@@ -2,6 +2,16 @@
 
 Đây là backlog chuẩn bị của NoSleepClub. Các mục chưa đánh dấu đều chưa được thực hiện; triển khai sản phẩm theo thời gian chính thức của hackathon.
 
+## Lát cắt kỹ thuật hiện tại
+
+- [x] Tải cutout WISE 0855 thật, kiểm tra bước sóng và chọn 3 cặp.
+- [x] Căn chỉnh, PSF cross-convolution, export ảnh sai khác và provenance.
+- [x] Demo web trước/sau, highlight, evidence và nhận xét cục bộ.
+- [ ] Cộng ảnh trong epoch theo phổ và đo centroid độc lập kèm sai số.
+- [ ] Xác minh chuyển động của WISE 0855 bằng dữ liệu này.
+
+Xem kết quả và điều kiện hoàn thành bước tiếp theo tại [WISE0855_DEMO.md](WISE0855_DEMO.md).
+
 ## Chuẩn bị
 
 - [x] Đọc Details và kiểm tra Resources của đề chính thức.

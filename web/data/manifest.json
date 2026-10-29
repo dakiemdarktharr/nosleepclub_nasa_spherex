@@ -1,0 +1,552 @@
+{
+  "target": "WISE 0855\u22120714",
+  "title": "WISE 0855 \u00b7 Change Explorer",
+  "data_real": true,
+  "analysis_version": "0.1.0",
+  "analysis_sha256": "8985b55ba6fd29fd02d1618f1d62d2a58a4ad235f692d1c650dacb1ce53b159e",
+  "collection": "SPHEREx QR2 / IRSA",
+  "downloaded_scan_count": 43,
+  "selected_cutout_count": 6,
+  "method": "WCS reprojection, reference-star translation, local measured-PSF cross-convolution, median static-star aperture gain and sky offset, exploratory empirical residuals",
+  "bad_flag_bits": [
+    0,
+    1,
+    2,
+    6,
+    7,
+    9,
+    10,
+    11,
+    14,
+    15,
+    17,
+    19,
+    20,
+    22,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "model": "Classical baseline; no trained vision model yet",
+  "target_prior_source": "https://arxiv.org/pdf/1404.6501",
+  "target_prior_note": "Linear extrapolation from Luhman 2014 Tables 1/2. Parallax is omitted. Search guide, not a measured SPHEREx detection.",
+  "limitations": [
+    "Highlight is an exploratory residual, not confirmation of WISE 0855 or a calibrated sigma probability.",
+    "WCS-WAVE uses visualization precision; science-grade matching needs spectral calibration response.",
+    "Interpolated and PSF-convolved pixels have correlated noise; score is empirically normalized.",
+    "A half-bandwidth local wavelength gate does not remove all source-colour differences.",
+    "Only local PSFs and a translation correction are used; targets require independent astrometric verification."
+  ],
+  "sources": [
+    "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+    "https://caltech-ipac.github.io/irsa-tutorials/spherex-cutouts/",
+    "https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/",
+    "https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/sp.html"
+  ],
+  "scenes": [
+    {
+      "id": "matched-4853",
+      "label": "4.853 \u00b5m \u00b7 kh\u1edbp ph\u1ed5 t\u1ed1t nh\u1ea5t",
+      "shape": [
+        64,
+        64
+      ],
+      "pixel_scale_arcsec": 6.15,
+      "before": {
+        "obs_id": "2025W19_1B_0138_1",
+        "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W19_1B/l2b-v20-2025-241/6/level2_2025W19_1B_0138_1D6_spx_l2b-v20-2025-241.fits",
+        "mjd": 60800.834437847,
+        "detector": 6,
+        "collection": "spherex_qr2",
+        "cache_subdir": "target-centered",
+        "cutout_center_ra": 133.76037473328523,
+        "cutout_center_dec": -7.242149767967145,
+        "path": "data/raw/wise0855/target-centered/level2_2025W19_1B_0138_1D6_spx_l2b-v20-2025-241.fits",
+        "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W19_1B/l2b-v20-2025-241/6/level2_2025W19_1B_0138_1D6_spx_l2b-v20-2025-241.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+        "bytes": 5129280,
+        "sha256": "47530a09e2e3cc8cd3d3e39fceabfb811ca805b7d8c3604112b9b57a8f8ae21a",
+        "shape": [
+          70,
+          70
+        ],
+        "status": "downloaded",
+        "date": "2025-05-05",
+        "wavelength_um": 4.8535248334993994,
+        "bandwidth_um": 0.03793446640363798,
+        "pipeline_version": "6.4+psffix1",
+        "psf_zone": 24,
+        "target_fit": {
+          "fixed_prior_snr": 2.974492013323301,
+          "reduced_chi2": 0.9811783576023483,
+          "fit_pixels": 98,
+          "position_fitted": false,
+          "note": "PSF amplitude at an extrapolated position; no independent motion fit."
+        },
+        "image": "data/matched-4853/before.png",
+        "native_shape": [
+          70,
+          70
+        ]
+      },
+      "after": {
+        "obs_id": "2026W19_2A_0651_1",
+        "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_0651_1D6_spx_l2b-v24-2026-131.fits",
+        "mjd": 61169.194222546,
+        "detector": 6,
+        "collection": "spherex_qr2",
+        "cache_subdir": "target-centered",
+        "cutout_center_ra": 133.76037473328523,
+        "cutout_center_dec": -7.242149767967145,
+        "path": "data/raw/wise0855/target-centered/level2_2026W19_2A_0651_1D6_spx_l2b-v24-2026-131.fits",
+        "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_0651_1D6_spx_l2b-v24-2026-131.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+        "bytes": 5129280,
+        "sha256": "8f2beb7dce3c85276f2ccb47f45ac160073ccd4257c00c94a3d7d11f23ce742e",
+        "shape": [
+          70,
+          70
+        ],
+        "status": "downloaded",
+        "date": "2026-05-09",
+        "wavelength_um": 4.853311229642043,
+        "bandwidth_um": 0.03793186127451837,
+        "pipeline_version": "6.5.6",
+        "psf_zone": 24,
+        "target_fit": {
+          "fixed_prior_snr": 4.6890176386849935,
+          "reduced_chi2": 1.3255305855297608,
+          "fit_pixels": 97,
+          "position_fitted": false,
+          "note": "PSF amplitude at an extrapolated position; no independent motion fit."
+        },
+        "image": "data/matched-4853/after.png",
+        "native_shape": [
+          70,
+          70
+        ]
+      },
+      "baseline_days": 368.35978469900147,
+      "target_wavelength_delta_nm": 0.21360385735658127,
+      "wavelength_mismatch_channels": 0.0056310583072569816,
+      "alignment": {
+        "matched_stars": 5,
+        "applied": true,
+        "rms_before_px": 0.25070970314778634,
+        "rms_after_px": 0.23687866206128227,
+        "shift_x_px": -0.07571443822238741,
+        "shift_y_px": -0.03179903390319048
+      },
+      "photometric_gain": 0.9918332231622111,
+      "background_offset": 0.0019539415515422167,
+      "calibration_star_ratios": [
+        1.3139407147371733,
+        0.8117264843552593,
+        0.9494240717466039,
+        1.0522800731663773,
+        0.9918332231622111
+      ],
+      "empirical_noise_scale": 1.1454475419686507,
+      "valid_fraction": 0.779296875,
+      "candidates": [
+        {
+          "id": "R01",
+          "x": 21,
+          "y": 23,
+          "ra_deg": 133.77845706707998,
+          "dec_deg": -7.256670243456015,
+          "score": 3.787,
+          "kind": "positive"
+        },
+        {
+          "id": "R02",
+          "x": 10,
+          "y": 13,
+          "ra_deg": 133.79740186344026,
+          "dec_deg": -7.2737524288154995,
+          "score": -3.739,
+          "kind": "negative"
+        },
+        {
+          "id": "R03",
+          "x": 50,
+          "y": 43,
+          "ra_deg": 133.72851779964174,
+          "dec_deg": -7.222502830791164,
+          "score": 3.647,
+          "kind": "positive"
+        },
+        {
+          "id": "R04",
+          "x": 35,
+          "y": 16,
+          "ra_deg": 133.75434712863682,
+          "dec_deg": -7.268628892956538,
+          "score": -3.623,
+          "kind": "negative"
+        }
+      ],
+      "target_prior": [
+        {
+          "epoch": "before",
+          "x": 30.78536207042948,
+          "y": 31.43793400583018,
+          "ra_deg": 133.7616053912734,
+          "dec_deg": -7.242255795720973,
+          "valid_fraction": 1.0,
+          "peak_empirical_score": 4.982052915127
+        },
+        {
+          "epoch": "after",
+          "x": 32.10709622774851,
+          "y": 31.552724500917236,
+          "ra_deg": 133.7593292703082,
+          "dec_deg": -7.242059695751934,
+          "valid_fraction": 0.9473684210526315,
+          "peak_empirical_score": 4.982052915127
+        }
+      ],
+      "target_detection": "unconfirmed",
+      "difference_image": "data/matched-4853/difference.png",
+      "fits": "data/matched-4853/comparison.fits",
+      "arrays": "data/matched-4853/arrays.npz",
+      "array_json": "data/matched-4853/pixels.json",
+      "display_stretch": {
+        "low": -0.0649656658883339,
+        "high": 0.8787076053003754,
+        "function": "asinh; identical limits"
+      },
+      "wcs": {
+        "center_ra_deg": 133.76037473328523,
+        "center_dec_deg": -7.242149767967145,
+        "orientation": "north up, east left"
+      }
+    },
+    {
+      "id": "matched-4961",
+      "label": "4.961 \u00b5m \u00b7 \u0111\u1ed1i chi\u1ebfu \u0111\u1ed9c l\u1eadp",
+      "shape": [
+        64,
+        64
+      ],
+      "pixel_scale_arcsec": 6.15,
+      "before": {
+        "obs_id": "2025W19_1B_0116_1",
+        "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W19_1B/l2b-v20-2025-241/6/level2_2025W19_1B_0116_1D6_spx_l2b-v20-2025-241.fits",
+        "mjd": 60800.700028461,
+        "detector": 6,
+        "collection": "spherex_qr2",
+        "cache_subdir": "target-centered",
+        "cutout_center_ra": 133.76037473328523,
+        "cutout_center_dec": -7.242149767967145,
+        "path": "data/raw/wise0855/target-centered/level2_2025W19_1B_0116_1D6_spx_l2b-v20-2025-241.fits",
+        "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W19_1B/l2b-v20-2025-241/6/level2_2025W19_1B_0116_1D6_spx_l2b-v20-2025-241.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+        "bytes": 5129280,
+        "sha256": "2fbf92d2ced7ca07316ba64659c12c8973aa215138a0b26ec1e6498b8bea7a00",
+        "shape": [
+          70,
+          70
+        ],
+        "status": "downloaded",
+        "date": "2025-05-05",
+        "wavelength_um": 4.961049802305413,
+        "bandwidth_um": 0.037187389183344466,
+        "pipeline_version": "6.4+psffix1",
+        "psf_zone": 2,
+        "target_fit": {
+          "fixed_prior_snr": 1.0630977691394699,
+          "reduced_chi2": 0.9749369927217499,
+          "fit_pixels": 98,
+          "position_fitted": false,
+          "note": "PSF amplitude at an extrapolated position; no independent motion fit."
+        },
+        "image": "data/matched-4961/before.png",
+        "native_shape": [
+          70,
+          70
+        ]
+      },
+      "after": {
+        "obs_id": "2026W20_1A_0033_1",
+        "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0033_1D6_spx_l2b-v24-2026-135.fits",
+        "mjd": 61171.096350255,
+        "detector": 6,
+        "collection": "spherex_qr2",
+        "cache_subdir": "target-centered",
+        "cutout_center_ra": 133.76037473328523,
+        "cutout_center_dec": -7.242149767967145,
+        "path": "data/raw/wise0855/target-centered/level2_2026W20_1A_0033_1D6_spx_l2b-v24-2026-135.fits",
+        "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0033_1D6_spx_l2b-v24-2026-135.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+        "bytes": 5129280,
+        "sha256": "69438db648afeaf4fcde9610020613cb470a92e4be772a28f2670f248d6e44e5",
+        "shape": [
+          70,
+          70
+        ],
+        "status": "downloaded",
+        "date": "2026-05-11",
+        "wavelength_um": 4.960913464654949,
+        "bandwidth_um": 0.03718714480237015,
+        "pipeline_version": "6.5.6",
+        "psf_zone": 2,
+        "target_fit": {
+          "fixed_prior_snr": 2.646830475844096,
+          "reduced_chi2": 1.1683625819082801,
+          "fit_pixels": 99,
+          "position_fitted": false,
+          "note": "PSF amplitude at an extrapolated position; no independent motion fit."
+        },
+        "image": "data/matched-4961/after.png",
+        "native_shape": [
+          70,
+          70
+        ]
+      },
+      "baseline_days": 370.3963217940036,
+      "target_wavelength_delta_nm": 0.13633765046439095,
+      "wavelength_mismatch_channels": 0.003666245505231073,
+      "alignment": {
+        "matched_stars": 5,
+        "applied": true,
+        "rms_before_px": 0.28577168177185375,
+        "rms_after_px": 0.26477168072975366,
+        "shift_x_px": 0.001696363256244382,
+        "shift_y_px": -0.10751062058214486
+      },
+      "photometric_gain": 0.9552013455405688,
+      "background_offset": -0.0024727418508956895,
+      "calibration_star_ratios": [
+        0.9428464144966003,
+        0.8881505355880909,
+        0.972984940848021,
+        0.9675562765845374
+      ],
+      "empirical_noise_scale": 1.0924777821115055,
+      "valid_fraction": 0.764892578125,
+      "candidates": [
+        {
+          "id": "R01",
+          "x": 60,
+          "y": 33,
+          "ra_deg": 133.71129598297838,
+          "dec_deg": -7.239584640163754,
+          "score": 18.19,
+          "kind": "positive"
+        }
+      ],
+      "target_prior": [
+        {
+          "epoch": "before",
+          "x": 30.784879788128084,
+          "y": 31.437892119168623,
+          "ra_deg": 133.76160622179844,
+          "dec_deg": -7.242255867275136,
+          "valid_fraction": 1.0,
+          "peak_empirical_score": 1.954025022029306
+        },
+        {
+          "epoch": "after",
+          "x": 32.113921370903306,
+          "y": 31.553317236237532,
+          "ra_deg": 133.75931751692758,
+          "dec_deg": -7.242058683135464,
+          "valid_fraction": 1.0,
+          "peak_empirical_score": 1.954025022029306
+        }
+      ],
+      "target_detection": "unconfirmed",
+      "difference_image": "data/matched-4961/difference.png",
+      "fits": "data/matched-4961/comparison.fits",
+      "arrays": "data/matched-4961/arrays.npz",
+      "array_json": "data/matched-4961/pixels.json",
+      "display_stretch": {
+        "low": -0.07218795193460871,
+        "high": 0.8738571053835095,
+        "function": "asinh; identical limits"
+      },
+      "wcs": {
+        "center_ra_deg": 133.76037473328523,
+        "center_dec_deg": -7.242149767967145,
+        "orientation": "north up, east left"
+      }
+    },
+    {
+      "id": "matched-4609",
+      "label": "4.609 \u00b5m \u00b7 baseline ng\u1eafn h\u01a1n",
+      "shape": [
+        64,
+        64
+      ],
+      "pixel_scale_arcsec": 6.15,
+      "before": {
+        "obs_id": "2025W46_1A_0090_3",
+        "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits",
+        "mjd": 60989.367760625,
+        "detector": 6,
+        "collection": "spherex_qr2",
+        "cache_subdir": "target-centered",
+        "cutout_center_ra": 133.76037473328523,
+        "cutout_center_dec": -7.242149767967145,
+        "path": "data/raw/wise0855/target-centered/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits",
+        "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+        "bytes": 5129280,
+        "sha256": "29d52efb7c26e037e78e7814755672210b5a6ada196c45ad950df7930f73ec86",
+        "shape": [
+          70,
+          70
+        ],
+        "status": "downloaded",
+        "date": "2025-11-10",
+        "wavelength_um": 4.606615128054428,
+        "bandwidth_um": 0.03632788591724277,
+        "pipeline_version": "6.4+psffix1",
+        "psf_zone": 71,
+        "target_fit": {
+          "fixed_prior_snr": 4.456723336962016,
+          "reduced_chi2": 1.2174138543215123,
+          "fit_pixels": 97,
+          "position_fitted": false,
+          "note": "PSF amplitude at an extrapolated position; no independent motion fit."
+        },
+        "image": "data/matched-4609/before.png",
+        "native_shape": [
+          70,
+          70
+        ]
+      },
+      "after": {
+        "obs_id": "2026W17_1B_0634_1",
+        "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits",
+        "mjd": 61153.436457037,
+        "detector": 6,
+        "collection": "spherex_qr2",
+        "cache_subdir": "target-centered",
+        "cutout_center_ra": 133.76037473328523,
+        "cutout_center_dec": -7.242149767967145,
+        "path": "data/raw/wise0855/target-centered/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits",
+        "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+        "bytes": 5132160,
+        "sha256": "21795106fc179df6fb36bb0439c1d50fe3511d4f3dde082ccb52cb8f9264f993",
+        "shape": [
+          70,
+          70
+        ],
+        "status": "downloaded",
+        "date": "2026-04-23",
+        "wavelength_um": 4.610911260132259,
+        "bandwidth_um": 0.03620777360251336,
+        "pipeline_version": "6.5.6",
+        "psf_zone": 87,
+        "target_fit": {
+          "fixed_prior_snr": 5.277575259452076,
+          "reduced_chi2": 1.133716752827806,
+          "fit_pixels": 100,
+          "position_fitted": false,
+          "note": "PSF amplitude at an extrapolated position; no independent motion fit."
+        },
+        "image": "data/matched-4609/after.png",
+        "native_shape": [
+          70,
+          70
+        ]
+      },
+      "baseline_days": 164.0686964120032,
+      "target_wavelength_delta_nm": 4.296132077830528,
+      "wavelength_mismatch_channels": 0.1184557252604952,
+      "alignment": {
+        "matched_stars": 6,
+        "applied": true,
+        "rms_before_px": 0.2238404853755351,
+        "rms_after_px": 0.2095537830599592,
+        "shift_x_px": 0.035927395594478405,
+        "shift_y_px": 0.07000712209634496
+      },
+      "photometric_gain": 1.0559077682931204,
+      "background_offset": 0.0006293566470014847,
+      "calibration_star_ratios": [
+        0.8272633088992613,
+        1.0491224990061796,
+        1.1595013166674293,
+        1.0626930375800612,
+        0.6764775610166566,
+        1.0756618138845142
+      ],
+      "empirical_noise_scale": 1.1869817331461343,
+      "valid_fraction": 0.677734375,
+      "candidates": [
+        {
+          "id": "R01",
+          "x": 45,
+          "y": 16,
+          "ra_deg": 133.7371254022602,
+          "dec_deg": -7.26862834073944,
+          "score": 5.758,
+          "kind": "positive"
+        },
+        {
+          "id": "R02",
+          "x": 10,
+          "y": 23,
+          "ra_deg": 133.79740046046405,
+          "dec_deg": -7.256669101943344,
+          "score": -4.96,
+          "kind": "negative"
+        },
+        {
+          "id": "R03",
+          "x": 48,
+          "y": 34,
+          "ra_deg": 133.73196082298716,
+          "dec_deg": -7.237878054063614,
+          "score": 4.0,
+          "kind": "positive"
+        },
+        {
+          "id": "R04",
+          "x": 50,
+          "y": 41,
+          "ra_deg": 133.72851755824323,
+          "dec_deg": -7.225919496593787,
+          "score": 3.507,
+          "kind": "positive"
+        }
+      ],
+      "target_prior": [
+        {
+          "epoch": "before",
+          "x": 31.46184981408117,
+          "y": 31.49668672253904,
+          "ra_deg": 133.76044043063862,
+          "dec_deg": -7.242155428144773,
+          "valid_fraction": 1.0,
+          "peak_empirical_score": 1.5090410058715897
+        },
+        {
+          "epoch": "after",
+          "x": 32.050554806949734,
+          "y": 31.547814106627264,
+          "ra_deg": 133.75942663864734,
+          "dec_deg": -7.242068084554014,
+          "valid_fraction": 0.9473684210526315,
+          "peak_empirical_score": 2.8049225014821704
+        }
+      ],
+      "target_detection": "unconfirmed",
+      "difference_image": "data/matched-4609/difference.png",
+      "fits": "data/matched-4609/comparison.fits",
+      "arrays": "data/matched-4609/arrays.npz",
+      "array_json": "data/matched-4609/pixels.json",
+      "display_stretch": {
+        "low": -0.052132866207711466,
+        "high": 1.016707178187592,
+        "function": "asinh; identical limits"
+      },
+      "wcs": {
+        "center_ra_deg": 133.76037473328523,
+        "center_dec_deg": -7.242149767967145,
+        "orientation": "north up, east left"
+      }
+    }
+  ]
+}

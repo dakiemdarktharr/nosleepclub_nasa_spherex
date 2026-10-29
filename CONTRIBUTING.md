@@ -14,4 +14,6 @@
 
 ## Kiểm chứng
 
-Hiện chưa có mã ứng dụng hoặc bộ kiểm thử. Khi thêm công nghệ đầu tiên, cập nhật README với lệnh cài đặt, chạy và kiểm thử; thêm kiểm thử cho hành vi có ý nghĩa như chuyển đổi tọa độ hoặc căn chỉnh ảnh.
+Chạy `python -m unittest discover -s tests -v` trong môi trường đã cài `requirements.txt`. Khi thay pipeline, tái sinh `web/data/` bằng `scripts/build_demo.py`, giữ provenance và ghi rõ giới hạn khoa học trong tài liệu.
+
+Mỗi lần bàn giao cần có bản xem được, kiểm chứng đã làm, giới hạn còn lại và bước tiếp theo cụ thể để người dùng duyệt rồi tiếp tục. Xem `AGENTS.md`.

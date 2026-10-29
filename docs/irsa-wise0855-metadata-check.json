@@ -1,0 +1,74 @@
+{
+  "checked_date": "2026-10-30",
+  "target_region": "WISE 0855 coordinates from challenge; not an epoch-propagated source position",
+  "ra_deg": 133.79512917,
+  "dec_deg": -7.24514722,
+  "radius_deg": 0.05,
+  "scope": "SIA metadata query only; no FITS downloaded and no matched temporal passbands or detections validated",
+  "checks": [
+    {
+      "collection": "spherex_qr2",
+      "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+133.79512917+-7.24514722+0.05",
+      "query_status": "OK",
+      "serialization": "TABLEDATA",
+      "metadata_rows": 278,
+      "min_mjd": 60800.700028,
+      "max_mjd": 61174.287218,
+      "band_groups": [
+        {
+          "Name": "SPHEREx-D1",
+          "Count": 46
+        },
+        {
+          "Name": "SPHEREx-D2",
+          "Count": 50
+        },
+        {
+          "Name": "SPHEREx-D3",
+          "Count": 46
+        },
+        {
+          "Name": "SPHEREx-D4",
+          "Count": 44
+        },
+        {
+          "Name": "SPHEREx-D5",
+          "Count": 49
+        },
+        {
+          "Name": "SPHEREx-D6",
+          "Count": 43
+        }
+      ],
+      "sample": [
+        {
+          "obs_id": "2025W44_2B_0322_4",
+          "obs_publisher_did": "ivo://irsa.ipac/spherex_qr2?2025W44_2B_0322_4/D4",
+          "t_min": "60979.793115",
+          "t_max": "60979.794448",
+          "energy_bandpassname": "SPHEREx-D4",
+          "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W44_2B/l2b-v20-2025-307/4/level2_2025W44_2B_0322_4D4_spx_l2b-v20-2025-307.fits"
+        },
+        {
+          "obs_id": "2025W44_2B_0322_4",
+          "obs_publisher_did": "ivo://irsa.ipac/spherex_qr2?2025W44_2B_0322_4/D1",
+          "t_min": "60979.793115",
+          "t_max": "60979.794448",
+          "energy_bandpassname": "SPHEREx-D1",
+          "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W44_2B/l2b-v20-2025-307/1/level2_2025W44_2B_0322_4D1_spx_l2b-v20-2025-307.fits"
+        }
+      ]
+    },
+    {
+      "collection": "spherex_qr3",
+      "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=circle+133.79512917+-7.24514722+0.05",
+      "query_status": "OK",
+      "serialization": "TABLEDATA",
+      "metadata_rows": 0,
+      "min_mjd": null,
+      "max_mjd": null,
+      "band_groups": [],
+      "sample": []
+    }
+  ]
+}

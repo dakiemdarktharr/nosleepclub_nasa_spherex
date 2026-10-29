@@ -1,43 +1,56 @@
 # nosleepclub_nasa_spherex
 
-NoSleepClub tham gia **NASA Space Apps Challenge 2026**, đề bài **Planet X and SPHEREx**.
+NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details).
 
-Mục tiêu: giúp mọi người khám phá sự thay đổi của bầu trời qua ảnh hồng ngoại SPHEREx theo thời gian.
+Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-- [Đề bài chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details)
-- [Tóm tắt đề bài](docs/CHALLENGE.md)
-- [Lộ trình đề xuất](docs/ROADMAP.md)
-- [Hướng dẫn đóng góp](CONTRIBUTING.md)
+## Demo hiện tại: WISE 0855
 
-## Trạng thái
+![WISE 0855 real-data comparison](docs/wise0855-demo-desktop.jpg)
 
-Repo đã được khởi tạo để lưu tài liệu và phối hợp nhóm. Chưa có ứng dụng, pipeline dữ liệu hoặc kết quả phát hiện thiên thể.
+- Ba cặp cutout **thật** từ SPHEREx QR2/IRSA, đã kiểm tra bước sóng và đưa về cùng lưới trời.
+- So sánh kéo vạch, song song, sai khác và nhấp nháy; zoom, highlight và bảng bằng chứng.
+- Lưu/xuất nhận xét trong trình duyệt; có thể xóa nhận xét theo vùng.
+- FITS đã xử lý, arrays và manifest có nguồn, hash và phiên bản để kiểm tra lại.
 
-Đã đọc trang đề ngày **30/10/2026**. Tab [Resources](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=resources) hiện thông báo tài nguyên sẽ có vào **13/11/2026**. Cần kiểm tra lại nguồn dữ liệu trước khi triển khai.
+**Chưa xác nhận chuyển động WISE 0855.** Đây là baseline xử lý ảnh cổ điển; chưa có vision model được huấn luyện. Vòng nét đứt là vị trí ngoại suy từ astrometry cũ, khác với residual tự động. S/N ở vị trí cố định chưa phải bằng chứng đo chuyển động.
 
-## Bắt đầu
+## Mở demo ngay
+
+Ứng dụng dùng các sản phẩm nhỏ đã có sẵn trong repo; chỉ cần Python để mở, không cần Node hoặc tải lại dữ liệu.
 
 ```sh
 git clone https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex.git
 cd nosleepclub_nasa_spherex
+python scripts/serve_demo.py
 ```
 
-Đọc `docs/CHALLENGE.md`, sau đó chọn công việc từ `docs/ROADMAP.md`. Công nghệ và lệnh chạy ứng dụng sẽ được bổ sung khi bắt đầu triển khai.
+Mở **http://127.0.0.1:8766**. Có thể đổi cổng bằng `--port 8767`. Server chỉ phục vụ thư mục `web/`, bind vào localhost. Các tệp trong `web/` cũng có thể được phục vụ bằng static hosting có hỗ trợ JSON/PNG/FITS.
 
-## Cấu trúc
+## Tái tạo kết quả khoa học
 
-```text
-.
-├── .github/              # Mẫu issue và pull request
-├── docs/
-│   ├── CHALLENGE.md      # Yêu cầu và nguồn tham khảo
-│   └── ROADMAP.md        # Công việc đề xuất của nhóm
-├── CONTRIBUTING.md
-└── README.md
+Python 3.11 trở lên; nên dùng virtual environment. Các phiên bản trong `requirements.txt` là phiên bản đã chạy trên máy phát triển.
+
+```sh
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+.venv\Scripts\python scripts/fetch_wise0855.py --demo
+.venv\Scripts\python scripts/build_demo.py
+.venv\Scripts\python -m unittest discover -s tests -v
 ```
 
-## Dữ liệu và ghi nguồn
+Lệnh `--demo` tải 6 cutout được chọn và kiểm tra FITS; lưu trong `data/raw/wise0855/target-centered/`. Chạy fetch không có `--demo` để quét các quan sát D6 trong vùng truy vấn ban đầu, hiện đã kiểm tra 43 quan sát. Download có cache và giới hạn 3 request đồng thời.
 
-Mỗi bộ dữ liệu sử dụng cần ghi nguồn, phiên bản, ngày truy cập và điều kiện sử dụng. Lưu ảnh FITS và sản phẩm dữ liệu lớn ngoài Git; chỉ commit mã, metadata và mẫu nhỏ phù hợp để chia sẻ công khai.
+## Tài liệu
 
-Repo hiện chưa cấp giấy phép sử dụng mã nguồn. Cần thống nhất giấy phép của nhóm trước khi bổ sung `LICENSE`; dữ liệu và tài sản bên thứ ba giữ điều kiện sử dụng riêng.
+- [Kết quả, phương pháp và bước tiếp theo của demo](docs/WISE0855_DEMO.md)
+- [Phân tích vision model và quy trình review](docs/DEEP_RESEARCH_VISION.md)
+- [Tóm tắt đề bài](docs/CHALLENGE.md)
+- [Lộ trình](docs/ROADMAP.md)
+- [Hướng dẫn đóng góp](CONTRIBUTING.md)
+
+## Dữ liệu và giấy phép
+
+Dữ liệu gốc: SPHEREx QR2 tại NASA/IPAC IRSA, DOI [10.26131/IRSA652](https://doi.org/10.26131/IRSA652). Các PNG/FITS trong `web/data/` là sản phẩm xử lý phục vụ demo, không phải sản phẩm khoa học chính thức của IRSA. Manifest giữ URL cutout, SHA-256, observation ID và pipeline version.
+
+Không commit token hoặc bộ FITS thô lớn. Repo hiện chưa cấp giấy phép mã nguồn; cần thống nhất giấy phép của nhóm. Dữ liệu và tài sản bên thứ ba giữ điều kiện sử dụng riêng.

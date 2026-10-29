@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#132941">
+  <title>WISE 0855 · NoSleepClub Sky Lab</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Đến vùng so sánh</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="NoSleepClub Sky Lab, trang chính">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="8"/><ellipse cx="20" cy="20" rx="19" ry="7" transform="rotate(-34 20 20)"/><circle cx="33" cy="10" r="3" class="satellite"/></svg>
+      <span>NoSleepClub <b>Sky Lab</b></span>
+    </a>
+    <nav aria-label="Điều hướng chính"><a class="active" href="#workspace">Khám phá</a><button id="evidence-open">Dữ liệu & phương pháp</button><a href="#next-steps">Bước tiếp theo</a></nav>
+    <a class="repo-link" href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="workspace">
+    <div id="load-state" role="status">Đang tải bộ ảnh SPHEREx thật…</div>
+    <div class="intro">
+      <div><p class="location">Hydra / SPHEREx QR2</p><h1>Theo dấu <span>WISE 0855</span></h1><p class="intro-copy">Cùng một vùng trời. Quan sát điều gì thay đổi giữa hai thời điểm.</p></div>
+      <div class="data-status"><span class="data-stamp">FITS thật từ NASA/IPAC IRSA</span><span class="unconfirmed">Chưa xác nhận chuyển động của mục tiêu</span></div>
+    </div>
+
+    <div class="workspace-grid">
+      <section class="observation" aria-label="So sánh ảnh thiên văn">
+        <div class="observation-head"><div><h2>Vùng quan sát</h2><span>Hướng bắc ở trên · hướng đông bên trái</span></div><button id="download-manifest" class="text-button" disabled>Tải bằng chứng <span aria-hidden="true">↓</span></button></div>
+        <div class="metrics" aria-live="polite">
+          <div><span>Khoảng thời gian</span><strong id="baseline">—</strong></div>
+          <div><span>Bước sóng tại mục tiêu</span><strong id="wavelength">—</strong></div>
+          <div><span>RMS sao nền sau căn chỉnh</span><strong id="alignment">—</strong></div>
+        </div>
+        <div class="toolbar"><div class="view-switch" role="group" aria-label="Chế độ xem"><button data-mode="wipe" aria-pressed="true">Trước / sau</button><button data-mode="side" aria-pressed="false">Song song</button><button data-mode="difference" aria-pressed="false">Sai khác</button><button data-mode="blink" aria-pressed="false">Nhấp nháy</button></div><button id="reset-view" class="icon-text" title="Đặt lại vùng xem">↺ <span>Đặt lại</span></button></div>
+        <div class="viewer-shell" id="viewer-shell">
+          <div class="viewer-top"><span id="date-before">Trước</span><span class="viewer-badge" id="mode-badge">Kéo vạch để so sánh</span><span id="date-after">Sau</span></div>
+          <canvas id="sky" width="1024" height="1024" tabindex="0" aria-label="Ảnh SPHEREx trước và sau đã căn chỉnh. Dùng danh sách residual bên phải để chọn vùng; dùng các nút và thanh trượt bên dưới để điều khiển."></canvas>
+          <div class="viewer-bottom"><span id="pixel-readout">Di chuột trên ảnh để xem giá trị</span><span>6,15″ / pixel <span class="scale-bar" aria-hidden="true"></span> 1′</span></div>
+        </div>
+        <div class="wipe-control" id="wipe-control"><label for="wipe">Trước</label><input id="wipe" type="range" min="0" max="100" value="50" aria-label="Vị trí vạch so sánh"><span>Sau</span></div>
+        <div class="display-controls"><div class="overlay-options"><label><input id="show-prior" type="checkbox" checked><span class="legend-prior"></span>Vị trí dự kiến</label><label><input id="show-residuals" type="checkbox" checked><span class="legend-residual"></span>Residual cần kiểm tra</label></div><label class="zoom-label" for="zoom">Zoom <input id="zoom" type="range" min="1" max="4" value="1" step="0.25"><output id="zoom-value" for="zoom">1×</output></label></div>
+        <p id="view-note" class="view-note">Hai ảnh dùng cùng mức kéo sáng. Vòng nét đứt là dự báo từ astrometry cũ, không phải phát hiện của model.</p>
+        <div class="scene-heading"><h3>Ba cặp ảnh, ba phép đối chiếu</h3><span>Chọn dải phổ để kiểm tra lại</span></div>
+        <div id="scene-list" class="scene-list" aria-label="Các cặp ảnh"></div>
+      </section>
+
+      <aside class="inspector" aria-label="Kiểm tra và nhận xét">
+        <div class="inspector-header"><h2>Kiểm tra vùng chọn</h2><span class="subtle-label">Con người quyết định</span></div>
+        <button id="select-target" class="target-button" aria-pressed="true"><span class="target-symbol" aria-hidden="true">⊕</span><span><strong>WISE 0855−0714</strong><small>Vùng vị trí dự kiến</small></span><span aria-hidden="true">⌖</span></button>
+        <div id="selection-detail" class="selection-detail"></div>
+        <button id="focus-selection" class="focus-button">Phóng vào vùng chọn</button>
+        <div class="residual-heading"><h3>Residual tự động</h3><span id="candidate-count">—</span></div>
+        <p class="helper">Điểm thực nghiệm để ưu tiên xem ảnh; không phải xác suất hay sigma đã hiệu chuẩn.</p>
+        <div id="candidate-list" class="candidate-list"></div>
+        <div class="review-form">
+          <h3>Nhận xét của bạn</h3>
+          <label for="review-status" class="sr-only">Kết luận review</label><select id="review-status"><option value="uncertain">Chưa đủ bằng chứng</option><option value="interesting">Có dấu hiệu đáng kiểm tra</option><option value="artifact">Nghi nhiễu / lỗi xử lý</option></select>
+          <label for="review-note" class="sr-only">Ghi chú review</label><textarea id="review-note" rows="3" placeholder="Bạn thấy gì ở ảnh trước, sau và sai khác?" maxlength="2000"></textarea>
+          <div class="review-actions"><button id="save-review" class="primary-button" disabled>Lưu nhận xét</button><button id="export-reviews" class="text-button" disabled>Xuất JSON</button></div>
+          <p class="storage-note">Lưu trên trình duyệt này. Chưa đồng bộ lên máy chủ.</p><p id="review-feedback" role="status" aria-live="polite"></p><button id="clear-review" class="text-button" hidden>Xóa nhận xét của vùng này</button>
+        </div>
+      </aside>
+    </div>
+
+    <section class="next-steps" id="next-steps" aria-labelledby="next-heading"><div class="next-intro"><p class="location">Sau khi duyệt demo</p><h2 id="next-heading">Từ một dấu hiệu<br> đến bằng chứng tốt hơn.</h2><p>Bản hiện tại kiểm tra dữ liệu và luồng review. Độ tin cậy cần được nâng dần qua các bước dưới đây.</p></div><ol><li><strong>Cộng ảnh trong từng epoch</strong><span>Chọn phổ tương thích và tăng tín hiệu của WISE 0855; giữ từng ảnh thành phần để kiểm tra.</span></li><li><strong>Đo vị trí độc lập</strong><span>Fit PSF và centroid kèm sai số, đưa parallax vào mô hình và kiểm tra với sao nền.</span></li><li><strong>Thêm vision model</strong><span>Dùng các ứng viên đã duyệt để huấn luyện bộ xếp hạng thật/nhiễu và so với baseline.</span></li></ol></section>
+  </main>
+  <footer><span>NoSleepClub · NASA Space Apps 2026</span><span>Exploratory science demo · Dữ liệu SPHEREx, hiển thị do NoSleepClub xử lý</span></footer>
+
+  <dialog id="evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-heading"><h2 id="evidence-title">Dữ liệu và giới hạn của bản demo</h2><button id="evidence-close" aria-label="Đóng bảng bằng chứng">×</button></div><p>Cutout thật từ SPHEREx QR2. Highlight hiện được tạo bằng xử lý ảnh cổ điển, chưa dùng vision model đã huấn luyện.</p><div id="evidence-content"></div><a id="download-fits" class="primary-button" href="#" download>Tải FITS đã căn chỉnh</a><h3>Tài liệu gốc</h3><ul><li><a href="https://caltech-ipac.github.io/irsa-tutorials/spherex-cutouts/" target="_blank" rel="noopener noreferrer">IRSA: cutout và spectral WCS</a></li><li><a href="https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/" target="_blank" rel="noopener noreferrer">IRSA: PSF theo vị trí và phiên bản dữ liệu</a></li><li><a href="https://arxiv.org/pdf/1404.6501" target="_blank" rel="noopener noreferrer">Luhman 2014: astrometry và proper motion WISE 0855</a></li></ul></dialog>
+</body>
+</html>

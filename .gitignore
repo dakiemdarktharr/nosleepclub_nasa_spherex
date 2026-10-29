@@ -36,6 +36,8 @@ data/cache/
 *.fits.gz
 *.fit
 *.fts
+!web/data/**/comparison.fits
+web/data/diagnostic.png
 *.h5
 *.hdf5
 
