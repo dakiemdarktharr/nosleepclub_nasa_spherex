@@ -59,6 +59,19 @@ function ellipse(covariance, factor=2.30) {
   const root=Math.hypot(a-d,2*b), major=Math.max(0,(a+d+root)/2),minor=Math.max(0,(a+d-root)/2);
   return {rx:Math.sqrt(factor*major),ry:Math.sqrt(factor*minor),angle:.5*Math.atan2(2*b,a-d)};
 }
+function canvasLabel(text,x,y,width,height,offset,color) {
+  const scale=canvas.width/Math.max(canvas.getBoundingClientRect().width,1);
+  const fontSize=13*scale,padding=6*scale,margin=5*scale;
+  ctx.save();ctx.font=`600 ${fontSize}px "Be Vietnam Pro", Arial, sans-serif`;
+  ctx.textAlign="left";ctx.textBaseline="middle";ctx.setLineDash([]);
+  const boxWidth=Math.min(ctx.measureText(text).width+2*padding,width-2*margin),boxHeight=fontSize*1.65+padding;
+  const left=Math.max(offset+margin,Math.min(offset+width-boxWidth-margin,x));
+  const top=Math.max(margin,Math.min(height-boxHeight-margin,y-boxHeight/2));
+  ctx.fillStyle="#070d16";ctx.fillRect(left,top,boxWidth,boxHeight);
+  ctx.lineWidth=scale;ctx.strokeStyle=color;ctx.strokeRect(left,top,boxWidth,boxHeight);
+  ctx.fillStyle=color;ctx.fillText(text,left+padding,top+boxHeight/2,boxWidth-2*padding);
+  ctx.restore();
+}
 function overlays(width,height,offset=0) {
   const scene=state.scene;
   ctx.save();ctx.beginPath();ctx.rect(offset,0,width,height);ctx.clip();
@@ -73,7 +86,10 @@ function overlays(width,height,offset=0) {
       ctx.strokeStyle=i?"#f7be66":"#a4e4d9";ctx.fillStyle=ctx.strokeStyle;
       ctx.beginPath();ctx.ellipse(x,y,e.rx*scale,e.ry*scale,e.angle,0,2*Math.PI);ctx.stroke();
       ctx.beginPath();ctx.arc(x,y,3,0,2*Math.PI);ctx.fill();
-      if(state.selected==="target") {ctx.font="500 17px Segoe UI";ctx.fillText(i?"Sau · đo":"Trước · đo",x+12,i?y+23:y-12);}
+      if(state.selected==="target") {
+        const scale=canvas.width/Math.max(canvas.getBoundingClientRect().width,1);
+        canvasLabel(i?"Sau · đo":"Trước · đo",x+14*scale,y+(i?25:-25)*scale,width,height,offset,i?"#ffd99b":"#d6fff6");
+      }
     });
   }
   if ($("show-prior").checked) {
@@ -84,15 +100,14 @@ function overlays(width,height,offset=0) {
     ctx.beginPath();ctx.arc((ax+bx)/2,(ay+by)/2,radius,0,Math.PI*2);ctx.stroke();
     ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();ctx.setLineDash([]);
     for (const [x,y] of [[ax,ay],[bx,by]]) {ctx.beginPath();ctx.moveTo(x-5,y);ctx.lineTo(x+5,y);ctx.moveTo(x,y-5);ctx.lineTo(x,y+5);ctx.stroke();}
-    if (state.selected==="target") {ctx.fillStyle="#d9caff";ctx.font="500 18px Segoe UI";ctx.fillText("WISE 0855 · dự kiến",Math.max(offset+8,ax-radius),Math.max(22,ay-radius-13));}
+    if (state.selected==="target") canvasLabel("WISE 0855 · dự kiến",ax-radius,ay-radius-32,width,height,offset,"#e0d2ff");
   }
   if ($("show-residuals").checked) for (const candidate of scene.candidates) {
     const [x,y]=xy(candidate.x,candidate.y,width,height,offset);
     const selected=state.selected===candidate.id;
     ctx.lineWidth=selected?3:1.8;ctx.strokeStyle=candidate.score>0?"#f7be66":"#82d7f1";
     ctx.beginPath();ctx.arc(x,y,Math.max(12,2/crop().width*width),0,Math.PI*2);ctx.stroke();
-    ctx.fillStyle=ctx.strokeStyle;ctx.font=`${selected?"600":"400"} 17px Segoe UI`;
-    ctx.fillText(`${candidate.id} ${candidate.score>0?"+":"−"}`,x+14,y-14);
+    if(selected)canvasLabel(`${candidate.id} ${candidate.score>0?"+":"−"}`,x+14,y-28,width,height,offset,candidate.score>0?"#ffd99b":"#bdefff");
   }
   ctx.restore();
 }
@@ -113,7 +128,7 @@ function render() {
     overlays(1024,1024);
     ctx.strokeStyle="#e4eff8";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(split,0);ctx.lineTo(split,1024);ctx.stroke();
     ctx.fillStyle="#edf5fc";ctx.beginPath();ctx.arc(split,512,20,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle="#17314a";ctx.font="24px Segoe UI";ctx.textAlign="center";ctx.fillText("↔",split,520);ctx.textAlign="left";
+    ctx.fillStyle="#17314a";ctx.font='24px "Be Vietnam Pro", Arial, sans-serif';ctx.textAlign="center";ctx.fillText("↔",split,520);ctx.textAlign="left";
   } else {
     drawImage(state.images[state.mode==="difference"?"difference":state.blinkAfter?"after":"before"],0,1024,1024);
     overlays(1024,1024);
@@ -218,7 +233,7 @@ function motionPanel(scene) {
   const sx=27,ox=207,oy=90,point=(e,n)=>[ox+e*sx,oy-n*sx];
   const [mx,my]=point(m.east_arcsec,m.north_arcsec),[px,py]=point(m.predicted_motion.east_arcsec,m.predicted_motion.north_arcsec);
   const c=m.covariance_arcsec2,e=ellipse([[c[0][0],-c[0][1]],[-c[1][0],c[1][1]]]);
-  $("motion-chart").innerHTML=`<path d="M18 ${oy}H261 M${ox} 14V151" stroke="#d2dee6" fill="none"/><g fill="#52677b" font-size="10"><text x="17" y="${oy+15}">−7″</text><text x="${ox+4}" y="${oy+15}">0</text><text x="233" y="${oy+15}">+2″</text><text x="${ox+4}" y="22">+2″ Bắc</text><text x="209" y="151">Đông →</text></g><path d="M${ox} ${oy}L${px} ${py}" stroke="#8062af" stroke-dasharray="4 3"/><path d="M${ox} ${oy}L${mx} ${my}" stroke="#2f766e" stroke-width="2"/><ellipse cx="${mx}" cy="${my}" rx="${e.rx*sx}" ry="${e.ry*sx}" transform="rotate(${e.angle*180/Math.PI} ${mx} ${my})" fill="#b7e6dc" fill-opacity=".4" stroke="#2f766e"/><circle cx="${mx}" cy="${my}" r="4" fill="#2f766e"/><path d="M${px} ${py-5}l5 5 -5 5 -5 -5Z" fill="white" stroke="#8062af" stroke-width="1.5"/>`;
+  $("motion-chart").innerHTML=`<path d="M18 ${oy}H261 M${ox} 14V151" stroke="#d2dee6" fill="none"/><g fill="#d1dce8" font-size="14"><text x="17" y="${oy+15}">−7″</text><text x="${ox+4}" y="${oy+15}">0</text><text x="233" y="${oy+15}">+2″</text><text x="${ox+4}" y="22">+2″ Bắc</text><text x="209" y="151">Đông →</text></g><path d="M${ox} ${oy}L${px} ${py}" stroke="#c3acff" stroke-dasharray="4 3"/><path d="M${ox} ${oy}L${mx} ${my}" stroke="#96dfd0" stroke-width="2"/><ellipse cx="${mx}" cy="${my}" rx="${e.rx*sx}" ry="${e.ry*sx}" transform="rotate(${e.angle*180/Math.PI} ${mx} ${my})" fill="#b7e6dc" fill-opacity=".15" stroke="#96dfd0"/><circle cx="${mx}" cy="${my}" r="4" fill="#96dfd0"/><path d="M${px} ${py-5}l5 5 -5 5 -5 -5Z" fill="white" stroke="#c3acff" stroke-width="1.5"/>`;
 }
 function gaiaEvidence(s) {
   const m=s.motion,g=state.gaia,loo=m.leave_one_out.filter(v=>v.success);
@@ -388,3 +403,6 @@ getJson("data/manifest.json").then(async manifest=>{
   await syncReviews();
 })
   .catch(error=>{$("load-state").textContent=`Không tải được manifest: ${error.message}. Chạy scripts/serve_demo.py để mở bản demo.`;});
+
+window.addEventListener("resize",render);
+document.fonts.addEventListener("loadingdone",render);

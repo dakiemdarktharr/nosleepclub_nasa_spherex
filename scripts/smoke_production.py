@@ -28,6 +28,13 @@ def main():
         deployed=session.get(URL+'/assets/'+asset,timeout=30);deployed.raise_for_status()
         assert deployed.content.startswith(b'RIFF') and b'WEBP' in deployed.content[:16]
     results['canva_assets']=True
+    fonts=Path(__file__).resolve().parents[1]/'web/assets/fonts'
+    provenance=json.loads((fonts/'provenance.json').read_text())
+    for record in provenance['files']:
+        deployed=session.get(URL+'/assets/fonts/'+record['file'],timeout=30);deployed.raise_for_status()
+        assert deployed.content.startswith(b'wOF2')
+        assert sha256(deployed.content).hexdigest()==record['sha256']
+    results['vietnamese_fonts_match']=True
     response=session.get(URL+'/api/reviews',timeout=30);results['storage_get']=response.status_code
     assert response.status_code==200, response.text
     assert response.json()['storage']=='mongodb'

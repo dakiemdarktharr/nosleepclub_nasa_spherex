@@ -15,3 +15,136 @@ dialog{background:#11161d;color:var(--white);border:1px solid #657180;padding:30
 canvas.side{aspect-ratio:2/1}
 .release-table table{min-width:900px;font-size:11px}.release-table th,.release-table td{padding:15px 10px}
 .patch-map-wrap{max-width:540px;padding:10px 0 30px}.patch-map-wrap p{font-size:11px;color:var(--muted);margin-top:15px}
+
+/* Vietnamese typography and readable information surfaces. */
+:root {
+  font-family: "Be Vietnam Pro", Arial, sans-serif;
+  --muted: #c3ccd7;
+}
+body { font-size: 15px; line-height: 1.7; }
+.inspector { position: static; top: auto; }
+h1, h2, h3 { line-height: 1.25; }
+select, textarea { font-size: 14px; line-height: 1.65; }
+textarea::placeholder { color: #b8c4d2; opacity: 1; }
+svg text { font-family: "Be Vietnam Pro", Arial, sans-serif; }
+.site-header nav { font-size: 14px; }
+.repo-link, .text-button { font-size: 13px; }
+.mission-hero {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  height: auto;
+  min-height: calc(100svh - 84px);
+  max-height: none;
+  overflow: visible;
+}
+.mission-hero:after {
+  background: linear-gradient(90deg, #000 0%, rgba(0,0,0,.94) 32%, rgba(0,0,0,.6) 56%, rgba(0,0,0,.12) 82%),
+              linear-gradient(0deg, #000 0%, transparent 34%);
+}
+.hero-content { padding: 28px 7% 30px; width: 100%; max-width: 980px; }
+.mission-tag { font-size: 13px; letter-spacing: 1.2px; margin-bottom: 18px; }
+.hero-content h1 { font-size: clamp(42px, 4.5vw, 72px); line-height: 1.18; letter-spacing: -.03em; }
+.hero-content p { color: #edf2f8; font-size: 16px; line-height: 1.8; margin-top: 20px; max-width: 490px; }
+.hero-actions { margin-top: 25px; flex-wrap: wrap; }
+.primary-button, .outline-button { font-size: 14px; line-height: 1.5; }
+.outline-button { background: #101419; }
+.art-label {
+  top: 18px; bottom: auto; right: 4.5%; padding: 6px 10px;
+  color: #e4ecf5; background: #101419; border: 1px solid #48515d; font-size: 11px;
+}
+.mission-facts {
+  position: relative; left: auto; right: auto; bottom: auto;
+  margin: 0 7%; padding: 23px 0; align-items: start;
+  background: #000; gap: 22px;
+}
+.mission-facts span { font-size: 12px; letter-spacing: .2px; line-height: 1.6; }
+.mission-facts strong { font-size: 14px; line-height: 1.7; }
+.journey p, .section-step { font-size: 13px; }
+.unconfirmed { color: #ffd3a4; background: #2b2117; border-color: #a47d54; font-size: 12px; }
+.workspace-context label { font-size: 13px; }
+.metrics > div { display: grid; grid-template-rows: 1fr auto; }
+.metrics span { font-size: 12px; line-height: 1.6; }
+.metrics strong { font-size: 16px; line-height: 1.7; }
+.view-switch button { font-size: 13px; line-height: 1.6; }
+.icon-text, .mode-instruction { font-size: 13px; }
+.viewer-top, .viewer-bottom { font-size: 12px; line-height: 1.6; background: #111c29; }
+.overlay-options label, .zoom-label, .wipe-control { font-size: 12px; line-height: 1.6; }
+.display-controls { align-items: flex-start; }
+.dataset-history summary, .coordinate-details summary, .candidate-details summary { font-size: 13px; }
+.target-button strong, .focus-button { font-size: 13px; }
+.selection-detail, .selection-detail strong, .centroid-epoch strong { font-size: 12px; }
+.selection-detail dd { overflow-wrap: anywhere; }
+.candidate-list, .candidate-button { font-size: 13px; }
+.storage-badge { font-size: 11px; color: #d9fff3; background: #143c32; border-color: #5e9d8a; }
+.review-actions .primary-button { font-size: 13px; }
+.review-actions .text-button, #clear-review, .review-form #review-feedback { font-size: 12px; }
+.snr-summary table, .snr-summary th, .motion-chart p, .eyebrow, .motion-summary #motion-components { font-size: 12px; line-height: 1.7; }
+.motion-summary h2 { line-height: 1.6; }
+.predicted-key { color: #c3acff; }
+.release-facts span, .release-status, .release-actions, .benchmark-toolbar label { font-size: 13px; }
+.benchmark-toolbar select, .technical-section > summary { font-size: 14px; }
+.evidence-table { background: #101419; border: 1px solid #343c47; }
+.evidence-table table, .gaia-findings table, .release-table table { font-size: 13px; }
+.evidence-table th { background: #202833; color: #eef3fa; font-weight: 600; line-height: 1.7; }
+.evidence-table tbody tr:nth-child(even) { background: #171e27; }
+.evidence-table td { color: #edf2f8; line-height: 1.8; }
+.reference-legend, .reference-detail, .reference-detail strong, .gaia-map-column > label, #gaia-counts { font-size: 12px; }
+.reference-marker text, .map-target-label { paint-order: stroke; stroke: #050a11; stroke-width: 1.7px; font-weight: 600; }
+.reference-marker text { opacity: 0; }
+.reference-marker.selected text, .reference-marker:hover text, .reference-marker:focus text { opacity: 1; }
+.patch-map-wrap p, .uncertainty-budget span { font-size: 12px; }
+.next-steps p, .next-steps li span, footer, footer .text-button, .guide-layout figcaption { font-size: 13px; }
+dialog p, dialog li { font-size: 14px; line-height: 1.85; }
+dialog .evidence-table table { font-size: 13px; }
+@media (max-width: 760px) {
+  .mission-hero { min-height: calc(100svh - 72px); }
+  .hero-content { padding: 62px 6% 32px; }
+  .hero-content h1 { font-size: clamp(36px, 8.3vw, 58px); line-height: 1.24; letter-spacing: -.025em; }
+  .hero-content p { font-size: 15px; line-height: 1.85; }
+  .mission-tag { font-size: 12px; }
+  .hero-art { height: 100%; opacity: .8; }
+  .mission-hero:after { background: linear-gradient(90deg, rgba(0,0,0,.97), rgba(0,0,0,.8) 62%, rgba(0,0,0,.6)), linear-gradient(0deg, #000, transparent); }
+  .hero-actions { gap: 12px; }
+  .hero-actions .primary-button, .hero-actions .outline-button { font-size: 13px; min-height: 48px; padding: 13px 15px; }
+  .art-label { top: 12px; right: 6%; font-size: 10px; }
+  .mission-facts { margin: 0 6%; gap: 22px 16px; }
+  .mission-facts span { font-size: 12px; }
+  .mission-facts strong { font-size: 13px; }
+  .journey h2 { font-size: 15px; line-height: 1.5; }
+  .step-number, .section-step { font-size: 12px; }
+  .section-heading h2 { line-height: 1.3; }
+  .section-heading > .text-button { font-size: 12px; white-space: normal; }
+  .workspace-context label { font-size: 12px; white-space: nowrap; }
+  .workspace-context select { min-width: 0; }
+  .workspace-context .unconfirmed, .workspace-context .text-button { font-size: 12px; }
+  .workspace-context .text-button { margin-left: 0; }
+  .observation-head .text-button { font-size: 12px; }
+  .metrics { gap: 10px; }
+  .metrics span { font-size: 12px; }
+  .metrics strong { font-size: 13px; }
+  .toolbar { flex-wrap: wrap; }
+  .view-switch { flex: 1 1 100%; }
+  .view-switch button { font-size: 12px; padding: 10px 7px; }
+  .icon-text { margin-left: auto; font-size: 12px; }
+  .mode-instruction { font-size: 13px; line-height: 1.8; }
+  .viewer-top, .viewer-bottom, .overlay-options label { font-size: 12px; }
+  .scene-button strong, .scene-button { font-size: 12px; line-height: 1.7; }
+  .scene-list { grid-template-columns: 1fr; }
+  .review-actions .primary-button { font-size: 13px; }
+  .review-actions .text-button, .advanced-motion > summary { font-size: 12px; }
+  .validation-story > p { font-size: 14px; }
+  .release-facts strong { font-size: 28px; }
+  .release-facts span { font-size: 12px; }
+  .release-status, .release-actions, .benchmark-toolbar select, .technical-section > summary { font-size: 13px; }
+  .gaia-findings table, .evidence-table table, .gaia-map-column > select { font-size: 12px; }
+  .reference-detail, #gaia-counts { font-size: 12px; }
+  .next-steps strong { font-size: 15px; }
+  .next-steps p, .next-steps li span { font-size: 13px; }
+  footer, footer .text-button { font-size: 12px; }
+  dialog p, dialog li { font-size: 14px; }
+  .guide-layout figcaption { font-size: 12px; line-height: 1.7; }
+}
+@media (min-width: 761px) and (min-height: 1000px) {
+  .inspector { position: sticky; top: 108px; }
+}

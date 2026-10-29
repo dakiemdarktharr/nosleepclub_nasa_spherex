@@ -67,3 +67,20 @@ $("release-evidence").addEventListener("click",()=>{
   $("download-fits").href=state.scene?.fits||"data/manifest.json";$("evidence-dialog").showModal();
 });
 setupRelease();
+
+function sizeMapLabels(map) {
+  const width=map.getBoundingClientRect().width;
+  if(width<=0)return;
+  const scale=192/width;
+  map.querySelectorAll("svg text").forEach(text=>{
+    text.style.fontSize=`${12*scale}px`;
+    text.style.stroke="#050a11";
+    text.style.strokeWidth=`${3*scale}px`;
+    text.style.paintOrder="stroke";
+  });
+}
+const mapLabelSizing=new ResizeObserver(entries=>entries.forEach(entry=>sizeMapLabels(entry.target)));
+document.querySelectorAll(".reference-map").forEach(map=>{
+  mapLabelSizing.observe(map);
+  new MutationObserver(()=>sizeMapLabels(map)).observe(map,{childList:true,subtree:true});
+});

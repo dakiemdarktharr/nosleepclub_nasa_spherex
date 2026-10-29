@@ -2,7 +2,7 @@
 
 Tham khảo trực tiếp NASA.gov và SpaceX.com ngày 2026-10-30: hero dùng ảnh lớn, chữ trắng có tương phản, điều hướng ngắn và hành động rõ. Không sao chép logo, ảnh, bài viết hay mã nguồn của hai trang.
 
-Token: đen vũ trụ `#000000`, nền công cụ `#101419`, bề mặt `#191f27`, trắng `#f6f7f8`, xám đọc được `#b4bdc8`, cam đánh dấu `#ffb36a`. Font Arial cho tiếng Việt đầy đủ, tiêu đề Arial Black/Arial đậm lớn; tabular numbers cho phép đo, không dùng monospace trang trí.
+Token: đen vũ trụ `#000000`, nền công cụ `#101419`, bề mặt `#191f27`, trắng `#f6f7f8`, xám đọc được `#c3ccd7`, cam đánh dấu `#ffb36a`. Từ giao diện 0.5.4 dùng Be Vietnam Pro tự host, gồm Vietnamese/Latin và năm độ đậm; Arial làm fallback. Dùng tabular numbers cho phép đo, không dùng monospace trang trí. Nhãn trên ảnh có nền riêng; thông tin hero nằm trong luồng bố cục để chữ xuống dòng không chồng dải facts.
 
 ```text
 Điều hướng: Nhiệm vụ | Quan sát | Kiểm chứng | Ghi nhận
