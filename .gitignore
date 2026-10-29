@@ -1,0 +1,53 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# JavaScript / web build outputs
+node_modules/
+.next/
+.nuxt/
+.output/
+.vercel/
+dist/
+build/
+out/
+coverage/
+*.tsbuildinfo
+
+# Python / notebooks
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# Downloaded astronomy data and generated products
+data/raw/
+data/processed/
+data/cache/
+*.fits
+*.fits.gz
+*.fit
+*.fts
+*.h5
+*.hdf5
+
+# Local tools and OS files
+.codex/
+.agents/
+.aws/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+tmp/
+temp/
