@@ -24,33 +24,40 @@
     <div id="load-state" role="status">Đang tải bộ ảnh SPHEREx thật…</div>
     <div class="intro">
       <div><p class="location">Hydra / SPHEREx QR2</p><h1>Theo dấu <span>WISE 0855</span></h1><p class="intro-copy">Cùng một vùng trời. Quan sát điều gì thay đổi giữa hai thời điểm.</p></div>
-      <div class="data-status"><span class="data-stamp">FITS thật từ NASA/IPAC IRSA</span><span class="unconfirmed">Chưa xác nhận chuyển động của mục tiêu</span></div>
+      <div class="data-status"><span class="data-stamp">FITS thật từ NASA/IPAC IRSA</span><span class="unconfirmed" id="science-status">Dấu hiệu chuyển động · cần xác minh thêm</span></div>
     </div>
+
+    <section class="motion-panel" id="motion-panel" aria-labelledby="motion-heading" hidden>
+      <div class="motion-summary"><p class="eyebrow" id="configuration-label">Cộng ảnh theo epoch</p><h2 id="motion-heading">Dịch chuyển đo được</h2><p class="motion-value" id="motion-value">—</p><p id="motion-components"></p><p class="motion-qualification">Sai số 1σ theo mô hình có điều kiện; chưa bao phủ mọi sai số hệ thống.</p></div>
+      <div class="snr-summary"><h3>Tín hiệu rõ hơn sau khi cộng?</h3><table><thead><tr><th>Epoch</th><th>Ảnh đơn tốt nhất</th><th>Ảnh cộng</th></tr></thead><tbody id="snr-rows"></tbody></table><p id="snr-note"></p><p class="motion-qualification">S/N khẩu độ tại vị trí đã fit; có truyền covariance do nội suy. Không phải độ tin cậy phát hiện mù.</p></div>
+      <div class="motion-chart"><svg id="motion-chart" viewBox="0 0 280 175" role="img" aria-label="Vector dịch chuyển đo được và dự báo ngoài, với ellipse sai số 68 phần trăm theo mô hình"></svg><p><span class="measured-key">●</span> Đo được, ellipse 68% <span class="predicted-key">◇</span> Dự báo ngoài</p></div>
+      <p class="motion-limit" id="motion-limit"></p>
+    </section>
 
     <div class="workspace-grid">
       <section class="observation" aria-label="So sánh ảnh thiên văn">
         <div class="observation-head"><div><h2>Vùng quan sát</h2><span>Hướng bắc ở trên · hướng đông bên trái</span></div><button id="download-manifest" class="text-button" disabled>Tải bằng chứng <span aria-hidden="true">↓</span></button></div>
         <div class="metrics" aria-live="polite">
           <div><span>Khoảng thời gian</span><strong id="baseline">—</strong></div>
-          <div><span>Bước sóng tại mục tiêu</span><strong id="wavelength">—</strong></div>
-          <div><span>RMS sao nền sau căn chỉnh</span><strong id="alignment">—</strong></div>
+          <div><span id="wavelength-label">Bước sóng tại mục tiêu</span><strong id="wavelength">—</strong></div>
+          <div><span id="alignment-label">RMS sao nền sau căn chỉnh</span><strong id="alignment">—</strong></div>
         </div>
         <div class="toolbar"><div class="view-switch" role="group" aria-label="Chế độ xem"><button data-mode="wipe" aria-pressed="true">Trước / sau</button><button data-mode="side" aria-pressed="false">Song song</button><button data-mode="difference" aria-pressed="false">Sai khác</button><button data-mode="blink" aria-pressed="false">Nhấp nháy</button></div><button id="reset-view" class="icon-text" title="Đặt lại vùng xem">↺ <span>Đặt lại</span></button></div>
         <div class="viewer-shell" id="viewer-shell">
           <div class="viewer-top"><span id="date-before">Trước</span><span class="viewer-badge" id="mode-badge">Kéo vạch để so sánh</span><span id="date-after">Sau</span></div>
           <canvas id="sky" width="1024" height="1024" tabindex="0" aria-label="Ảnh SPHEREx trước và sau đã căn chỉnh. Dùng danh sách residual bên phải để chọn vùng; dùng các nút và thanh trượt bên dưới để điều khiển."></canvas>
-          <div class="viewer-bottom"><span id="pixel-readout">Di chuột trên ảnh để xem giá trị</span><span>6,15″ / pixel <span class="scale-bar" aria-hidden="true"></span> 1′</span></div>
+          <div class="viewer-bottom"><span id="pixel-readout">Di chuột trên ảnh để xem giá trị</span><span id="fov-readout">6,15″ / pixel gốc · khung 6,56′</span></div>
         </div>
         <div class="wipe-control" id="wipe-control"><label for="wipe">Trước</label><input id="wipe" type="range" min="0" max="100" value="50" aria-label="Vị trí vạch so sánh"><span>Sau</span></div>
-        <div class="display-controls"><div class="overlay-options"><label><input id="show-prior" type="checkbox" checked><span class="legend-prior"></span>Vị trí dự kiến</label><label><input id="show-residuals" type="checkbox" checked><span class="legend-residual"></span>Residual cần kiểm tra</label></div><label class="zoom-label" for="zoom">Zoom <input id="zoom" type="range" min="1" max="4" value="1" step="0.25"><output id="zoom-value" for="zoom">1×</output></label></div>
+        <div class="display-controls"><div class="overlay-options"><label id="motion-overlay-label"><input id="show-motion" type="checkbox" checked><span class="legend-measured"></span>Vị trí đo + sai số</label><label><input id="show-prior" type="checkbox"><span class="legend-prior"></span>Vị trí dự kiến</label><label><input id="show-residuals" type="checkbox" checked><span class="legend-residual"></span>Residual cần kiểm tra</label></div><label class="zoom-label" for="zoom">Zoom <input id="zoom" type="range" min="1" max="4" value="1" step="0.25"><output id="zoom-value" for="zoom">1×</output></label></div>
         <p id="view-note" class="view-note">Hai ảnh dùng cùng mức kéo sáng. Vòng nét đứt là dự báo từ astrometry cũ, không phải phát hiện của model.</p>
-        <div class="scene-heading"><h3>Ba cặp ảnh, ba phép đối chiếu</h3><span>Chọn dải phổ để kiểm tra lại</span></div>
+        <div class="scene-heading"><h3>Cấu hình cộng ảnh & ảnh đơn đối chiếu</h3><span>Giữ cả cấu hình phổ chặt để kiểm tra</span></div>
         <div id="scene-list" class="scene-list" aria-label="Các cặp ảnh"></div>
       </section>
 
       <aside class="inspector" aria-label="Kiểm tra và nhận xét">
         <div class="inspector-header"><h2>Kiểm tra vùng chọn</h2><span class="subtle-label">Con người quyết định</span></div>
-        <button id="select-target" class="target-button" aria-pressed="true"><span class="target-symbol" aria-hidden="true">⊕</span><span><strong>WISE 0855−0714</strong><small>Vùng vị trí dự kiến</small></span><span aria-hidden="true">⌖</span></button>
+        <button id="select-target" class="target-button" aria-pressed="true"><span class="target-symbol" aria-hidden="true">⊕</span><span><strong>WISE 0855−0714</strong><small id="target-subtitle">Centroid fit độc lập từng epoch</small></span><span aria-hidden="true">⌖</span></button>
         <div id="selection-detail" class="selection-detail"></div>
         <button id="focus-selection" class="focus-button">Phóng vào vùng chọn</button>
         <div class="residual-heading"><h3>Residual tự động</h3><span id="candidate-count">—</span></div>
@@ -66,7 +73,7 @@
       </aside>
     </div>
 
-    <section class="next-steps" id="next-steps" aria-labelledby="next-heading"><div class="next-intro"><p class="location">Sau khi duyệt demo</p><h2 id="next-heading">Từ một dấu hiệu<br> đến bằng chứng tốt hơn.</h2><p>Bản hiện tại kiểm tra dữ liệu và luồng review. Độ tin cậy cần được nâng dần qua các bước dưới đây.</p></div><ol><li><strong>Cộng ảnh trong từng epoch</strong><span>Chọn phổ tương thích và tăng tín hiệu của WISE 0855; giữ từng ảnh thành phần để kiểm tra.</span></li><li><strong>Đo vị trí độc lập</strong><span>Fit PSF và centroid kèm sai số, đưa parallax vào mô hình và kiểm tra với sao nền.</span></li><li><strong>Thêm vision model</strong><span>Dùng các ứng viên đã duyệt để huấn luyện bộ xếp hạng thật/nhiễu và so với baseline.</span></li></ol></section>
+    <section class="next-steps" id="next-steps" aria-labelledby="next-heading"><div class="next-intro"><p class="location">Milestone tiếp theo</p><h2 id="next-heading">Kiểm soát sai số<br> trước khi tin chuyển động.</h2><p>Đã cộng ảnh và đo centroid độc lập. Cần khóa lại sai số hệ thống trước khi đưa ứng viên cho vision model.</p></div><ol><li><strong>Mở rộng sao tham chiếu & đối chiếu Gaia</strong><span>Dùng cutout rộng hơn, kiểm tra chuyển động của sao nền và đổi tập sao căn chỉnh. Đạt khi kết quả ổn định trong ngân sách sai số.</span></li><li><strong>Kiểm tra phổ & thêm epoch thứ ba</strong><span>Đánh giá toàn bộ đáp ứng phổ, injection ở nhiều vị trí/độ sáng; thêm thời điểm để tách proper motion và parallax.</span></li><li><strong>Huấn luyện bộ xếp hạng thật / nhiễu</strong><span>Thu nhãn review và benchmark hồi phục nguồn trước; so vision model với baseline, giữ người duyệt quyết định.</span></li></ol></section>
   </main>
   <footer><span>NoSleepClub · NASA Space Apps 2026</span><span>Exploratory science demo · Dữ liệu SPHEREx, hiển thị do NoSleepClub xử lý</span></footer>
 

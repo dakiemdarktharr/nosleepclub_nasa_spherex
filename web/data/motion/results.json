@@ -1,0 +1,3066 @@
+{
+  "analysis_version": "0.2.0",
+  "analysis_sha256": "50369300355b5b8af47bcfdb7d6a430731ade7a5c867912b3819b2680d6b4523",
+  "calibrations": {
+    "spectral_wcs": {
+      "url": "https://nasa-irsa-spherex.s3.us-east-1.amazonaws.com/qr2/spectral_wcs/cal-wcs-v4-2025-254/6/spectral_wcs_D6_spx_cal-wcs-v4-2025-254.fits",
+      "path": "data/raw/wise0855/calibration/spectral_wcs_D6_spx_cal-wcs-v4-2025-254.fits",
+      "sha256": "8872df333578ac80c308c7077bb86e4d3d2a639ee53c75f0f2fe94ee04ab6a96",
+      "bytes": 33312960,
+      "selection": "pinned official D6 calibration selected on 2026-10-30"
+    },
+    "epsf": {
+      "url": "https://nasa-irsa-spherex.s3.us-east-1.amazonaws.com/qr3/epsf/cal-epsf-v1-2026-191/6/epsf_D6_spx_cal-epsf-v1-2026-191.fits",
+      "path": "data/raw/wise0855/calibration/epsf_D6_spx_cal-epsf-v1-2026-191.fits",
+      "sha256": "52f85faeb93d67ed2020b68a628fc947c1f0b78cbf9282ca193ec6d588ac1a36",
+      "bytes": 7943040,
+      "selection": "pinned official D6 calibration selected on 2026-10-30"
+    }
+  },
+  "configurations": [
+    {
+      "id": "strict",
+      "tolerance_bandwidth": 0.2,
+      "wavelength_selection_um": [
+        4.55,
+        4.94
+      ],
+      "frame_count_per_epoch": 2,
+      "common_spectral_weights": [
+        0.5184929859066644,
+        0.4815070140933357
+      ],
+      "spectral_pairs": [
+        {
+          "before": {
+            "obs_id": "2025W46_1A_0090_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits",
+            "mjd": 60989.366268,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "feea63d0786667acb978b47c6b78cba35f0ab9df1fd3891985444d1890af48bd",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_1B_0507_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.760288,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "f96e48cbc53465ecb6089ca9cec9a8fa0b15cf5416fca59a59cc5d4859136578",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.572410998278066,
+          "after_um": 4.5775490651669095,
+          "mismatch_bandwidth": 0.14075209875114592,
+          "weight": 0.5184929859066644
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_1A_0090_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits",
+            "mjd": 60989.367761,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "29d52efb7c26e037e78e7814755672210b5a6ada196c45ad950df7930f73ec86",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_1B_0634_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61153.436457,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "21795106fc179df6fb36bb0439c1d50fe3511d4f3dde082ccb52cb8f9264f993",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.606236239635436,
+          "after_um": 4.610905931916208,
+          "mismatch_bandwidth": 0.12758196071413166,
+          "weight": 0.4815070140933357
+        }
+      ],
+      "target_before": {
+        "x": 31.81572852996101,
+        "y": 31.364778147014754,
+        "ra_deg": 133.7598310258648,
+        "dec_deg": -7.242380771643363,
+        "covariance_px2": [
+          [
+            0.009898169335561183,
+            0.00013882364808847107
+          ],
+          [
+            0.00013882364808847074,
+            0.017300391705538775
+          ]
+        ],
+        "sigma_x_arcsec": 0.6118606946799761,
+        "sigma_y_arcsec": 0.8089153634854146,
+        "effective_mjd": 60989.36695324151,
+        "reduced_chi2": 1.094729215754358,
+        "success": true,
+        "at_boundary": false,
+        "per_frame": [
+          {
+            "obs_id": "2025W46_1A_0090_2",
+            "mjd": 60989.366268368,
+            "amplitude": 0.8415190208768233,
+            "amplitude_error": 0.14101641426463252,
+            "snr": 5.967525307356221,
+            "epsf_zone": 303
+          },
+          {
+            "obs_id": "2025W46_1A_0090_3",
+            "mjd": 60989.367760625,
+            "amplitude": 0.7391656791141396,
+            "amplitude_error": 0.13448761007384535,
+            "snr": 5.496161904492715,
+            "epsf_zone": 282
+          }
+        ]
+      },
+      "target_after": {
+        "x": 32.31600374861776,
+        "y": 31.5359759536485,
+        "ra_deg": 133.75896951657762,
+        "dec_deg": -7.242088306891367,
+        "covariance_px2": [
+          [
+            0.011612270905507512,
+            0.00014722126594696525
+          ],
+          [
+            0.00014722126594696557,
+            0.016354245943998678
+          ]
+        ],
+        "sigma_x_arcsec": 0.6627255211047466,
+        "sigma_y_arcsec": 0.7864848804757089,
+        "effective_mjd": 61153.06199027182,
+        "reduced_chi2": 1.0970795986173763,
+        "success": true,
+        "at_boundary": false,
+        "per_frame": [
+          {
+            "obs_id": "2026W17_1B_0507_3",
+            "mjd": 61152.76028809,
+            "amplitude": 0.7264777341689974,
+            "amplitude_error": 0.11833176284647128,
+            "snr": 6.139329937233851,
+            "epsf_zone": 312
+          },
+          {
+            "obs_id": "2026W17_1B_0634_1",
+            "mjd": 61153.436457037,
+            "amplitude": 0.6272554934434916,
+            "amplitude_error": 0.11382585310420824,
+            "snr": 5.510659277635596,
+            "epsf_zone": 291
+          }
+        ]
+      },
+      "bootstrap_before": {
+        "draws": 128,
+        "seed": 20261030,
+        "covariance_px2": [
+          [
+            0.00917451112593722,
+            -4.2160552811978156e-05
+          ],
+          [
+            -4.2160552811978156e-05,
+            0.017255128236486728
+          ]
+        ],
+        "formal_covariance_px2": [
+          [
+            0.009733917346392557,
+            0.000795578767140678
+          ],
+          [
+            0.0007955787671406777,
+            0.014674382190619211
+          ]
+        ],
+        "mean_bias_px": [
+          -0.0183235715677057,
+          0.010014161782198272
+        ],
+        "boundary_fraction": 0.0,
+        "note": "Conditional parametric native-pixel noise check; does not simulate calibration or ePSF systematics."
+      },
+      "bootstrap_after": {
+        "draws": 128,
+        "seed": 20261031,
+        "covariance_px2": [
+          [
+            0.009848215900875949,
+            -0.0007966137217362924
+          ],
+          [
+            -0.0007966137217362924,
+            0.01584925914844175
+          ]
+        ],
+        "formal_covariance_px2": [
+          [
+            0.011497585129523001,
+            0.0003615723121845367
+          ],
+          [
+            0.000361572312184537,
+            0.015953617612989725
+          ]
+        ],
+        "mean_bias_px": [
+          -0.0059655224349981495,
+          0.015078837231683906
+        ],
+        "boundary_fraction": 0.0,
+        "note": "Conditional parametric native-pixel noise check; does not simulate calibration or ePSF systematics."
+      },
+      "reference_swap_east_north_arcsec": null,
+      "reference_swap_change_arcsec": null,
+      "reference_swap_unavailable_reason": "Too few registration sources: 2025W46_1A_0090_3",
+      "training_reference_positions": [
+        [
+          50.430874283281995,
+          42.31164818998446
+        ],
+        [
+          10.236752157813202,
+          22.349141858473157
+        ],
+        [
+          38.941002752949885,
+          13.938123521667292
+        ]
+      ],
+      "heldout_controls": [
+        {
+          "id": "H1",
+          "anchor": [
+            35.09091687202801,
+            15.654305739521215
+          ],
+          "before": {
+            "x": 34.96750276697927,
+            "y": 15.74000752715794,
+            "ra_deg": 133.75440308860283,
+            "dec_deg": -7.269073047400945,
+            "covariance_px2": [
+              [
+                0.0015139508024504616,
+                -2.9484700334429135e-05
+              ],
+              [
+                -2.9484700334429088e-05,
+                0.0013932342956833362
+              ]
+            ],
+            "sigma_x_arcsec": 0.23929355241143166,
+            "sigma_y_arcsec": 0.2295552311503334,
+            "effective_mjd": 60989.36705014298,
+            "reduced_chi2": 1.555403589847261,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2025W46_1A_0090_2",
+                "mjd": 60989.366268368,
+                "amplitude": 2.8113536002849173,
+                "amplitude_error": 0.21265370534525407,
+                "snr": 13.22033677109243,
+                "epsf_zone": 303
+              },
+              {
+                "obs_id": "2025W46_1A_0090_3",
+                "mjd": 60989.367760625,
+                "amplitude": 2.994137103150202,
+                "amplitude_error": 0.21590605752612888,
+                "snr": 13.867777205777807,
+                "epsf_zone": 282
+              }
+            ]
+          },
+          "after": {
+            "x": 35.01012782299149,
+            "y": 15.83951500085764,
+            "ra_deg": 133.7543296831001,
+            "dec_deg": -7.268903054538746,
+            "covariance_px2": [
+              [
+                0.0012686907757013272,
+                2.3853469217936163e-05
+              ],
+              [
+                2.385346921793618e-05,
+                0.00036757886926481564
+              ]
+            ],
+            "sigma_x_arcsec": 0.21905491746126918,
+            "sigma_y_arcsec": 0.11790993080639346,
+            "effective_mjd": 61153.08410171191,
+            "reduced_chi2": 1.9340153158298452,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2026W17_1B_0507_3",
+                "mjd": 61152.76028809,
+                "amplitude": 2.9914486809893974,
+                "amplitude_error": 0.22824408931696477,
+                "snr": 13.106357715292875,
+                "epsf_zone": 312
+              },
+              {
+                "obs_id": "2026W17_1B_0634_1",
+                "mjd": 61153.436457037,
+                "amplitude": 2.9218222160253515,
+                "amplitude_error": 0.23254908352229064,
+                "snr": 12.564324794448329,
+                "epsf_zone": 291
+              }
+            ]
+          },
+          "delta_px": [
+            0.042625056012219886,
+            0.09950747369969903
+          ]
+        },
+        {
+          "id": "H2",
+          "anchor": [
+            55.50262571802673,
+            47.15482301654275
+          ],
+          "before": {
+            "x": 55.39997191803403,
+            "y": 47.272179445515555,
+            "ra_deg": 133.7192197363508,
+            "dec_deg": -7.215203788373428,
+            "covariance_px2": [
+              [
+                0.003786678771682937,
+                -0.0010078325788698392
+              ],
+              [
+                -0.001007832578869838,
+                0.004927807044898627
+              ]
+            ],
+            "sigma_x_arcsec": 0.3784463737994828,
+            "sigma_y_arcsec": 0.43171979564953744,
+            "effective_mjd": 60989.366746106694,
+            "reduced_chi2": 3.077796202333612,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2025W46_1A_0090_2",
+                "mjd": 60989.366268368,
+                "amplitude": 2.1261902954027234,
+                "amplitude_error": 0.2587701700357423,
+                "snr": 8.216520069175848,
+                "epsf_zone": 303
+              },
+              {
+                "obs_id": "2025W46_1A_0090_3",
+                "mjd": 60989.367760625,
+                "amplitude": 1.8541186776646243,
+                "amplitude_error": 0.32883977414176524,
+                "snr": 5.6383650137933135,
+                "epsf_zone": 282
+              }
+            ]
+          },
+          "after": {
+            "x": 55.478560924242586,
+            "y": 47.306137048910266,
+            "ra_deg": 133.7190844139228,
+            "dec_deg": -7.215145765363757,
+            "covariance_px2": [
+              [
+                0.00495637384343767,
+                0.0009536939197370215
+              ],
+              [
+                0.0009536939197370221,
+                0.004274493724177111
+              ]
+            ],
+            "sigma_x_arcsec": 0.4329693403619029,
+            "sigma_y_arcsec": 0.4020846165705533,
+            "effective_mjd": 61152.981859899286,
+            "reduced_chi2": 2.591436523034286,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2026W17_1B_0507_3",
+                "mjd": 61152.76028809,
+                "amplitude": 1.9186573182922617,
+                "amplitude_error": 0.2026108985433438,
+                "snr": 9.469664919736834,
+                "epsf_zone": 312
+              },
+              {
+                "obs_id": "2026W17_1B_0634_1",
+                "mjd": 61153.436457037,
+                "amplitude": 1.7289173295157554,
+                "amplitude_error": 0.26151446269200984,
+                "snr": 6.611172903090762,
+                "epsf_zone": 291
+              }
+            ]
+          },
+          "delta_px": [
+            0.0785890062085528,
+            0.0339576033947111
+          ]
+        },
+        {
+          "id": "H3",
+          "anchor": [
+            32.04439030421656,
+            53.68522829199187
+          ],
+          "before": {
+            "x": 31.912784944332294,
+            "y": 53.60147094489707,
+            "ra_deg": 133.7596639475682,
+            "dec_deg": -7.20439309335304,
+            "covariance_px2": [
+              [
+                0.004307620408979494,
+                0.0007470097531723964
+              ],
+              [
+                0.0007470097531723956,
+                0.004191313539493944
+              ]
+            ],
+            "sigma_x_arcsec": 0.40363965726700707,
+            "sigma_y_arcsec": 0.3981531820135432,
+            "effective_mjd": 60989.36665558137,
+            "reduced_chi2": 1.0677981326023305,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2025W46_1A_0090_2",
+                "mjd": 60989.366268368,
+                "amplitude": 1.3846914520078628,
+                "amplitude_error": 0.15226277428715562,
+                "snr": 9.094090518779355,
+                "epsf_zone": 303
+              },
+              {
+                "obs_id": "2025W46_1A_0090_3",
+                "mjd": 60989.367760625,
+                "amplitude": 0.7621825563655631,
+                "amplitude_error": 0.14158403170077302,
+                "snr": 5.383252243984529,
+                "epsf_zone": 282
+              }
+            ]
+          },
+          "after": {
+            "x": 31.93285004036371,
+            "y": 53.652606719298824,
+            "ra_deg": 133.75962939707344,
+            "dec_deg": -7.204305736388519,
+            "covariance_px2": [
+              [
+                0.0035542562058016648,
+                -0.0005911709325365668
+              ],
+              [
+                -0.0005911709325365668,
+                0.0076347745142138915
+              ]
+            ],
+            "sigma_x_arcsec": 0.36664813560678783,
+            "sigma_y_arcsec": 0.537369760094346,
+            "effective_mjd": 61153.083713280444,
+            "reduced_chi2": 1.0559236415052,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2026W17_1B_0507_3",
+                "mjd": 61152.76028809,
+                "amplitude": 1.0788142887110306,
+                "amplitude_error": 0.12592558671911883,
+                "snr": 8.567077722793234,
+                "epsf_zone": 312
+              },
+              {
+                "obs_id": "2026W17_1B_0634_1",
+                "mjd": 61153.436457037,
+                "amplitude": 1.0935798530255756,
+                "amplitude_error": 0.13330932831986986,
+                "snr": 8.203325804789737,
+                "epsf_zone": 291
+              }
+            ]
+          },
+          "delta_px": [
+            0.020065096031416374,
+            0.05113577440175021
+          ]
+        }
+      ],
+      "holdout_rms_arcsec": 0.5274374595234711,
+      "registration_covariance_px2": [
+        [
+          0.0013041784738448208,
+          0.00013529605284037682
+        ],
+        [
+          0.00013529605284037674,
+          0.0012961179878293863
+        ]
+      ],
+      "holdout_covariance_px2": [
+        [
+          0.0027985784585475987,
+          0.0026454167227035513
+        ],
+        [
+          0.0026454167227035513,
+          0.004556574524691827
+        ]
+      ],
+      "east_arcsec": -3.076692594739012,
+      "north_arcsec": 1.052866510797537,
+      "displacement_arcsec": 3.251855656710619,
+      "radial_error_arcsec": 1.0463790289825696,
+      "covariance_arcsec2": [
+        [
+          0.9687551500932331,
+          -0.11599244271411552
+        ],
+        [
+          -0.11599244271411552,
+          1.4942659950544641
+        ]
+      ],
+      "mahalanobis_distance": 3.1761338873137044,
+      "predicted_motion": {
+        "east_arcsec": -4.475004615041798,
+        "north_arcsec": 0.5307062633655585,
+        "proper_motion_component_arcsec": [
+          -3.61227104302339,
+          0.3137208101881356
+        ],
+        "parallax_component_arcsec": [
+          -0.8627335720184082,
+          0.21698545317742288
+        ],
+        "note": "External Luhman 2014 prediction plus builtin Earth ephemeris; not fitted to these two epochs."
+      },
+      "coadd_snr_before": {
+        "snr": 2.596305315036955,
+        "signal": 0.4375402994093053,
+        "noise": 0.16852420895000844,
+        "coverage": 0.9473684210526315,
+        "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+      },
+      "coadd_snr_after": {
+        "snr": 4.568825541681765,
+        "signal": 0.714017056988864,
+        "noise": 0.15628021916679213,
+        "coverage": 1.0,
+        "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+      },
+      "best_single_snr_before": 2.55183766900013,
+      "best_single_snr_after": 4.662237371304844,
+      "single_frame_aperture_snr_before": [
+        {
+          "obs_id": "2025W46_1A_0090_2",
+          "snr": 2.55183766900013,
+          "signal": 0.6053001714358491,
+          "noise": 0.237201675791948,
+          "coverage": 0.9473684210526315,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_1A_0090_3",
+          "snr": 1.0736132892275374,
+          "signal": 0.25689429755168347,
+          "noise": 0.23928010218327161,
+          "coverage": 0.9473684210526315,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        }
+      ],
+      "single_frame_aperture_snr_after": [
+        {
+          "obs_id": "2026W17_1B_0507_3",
+          "snr": 4.662237371304844,
+          "signal": 1.0332051283968453,
+          "noise": 0.22161143805247244,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_1B_0634_1",
+          "snr": 1.683300926805325,
+          "signal": 0.3703112097921422,
+          "noise": 0.21999109243939066,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        }
+      ],
+      "frame_registration": [
+        {
+          "obs_id": "2025W46_1A_0090_2",
+          "offset_px": [
+            0.1478190860047017,
+            0.05088405105903032
+          ],
+          "covariance_px2": [
+            [
+              0.000601784471359375,
+              -6.634958260477575e-05
+            ],
+            [
+              -6.634958260477588e-05,
+              0.000828166049362122
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_1A_0090_3",
+          "offset_px": [
+            0.12947624813321548,
+            -0.0101928298197045
+          ],
+          "covariance_px2": [
+            [
+              0.0006330536997996683,
+              1.4675639135527109e-05
+            ],
+            [
+              1.467563913552705e-05,
+              0.0005792346348686086
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_1B_0507_3",
+          "offset_px": [
+            0.12125806981434015,
+            0.005613112279561688
+          ],
+          "covariance_px2": [
+            [
+              0.0007155943070396639,
+              0.00021659145997008052
+            ],
+            [
+              0.00021659145997008058,
+              0.0006250766766833273
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_1B_0634_1",
+          "offset_px": [
+            0.01870760507375195,
+            -0.06612296314467206
+          ],
+          "covariance_px2": [
+            [
+              0.0006579244694909345,
+              0.00010567458917992176
+            ],
+            [
+              0.00010567458917992173,
+              0.0005597586147447144
+            ]
+          ]
+        }
+      ],
+      "real_background_injection_controls": [
+        {
+          "kind": "stationary",
+          "injected_delta_px": [
+            0.0,
+            0.0
+          ],
+          "recovered_delta_px": [
+            0.007960298113424358,
+            -0.09571435532350137
+          ],
+          "error_mahalanobis": 0.8733326333347625,
+          "covariance_px2": [
+            [
+              0.013430562046879486,
+              0.000532662374931305
+            ],
+            [
+              0.0005326623749313052,
+              0.012187184784744358
+            ]
+          ],
+          "amplitude_per_frame": 0.8,
+          "note": "Synthetic control on real off-target background; fixed calibration; no added source shot noise; not a completeness benchmark."
+        },
+        {
+          "kind": "moving",
+          "injected_delta_px": [
+            0.6,
+            0.05
+          ],
+          "recovered_delta_px": [
+            0.6895343108066321,
+            -0.02457442354974404
+          ],
+          "error_mahalanobis": 1.095017772985608,
+          "covariance_px2": [
+            [
+              0.01090989032940934,
+              -0.0003844504973906466
+            ],
+            [
+              -0.0003844504973906465,
+              0.010999814799646648
+            ]
+          ],
+          "amplitude_per_frame": 0.8,
+          "note": "Synthetic control on real off-target background; fixed calibration; no added source shot noise; not a completeness benchmark."
+        }
+      ],
+      "configuration_role": "primary_strict",
+      "snr_note": "Aperture statistic conditional on fitted position; best individual comparison uses the coadd mask. Not a blind detection significance or total flux measurement.",
+      "native_pixel_fit": true,
+      "position_tied_to_expected_motion": false,
+      "parallax_fitted": false,
+      "status": "candidate_motion",
+      "uncertainty_note": "Conditional native-pixel fit covariance inflated by chi-square, plus conservative reference-calibration and heldout RMS terms. Not a calibrated discovery probability.",
+      "scene_id": "coadd-strict"
+    },
+    {
+      "id": "broad",
+      "tolerance_bandwidth": 0.5,
+      "wavelength_selection_um": [
+        4.55,
+        4.94
+      ],
+      "frame_count_per_epoch": 10,
+      "common_spectral_weights": [
+        0.1355743769996986,
+        0.1259033684757316,
+        0.12026182449242591,
+        0.11169834675205469,
+        0.09925852468999417,
+        0.09247102285451722,
+        0.08682339546946814,
+        0.08483344612811991,
+        0.07704662521966452,
+        0.06612906891832526
+      ],
+      "spectral_pairs": [
+        {
+          "before": {
+            "obs_id": "2025W46_1A_0090_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits",
+            "mjd": 60989.366268,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "feea63d0786667acb978b47c6b78cba35f0ab9df1fd3891985444d1890af48bd",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_1B_0507_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.760288,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "f96e48cbc53465ecb6089ca9cec9a8fa0b15cf5416fca59a59cc5d4859136578",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.572410998278066,
+          "after_um": 4.5775490651669095,
+          "mismatch_bandwidth": 0.14075209875114592,
+          "weight": 0.1355743769996986
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_1A_0090_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits",
+            "mjd": 60989.367761,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "29d52efb7c26e037e78e7814755672210b5a6ada196c45ad950df7930f73ec86",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_1B_0634_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61153.436457,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "21795106fc179df6fb36bb0439c1d50fe3511d4f3dde082ccb52cb8f9264f993",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.606236239635436,
+          "after_um": 4.610905931916208,
+          "mismatch_bandwidth": 0.12758196071413166,
+          "weight": 0.1259033684757316
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_1A_0238_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits",
+            "mjd": 60989.976991,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "f6aa3cbacc6287c2c432fc6a1377cdb5292897a5d95f0a0fa81830f822323d4b",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_1B_0634_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61153.437949,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "ce3232d78000ecbd853427503f4d0ed52f0e1c7d9eeff9e884b8e68f221e1642",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.627217528588664,
+          "after_um": 4.644347823854505,
+          "mismatch_bandwidth": 0.46445878376199323,
+          "weight": 0.12026182449242591
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_1A_0238_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits",
+            "mjd": 60989.978484,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "f4613db6e7d5179bf67b951fa3ed501628c7fec53dc049c817923c3e1d55c880",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_1B_0634_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61153.439442,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "cede6458ecae451af104ce39bb98e97cc64b903ee0d35d8a90fa4cb3775f8e7c",
+            "shape": [
+              70,
+              69
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.661605729874406,
+          "after_um": 4.6786277538544905,
+          "mismatch_bandwidth": 0.45716066639408154,
+          "weight": 0.11169834675205469
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_2A_0214_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits",
+            "mjd": 60993.506601,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "7267dd46ddc9df4cce5518b5dbf7d072ac18ecbfe34140ad597aab6350528ab4",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_1B_0634_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61153.440934,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "00727e09a969103e2962c4f9194d3a0fa5eced38d352521dae4c1be4a77fe810",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.729892759818627,
+          "after_um": 4.712386790671991,
+          "mismatch_bandwidth": 0.4720180200962601,
+          "weight": 0.09925852468999417
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_2A_0214_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits",
+            "mjd": 60993.508093,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "d4a13b010edb0e4233e159b6b5d7cb5636f32db8959f86127a74043ea782800d",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_2A_0609_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits",
+            "mjd": 61156.152716,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "d8d56f727b6659d13ccb0f12a9cce89aeeae444f2e36f40a803086a3a23ec9f8",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.763969678670449,
+          "after_um": 4.74686136696681,
+          "mismatch_bandwidth": 0.4754671410883216,
+          "weight": 0.09247102285451722
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_2A_0214_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits",
+            "mjd": 60993.509586,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "82b706e57cfc03a0e40a726b384cc276f7fb710b6139870f8cc2e2e6e6656d71",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_2A_0609_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits",
+            "mjd": 61156.154226,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "63f19b3bd42ffa06e5d11ea1ece990f3025e54c28b84fb48dd32fd4e7663c82c",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.798194839850815,
+          "after_um": 4.780496463029876,
+          "mismatch_bandwidth": 0.49484325400710616,
+          "weight": 0.08682339546946814
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_2A_0226_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits",
+            "mjd": 60993.57425,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "b1b11f7f34dd2a11a470ebcbbc192b88957788fa4cfbbef32b77356381b01281",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_2A_0591_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits",
+            "mjd": 61156.085511,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "a7dc389e76df1f8bf61b918cde68bc9e8ef3472e58219e2bf083932080ced500",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.831901955924634,
+          "after_um": 4.814820877309281,
+          "mismatch_bandwidth": 0.4607329476595928,
+          "weight": 0.08483344612811991
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_2A_0226_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits",
+            "mjd": 60993.577234,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "0631177da70f81127f6d003ffadd09a7445c0a353e300e875ab3ae9d8f5b48c7",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_2A_0692_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits",
+            "mjd": 61156.493181,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5132160,
+            "sha256": "fb5d38636cf9f08c0870206e51e9c8a2da83c257b465c7ab6c529a329af3a4f4",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.903383660836705,
+          "after_um": 4.888432354299533,
+          "mismatch_bandwidth": 0.40113238039986304,
+          "weight": 0.07704662521966452
+        },
+        {
+          "before": {
+            "obs_id": "2025W46_2A_0226_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits",
+            "mjd": 60993.578727,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2025-11",
+            "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "489d2e2ac1d9740539a3ee240647715e115263ba7e742ecf0532c803a236a76e",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "after": {
+            "obs_id": "2026W17_2A_0692_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits",
+            "mjd": 61156.494673,
+            "detector": 6,
+            "collection": "spherex_qr2",
+            "cache_subdir": "coadd",
+            "cutout_center_ra": 133.76037473328523,
+            "cutout_center_dec": -7.242149767967145,
+            "epoch": "2026-04",
+            "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits",
+            "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+            "bytes": 5129280,
+            "sha256": "1e8aa8f601a8bdd29ce90a11c59646ef983b217c521eea3136f2258166623a99",
+            "shape": [
+              70,
+              70
+            ],
+            "status": "downloaded"
+          },
+          "before_um": 4.939866658817829,
+          "after_um": 4.924355128088481,
+          "mismatch_bandwidth": 0.41945821749374396,
+          "weight": 0.06612906891832526
+        }
+      ],
+      "target_before": {
+        "x": 31.823164933476125,
+        "y": 31.54058411780219,
+        "ra_deg": 133.75981822020947,
+        "dec_deg": -7.242080436427908,
+        "covariance_px2": [
+          [
+            0.0044910206612431445,
+            0.000582202249431335
+          ],
+          [
+            0.0005822022494313353,
+            0.006130100492826295
+          ]
+        ],
+        "sigma_x_arcsec": 0.4121427288693431,
+        "sigma_y_arcsec": 0.4815139934518234,
+        "effective_mjd": 60990.69291929882,
+        "reduced_chi2": 1.1843090774003486,
+        "success": true,
+        "at_boundary": false,
+        "per_frame": [
+          {
+            "obs_id": "2025W46_1A_0090_2",
+            "mjd": 60989.366268368,
+            "amplitude": 0.7555679640306728,
+            "amplitude_error": 0.13265231525186383,
+            "snr": 5.695852067082988,
+            "epsf_zone": 303
+          },
+          {
+            "obs_id": "2025W46_1A_0090_3",
+            "mjd": 60989.367760625,
+            "amplitude": 0.7498633393123156,
+            "amplitude_error": 0.1362766000523565,
+            "snr": 5.502509888155585,
+            "epsf_zone": 282
+          },
+          {
+            "obs_id": "2025W46_1A_0238_1",
+            "mjd": 60989.97699147,
+            "amplitude": 0.8563935977509347,
+            "amplitude_error": 0.1474477680993193,
+            "snr": 5.808115028055743,
+            "epsf_zone": 265
+          },
+          {
+            "obs_id": "2025W46_1A_0238_2",
+            "mjd": 60989.978483727,
+            "amplitude": 0.3726695104787007,
+            "amplitude_error": 0.13107698024988576,
+            "snr": 2.8431346966358384,
+            "epsf_zone": 244
+          },
+          {
+            "obs_id": "2025W46_2A_0214_2",
+            "mjd": 60993.506600984,
+            "amplitude": 0.5852558441029299,
+            "amplitude_error": 0.18151762352150616,
+            "snr": 3.2242370341169044,
+            "epsf_zone": 202
+          },
+          {
+            "obs_id": "2025W46_2A_0214_3",
+            "mjd": 60993.508093229,
+            "amplitude": 0.5626981918313353,
+            "amplitude_error": 0.1616238571760538,
+            "snr": 3.481529284494175,
+            "epsf_zone": 160
+          },
+          {
+            "obs_id": "2025W46_2A_0214_4",
+            "mjd": 60993.509585509,
+            "amplitude": 0.5990354005730704,
+            "amplitude_error": 0.18306453290136498,
+            "snr": 3.2722635623571614,
+            "epsf_zone": 139
+          },
+          {
+            "obs_id": "2025W46_2A_0226_1",
+            "mjd": 60993.574249873,
+            "amplitude": 0.30323243290739194,
+            "amplitude_error": 0.14223723944134153,
+            "snr": 2.13187793926811,
+            "epsf_zone": 118
+          },
+          {
+            "obs_id": "2025W46_2A_0226_3",
+            "mjd": 60993.577234375,
+            "amplitude": 0.14803541759725788,
+            "amplitude_error": 0.1461892199256302,
+            "snr": 1.0126288222385131,
+            "epsf_zone": 76
+          },
+          {
+            "obs_id": "2025W46_2A_0226_4",
+            "mjd": 60993.578726644,
+            "amplitude": 0.20567005873447244,
+            "amplitude_error": 0.18667272370600682,
+            "snr": 1.1017681354367805,
+            "epsf_zone": 55
+          }
+        ]
+      },
+      "target_after": {
+        "x": 32.35079428493931,
+        "y": 31.54537749755555,
+        "ra_deg": 133.75890960484267,
+        "dec_deg": -7.242072245732859,
+        "covariance_px2": [
+          [
+            0.0031409483022446227,
+            -9.669195522945328e-05
+          ],
+          [
+            -9.66919552294532e-05,
+            0.0032029238140419466
+          ]
+        ],
+        "sigma_x_arcsec": 0.34467160771036426,
+        "sigma_y_arcsec": 0.3480554351775038,
+        "effective_mjd": 61154.178273565616,
+        "reduced_chi2": 1.1123172315628067,
+        "success": true,
+        "at_boundary": false,
+        "per_frame": [
+          {
+            "obs_id": "2026W17_1B_0507_3",
+            "mjd": 61152.76028809,
+            "amplitude": 0.7061325759470366,
+            "amplitude_error": 0.11840341168424848,
+            "snr": 5.963785721226606,
+            "epsf_zone": 312
+          },
+          {
+            "obs_id": "2026W17_1B_0634_1",
+            "mjd": 61153.436457037,
+            "amplitude": 0.6214595559750503,
+            "amplitude_error": 0.11253828066319112,
+            "snr": 5.5222058868570985,
+            "epsf_zone": 291
+          },
+          {
+            "obs_id": "2026W17_1B_0634_2",
+            "mjd": 61153.437949306,
+            "amplitude": 0.7410281848098821,
+            "amplitude_error": 0.1446306867515404,
+            "snr": 5.12358892468572,
+            "epsf_zone": 270
+          },
+          {
+            "obs_id": "2026W17_1B_0634_3",
+            "mjd": 61153.439441551,
+            "amplitude": 0.8360753934754932,
+            "amplitude_error": 0.1441775870958298,
+            "snr": 5.798927630268795,
+            "epsf_zone": 249
+          },
+          {
+            "obs_id": "2026W17_1B_0634_4",
+            "mjd": 61153.440933808,
+            "amplitude": 0.9359502865691686,
+            "amplitude_error": 0.13791492989580026,
+            "snr": 6.7864319495816225,
+            "epsf_zone": 207
+          },
+          {
+            "obs_id": "2026W17_2A_0609_1",
+            "mjd": 61156.152715706,
+            "amplitude": 0.7303351585063436,
+            "amplitude_error": 0.14232014886815114,
+            "snr": 5.131635712262667,
+            "epsf_zone": 186
+          },
+          {
+            "obs_id": "2026W17_2A_0609_2",
+            "mjd": 61156.154225718,
+            "amplitude": 0.6139383428670101,
+            "amplitude_error": 0.14698136927086972,
+            "snr": 4.1769807011090805,
+            "epsf_zone": 165
+          },
+          {
+            "obs_id": "2026W17_2A_0591_1",
+            "mjd": 61156.085510949,
+            "amplitude": 0.6092635952400824,
+            "amplitude_error": 0.1760193979567868,
+            "snr": 3.4613434786866963,
+            "epsf_zone": 144
+          },
+          {
+            "obs_id": "2026W17_2A_0692_1",
+            "mjd": 61156.493180671,
+            "amplitude": 0.45523512870258737,
+            "amplitude_error": 0.14933372511814882,
+            "snr": 3.048441524795672,
+            "epsf_zone": 66
+          },
+          {
+            "obs_id": "2026W17_2A_0692_2",
+            "mjd": 61156.494672917,
+            "amplitude": 0.45100094377207883,
+            "amplitude_error": 0.1517477720499933,
+            "snr": 2.9720432641574246,
+            "epsf_zone": 45
+          }
+        ]
+      },
+      "bootstrap_before": {
+        "draws": 128,
+        "seed": 20261032,
+        "covariance_px2": [
+          [
+            0.0044910206612431445,
+            0.0005822022494313353
+          ],
+          [
+            0.0005822022494313353,
+            0.006130100492826295
+          ]
+        ],
+        "formal_covariance_px2": [
+          [
+            0.004111281469593991,
+            6.835174158189207e-05
+          ],
+          [
+            6.835174158189224e-05,
+            0.004658495725960148
+          ]
+        ],
+        "mean_bias_px": [
+          -0.006662110763315354,
+          0.0011700707478148331
+        ],
+        "boundary_fraction": 0.0,
+        "note": "Conditional parametric native-pixel noise check; does not simulate calibration or ePSF systematics."
+      },
+      "bootstrap_after": {
+        "draws": 128,
+        "seed": 20261033,
+        "covariance_px2": [
+          [
+            0.003140948302244623,
+            -9.669195522945326e-05
+          ],
+          [
+            -9.669195522945326e-05,
+            0.0032029238140419466
+          ]
+        ],
+        "formal_covariance_px2": [
+          [
+            0.0025901742302977472,
+            2.334506509090498e-05
+          ],
+          [
+            2.3345065090905072e-05,
+            0.002819982324599495
+          ]
+        ],
+        "mean_bias_px": [
+          0.000564948010080002,
+          -0.0003433254526683527
+        ],
+        "boundary_fraction": 0.0,
+        "note": "Conditional parametric native-pixel noise check; does not simulate calibration or ePSF systematics."
+      },
+      "reference_swap_east_north_arcsec": null,
+      "reference_swap_change_arcsec": null,
+      "reference_swap_unavailable_reason": "Too few registration sources: 2025W46_1A_0090_3",
+      "training_reference_positions": [
+        [
+          50.552569809987375,
+          42.30789976889406
+        ],
+        [
+          10.206580244088542,
+          22.328057348473827
+        ],
+        [
+          38.868315038994496,
+          13.86608558482229
+        ],
+        [
+          7.619523927667983,
+          46.026927060510566
+        ]
+      ],
+      "heldout_controls": [
+        {
+          "id": "H1",
+          "anchor": [
+            35.02081406993485,
+            15.728125490791792
+          ],
+          "before": {
+            "x": 35.05815595689846,
+            "y": 15.784292397681373,
+            "ra_deg": 133.75424696902445,
+            "dec_deg": -7.26899739202857,
+            "covariance_px2": [
+              [
+                0.0003224138368435579,
+                2.7922661284196562e-05
+              ],
+              [
+                2.792266128419665e-05,
+                0.0003023711625852189
+              ]
+            ],
+            "sigma_x_arcsec": 0.11042869800923794,
+            "sigma_y_arcsec": 0.10694126096544515,
+            "effective_mjd": 60991.93485047565,
+            "reduced_chi2": 1.5864697530897756,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2025W46_1A_0090_2",
+                "mjd": 60989.366268368,
+                "amplitude": 2.8169125681118903,
+                "amplitude_error": 0.21302373980214342,
+                "snr": 13.223467819728638,
+                "epsf_zone": 303
+              },
+              {
+                "obs_id": "2025W46_1A_0090_3",
+                "mjd": 60989.367760625,
+                "amplitude": 3.016501954633917,
+                "amplitude_error": 0.21994969625605573,
+                "snr": 13.714508389783083,
+                "epsf_zone": 282
+              },
+              {
+                "obs_id": "2025W46_1A_0238_1",
+                "mjd": 60989.97699147,
+                "amplitude": 2.9981138935188114,
+                "amplitude_error": 0.30111610424014223,
+                "snr": 9.956670703762141,
+                "epsf_zone": 265
+              },
+              {
+                "obs_id": "2025W46_1A_0238_2",
+                "mjd": 60989.978483727,
+                "amplitude": 3.02156878652055,
+                "amplitude_error": 0.21791388453157112,
+                "snr": 13.865884649873186,
+                "epsf_zone": 244
+              },
+              {
+                "obs_id": "2025W46_2A_0214_2",
+                "mjd": 60993.506600984,
+                "amplitude": 2.9413975415107902,
+                "amplitude_error": 0.24565333995243926,
+                "snr": 11.97377386393473,
+                "epsf_zone": 181
+              },
+              {
+                "obs_id": "2025W46_2A_0214_3",
+                "mjd": 60993.508093229,
+                "amplitude": 3.3815076094579313,
+                "amplitude_error": 0.23626281067598978,
+                "snr": 14.312483626952709,
+                "epsf_zone": 160
+              },
+              {
+                "obs_id": "2025W46_2A_0214_4",
+                "mjd": 60993.509585509,
+                "amplitude": 3.1963029544683614,
+                "amplitude_error": 0.23666843495367074,
+                "snr": 13.505404533959322,
+                "epsf_zone": 139
+              },
+              {
+                "obs_id": "2025W46_2A_0226_1",
+                "mjd": 60993.574249873,
+                "amplitude": 3.312511758392484,
+                "amplitude_error": 0.25407048701664514,
+                "snr": 13.037766791762275,
+                "epsf_zone": 118
+              },
+              {
+                "obs_id": "2025W46_2A_0226_3",
+                "mjd": 60993.577234375,
+                "amplitude": 2.74821611208323,
+                "amplitude_error": 0.2594342999157046,
+                "snr": 10.593110136077536,
+                "epsf_zone": 76
+              },
+              {
+                "obs_id": "2025W46_2A_0226_4",
+                "mjd": 60993.578726644,
+                "amplitude": 2.6478913850740864,
+                "amplitude_error": 0.23746354302110562,
+                "snr": 11.150728029181066,
+                "epsf_zone": 34
+              }
+            ]
+          },
+          "after": {
+            "x": 35.08552868454053,
+            "y": 15.782098863306127,
+            "ra_deg": 133.75419982836914,
+            "dec_deg": -7.269001138680396,
+            "covariance_px2": [
+              [
+                0.00036118849184899407,
+                4.5904315832884144e-05
+              ],
+              [
+                4.5904315832884225e-05,
+                0.0003352017416822958
+              ]
+            ],
+            "sigma_x_arcsec": 0.11688050193663004,
+            "sigma_y_arcsec": 0.11259737063883257,
+            "effective_mjd": 61154.648199690615,
+            "reduced_chi2": 1.670360969844102,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2026W17_1B_0507_3",
+                "mjd": 61152.76028809,
+                "amplitude": 2.9547571514028546,
+                "amplitude_error": 0.22417104184395703,
+                "snr": 13.180815537537752,
+                "epsf_zone": 312
+              },
+              {
+                "obs_id": "2026W17_1B_0634_1",
+                "mjd": 61153.436457037,
+                "amplitude": 2.8550009761153956,
+                "amplitude_error": 0.22459742471658323,
+                "snr": 12.711637186927174,
+                "epsf_zone": 291
+              },
+              {
+                "obs_id": "2026W17_1B_0634_2",
+                "mjd": 61153.437949306,
+                "amplitude": 3.0097752396632393,
+                "amplitude_error": 0.19694322002117873,
+                "snr": 15.282451659618323,
+                "epsf_zone": 270
+              },
+              {
+                "obs_id": "2026W17_1B_0634_3",
+                "mjd": 61153.439441551,
+                "amplitude": 2.9243897702410515,
+                "amplitude_error": 0.21980853610436302,
+                "snr": 13.304259343470532,
+                "epsf_zone": 249
+              },
+              {
+                "obs_id": "2026W17_1B_0634_4",
+                "mjd": 61153.440933808,
+                "amplitude": 2.942460494845379,
+                "amplitude_error": 0.22895855186354566,
+                "snr": 12.851498539347077,
+                "epsf_zone": 228
+              },
+              {
+                "obs_id": "2026W17_2A_0609_1",
+                "mjd": 61156.152715706,
+                "amplitude": 2.9545518926708207,
+                "amplitude_error": 0.25452006930863635,
+                "snr": 11.608325821599825,
+                "epsf_zone": 186
+              },
+              {
+                "obs_id": "2026W17_2A_0609_2",
+                "mjd": 61156.154225718,
+                "amplitude": 3.4589892585198023,
+                "amplitude_error": 0.2738446635862753,
+                "snr": 12.631209289313176,
+                "epsf_zone": 165
+              },
+              {
+                "obs_id": "2026W17_2A_0591_1",
+                "mjd": 61156.085510949,
+                "amplitude": 2.9907967701562783,
+                "amplitude_error": 0.23263644443800857,
+                "snr": 12.8560973212142,
+                "epsf_zone": 144
+              },
+              {
+                "obs_id": "2026W17_2A_0692_1",
+                "mjd": 61156.493180671,
+                "amplitude": 2.7780348516909252,
+                "amplitude_error": 0.23339517477878238,
+                "snr": 11.902709018402005,
+                "epsf_zone": 87
+              },
+              {
+                "obs_id": "2026W17_2A_0692_2",
+                "mjd": 61156.494672917,
+                "amplitude": 2.7660620095377197,
+                "amplitude_error": 0.2254967411031608,
+                "snr": 12.266527649161434,
+                "epsf_zone": 45
+              }
+            ]
+          },
+          "delta_px": [
+            0.02737272764206722,
+            -0.0021935343752463865
+          ]
+        },
+        {
+          "id": "H2",
+          "anchor": [
+            55.46377130823069,
+            47.302865506455156
+          ],
+          "before": {
+            "x": 55.51628762157244,
+            "y": 47.294036896300554,
+            "ra_deg": 133.71901944787638,
+            "dec_deg": -7.215166430609846,
+            "covariance_px2": [
+              [
+                0.0009640390439197253,
+                -4.240040420833562e-05
+              ],
+              [
+                -4.240040420833569e-05,
+                0.0012757495389281884
+              ]
+            ],
+            "sigma_x_arcsec": 0.19095121559878536,
+            "sigma_y_arcsec": 0.2196634629065822,
+            "effective_mjd": 60992.03340269476,
+            "reduced_chi2": 2.7991247263725985,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2025W46_1A_0090_2",
+                "mjd": 60989.366268368,
+                "amplitude": 2.099381143741311,
+                "amplitude_error": 0.2586331576974723,
+                "snr": 8.117215760080514,
+                "epsf_zone": 303
+              },
+              {
+                "obs_id": "2025W46_1A_0090_3",
+                "mjd": 60989.367760625,
+                "amplitude": 1.8678851758275405,
+                "amplitude_error": 0.3234304984537594,
+                "snr": 5.775228943335382,
+                "epsf_zone": 282
+              },
+              {
+                "obs_id": "2025W46_1A_0238_1",
+                "mjd": 60989.97699147,
+                "amplitude": 2.0861284448820783,
+                "amplitude_error": 0.3536049174502266,
+                "snr": 5.899602471381699,
+                "epsf_zone": 265
+              },
+              {
+                "obs_id": "2025W46_1A_0238_2",
+                "mjd": 60989.978483727,
+                "amplitude": 2.1834984522160776,
+                "amplitude_error": 0.21898017323293092,
+                "snr": 9.971215293055199,
+                "epsf_zone": 244
+              },
+              {
+                "obs_id": "2025W46_2A_0214_2",
+                "mjd": 60993.506600984,
+                "amplitude": 1.9240581743738123,
+                "amplitude_error": 0.19017132681296614,
+                "snr": 10.117498818663273,
+                "epsf_zone": 202
+              },
+              {
+                "obs_id": "2025W46_2A_0214_3",
+                "mjd": 60993.508093229,
+                "amplitude": 2.150377868852393,
+                "amplitude_error": 0.33502049087036945,
+                "snr": 6.418645806606634,
+                "epsf_zone": 160
+              },
+              {
+                "obs_id": "2025W46_2A_0214_4",
+                "mjd": 60993.509585509,
+                "amplitude": 2.235931295878589,
+                "amplitude_error": 0.2540933058454769,
+                "snr": 8.799646603985458,
+                "epsf_zone": 139
+              },
+              {
+                "obs_id": "2025W46_2A_0226_1",
+                "mjd": 60993.574249873,
+                "amplitude": 2.3048092509128235,
+                "amplitude_error": 0.29989770267727334,
+                "snr": 7.685318127938714,
+                "epsf_zone": 118
+              },
+              {
+                "obs_id": "2025W46_2A_0226_3",
+                "mjd": 60993.577234375,
+                "amplitude": 1.8353483745039147,
+                "amplitude_error": 0.2640329392389444,
+                "snr": 6.951209874776125,
+                "epsf_zone": 76
+              },
+              {
+                "obs_id": "2025W46_2A_0226_4",
+                "mjd": 60993.578726644,
+                "amplitude": 2.146024229621372,
+                "amplitude_error": 0.38088193302448625,
+                "snr": 5.634355540522337,
+                "epsf_zone": 55
+              }
+            ]
+          },
+          "after": {
+            "x": 55.523374374191064,
+            "y": 47.274133971235884,
+            "ra_deg": 133.71900724159806,
+            "dec_deg": -7.215200430326116,
+            "covariance_px2": [
+              [
+                0.0016033874098630241,
+                0.00013407524118150965
+              ],
+              [
+                0.0001340752411815096,
+                0.0014414223371467293
+              ]
+            ],
+            "sigma_x_arcsec": 0.246260269449914,
+            "sigma_y_arcsec": 0.23349131963893685,
+            "effective_mjd": 61154.47407343511,
+            "reduced_chi2": 3.6089639691467443,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2026W17_1B_0507_3",
+                "mjd": 61152.76028809,
+                "amplitude": 1.9085848603838322,
+                "amplitude_error": 0.2009981746267674,
+                "snr": 9.495533299881329,
+                "epsf_zone": 312
+              },
+              {
+                "obs_id": "2026W17_1B_0634_1",
+                "mjd": 61153.436457037,
+                "amplitude": 1.7207869703912724,
+                "amplitude_error": 0.26151591238561905,
+                "snr": 6.5800469068738,
+                "epsf_zone": 291
+              },
+              {
+                "obs_id": "2026W17_1B_0634_2",
+                "mjd": 61153.437949306,
+                "amplitude": 2.2942896668908355,
+                "amplitude_error": 0.3762149621525338,
+                "snr": 6.098347747160123,
+                "epsf_zone": 270
+              },
+              {
+                "obs_id": "2026W17_1B_0634_3",
+                "mjd": 61153.439441551,
+                "amplitude": 2.0680710787283894,
+                "amplitude_error": 0.24286723332129992,
+                "snr": 8.515232995603181,
+                "epsf_zone": 249
+              },
+              {
+                "obs_id": "2026W17_1B_0634_4",
+                "mjd": 61153.440933808,
+                "amplitude": 1.7839104187212433,
+                "amplitude_error": 0.3466771265124133,
+                "snr": 5.1457401780944085,
+                "epsf_zone": 207
+              },
+              {
+                "obs_id": "2026W17_2A_0609_1",
+                "mjd": 61156.152715706,
+                "amplitude": 2.033045942494296,
+                "amplitude_error": 0.2328486358830084,
+                "snr": 8.731191122441327,
+                "epsf_zone": 186
+              },
+              {
+                "obs_id": "2026W17_2A_0609_2",
+                "mjd": 61156.154225718,
+                "amplitude": 1.9005051932628831,
+                "amplitude_error": 0.3649292735586548,
+                "snr": 5.207872678258617,
+                "epsf_zone": 165
+              },
+              {
+                "obs_id": "2026W17_2A_0591_1",
+                "mjd": 61156.085510949,
+                "amplitude": 1.5133179917168451,
+                "amplitude_error": 0.807033964152886,
+                "snr": 1.8751602273707522,
+                "epsf_zone": 144
+              },
+              {
+                "obs_id": "2026W17_2A_0692_1",
+                "mjd": 61156.493180671,
+                "amplitude": 1.6296744131440586,
+                "amplitude_error": 0.26533752239008906,
+                "snr": 6.141892026669992,
+                "epsf_zone": 66
+              },
+              {
+                "obs_id": "2026W17_2A_0692_2",
+                "mjd": 61156.494672917,
+                "amplitude": 2.0752183849244243,
+                "amplitude_error": 0.3199808590645617,
+                "snr": 6.4854453825493135,
+                "epsf_zone": 45
+              }
+            ]
+          },
+          "delta_px": [
+            0.007086752618626235,
+            -0.019902925064670285
+          ]
+        },
+        {
+          "id": "H3",
+          "anchor": [
+            31.94204058580447,
+            53.64782551276275
+          ],
+          "before": {
+            "x": 32.00115487327896,
+            "y": 53.5946746866962,
+            "ra_deg": 133.75951178094166,
+            "dec_deg": -7.204404703362419,
+            "covariance_px2": [
+              [
+                0.0013015120743840346,
+                0.0002090141371164763
+              ],
+              [
+                0.0002090141371164763,
+                0.0013343905819142513
+              ]
+            ],
+            "sigma_x_arcsec": 0.22187032346258062,
+            "sigma_y_arcsec": 0.22465526431502064,
+            "effective_mjd": 60991.50170683947,
+            "reduced_chi2": 1.0536253406122107,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2025W46_1A_0090_2",
+                "mjd": 60989.366268368,
+                "amplitude": 1.3752361587943291,
+                "amplitude_error": 0.15138253281130817,
+                "snr": 9.08451016940311,
+                "epsf_zone": 303
+              },
+              {
+                "obs_id": "2025W46_1A_0090_3",
+                "mjd": 60989.367760625,
+                "amplitude": 0.7643251644103524,
+                "amplitude_error": 0.14172003590126434,
+                "snr": 5.393204704963905,
+                "epsf_zone": 282
+              },
+              {
+                "obs_id": "2025W46_1A_0238_1",
+                "mjd": 60989.97699147,
+                "amplitude": 0.7751762622858424,
+                "amplitude_error": 0.1539958377645353,
+                "snr": 5.033748142408319,
+                "epsf_zone": 265
+              },
+              {
+                "obs_id": "2025W46_1A_0238_2",
+                "mjd": 60989.978483727,
+                "amplitude": 1.1912402900389836,
+                "amplitude_error": 0.15464521961866534,
+                "snr": 7.703052787382789,
+                "epsf_zone": 244
+              },
+              {
+                "obs_id": "2025W46_2A_0214_2",
+                "mjd": 60993.506600984,
+                "amplitude": 1.020543358899097,
+                "amplitude_error": 0.16465633159082912,
+                "snr": 6.19802074441417,
+                "epsf_zone": 202
+              },
+              {
+                "obs_id": "2025W46_2A_0214_3",
+                "mjd": 60993.508093229,
+                "amplitude": 0.9146644578982963,
+                "amplitude_error": 0.15883876534152366,
+                "snr": 5.758446031305083,
+                "epsf_zone": 181
+              },
+              {
+                "obs_id": "2025W46_2A_0214_4",
+                "mjd": 60993.509585509,
+                "amplitude": 0.9729480815392387,
+                "amplitude_error": 0.15860703725673,
+                "snr": 6.134331101364512,
+                "epsf_zone": 139
+              },
+              {
+                "obs_id": "2025W46_2A_0226_1",
+                "mjd": 60993.574249873,
+                "amplitude": 0.6426746006376325,
+                "amplitude_error": 0.18126319620536274,
+                "snr": 3.5455327617058687,
+                "epsf_zone": 118
+              },
+              {
+                "obs_id": "2025W46_2A_0226_3",
+                "mjd": 60993.577234375,
+                "amplitude": 1.0150347894703882,
+                "amplitude_error": 0.18910963540552034,
+                "snr": 5.367440888423172,
+                "epsf_zone": 76
+              },
+              {
+                "obs_id": "2025W46_2A_0226_4",
+                "mjd": 60993.578726644,
+                "amplitude": 1.0251841311003864,
+                "amplitude_error": 0.18708849348451956,
+                "snr": 5.479674949572536,
+                "epsf_zone": 55
+              }
+            ]
+          },
+          "after": {
+            "x": 32.02552784167645,
+            "y": 53.594462515429704,
+            "ra_deg": 133.7594698124571,
+            "dec_deg": -7.204405065740955,
+            "covariance_px2": [
+              [
+                0.0011897790090754676,
+                0.00018187657738847577
+              ],
+              [
+                0.00018187657738847569,
+                0.0018015192384282913
+              ]
+            ],
+            "sigma_x_arcsec": 0.21213301622038205,
+            "sigma_y_arcsec": 0.2610324910723837,
+            "effective_mjd": 61154.360544363146,
+            "reduced_chi2": 1.518865589151624,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2026W17_1B_0507_3",
+                "mjd": 61152.76028809,
+                "amplitude": 1.0834456730671111,
+                "amplitude_error": 0.12615497567789893,
+                "snr": 8.58821197693687,
+                "epsf_zone": 312
+              },
+              {
+                "obs_id": "2026W17_1B_0634_1",
+                "mjd": 61153.436457037,
+                "amplitude": 1.0930083387753415,
+                "amplitude_error": 0.13487142564848797,
+                "snr": 8.104076408475297,
+                "epsf_zone": 291
+              },
+              {
+                "obs_id": "2026W17_1B_0634_2",
+                "mjd": 61153.437949306,
+                "amplitude": 0.8851362163255484,
+                "amplitude_error": 0.14040729517930517,
+                "snr": 6.304061446345773,
+                "epsf_zone": 270
+              },
+              {
+                "obs_id": "2026W17_1B_0634_3",
+                "mjd": 61153.439441551,
+                "amplitude": 1.2801202807815293,
+                "amplitude_error": 0.1421511484469303,
+                "snr": 9.005346033200993,
+                "epsf_zone": 228
+              },
+              {
+                "obs_id": "2026W17_1B_0634_4",
+                "mjd": 61153.440933808,
+                "amplitude": 0.7167837485662993,
+                "amplitude_error": 0.12751440029106126,
+                "snr": 5.621198444490867,
+                "epsf_zone": 207
+              },
+              {
+                "obs_id": "2026W17_2A_0609_1",
+                "mjd": 61156.152715706,
+                "amplitude": 0.8381077266034913,
+                "amplitude_error": 0.34112166197164306,
+                "snr": 2.456917340749712,
+                "epsf_zone": 186
+              },
+              {
+                "obs_id": "2026W17_2A_0609_2",
+                "mjd": 61156.154225718,
+                "amplitude": 0.8863167540737988,
+                "amplitude_error": 0.1615432068280292,
+                "snr": 5.486561592263841,
+                "epsf_zone": 165
+              },
+              {
+                "obs_id": "2026W17_2A_0591_1",
+                "mjd": 61156.085510949,
+                "amplitude": 1.1324213950134354,
+                "amplitude_error": 0.15967641320538947,
+                "snr": 7.091976656294365,
+                "epsf_zone": 144
+              },
+              {
+                "obs_id": "2026W17_2A_0692_1",
+                "mjd": 61156.493180671,
+                "amplitude": 0.9767914309580781,
+                "amplitude_error": 0.15969034793758577,
+                "snr": 6.116784411665584,
+                "epsf_zone": 66
+              },
+              {
+                "obs_id": "2026W17_2A_0692_2",
+                "mjd": 61156.494672917,
+                "amplitude": 1.174609652687004,
+                "amplitude_error": 0.18315208331319988,
+                "snr": 6.413302166366072,
+                "epsf_zone": 45
+              }
+            ]
+          },
+          "delta_px": [
+            0.02437296839748626,
+            -0.00021217126649730744
+          ]
+        },
+        {
+          "id": "H4",
+          "anchor": [
+            49.35461610600448,
+            26.8830194421672
+          ],
+          "before": {
+            "x": 48.763000192236056,
+            "y": 26.64627784785058,
+            "ra_deg": 133.73064606647864,
+            "dec_deg": -7.250440577660292,
+            "covariance_px2": [
+              [
+                0.006929377557057861,
+                0.000694125824506708
+              ],
+              [
+                0.0006941258245067066,
+                0.005961432864052067
+              ]
+            ],
+            "sigma_x_arcsec": 0.5119437299663128,
+            "sigma_y_arcsec": 0.47484344209498075,
+            "effective_mjd": 60992.06152875961,
+            "reduced_chi2": 1.0380567478558227,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2025W46_1A_0090_2",
+                "mjd": 60989.366268368,
+                "amplitude": 0.3817274879299435,
+                "amplitude_error": 0.13291210059808378,
+                "snr": 2.8720296061248685,
+                "epsf_zone": 303
+              },
+              {
+                "obs_id": "2025W46_1A_0090_3",
+                "mjd": 60989.367760625,
+                "amplitude": 0.31216207586121786,
+                "amplitude_error": 0.12824710836396244,
+                "snr": 2.4340671680121537,
+                "epsf_zone": 282
+              },
+              {
+                "obs_id": "2025W46_1A_0238_1",
+                "mjd": 60989.97699147,
+                "amplitude": 0.285392161749519,
+                "amplitude_error": 0.13698593882168647,
+                "snr": 2.0833682946175354,
+                "epsf_zone": 265
+              },
+              {
+                "obs_id": "2025W46_1A_0238_2",
+                "mjd": 60989.978483727,
+                "amplitude": 0.4132337096110893,
+                "amplitude_error": 0.15106170942045297,
+                "snr": 2.735529150282074,
+                "epsf_zone": 244
+              },
+              {
+                "obs_id": "2025W46_2A_0214_2",
+                "mjd": 60993.506600984,
+                "amplitude": 0.35508672638495775,
+                "amplitude_error": 0.1447920827142092,
+                "snr": 2.4523904879925538,
+                "epsf_zone": 202
+              },
+              {
+                "obs_id": "2025W46_2A_0214_3",
+                "mjd": 60993.508093229,
+                "amplitude": 0.40654329110123877,
+                "amplitude_error": 0.155437047630998,
+                "snr": 2.615485158122393,
+                "epsf_zone": 160
+              },
+              {
+                "obs_id": "2025W46_2A_0214_4",
+                "mjd": 60993.509585509,
+                "amplitude": 0.3860742977382723,
+                "amplitude_error": 0.1565589760572957,
+                "snr": 2.4659991235314487,
+                "epsf_zone": 139
+              },
+              {
+                "obs_id": "2025W46_2A_0226_1",
+                "mjd": 60993.574249873,
+                "amplitude": 0.34977407287076784,
+                "amplitude_error": 0.1685913164491947,
+                "snr": 2.0746861714919516,
+                "epsf_zone": 118
+              },
+              {
+                "obs_id": "2025W46_2A_0226_3",
+                "mjd": 60993.577234375,
+                "amplitude": 0.4960643915799985,
+                "amplitude_error": 0.164497691003395,
+                "snr": 3.0156313353344295,
+                "epsf_zone": 76
+              },
+              {
+                "obs_id": "2025W46_2A_0226_4",
+                "mjd": 60993.578726644,
+                "amplitude": 0.6067590826326605,
+                "amplitude_error": 0.19207901452551548,
+                "snr": 3.1589035592019843,
+                "epsf_zone": 34
+              }
+            ]
+          },
+          "after": {
+            "x": 48.93568968621134,
+            "y": 26.767821359520223,
+            "ra_deg": 133.73034869124112,
+            "dec_deg": -7.250232921445485,
+            "covariance_px2": [
+              [
+                0.02580501239700884,
+                0.0012366125601361998
+              ],
+              [
+                0.0012366125601362054,
+                0.025325485683691907
+              ]
+            ],
+            "sigma_x_arcsec": 0.9879322250973834,
+            "sigma_y_arcsec": 0.9787099581957043,
+            "effective_mjd": 61155.09887431175,
+            "reduced_chi2": 4.943174277071716,
+            "success": true,
+            "at_boundary": false,
+            "per_frame": [
+              {
+                "obs_id": "2026W17_1B_0507_3",
+                "mjd": 61152.76028809,
+                "amplitude": 0.31251887646339577,
+                "amplitude_error": 0.6571102586528356,
+                "snr": 0.475595795908135,
+                "epsf_zone": 312
+              },
+              {
+                "obs_id": "2026W17_1B_0634_1",
+                "mjd": 61153.436457037,
+                "amplitude": 0.5324028723469446,
+                "amplitude_error": 0.13174520000650441,
+                "snr": 4.041155748525633,
+                "epsf_zone": 291
+              },
+              {
+                "obs_id": "2026W17_1B_0634_2",
+                "mjd": 61153.437949306,
+                "amplitude": 0.2500119442111984,
+                "amplitude_error": 0.12013324145983328,
+                "snr": 2.0811221038665657,
+                "epsf_zone": 270
+              },
+              {
+                "obs_id": "2026W17_1B_0634_3",
+                "mjd": 61153.439441551,
+                "amplitude": 0.29085144990230666,
+                "amplitude_error": 0.1175933621675034,
+                "snr": 2.4733662218791688,
+                "epsf_zone": 249
+              },
+              {
+                "obs_id": "2026W17_1B_0634_4",
+                "mjd": 61153.440933808,
+                "amplitude": 0.14390632915546175,
+                "amplitude_error": 0.11203661862628983,
+                "snr": 1.284457982755413,
+                "epsf_zone": 228
+              },
+              {
+                "obs_id": "2026W17_2A_0609_1",
+                "mjd": 61156.152715706,
+                "amplitude": 0.4461739597535505,
+                "amplitude_error": 0.148082771965452,
+                "snr": 3.013003834488213,
+                "epsf_zone": 186
+              },
+              {
+                "obs_id": "2026W17_2A_0609_2",
+                "mjd": 61156.154225718,
+                "amplitude": 0.2673232126175439,
+                "amplitude_error": 0.128276941656203,
+                "snr": 2.083953742317937,
+                "epsf_zone": 165
+              },
+              {
+                "obs_id": "2026W17_2A_0591_1",
+                "mjd": 61156.085510949,
+                "amplitude": 0.547334444744553,
+                "amplitude_error": 0.1602943407687445,
+                "snr": 3.4145587555969206,
+                "epsf_zone": 144
+              },
+              {
+                "obs_id": "2026W17_2A_0692_1",
+                "mjd": 61156.493180671,
+                "amplitude": 0.30232424098013594,
+                "amplitude_error": 0.14108033901260922,
+                "snr": 2.1429225581398366,
+                "epsf_zone": 87
+              },
+              {
+                "obs_id": "2026W17_2A_0692_2",
+                "mjd": 61156.494672917,
+                "amplitude": 0.5517731025228744,
+                "amplitude_error": 0.1645112642801874,
+                "snr": 3.3540141153077636,
+                "epsf_zone": 45
+              }
+            ]
+          },
+          "delta_px": [
+            0.17268949397528388,
+            0.12154351166964261
+          ]
+        }
+      ],
+      "holdout_rms_arcsec": 0.6622967484873153,
+      "registration_covariance_px2": [
+        [
+          0.001534395247099453,
+          0.00012233209204928584
+        ],
+        [
+          0.00012233209204928587,
+          0.00167530047621614
+        ]
+      ],
+      "holdout_covariance_px2": [
+        [
+          0.0078037977997972175,
+          0.005195756539322224
+        ],
+        [
+          0.005195756539322224,
+          0.0037934520662050364
+        ]
+      ],
+      "east_arcsec": -3.244920511498598,
+      "north_arcsec": 0.02947928548315666,
+      "displacement_arcsec": 3.2450544146773446,
+      "radial_error_arcsec": 0.8036387123288519,
+      "covariance_arcsec2": [
+        [
+          0.6418539526377655,
+          -0.21950662036249963
+        ],
+        [
+          -0.21950662036249965,
+          0.559840204882249
+        ]
+      ],
+      "mahalanobis_distance": 4.337281941511219,
+      "predicted_motion": {
+        "east_arcsec": -4.47030013329141,
+        "north_arcsec": 0.5381666477650608,
+        "proper_motion_component_arcsec": [
+          -3.6076439572632406,
+          0.3133189541047479
+        ],
+        "parallax_component_arcsec": [
+          -0.862656176028169,
+          0.2248476936603129
+        ],
+        "note": "External Luhman 2014 prediction plus builtin Earth ephemeris; not fitted to these two epochs."
+      },
+      "coadd_snr_before": {
+        "snr": 7.868077613062783,
+        "signal": 0.6121423395617138,
+        "noise": 0.07780075002633674,
+        "coverage": 0.8421052631578947,
+        "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+      },
+      "coadd_snr_after": {
+        "snr": 7.575855519614164,
+        "signal": 0.5933620135854453,
+        "noise": 0.0783227731903294,
+        "coverage": 1.0,
+        "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+      },
+      "best_single_snr_before": 5.110359045603432,
+      "best_single_snr_after": 4.637273435357641,
+      "single_frame_aperture_snr_before": [
+        {
+          "obs_id": "2025W46_1A_0090_2",
+          "snr": 2.1945323429059465,
+          "signal": 0.47708151277566113,
+          "noise": 0.21739552589319389,
+          "coverage": 0.8421052631578947,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_1A_0090_3",
+          "snr": 1.0662093268194053,
+          "signal": 0.2333814999789131,
+          "noise": 0.2188890062283645,
+          "coverage": 0.8421052631578947,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_1A_0238_1",
+          "snr": 5.110359045603432,
+          "signal": 1.14507916430851,
+          "noise": 0.22407019821702154,
+          "coverage": 0.8421052631578947,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_1A_0238_2",
+          "snr": 2.360688330571038,
+          "signal": 0.5397675095969623,
+          "noise": 0.2286483576027147,
+          "coverage": 0.8421052631578947,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_2A_0214_2",
+          "snr": null,
+          "coverage": 0.7368421052631579
+        },
+        {
+          "obs_id": "2025W46_2A_0214_3",
+          "snr": 1.1820185182098237,
+          "signal": 0.29286484379948535,
+          "noise": 0.2477667137085394,
+          "coverage": 0.8421052631578947,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_2A_0214_4",
+          "snr": 3.6120957722855276,
+          "signal": 0.9345609733506386,
+          "noise": 0.2587309507464421,
+          "coverage": 0.8421052631578947,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_2A_0226_1",
+          "snr": 2.0264325280807625,
+          "signal": 0.512408891641253,
+          "noise": 0.25286254762528726,
+          "coverage": 0.8421052631578947,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_2A_0226_3",
+          "snr": 0.6341232423651286,
+          "signal": 0.1664209565772291,
+          "noise": 0.26244260651370954,
+          "coverage": 0.7894736842105263,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2025W46_2A_0226_4",
+          "snr": 1.504069497184988,
+          "signal": 0.45463351308111066,
+          "noise": 0.3022689536168385,
+          "coverage": 0.8421052631578947,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        }
+      ],
+      "single_frame_aperture_snr_after": [
+        {
+          "obs_id": "2026W17_1B_0507_3",
+          "snr": 4.637273435357641,
+          "signal": 1.0403928580045985,
+          "noise": 0.22435443423973125,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_1B_0634_1",
+          "snr": 1.5426398319410302,
+          "signal": 0.3439511551162888,
+          "noise": 0.22296270846546953,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_1B_0634_2",
+          "snr": 2.4529477734076925,
+          "signal": 0.5507366808763023,
+          "noise": 0.22452034521354935,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_1B_0634_3",
+          "snr": 2.3922097821572215,
+          "signal": 0.5483725919376794,
+          "noise": 0.22923265176316343,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_1B_0634_4",
+          "snr": 3.913539009696778,
+          "signal": 0.9513124020422874,
+          "noise": 0.2430823864755587,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_2A_0609_1",
+          "snr": 3.3226616026001565,
+          "signal": 0.8573801454373219,
+          "noise": 0.2580401641763269,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_2A_0609_2",
+          "snr": 2.4894446450517216,
+          "signal": 0.6531980456263232,
+          "noise": 0.2623870536445498,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_2A_0591_1",
+          "snr": 2.0693848005378,
+          "signal": 0.5728997578116888,
+          "noise": 0.276845445884594,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_2A_0692_1",
+          "snr": -1.2165663717023278,
+          "signal": -0.33235119426948123,
+          "noise": 0.2731878851824795,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        },
+        {
+          "obs_id": "2026W17_2A_0692_2",
+          "snr": 1.2561728574405915,
+          "signal": 0.36837846288674003,
+          "noise": 0.29325459526111586,
+          "coverage": 1.0,
+          "noise_method": "native-pixel adjoint propagation; independent input pixels/exposures assumed"
+        }
+      ],
+      "frame_registration": [
+        {
+          "obs_id": "2025W46_1A_0090_2",
+          "offset_px": [
+            0.07357694076731158,
+            0.047165080273709116
+          ],
+          "covariance_px2": [
+            [
+              0.0006012346605074506,
+              -6.612214009926724e-05
+            ],
+            [
+              -6.612214009926729e-05,
+              0.0008296108923800722
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_1A_0090_3",
+          "offset_px": [
+            0.05608052236906123,
+            -0.01525418368779186
+          ],
+          "covariance_px2": [
+            [
+              0.0006330402778552625,
+              1.471401782288921e-05
+            ],
+            [
+              1.4714017822889245e-05,
+              0.0005791966886930751
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_1A_0238_1",
+          "offset_px": [
+            0.05468796089422943,
+            0.03441105435156255
+          ],
+          "covariance_px2": [
+            [
+              0.0006173705928682584,
+              -5.783220603448201e-06
+            ],
+            [
+              -5.783220603448184e-06,
+              0.0007443343321142146
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_1A_0238_2",
+          "offset_px": [
+            0.002058980650409006,
+            -0.17990969562526812
+          ],
+          "covariance_px2": [
+            [
+              0.0007247400501810472,
+              9.014540842424437e-05
+            ],
+            [
+              9.014540842424436e-05,
+              0.000859906385814303
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_2A_0214_2",
+          "offset_px": [
+            0.031463322976331885,
+            0.01425364159697788
+          ],
+          "covariance_px2": [
+            [
+              0.0008261970768209892,
+              -0.00010946390536505202
+            ],
+            [
+              -0.00010946390536505203,
+              0.001101288362549988
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_2A_0214_3",
+          "offset_px": [
+            0.04530042896063661,
+            0.0387887326979295
+          ],
+          "covariance_px2": [
+            [
+              0.0007487703274555429,
+              4.0258424602271244e-05
+            ],
+            [
+              4.025842460227122e-05,
+              0.0007480885786049635
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_2A_0214_4",
+          "offset_px": [
+            0.04004748187128942,
+            -0.005608592447166371
+          ],
+          "covariance_px2": [
+            [
+              0.0008398495963969297,
+              0.00011833705141694387
+            ],
+            [
+              0.00011833705141694427,
+              0.0009864648001914414
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_2A_0226_1",
+          "offset_px": [
+            0.010706643937451375,
+            -0.04728894699520937
+          ],
+          "covariance_px2": [
+            [
+              0.0006813568144025071,
+              8.079497321473106e-06
+            ],
+            [
+              8.079497321473074e-06,
+              0.000778591218820829
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_2A_0226_3",
+          "offset_px": [
+            0.07808282917103707,
+            -0.021825315849312403
+          ],
+          "covariance_px2": [
+            [
+              0.0007453775613600758,
+              -0.0003013165850599014
+            ],
+            [
+              -0.00030131658505990123,
+              0.0011664884431322458
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W46_2A_0226_4",
+          "offset_px": [
+            0.05343810976272837,
+            -0.03924499688226176
+          ],
+          "covariance_px2": [
+            [
+              0.0008480057268272493,
+              7.201871911358667e-05
+            ],
+            [
+              7.201871911358673e-05,
+              0.001040518843120801
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_1B_0507_3",
+          "offset_px": [
+            0.026012479853258264,
+            0.010308021520707492
+          ],
+          "covariance_px2": [
+            [
+              0.0011032296840402897,
+              0.000351130222309614
+            ],
+            [
+              0.00035113022230961425,
+              0.0009542469387920693
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_1B_0634_1",
+          "offset_px": [
+            -0.04304690987027985,
+            -0.05445310288628048
+          ],
+          "covariance_px2": [
+            [
+              0.0006579253520684157,
+              0.00010567413660059113
+            ],
+            [
+              0.00010567413660059115,
+              0.0005597511976097073
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_1B_0634_2",
+          "offset_px": [
+            0.06931522898304922,
+            -0.0011214118045511697
+          ],
+          "covariance_px2": [
+            [
+              0.0005179738690125923,
+              2.7350202177657764e-05
+            ],
+            [
+              2.7350202177657768e-05,
+              0.00042687294090480515
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_1B_0634_3",
+          "offset_px": [
+            -0.07021293108985262,
+            0.07585714593881068
+          ],
+          "covariance_px2": [
+            [
+              0.0006809252127189534,
+              7.796006917335469e-05
+            ],
+            [
+              7.796006917335466e-05,
+              0.001383506516684959
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_1B_0634_4",
+          "offset_px": [
+            0.021857190410646675,
+            0.11173535811466861
+          ],
+          "covariance_px2": [
+            [
+              0.0010912784245898396,
+              0.000371305253791782
+            ],
+            [
+              0.00037130525379178186,
+              0.001060001916613521
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_2A_0609_1",
+          "offset_px": [
+            -0.021376915227111236,
+            -0.0032747623109013572
+          ],
+          "covariance_px2": [
+            [
+              0.0009306784899073228,
+              0.00015802454486532936
+            ],
+            [
+              0.000158024544865329,
+              0.0008504213637276526
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_2A_0609_2",
+          "offset_px": [
+            0.019210594765473106,
+            -0.013746871178742247
+          ],
+          "covariance_px2": [
+            [
+              0.0006449838566983862,
+              3.178214810166115e-06
+            ],
+            [
+              3.1782148101661163e-06,
+              0.0004648337205339277
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_2A_0591_1",
+          "offset_px": [
+            0.041121668421708606,
+            -0.034481223082015386
+          ],
+          "covariance_px2": [
+            [
+              0.0007723222045148005,
+              1.2276024477741508e-05
+            ],
+            [
+              1.2276024477741652e-05,
+              0.000650726838141717
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_2A_0692_1",
+          "offset_px": [
+            0.04398906235419313,
+            0.04212870986349618
+          ],
+          "covariance_px2": [
+            [
+              0.0009483121754754995,
+              0.0001557313937268304
+            ],
+            [
+              0.0001557313937268301,
+              0.0009474758971490427
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W17_2A_0692_2",
+          "offset_px": [
+            -0.001162433146984924,
+            0.000949899308155426
+          ],
+          "covariance_px2": [
+            [
+              0.0007303805172931185,
+              9.982359098605199e-05
+            ],
+            [
+              9.982359098605203e-05,
+              0.0006206788865820678
+            ]
+          ]
+        }
+      ],
+      "real_background_injection_controls": [
+        {
+          "kind": "stationary",
+          "injected_delta_px": [
+            0.0,
+            0.0
+          ],
+          "recovered_delta_px": [
+            0.007876080535428542,
+            -0.14471032022625252
+          ],
+          "error_mahalanobis": 2.5869749575428087,
+          "covariance_px2": [
+            [
+              0.003524567947566188,
+              0.00043800822974780155
+            ],
+            [
+              0.00043800822974780177,
+              0.0032343315266467765
+            ]
+          ],
+          "amplitude_per_frame": 0.8,
+          "note": "Synthetic control on real off-target background; fixed calibration; no added source shot noise; not a completeness benchmark."
+        },
+        {
+          "kind": "moving",
+          "injected_delta_px": [
+            0.6,
+            0.05
+          ],
+          "recovered_delta_px": [
+            0.6564690816536185,
+            -0.088346764808378
+          ],
+          "error_mahalanobis": 2.7665704036717513,
+          "covariance_px2": [
+            [
+              0.0025858226014344385,
+              0.00013963684605182281
+            ],
+            [
+              0.0001396368460518231,
+              0.0031213347415219566
+            ]
+          ],
+          "amplitude_per_frame": 0.8,
+          "note": "Synthetic control on real off-target background; fixed calibration; no added source shot noise; not a completeness benchmark."
+        }
+      ],
+      "configuration_role": "spectral_tolerance_sensitivity_check",
+      "snr_note": "Aperture statistic conditional on fitted position; best individual comparison uses the coadd mask. Not a blind detection significance or total flux measurement.",
+      "native_pixel_fit": true,
+      "position_tied_to_expected_motion": false,
+      "parallax_fitted": false,
+      "status": "candidate_motion",
+      "uncertainty_note": "Conditional native-pixel fit covariance inflated by chi-square, plus conservative reference-calibration and heldout RMS terms. Not a calibrated discovery probability.",
+      "scene_id": "coadd-broad"
+    }
+  ]
+}

@@ -84,9 +84,10 @@ class RealDataProducts(unittest.TestCase):
 
     def test_three_real_pairs_are_unconfirmed(self):
         self.assertTrue(self.manifest['data_real'])
-        self.assertEqual(self.manifest['analysis_sha256'],sha256(Path(pipeline.__file__).read_bytes()).hexdigest())
-        self.assertEqual(len(self.manifest['scenes']),3)
-        for s in self.manifest['scenes']:
+        self.assertEqual(self.manifest['legacy_analysis_sha256'],sha256(Path(pipeline.__file__).read_bytes()).hexdigest())
+        legacy=[s for s in self.manifest['scenes'] if s.get('kind')!='coadd']
+        self.assertEqual(len(legacy),3)
+        for s in legacy:
             self.assertEqual(s['target_detection'],'unconfirmed')
             self.assertGreater(s['baseline_days'],150)
             self.assertLess(s['wavelength_mismatch_channels'],.5)
@@ -94,9 +95,10 @@ class RealDataProducts(unittest.TestCase):
     def test_input_hashes_when_raw_cache_available(self):
         for s in self.manifest['scenes']:
             for frame in [s['before'],s['after']]:
-                path=ROOT/frame['path']
-                if path.exists():
-                    self.assertEqual(sha256(path.read_bytes()).hexdigest(),frame['sha256'])
+                for record in frame.get('inputs',[frame]):
+                    path=ROOT/record['path']
+                    if path.exists():
+                        self.assertEqual(sha256(path.read_bytes()).hexdigest(),record['sha256'])
 
     def test_products_have_wcs_and_no_highlights_in_invalid_regions(self):
         for s in self.manifest['scenes']:

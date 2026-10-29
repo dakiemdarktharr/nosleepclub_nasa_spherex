@@ -6,14 +6,15 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 ## Demo hiện tại: WISE 0855
 
-![WISE 0855 real-data comparison](docs/wise0855-demo-desktop.jpg)
+![WISE 0855 coadd and independent astrometry](docs/wise0855-coadd-demo.jpg)
 
-- Ba cặp cutout **thật** từ SPHEREx QR2/IRSA, đã kiểm tra bước sóng và đưa về cùng lưới trời.
+- Cộng 10 ảnh mỗi epoch theo các cặp phổ tương thích, cùng trọng số phổ ở hai epoch; thêm cấu hình phổ chặt 2 ảnh để đối chiếu và giữ ba cặp ảnh đơn cũ.
+- S/N khẩu độ trước/sau: **5,1 → 7,9** và **4,6 → 7,6**. Fit centroid độc lập trên pixel gốc cho dịch chuyển **3,25″ ± 0,80″** trong 163,5 ngày ở cấu hình phổ rộng; sai số theo mô hình có điều kiện.
 - So sánh kéo vạch, song song, sai khác và nhấp nháy; zoom, highlight và bảng bằng chứng.
 - Lưu/xuất nhận xét trong trình duyệt; có thể xóa nhận xét theo vùng.
 - FITS đã xử lý, arrays và manifest có nguồn, hash và phiên bản để kiểm tra lại.
 
-**Chưa xác nhận chuyển động WISE 0855.** Đây là baseline xử lý ảnh cổ điển; chưa có vision model được huấn luyện. Vòng nét đứt là vị trí ngoại suy từ astrometry cũ, khác với residual tự động. S/N ở vị trí cố định chưa phải bằng chứng đo chuyển động.
+**Dấu hiệu chuyển động, chưa xác nhận.** Cấu hình phổ chặt là cấu hình chính: **3,25″ ± 1,05″**, S/N không tăng rõ. Cấu hình phổ rộng là kiểm tra độ nhạy, có dùng chung ảnh với cấu hình chặt. Chỉ 3–4 sao kiểm tra độc lập, chưa đổi chéo được tập sao căn chỉnh; nguồn giả đứng yên trên nền khác vẫn có độ lệch 0,89″ ở cấu hình rộng. Chưa neo Gaia hoặc kiểm tra toàn bộ đáp ứng phổ. Baseline hiện dùng xử lý ảnh và ePSF, chưa có vision model được huấn luyện.
 
 ## Mở demo ngay
 
@@ -34,16 +35,22 @@ Python 3.11 trở lên; nên dùng virtual environment. Các phiên bản trong 
 ```sh
 python -m venv .venv
 .venv\Scripts\python -m pip install -r requirements.txt
+.venv\Scripts\python scripts/fetch_wise0855.py
 .venv\Scripts\python scripts/fetch_wise0855.py --demo
 .venv\Scripts\python scripts/build_demo.py
+.venv\Scripts\python scripts/prepare_motion_data.py
+.venv\Scripts\python scripts/motion_analysis.py
 .venv\Scripts\python -m unittest discover -s tests -v
 ```
 
 Lệnh `--demo` tải 6 cutout được chọn và kiểm tra FITS; lưu trong `data/raw/wise0855/target-centered/`. Chạy fetch không có `--demo` để quét các quan sát D6 trong vùng truy vấn ban đầu, hiện đã kiểm tra 43 quan sát. Download có cache và giới hạn 3 request đồng thời.
 
+`prepare_motion_data.py` chọn 31 cutout trong hai cửa sổ epoch, tải lại quanh mục tiêu và lấy hai tệp hiệu chuẩn chính thức đã ghim phiên bản/hash. Phân tích dùng 2 hoặc 10 cặp phù hợp phổ; không dùng tất cả 31 ảnh để cộng. `motion_analysis.py` chạy 128 mô phỏng noise mỗi epoch/cấu hình, xuất covariance, đối chứng và hai bộ sản phẩm web. Chạy `build_demo.py` trước rồi `motion_analysis.py` để manifest chứa cả ảnh đơn và ảnh cộng. Test chạy offline; chỉ kiểm tra hash raw khi có cache.
+
 ## Tài liệu
 
-- [Kết quả, phương pháp và bước tiếp theo của demo](docs/WISE0855_DEMO.md)
+- [Cộng ảnh, astrometry, sai số và bước tiếp theo hiện tại](docs/WISE0855_COADD.md)
+- [Baseline ba cặp ảnh đơn ban đầu](docs/WISE0855_DEMO.md)
 - [Phân tích vision model và quy trình review](docs/DEEP_RESEARCH_VISION.md)
 - [Tóm tắt đề bài](docs/CHALLENGE.md)
 - [Lộ trình](docs/ROADMAP.md)

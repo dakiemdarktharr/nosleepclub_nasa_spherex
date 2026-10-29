@@ -7,10 +7,13 @@
 - [x] Tải cutout WISE 0855 thật, kiểm tra bước sóng và chọn 3 cặp.
 - [x] Căn chỉnh, PSF cross-convolution, export ảnh sai khác và provenance.
 - [x] Demo web trước/sau, highlight, evidence và nhận xét cục bộ.
-- [ ] Cộng ảnh trong epoch theo phổ và đo centroid độc lập kèm sai số.
+- [x] Cộng ảnh trong epoch theo phổ và đo centroid độc lập kèm sai số có điều kiện.
+- [x] Truyền covariance nội suy cho S/N; đối chứng sao giữ lại, bootstrap và injection nền thật.
+- [ ] Mở rộng trường sao tham chiếu, đối chiếu Gaia và kiểm tra đổi tập sao căn chỉnh.
+- [ ] Kiểm tra đáp ứng phổ đầy đủ, injection nhiều vị trí và thêm epoch thứ ba.
 - [ ] Xác minh chuyển động của WISE 0855 bằng dữ liệu này.
 
-Xem kết quả và điều kiện hoàn thành bước tiếp theo tại [WISE0855_DEMO.md](WISE0855_DEMO.md).
+Xem kết quả và điều kiện hoàn thành bước tiếp theo tại [WISE0855_COADD.md](WISE0855_COADD.md).
 
 ## Chuẩn bị
 

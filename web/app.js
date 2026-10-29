@@ -33,9 +33,28 @@ function xy(x,y,width,height,offset=0) {
 function drawImage(image,x,width,height) {
   const c=crop(); ctx.drawImage(image,c.x,c.y,c.width,c.width,x,0,width,height);
 }
+function ellipse(covariance, factor=2.30) {
+  const a=covariance[0][0],b=covariance[0][1],d=covariance[1][1];
+  const root=Math.hypot(a-d,2*b), major=Math.max(0,(a+d+root)/2),minor=Math.max(0,(a+d-root)/2);
+  return {rx:Math.sqrt(factor*major),ry:Math.sqrt(factor*minor),angle:.5*Math.atan2(2*b,a-d)};
+}
 function overlays(width,height,offset=0) {
   const scene=state.scene;
   ctx.save();ctx.beginPath();ctx.rect(offset,0,width,height);ctx.clip();
+  if (scene.measured_positions && $("show-motion").checked) {
+    const points=scene.measured_positions.map(p=>xy(p.x,p.y,width,height,offset));
+    ctx.strokeStyle="#a4e4d9";ctx.lineWidth=2;ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(...points[0]);ctx.lineTo(...points[1]);ctx.stroke();
+    scene.measured_positions.forEach((p,i)=>{
+      const [x,y]=points[i],c=p.covariance_px2;
+      const e=ellipse([[c[0][0],-c[0][1]],[-c[1][0],c[1][1]]]);
+      const scale=width/crop().width;
+      ctx.strokeStyle=i?"#f7be66":"#a4e4d9";ctx.fillStyle=ctx.strokeStyle;
+      ctx.beginPath();ctx.ellipse(x,y,e.rx*scale,e.ry*scale,e.angle,0,2*Math.PI);ctx.stroke();
+      ctx.beginPath();ctx.arc(x,y,3,0,2*Math.PI);ctx.fill();
+      if(state.selected==="target") {ctx.font="500 17px Segoe UI";ctx.fillText(i?"Sau · đo":"Trước · đo",x+12,i?y+23:y-12);}
+    });
+  }
   if ($("show-prior").checked) {
     const a=scene.target_prior[0], b=scene.target_prior[1];
     const [ax,ay]=xy(a.x,a.y,width,height,offset),[bx,by]=xy(b.x,b.y,width,height,offset);
@@ -60,6 +79,7 @@ function render() {
   if (!state.scene || !state.images.before) return;
   canvas.classList.toggle("side",state.mode==="side");
   canvas.width=1024;canvas.height=state.mode==="side"?512:1024;
+  $("fov-readout").textContent=`6,15″ / pixel gốc · khung ${number(64/state.zoom*6.15/60,2)}′`;
   ctx.imageSmoothingEnabled=false;ctx.fillStyle="#0e1a2c";ctx.fillRect(0,0,canvas.width,canvas.height);
   if (state.mode==="side") {
     drawImage(state.images.before,0,512,512);drawImage(state.images.after,512,512,512);
@@ -85,7 +105,8 @@ function setMode(mode) {
   document.querySelectorAll("[data-mode]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===mode)));
   $("wipe-control").hidden=mode!=="wipe";
   $("view-note").textContent=mode==="difference"
-    ?"Ảnh sau trừ ảnh trước đã đồng nhất PSF và hiệu chỉnh flux/nền. Vùng xanh xám thiếu dữ liệu hoặc không qua kiểm tra phổ; điểm residual không phải sigma đã hiệu chuẩn."
+    ?"Ảnh sau trừ ảnh trước đã cross-convolution PSF và hiệu chỉnh flux/nền để hiển thị. Vùng xanh xám thiếu dữ liệu hoặc không qua gate phổ. Residual không phải sigma đã hiệu chuẩn."
+    :state.scene?.kind==="coadd"?"Hai ảnh cùng mức kéo sáng. Chấm và ellipse 68% là vị trí fit trên pixel gốc, độc lập từng epoch. Xanh xám là pixel thiếu dữ liệu. Ảnh cộng đã làm mượt chỉ dùng để xem; vị trí dự kiến nét đứt là ngoại suy cũ, chưa có parallax."
     :"Hai ảnh dùng cùng mức kéo sáng. Vòng nét đứt là dự báo từ astrometry cũ, không phải phát hiện của model.";
   if (mode==="blink") state.timer=setInterval(()=>{state.blinkAfter=!state.blinkAfter;render();},850);
   render();
@@ -104,7 +125,13 @@ function select(id) {
   $("select-target").setAttribute("aria-pressed",String(id==="target"));
   document.querySelectorAll(".candidate-button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.id===id)));
   const scene=state.scene,detail=$("selection-detail");
-  if(id==="target") {
+  if(id==="target" && scene.kind==="coadd") {
+    const m=scene.motion;
+    detail.innerHTML=`<div class="selection-title">Centroid ePSF · pixel gốc</div><p>Fit vị trí riêng cho từng epoch; biên độ riêng từng ảnh. Không buộc theo vector chuyển động dự báo.</p>${["before","after"].map((key,i)=>{
+      const p=m["target_"+key],c=scene.measured_positions[i].covariance_px2;
+      return `<div class="centroid-epoch"><strong>${i?"Sau":"Trước"} · MJD ${number(p.effective_mjd,3)}</strong><dl><dt>RA / Dec (độ)</dt><dd>${number(p.ra_deg,6)}<br>${number(p.dec_deg,6)}</dd><dt>σ đông / bắc</dt><dd>${number(Math.sqrt(c[0][0])*6.15,2)}″ / ${number(Math.sqrt(c[1][1])*6.15,2)}″</dd></dl></div>`;
+    }).join("")}<p>Sai số trục theo mô hình, có thêm hạng căn chỉnh và sao giữ lại. Tọa độ tương đối theo WCS SPHEREx, chưa neo vào Gaia.</p><dl><dt>RMS sao giữ lại</dt><dd>${number(m.holdout_rms_arcsec,2)}″</dd><dt>Số sao căn chỉnh / giữ lại</dt><dd>${m.training_reference_positions.length} / ${m.heldout_controls.length}</dd><dt>Bootstrap / epoch</dt><dd>${m.bootstrap_before.draws}</dd></dl>`;
+  } else if(id==="target") {
     const a=scene.before.target_fit,b=scene.after.target_fit;
     detail.innerHTML=`<div class="selection-title">Fit PSF tại vị trí dự kiến</div><div class="fit-score"><div><span>S/N ảnh trước</span><strong>${number(a.fixed_prior_snr,1)}</strong></div><div><span>S/N ảnh sau</span><strong>${number(b.fixed_prior_snr,1)}</strong></div></div><p>Fit biên độ tại vị trí ngoại suy; chưa fit vị trí độc lập. Hai giá trị này chưa xác nhận chuyển động.</p><dl><dt>Độ lệch bước sóng</dt><dd>≈ ${number(scene.target_wavelength_delta_nm,2)} nm</dd><dt>Bề rộng phổ trung bình</dt><dd>${number((scene.before.bandwidth_um+scene.after.bandwidth_um)*500,1)} nm</dd><dt>Vị trí dự kiến, ảnh sau</dt><dd>${number(scene.target_prior[1].ra_deg,5)}°</dd></dl>`;
   } else {
@@ -130,14 +157,39 @@ function sceneList() {
     const button=document.createElement("button");button.className="scene-button";button.dataset.scene=scene.id;
     button.setAttribute("aria-pressed",String(scene.id===state.scene?.id));
     const image=document.createElement("img");image.src=scene.before.image;image.alt="";
-    const text=document.createElement("span");text.innerHTML=`<strong>${number((scene.before.wavelength_um+scene.after.wavelength_um)/2,3)} µm</strong><small>${Math.round(scene.baseline_days)} ngày · Δλ ${number(scene.target_wavelength_delta_nm,2)} nm</small>`;
+    const text=document.createElement("span");text.innerHTML=scene.kind==="coadd"
+      ?`<strong>${scene.label}</strong><small>${scene.motion.id==="strict"?"Phổ chặt · cấu hình chính":"Phổ rộng · kiểm tra độ nhạy"}</small>`
+      :`<strong>Ảnh đơn · ${number((scene.before.wavelength_um+scene.after.wavelength_um)/2,3)} µm</strong><small>${Math.round(scene.baseline_days)} ngày · Δλ ${number(scene.target_wavelength_delta_nm,2)} nm</small>`;
     button.append(image,text);button.addEventListener("click",()=>loadScene(scene));list.append(button);
   }
 }
 function evidenceContent() {
   const s=state.scene;
+  if(s.kind==="coadd") {
+    const m=s.motion, controls=m.real_background_injection_controls;
+    $("evidence-content").innerHTML=`<h3>${s.label} · ${m.id==="strict"?"cấu hình phổ chặt, chính":"cấu hình phổ rộng, kiểm tra độ nhạy"}</h3><p>Các cặp được chọn trước khi fit mục tiêu, trong 4,55–4,94 µm; |Δλ| / bề rộng phổ trung bình ≤ ${number(m.tolerance_bandwidth,2)}. Hai epoch dùng cùng trọng số cho từng cặp phổ. Đây là ảnh tổng hợp nhiều kênh, không phải nhiều lần chụp một bước sóng giống hệt.</p><table><thead><tr><th>Thông tin</th><th>Trước</th><th>Sau</th></tr></thead><tbody><tr><td>Cửa sổ ngày UTC</td><td>${s.before.date_start} → ${s.before.date_end}</td><td>${s.after.date_start} → ${s.after.date_end}</td></tr><tr><td>Số ảnh</td><td>${s.before.inputs.length}</td><td>${s.after.inputs.length}</td></tr><tr><td>λ trung bình có trọng số</td><td>${number(s.before.wavelength_um,5)} µm</td><td>${number(s.after.wavelength_um,5)} µm</td></tr><tr><td>Pipeline IRSA</td><td>${s.before.pipeline_version}</td><td>${s.after.pipeline_version}</td></tr></tbody></table><h3>Phương pháp và sai số</h3><p>CWAVE/CBAND khoa học đầy đủ và ePSF chính thức của IRSA. Fit trên pixel gốc: centroid chung trong mỗi epoch, biên độ và mặt phẳng nền riêng từng ảnh. Không dùng vị trí dự báo để ràng buộc vector dịch chuyển. ${m.bootstrap_before.draws} mô phỏng noise/epoch kiểm tra covariance; thêm hạng sai số căn chỉnh và RMS của ${m.heldout_controls.length} sao không tham gia fit căn chỉnh. RMS giữ lại: ${number(m.holdout_rms_arcsec,3)}″.</p><p>Khẩu độ bán kính 2,5 pixel, vành nền 4–6 pixel; truyền trọng số ngược về pixel gốc để giữ covariance nội suy. Vẫn giả định noise pixel gốc và các exposure độc lập. Phủ khẩu độ trước/sau: ${number(m.coadd_snr_before.coverage*100,1)}% / ${number(m.coadd_snr_after.coverage*100,1)}%. So ảnh đơn dùng cùng mặt nạ hợp lệ của ảnh cộng; đây là S/N có điều kiện tại vị trí fit.</p><p>Mahalanobis 2 chiều = ${number(m.mahalanobis_distance,2)}; không diễn giải thành Gaussian sigma hay xác suất phát hiện. Dự báo ngoài dùng Luhman 2014 và parallax 0,454″ với quỹ đạo Trái Đất; hai epoch chưa đủ để fit riêng proper motion và parallax.</p><h3>Kiểm tra và giới hạn còn mở</h3><p>Nguồn giả trên nền thật, khác vùng mục tiêu: ${controls.map(c=>`${c.kind==="stationary"?"đứng yên":"dịch chuyển"}: sai lệch hồi phục ${number(Math.hypot(...c.recovered_delta_px.map((v,i)=>v-c.injected_delta_px[i]))*6.15,2)}″, D<sub>M</sub> ${number(c.error_mahalanobis,2)}`).join("; ")}. Giữ nguyên noise map, chưa thêm shot noise nguồn. Một vị trí không đại diện completeness hoặc false-positive rate.</p><p>Đổi chéo tập sao tham chiếu chưa thực hiện được: không đủ 2 sao đạt S/N trong một exposure (${m.reference_swap_unavailable_reason.split(": ").pop()}). Chưa neo Gaia; mới so tâm/bề rộng phổ, chưa so toàn bộ đáp ứng phổ. Sai số ePSF, blending và noise thiết bị tương quan chưa được mô phỏng đầy đủ. Không suy ra biến thiên thông lượng từ ảnh tổng hợp này.</p><h3>Ảnh thành phần & trọng số phổ</h3><div class="evidence-table"><table><thead><tr><th>Cutout trước (IRSA)</th><th>Cutout sau (IRSA)</th><th>λ trước / sau (µm)</th><th>Trọng số</th></tr></thead><tbody>${m.spectral_pairs.map(p=>`<tr><td><a href="${p.before.cutout_url}" target="_blank" rel="noopener noreferrer">${p.before.obs_id}</a></td><td><a href="${p.after.cutout_url}" target="_blank" rel="noopener noreferrer">${p.after.obs_id}</a></td><td>${number(p.before_um,4)} / ${number(p.after_um,4)}</td><td>${number(p.weight,4)}</td></tr>`).join("")}</tbody></table></div><p><a href="data/${s.id}/evidence.json" download>JSON kết quả, SHA-256 đầu vào & hiệu chuẩn</a> · <a href="data/motion/results.json" download>Toàn bộ phép đo và covariance</a></p>`;
+    $("download-fits").href=s.fits;return;
+  }
   $("evidence-content").innerHTML=`<table><thead><tr><th>Thông tin</th><th>Trước</th><th>Sau</th></tr></thead><tbody><tr><td>Ngày quan sát</td><td>${s.before.date}</td><td>${s.after.date}</td></tr><tr><td>λ tại vị trí dự kiến</td><td>${number(s.before.wavelength_um,5)} µm</td><td>${number(s.after.wavelength_um,5)} µm</td></tr><tr><td>Pipeline IRSA</td><td>${s.before.pipeline_version}</td><td>${s.after.pipeline_version}</td></tr></tbody></table><p>RMS từ ${s.alignment.matched_stars} sao nền: ${number(s.alignment.rms_before_px,3)} → ${number(s.alignment.rms_after_px,3)} pixel. Đây là residual của các sao dùng để fit, chưa phải kiểm tra astrometry độc lập.</p><p>WCS-WAVE có độ chính xác dùng cho trực quan hóa, cỡ 1 nm theo IRSA. Các Δλ nhỏ hơn mức này là giá trị tính từ bảng tra, không phải độ chính xác hiệu chuẩn được cam kết.</p><p>Noise sau nội suy và convolution có tương quan. Highlight chỉ nằm trong vùng có dữ liệu và qua gate bước sóng cục bộ ≤ ½ bề rộng phổ. Vị trí dự kiến dùng ngoại suy tuyến tính từ Luhman 2014, chưa hiệu chỉnh parallax.</p><h3>Cutout gốc</h3><p><a href="${s.before.cutout_url}" target="_blank" rel="noopener noreferrer">Tải cutout trước từ IRSA</a> · <a href="${s.after.cutout_url}" target="_blank" rel="noopener noreferrer">Tải cutout sau từ IRSA</a></p>`;
   $("download-fits").href=s.fits;
+}
+function motionPanel(scene) {
+  const active=scene.kind==="coadd";$("motion-panel").hidden=!active;$("motion-overlay-label").hidden=!active;
+  $("science-status").textContent=active?"Dấu hiệu chuyển động · cần xác minh thêm":"Ảnh đơn · chưa đo chuyển động độc lập";
+  $("target-subtitle").textContent=active?"Centroid fit độc lập từng epoch":"Vùng vị trí dự kiến";
+  if(!active)return;
+  const m=scene.motion;
+  $("configuration-label").textContent=`${scene.label} · ${m.id==="strict"?"Phổ chặt, cấu hình chính":"Phổ rộng, kiểm tra độ nhạy"}`;
+  $("motion-value").textContent=`${number(m.displacement_arcsec,2)}″ ± ${number(m.radial_error_arcsec,2)}″`;
+  $("motion-components").textContent=`Đông ${number(m.east_arcsec,2)}″ · Bắc ${number(m.north_arcsec,2)}″ · ${number(scene.baseline_days,1)} ngày`;
+  $("snr-rows").innerHTML=["before","after"].map((key,i)=>`<tr><td>${i?"Tháng 4/2026":"Tháng 11/2025"}</td><td>${number(m["best_single_snr_"+key],1)}</td><td><strong>${number(m["coadd_snr_"+key].snr,1)}</strong></td></tr>`).join("");
+  $("snr-note").textContent=m.id==="broad"?"S/N tăng khoảng 1,5–1,6×. Cùng trọng số phổ ở hai epoch; phổ rộng chỉ là kiểm tra độ nhạy.":"Phổ chặt cho dịch chuyển cùng hướng, nhưng S/N không tăng rõ so với ảnh đơn. Giữ lại để đối chiếu.";
+  const stationary=m.real_background_injection_controls[0];
+  $("motion-limit").textContent=`Chưa xác nhận: chỉ ${m.heldout_controls.length} sao giữ lại; kiểm tra đổi tập sao chưa đủ dữ liệu. Nguồn giả đứng yên ở nền khác vẫn lệch ${number(Math.hypot(...stationary.recovered_delta_px)*6.15,2)}″. Cần thêm sao tham chiếu, kiểm tra hệ thống và epoch thứ ba.`;
+  const sx=27,ox=207,oy=90,point=(e,n)=>[ox+e*sx,oy-n*sx];
+  const [mx,my]=point(m.east_arcsec,m.north_arcsec),[px,py]=point(m.predicted_motion.east_arcsec,m.predicted_motion.north_arcsec);
+  const c=m.covariance_arcsec2,e=ellipse([[c[0][0],-c[0][1]],[-c[1][0],c[1][1]]]);
+  $("motion-chart").innerHTML=`<path d="M18 ${oy}H261 M${ox} 14V151" stroke="#d2dee6" fill="none"/><g fill="#52677b" font-size="10"><text x="17" y="${oy+15}">−7″</text><text x="${ox+4}" y="${oy+15}">0</text><text x="233" y="${oy+15}">+2″</text><text x="${ox+4}" y="22">+2″ Bắc</text><text x="209" y="151">Đông →</text></g><path d="M${ox} ${oy}L${px} ${py}" stroke="#8062af" stroke-dasharray="4 3"/><path d="M${ox} ${oy}L${mx} ${my}" stroke="#2f766e" stroke-width="2"/><ellipse cx="${mx}" cy="${my}" rx="${e.rx*sx}" ry="${e.ry*sx}" transform="rotate(${e.angle*180/Math.PI} ${mx} ${my})" fill="#b7e6dc" fill-opacity=".4" stroke="#2f766e"/><circle cx="${mx}" cy="${my}" r="4" fill="#2f766e"/><path d="M${px} ${py-5}l5 5 -5 5 -5 -5Z" fill="white" stroke="#8062af" stroke-width="1.5"/>`;
 }
 async function loadScene(scene) {
   const generation=++state.loading;
@@ -145,13 +197,16 @@ async function loadScene(scene) {
   try {
     const [before,after,difference,pixels]=await Promise.all([loadImage(scene.before.image),loadImage(scene.after.image),loadImage(scene.difference_image),getJson(scene.array_json)]);
     if(generation!==state.loading)return;
-    state.scene=scene;state.images={before,after,difference};state.pixels=pixels;state.center=[32,32];state.zoom=1;
-    $("zoom").value="1";$("zoom-value").textContent="1×";
+    state.scene=scene;state.images={before,after,difference};state.pixels=pixels;state.center=[32,32];state.zoom=scene.kind==="coadd"?2:1;
+    $("zoom").value=String(state.zoom);$("zoom-value").textContent=`${state.zoom}×`;
     $("baseline").textContent=`${number(scene.baseline_days,1)} ngày`;
-    $("wavelength").textContent=`${number((scene.before.wavelength_um+scene.after.wavelength_um)/2,3)} µm`;
-    $("alignment").textContent=scene.alignment.rms_after_px===null?"Chỉ dùng WCS":`${number(scene.alignment.rms_after_px,3)} px`;
-    $("date-before").textContent=`Trước · ${scene.before.date}`;$("date-after").textContent=`Sau · ${scene.after.date}`;
-    $("load-state").hidden=true;candidateList();sceneList();evidenceContent();select("target");setMode(state.mode);
+    const isCoadd=scene.kind==="coadd";
+    $("wavelength-label").textContent=isCoadd?"Vùng chọn phổ tổng hợp":"Bước sóng tại mục tiêu";
+    $("alignment-label").textContent=isCoadd?"RMS sao giữ lại độc lập":"RMS sao nền sau căn chỉnh";
+    $("wavelength").textContent=isCoadd?"4,55–4,94 µm":`${number((scene.before.wavelength_um+scene.after.wavelength_um)/2,3)} µm`;
+    $("alignment").textContent=isCoadd?`${number(scene.motion.holdout_rms_arcsec,2)}″ (${scene.motion.heldout_controls.length} sao)`:scene.alignment.rms_after_px===null?"Chỉ dùng WCS":`${number(scene.alignment.rms_after_px,3)} px`;
+    $("date-before").textContent=`Trước · ${isCoadd?scene.before.date_start:scene.before.date}`;$("date-after").textContent=`Sau · ${isCoadd?scene.after.date_end:scene.after.date}`;
+    $("load-state").hidden=true;motionPanel(scene);candidateList();sceneList();evidenceContent();select("target");setMode(state.mode);
     ["download-manifest","save-review","export-reviews"].forEach(id=>$(id).disabled=false);
   } catch(error) {
     $("load-state").hidden=false;$("load-state").textContent=`Không tải được dữ liệu: ${error.message}. Chạy web bằng scripts/serve_demo.py rồi tải lại trang.`;
@@ -161,12 +216,12 @@ async function loadScene(scene) {
 document.querySelectorAll("[data-mode]").forEach(button=>button.addEventListener("click",()=>setMode(button.dataset.mode)));
 $("wipe").addEventListener("input",e=>{state.wipe=Number(e.target.value)/100;render();});
 $("zoom").addEventListener("input",e=>{state.zoom=Number(e.target.value);$("zoom-value").textContent=`${number(state.zoom,state.zoom%1?2:0)}×`;render();});
-["show-prior","show-residuals"].forEach(id=>$(id).addEventListener("change",render));
+["show-prior","show-residuals","show-motion"].forEach(id=>$(id).addEventListener("change",render));
 $("reset-view").addEventListener("click",()=>{state.center=[32,32];state.zoom=1;state.wipe=.5;$("wipe").value="50";$("zoom").value="1";$("zoom-value").textContent="1×";setMode("wipe");});
 $("select-target").addEventListener("click",()=>{if(state.scene)select("target");});
 $("focus-selection").addEventListener("click",()=>{
   if(!state.scene)return;
-  const p=state.selected==="target"?state.scene.target_prior[1]:state.scene.candidates.find(c=>c.id===state.selected);
+  const p=state.selected==="target"?(state.scene.measured_positions?.[1]||state.scene.target_prior[1]):state.scene.candidates.find(c=>c.id===state.selected);
   state.center=[p.x+.5,63-p.y+.5];state.zoom=3;$("zoom").value="3";$("zoom-value").textContent="3×";render();
 });
 $("evidence-open").addEventListener("click",()=>{if(state.scene)$("evidence-dialog").showModal();});
@@ -176,7 +231,7 @@ $("save-review").addEventListener("click",()=>{
   const s=state.scene;
   reviews[keyForSelection()]={scene_id:s.id,selection:state.selected,status:$("review-status").value,note:$("review-note").value,
     saved_at:new Date().toISOString(),analysis_sha256:state.manifest.analysis_sha256,
-    input_sha256:[s.before.sha256,s.after.sha256],target_detection:"unconfirmed"};
+    input_sha256:[s.before.sha256,s.after.sha256],target_detection:s.target_detection};
   try{localStorage.setItem("nosleepclub.reviews.v1",JSON.stringify(reviews));$("review-feedback").textContent="Đã lưu nhận xét trên trình duyệt này.";$("clear-review").hidden=false;}
   catch{$("review-feedback").textContent="Trình duyệt không cho lưu. Chọn Xuất JSON để giữ nhận xét.";}
 });

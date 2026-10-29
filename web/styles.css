@@ -1140,6 +1140,55 @@ dialog code {
     max-width:700px
   }
 }
+.motion-panel {
+  display:grid;
+  grid-template-columns:1.15fr 1.2fr 280px;
+  gap:24px;
+  align-items:center;
+  margin-bottom:24px;
+  padding:23px 27px 0;
+  background:#fff;
+  border:1px solid var(--line);
+  border-left:4px solid #367d72;
+  border-radius:7px;
+}
+.eyebrow {font-size:11px;color:#367065;margin-bottom:7px;font-weight:600}
+.motion-summary h2 {font-size:14px;font-weight:500;color:var(--muted)}
+.motion-value {font-size:31px;font-weight:650;letter-spacing:-1px;margin:3px 0 5px;white-space:nowrap}
+#motion-components {font-size:12px;color:var(--muted)}
+.motion-qualification {font-size:11px;color:var(--muted);margin-top:9px;max-width:43ch}
+.snr-summary h3 {font-size:13px;margin-bottom:9px}
+.snr-summary table {width:100%;border-collapse:collapse;font-size:12px;text-align:left;font-variant-numeric:tabular-nums}
+.snr-summary th {font-size:10px;color:var(--muted);font-weight:500;padding:0 6px 7px 0}
+.snr-summary td {padding:5px 6px 5px 0;border-top:1px solid #e6edf1}
+.snr-summary td strong {color:#23685e}
+#snr-note {font-size:11px;margin-top:8px;max-width:48ch}
+.motion-chart svg {display:block;width:100%}
+.motion-chart p {font-size:10px;color:var(--muted);text-align:center}
+.measured-key {color:#2f766e;margin-right:3px}
+.predicted-key {color:#8062af;margin-left:10px;margin-right:3px}
+.motion-limit {grid-column:1/-1;background:#faf4e9;color:#755125;padding:10px 13px;border-top:1px solid #ebdeca;font-size:11px;margin:0 -27px 0 -27px;border-radius:0 0 7px 0}
+.legend-measured {width:9px;height:9px;border:1.5px solid #367d72;border-radius:50%;display:inline-block}
+.overlay-options {flex-wrap:wrap}
+.display-controls {align-items:flex-start}
+.scene-list {flex-wrap:wrap}
+.scene-button {flex:1 1 165px;min-width:0}
+.centroid-epoch {border-top:1px solid var(--line);padding-top:12px;margin-top:13px}
+.centroid-epoch>strong {font-size:11px;font-weight:600}
+.evidence-table {overflow-x:auto}
+dialog table {font-variant-numeric:tabular-nums}
+@media(max-width:1100px) {
+  .motion-panel {grid-template-columns:1fr 1fr;gap:18px}
+  .motion-chart {display:none}
+}
+@media(max-width:600px) {
+  .motion-panel {grid-template-columns:1fr;gap:17px;padding:18px 17px 0}
+  .motion-value {font-size:29px}
+  .motion-qualification {max-width:none}
+  .motion-limit {margin:0 -17px;padding:12px 17px}
+  .scene-button {flex-basis:130px}
+  .display-controls {gap:15px}
+}
 [hidden] {
   display:none!important
 }

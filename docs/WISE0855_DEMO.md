@@ -2,6 +2,8 @@
 
 Ngày thực hiện: 30/10/2026. [Mở demo trên máy phát triển](http://127.0.0.1:8766/).
 
+Đây là báo cáo baseline ảnh đơn. Bản mới đã cộng ảnh theo epoch và fit centroid độc lập: xem [kết quả cộng ảnh và astrometry](WISE0855_COADD.md). Những kết luận dưới đây áp dụng cho ba cặp ảnh đơn được giữ lại trong demo.
+
 ## Đã hoàn thành
 
 - Truy vấn IRSA, tải 43 cutout D6 để kiểm tra spectral WCS tại vùng mục tiêu.
