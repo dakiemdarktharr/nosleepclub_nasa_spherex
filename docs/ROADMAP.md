@@ -9,11 +9,13 @@
 - [x] Demo web trước/sau, highlight, evidence và nhận xét cục bộ.
 - [x] Cộng ảnh trong epoch theo phổ và đo centroid độc lập kèm sai số có điều kiện.
 - [x] Truyền covariance nội suy cho S/N; đối chứng sao giữ lại, bootstrap và injection nền thật.
-- [ ] Mở rộng trường sao tham chiếu, đối chiếu Gaia và kiểm tra đổi tập sao căn chỉnh.
+- [x] Mở rộng trường sao tham chiếu, đối chiếu Gaia và kiểm tra đổi tập sao căn chỉnh.
+- [x] Bỏ lần lượt 14 sao, thử affine và 32 injection mỗi cấu hình; giữ cả giới hạn nền ảnh.
+- [ ] Fit chung mục tiêu và nguồn nền, kiểm tra bias/coverage trên injection giữ lại theo vùng trời.
 - [ ] Kiểm tra đáp ứng phổ đầy đủ, injection nhiều vị trí và thêm epoch thứ ba.
 - [ ] Xác minh chuyển động của WISE 0855 bằng dữ liệu này.
 
-Xem kết quả và điều kiện hoàn thành bước tiếp theo tại [WISE0855_COADD.md](WISE0855_COADD.md).
+Xem kết quả và điều kiện hoàn thành bước tiếp theo tại [WISE0855_GAIA.md](WISE0855_GAIA.md), cùng [research và tài liệu](GAIA_RESEARCH.md).
 
 ## Chuẩn bị
 

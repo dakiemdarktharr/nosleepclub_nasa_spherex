@@ -2,6 +2,8 @@
 
 Ngày thực hiện: 30/10/2026. [Mở demo](http://127.0.0.1:8766/). Các số đầy đủ, covariance, observation ID, URL và hash nằm trong [results.json](../web/data/motion/results.json), [manifest web](../web/data/manifest.json) và evidence JSON của từng cấu hình.
 
+Đây là báo cáo trước khi neo Gaia. Bước mở rộng trường sao đã hoàn thành; xem [kết quả Gaia mới và các giới hạn còn lại](WISE0855_GAIA.md). Các sản phẩm của bước này được giữ nguyên để so sánh.
+
 ## Kết quả hiện tại
 
 Đã đo được dấu hiệu dịch chuyển về phía tây của nguồn trong vùng WISE 0855. Hai vị trí được fit độc lập trên pixel gốc, không buộc theo vector chuyển động cũ. Chưa xác nhận chuyển động thiên thể từ phép đo này vì ngân sách sai số hệ thống còn chưa hoàn chỉnh.

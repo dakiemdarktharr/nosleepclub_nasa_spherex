@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#132941">
   <title>WISE 0855 · NoSleepClub Sky Lab</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=0.3.0">
+  <script src="app.js?v=0.3.0" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#workspace">Đến vùng so sánh</a>
@@ -16,7 +16,7 @@
       <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="8"/><ellipse cx="20" cy="20" rx="19" ry="7" transform="rotate(-34 20 20)"/><circle cx="33" cy="10" r="3" class="satellite"/></svg>
       <span>NoSleepClub <b>Sky Lab</b></span>
     </a>
-    <nav aria-label="Điều hướng chính"><a class="active" href="#workspace">Khám phá</a><button id="evidence-open">Dữ liệu & phương pháp</button><a href="#next-steps">Bước tiếp theo</a></nav>
+    <nav aria-label="Điều hướng chính"><a class="active" href="#workspace">Khám phá</a><button id="evidence-open">Dữ liệu & phương pháp</button><a id="gaia-nav" href="#gaia-validation" hidden>Gaia</a><a href="#next-steps">Bước tiếp theo</a></nav>
     <a class="repo-link" href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
   </header>
 
@@ -73,7 +73,13 @@
       </aside>
     </div>
 
-    <section class="next-steps" id="next-steps" aria-labelledby="next-heading"><div class="next-intro"><p class="location">Milestone tiếp theo</p><h2 id="next-heading">Kiểm soát sai số<br> trước khi tin chuyển động.</h2><p>Đã cộng ảnh và đo centroid độc lập. Cần khóa lại sai số hệ thống trước khi đưa ứng viên cho vision model.</p></div><ol><li><strong>Mở rộng sao tham chiếu & đối chiếu Gaia</strong><span>Dùng cutout rộng hơn, kiểm tra chuyển động của sao nền và đổi tập sao căn chỉnh. Đạt khi kết quả ổn định trong ngân sách sai số.</span></li><li><strong>Kiểm tra phổ & thêm epoch thứ ba</strong><span>Đánh giá toàn bộ đáp ứng phổ, injection ở nhiều vị trí/độ sáng; thêm thời điểm để tách proper motion và parallax.</span></li><li><strong>Huấn luyện bộ xếp hạng thật / nhiễu</strong><span>Thu nhãn review và benchmark hồi phục nguồn trước; so vision model với baseline, giữ người duyệt quyết định.</span></li></ol></section>
+    <section class="gaia-validation" id="gaia-validation" aria-labelledby="gaia-heading" hidden>
+      <div class="gaia-heading"><div><p class="location">Gaia DR3 / Kiểm tra frame astrometry</p><h2 id="gaia-heading">Nhiều sao hơn để kiểm tra lại chuyển động.</h2></div><a href="data/gaia/results.json" class="text-button" download>Tải kiểm chứng Gaia ↓</a></div>
+      <div class="gaia-layout"><div class="gaia-map-column"><div class="reference-map"><img id="reference-field" alt="Ảnh cộng trường rộng SPHEREx với các sao Gaia được chọn"><svg id="reference-overlay" viewBox="0 0 192 192" aria-label="Bản đồ sao tham chiếu Gaia"></svg></div><p class="reference-legend"><span class="training-dot">●</span> Căn chỉnh <span class="heldout-dot">●</span> Giữ ngoài fit <span class="target-dot">+</span> WISE 0855 · Bắc ↑ / Đông ←</p><label for="reference-select">Kiểm tra từng sao Gaia</label><select id="reference-select"></select><div id="reference-detail" class="reference-detail" aria-live="polite"></div></div>
+      <div class="gaia-findings"><p id="gaia-counts"></p><div class="evidence-table"><table><thead><tr><th>Cấu hình</th><th>RMS sao giữ lại</th><th>Đổi tập sao</th><th>Bỏ 1 sao, lớn nhất</th><th>Thử affine</th></tr></thead><tbody id="stability-rows"></tbody></table></div><p class="helper">Các độ thay đổi vector tính bằng arcsec. Sao giữ lại không tham gia fit căn chỉnh cục bộ; Gaia cũng đã góp phần vào WCS đầu vào của SPHEREx.</p><h3>Ngân sách sai số của vector <span id="budget-config"></span></h3><div id="uncertainty-budget" class="uncertainty-budget"></div><p class="helper">Chiếu covariance theo hướng vector rồi cộng theo bình phương. Hạng giữ lại có thể đếm một phần noise hai lần; các sai số ePSF và blending vẫn chưa được mô phỏng đầy đủ.</p><h3>Nguồn giả trên nền thật: giới hạn còn lại</h3><div class="evidence-table"><table><thead><tr><th>Độ sáng × WISE</th><th>Loại nguồn</th><th>Trong ellipse 68%</th><th>RMS sai lệch</th></tr></thead><tbody id="injection-rows"></tbody></table></div><p class="helper">8 vị trí cố định, hai độ sáng, hai kiểu chuyển động. Dùng chung nền ảnh và ePSF để tiêm/fit, chưa thêm shot noise; đây là chẩn đoán có tương quan, chưa phải hiệu chuẩn completeness hay false-positive rate.</p><p id="gaia-conclusion" class="gaia-conclusion"></p></div></div>
+    </section>
+
+    <section class="next-steps" id="next-steps" aria-labelledby="next-heading"><div class="next-intro"><p class="location">Milestone tiếp theo</p><h2 id="next-heading">Tách nguồn nền<br> để kiểm soát sai số.</h2><p>Frame Gaia đã qua kiểm tra đổi sao và mô hình. Injection cho thấy nền ảnh còn gây bias; cần xử lý trước khi nâng mức tin cậy.</p></div><ol><li><strong>Fit chung mục tiêu và các nguồn nền</strong><span>Dùng mô hình ePSF cho nhiều nguồn, kiểm tra đáp ứng phổ đầy đủ. Đánh giá trên tập injection giữ lại, với bias và coverage của ellipse sai số.</span></li><li><strong>Thêm epoch thứ ba và kiểm tra ngoài</strong><span>Tách proper motion khỏi parallax, đối chiếu dữ liệu bước sóng phù hợp và giữ rõ phiên bản hiệu chuẩn.</span></li><li><strong>Vision model cho chuỗi ảnh</strong><span>Tiêm nguồn có chuyển động để tạo benchmark, chia train/test theo vùng trời; xếp hạng ứng viên và chuyển cho người duyệt.</span></li></ol></section>
   </main>
   <footer><span>NoSleepClub · NASA Space Apps 2026</span><span>Exploratory science demo · Dữ liệu SPHEREx, hiển thị do NoSleepClub xử lý</span></footer>
 

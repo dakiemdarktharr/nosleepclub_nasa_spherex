@@ -80,7 +80,7 @@ class MotionProducts(unittest.TestCase):
     def test_provenance_matches_analysis_code_and_calibrations(self):
         source=Path(motion.__file__).read_bytes()
         self.assertEqual(self.results['analysis_sha256'],sha256(source).hexdigest())
-        self.assertEqual(self.manifest['analysis_sha256'],sha256(source+Path(motion.base.__file__).read_bytes()).hexdigest())
+        self.assertEqual(self.manifest.get('coadd_analysis_sha256',self.manifest['analysis_sha256']),sha256(source+Path(motion.base.__file__).read_bytes()).hexdigest())
         for record in self.results['calibrations'].values():
             path=ROOT/record['path']
             if path.exists():self.assertEqual(sha256(path.read_bytes()).hexdigest(),record['sha256'])

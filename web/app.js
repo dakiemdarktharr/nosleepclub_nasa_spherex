@@ -130,7 +130,7 @@ function select(id) {
     detail.innerHTML=`<div class="selection-title">Centroid ePSF · pixel gốc</div><p>Fit vị trí riêng cho từng epoch; biên độ riêng từng ảnh. Không buộc theo vector chuyển động dự báo.</p>${["before","after"].map((key,i)=>{
       const p=m["target_"+key],c=scene.measured_positions[i].covariance_px2;
       return `<div class="centroid-epoch"><strong>${i?"Sau":"Trước"} · MJD ${number(p.effective_mjd,3)}</strong><dl><dt>RA / Dec (độ)</dt><dd>${number(p.ra_deg,6)}<br>${number(p.dec_deg,6)}</dd><dt>σ đông / bắc</dt><dd>${number(Math.sqrt(c[0][0])*6.15,2)}″ / ${number(Math.sqrt(c[1][1])*6.15,2)}″</dd></dl></div>`;
-    }).join("")}<p>Sai số trục theo mô hình, có thêm hạng căn chỉnh và sao giữ lại. Tọa độ tương đối theo WCS SPHEREx, chưa neo vào Gaia.</p><dl><dt>RMS sao giữ lại</dt><dd>${number(m.holdout_rms_arcsec,2)}″</dd><dt>Số sao căn chỉnh / giữ lại</dt><dd>${m.training_reference_positions.length} / ${m.heldout_controls.length}</dd><dt>Bootstrap / epoch</dt><dd>${m.bootstrap_before.draws}</dd></dl>`;
+    }).join("")}<p>Sai số trục có hạng căn chỉnh và sao giữ lại. ${m.gaia_reference?"Tọa độ neo Gaia đã lan truyền đến epoch; sai số chung giữa hai epoch được xử lý riêng trong covariance chuyển động.":"Tọa độ tương đối theo WCS SPHEREx, chưa neo vào Gaia."}</p><dl><dt>RMS sao giữ lại</dt><dd>${number(m.holdout_rms_arcsec,2)}″</dd><dt>Số sao căn chỉnh / giữ lại</dt><dd>${m.training_reference_positions.length} / ${m.heldout_controls.length}</dd><dt>Bootstrap / epoch</dt><dd>${m.bootstrap_before.draws}</dd></dl>`;
   } else if(id==="target") {
     const a=scene.before.target_fit,b=scene.after.target_fit;
     detail.innerHTML=`<div class="selection-title">Fit PSF tại vị trí dự kiến</div><div class="fit-score"><div><span>S/N ảnh trước</span><strong>${number(a.fixed_prior_snr,1)}</strong></div><div><span>S/N ảnh sau</span><strong>${number(b.fixed_prior_snr,1)}</strong></div></div><p>Fit biên độ tại vị trí ngoại suy; chưa fit vị trí độc lập. Hai giá trị này chưa xác nhận chuyển động.</p><dl><dt>Độ lệch bước sóng</dt><dd>≈ ${number(scene.target_wavelength_delta_nm,2)} nm</dd><dt>Bề rộng phổ trung bình</dt><dd>${number((scene.before.bandwidth_um+scene.after.bandwidth_um)*500,1)} nm</dd><dt>Vị trí dự kiến, ảnh sau</dt><dd>${number(scene.target_prior[1].ra_deg,5)}°</dd></dl>`;
@@ -158,13 +158,14 @@ function sceneList() {
     button.setAttribute("aria-pressed",String(scene.id===state.scene?.id));
     const image=document.createElement("img");image.src=scene.before.image;image.alt="";
     const text=document.createElement("span");text.innerHTML=scene.kind==="coadd"
-      ?`<strong>${scene.label}</strong><small>${scene.motion.id==="strict"?"Phổ chặt · cấu hình chính":"Phổ rộng · kiểm tra độ nhạy"}</small>`
+      ?`<strong>${scene.label}</strong><small>${(scene.motion.spectral_configuration||scene.motion.id)==="strict"?"Phổ chặt · cấu hình chính":"Phổ rộng · kiểm tra độ nhạy"}</small>`
       :`<strong>Ảnh đơn · ${number((scene.before.wavelength_um+scene.after.wavelength_um)/2,3)} µm</strong><small>${Math.round(scene.baseline_days)} ngày · Δλ ${number(scene.target_wavelength_delta_nm,2)} nm</small>`;
     button.append(image,text);button.addEventListener("click",()=>loadScene(scene));list.append(button);
   }
 }
 function evidenceContent() {
   const s=state.scene;
+  if(s.motion?.gaia_reference) {gaiaEvidence(s);$("download-fits").href=s.fits;return;}
   if(s.kind==="coadd") {
     const m=s.motion, controls=m.real_background_injection_controls;
     $("evidence-content").innerHTML=`<h3>${s.label} · ${m.id==="strict"?"cấu hình phổ chặt, chính":"cấu hình phổ rộng, kiểm tra độ nhạy"}</h3><p>Các cặp được chọn trước khi fit mục tiêu, trong 4,55–4,94 µm; |Δλ| / bề rộng phổ trung bình ≤ ${number(m.tolerance_bandwidth,2)}. Hai epoch dùng cùng trọng số cho từng cặp phổ. Đây là ảnh tổng hợp nhiều kênh, không phải nhiều lần chụp một bước sóng giống hệt.</p><table><thead><tr><th>Thông tin</th><th>Trước</th><th>Sau</th></tr></thead><tbody><tr><td>Cửa sổ ngày UTC</td><td>${s.before.date_start} → ${s.before.date_end}</td><td>${s.after.date_start} → ${s.after.date_end}</td></tr><tr><td>Số ảnh</td><td>${s.before.inputs.length}</td><td>${s.after.inputs.length}</td></tr><tr><td>λ trung bình có trọng số</td><td>${number(s.before.wavelength_um,5)} µm</td><td>${number(s.after.wavelength_um,5)} µm</td></tr><tr><td>Pipeline IRSA</td><td>${s.before.pipeline_version}</td><td>${s.after.pipeline_version}</td></tr></tbody></table><h3>Phương pháp và sai số</h3><p>CWAVE/CBAND khoa học đầy đủ và ePSF chính thức của IRSA. Fit trên pixel gốc: centroid chung trong mỗi epoch, biên độ và mặt phẳng nền riêng từng ảnh. Không dùng vị trí dự báo để ràng buộc vector dịch chuyển. ${m.bootstrap_before.draws} mô phỏng noise/epoch kiểm tra covariance; thêm hạng sai số căn chỉnh và RMS của ${m.heldout_controls.length} sao không tham gia fit căn chỉnh. RMS giữ lại: ${number(m.holdout_rms_arcsec,3)}″.</p><p>Khẩu độ bán kính 2,5 pixel, vành nền 4–6 pixel; truyền trọng số ngược về pixel gốc để giữ covariance nội suy. Vẫn giả định noise pixel gốc và các exposure độc lập. Phủ khẩu độ trước/sau: ${number(m.coadd_snr_before.coverage*100,1)}% / ${number(m.coadd_snr_after.coverage*100,1)}%. So ảnh đơn dùng cùng mặt nạ hợp lệ của ảnh cộng; đây là S/N có điều kiện tại vị trí fit.</p><p>Mahalanobis 2 chiều = ${number(m.mahalanobis_distance,2)}; không diễn giải thành Gaussian sigma hay xác suất phát hiện. Dự báo ngoài dùng Luhman 2014 và parallax 0,454″ với quỹ đạo Trái Đất; hai epoch chưa đủ để fit riêng proper motion và parallax.</p><h3>Kiểm tra và giới hạn còn mở</h3><p>Nguồn giả trên nền thật, khác vùng mục tiêu: ${controls.map(c=>`${c.kind==="stationary"?"đứng yên":"dịch chuyển"}: sai lệch hồi phục ${number(Math.hypot(...c.recovered_delta_px.map((v,i)=>v-c.injected_delta_px[i]))*6.15,2)}″, D<sub>M</sub> ${number(c.error_mahalanobis,2)}`).join("; ")}. Giữ nguyên noise map, chưa thêm shot noise nguồn. Một vị trí không đại diện completeness hoặc false-positive rate.</p><p>Đổi chéo tập sao tham chiếu chưa thực hiện được: không đủ 2 sao đạt S/N trong một exposure (${m.reference_swap_unavailable_reason.split(": ").pop()}). Chưa neo Gaia; mới so tâm/bề rộng phổ, chưa so toàn bộ đáp ứng phổ. Sai số ePSF, blending và noise thiết bị tương quan chưa được mô phỏng đầy đủ. Không suy ra biến thiên thông lượng từ ảnh tổng hợp này.</p><h3>Ảnh thành phần & trọng số phổ</h3><div class="evidence-table"><table><thead><tr><th>Cutout trước (IRSA)</th><th>Cutout sau (IRSA)</th><th>λ trước / sau (µm)</th><th>Trọng số</th></tr></thead><tbody>${m.spectral_pairs.map(p=>`<tr><td><a href="${p.before.cutout_url}" target="_blank" rel="noopener noreferrer">${p.before.obs_id}</a></td><td><a href="${p.after.cutout_url}" target="_blank" rel="noopener noreferrer">${p.after.obs_id}</a></td><td>${number(p.before_um,4)} / ${number(p.after_um,4)}</td><td>${number(p.weight,4)}</td></tr>`).join("")}</tbody></table></div><p><a href="data/${s.id}/evidence.json" download>JSON kết quả, SHA-256 đầu vào & hiệu chuẩn</a> · <a href="data/motion/results.json" download>Toàn bộ phép đo và covariance</a></p>`;
@@ -179,17 +180,71 @@ function motionPanel(scene) {
   $("target-subtitle").textContent=active?"Centroid fit độc lập từng epoch":"Vùng vị trí dự kiến";
   if(!active)return;
   const m=scene.motion;
-  $("configuration-label").textContent=`${scene.label} · ${m.id==="strict"?"Phổ chặt, cấu hình chính":"Phổ rộng, kiểm tra độ nhạy"}`;
+  const spectral=m.spectral_configuration||m.id;
+  $("configuration-label").textContent=`${scene.label} · ${spectral==="strict"?"Phổ chặt, cấu hình chính":"Phổ rộng, kiểm tra độ nhạy"}`;
   $("motion-value").textContent=`${number(m.displacement_arcsec,2)}″ ± ${number(m.radial_error_arcsec,2)}″`;
   $("motion-components").textContent=`Đông ${number(m.east_arcsec,2)}″ · Bắc ${number(m.north_arcsec,2)}″ · ${number(scene.baseline_days,1)} ngày`;
   $("snr-rows").innerHTML=["before","after"].map((key,i)=>`<tr><td>${i?"Tháng 4/2026":"Tháng 11/2025"}</td><td>${number(m["best_single_snr_"+key],1)}</td><td><strong>${number(m["coadd_snr_"+key].snr,1)}</strong></td></tr>`).join("");
-  $("snr-note").textContent=m.id==="broad"?"S/N tăng khoảng 1,5–1,6×. Cùng trọng số phổ ở hai epoch; phổ rộng chỉ là kiểm tra độ nhạy.":"Phổ chặt cho dịch chuyển cùng hướng, nhưng S/N không tăng rõ so với ảnh đơn. Giữ lại để đối chiếu.";
-  const stationary=m.real_background_injection_controls[0];
-  $("motion-limit").textContent=`Chưa xác nhận: chỉ ${m.heldout_controls.length} sao giữ lại; kiểm tra đổi tập sao chưa đủ dữ liệu. Nguồn giả đứng yên ở nền khác vẫn lệch ${number(Math.hypot(...stationary.recovered_delta_px)*6.15,2)}″. Cần thêm sao tham chiếu, kiểm tra hệ thống và epoch thứ ba.`;
+  $("snr-note").textContent=spectral==="broad"?`S/N tăng ${number(m.coadd_snr_before.snr/m.best_single_snr_before,1)}× / ${number(m.coadd_snr_after.snr/m.best_single_snr_after,1)}×. Cùng trọng số phổ; cấu hình rộng là kiểm tra độ nhạy.`:"Phổ chặt cho dịch chuyển cùng hướng, nhưng S/N không tăng rõ so với ảnh đơn. Giữ lại để đối chiếu.";
+  if(m.gaia_reference) {
+    const stationary=m.injection_diagnostics.groups.find(g=>g.kind==="stationary"&&g.flux_scale===1);
+    $("motion-limit").textContent=`Gaia: ${m.training_source_ids.length} sao căn chỉnh + ${m.heldout_controls.length} sao giữ lại. Đổi tập sao làm vector đổi ${number(m.reference_swap.change_arcsec,2)}″. Chưa xác nhận: nguồn giả đứng yên cùng độ sáng vẫn có RMS lệch ${number(stationary.rms_error_arcsec,2)}″ trên 8 nền ảnh khác.`;
+  } else {
+    const stationary=m.real_background_injection_controls[0];
+    $("motion-limit").textContent=`Bản trước Gaia: chỉ ${m.heldout_controls.length} sao giữ lại; kiểm tra đổi tập sao chưa đủ dữ liệu. Nguồn giả đứng yên ở nền khác lệch ${number(Math.hypot(...stationary.recovered_delta_px)*6.15,2)}″. Xem cấu hình Gaia để kiểm tra lại.`;
+  }
   const sx=27,ox=207,oy=90,point=(e,n)=>[ox+e*sx,oy-n*sx];
   const [mx,my]=point(m.east_arcsec,m.north_arcsec),[px,py]=point(m.predicted_motion.east_arcsec,m.predicted_motion.north_arcsec);
   const c=m.covariance_arcsec2,e=ellipse([[c[0][0],-c[0][1]],[-c[1][0],c[1][1]]]);
   $("motion-chart").innerHTML=`<path d="M18 ${oy}H261 M${ox} 14V151" stroke="#d2dee6" fill="none"/><g fill="#52677b" font-size="10"><text x="17" y="${oy+15}">−7″</text><text x="${ox+4}" y="${oy+15}">0</text><text x="233" y="${oy+15}">+2″</text><text x="${ox+4}" y="22">+2″ Bắc</text><text x="209" y="151">Đông →</text></g><path d="M${ox} ${oy}L${px} ${py}" stroke="#8062af" stroke-dasharray="4 3"/><path d="M${ox} ${oy}L${mx} ${my}" stroke="#2f766e" stroke-width="2"/><ellipse cx="${mx}" cy="${my}" rx="${e.rx*sx}" ry="${e.ry*sx}" transform="rotate(${e.angle*180/Math.PI} ${mx} ${my})" fill="#b7e6dc" fill-opacity=".4" stroke="#2f766e"/><circle cx="${mx}" cy="${my}" r="4" fill="#2f766e"/><path d="M${px} ${py-5}l5 5 -5 5 -5 -5Z" fill="white" stroke="#8062af" stroke-width="1.5"/>`;
+}
+function gaiaEvidence(s) {
+  const m=s.motion,g=state.gaia,loo=m.leave_one_out.filter(v=>v.success);
+  $("evidence-content").innerHTML=`<h3>${s.label}</h3><p>Giữ cùng exposure và trọng số phổ của bản trước; cutout rộng 0,32° thay cho 0,12°. Gaia DR3: ${g.catalog_count} nguồn G&lt;18,5 trong bán kính 0,25°, ${g.candidate_count} ghép cô lập ban đầu, ${g.selected_count} sao đạt quality/S/N.</p><p>Lan truyền vị trí từ epoch Gaia 2016.0 bằng proper motion và parallax với vị trí barycentric Trái Đất. Truyền đủ covariance 5 tham số/correlation của mỗi sao. Cắt RUWE ≤1,4, ≥9 visibility periods, giới hạn nhiễu nhiều nguồn và chuyển động lớn. Quy tắc chọn và source ID có trong JSON.</p><p>${m.training_source_ids.length} sao fit translation cục bộ, ${m.heldout_controls.length} sao giữ ngoài fit. Đổi tập sao: ${m.reference_swap.success?`chạy được, vector đổi ${number(m.reference_swap.change_arcsec,3)}″`:`chưa chạy được: ${m.reference_swap.reason}`}. Bỏ từng sao: ${loo.length}/${m.leave_one_out.length} lượt chạy được, đổi lớn nhất ${number(Math.max(...loo.map(v=>v.change_arcsec)),3)}″. Affine: ${m.affine_sensitivity.success?`vector đổi ${number(m.affine_sensitivity.change_arcsec,3)}″`:`chưa chạy được: ${m.affine_sensitivity.reason}`}.</p><p>Covariance gồm noise centroid trên pixel gốc (${m.bootstrap_before.draws} mô phỏng/epoch), calibration (${m.calibration_bootstrap.accepted}/${m.calibration_bootstrap.draws} bootstrap ghép cặp sao tham chiếu) và second moment của residual sao giữ lại. Mỗi draw Gaia được dùng chung qua các exposure/epoch để giữ tương quan. Sai số này có điều kiện với ePSF và mô hình nền, chưa phải ngân sách hệ thống đầy đủ.</p><p>Injection: 8 vị trí × hai độ sáng × hai loại chuyển động. Giữ nguyên noise map, không thêm shot noise, dùng ePSF giống nhau để tiêm và fit. Không dùng nguồn giả để hiệu chỉnh vector mục tiêu hoặc đổi sai số cho đẹp. RMS lệch còn phụ thuộc nền; xem bảng Gaia bên dưới vùng so sánh.</p><p>Gaia cũng được dùng trong hiệu chuẩn WCS SPHEREx: các sao giữ lại độc lập với fit cục bộ này, không phải một catalog xác minh hoàn toàn độc lập. Hai epoch chưa tách được proper motion và parallax. Cấu hình phổ rộng/chặt dùng chung ảnh; tâm/bề rộng tương thích chưa thay thế kiểm tra đầy đủ đáp ứng phổ.</p><h3>Ảnh thành phần</h3><div class="evidence-table"><table><thead><tr><th>IRSA trước</th><th>IRSA sau</th><th>λ trước / sau (µm)</th><th>Trọng số</th></tr></thead><tbody>${m.spectral_pairs.map(p=>`<tr><td><a href="${p.before.cutout_url}" target="_blank" rel="noopener noreferrer">${p.before.obs_id}</a></td><td><a href="${p.after.cutout_url}" target="_blank" rel="noopener noreferrer">${p.after.obs_id}</a></td><td>${number(p.before_um,4)} / ${number(p.after_um,4)}</td><td>${number(p.weight,4)}</td></tr>`).join("")}</tbody></table></div><p><a href="${s.gaia_evidence}" download>Tải kết quả Gaia, covariance, CV và hash đầy đủ</a> · <a href="https://gaia.aip.de/metadata/gaiadr3/gaia_source/" target="_blank" rel="noopener noreferrer">Mô tả trường Gaia DR3</a></p>`;
+}
+function setupGaiaPanel() {
+  $("gaia-validation").hidden=false;
+  $("gaia-nav").hidden=false;
+  const g=state.gaia,map=state.gaiaMap;
+  const training=g.references.filter(r=>r.split==="training").length;
+  $("gaia-counts").textContent=`${g.catalog_count} nguồn Gaia trong vùng truy vấn → ${g.candidate_count} ghép cô lập → ${g.selected_count} sao đạt chất lượng. Chia cố định ${training} sao căn chỉnh / ${g.selected_count-training} sao giữ ngoài fit, dùng cùng tập cho hai cấu hình phổ.`;
+  $("reference-field").src=map.image;
+  const select=$("reference-select");select.replaceChildren();
+  for(const [i,r] of map.references.entries()) {
+    const option=document.createElement("option");option.value=r.source_id;option.textContent=`${i+1}. Gaia ${r.source_id} · ${r.split==="training"?"căn chỉnh":"giữ lại"}`;select.append(option);
+  }
+  $("reference-overlay").innerHTML=map.references.map((r,i)=>`<g data-source="${r.source_id}" class="reference-marker ${r.split}" role="button" tabindex="0" aria-label="Sao ${i+1}, Gaia ${r.source_id}, ${r.split==="training"?"căn chỉnh":"giữ lại"}"><circle cx="${r.x+.5}" cy="${192-r.y-.5}" r="5" class="reference-hit"/><circle cx="${r.x+.5}" cy="${192-r.y-.5}" r="1.8"/><text x="${r.x+3}" y="${192-r.y-2}">${i+1}</text></g>`).join("")+`<path class="map-target" d="M91 96H101 M96 91V101"/><text class="map-target-label" x="99" y="103">WISE</text>`;
+  $("reference-overlay").querySelectorAll("[data-source]").forEach(marker=>{
+    const choose=()=>{select.value=marker.dataset.source;showReference();};
+    marker.addEventListener("click",choose);marker.addEventListener("keydown",event=>{if(["Enter"," "].includes(event.key)){event.preventDefault();choose();}});
+  });
+  select.addEventListener("change",showReference);
+  $("stability-rows").innerHTML=[...g.configurations].reverse().map(c=>{
+    const loo=c.leave_one_out.filter(v=>v.success);
+    return `<tr><td>${c.spectral_configuration==="broad"?"Rộng · 10 ảnh":"Chặt · 2 ảnh"}</td><td>${number(c.holdout_rms_arcsec,2)}″</td><td>${c.reference_swap.success?`${number(c.reference_swap.change_arcsec,2)}″`:"Chưa đạt"}</td><td>${number(Math.max(...loo.map(v=>v.change_arcsec)),2)}″ (${loo.length}/${c.leave_one_out.length})</td><td>${c.affine_sensitivity.success?`${number(c.affine_sensitivity.change_arcsec,2)}″`:"Chưa đạt"}</td></tr>`;
+  }).join("");
+  gaiaConfiguration("broad");
+}
+function gaiaConfiguration(spectral) {
+  state.gaiaConfig=spectral;
+  const m=state.gaia.configurations.find(c=>c.spectral_configuration===spectral);
+  const vector=[m.east_arcsec,m.north_arcsec],norm2=vector[0]**2+vector[1]**2;
+  const radial=c=>{
+    const x=-vector[0]*6.15,y=vector[1]*6.15;
+    return Math.sqrt(Math.max(0,(x*x*c[0][0]+2*x*y*c[0][1]+y*y*c[1][1])/norm2));
+  };
+  $("budget-config").textContent=spectral==="broad"?"· phổ rộng":"· phổ chặt";
+  $("uncertainty-budget").innerHTML=[["Noise centroid",m.statistical_covariance_px2],["Căn chỉnh Gaia",m.registration_covariance_px2],["Sao giữ lại",m.holdout_covariance_px2]].map(([label,c])=>`<div><span>${label}</span><strong>${number(radial(c),2)}″</strong></div>`).join("")+`<div class="budget-total"><span>Tổng có điều kiện</span><strong>${number(m.radial_error_arcsec,2)}″</strong></div>`;
+  $("injection-rows").innerHTML=m.injection_diagnostics.groups.map(g=>`<tr><td>${number(g.flux_scale,1)}×</td><td>${g.kind==="stationary"?"Đứng yên":"Dịch chuyển"}</td><td>${g.within_68_percent_ellipse}/${g.attempted}${g.failed_or_boundary?` · ${g.failed_or_boundary} lỗi/biên`:""}</td><td>${number(g.rms_error_arcsec,2)}″</td></tr>`).join("");
+  $("gaia-conclusion").textContent=`Vector ${number(m.displacement_arcsec,2)}″ ± ${number(m.radial_error_arcsec,2)}″ đổi ${number(m.change_from_previous_arcsec,2)}″ so với bản trước Gaia; chênh vector dự báo ngoài ${number(m.difference_from_external_prediction_arcsec,2)}″. Frame ít thay đổi khi đổi sao, nhưng injection trên nền khác còn lệch lớn: chưa xác nhận sai số hệ thống hoặc chuyển động thiên thể.`;
+  showReference();
+}
+function showReference() {
+  const selected=$("reference-select").value,r=state.gaiaMap.references.find(v=>v.source_id===selected);
+  if(!r)return;
+  $("reference-overlay").querySelectorAll("[data-source]").forEach(marker=>marker.classList.toggle("selected",marker.dataset.source===selected));
+  const residual=r[state.gaiaConfig+"_residual_arcsec"];
+  $("reference-detail").innerHTML=`<strong>Gaia DR3 ${r.source_id}</strong><dl><dt>Vai trò</dt><dd>${r.split==="training"?"Dùng căn chỉnh":"Giữ ngoài fit"}</dd><dt>RUWE / G</dt><dd>${number(r.ruwe,2)} / ${number(r.g_mag,2)}</dd><dt>Exposure hợp lệ</dt><dd>${r.valid_frames}/20</dd><dt>Khoảng cách ghép ban đầu</dt><dd>${number(r.match_arcsec,2)}″</dd>${residual?`<dt>Residual Đông / Bắc</dt><dd>${number(residual[0],2)}″ / ${number(residual[1],2)}″</dd>`:""}</dl><p>Residual đã trừ chuyển động/parallax Gaia và hiệu chỉnh frame; chỉ sao giữ lại được dùng để đánh giá ngoài fit.</p>`;
 }
 async function loadScene(scene) {
   const generation=++state.loading;
@@ -207,6 +262,7 @@ async function loadScene(scene) {
     $("alignment").textContent=isCoadd?`${number(scene.motion.holdout_rms_arcsec,2)}″ (${scene.motion.heldout_controls.length} sao)`:scene.alignment.rms_after_px===null?"Chỉ dùng WCS":`${number(scene.alignment.rms_after_px,3)} px`;
     $("date-before").textContent=`Trước · ${isCoadd?scene.before.date_start:scene.before.date}`;$("date-after").textContent=`Sau · ${isCoadd?scene.after.date_end:scene.after.date}`;
     $("load-state").hidden=true;motionPanel(scene);candidateList();sceneList();evidenceContent();select("target");setMode(state.mode);
+    if(state.gaia)gaiaConfiguration(scene.motion?.spectral_configuration||"broad");
     ["download-manifest","save-review","export-reviews"].forEach(id=>$(id).disabled=false);
   } catch(error) {
     $("load-state").hidden=false;$("load-state").textContent=`Không tải được dữ liệu: ${error.message}. Chạy web bằng scripts/serve_demo.py rồi tải lại trang.`;
@@ -267,5 +323,12 @@ canvas.addEventListener("keydown",event=>{
   $("wipe").value=String(state.wipe*100);render();
 });
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&state.mode==="blink")setMode("wipe");});
-getJson("data/manifest.json").then(async manifest=>{state.manifest=manifest;await loadScene(manifest.scenes[0]);})
+getJson("data/manifest.json").then(async manifest=>{
+  state.manifest=manifest;
+  if(manifest.gaia_results) {
+    [state.gaia,state.gaiaMap]=await Promise.all([getJson(manifest.gaia_results),getJson(manifest.gaia_map)]);
+    setupGaiaPanel();
+  }
+  await loadScene(manifest.scenes[0]);
+})
   .catch(error=>{$("load-state").textContent=`Không tải được manifest: ${error.message}. Chạy scripts/serve_demo.py để mở bản demo.`;});

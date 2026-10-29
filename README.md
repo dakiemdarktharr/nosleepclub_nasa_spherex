@@ -6,15 +6,17 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 ## Demo hiện tại: WISE 0855
 
-![WISE 0855 coadd and independent astrometry](docs/wise0855-coadd-demo.jpg)
+![WISE 0855 Gaia validation](docs/wise0855-gaia-validation.jpg)
 
-- Cộng 10 ảnh mỗi epoch theo các cặp phổ tương thích, cùng trọng số phổ ở hai epoch; thêm cấu hình phổ chặt 2 ảnh để đối chiếu và giữ ba cặp ảnh đơn cũ.
-- S/N khẩu độ trước/sau: **5,1 → 7,9** và **4,6 → 7,6**. Fit centroid độc lập trên pixel gốc cho dịch chuyển **3,25″ ± 0,80″** trong 163,5 ngày ở cấu hình phổ rộng; sai số theo mô hình có điều kiện.
+- Giữ cùng 20 exposure của bản cộng ảnh, mở cutout từ 0,12° lên 0,32° và đối chiếu 675 nguồn Gaia DR3.
+- Chọn 21 sao đạt chất lượng: 14 sao căn chỉnh, 7 sao giữ ngoài fit. Lan truyền vị trí/proper motion/parallax và covariance Gaia đến ngày quan sát.
+- Cấu hình phổ rộng: **3,29″ ± 0,52″** trong 163,5 ngày; đổi tập sao làm vector đổi **0,04″**, bỏ từng sao lớn nhất **0,17″**, thử affine **0,10″**. Đây là sai số theo mô hình có điều kiện.
+- Bản đồ Gaia tương tác, bảng ngân sách sai số, kiểm tra nguồn giả tại 8 vị trí/hai độ sáng; giữ cả hai cấu hình trước Gaia và ba cặp ảnh đơn cũ.
 - So sánh kéo vạch, song song, sai khác và nhấp nháy; zoom, highlight và bảng bằng chứng.
 - Lưu/xuất nhận xét trong trình duyệt; có thể xóa nhận xét theo vùng.
 - FITS đã xử lý, arrays và manifest có nguồn, hash và phiên bản để kiểm tra lại.
 
-**Dấu hiệu chuyển động, chưa xác nhận.** Cấu hình phổ chặt là cấu hình chính: **3,25″ ± 1,05″**, S/N không tăng rõ. Cấu hình phổ rộng là kiểm tra độ nhạy, có dùng chung ảnh với cấu hình chặt. Chỉ 3–4 sao kiểm tra độc lập, chưa đổi chéo được tập sao căn chỉnh; nguồn giả đứng yên trên nền khác vẫn có độ lệch 0,89″ ở cấu hình rộng. Chưa neo Gaia hoặc kiểm tra toàn bộ đáp ứng phổ. Baseline hiện dùng xử lý ảnh và ePSF, chưa có vision model được huấn luyện.
+**Dấu hiệu chuyển động, chưa xác nhận.** Phổ chặt là cấu hình chính: **3,06″ ± 0,99″**; phổ rộng là kiểm tra độ nhạy và dùng chung một phần ảnh. Nguồn giả đứng yên cùng độ sáng trên tám nền ảnh khác vẫn có RMS lệch **2,72″** ở cấu hình rộng; nguồn dịch chuyển bằng nửa độ sáng chỉ có **2/8** lượt nằm trong ellipse sai số 68%. Vector rộng còn chênh **1,21″** so với dự báo ngoài. Gaia làm rõ độ ổn định của frame, chưa giải quyết toàn bộ blending, ePSF và đáp ứng phổ. Chưa có vision model được huấn luyện.
 
 ## Mở demo ngay
 
@@ -40,6 +42,8 @@ python -m venv .venv
 .venv\Scripts\python scripts/build_demo.py
 .venv\Scripts\python scripts/prepare_motion_data.py
 .venv\Scripts\python scripts/motion_analysis.py
+.venv\Scripts\python scripts/prepare_gaia_data.py
+.venv\Scripts\python scripts/gaia_motion.py --publish
 .venv\Scripts\python -m unittest discover -s tests -v
 ```
 
@@ -47,9 +51,13 @@ Lệnh `--demo` tải 6 cutout được chọn và kiểm tra FITS; lưu trong `
 
 `prepare_motion_data.py` chọn 31 cutout trong hai cửa sổ epoch, tải lại quanh mục tiêu và lấy hai tệp hiệu chuẩn chính thức đã ghim phiên bản/hash. Phân tích dùng 2 hoặc 10 cặp phù hợp phổ; không dùng tất cả 31 ảnh để cộng. `motion_analysis.py` chạy 128 mô phỏng noise mỗi epoch/cấu hình, xuất covariance, đối chứng và hai bộ sản phẩm web. Chạy `build_demo.py` trước rồi `motion_analysis.py` để manifest chứa cả ảnh đơn và ảnh cộng. Test chạy offline; chỉ kiểm tra hash raw khi có cache.
 
+`prepare_gaia_data.py` tải cutout rộng của đúng 20 exposure cũ và truy vấn Gaia DR3 qua IRSA TAP, lưu ADQL/URL/hash. `gaia_motion.py --publish` cache centroid sao tham chiếu, chạy đổi tập sao, 14 lượt bỏ từng sao, affine, 256 bootstrap căn chỉnh và 32 injection mỗi cấu hình; sau đó thêm sản phẩm Gaia vào demo. Chạy các bước theo thứ tự trên nếu tái tạo toàn bộ manifest. 31 kiểm thử kiểm tra cả các sản phẩm đã commit mà không cần tải raw.
+
 ## Tài liệu
 
-- [Cộng ảnh, astrometry, sai số và bước tiếp theo hiện tại](docs/WISE0855_COADD.md)
+- [Gaia, độ ổn định vector, sai số và milestone tiếp theo](docs/WISE0855_GAIA.md)
+- [Research cải thiện công cụ và danh mục nhập Zotero](docs/GAIA_RESEARCH.md)
+- [Bản cộng ảnh trước Gaia](docs/WISE0855_COADD.md)
 - [Baseline ba cặp ảnh đơn ban đầu](docs/WISE0855_DEMO.md)
 - [Phân tích vision model và quy trình review](docs/DEEP_RESEARCH_VISION.md)
 - [Tóm tắt đề bài](docs/CHALLENGE.md)

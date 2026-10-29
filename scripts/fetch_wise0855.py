@@ -35,7 +35,8 @@ def download(row: dict) -> dict:
     destination = folder / Path(url).name
     center_ra = row.get("cutout_center_ra", RA)
     center_dec = row.get("cutout_center_dec", DEC)
-    cutout_url = f"{url}?center={center_ra},{center_dec}&size=0.12"
+    width = row.get("cutout_width_deg", 0.12)
+    cutout_url = f"{url}?center={center_ra},{center_dec}&size={width}"
     for attempt in range(3):
         try:
             if not destination.exists():
