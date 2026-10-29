@@ -7,7 +7,28 @@ const state = { manifest: null, scene: null, images: {}, pixels: null, mode: "wi
   zoom: 1, center: [32,32], selected: "target", blinkAfter: false, timer: null, loading: 0 };
 const number = (value, digits=2) => Number(value).toLocaleString("vi-VN", {maximumFractionDigits:digits, minimumFractionDigits:digits});
 let reviews = {};
+let remoteStorage = false;
 try { reviews = JSON.parse(localStorage.getItem("nosleepclub.reviews.v1") || "{}"); } catch { reviews = {}; }
+
+async function reviewApi(method="GET", body) {
+  const response = await fetch("/api/reviews", {method, credentials:"same-origin", cache:"no-store",
+    headers:body?{"Content-Type":"application/json"}:{}, body:body?JSON.stringify(body):undefined});
+  if(!response.ok)throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+async function syncReviews() {
+  if(location.protocol!=="https:")return;
+  try {
+    const result=await reviewApi();
+    remoteStorage=true;
+    for(const item of result.reviews) {
+      const key=`${item.analysis_sha256}:${item.scene_id}:${item.selection}`;
+      if(!reviews[key]||reviews[key].saved_at<item.saved_at)reviews[key]=item;
+    }
+    if(state.scene)loadReview();
+  } catch { remoteStorage=false; }
+  $("storage-status").textContent=remoteStorage?"MongoDB":"Trình duyệt";
+}
 
 async function getJson(url) {
   const response = await fetch(url, {cache:"no-cache"});
@@ -117,7 +138,7 @@ function keyForSelection() {
 function loadReview() {
   const saved=reviews[keyForSelection()];
   $("review-status").value=saved?.status||"uncertain";$("review-note").value=saved?.note||"";
-  $("review-feedback").textContent=saved?"Đã có nhận xét được lưu trên trình duyệt này.":"";
+  $("review-feedback").textContent="";
   $("clear-review").hidden=!saved;
 }
 function select(id) {
@@ -143,7 +164,7 @@ function select(id) {
 function candidateList() {
   const list=$("candidate-list");list.replaceChildren();
   $("candidate-count").textContent=String(state.scene.candidates.length);
-  if(!state.scene.candidates.length){list.textContent="Không có residual vượt ngưỡng trong vùng hợp lệ.";return;}
+  if(!state.scene.candidates.length){list.textContent="0 ứng viên";return;}
   for(const c of state.scene.candidates) {
     const button=document.createElement("button");button.className="candidate-button";button.dataset.id=c.id;
     button.setAttribute("aria-pressed","false");
@@ -207,7 +228,7 @@ function setupGaiaPanel() {
   $("gaia-nav").hidden=false;
   const g=state.gaia,map=state.gaiaMap;
   const training=g.references.filter(r=>r.split==="training").length;
-  $("gaia-counts").textContent=`${g.catalog_count} nguồn Gaia trong vùng truy vấn → ${g.candidate_count} ghép cô lập → ${g.selected_count} sao đạt chất lượng. Chia cố định ${training} sao căn chỉnh / ${g.selected_count-training} sao giữ ngoài fit, dùng cùng tập cho hai cấu hình phổ.`;
+  $("gaia-counts").textContent=`${g.catalog_count} nguồn · ${g.selected_count} sao đạt chuẩn · ${training} căn chỉnh / ${g.selected_count-training} giữ lại`;
   $("reference-field").src=map.image;
   const select=$("reference-select");select.replaceChildren();
   for(const [i,r] of map.references.entries()) {
@@ -246,6 +267,21 @@ function showReference() {
   const residual=r[state.gaiaConfig+"_residual_arcsec"];
   $("reference-detail").innerHTML=`<strong>Gaia DR3 ${r.source_id}</strong><dl><dt>Vai trò</dt><dd>${r.split==="training"?"Dùng căn chỉnh":"Giữ ngoài fit"}</dd><dt>RUWE / G</dt><dd>${number(r.ruwe,2)} / ${number(r.g_mag,2)}</dd><dt>Exposure hợp lệ</dt><dd>${r.valid_frames}/20</dd><dt>Khoảng cách ghép ban đầu</dt><dd>${number(r.match_arcsec,2)}″</dd>${residual?`<dt>Residual Đông / Bắc</dt><dd>${number(residual[0],2)}″ / ${number(residual[1],2)}″</dd>`:""}</dl><p>Residual đã trừ chuyển động/parallax Gaia và hiệu chỉnh frame; chỉ sao giữ lại được dùng để đánh giá ngoài fit.</p>`;
 }
+async function setupAccuracy() {
+  try {
+    state.joint=await Promise.all([getJson("data/joint/broad.json"),getJson("data/joint/strict.json")]);
+    $("accuracy-rows").innerHTML=state.joint.map(p=>p.protocol.control_flux_scales.map(flux=>{
+      const g=p.result.groups,a=g.find(x=>x.model==="single"&&x.flux_scale===flux),b=g.find(x=>x.model==="joint"&&x.flux_scale===flux);
+      return `<tr><td>${p.result.spectral_configuration==="broad"?"Rộng":"Chặt"}</td><td>${number(flux,1)}×</td><td>${number(a.rms_arcsec,2)}″</td><td>${number(b.rms_arcsec,2)}″</td><td>${a.valid}/${a.attempted} · ${b.valid}/${b.attempted}</td><td>${a.within_68_ellipse}/${a.attempted} · ${b.within_68_ellipse}/${b.attempted}</td></tr>`;
+    }).join("")).join("");
+    $("accuracy-validation").hidden=false;
+  } catch {$("accuracy-validation").hidden=true;}
+}
+$("accuracy-evidence").addEventListener("click",()=>{
+  $("evidence-content").innerHTML=`<h3>Phép thử A/B 0.4.0</h3><p>Fit trên cùng pixel gốc, cùng mặt nạ, ePSF và biên độ tiêm. Cả hai phương pháp dùng cùng solver đa điểm khởi tạo. Mô hình nhiều nguồn thêm ePSF tại vị trí Gaia đã lan truyền; fit biên độ nguồn lân cận và mặt phẳng nền riêng từng exposure bằng phép chiếu SVD. Không buộc centroid WISE theo dự báo ngoài.</p><p>12 vị trí mới được khóa trước khi chạy, tách khỏi tám vị trí cũ. Mỗi vị trí có hai độ sáng và hai vector thật: đứng yên và [0,6; 0,05] pixel. 48 injection/phương pháp/cấu hình. Các injection trên một nền và hai cấu hình phổ có tương quan. Sau khi xem kết quả, các vùng này trở thành dữ liệu phát triển cho lần sau.</p><p>RMS chỉ tính các fit thành công và không chạm biên; cột hợp lệ luôn giữ mẫu số tất cả lượt thử. Ellipse gồm noise mô hình có điều kiện, không bao gồm sai số frame, ePSF, vị trí nguồn lân cận hoặc blending chưa có trong catalog. Chưa thêm shot noise nguồn; tiêm và fit dùng chung họ ePSF. Không xem đây là completeness hoặc hiệu chuẩn xác suất phát hiện.</p><p>Phổ rộng: nguồn 0,5× giảm RMS 1,70″ → 1,57″, số hợp lệ 22/24 → 24/24; nguồn 1× tăng RMS 1,02″ → 1,34″. Chưa đạt tiêu chí cải thiện ở cả hai mức sáng. Giữ số đo Gaia 0.3.0 làm mặc định.</p><div class="evidence-table"><table><thead><tr><th>Phổ</th><th>Mô hình</th><th>Đông / Bắc</th><th>Độ dài</th><th>σ noise theo vector</th></tr></thead><tbody>${state.joint.map(p=>Object.entries(p.result.models).map(([label,m])=>`<tr><td>${p.result.spectral_configuration}</td><td>${label}</td><td>${number(m.east_arcsec,2)}″ / ${number(m.north_arcsec,2)}″</td><td>${number(m.displacement_arcsec,2)}″</td><td>${number(m.conditional_noise_radial_arcsec,2)}″</td></tr>`).join("")).join("")}</tbody></table></div><p>Sai số ở bảng này chỉ là noise có điều kiện, không so trực tiếp với sai số tổng của bản Gaia. Tệp JSON có bootstrap 128 lượt/epoch, danh sách hàng xóm, toàn bộ lượt injection và hash mã nguồn.</p><p>Bước kế: catalog hồng ngoại sâu để kiểm soát nguồn Gaia mờ trong IR, nội suy ePSF có kiểm chứng và kiểm tra đáp ứng phổ. Khóa mô hình trước khi đánh giá trên vùng mới; yêu cầu RMS giảm ở cả hai độ sáng và không tăng lỗi/biên.</p><h3>Lưu nhận xét</h3><p>Bản production lưu vào MongoDB theo phiên trình duyệt bằng cookie HttpOnly. Chưa có tài khoản hoặc đồng bộ giữa thiết bị. Dữ liệu tự hết hạn sau 180 ngày; có thể xuất JSON và xóa nhận xét. Nếu API lỗi, thao tác lưu vẫn giữ bản cục bộ và báo chưa đồng bộ.</p><p><a href="https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/sp.html" target="_blank" rel="noopener noreferrer">IRSA: mô hình nhiều nguồn</a> · <a href="https://arxiv.org/abs/2510.01410" target="_blank" rel="noopener noreferrer">Huai et al.: confusion và blending</a></p>`;
+  $("evidence-content").insertAdjacentHTML("beforeend",`<p>So trên 22 lượt cùng hợp lệ ở phổ rộng 0,5×: RMS 1,70″ → 1,63″, giảm 4,06%. Bootstrap hậu kiểm theo vùng (2.000 lượt) cho khoảng 95% [0,89%; 7,64%], với chỉ 11 vùng có cặp hợp lệ; chưa phải phép kiểm định xác nhận. <a href="data/joint/summary.json" download>Tải so sánh ghép cặp</a> · <a href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/blob/main/docs/ACCURACY_RESEARCH.md" target="_blank" rel="noopener noreferrer">Nghiên cứu và tiêu chí bước kế</a>.</p>`);
+  $("download-fits").href=state.scene.fits;$("evidence-dialog").showModal();
+});
 async function loadScene(scene) {
   const generation=++state.loading;
   $("load-state").hidden=false;$("load-state").textContent="Đang tải cặp ảnh và bằng chứng…";
@@ -283,17 +319,32 @@ $("focus-selection").addEventListener("click",()=>{
 $("evidence-open").addEventListener("click",()=>{if(state.scene)$("evidence-dialog").showModal();});
 $("evidence-close").addEventListener("click",()=>$("evidence-dialog").close());
 $("download-manifest").addEventListener("click",()=>download("wise0855-evidence.json",state.manifest));
-$("save-review").addEventListener("click",()=>{
+$("save-review").addEventListener("click",async()=>{
   const s=state.scene;
-  reviews[keyForSelection()]={scene_id:s.id,selection:state.selected,status:$("review-status").value,note:$("review-note").value,
+  const key=keyForSelection(),item={scene_id:s.id,selection:state.selected,status:$("review-status").value,note:$("review-note").value,
     saved_at:new Date().toISOString(),analysis_sha256:state.manifest.analysis_sha256,
     input_sha256:[s.before.sha256,s.after.sha256],target_detection:s.target_detection};
-  try{localStorage.setItem("nosleepclub.reviews.v1",JSON.stringify(reviews));$("review-feedback").textContent="Đã lưu nhận xét trên trình duyệt này.";$("clear-review").hidden=false;}
-  catch{$("review-feedback").textContent="Trình duyệt không cho lưu. Chọn Xuất JSON để giữ nhận xét.";}
+  $("save-review").disabled=true;
+  let cloud=false,local=false;
+  if(location.protocol==="https:")try {
+    if(!remoteStorage)await reviewApi();
+    const result=await reviewApi("POST",item);Object.assign(item,result.review);cloud=true;remoteStorage=true;
+  } catch { remoteStorage=false; }
+  reviews[key]=item;
+  try{localStorage.setItem("nosleepclub.reviews.v1",JSON.stringify(reviews));local=true;}catch{}
+  $("storage-status").textContent=cloud?"MongoDB":"Trình duyệt";
+  if(key===keyForSelection()) {
+    $("review-feedback").textContent=cloud?"Đã lưu MongoDB.":local?"Đã lưu trên trình duyệt. Chưa đồng bộ.":"Chưa lưu được. Hãy xuất JSON.";
+    $("clear-review").hidden=false;
+  }
+  $("save-review").disabled=false;
 });
 $("export-reviews").addEventListener("click",()=>download("wise0855-reviews.json",{schema_version:1,reviews:Object.values(reviews)}));
-$("clear-review").addEventListener("click",()=>{
+$("clear-review").addEventListener("click",async()=>{
   const key=keyForSelection(),next={...reviews};delete next[key];
+  if(location.protocol==="https:")try {
+    await reviewApi("DELETE",reviews[key]);
+  } catch {$("review-feedback").textContent="Chưa xóa được trên máy chủ. Hãy thử lại.";return;}
   try{localStorage.setItem("nosleepclub.reviews.v1",JSON.stringify(next));reviews=next;loadReview();$("review-feedback").textContent="Đã xóa nhận xét của vùng này.";}
   catch{$("review-feedback").textContent="Trình duyệt không cho cập nhật lưu trữ. Nhận xét vẫn được giữ lại.";}
 });
@@ -330,5 +381,7 @@ getJson("data/manifest.json").then(async manifest=>{
     setupGaiaPanel();
   }
   await loadScene(manifest.scenes[0]);
+  await setupAccuracy();
+  await syncReviews();
 })
   .catch(error=>{$("load-state").textContent=`Không tải được manifest: ${error.message}. Chạy scripts/serve_demo.py để mở bản demo.`;});

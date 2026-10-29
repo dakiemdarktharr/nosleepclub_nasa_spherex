@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#132941">
   <title>WISE 0855 · NoSleepClub Sky Lab</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=0.3.0">
-  <script src="app.js?v=0.3.0" defer></script>
+  <link rel="stylesheet" href="styles.css?v=0.4.3">
+  <script src="app.js?v=0.4.3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#workspace">Đến vùng so sánh</a>
@@ -16,7 +16,7 @@
       <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="8"/><ellipse cx="20" cy="20" rx="19" ry="7" transform="rotate(-34 20 20)"/><circle cx="33" cy="10" r="3" class="satellite"/></svg>
       <span>NoSleepClub <b>Sky Lab</b></span>
     </a>
-    <nav aria-label="Điều hướng chính"><a class="active" href="#workspace">Khám phá</a><button id="evidence-open">Dữ liệu & phương pháp</button><a id="gaia-nav" href="#gaia-validation" hidden>Gaia</a><a href="#next-steps">Bước tiếp theo</a></nav>
+    <nav aria-label="Điều hướng chính"><a class="active" href="#workspace">Khám phá</a><button id="evidence-open">Dữ liệu & phương pháp</button><a id="gaia-nav" href="#gaia-validation" hidden>Gaia</a><a href="#accuracy-validation">Độ chính xác</a><a href="#next-steps">Tiếp theo</a></nav>
     <a class="repo-link" href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
   </header>
 
@@ -28,8 +28,8 @@
     </div>
 
     <section class="motion-panel" id="motion-panel" aria-labelledby="motion-heading" hidden>
-      <div class="motion-summary"><p class="eyebrow" id="configuration-label">Cộng ảnh theo epoch</p><h2 id="motion-heading">Dịch chuyển đo được</h2><p class="motion-value" id="motion-value">—</p><p id="motion-components"></p><p class="motion-qualification">Sai số 1σ theo mô hình có điều kiện; chưa bao phủ mọi sai số hệ thống.</p></div>
-      <div class="snr-summary"><h3>Tín hiệu rõ hơn sau khi cộng?</h3><table><thead><tr><th>Epoch</th><th>Ảnh đơn tốt nhất</th><th>Ảnh cộng</th></tr></thead><tbody id="snr-rows"></tbody></table><p id="snr-note"></p><p class="motion-qualification">S/N khẩu độ tại vị trí đã fit; có truyền covariance do nội suy. Không phải độ tin cậy phát hiện mù.</p></div>
+      <div class="motion-summary"><p class="eyebrow" id="configuration-label">Cộng ảnh theo epoch</p><h2 id="motion-heading">Dịch chuyển · sai số mô hình</h2><p class="motion-value" id="motion-value">—</p><p id="motion-components"></p><p class="motion-qualification">Sai số 1σ theo mô hình có điều kiện; chưa bao phủ mọi sai số hệ thống.</p></div>
+      <div class="snr-summary"><h3>S/N khẩu độ</h3><table><thead><tr><th>Epoch</th><th>Ảnh đơn tốt nhất</th><th>Ảnh cộng</th></tr></thead><tbody id="snr-rows"></tbody></table><p id="snr-note"></p><p class="motion-qualification">S/N khẩu độ tại vị trí đã fit; có truyền covariance do nội suy. Không phải độ tin cậy phát hiện mù.</p></div>
       <div class="motion-chart"><svg id="motion-chart" viewBox="0 0 280 175" role="img" aria-label="Vector dịch chuyển đo được và dự báo ngoài, với ellipse sai số 68 phần trăm theo mô hình"></svg><p><span class="measured-key">●</span> Đo được, ellipse 68% <span class="predicted-key">◇</span> Dự báo ngoài</p></div>
       <p class="motion-limit" id="motion-limit"></p>
     </section>
@@ -64,22 +64,28 @@
         <p class="helper">Điểm thực nghiệm để ưu tiên xem ảnh; không phải xác suất hay sigma đã hiệu chuẩn.</p>
         <div id="candidate-list" class="candidate-list"></div>
         <div class="review-form">
-          <h3>Nhận xét của bạn</h3>
+          <h3>Nhận xét <span id="storage-status" class="storage-badge">Trình duyệt</span></h3>
           <label for="review-status" class="sr-only">Kết luận review</label><select id="review-status"><option value="uncertain">Chưa đủ bằng chứng</option><option value="interesting">Có dấu hiệu đáng kiểm tra</option><option value="artifact">Nghi nhiễu / lỗi xử lý</option></select>
           <label for="review-note" class="sr-only">Ghi chú review</label><textarea id="review-note" rows="3" placeholder="Bạn thấy gì ở ảnh trước, sau và sai khác?" maxlength="2000"></textarea>
           <div class="review-actions"><button id="save-review" class="primary-button" disabled>Lưu nhận xét</button><button id="export-reviews" class="text-button" disabled>Xuất JSON</button></div>
-          <p class="storage-note">Lưu trên trình duyệt này. Chưa đồng bộ lên máy chủ.</p><p id="review-feedback" role="status" aria-live="polite"></p><button id="clear-review" class="text-button" hidden>Xóa nhận xét của vùng này</button>
+          <p id="review-feedback" role="status" aria-live="polite"></p><button id="clear-review" class="text-button" hidden>Xóa nhận xét của vùng này</button>
         </div>
       </aside>
     </div>
 
     <section class="gaia-validation" id="gaia-validation" aria-labelledby="gaia-heading" hidden>
-      <div class="gaia-heading"><div><p class="location">Gaia DR3 / Kiểm tra frame astrometry</p><h2 id="gaia-heading">Nhiều sao hơn để kiểm tra lại chuyển động.</h2></div><a href="data/gaia/results.json" class="text-button" download>Tải kiểm chứng Gaia ↓</a></div>
+      <div class="gaia-heading"><div><h2 id="gaia-heading">Kiểm chứng Gaia DR3</h2></div><a href="data/gaia/results.json" class="text-button" download>Tải kiểm chứng Gaia ↓</a></div>
       <div class="gaia-layout"><div class="gaia-map-column"><div class="reference-map"><img id="reference-field" alt="Ảnh cộng trường rộng SPHEREx với các sao Gaia được chọn"><svg id="reference-overlay" viewBox="0 0 192 192" aria-label="Bản đồ sao tham chiếu Gaia"></svg></div><p class="reference-legend"><span class="training-dot">●</span> Căn chỉnh <span class="heldout-dot">●</span> Giữ ngoài fit <span class="target-dot">+</span> WISE 0855 · Bắc ↑ / Đông ←</p><label for="reference-select">Kiểm tra từng sao Gaia</label><select id="reference-select"></select><div id="reference-detail" class="reference-detail" aria-live="polite"></div></div>
       <div class="gaia-findings"><p id="gaia-counts"></p><div class="evidence-table"><table><thead><tr><th>Cấu hình</th><th>RMS sao giữ lại</th><th>Đổi tập sao</th><th>Bỏ 1 sao, lớn nhất</th><th>Thử affine</th></tr></thead><tbody id="stability-rows"></tbody></table></div><p class="helper">Các độ thay đổi vector tính bằng arcsec. Sao giữ lại không tham gia fit căn chỉnh cục bộ; Gaia cũng đã góp phần vào WCS đầu vào của SPHEREx.</p><h3>Ngân sách sai số của vector <span id="budget-config"></span></h3><div id="uncertainty-budget" class="uncertainty-budget"></div><p class="helper">Chiếu covariance theo hướng vector rồi cộng theo bình phương. Hạng giữ lại có thể đếm một phần noise hai lần; các sai số ePSF và blending vẫn chưa được mô phỏng đầy đủ.</p><h3>Nguồn giả trên nền thật: giới hạn còn lại</h3><div class="evidence-table"><table><thead><tr><th>Độ sáng × WISE</th><th>Loại nguồn</th><th>Trong ellipse 68%</th><th>RMS sai lệch</th></tr></thead><tbody id="injection-rows"></tbody></table></div><p class="helper">8 vị trí cố định, hai độ sáng, hai kiểu chuyển động. Dùng chung nền ảnh và ePSF để tiêm/fit, chưa thêm shot noise; đây là chẩn đoán có tương quan, chưa phải hiệu chuẩn completeness hay false-positive rate.</p><p id="gaia-conclusion" class="gaia-conclusion"></p></div></div>
     </section>
 
-    <section class="next-steps" id="next-steps" aria-labelledby="next-heading"><div class="next-intro"><p class="location">Milestone tiếp theo</p><h2 id="next-heading">Tách nguồn nền<br> để kiểm soát sai số.</h2><p>Frame Gaia đã qua kiểm tra đổi sao và mô hình. Injection cho thấy nền ảnh còn gây bias; cần xử lý trước khi nâng mức tin cậy.</p></div><ol><li><strong>Fit chung mục tiêu và các nguồn nền</strong><span>Dùng mô hình ePSF cho nhiều nguồn, kiểm tra đáp ứng phổ đầy đủ. Đánh giá trên tập injection giữ lại, với bias và coverage của ellipse sai số.</span></li><li><strong>Thêm epoch thứ ba và kiểm tra ngoài</strong><span>Tách proper motion khỏi parallax, đối chiếu dữ liệu bước sóng phù hợp và giữ rõ phiên bản hiệu chuẩn.</span></li><li><strong>Vision model cho chuỗi ảnh</strong><span>Tiêm nguồn có chuyển động để tạo benchmark, chia train/test theo vùng trời; xếp hạng ứng viên và chuyển cho người duyệt.</span></li></ol></section>
+    <section class="accuracy-panel" id="accuracy-validation" aria-labelledby="accuracy-heading" hidden>
+      <div class="gaia-heading"><h2 id="accuracy-heading">Fit nhiều nguồn · thử nghiệm</h2><span class="unconfirmed">Chưa đạt tiêu chí thay mặc định</span></div>
+      <div class="evidence-table"><table><thead><tr><th>Phổ</th><th>Độ sáng</th><th>RMS một nguồn</th><th>RMS nhiều nguồn</th><th>Hợp lệ: một / nhiều</th><th>Trong ellipse 68%: một / nhiều</th></tr></thead><tbody id="accuracy-rows"></tbody></table></div>
+      <div class="accuracy-actions"><button id="accuracy-evidence" class="text-button">Phương pháp & giới hạn</button><a href="data/joint/broad.json" download>JSON phổ rộng ↓</a><a href="data/joint/strict.json" download>JSON phổ chặt ↓</a></div>
+    </section>
+
+    <section class="next-steps" id="next-steps" aria-labelledby="next-heading"><div class="next-intro"><h2 id="next-heading">Kiểm soát<br>sai số hệ thống.</h2></div><ol><li><strong>Catalog hồng ngoại sâu + ePSF theo vị trí</strong><span>Phát triển trên các vùng đã mở; khóa tham số trước khi chạy vùng kiểm chứng mới. Yêu cầu RMS giảm ở cả hai độ sáng, không tăng lỗi/biên.</span></li><li><strong>Epoch thứ ba + đáp ứng phổ đầy đủ</strong><span>Tách proper motion khỏi parallax, đối chiếu dữ liệu bước sóng phù hợp và giữ rõ phiên bản hiệu chuẩn.</span></li><li><strong>Vision model + benchmark theo vùng trời</strong><span>Đánh giá precision/recall và false positive trên vùng chưa dùng huấn luyện; chuyển ứng viên cho người duyệt.</span></li></ol></section>
   </main>
   <footer><span>NoSleepClub · NASA Space Apps 2026</span><span>Exploratory science demo · Dữ liệu SPHEREx, hiển thị do NoSleepClub xử lý</span></footer>
 

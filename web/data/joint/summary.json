@@ -1,0 +1,70 @@
+{
+  "source_sha256": "9260f2ed2cf10c1c107f577f53e36a224665a4f59d8666d54cd0fceb27879ea5",
+  "input_sha256": {
+    "broad.json": "71b7f080052e391b297b02d2e649e6b7a9dba32a632222f7b11c71b4a3b65e15",
+    "strict.json": "7a1beb53e6e6e089d958b95248671c090d26c38edc50a4f1c6a41f872ee6fc77"
+  },
+  "draws": 2000,
+  "method": "paired common-valid fits; resample spatial patches, not individual injections",
+  "qualification": "Post-hoc diagnostic interval with only 12 correlated patches; failures reported separately; not a significance test or population guarantee.",
+  "configurations": [
+    {
+      "spectral_configuration": "broad",
+      "groups": [
+        {
+          "flux_scale": 0.5,
+          "common_valid_pairs": 22,
+          "spatial_patches": 11,
+          "single_paired_rms_arcsec": 1.6986137354877198,
+          "joint_paired_rms_arcsec": 1.6295745095220826,
+          "relative_rms_improvement_percent": 4.064445289900709,
+          "spatial_bootstrap_95_interval_percent": [
+            0.8911919488663861,
+            7.640659750691456
+          ]
+        },
+        {
+          "flux_scale": 1.0,
+          "common_valid_pairs": 24,
+          "spatial_patches": 12,
+          "single_paired_rms_arcsec": 1.0159021149064684,
+          "joint_paired_rms_arcsec": 1.3357905917087638,
+          "relative_rms_improvement_percent": -31.488119978148355,
+          "spatial_bootstrap_95_interval_percent": [
+            -48.95578333772349,
+            6.379325476158775
+          ]
+        }
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "groups": [
+        {
+          "flux_scale": 0.5,
+          "common_valid_pairs": 23,
+          "spatial_patches": 12,
+          "single_paired_rms_arcsec": 2.0311497814036077,
+          "joint_paired_rms_arcsec": 2.5723647286088505,
+          "relative_rms_improvement_percent": -26.645742828046927,
+          "spatial_bootstrap_95_interval_percent": [
+            -90.53157563660639,
+            2.8155354899536333
+          ]
+        },
+        {
+          "flux_scale": 1.0,
+          "common_valid_pairs": 22,
+          "spatial_patches": 11,
+          "single_paired_rms_arcsec": 1.1722855050888905,
+          "joint_paired_rms_arcsec": 1.1371908085778895,
+          "relative_rms_improvement_percent": 2.993698749891127,
+          "spatial_bootstrap_95_interval_percent": [
+            0.25372396249423723,
+            7.489050017573142
+          ]
+        }
+      ]
+    }
+  ]
+}

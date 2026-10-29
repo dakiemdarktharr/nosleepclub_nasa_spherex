@@ -1,0 +1,74 @@
+{
+  "version": "0.4.0",
+  "stamp_radius_native_px": 6,
+  "neighbour_radius_sky_px": 11,
+  "derivative_step_sky_px": 0.002,
+  "svd_relative_cut": 1e-08,
+  "fit_bound_px": 1.5,
+  "control_flux_scales": [
+    0.5,
+    1.0
+  ],
+  "control_displacements_px": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.6,
+      0.05
+    ]
+  ],
+  "heldout_positions_px": [
+    [
+      -12.0,
+      -12.0
+    ],
+    [
+      12.0,
+      -12.0
+    ],
+    [
+      52.0,
+      -12.0
+    ],
+    [
+      76.0,
+      -12.0
+    ],
+    [
+      -12.0,
+      64.0
+    ],
+    [
+      12.0,
+      64.0
+    ],
+    [
+      52.0,
+      64.0
+    ],
+    [
+      76.0,
+      64.0
+    ],
+    [
+      -12.0,
+      88.0
+    ],
+    [
+      12.0,
+      88.0
+    ],
+    [
+      52.0,
+      88.0
+    ],
+    [
+      76.0,
+      88.0
+    ]
+  ],
+  "seed": 20261030,
+  "bootstrap_draws": 128
+}
