@@ -12,4 +12,8 @@ Review hết hạn sau 180 ngày theo TTL index; người dùng có thể xóa v
 
 Schema, index và rate limit được tạo khi API kết nối lần đầu. Kết quả QA production cần kiểm tra thực tế: anonymous GET, POST lưu, GET đọc lại cùng session, session khác không đọc được, cross-origin bị chặn, DELETE dữ liệu QA và GET xác nhận rỗng. Không dùng nhận xét thật của người dùng để thử.
 
+Đã xác minh production từ commit `244f5377bd56149e859c39aa2a09b96688919bf7`, deployment `dpl_6iExhUFB4TxF7vandvCxZzSnA1dt`, runtime Python 3.12 ở `sin1`, trạng thái READY. URL public: https://nosleepclub-nasa-spherex.vercel.app. HTTP: site/GET/POST/DELETE đều 200; Origin lạ 403; hash cũ 400; đọc lại đúng nội dung; phiên khác không thấy review; xóa và xác nhận rỗng. Kiểm tra nút lưu/xóa trên giao diện public cũng qua, badge “MongoDB”, không có lỗi JavaScript. Không để lại review QA. Script chạy lại: `python -m scripts.smoke_production` (cần requests/truststore, chỉ tạo/xóa review riêng của bài test).
+
+38 kiểm thử offline qua. Kiểm tra giao diện desktop và viewport 390 px: không tràn ngang trang; bảng rộng cuộn trong khung. Subtext được ẩn, nhãn/đơn vị/trạng thái chưa xác nhận được giữ lại. Giới hạn khoa học ở hộp bằng chứng và tài liệu accuracy.
+
 Biến môi trường mẫu ở `web/.env.example`, tuyệt đối không thay bằng URI thật trong Git. Backend dependency pin trong `web/requirements.txt`, độc lập `requirements.txt` cho phân tích offline. Build từ commit GitHub đã kiểm tra; sau deployment kiểm tra runtime/readiness và API, không chỉ build status.

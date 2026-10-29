@@ -8,7 +8,7 @@ Production: **https://nosleepclub-nasa-spherex.vercel.app** · [Deployment](docs
 
 ## Demo hiện tại: WISE 0855
 
-![WISE 0855 Gaia validation](docs/wise0855-gaia-validation.jpg)
+![WISE 0855 production](docs/wise0855-production.jpg)
 
 - Giữ cùng 20 exposure của bản cộng ảnh, mở cutout từ 0,12° lên 0,32° và đối chiếu 675 nguồn Gaia DR3.
 - Chọn 21 sao đạt chất lượng: 14 sao căn chỉnh, 7 sao giữ ngoài fit. Lan truyền vị trí/proper motion/parallax và covariance Gaia đến ngày quan sát.

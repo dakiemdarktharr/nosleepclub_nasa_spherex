@@ -8,6 +8,6 @@ The user wants each delivery to make the current product easy to inspect and the
 - Do not silently turn a validated software operation into a confirmed astronomical detection. Distinguish measured data, extrapolated positions, synthetic controls, and learned-model outputs.
 - Preserve source URLs, hashes, units, processing versions, masks and uncertainty qualifications for scientific products.
 - Keep large raw FITS downloads in ignored data/raw/. Small, documented demo products in web/data/ may be versioned.
-- For this milestone the web app is a static real-data comparison served by Python. It needs no Node runtime.
+- The frontend is a static real-data comparison served locally by Python. Production on Vercel adds a Python review API backed by an isolated MongoDB database. Keep web runtime dependencies separate from offline science requirements; no Node runtime is needed locally.
 
 User communication is in Vietnamese unless requested otherwise.
