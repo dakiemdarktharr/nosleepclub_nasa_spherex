@@ -123,6 +123,7 @@ function render() {
 function setMode(mode) {
   if (state.timer) clearInterval(state.timer);state.timer=null;
   state.mode=mode;state.blinkAfter=false;
+  $("mode-instruction").textContent={wipe:"Kéo vạch qua chấm được đánh dấu để so vị trí trước và sau.",side:"Hai ảnh đặt cạnh nhau: nhìn vị trí chấm so với các sao xung quanh.",difference:"Vùng sáng/tối cho biết ảnh sau khác ảnh trước; nhiễu cũng có thể tạo dấu như vậy.",blink:"Ảnh trước và sau đổi phiên. Tìm chấm nhảy chỗ trong khi các sao xung quanh đứng yên."}[mode];
   document.querySelectorAll("[data-mode]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===mode)));
   $("wipe-control").hidden=mode!=="wipe";
   $("view-note").textContent=mode==="difference"
@@ -225,7 +226,7 @@ function gaiaEvidence(s) {
 }
 function setupGaiaPanel() {
   $("gaia-validation").hidden=false;
-  $("gaia-nav").hidden=false;
+  const gaiaNav=$("gaia-nav");if(gaiaNav)gaiaNav.hidden=false;
   const g=state.gaia,map=state.gaiaMap;
   const training=g.references.filter(r=>r.split==="training").length;
   $("gaia-counts").textContent=`${g.catalog_count} nguồn · ${g.selected_count} sao đạt chuẩn · ${training} căn chỉnh / ${g.selected_count-training} giữ lại`;
@@ -292,14 +293,16 @@ async function loadScene(scene) {
     $("zoom").value=String(state.zoom);$("zoom-value").textContent=`${state.zoom}×`;
     $("baseline").textContent=`${number(scene.baseline_days,1)} ngày`;
     const isCoadd=scene.kind==="coadd";
-    $("wavelength-label").textContent=isCoadd?"Vùng chọn phổ tổng hợp":"Bước sóng tại mục tiêu";
-    $("alignment-label").textContent=isCoadd?"RMS sao giữ lại độc lập":"RMS sao nền sau căn chỉnh";
+    $("wavelength-label").textContent="Bước sóng hồng ngoại";
+    $("alignment-label").textContent=isCoadd?"Độ lệch sao nền kiểm tra":"Độ lệch sao nền sau căn chỉnh";
+    $("alignment-label").title="Độ ổn định căn chỉnh đo trên sao nền; không phải sai số vị trí của WISE 0855.";
     $("wavelength").textContent=isCoadd?"4,55–4,94 µm":`${number((scene.before.wavelength_um+scene.after.wavelength_um)/2,3)} µm`;
     $("alignment").textContent=isCoadd?`${number(scene.motion.holdout_rms_arcsec,2)}″ (${scene.motion.heldout_controls.length} sao)`:scene.alignment.rms_after_px===null?"Chỉ dùng WCS":`${number(scene.alignment.rms_after_px,3)} px`;
     $("date-before").textContent=`Trước · ${isCoadd?scene.before.date_start:scene.before.date}`;$("date-after").textContent=`Sau · ${isCoadd?scene.after.date_end:scene.after.date}`;
     $("load-state").hidden=true;motionPanel(scene);candidateList();sceneList();evidenceContent();select("target");setMode(state.mode);
     if(state.gaia)gaiaConfiguration(scene.motion?.spectral_configuration||"broad");
     ["download-manifest","save-review","export-reviews"].forEach(id=>$(id).disabled=false);
+    document.dispatchEvent(new CustomEvent("scene:loaded"));
   } catch(error) {
     $("load-state").hidden=false;$("load-state").textContent=`Không tải được dữ liệu: ${error.message}. Chạy web bằng scripts/serve_demo.py rồi tải lại trang.`;
   }

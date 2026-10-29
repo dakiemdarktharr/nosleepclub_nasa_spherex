@@ -1,0 +1,397 @@
+{
+  "source_sha256": "0517178492d4c990dc3d9f50e9bc1341030eb282089e11c02d4d8d7c68a89b19",
+  "protocol_sha256": "79803094b4aeee039e589f8b3ceb3af5fcfbcc61bd929c89cc2ed26fbf51fac1",
+  "input_sha256": {
+    "broad.json": "4d2512b3c85172b0c6846d4f0c046ad6e88ce79095e135958b70c9c3c0709428",
+    "strict.json": "196bce1edd6ebd9e73888f79dbad3073ef7700aadcfc42accd2aec30588d9c70"
+  },
+  "bootstrap_draws": 2000,
+  "qualification": "Post-hoc paired common-valid diagnostic; bootstrap spatial patches; shared exposures and only one field. Not a detection significance.",
+  "groups": [
+    {
+      "spectral_configuration": "broad",
+      "model": "ir_nearest",
+      "truth_psf": "nearest",
+      "flux_scale": 0.5,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 2.460837899159281,
+      "bias_east_north_arcsec": [
+        -0.2532188716705411,
+        0.19321585067756056
+      ],
+      "within_68_ellipse": 29,
+      "paired_valid": 50,
+      "paired_baseline_rms_arcsec": 3.132967816386372,
+      "paired_model_rms_arcsec": 2.026234275842095,
+      "paired_improvement_percent": 35.32540407072568,
+      "common_valid_pairs": 50,
+      "spatial_patches": 25,
+      "improvement_95_interval_percent": [
+        -35.034400875157,
+        63.12486972145655
+      ]
+    },
+    {
+      "spectral_configuration": "broad",
+      "model": "ir_bilinear",
+      "truth_psf": "nearest",
+      "flux_scale": 0.5,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 2.4129121942215104,
+      "bias_east_north_arcsec": [
+        -0.2558451211829333,
+        0.15715276291891692
+      ],
+      "within_68_ellipse": 28,
+      "paired_valid": 50,
+      "paired_baseline_rms_arcsec": 3.132967816386372,
+      "paired_model_rms_arcsec": 1.9800314079871202,
+      "paired_improvement_percent": 36.80013571697241,
+      "common_valid_pairs": 50,
+      "spatial_patches": 25,
+      "improvement_95_interval_percent": [
+        -31.36478730199232,
+        64.16174326477227
+      ]
+    },
+    {
+      "spectral_configuration": "broad",
+      "model": "ir_nearest",
+      "truth_psf": "nearest",
+      "flux_scale": 1.0,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 0.6068288810584878,
+      "bias_east_north_arcsec": [
+        -0.0034916936960489877,
+        -0.0671128919568152
+      ],
+      "within_68_ellipse": 42,
+      "paired_valid": 52,
+      "paired_baseline_rms_arcsec": 0.6223813870030435,
+      "paired_model_rms_arcsec": 0.6010165764159217,
+      "paired_improvement_percent": 3.432752173068654,
+      "common_valid_pairs": 52,
+      "spatial_patches": 26,
+      "improvement_95_interval_percent": [
+        -2.344155872871401,
+        8.620730995576702
+      ]
+    },
+    {
+      "spectral_configuration": "broad",
+      "model": "ir_bilinear",
+      "truth_psf": "nearest",
+      "flux_scale": 1.0,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 0.6162183205127256,
+      "bias_east_north_arcsec": [
+        -0.011999138386546999,
+        -0.0796900260607938
+      ],
+      "within_68_ellipse": 41,
+      "paired_valid": 52,
+      "paired_baseline_rms_arcsec": 0.6223813870030435,
+      "paired_model_rms_arcsec": 0.6068583900106889,
+      "paired_improvement_percent": 2.4941293741290282,
+      "common_valid_pairs": 52,
+      "spatial_patches": 26,
+      "improvement_95_interval_percent": [
+        -3.1298009514346625,
+        7.3045457715170015
+      ]
+    },
+    {
+      "spectral_configuration": "broad",
+      "model": "ir_nearest",
+      "truth_psf": "bilinear",
+      "flux_scale": 0.5,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 2.466860239864375,
+      "bias_east_north_arcsec": [
+        -0.24802161333223183,
+        0.18934494011263775
+      ],
+      "within_68_ellipse": 27,
+      "paired_valid": 50,
+      "paired_baseline_rms_arcsec": 3.1437041505324927,
+      "paired_model_rms_arcsec": 2.0360320760036275,
+      "paired_improvement_percent": 35.23461564731667,
+      "common_valid_pairs": 50,
+      "spatial_patches": 25,
+      "improvement_95_interval_percent": [
+        -33.05820788543387,
+        62.677502177018816
+      ]
+    },
+    {
+      "spectral_configuration": "broad",
+      "model": "ir_bilinear",
+      "truth_psf": "bilinear",
+      "flux_scale": 0.5,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 2.411523693777342,
+      "bias_east_north_arcsec": [
+        -0.24842861441130598,
+        0.1468173263336817
+      ],
+      "within_68_ellipse": 28,
+      "paired_valid": 50,
+      "paired_baseline_rms_arcsec": 3.1437041505324927,
+      "paired_model_rms_arcsec": 1.980791837245191,
+      "paired_improvement_percent": 36.99178604609862,
+      "common_valid_pairs": 50,
+      "spatial_patches": 25,
+      "improvement_95_interval_percent": [
+        -30.413949571346926,
+        64.18325911745995
+      ]
+    },
+    {
+      "spectral_configuration": "broad",
+      "model": "ir_nearest",
+      "truth_psf": "bilinear",
+      "flux_scale": 1.0,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 0.6123218415927364,
+      "bias_east_north_arcsec": [
+        -0.00022300329981519984,
+        -0.07738466142816632
+      ],
+      "within_68_ellipse": 42,
+      "paired_valid": 52,
+      "paired_baseline_rms_arcsec": 0.6243542431791055,
+      "paired_model_rms_arcsec": 0.6045231524250788,
+      "paired_improvement_percent": 3.1762562632793423,
+      "common_valid_pairs": 52,
+      "spatial_patches": 26,
+      "improvement_95_interval_percent": [
+        -2.5984381490456396,
+        7.876012108038352
+      ]
+    },
+    {
+      "spectral_configuration": "broad",
+      "model": "ir_bilinear",
+      "truth_psf": "bilinear",
+      "flux_scale": 1.0,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 0.6105877700796877,
+      "bias_east_north_arcsec": [
+        -0.003642764264639096,
+        -0.08762292000944213
+      ],
+      "within_68_ellipse": 42,
+      "paired_valid": 52,
+      "paired_baseline_rms_arcsec": 0.6243542431791055,
+      "paired_model_rms_arcsec": 0.5999679567554521,
+      "paired_improvement_percent": 3.905841385730402,
+      "common_valid_pairs": 52,
+      "spatial_patches": 26,
+      "improvement_95_interval_percent": [
+        -1.446112537121511,
+        8.657340771574512
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "model": "ir_nearest",
+      "truth_psf": "nearest",
+      "flux_scale": 0.5,
+      "attempted": 60,
+      "valid": 59,
+      "rms_arcsec": 4.344990095033895,
+      "bias_east_north_arcsec": [
+        -0.27763029749478874,
+        0.21945166322365117
+      ],
+      "within_68_ellipse": 26,
+      "paired_valid": 49,
+      "paired_baseline_rms_arcsec": 3.9760557781725665,
+      "paired_model_rms_arcsec": 3.571792894125243,
+      "paired_improvement_percent": 10.16743493053125,
+      "common_valid_pairs": 49,
+      "spatial_patches": 25,
+      "improvement_95_interval_percent": [
+        -8.967669758683659,
+        24.408381882355442
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "model": "ir_bilinear",
+      "truth_psf": "nearest",
+      "flux_scale": 0.5,
+      "attempted": 60,
+      "valid": 59,
+      "rms_arcsec": 4.290713312971541,
+      "bias_east_north_arcsec": [
+        -0.2636410814496185,
+        0.22539493401100816
+      ],
+      "within_68_ellipse": 28,
+      "paired_valid": 49,
+      "paired_baseline_rms_arcsec": 3.9760557781725665,
+      "paired_model_rms_arcsec": 3.52873124752043,
+      "paired_improvement_percent": 11.250459138622325,
+      "common_valid_pairs": 49,
+      "spatial_patches": 25,
+      "improvement_95_interval_percent": [
+        -7.119093872697401,
+        24.350858314683908
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "model": "ir_nearest",
+      "truth_psf": "nearest",
+      "flux_scale": 1.0,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 2.1327139848939254,
+      "bias_east_north_arcsec": [
+        0.03440603423257988,
+        0.2243800743105426
+      ],
+      "within_68_ellipse": 38,
+      "paired_valid": 52,
+      "paired_baseline_rms_arcsec": 1.1842638951539748,
+      "paired_model_rms_arcsec": 1.2009048870463395,
+      "paired_improvement_percent": -1.405175988262397,
+      "common_valid_pairs": 52,
+      "spatial_patches": 26,
+      "improvement_95_interval_percent": [
+        -11.675920785385879,
+        9.014842615764088
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "model": "ir_bilinear",
+      "truth_psf": "nearest",
+      "flux_scale": 1.0,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 2.1260560455115596,
+      "bias_east_north_arcsec": [
+        0.02268125988130142,
+        0.21579051904971805
+      ],
+      "within_68_ellipse": 38,
+      "paired_valid": 52,
+      "paired_baseline_rms_arcsec": 1.1842638951539748,
+      "paired_model_rms_arcsec": 1.2017905177894554,
+      "paired_improvement_percent": -1.479959214090698,
+      "common_valid_pairs": 52,
+      "spatial_patches": 26,
+      "improvement_95_interval_percent": [
+        -11.231767894625952,
+        8.360061950481011
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "model": "ir_nearest",
+      "truth_psf": "bilinear",
+      "flux_scale": 0.5,
+      "attempted": 60,
+      "valid": 59,
+      "rms_arcsec": 4.38923752432628,
+      "bias_east_north_arcsec": [
+        -0.33243319181574876,
+        0.18245273051915514
+      ],
+      "within_68_ellipse": 27,
+      "paired_valid": 49,
+      "paired_baseline_rms_arcsec": 3.6592585018138704,
+      "paired_model_rms_arcsec": 3.623490114404676,
+      "paired_improvement_percent": 0.9774763764698324,
+      "common_valid_pairs": 49,
+      "spatial_patches": 25,
+      "improvement_95_interval_percent": [
+        -18.639543670478172,
+        16.12963090137543
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "model": "ir_bilinear",
+      "truth_psf": "bilinear",
+      "flux_scale": 0.5,
+      "attempted": 60,
+      "valid": 59,
+      "rms_arcsec": 4.060638309271886,
+      "bias_east_north_arcsec": [
+        -0.24719176333801743,
+        0.19550351041252229
+      ],
+      "within_68_ellipse": 27,
+      "paired_valid": 49,
+      "paired_baseline_rms_arcsec": 3.6592585018138704,
+      "paired_model_rms_arcsec": 3.1734273602383256,
+      "paired_improvement_percent": 13.2767647143464,
+      "common_valid_pairs": 49,
+      "spatial_patches": 25,
+      "improvement_95_interval_percent": [
+        -8.07756319709648,
+        31.198936995991968
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "model": "ir_nearest",
+      "truth_psf": "bilinear",
+      "flux_scale": 1.0,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 2.1434444086458315,
+      "bias_east_north_arcsec": [
+        0.029378047237059775,
+        0.2232677085996718
+      ],
+      "within_68_ellipse": 38,
+      "paired_valid": 52,
+      "paired_baseline_rms_arcsec": 1.1940435451214901,
+      "paired_model_rms_arcsec": 1.2132514218891908,
+      "paired_improvement_percent": -1.608641229725527,
+      "common_valid_pairs": 52,
+      "spatial_patches": 26,
+      "improvement_95_interval_percent": [
+        -12.012527590296516,
+        8.632977195763418
+      ]
+    },
+    {
+      "spectral_configuration": "strict",
+      "model": "ir_bilinear",
+      "truth_psf": "bilinear",
+      "flux_scale": 1.0,
+      "attempted": 60,
+      "valid": 60,
+      "rms_arcsec": 2.134118079459772,
+      "bias_east_north_arcsec": [
+        0.022279904187265602,
+        0.2162800596443594
+      ],
+      "within_68_ellipse": 39,
+      "paired_valid": 52,
+      "paired_baseline_rms_arcsec": 1.1940435451214901,
+      "paired_model_rms_arcsec": 1.2072987563416169,
+      "paired_improvement_percent": -1.1101112077765984,
+      "common_valid_pairs": 52,
+      "spatial_patches": 26,
+      "improvement_95_interval_percent": [
+        -11.084246995466492,
+        8.670180673104351
+      ]
+    }
+  ],
+  "point_estimate_gate_passed": []
+}

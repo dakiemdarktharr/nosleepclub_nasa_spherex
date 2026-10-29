@@ -1,5 +1,6 @@
 """Explicit production smoke test; uses only this test's disposable guest review."""
 import json
+from hashlib import sha256
 from pathlib import Path
 import requests
 import truststore
@@ -15,6 +16,18 @@ def main():
     assert response.url.startswith(URL+'/'), 'Unexpected authentication redirect'
     assert "script-src 'self'" in response.headers['Content-Security-Policy']
     manifest=session.get(URL+'/data/manifest.json',timeout=30).json()
+    overview=session.get(URL+'/data/release/overview.json',timeout=30);overview.raise_for_status()
+    local=Path(__file__).resolve().parents[1]/'web/data/release'
+    assert overview.json()['protocol_sha256']==sha256((local/'protocol.json').read_bytes()).hexdigest()
+    assert overview.json()['total_recoveries']==1440
+    for name in ['broad','strict']:
+        deployed=session.get(URL+'/data/release/'+name+'.json',timeout=30);deployed.raise_for_status()
+        assert sha256(deployed.content).hexdigest()==sha256((local/(name+'.json')).read_bytes()).hexdigest()
+    results['locked_science_products_match']=True
+    for asset in ['brown-dwarf-canva.webp','compare-guide-canva.webp']:
+        deployed=session.get(URL+'/assets/'+asset,timeout=30);deployed.raise_for_status()
+        assert deployed.content.startswith(b'RIFF') and b'WEBP' in deployed.content[:16]
+    results['canva_assets']=True
     response=session.get(URL+'/api/reviews',timeout=30);results['storage_get']=response.status_code
     assert response.status_code==200, response.text
     assert response.json()['storage']=='mongodb'

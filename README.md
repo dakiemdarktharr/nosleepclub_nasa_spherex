@@ -6,9 +6,11 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 Production: **https://nosleepclub-nasa-spherex.vercel.app** · [Deployment](docs/DEPLOYMENT.md) · [Nghiên cứu và A/B độ chính xác 0.4.0](docs/ACCURACY_RESEARCH.md).
 
+**Bản 0.5.0:** [QR3/CatWISE/ePSF và 30 vùng khóa trước](docs/QR3_CATWISE_VALIDATION.md). QR3 chưa phủ tọa độ truy vấn ở cả SIA và TAP. Đã bổ sung catalog IR có hiệu chỉnh tile, so ba mô hình bằng 1.440 phép phục hồi; phổ rộng có tiến bộ, chưa mô hình nào qua gate ở cả hai cấu hình. Giữ phép đo cũ làm mặc định. Frontend mới theo luồng quan sát → kiểm chứng → nhận xét, có hướng dẫn nhập môn và minh họa Canva tách rõ khỏi FITS thật.
+
 ## Demo hiện tại: WISE 0855
 
-![WISE 0855 production](docs/wise0855-production.jpg)
+![NoSleepClub mission interface](docs/wise0855-mission.jpg)
 
 - Giữ cùng 20 exposure của bản cộng ảnh, mở cutout từ 0,12° lên 0,32° và đối chiếu 675 nguồn Gaia DR3.
 - Chọn 21 sao đạt chất lượng: 14 sao căn chỉnh, 7 sao giữ ngoài fit. Lan truyền vị trí/proper motion/parallax và covariance Gaia đến ngày quan sát.
@@ -56,7 +58,7 @@ Lệnh `--demo` tải 6 cutout được chọn và kiểm tra FITS; lưu trong `
 
 `prepare_gaia_data.py` tải cutout rộng của đúng 20 exposure cũ và truy vấn Gaia DR3 qua IRSA TAP, lưu ADQL/URL/hash. `gaia_motion.py --publish` cache centroid sao tham chiếu, chạy đổi tập sao, 14 lượt bỏ từng sao, affine, 256 bootstrap căn chỉnh và 32 injection mỗi cấu hình; sau đó thêm sản phẩm Gaia vào demo. Chạy các bước theo thứ tự trên nếu tái tạo toàn bộ manifest. 31 kiểm thử kiểm tra cả các sản phẩm đã commit mà không cần tải raw.
 
-Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Toàn bộ suite hiện có 38 kiểm thử offline, gồm API validation và deblending tổng hợp.
+Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Toàn bộ suite hiện có 46 kiểm thử offline, gồm API, deblending, propagation CatWISE, ePSF, lock và giao diện.
 
 ## Tài liệu
 

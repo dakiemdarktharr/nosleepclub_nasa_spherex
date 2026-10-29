@@ -1,0 +1,26 @@
+{
+  "generated_with": "Canva",
+  "purpose": "Illustrations only; never scientific observation data",
+  "assets": [
+    {
+      "path": "brown-dwarf-canva.webp",
+      "media_id": "MAHZbvmhEbQ",
+      "canva_url": "https://www.canva.com/M/MAHZbvmhEbQ",
+      "role": "Hero artistic interpretation of a cold brown dwarf",
+      "source_dimensions": [
+        1776,
+        896
+      ],
+      "processing": "WebP encoding only; no scientific content",
+      "sha256": "996bc7f1a66f7e862aadd2606f4fb88bfca46e1d6295435962b31aa077c628b4"
+    },
+    {
+      "path": "compare-guide-canva.webp",
+      "media_id": "MAHZbsQBgXg",
+      "canva_url": "https://www.canva.com/M/MAHZbsQBgXg",
+      "role": "Onboarding illustration of temporal comparison",
+      "processing": "WebP encoding only; image labels clearly mark it as illustration",
+      "sha256": "abd1fc6477a6cd8b9acb36e6235b2fb53d35469ccaa4c5da5a7a43ff666172c2"
+    }
+  ]
+}

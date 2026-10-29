@@ -1,49 +1,23 @@
 <!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#132941">
-  <title>WISE 0855 · NoSleepClub Sky Lab</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=0.4.3">
-  <script src="app.js?v=0.4.3" defer></script>
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000000"><meta name="description" content="So sánh ảnh hồng ngoại thật của WISE 0855, kiểm tra chuyển động và góp nhận xét cùng NoSleepClub."><title>NoSleepClub Sky Lab — Theo dấu WISE 0855</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="mission.css?v=0.5.2"><script src="app.js?v=0.5.2" defer></script><script src="mission.js?v=0.5.2" defer></script></head>
 <body>
-  <a class="skip-link" href="#workspace">Đến vùng so sánh</a>
-  <header class="site-header">
-    <a class="brand" href="./" aria-label="NoSleepClub Sky Lab, trang chính">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="8"/><ellipse cx="20" cy="20" rx="19" ry="7" transform="rotate(-34 20 20)"/><circle cx="33" cy="10" r="3" class="satellite"/></svg>
-      <span>NoSleepClub <b>Sky Lab</b></span>
-    </a>
-    <nav aria-label="Điều hướng chính"><a class="active" href="#workspace">Khám phá</a><button id="evidence-open">Dữ liệu & phương pháp</button><a id="gaia-nav" href="#gaia-validation" hidden>Gaia</a><a href="#accuracy-validation">Độ chính xác</a><a href="#next-steps">Tiếp theo</a></nav>
-    <a class="repo-link" href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-  </header>
-
-  <main id="workspace">
-    <div id="load-state" role="status">Đang tải bộ ảnh SPHEREx thật…</div>
-    <div class="intro">
-      <div><p class="location">Hydra / SPHEREx QR2</p><h1>Theo dấu <span>WISE 0855</span></h1><p class="intro-copy">Cùng một vùng trời. Quan sát điều gì thay đổi giữa hai thời điểm.</p></div>
-      <div class="data-status"><span class="data-stamp">FITS thật từ NASA/IPAC IRSA</span><span class="unconfirmed" id="science-status">Dấu hiệu chuyển động · cần xác minh thêm</span></div>
-    </div>
-
-    <section class="motion-panel" id="motion-panel" aria-labelledby="motion-heading" hidden>
-      <div class="motion-summary"><p class="eyebrow" id="configuration-label">Cộng ảnh theo epoch</p><h2 id="motion-heading">Dịch chuyển · sai số mô hình</h2><p class="motion-value" id="motion-value">—</p><p id="motion-components"></p><p class="motion-qualification">Sai số 1σ theo mô hình có điều kiện; chưa bao phủ mọi sai số hệ thống.</p></div>
-      <div class="snr-summary"><h3>S/N khẩu độ</h3><table><thead><tr><th>Epoch</th><th>Ảnh đơn tốt nhất</th><th>Ảnh cộng</th></tr></thead><tbody id="snr-rows"></tbody></table><p id="snr-note"></p><p class="motion-qualification">S/N khẩu độ tại vị trí đã fit; có truyền covariance do nội suy. Không phải độ tin cậy phát hiện mù.</p></div>
-      <div class="motion-chart"><svg id="motion-chart" viewBox="0 0 280 175" role="img" aria-label="Vector dịch chuyển đo được và dự báo ngoài, với ellipse sai số 68 phần trăm theo mô hình"></svg><p><span class="measured-key">●</span> Đo được, ellipse 68% <span class="predicted-key">◇</span> Dự báo ngoài</p></div>
-      <p class="motion-limit" id="motion-limit"></p>
-    </section>
-
+<a class="skip-link" href="#workspace">Đến ảnh quan sát</a>
+<header class="site-header"><a class="brand" href="#home" aria-label="NoSleepClub Sky Lab, trang chính"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="8"/><ellipse cx="20" cy="20" rx="19" ry="7" transform="rotate(-34 20 20)"/><circle cx="33" cy="10" r="3"/></svg><span>NoSleepClub <b>Sky Lab</b></span></a><button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button><nav id="main-nav" aria-label="Điều hướng chính"><a href="#home">Nhiệm vụ</a><a href="#workspace">Quan sát</a><a href="#validation">Kiểm chứng</a><a href="#review">Ghi nhận</a></nav><a class="repo-link" href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex" target="_blank" rel="noopener noreferrer">GitHub ↗</a></header>
+<main>
+<section class="mission-hero" id="home" aria-labelledby="hero-heading"><img class="hero-art" src="assets/brown-dwarf-canva.webp" alt="" fetchpriority="high" width="1776" height="896"><div class="hero-content"><span class="mission-tag">WISE 0855 / SPHEREx</span><h1 id="hero-heading">Theo dấu<br>một thế giới<br>gần như vô hình.</h1><p>Một sao lùn nâu rất lạnh. Hai lần nhìn bằng hồng ngoại. Cùng tìm điểm đổi vị trí giữa những ngôi sao.</p><div class="hero-actions"><a class="primary-button" href="#workspace">Bắt đầu quan sát <span aria-hidden="true">↘</span></a><button class="outline-button" id="guide-open">Hướng dẫn 60 giây</button></div></div><span class="art-label">Minh họa nghệ thuật · Canva</span><div class="mission-facts"><div><span>Đối tượng</span><strong>WISE 0855−0714</strong></div><div><span>Dữ liệu thật</span><strong>NASA / IPAC IRSA</strong></div><div><span>Giữa hai lần chụp</span><strong id="hero-baseline">163,5 ngày</strong></div><div><span>Trạng thái</span><strong class="status-amber">Chưa xác nhận chuyển động</strong></div></div></section>
+<section class="journey" aria-label="Ba bước quan sát"><a href="#workspace"><span class="step-number">01</span><div><h2>So ảnh</h2><p>Tìm chấm sáng đổi vị trí.</p></div><span aria-hidden="true">↘</span></a><a href="#validation"><span class="step-number">02</span><div><h2>Xem bằng chứng</h2><p>Kiểm tra những gì phép đo còn chưa chắc.</p></div><span aria-hidden="true">↘</span></a><a href="#review"><span class="step-number">03</span><div><h2>Ghi nhận</h2><p>Điều bạn thấy giúp lần kiểm tra tiếp theo.</p></div><span aria-hidden="true">↘</span></a></section>
+<section class="workspace-section page-section" id="workspace" aria-labelledby="workspace-heading"><div class="section-heading"><div><span class="section-step">01 / Quan sát</span><h2 id="workspace-heading">Bạn có thấy điểm đổi chỗ?</h2></div><button class="text-button" id="workspace-help">Cách đọc ảnh <span aria-hidden="true">?</span></button></div><div class="workspace-context"><label for="scene-select">Bộ ảnh <select id="scene-select" aria-label="Bộ ảnh"><option value="coadd-gaia-broad">Nhiều ảnh hơn · 10 ảnh mỗi lần</option><option value="coadd-gaia-strict">Phổ gần nhau hơn · 2 ảnh mỗi lần</option></select></label><span class="unconfirmed" id="science-status">Chưa xác nhận chuyển động</span><button id="evidence-open" class="text-button">Nguồn & phương pháp</button></div><div id="load-state" role="status">Đang tải ảnh thật từ SPHEREx…</div>
     <div class="workspace-grid">
       <section class="observation" aria-label="So sánh ảnh thiên văn">
-        <div class="observation-head"><div><h2>Vùng quan sát</h2><span>Hướng bắc ở trên · hướng đông bên trái</span></div><button id="download-manifest" class="text-button" disabled>Tải bằng chứng <span aria-hidden="true">↓</span></button></div>
+        <div class="observation-head"><div><h3>Ảnh quan sát thật</h3><span>Hướng bắc ở trên · hướng đông bên trái</span></div><button id="download-manifest" class="text-button" disabled>Tải bằng chứng <span aria-hidden="true">↓</span></button></div>
         <div class="metrics" aria-live="polite">
           <div><span>Khoảng thời gian</span><strong id="baseline">—</strong></div>
           <div><span id="wavelength-label">Bước sóng tại mục tiêu</span><strong id="wavelength">—</strong></div>
           <div><span id="alignment-label">RMS sao nền sau căn chỉnh</span><strong id="alignment">—</strong></div>
         </div>
         <div class="toolbar"><div class="view-switch" role="group" aria-label="Chế độ xem"><button data-mode="wipe" aria-pressed="true">Trước / sau</button><button data-mode="side" aria-pressed="false">Song song</button><button data-mode="difference" aria-pressed="false">Sai khác</button><button data-mode="blink" aria-pressed="false">Nhấp nháy</button></div><button id="reset-view" class="icon-text" title="Đặt lại vùng xem">↺ <span>Đặt lại</span></button></div>
-        <div class="viewer-shell" id="viewer-shell">
+        <p class="mode-instruction" id="mode-instruction">Kéo vạch qua chấm được đánh dấu để so vị trí trước và sau.</p><div class="viewer-shell" id="viewer-shell">
           <div class="viewer-top"><span id="date-before">Trước</span><span class="viewer-badge" id="mode-badge">Kéo vạch để so sánh</span><span id="date-after">Sau</span></div>
           <canvas id="sky" width="1024" height="1024" tabindex="0" aria-label="Ảnh SPHEREx trước và sau đã căn chỉnh. Dùng danh sách residual bên phải để chọn vùng; dùng các nút và thanh trượt bên dưới để điều khiển."></canvas>
           <div class="viewer-bottom"><span id="pixel-readout">Di chuột trên ảnh để xem giá trị</span><span id="fov-readout">6,15″ / pixel gốc · khung 6,56′</span></div>
@@ -51,44 +25,49 @@
         <div class="wipe-control" id="wipe-control"><label for="wipe">Trước</label><input id="wipe" type="range" min="0" max="100" value="50" aria-label="Vị trí vạch so sánh"><span>Sau</span></div>
         <div class="display-controls"><div class="overlay-options"><label id="motion-overlay-label"><input id="show-motion" type="checkbox" checked><span class="legend-measured"></span>Vị trí đo + sai số</label><label><input id="show-prior" type="checkbox"><span class="legend-prior"></span>Vị trí dự kiến</label><label><input id="show-residuals" type="checkbox" checked><span class="legend-residual"></span>Residual cần kiểm tra</label></div><label class="zoom-label" for="zoom">Zoom <input id="zoom" type="range" min="1" max="4" value="1" step="0.25"><output id="zoom-value" for="zoom">1×</output></label></div>
         <p id="view-note" class="view-note">Hai ảnh dùng cùng mức kéo sáng. Vòng nét đứt là dự báo từ astrometry cũ, không phải phát hiện của model.</p>
-        <div class="scene-heading"><h3>Cấu hình cộng ảnh & ảnh đơn đối chiếu</h3><span>Giữ cả cấu hình phổ chặt để kiểm tra</span></div>
-        <div id="scene-list" class="scene-list" aria-label="Các cặp ảnh"></div>
+        <details class="dataset-history"><summary>Ảnh đơn & cấu hình đối chiếu</summary><div id="scene-list" class="scene-list" aria-label="Các cặp ảnh"></div></details>
       </section>
 
       <aside class="inspector" aria-label="Kiểm tra và nhận xét">
-        <div class="inspector-header"><h2>Kiểm tra vùng chọn</h2><span class="subtle-label">Con người quyết định</span></div>
+        <div class="inspector-header"><h3>Điểm đang xem</h3><span class="subtle-label">Con người quyết định</span></div>
         <button id="select-target" class="target-button" aria-pressed="true"><span class="target-symbol" aria-hidden="true">⊕</span><span><strong>WISE 0855−0714</strong><small id="target-subtitle">Centroid fit độc lập từng epoch</small></span><span aria-hidden="true">⌖</span></button>
-        <div id="selection-detail" class="selection-detail"></div>
+        <details class="coordinate-details"><summary>Tọa độ & sai số</summary><div id="selection-detail" class="selection-detail"></div></details>
         <button id="focus-selection" class="focus-button">Phóng vào vùng chọn</button>
-        <div class="residual-heading"><h3>Residual tự động</h3><span id="candidate-count">—</span></div>
-        <p class="helper">Điểm thực nghiệm để ưu tiên xem ảnh; không phải xác suất hay sigma đã hiệu chuẩn.</p>
-        <div id="candidate-list" class="candidate-list"></div>
-        <div class="review-form">
-          <h3>Nhận xét <span id="storage-status" class="storage-badge">Trình duyệt</span></h3>
-          <label for="review-status" class="sr-only">Kết luận review</label><select id="review-status"><option value="uncertain">Chưa đủ bằng chứng</option><option value="interesting">Có dấu hiệu đáng kiểm tra</option><option value="artifact">Nghi nhiễu / lỗi xử lý</option></select>
-          <label for="review-note" class="sr-only">Ghi chú review</label><textarea id="review-note" rows="3" placeholder="Bạn thấy gì ở ảnh trước, sau và sai khác?" maxlength="2000"></textarea>
+        <details class="candidate-details"><summary>Vùng máy đề xuất <span id="candidate-count">—</span></summary><div id="candidate-list" class="candidate-list"></div></details>
+        <div class="review-form" id="review">
+          <h3>Bạn nhìn thấy gì? <span id="storage-status" class="storage-badge">Trình duyệt</span></h3>
+          <label for="review-status" class="sr-only">Kết luận review</label><select id="review-status"><option value="uncertain">Tôi chưa chắc</option><option value="interesting">Có điểm đổi vị trí</option><option value="artifact">Có vẻ là nhiễu</option></select>
+          <label for="review-note" class="sr-only">Ghi chú review</label><textarea id="review-note" rows="3" placeholder="Ghi lại điều bạn thấy ở hai ảnh…" maxlength="2000"></textarea>
           <div class="review-actions"><button id="save-review" class="primary-button" disabled>Lưu nhận xét</button><button id="export-reviews" class="text-button" disabled>Xuất JSON</button></div>
           <p id="review-feedback" role="status" aria-live="polite"></p><button id="clear-review" class="text-button" hidden>Xóa nhận xét của vùng này</button>
         </div>
       </aside>
     </div>
 
-    <section class="gaia-validation" id="gaia-validation" aria-labelledby="gaia-heading" hidden>
+<details class="advanced-motion"><summary>Phép đo chuyển động & mức rõ của tín hiệu</summary>    <section class="motion-panel" id="motion-panel" aria-labelledby="motion-heading" hidden>
+      <div class="motion-summary"><p class="eyebrow" id="configuration-label">Cộng ảnh theo epoch</p><h2 id="motion-heading">Dịch chuyển · sai số mô hình</h2><p class="motion-value" id="motion-value">—</p><p id="motion-components"></p><p class="motion-qualification">Sai số 1σ theo mô hình có điều kiện; chưa bao phủ mọi sai số hệ thống.</p></div>
+      <div class="snr-summary"><h3>S/N khẩu độ</h3><table><thead><tr><th>Epoch</th><th>Ảnh đơn tốt nhất</th><th>Ảnh cộng</th></tr></thead><tbody id="snr-rows"></tbody></table><p id="snr-note"></p><p class="motion-qualification">S/N khẩu độ tại vị trí đã fit; có truyền covariance do nội suy. Không phải độ tin cậy phát hiện mù.</p></div>
+      <div class="motion-chart"><svg id="motion-chart" viewBox="0 0 280 175" role="img" aria-label="Vector dịch chuyển đo được và dự báo ngoài, với ellipse sai số 68 phần trăm theo mô hình"></svg><p><span class="measured-key">●</span> Đo được, ellipse 68% <span class="predicted-key">◇</span> Dự báo ngoài</p></div>
+      <p class="motion-limit" id="motion-limit"></p>
+    </section>
+
+</details></section>
+<section class="page-section validation-intro" id="validation" aria-labelledby="validation-heading"><div class="section-heading"><div><span class="section-step">02 / Kiểm chứng</span><h2 id="validation-heading">Thấy thay đổi chưa đủ<br>để kết luận.</h2></div><span class="unconfirmed" id="release-verdict">Đang tải kiểm chứng</span></div><div class="validation-story"><p>Ảnh mờ, nguồn chồng nhau hoặc cách xử lý có thể làm một chấm sáng trông như đã di chuyển. Chúng tôi tiêm nguồn có vị trí biết trước vào nền ảnh thật để đo mức sai lệch.</p><div class="release-facts"><div><strong>30</strong><span>vùng mới đã khóa trước phép thử</span></div><div><strong id="ir-source-count">—</strong><span>nguồn hồng ngoại đạt điều kiện</span></div><div><strong>0</strong><span>cặp QR3 cùng exposure hiện có</span></div></div></div><div class="release-status" id="qr3-status">QR3 chưa phủ tọa độ này trong truy vấn SIA và TAP. Phép thử bên dưới dùng QR2.</div><div class="benchmark-toolbar"><h3>Thử tách nguồn nền có tốt hơn?</h3><div><label for="release-spectrum">Bộ phổ <select id="release-spectrum" aria-label="Bộ phổ"><option value="broad">Rộng · 10 ảnh</option><option value="strict">Chặt · 2 ảnh</option></select></label><label for="release-truth">Hình nguồn tiêm <select id="release-truth" aria-label="Hình nguồn tiêm"><option value="nearest">ePSF gần nhất</option><option value="bilinear">ePSF nội suy</option></select></label></div></div><div class="evidence-table release-table"><table><thead><tr><th>Mô hình thử</th><th>Độ sáng</th><th>Sai lệch ghép cặp cũ / mới</th><th>Cặp hợp lệ</th><th>Fit cũ / mới</th><th>RMS mọi fit mới</th><th>Trong vùng sai số 68%</th></tr></thead><tbody id="release-rows"></tbody></table></div><div class="release-actions"><button class="text-button" id="release-evidence">Đọc kết quả & giới hạn</button><a href="data/release/broad.json" download>JSON phổ rộng ↓</a><a href="data/release/strict.json" download>JSON phổ chặt ↓</a><a href="data/release/protocol.json" download>Cấu hình đã khóa ↓</a></div><details class="technical-section"><summary>Xem 30 vị trí kiểm thử trên ảnh thật</summary><div class="patch-map-wrap"><div class="reference-map"><img src="data/gaia/reference-field.png" alt="Trường sao thật dùng làm nền cho các phép thử" loading="lazy" width="192" height="192"><svg id="patch-overlay" viewBox="0 0 192 192" role="img" aria-label="Vị trí 30 vùng tiêm nguồn giả"></svg></div><p>Vòng cam là vị trí kiểm thử, không phải các thiên thể được phát hiện.</p></div></details><details class="technical-section" id="gaia-details"><summary>Căn chỉnh theo sao Gaia DR3</summary>    <section class="gaia-validation" id="gaia-validation" aria-labelledby="gaia-heading" hidden>
       <div class="gaia-heading"><div><h2 id="gaia-heading">Kiểm chứng Gaia DR3</h2></div><a href="data/gaia/results.json" class="text-button" download>Tải kiểm chứng Gaia ↓</a></div>
       <div class="gaia-layout"><div class="gaia-map-column"><div class="reference-map"><img id="reference-field" alt="Ảnh cộng trường rộng SPHEREx với các sao Gaia được chọn"><svg id="reference-overlay" viewBox="0 0 192 192" aria-label="Bản đồ sao tham chiếu Gaia"></svg></div><p class="reference-legend"><span class="training-dot">●</span> Căn chỉnh <span class="heldout-dot">●</span> Giữ ngoài fit <span class="target-dot">+</span> WISE 0855 · Bắc ↑ / Đông ←</p><label for="reference-select">Kiểm tra từng sao Gaia</label><select id="reference-select"></select><div id="reference-detail" class="reference-detail" aria-live="polite"></div></div>
       <div class="gaia-findings"><p id="gaia-counts"></p><div class="evidence-table"><table><thead><tr><th>Cấu hình</th><th>RMS sao giữ lại</th><th>Đổi tập sao</th><th>Bỏ 1 sao, lớn nhất</th><th>Thử affine</th></tr></thead><tbody id="stability-rows"></tbody></table></div><p class="helper">Các độ thay đổi vector tính bằng arcsec. Sao giữ lại không tham gia fit căn chỉnh cục bộ; Gaia cũng đã góp phần vào WCS đầu vào của SPHEREx.</p><h3>Ngân sách sai số của vector <span id="budget-config"></span></h3><div id="uncertainty-budget" class="uncertainty-budget"></div><p class="helper">Chiếu covariance theo hướng vector rồi cộng theo bình phương. Hạng giữ lại có thể đếm một phần noise hai lần; các sai số ePSF và blending vẫn chưa được mô phỏng đầy đủ.</p><h3>Nguồn giả trên nền thật: giới hạn còn lại</h3><div class="evidence-table"><table><thead><tr><th>Độ sáng × WISE</th><th>Loại nguồn</th><th>Trong ellipse 68%</th><th>RMS sai lệch</th></tr></thead><tbody id="injection-rows"></tbody></table></div><p class="helper">8 vị trí cố định, hai độ sáng, hai kiểu chuyển động. Dùng chung nền ảnh và ePSF để tiêm/fit, chưa thêm shot noise; đây là chẩn đoán có tương quan, chưa phải hiệu chuẩn completeness hay false-positive rate.</p><p id="gaia-conclusion" class="gaia-conclusion"></p></div></div>
     </section>
 
-    <section class="accuracy-panel" id="accuracy-validation" aria-labelledby="accuracy-heading" hidden>
+</details><details class="technical-section"><summary>Đối chiếu thí nghiệm 0.4.0 trước đó</summary>    <section class="accuracy-panel" id="accuracy-validation" aria-labelledby="accuracy-heading" hidden>
       <div class="gaia-heading"><h2 id="accuracy-heading">Fit nhiều nguồn · thử nghiệm</h2><span class="unconfirmed">Chưa đạt tiêu chí thay mặc định</span></div>
       <div class="evidence-table"><table><thead><tr><th>Phổ</th><th>Độ sáng</th><th>RMS một nguồn</th><th>RMS nhiều nguồn</th><th>Hợp lệ: một / nhiều</th><th>Trong ellipse 68%: một / nhiều</th></tr></thead><tbody id="accuracy-rows"></tbody></table></div>
       <div class="accuracy-actions"><button id="accuracy-evidence" class="text-button">Phương pháp & giới hạn</button><a href="data/joint/broad.json" download>JSON phổ rộng ↓</a><a href="data/joint/strict.json" download>JSON phổ chặt ↓</a></div>
     </section>
 
-    <section class="next-steps" id="next-steps" aria-labelledby="next-heading"><div class="next-intro"><h2 id="next-heading">Kiểm soát<br>sai số hệ thống.</h2></div><ol><li><strong>Catalog hồng ngoại sâu + ePSF theo vị trí</strong><span>Phát triển trên các vùng đã mở; khóa tham số trước khi chạy vùng kiểm chứng mới. Yêu cầu RMS giảm ở cả hai độ sáng, không tăng lỗi/biên.</span></li><li><strong>Epoch thứ ba + đáp ứng phổ đầy đủ</strong><span>Tách proper motion khỏi parallax, đối chiếu dữ liệu bước sóng phù hợp và giữ rõ phiên bản hiệu chuẩn.</span></li><li><strong>Vision model + benchmark theo vùng trời</strong><span>Đánh giá precision/recall và false positive trên vùng chưa dùng huấn luyện; chuyển ứng viên cho người duyệt.</span></li></ol></section>
-  </main>
-  <footer><span>NoSleepClub · NASA Space Apps 2026</span><span>Exploratory science demo · Dữ liệu SPHEREx, hiển thị do NoSleepClub xử lý</span></footer>
-
+</details></section>
+<section class="next-steps page-section" id="next-steps" aria-labelledby="next-heading"><div><span class="section-step">Lần kiểm chứng tiếp theo</span><h2 id="next-heading">Tốt hơn phải<br>đo được.</h2><p id="next-summary">Khóa phương pháp trước khi xem kết quả mới. Giảm sai lệch ở cả hai mức sáng, không tăng số fit lỗi.</p></div><ol><li><strong>Kiểm tra hình dạng nguồn và nền ảnh</strong><span>Đo bias theo màu, mật độ nguồn và vị trí trên detector.</span></li><li><strong>Đối chiếu QR3 khi có cùng exposure</strong><span>Tách thay đổi hiệu chuẩn khỏi chuyển động thật.</span></li><li><strong>Thêm thời điểm quan sát độc lập</strong><span>Phân biệt chuyển động riêng và thị sai trước khi nâng mức tin cậy.</span></li></ol></section>
+</main>
+<footer><div><a class="footer-brand" href="#home">NoSleepClub<br><b>Sky Lab</b></a><p>Dữ liệu thật. Kết luận có thể kiểm tra.</p></div><div><a href="#workspace">Quan sát WISE 0855</a><a href="#validation">Kiểm chứng khoa học</a><a href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex" target="_blank" rel="noopener noreferrer">Mã nguồn & nghiên cứu ↗</a><button class="text-button" id="privacy-open">Lưu trữ nhận xét</button></div><div><span>NASA Space Apps 2026</span><p>Dự án độc lập của NoSleepClub.<br>Ảnh quan sát: SPHEREx / IRSA.<br>Minh họa: Canva.</p></div></footer>
+<dialog id="guide-dialog" aria-labelledby="guide-title"><div class="dialog-heading"><h2 id="guide-title">Bắt đầu từ một chấm sáng.</h2><button id="guide-close" aria-label="Đóng hướng dẫn">×</button></div><div class="guide-layout"><figure><img src="assets/compare-guide-canva.webp" alt="Minh họa hai trường sao với một điểm đổi vị trí" width="1600" height="899"><figcaption>Minh họa Canva; ảnh quan sát thật ở vùng so sánh.</figcaption></figure><div><p><strong>WISE 0855 là gì?</strong> Một sao lùn nâu gần Trái Đất, phát sáng rất yếu. Ảnh hồng ngoại giúp nhìn thấy những vật thể lạnh như vậy.</p><ol><li><strong>Kéo thanh hoặc bật Nhấp nháy.</strong> Xem chấm đánh dấu đổi vị trí so với các sao xung quanh.</li><li><strong>Mở Kiểm chứng.</strong> Vòng ellipse là vùng sai số theo mô hình, không phải xác suất thiên thể đã được phát hiện.</li><li><strong>Ghi lại điều bạn thấy.</strong> Chọn “Tôi chưa chắc” cũng là một kết quả hữu ích.</li></ol><p>Ảnh có hạt lớn vì mỗi pixel gốc rộng 6,15 giây cung. Zoom không tạo thêm chi tiết. Vùng tối xanh thiếu dữ liệu; các dấu màu là kết quả xử lý, không có sẵn trong FITS gốc.</p><button class="primary-button" id="guide-start">Đến ảnh thật</button></div></div></dialog>
   <dialog id="evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-heading"><h2 id="evidence-title">Dữ liệu và giới hạn của bản demo</h2><button id="evidence-close" aria-label="Đóng bảng bằng chứng">×</button></div><p>Cutout thật từ SPHEREx QR2. Highlight hiện được tạo bằng xử lý ảnh cổ điển, chưa dùng vision model đã huấn luyện.</p><div id="evidence-content"></div><a id="download-fits" class="primary-button" href="#" download>Tải FITS đã căn chỉnh</a><h3>Tài liệu gốc</h3><ul><li><a href="https://caltech-ipac.github.io/irsa-tutorials/spherex-cutouts/" target="_blank" rel="noopener noreferrer">IRSA: cutout và spectral WCS</a></li><li><a href="https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/" target="_blank" rel="noopener noreferrer">IRSA: PSF theo vị trí và phiên bản dữ liệu</a></li><li><a href="https://arxiv.org/pdf/1404.6501" target="_blank" rel="noopener noreferrer">Luhman 2014: astrometry và proper motion WISE 0855</a></li></ul></dialog>
-</body>
-</html>
+</body></html>

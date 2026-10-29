@@ -1,0 +1,195 @@
+{
+  "analysis_version": "0.5.0",
+  "locked_commit": "581de3342788563226368e567e86c413f29e0d0b",
+  "protocol_sha256": "79803094b4aeee039e589f8b3ceb3af5fcfbcc61bd929c89cc2ed26fbf51fac1",
+  "catalog_screening": {
+    "queried": 5078,
+    "selected": 1783,
+    "gaia_positions": 508,
+    "rejections": {
+      "faint_ir": 3221,
+      "artifact_or_poor_fit": 71,
+      "large_motion": 3
+    }
+  },
+  "positions_px": [
+    [
+      -39.0,
+      38.0
+    ],
+    [
+      38.0,
+      104.0
+    ],
+    [
+      27.0,
+      -50.0
+    ],
+    [
+      -39.0,
+      82.0
+    ],
+    [
+      -50.0,
+      60.0
+    ],
+    [
+      -50.0,
+      16.0
+    ],
+    [
+      104.0,
+      60.0
+    ],
+    [
+      71.0,
+      38.0
+    ],
+    [
+      -39.0,
+      -6.0
+    ],
+    [
+      104.0,
+      -28.0
+    ],
+    [
+      93.0,
+      27.0
+    ],
+    [
+      115.0,
+      16.0
+    ],
+    [
+      -39.0,
+      -28.0
+    ],
+    [
+      -28.0,
+      104.0
+    ],
+    [
+      60.0,
+      -50.0
+    ],
+    [
+      93.0,
+      104.0
+    ],
+    [
+      5.0,
+      115.0
+    ],
+    [
+      -17.0,
+      -50.0
+    ],
+    [
+      5.0,
+      -50.0
+    ],
+    [
+      60.0,
+      115.0
+    ],
+    [
+      115.0,
+      -6.0
+    ],
+    [
+      -6.0,
+      16.0
+    ],
+    [
+      38.0,
+      -28.0
+    ],
+    [
+      71.0,
+      16.0
+    ],
+    [
+      93.0,
+      5.0
+    ],
+    [
+      -17.0,
+      38.0
+    ],
+    [
+      104.0,
+      82.0
+    ],
+    [
+      82.0,
+      -39.0
+    ],
+    [
+      -28.0,
+      16.0
+    ],
+    [
+      115.0,
+      38.0
+    ]
+  ],
+  "source_coverage": {
+    "qr3": {
+      "url": "https://irsa.ipac.caltech.edu/SIA",
+      "path": "data/raw/wise0855/release-study/qr3.xml",
+      "sha256": "d2cce5b4542afdde6fa4e4d770e6352b3b9e65476a6f8c2ba7387beb88301414",
+      "rows": 0
+    },
+    "qr3-tap": {
+      "url": "https://irsa.ipac.caltech.edu/TAP/sync",
+      "path": "data/raw/wise0855/release-study/qr3-tap.xml",
+      "sha256": "1d989d25dbcb483de8389e76d3d5f01e4bb9ead4406f9ab5a0f28ca5ccc071e7",
+      "rows": 0
+    }
+  },
+  "rules": {
+    "version": "0.5.0",
+    "w2_magnitude_max": 16.0,
+    "w2_snr_min": 10.0,
+    "w2_chi2_max": 2.0,
+    "artifact_flags": "00",
+    "proper_motion_max_arcsec_yr": 0.3,
+    "position_error_2026_max_arcsec": 1.0,
+    "gaia_match_arcsec": 2.0,
+    "catwise_epoch_mjd": 57170.0,
+    "neighbour_radius_px": 11.0,
+    "patch_count": 30,
+    "patch_separation_px": 20.0,
+    "old_patch_exclusion_px": 20.0,
+    "minimum_native_stamp_pixels": 100,
+    "flux_scales": [
+      0.5,
+      1.0
+    ],
+    "truth_displacements_px": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.6,
+        0.05
+      ]
+    ],
+    "truth_psfs": [
+      "nearest",
+      "bilinear"
+    ],
+    "models": [
+      "single_nearest",
+      "ir_nearest",
+      "ir_bilinear"
+    ],
+    "seed": 20261031,
+    "bootstrap_draws": 128,
+    "release_gate": "both flux scales AND both truth PSFs AND both spectra: paired RMSE lower, no extra failed/boundary fits; no post-hoc model selection"
+  },
+  "total_recoveries": 1440,
+  "point_estimate_gate_passed": []
+}
