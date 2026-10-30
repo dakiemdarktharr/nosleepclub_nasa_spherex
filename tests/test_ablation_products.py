@@ -1,5 +1,6 @@
 """Published 0.9 products: fair selection, calibration isolation and support audit."""
 import copy
+import math
 from pathlib import Path
 import unittest
 import numpy as np
@@ -9,6 +10,19 @@ from scripts.build_ablation_overview import comparison
 
 
 class AblationProducts(unittest.TestCase):
+    def assertReplayEqual(self, actual, expected, path='record'):
+        # BLAS on Linux and Windows can differ by a few ulps. Keep the schema,
+        # decisions, counts and hashes exact; tolerate only tiny float roundoff.
+        if isinstance(actual, dict) and isinstance(expected, dict):
+            self.assertEqual(set(actual), set(expected), path)
+            for key in actual:self.assertReplayEqual(actual[key],expected[key],path+'.'+key)
+        elif isinstance(actual, list) and isinstance(expected, list):
+            self.assertEqual(len(actual),len(expected),path)
+            for i,(a,b) in enumerate(zip(actual,expected)):self.assertReplayEqual(a,b,f'{path}[{i}]')
+        elif type(actual) is float and type(expected) is float:
+            self.assertTrue(math.isclose(actual,expected,rel_tol=1e-12,abs_tol=1e-12),f'{path}: {actual} != {expected}')
+        else:self.assertEqual(actual,expected,path)
+
     @classmethod
     def setUpClass(cls):
         cls.design=s.read(s.OUT/'design.json');cls.selection=s.read(s.OUT/'selection.json');cls.cal=s.read(s.OUT/'calibrator.json')
@@ -61,7 +75,7 @@ class AblationProducts(unittest.TestCase):
         for result in self.results['validation']:
             for r in result['injections']+result['real_controls']:
                 expected=copy.deepcopy(r);s.apply_record(expected,self.cal)
-                self.assertEqual(r,expected)
+                self.assertReplayEqual(r,expected)
                 v=r['models'][selected]
                 for name in ['global_calibration','conditional_calibration']:
                     out=v.get(name,{})

@@ -12,7 +12,7 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 Đã thêm luồng RA/Dec → metadata IRSA → từng cutout thật → đối chiếu/nhấp nháy cùng thang hiển thị → xuất bằng chứng. Năm mục tiêu của đề đều có hai cutout thật được kiểm tra, có nguồn/epoch/hash. Review riêng có ID ổn định, hết hạn cục bộ và máy chủ, quản lý được phân tích cũ; có quota, log đã lọc và CI.
 
-**Chưa đạt nghiệm thu khoa học/production.** Monte Carlo noise trên ba trường đã mở cho thấy ellipse thô vẫn thiếu phủ ở nguồn mờ. Kiểm tra profile likelihood đang phát triển, chưa thay centroid, calibrator hay số đo WISE đã công bố. Các trạng thái được theo dõi trong ledger; test phần mềm, khám phá dữ liệu và xác nhận thiên văn được nghiệm thu riêng.
+**Chưa đạt nghiệm thu khoa học/production.** Monte Carlo noise trên ba trường đã mở cho thấy ellipse thô vẫn thiếu phủ ở nguồn mờ. [Đối chứng ePSF](docs/CONTINUOUS_EPSF_RESULTS.md) đã khóa ở `f138e11` trước 384 lượt ghép cặp: Hessian nhạy với bước sai phân giảm từ 304/768 xuống 0/768 epoch-fit, nhưng RMS không giảm ở cả sáu ca. Profile mới vẫn chỉ phủ 31/64, 36/64 và 34/64 lượt S/N thấp. Chưa thay centroid, calibrator hay số đo WISE đã công bố. Các trạng thái được theo dõi trong ledger; test phần mềm, khám phá dữ liệu và xác nhận thiên văn được nghiệm thu riêng.
 
 ## Bắt đầu trên web
 

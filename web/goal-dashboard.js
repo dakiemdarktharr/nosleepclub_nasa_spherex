@@ -20,4 +20,13 @@
     }
     el("challenge-preview-note").textContent=`Ảnh thật được kiểm tra ${new Date(coverage.created_at).toLocaleString("vi-VN")}. Hai ảnh mỗi mục tiêu dùng cùng mức xám và lưới WCS; chưa căn chỉnh sao, ghép phổ tại nguồn hay xác nhận chuyển động/biến quang. Tải JSON để xem URL, hash và mask.`;
   }).catch(error=>{el("bias-diagnostic-note").textContent=`Chưa tải được báo cáo: ${error.message}. Xem tài liệu và JSON nguồn bên dưới.`;}).finally(()=>el("validation").removeAttribute("aria-busy"));
+  fetch("data/continuous-epsf/development-summary.json").then(r=>{if(!r.ok)throw Error(r.status);return r.json();}).then(data=>{
+    const rows=el("continuous-epsf-rows");rows.replaceChildren();let before=0,after=0,total=0;
+    for(const item of data.cases){
+      const s=item.gaussian_summary.common_numeric,tr=document.createElement("tr"),p=s.candidate_profile,g=s.baseline_gn;
+      for(const text of [item.field,n(item.snr_per_frame,0),`${n(s.baseline_error.rms_arcsec,4)}″ → ${n(s.candidate_error.rms_arcsec,4)}″`,`${g.within68}/${g.available}`,`${p.within68}/${p.available}`,`${item.gaussian_summary.common_accepted.count}/${item.gaussian_summary.attempts}`]){const td=document.createElement("td");td.textContent=text;tr.append(td);}rows.append(tr);
+      for(const draw of item.paired_draws){for(const p of draw.baseline_epoch_profile){total++;if(p[2]>.05)before++;}for(const p of draw.candidate.epoch_profile)if(p[2]>.05)after++;}
+    }
+    el("continuous-epsf-note").textContent=`Hessian nhạy với bước sai phân giảm từ ${before}/${total} xuống ${after}/${total} epoch-fit. RMS sai số chưa giảm ở cả sáu ca; uncertainty nguồn mờ vẫn thiếu coverage. Chưa thay phép đo WISE hoặc hiệu chuẩn khoa học.`;
+  }).catch(error=>{el("continuous-epsf-note").textContent=`Chưa tải được đối chứng ePSF: ${error.message}. Mở JSON hoặc báo cáo nguồn.`;});
 })();
