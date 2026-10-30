@@ -20,8 +20,24 @@ KEY_PART = re.compile(r"^[A-Za-z0-9_.-]{1,128}$")
 STATUSES = {"uncertain", "interesting", "artifact"}
 MAX_BODY = 8192
 LIMIT = 90
+POST_GLOBAL_LIMIT = 60
+OWNER_REVIEW_LIMIT = 100
+GLOBAL_REVIEW_LIMIT = 20000
+DB_TIMEOUT_SECONDS = 10
+MAX_TRANSACTION_ATTEMPTS = 4
+MAX_COMMIT_ATTEMPTS = 3
 CONTRACT_VERSION = "1.1"
 logger = logging.getLogger("review_api")
+
+
+class ReviewQuota(Exception):
+    def __init__(self, code):
+        self.code = code
+        super().__init__(code)
+
+
+class CommitOutcomeUnknown(Exception):
+    pass
 
 
 @lru_cache(maxsize=1)
@@ -44,6 +60,7 @@ def validate_review(body):
     note = body.get("note", "")
     if status not in STATUSES or not isinstance(note, str) or len(note) > 2000:
         raise ValueError("invalid_review")
+    note.encode("utf-8")  # Reject lone JSON surrogates before any storage access.
     return {"scene_id": scene["id"], "selection": selection, "status": status,
             "note": note, "analysis_sha256": body["analysis_sha256"],
             "input_sha256": [scene["before"]["sha256"], scene["after"]["sha256"]],
@@ -85,6 +102,69 @@ def database():
 def same_origin(headers):
     origin = urlsplit(headers.get("Origin", ""))
     return origin.scheme == "https" and origin.netloc == headers.get("Host") and not (origin.path or origin.query or origin.fragment)
+
+
+def save_review(db, owner, key, item, now):
+    """Serialize every POST before counting; retries have no external side effects."""
+    from pymongo.errors import DuplicateKeyError, PyMongoError
+    from pymongo.read_concern import ReadConcern
+    from pymongo.write_concern import WriteConcern
+
+    # Create the common guard outside the transaction for existing deployments.
+    # Two cold instances may race to insert it; an existing _id is sufficient.
+    try:
+        db.review_guard.update_one({"_id": "global"}, {"$setOnInsert": {"version": 0}}, upsert=True)
+    except DuplicateKeyError:
+        pass
+    query = {"owner": owner, "key": key}
+    expires = now + timedelta(days=180)
+    saved = {**item, "saved_at": now.isoformat(), "expires_at": expires}
+    with db.client.start_session() as session:
+        for attempt in range(MAX_TRANSACTION_ATTEMPTS):
+            session.start_transaction(read_concern=ReadConcern("snapshot"), write_concern=WriteConcern("majority"))
+            try:
+                guard = db.review_guard.update_one({"_id": "global"}, {"$inc": {"version": 1}}, session=session)
+                if guard.matched_count != 1:
+                    raise RuntimeError("review_guard_missing")
+                existing = db.reviews.find_one(query, {"expires_at": 1}, session=session)
+                live = existing is not None and existing.get("expires_at") is not None and existing["expires_at"] > now
+                if not live and db.reviews.count_documents({"owner": owner, "expires_at": {"$gt": now}},
+                                                          limit=OWNER_REVIEW_LIMIT, session=session) >= OWNER_REVIEW_LIMIT:
+                    raise ReviewQuota("review_limit")
+                if existing is None and db.reviews.count_documents({}, limit=GLOBAL_REVIEW_LIMIT,
+                                                                   hint="_id_", session=session) >= GLOBAL_REVIEW_LIMIT:
+                    raise ReviewQuota("storage_limit")
+                db.reviews.update_one(query, {"$set": saved}, upsert=True, session=session)
+            except Exception as exc:
+                if session.in_transaction:
+                    try:
+                        session.abort_transaction()
+                    except PyMongoError:
+                        pass
+                if isinstance(exc, PyMongoError) and exc.has_error_label("TransientTransactionError") and attempt + 1 < MAX_TRANSACTION_ATTEMPTS:
+                    continue
+                raise
+            commit_uncertain = False
+            for commit_attempt in range(MAX_COMMIT_ATTEMPTS):
+                try:
+                    session.commit_transaction()
+                    return saved
+                except PyMongoError as exc:
+                    if exc.has_error_label("UnknownTransactionCommitResult"):
+                        commit_uncertain = True
+                        if commit_attempt + 1 < MAX_COMMIT_ATTEMPTS:
+                            continue
+                        raise CommitOutcomeUnknown() from exc
+                    if commit_uncertain:
+                        raise CommitOutcomeUnknown() from exc
+                    if exc.has_error_label("TransientTransactionError") and attempt + 1 < MAX_TRANSACTION_ATTEMPTS:
+                        break
+                    raise
+                except Exception as exc:
+                    if commit_uncertain:
+                        raise CommitOutcomeUnknown() from exc
+                    raise
+        raise RuntimeError("transaction_retry_exhausted")
 
 
 class handler(BaseHTTPRequestHandler):
@@ -146,70 +226,85 @@ class handler(BaseHTTPRequestHandler):
             owner = self.session(create=method == "GET")
             if not owner:
                 return self.reply(401, {"error": "session_required"}, "session")
+            body = item = None
+            if method != "GET":
+                raw_length = self.headers.get("Content-Length")
+                if raw_length is None:
+                    return self.reply(411, {"error": "length_required"}, "validation")
+                if not re.fullmatch(r"[0-9]+", raw_length):
+                    return self.reply(400, {"error": "invalid_review"}, "validation")
+                length = int(raw_length)
+                if not 0 < length <= MAX_BODY:
+                    return self.reply(413, {"error": "body_too_large"}, "validation")
+                if self.headers.get("Content-Type", "").split(";")[0].strip().lower() != "application/json":
+                    return self.reply(415, {"error": "json_required"}, "validation")
+                raw = self.rfile.read(length)
+                if len(raw) != length:
+                    raise ValueError("short_body")
+                body = json.loads(raw)
+                if method == "POST":
+                    item = validate_review(body)
+                elif isinstance(body, dict) and "review_id" in body:
+                    if not isinstance(body["review_id"], str) or not HEX_ID.fullmatch(body["review_id"]):
+                        raise ValueError("invalid_review")
+                else:
+                    legacy_key(body)
             if not os.environ.get("MONGODB_URI"):
                 return self.reply(503, {"error": "storage_unavailable"}, "configuration")
-            from pymongo import ReturnDocument
-            db = database()
-            now = datetime.now(timezone.utc)
-            ip = self.headers.get("X-Forwarded-For", "unknown").split(",")[0].strip()
-            bucket = sha256((ip + now.strftime("%Y%m%d%H%M")).encode()).hexdigest()
-            counter = db.limits.find_one_and_update({"_id": bucket},
-                {"$inc": {"count": 1}, "$setOnInsert": {"expires_at": now + timedelta(minutes=2)}},
-                upsert=True, return_document=ReturnDocument.AFTER)
-            self.rate_remaining = max(0, LIMIT - counter["count"])
-            self.rate_reset = 60 - now.second
-            if counter["count"] > LIMIT:
-                return self.reply(429, {"error": "rate_limited"}, "rate_limit")
-            if method == "GET":
-                rows = list(db.reviews.find({"owner": owner, "expires_at": {"$gt": now}}, {"_id": 0, "owner": 0}).limit(100))
-                for row in rows:
-                    row["review_id"] = review_id(owner, row["key"])
-                    row["expires_at"] = row["expires_at"].isoformat()
-                return self.reply(200, {"storage": "mongodb", "contract_version": CONTRACT_VERSION,
-                                        "session_scope": session_scope(owner), "reviews": rows})
-            raw_length = self.headers.get("Content-Length")
-            if raw_length is None:
-                return self.reply(411, {"error": "length_required"}, "validation")
-            if not re.fullmatch(r"[0-9]+", raw_length):
-                return self.reply(400, {"error": "invalid_review"}, "validation")
-            length = int(raw_length)
-            if not 0 < length <= MAX_BODY:
-                return self.reply(413, {"error": "body_too_large"}, "validation")
-            if self.headers.get("Content-Type", "").split(";")[0].strip().lower() != "application/json":
-                return self.reply(415, {"error": "json_required"}, "validation")
-            raw = self.rfile.read(length)
-            if len(raw) != length:
-                raise ValueError("short_body")
-            body = json.loads(raw)
-            if method == "DELETE":
-                if isinstance(body, dict) and "review_id" in body:
-                    rid = body["review_id"]
-                    if not isinstance(rid, str) or not HEX_ID.fullmatch(rid):
-                        raise ValueError("invalid_review")
-                    # Derive IDs for legacy rows without requiring a database migration.
-                    key = next((row["key"] for row in db.reviews.find({"owner": owner}, {"_id": 0, "key": 1})
-                                if secrets.compare_digest(review_id(owner, row["key"]), rid)), None)
-                else:
-                    key = legacy_key(body)
-                if key is not None:
-                    db.reviews.delete_one({"owner": owner, "key": key})
-                return self.reply(200, {"deleted": True})
-            item = validate_review(body)
-            key = ":".join([item["analysis_sha256"], item["scene_id"], item["selection"]])
-            query = {"owner": owner, "key": key}
-            live = {"owner": owner, "expires_at": {"$gt": now}}
-            if not db.reviews.find_one({**query, "expires_at": {"$gt": now}}, {"_id": 1}) and db.reviews.count_documents(live, limit=100) >= 100:
-                return self.reply(409, {"error": "review_limit"}, "review_limit")
-            expires = now + timedelta(days=180)
-            item["saved_at"] = now.isoformat()
-            db.reviews.update_one(query, {"$set": {**item, "expires_at": expires}}, upsert=True)
-            return self.reply(200, {"saved": True, "storage": "mongodb", "contract_version": CONTRACT_VERSION,
-                                    "session_scope": session_scope(owner),
-                                    "review": {**item, "review_id": review_id(owner, key), "expires_at": expires.isoformat()}})
+            from pymongo import timeout
+            with timeout(DB_TIMEOUT_SECONDS):
+                return self.process_storage(method, owner, body, item)
+        except ReviewQuota as exc:
+            return self.reply(409, {"error": exc.code}, exc.code)
+        except CommitOutcomeUnknown:
+            return self.reply(503, {"error": "save_outcome_unknown"}, "commit_unknown")
         except (ValueError, TypeError, UnicodeError):
             return self.reply(400, {"error": "invalid_review"}, "validation")
         except Exception:
             return self.reply(503, {"error": "storage_unavailable"}, "dependency_or_internal")
+
+    def process_storage(self, method, owner, body, item):
+        from pymongo import ReturnDocument
+        db = database()
+        now = datetime.now(timezone.utc)
+        ip = self.headers.get("X-Forwarded-For", "unknown").split(",")[0].strip()
+        minute = now.strftime("%Y%m%d%H%M")
+        bucket = sha256((ip + minute).encode()).hexdigest()
+        counter = db.limits.find_one_and_update({"_id": bucket},
+            {"$inc": {"count": 1}, "$setOnInsert": {"expires_at": now + timedelta(minutes=2)}},
+            upsert=True, return_document=ReturnDocument.AFTER)
+        self.rate_remaining = max(0, LIMIT - counter["count"])
+        self.rate_reset = 60 - now.second
+        if counter["count"] > LIMIT:
+            return self.reply(429, {"error": "rate_limited"}, "rate_limit")
+        if method == "GET":
+            rows = list(db.reviews.find({"owner": owner, "expires_at": {"$gt": now}}, {"_id": 0, "owner": 0}).limit(100))
+            for row in rows:
+                row["review_id"] = review_id(owner, row["key"])
+                row["expires_at"] = row["expires_at"].isoformat()
+            return self.reply(200, {"storage": "mongodb", "contract_version": CONTRACT_VERSION,
+                                    "session_scope": session_scope(owner), "reviews": rows})
+        if method == "DELETE":
+            if "review_id" in body:
+                rid = body["review_id"]
+                key = next((row["key"] for row in db.reviews.find({"owner": owner}, {"_id": 0, "key": 1})
+                            if secrets.compare_digest(review_id(owner, row["key"]), rid)), None)
+            else:
+                key = legacy_key(body)
+            if key is not None:
+                db.reviews.delete_one({"owner": owner, "key": key})
+            return self.reply(200, {"deleted": True})
+        global_counter = db.limits.find_one_and_update({"_id": "review-post-global:" + minute},
+            {"$inc": {"count": 1}, "$setOnInsert": {"expires_at": now + timedelta(minutes=2)}},
+            upsert=True, return_document=ReturnDocument.AFTER)
+        if global_counter["count"] > POST_GLOBAL_LIMIT:
+            return self.reply(429, {"error": "rate_limited"}, "global_rate_limit")
+        key = ":".join([item["analysis_sha256"], item["scene_id"], item["selection"]])
+        saved = save_review(db, owner, key, item, now)
+        saved["expires_at"] = saved["expires_at"].isoformat()
+        return self.reply(200, {"saved": True, "storage": "mongodb", "contract_version": CONTRACT_VERSION,
+                                "session_scope": session_scope(owner),
+                                "review": {**saved, "review_id": review_id(owner, key)}})
 
     def do_GET(self):
         self.dispatch("GET")
