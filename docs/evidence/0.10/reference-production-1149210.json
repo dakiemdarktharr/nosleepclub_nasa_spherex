@@ -1,0 +1,29 @@
+{
+  "at_utc": "2026-10-30T23:48:02.237Z",
+  "deployed_commit": "1149210d1b68627734b3e42f4f03a34dd78a8400",
+  "observed": {
+    "counts": "1.998 lượt học ngưỡng + 5.994 lượt kiểm tra riêng. 0 lượt kiểm tra lỗi, vẫn nằm trong mẫu số. Toàn bộ dùng một bố cục ảnh đã mở.",
+    "documentWidth": 1265,
+    "rows": "Nền phẳng nghiêng · không có mục tiêu\t999/999\t0/999\t0\tBáo nhầm ≤ 0,37%\tĐạt trong mô phỏng\nNền bậc hai · không có mục tiêu\t999/999\t0/999\t0\tBáo nhầm ≤ 0,37%\tĐạt trong mô phỏng\nNền phẳng nghiêng · 300 µJy\t999/999\t46/999\t0\tThu hồi ≥ 3,39%\tChỉ báo cáo\nNền phẳng nghiêng · 600 µJy\t999/999\t928/999\t0\tThu hồi ≥ 91,12%\tĐạt trong mô phỏng\nNền bậc hai · 300 µJy\t999/999\t55/999\t0\tThu hồi ≥ 4,17%\tChỉ báo cáo\nNền bậc hai · 600 µJy\t999/999\t870/999\t0\tThu hồi ≥ 84,85%\tĐạt trong mô phỏng",
+    "selected": "true",
+    "tableTop": 747.5625,
+    "url": "https://nosleepclub-nasa-spherex.vercel.app/#reference-presence",
+    "verdict": "Đạt điều kiện đã khóa tại 600 µJy. Ở mức 300 µJy chỉ nhận 4,6–5,5% lượt thử. Chưa xác nhận khả năng phát hiện trên bầu trời thật.",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "verified_interactions": [
+    "default common completed359/420",
+    "common numerical357/420",
+    "21 source rows; two zero-of-20 rows retained",
+    "End selects source-presence tab",
+    "all six validation rows with full denominators"
+  ],
+  "console": [],
+  "limitations": [
+    "desktop public browser check; mobile verified locally",
+    "not full accessibility or scientific acceptance"
+  ]
+}

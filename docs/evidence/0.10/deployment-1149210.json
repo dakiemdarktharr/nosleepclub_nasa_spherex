@@ -1,0 +1,24 @@
+{
+  "id": "dpl_AHsdPSuFJXUjnasZ8oFZfRxoDUED",
+  "url": "nosleepclub-nasa-spherex-9bxvdkpa4-acne-a6cd.vercel.app",
+  "state": "READY",
+  "target": "production",
+  "created": 1793403912622,
+  "buildingAt": 1793403913578,
+  "ready": 1793403955249,
+  "alias": [
+    "nosleepclub-nasa-spherex.vercel.app",
+    "nosleepclub-nasa-spherex-acne-a6cd.vercel.app",
+    "nosleepclub-nasa-spherex-git-main-acne-a6cd.vercel.app"
+  ],
+  "meta": {
+    "githubCommitRef": "main",
+    "githubCommitSha": "1149210d1b68627734b3e42f4f03a34dd78a8400",
+    "githubCommitMessage": "Merge PR #11: native reference and sealed source-presence evidence\n\nValidate native reference stars and seal conditional source-presence tests",
+    "githubRepo": "nosleepclub_nasa_spherex",
+    "githubOrg": "dakiemdarktharr"
+  },
+  "schema_version": 1,
+  "deployed_commit": "1149210d1b68627734b3e42f4f03a34dd78a8400",
+  "qualification": "Provider metadata; exact public Git artifact/API verification recorded separately. No protected-preview share or fetch used."
+}

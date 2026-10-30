@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "repository": "dakiemdarktharr/nosleepclub_nasa_spherex",
+  "pr": 11,
+  "head_commit": "8c124d1c30c32cb70031edb2f2b8ac512def60f8",
+  "merge_commit": "1149210d1b68627734b3e42f4f03a34dd78a8400",
+  "workflow_run": 41146129119,
+  "workflow_url": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41146129119",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 124371549499,
+      "name": "Python tests and repository evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install pinned science and web dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Compile Python source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check source whitespace",
+          "conclusion": "success"
+        },
+        {
+          "name": "Start disposable MongoDB replica set",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run all Python unit tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Create evidence report",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload evidence and test output",
+          "conclusion": "success"
+        },
+        {
+          "name": "Remove disposable MongoDB container",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 124371549795,
+      "name": "JavaScript syntax and review store",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check browser JavaScript syntax",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test ReviewStore pure cases",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test explorer request and display races",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test linked evidence refusals and report loading",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test neighbor factorial and all control denominators",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test reference stars and sealed presence evidence",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "python": {
+    "cases": 453,
+    "skipped": 13,
+    "passed": 440,
+    "seconds": 21.349,
+    "scope": "optional raw-cache/photutils cases skipped; real loopback Mongo fixture cases executed",
+    "summary": [
+      "2026-10-30T23:44:26.2918330Z Ran 453 tests in 21.349s",
+      "2026-10-30T23:44:26.2918552Z OK (skipped=13)"
+    ],
+    "mongo_fixture_cases": [
+      "2026-10-30T23:44:21.1596597Z test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+      "2026-10-30T23:44:21.3920281Z test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+      "2026-10-30T23:44:21.5813099Z test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+      "2026-10-30T23:44:21.5909501Z test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+      "2026-10-30T23:44:21.6214907Z test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+      "2026-10-30T23:44:21.6426788Z test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok"
+    ]
+  },
+  "javascript": {
+    "node_major": 24,
+    "suites": 5,
+    "summary": [
+      "2026-10-30T23:43:33.4418553Z ReviewStore lifecycle cases passed",
+      "2026-10-30T23:43:33.4609852Z Review UI race cases passed",
+      "2026-10-30T23:43:33.5185575Z Explorer DOM and HTTP race cases passed",
+      "2026-10-30T23:43:33.5948423Z Linked evidence: all denominators, refusals, model switches, failures and retries passed",
+      "2026-10-30T23:43:33.6639976Z Neighbor evidence: lazy loading, all refusals, paired denominators, worse outcomes and retries passed",
+      "2026-10-30T23:43:33.7592591Z Reference/presence UI: lazy loading, fixed denominators, failed cases, tab keyboard, corruption refusals and retry passed"
+    ]
+  },
+  "qualification": "Software CI and disposable loopback MongoDB tests; no production restore, scientific promotion or SLO claim"
+}
