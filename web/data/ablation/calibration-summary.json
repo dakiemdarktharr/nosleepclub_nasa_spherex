@@ -1,0 +1,800 @@
+{
+  "phase": "calibration",
+  "version": "0.9.0",
+  "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+  "models": [
+    "plane_fixed"
+  ],
+  "fields": [
+    {
+      "field": {
+        "id": "q030m10",
+        "name": "RA 30\u00b0 / Dec -10\u00b0",
+        "ra": 30.0,
+        "dec": -10.0,
+        "coordinate_source": "predeclared geometric centers, not selected by fitted errors",
+        "sia": {
+          "url": "https://irsa.ipac.caltech.edu/SIA",
+          "params": {
+            "COLLECTION": "spherex_qr2",
+            "POS": "circle 30.0 -10.0 0.05"
+          },
+          "sha256": "ae76b2c11c0e8031e3edfe9dbcf0c9409a514186176de05f933dec33183529ac",
+          "rows": 342,
+          "d6_rows": 58
+        }
+      },
+      "phase": "calibration",
+      "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+      "kinds": [
+        "plane_fixed"
+      ],
+      "catalog_screening": {
+        "queried": 3774,
+        "selected": 1011,
+        "gaia_positions": 165,
+        "rejections": {
+          "faint_ir": 2740,
+          "large_motion": 10,
+          "artifact_or_poor_fit": 13
+        }
+      },
+      "unavailable": null,
+      "injection_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 64,
+            "valid": 48,
+            "reasons": {
+              "input_exception": 16,
+              "model_disagreement": 4
+            },
+            "rms_arcsec": 1.4275473791259996,
+            "p90_arcsec": 2.142022542622833,
+            "bias_east_north_arcsec": [
+              0.11605499485328281,
+              0.24913500546169698
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 21
+          },
+          "accepted": {
+            "attempted": 64,
+            "valid": 44,
+            "reasons": {
+              "input_exception": 16,
+              "model_disagreement": 4
+            },
+            "rms_arcsec": 1.4359665040521705,
+            "p90_arcsec": 2.1652484524088997,
+            "bias_east_north_arcsec": [
+              0.2217789112290266,
+              0.20381381617146702
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 19
+          }
+        }
+      },
+      "real_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 11,
+            "valid": 10,
+            "reasons": {
+              "poor_global_fit": 1,
+              "fit_exception": 1
+            },
+            "rms_arcsec": 0.968634478904939,
+            "p90_arcsec": 1.3453603775017355,
+            "bias_east_north_arcsec": [
+              -0.16832894769393286,
+              -0.15659522948521148
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 2
+          },
+          "accepted": {
+            "attempted": 11,
+            "valid": 9,
+            "reasons": {
+              "poor_global_fit": 1,
+              "fit_exception": 1
+            },
+            "rms_arcsec": 1.019860202361447,
+            "p90_arcsec": 1.3678814343488375,
+            "bias_east_north_arcsec": [
+              -0.18675120163104916,
+              -0.15770729163760303
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 2
+          }
+        }
+      }
+    },
+    {
+      "field": {
+        "id": "q180p20",
+        "name": "RA 180\u00b0 / Dec +20\u00b0",
+        "ra": 180.0,
+        "dec": 20.0,
+        "coordinate_source": "predeclared geometric centers, not selected by fitted errors",
+        "sia": {
+          "url": "https://irsa.ipac.caltech.edu/SIA",
+          "params": {
+            "COLLECTION": "spherex_qr2",
+            "POS": "circle 180.0 20.0 0.05"
+          },
+          "sha256": "049c382cc1e1a6ef74ccfc560548973be72c66c7a576012c67908d440a3fd61d",
+          "rows": 341,
+          "d6_rows": 49
+        }
+      },
+      "phase": "calibration",
+      "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+      "kinds": [
+        "plane_fixed"
+      ],
+      "catalog_screening": {
+        "queried": 3302,
+        "selected": 823,
+        "gaia_positions": 119,
+        "rejections": {
+          "faint_ir": 2463,
+          "artifact_or_poor_fit": 16
+        }
+      },
+      "unavailable": null,
+      "injection_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 64,
+            "valid": 62,
+            "reasons": {
+              "unresolved_blend": 6,
+              "low_epoch_snr": 4,
+              "model_disagreement": 4,
+              "nonpositive_flux": 2,
+              "insufficient_core_pixels": 2
+            },
+            "rms_arcsec": 2.5212813835815555,
+            "p90_arcsec": 4.560890839260287,
+            "bias_east_north_arcsec": [
+              0.530499172885497,
+              0.15627654024879423
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 11
+          },
+          "accepted": {
+            "attempted": 64,
+            "valid": 56,
+            "reasons": {
+              "unresolved_blend": 6,
+              "low_epoch_snr": 4,
+              "model_disagreement": 4,
+              "nonpositive_flux": 2,
+              "insufficient_core_pixels": 2
+            },
+            "rms_arcsec": 2.250421537415119,
+            "p90_arcsec": 3.8183462552192236,
+            "bias_east_north_arcsec": [
+              0.24741010211794642,
+              0.2414741608922168
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 10
+          }
+        }
+      },
+      "real_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 11,
+            "valid": 11,
+            "reasons": {},
+            "rms_arcsec": 1.0536197325047074,
+            "p90_arcsec": 1.9413507562155388,
+            "bias_east_north_arcsec": [
+              0.21339046975593956,
+              0.05498750146293161
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 6
+          },
+          "accepted": {
+            "attempted": 11,
+            "valid": 11,
+            "reasons": {},
+            "rms_arcsec": 1.0536197325047074,
+            "p90_arcsec": 1.9413507562155388,
+            "bias_east_north_arcsec": [
+              0.21339046975593956,
+              0.05498750146293161
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 6
+          }
+        }
+      }
+    },
+    {
+      "field": {
+        "id": "q300m30",
+        "name": "RA 300\u00b0 / Dec -30\u00b0",
+        "ra": 300.0,
+        "dec": -30.0,
+        "coordinate_source": "predeclared geometric centers, not selected by fitted errors",
+        "sia": {
+          "url": "https://irsa.ipac.caltech.edu/SIA",
+          "params": {
+            "COLLECTION": "spherex_qr2",
+            "POS": "circle 300.0 -30.0 0.05"
+          },
+          "sha256": "dfc9ac5adcf7220f3643e5029e82de2fa2188ecfca81839a060f6a9e70900e9d",
+          "rows": 238,
+          "d6_rows": 40
+        }
+      },
+      "phase": "calibration",
+      "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+      "kinds": [
+        "plane_fixed"
+      ],
+      "catalog_screening": {
+        "queried": 6773,
+        "selected": 2722,
+        "gaia_positions": 1019,
+        "rejections": {
+          "faint_ir": 3958,
+          "artifact_or_poor_fit": 86,
+          "large_motion": 6,
+          "duplicate_gaia_match": 1
+        }
+      },
+      "unavailable": null,
+      "injection_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 64,
+            "valid": 64,
+            "reasons": {
+              "model_disagreement": 8,
+              "poor_global_fit": 16
+            },
+            "rms_arcsec": 2.6979329293686383,
+            "p90_arcsec": 3.4062822427718555,
+            "bias_east_north_arcsec": [
+              0.689526289625231,
+              -0.5701793159574023
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 22
+          },
+          "accepted": {
+            "attempted": 64,
+            "valid": 40,
+            "reasons": {
+              "model_disagreement": 8,
+              "poor_global_fit": 16
+            },
+            "rms_arcsec": 2.4787034530546026,
+            "p90_arcsec": 2.9617046241067486,
+            "bias_east_north_arcsec": [
+              0.7674988333077779,
+              -0.20568691866140915
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 15
+          }
+        }
+      },
+      "real_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 11,
+            "valid": 11,
+            "reasons": {
+              "core_outliers": 1,
+              "poor_global_fit": 3,
+              "structured_core_residual": 1
+            },
+            "rms_arcsec": 0.228355435846928,
+            "p90_arcsec": 0.26269917128627945,
+            "bias_east_north_arcsec": [
+              0.04870254395524697,
+              -0.0013610260099493584
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 6
+          },
+          "accepted": {
+            "attempted": 11,
+            "valid": 8,
+            "reasons": {
+              "core_outliers": 1,
+              "poor_global_fit": 3,
+              "structured_core_residual": 1
+            },
+            "rms_arcsec": 0.24970262989522593,
+            "p90_arcsec": 0.3637408105654789,
+            "bias_east_north_arcsec": [
+              0.044582828879606656,
+              0.0258428908060295
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 4
+          }
+        }
+      }
+    }
+  ],
+  "injection_summary": {
+    "plane_fixed": {
+      "numeric_valid": {
+        "attempted": 192,
+        "valid": 174,
+        "reasons": {
+          "input_exception": 16,
+          "model_disagreement": 16,
+          "unresolved_blend": 6,
+          "low_epoch_snr": 4,
+          "nonpositive_flux": 2,
+          "insufficient_core_pixels": 2,
+          "poor_global_fit": 16
+        },
+        "rms_arcsec": 2.3461756547759776,
+        "p90_arcsec": 3.527356660165836,
+        "bias_east_north_arcsec": [
+          0.47466247705674247,
+          -0.08530948542348868
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 54
+      },
+      "accepted": {
+        "attempted": 192,
+        "valid": 140,
+        "reasons": {
+          "input_exception": 16,
+          "model_disagreement": 16,
+          "unresolved_blend": 6,
+          "low_epoch_snr": 4,
+          "nonpositive_flux": 2,
+          "insufficient_core_pixels": 2,
+          "poor_global_fit": 16
+        },
+        "rms_arcsec": 2.1045750520172652,
+        "p90_arcsec": 3.072609909682916,
+        "bias_east_north_arcsec": [
+          0.38795136532138075,
+          0.1018777441075168
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 44
+      }
+    }
+  },
+  "real_summary": {
+    "plane_fixed": {
+      "numeric_valid": {
+        "attempted": 33,
+        "valid": 32,
+        "reasons": {
+          "poor_global_fit": 4,
+          "fit_exception": 1,
+          "core_outliers": 1,
+          "structured_core_residual": 1
+        },
+        "rms_arcsec": 0.832304701962416,
+        "p90_arcsec": 1.3188089453461485,
+        "bias_east_north_arcsec": [
+          0.03749167730886636,
+          -0.03050190827716593
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 14
+      },
+      "accepted": {
+        "attempted": 33,
+        "valid": 28,
+        "reasons": {
+          "poor_global_fit": 4,
+          "fit_exception": 1,
+          "core_outliers": 1,
+          "structured_core_residual": 1
+        },
+        "rms_arcsec": 0.8878365491908553,
+        "p90_arcsec": 1.3904024911959394,
+        "bias_east_north_arcsec": [
+          0.03654274941688379,
+          -0.021705713649926545
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 12
+      }
+    }
+  },
+  "current_measurement_changed": false,
+  "selected_model": "plane_fixed",
+  "injection_uncertainty": {
+    "raw": {
+      "attempted": 192,
+      "valid": 140,
+      "reasons": {
+        "input_exception": 16,
+        "model_disagreement": 16,
+        "unresolved_blend": 6,
+        "low_epoch_snr": 4,
+        "nonpositive_flux": 2,
+        "insufficient_core_pixels": 2,
+        "poor_global_fit": 16
+      },
+      "rms_arcsec": 2.1045750520172652,
+      "p90_arcsec": 3.072609909682916,
+      "bias_east_north_arcsec": [
+        0.38795136532138075,
+        0.1018777441075168
+      ],
+      "width_boundary_epochs": 0,
+      "raw68_count": 44
+    },
+    "global": {
+      "attempted": 192,
+      "accepted": 140,
+      "supported": 140,
+      "unsupported": 0,
+      "covered68": 114,
+      "covered95": 131,
+      "fraction68": 0.8142857142857143,
+      "median_area_inflation": 5.002158040573267,
+      "pooled_count": 0,
+      "blocks": 20,
+      "fields": 3
+    },
+    "conditional": {
+      "attempted": 192,
+      "accepted": 140,
+      "supported": 140,
+      "unsupported": 0,
+      "covered68": 114,
+      "covered95": 134,
+      "fraction68": 0.8142857142857143,
+      "median_area_inflation": 4.295854310565575,
+      "pooled_count": 62,
+      "blocks": 20,
+      "fields": 3
+    },
+    "common_supported": {
+      "global": {
+        "attempted": 172,
+        "accepted": 140,
+        "supported": 140,
+        "unsupported": 0,
+        "covered68": 114,
+        "covered95": 131,
+        "fraction68": 0.8142857142857143,
+        "median_area_inflation": 5.002158040573267,
+        "pooled_count": 0,
+        "blocks": 20,
+        "fields": 3
+      },
+      "conditional": {
+        "attempted": 172,
+        "accepted": 140,
+        "supported": 140,
+        "unsupported": 0,
+        "covered68": 114,
+        "covered95": 134,
+        "fraction68": 0.8142857142857143,
+        "median_area_inflation": 4.295854310565575,
+        "pooled_count": 62,
+        "blocks": 20,
+        "fields": 3
+      }
+    },
+    "cells": {
+      "snr_low_bg_smooth": {
+        "global": {
+          "attempted": 38,
+          "accepted": 32,
+          "supported": 32,
+          "unsupported": 0,
+          "covered68": 23,
+          "covered95": 29,
+          "fraction68": 0.71875,
+          "median_area_inflation": 3.600072554764517,
+          "pooled_count": 0,
+          "blocks": 8,
+          "fields": 3
+        },
+        "conditional": {
+          "attempted": 38,
+          "accepted": 32,
+          "supported": 32,
+          "unsupported": 0,
+          "covered68": 27,
+          "covered95": 30,
+          "fraction68": 0.84375,
+          "median_area_inflation": 7.537982056872506,
+          "pooled_count": 32,
+          "blocks": 8,
+          "fields": 3
+        }
+      },
+      "snr_low_bg_structured": {
+        "global": {
+          "attempted": 58,
+          "accepted": 38,
+          "supported": 38,
+          "unsupported": 0,
+          "covered68": 22,
+          "covered95": 32,
+          "fraction68": 0.5789473684210527,
+          "median_area_inflation": 3.420790482709637,
+          "pooled_count": 0,
+          "blocks": 10,
+          "fields": 3
+        },
+        "conditional": {
+          "attempted": 58,
+          "accepted": 38,
+          "supported": 38,
+          "unsupported": 0,
+          "covered68": 31,
+          "covered95": 35,
+          "fraction68": 0.8157894736842105,
+          "median_area_inflation": 6.820137244805197,
+          "pooled_count": 0,
+          "blocks": 10,
+          "fields": 3
+        }
+      },
+      "snr_high_bg_smooth": {
+        "global": {
+          "attempted": 34,
+          "accepted": 30,
+          "supported": 30,
+          "unsupported": 0,
+          "covered68": 29,
+          "covered95": 30,
+          "fraction68": 0.9666666666666667,
+          "median_area_inflation": 6.332940403548381,
+          "pooled_count": 0,
+          "blocks": 8,
+          "fields": 3
+        },
+        "conditional": {
+          "attempted": 34,
+          "accepted": 30,
+          "supported": 30,
+          "unsupported": 0,
+          "covered68": 25,
+          "covered95": 29,
+          "fraction68": 0.8333333333333334,
+          "median_area_inflation": 2.2549490753014627,
+          "pooled_count": 30,
+          "blocks": 8,
+          "fields": 3
+        }
+      },
+      "snr_high_bg_structured": {
+        "global": {
+          "attempted": 46,
+          "accepted": 40,
+          "supported": 40,
+          "unsupported": 0,
+          "covered68": 40,
+          "covered95": 40,
+          "fraction68": 1.0,
+          "median_area_inflation": 5.727645376941637,
+          "pooled_count": 0,
+          "blocks": 11,
+          "fields": 3
+        },
+        "conditional": {
+          "attempted": 46,
+          "accepted": 40,
+          "supported": 40,
+          "unsupported": 0,
+          "covered68": 31,
+          "covered95": 40,
+          "fraction68": 0.775,
+          "median_area_inflation": 1.8189231978259142,
+          "pooled_count": 0,
+          "blocks": 11,
+          "fields": 3
+        }
+      }
+    }
+  },
+  "real_uncertainty": {
+    "raw": {
+      "attempted": 33,
+      "valid": 28,
+      "reasons": {
+        "poor_global_fit": 4,
+        "fit_exception": 1,
+        "core_outliers": 1,
+        "structured_core_residual": 1
+      },
+      "rms_arcsec": 0.8878365491908553,
+      "p90_arcsec": 1.3904024911959394,
+      "bias_east_north_arcsec": [
+        0.03654274941688379,
+        -0.021705713649926545
+      ],
+      "width_boundary_epochs": 0,
+      "raw68_count": 12
+    },
+    "global": {
+      "attempted": 33,
+      "accepted": 28,
+      "supported": 10,
+      "unsupported": 18,
+      "covered68": 8,
+      "covered95": 10,
+      "fraction68": 0.8,
+      "median_area_inflation": 4.499928410684198,
+      "pooled_count": 0,
+      "blocks": 10,
+      "fields": 2
+    },
+    "conditional": {
+      "attempted": 33,
+      "accepted": 28,
+      "supported": 10,
+      "unsupported": 18,
+      "covered68": 10,
+      "covered95": 10,
+      "fraction68": 1.0,
+      "median_area_inflation": 7.972314082449058,
+      "pooled_count": 5,
+      "blocks": 10,
+      "fields": 2
+    },
+    "common_supported": {
+      "global": {
+        "attempted": 10,
+        "accepted": 10,
+        "supported": 10,
+        "unsupported": 0,
+        "covered68": 8,
+        "covered95": 10,
+        "fraction68": 0.8,
+        "median_area_inflation": 4.499928410684198,
+        "pooled_count": 0,
+        "blocks": 10,
+        "fields": 2
+      },
+      "conditional": {
+        "attempted": 10,
+        "accepted": 10,
+        "supported": 10,
+        "unsupported": 0,
+        "covered68": 10,
+        "covered95": 10,
+        "fraction68": 1.0,
+        "median_area_inflation": 7.972314082449058,
+        "pooled_count": 5,
+        "blocks": 10,
+        "fields": 2
+      }
+    },
+    "cells": {
+      "snr_low_bg_smooth": {
+        "global": {
+          "attempted": 3,
+          "accepted": 3,
+          "supported": 3,
+          "unsupported": 0,
+          "covered68": 1,
+          "covered95": 3,
+          "fraction68": 0.3333333333333333,
+          "median_area_inflation": 4.177750312651809,
+          "pooled_count": 0,
+          "blocks": 3,
+          "fields": 2
+        },
+        "conditional": {
+          "attempted": 3,
+          "accepted": 3,
+          "supported": 3,
+          "unsupported": 0,
+          "covered68": 3,
+          "covered95": 3,
+          "fraction68": 1.0,
+          "median_area_inflation": 8.856570617198205,
+          "pooled_count": 3,
+          "blocks": 3,
+          "fields": 2
+        }
+      },
+      "snr_low_bg_structured": {
+        "global": {
+          "attempted": 4,
+          "accepted": 4,
+          "supported": 4,
+          "unsupported": 0,
+          "covered68": 4,
+          "covered95": 4,
+          "fraction68": 1.0,
+          "median_area_inflation": 4.127805850172818,
+          "pooled_count": 0,
+          "blocks": 4,
+          "fields": 2
+        },
+        "conditional": {
+          "attempted": 4,
+          "accepted": 4,
+          "supported": 4,
+          "unsupported": 0,
+          "covered68": 4,
+          "covered95": 4,
+          "fraction68": 1.0,
+          "median_area_inflation": 8.31668327500272,
+          "pooled_count": 0,
+          "blocks": 4,
+          "fields": 2
+        }
+      },
+      "snr_high_bg_smooth": {
+        "global": {
+          "attempted": 13,
+          "accepted": 11,
+          "supported": 2,
+          "unsupported": 9,
+          "covered68": 2,
+          "covered95": 2,
+          "fraction68": 1.0,
+          "median_area_inflation": 8.333998149324332,
+          "pooled_count": 0,
+          "blocks": 2,
+          "fields": 2
+        },
+        "conditional": {
+          "attempted": 13,
+          "accepted": 11,
+          "supported": 2,
+          "unsupported": 9,
+          "covered68": 2,
+          "covered95": 2,
+          "fraction68": 1.0,
+          "median_area_inflation": 2.7604901073006376,
+          "pooled_count": 2,
+          "blocks": 2,
+          "fields": 2
+        }
+      },
+      "snr_high_bg_structured": {
+        "global": {
+          "attempted": 12,
+          "accepted": 10,
+          "supported": 1,
+          "unsupported": 9,
+          "covered68": 1,
+          "covered95": 1,
+          "fraction68": 1.0,
+          "median_area_inflation": 4.5133651124398,
+          "pooled_count": 0,
+          "blocks": 1,
+          "fields": 1
+        },
+        "conditional": {
+          "attempted": 12,
+          "accepted": 10,
+          "supported": 1,
+          "unsupported": 9,
+          "covered68": 1,
+          "covered95": 1,
+          "fraction68": 1.0,
+          "median_area_inflation": 1.5570206390686399,
+          "pooled_count": 0,
+          "blocks": 1,
+          "fields": 1
+        }
+      }
+    }
+  }
+}

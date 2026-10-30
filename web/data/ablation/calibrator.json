@@ -1,0 +1,371 @@
+{
+  "version": "0.9.0",
+  "selected_model": "plane_fixed",
+  "rules": {
+    "version": "0.9.0",
+    "snr_cut": 10.0,
+    "background_cut": 1.5,
+    "probability": 0.68,
+    "background_cut_source": "feature-only development patch median, frozen in selection; default used only in standalone controls",
+    "ellipse68_threshold": 2.27886856637673,
+    "ellipse95_threshold": 5.99146454710798,
+    "minimum_rows_per_partition": 12,
+    "minimum_blocks_per_partition": 3,
+    "minimum_fields_per_partition": 2,
+    "shrinkage_pseudo_blocks": 8.0,
+    "minimum_floor_arcsec": 0.05,
+    "floor_strength_grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "support_multiplicative_margin": 1.25,
+    "floor_patch_parity": 0,
+    "quantile_patch_parity": 1,
+    "bias_subtraction": false,
+    "covariance_shrinking": false
+  },
+  "thresholds": {
+    "snr_cut": 10.0,
+    "background_cut": 1.016051688058784
+  },
+  "accepted_usable": 140,
+  "attempted": 192,
+  "nodes": {
+    "global": {
+      "parameters": {
+        "floor_arcsec2": [
+          [
+            2.266952146180735,
+            -0.9492556997761531
+          ],
+          [
+            -0.9492556997761531,
+            0.5631581746688767
+          ]
+        ],
+        "floor_strength": 1.0,
+        "scale_squared": 1.5144863372667468
+      },
+      "parameter_source": "global",
+      "parent": null,
+      "local_fitted": true,
+      "local_floor_weight": 1.0,
+      "floor_support": {
+        "rows": 82,
+        "blocks": 11,
+        "fields": 3
+      },
+      "quantile_support": {
+        "rows": 58,
+        "blocks": 9,
+        "fields": 3
+      },
+      "feature_ranges": {
+        "observed_snr": [
+          5.0108089827870925,
+          13.75475586984023
+        ],
+        "background_score": [
+          0.950232842173768,
+          1.0873314736554234
+        ]
+      },
+      "population_support": {
+        "rows": 140,
+        "blocks": 20,
+        "fields": 3
+      }
+    },
+    "snr_low": {
+      "parameters": {
+        "floor_arcsec2": [
+          [
+            3.4803574549398886,
+            -1.4981171810106917
+          ],
+          [
+            -1.498117181010692,
+            0.8475026890741824
+          ]
+        ],
+        "floor_strength": 1.0,
+        "scale_squared": 2.608729491335893
+      },
+      "parameter_source": "snr_low",
+      "parent": "global",
+      "local_fitted": true,
+      "local_floor_weight": 0.5789473684210527,
+      "floor_support": {
+        "rows": 44,
+        "blocks": 11,
+        "fields": 3
+      },
+      "quantile_support": {
+        "rows": 26,
+        "blocks": 7,
+        "fields": 3
+      },
+      "feature_ranges": {
+        "observed_snr": [
+          5.0108089827870925,
+          9.957749327974938
+        ],
+        "background_score": [
+          0.950232842173768,
+          1.077933448608924
+        ]
+      },
+      "population_support": {
+        "rows": 70,
+        "blocks": 18,
+        "fields": 3
+      }
+    },
+    "snr_high": {
+      "parameters": {
+        "floor_arcsec2": [
+          [
+            1.0407957598651953,
+            -0.40173779847920177
+          ],
+          [
+            -0.40173779847920177,
+            0.23716799018616028
+          ]
+        ],
+        "floor_strength": 0.7,
+        "scale_squared": 1.0
+      },
+      "parameter_source": "snr_high",
+      "parent": "global",
+      "local_fitted": true,
+      "local_floor_weight": 0.5789473684210527,
+      "floor_support": {
+        "rows": 38,
+        "blocks": 11,
+        "fields": 3
+      },
+      "quantile_support": {
+        "rows": 32,
+        "blocks": 8,
+        "fields": 3
+      },
+      "feature_ranges": {
+        "observed_snr": [
+          10.117791248622899,
+          13.75475586984023
+        ],
+        "background_score": [
+          0.950232842173768,
+          1.0873314736554234
+        ]
+      },
+      "population_support": {
+        "rows": 70,
+        "blocks": 19,
+        "fields": 3
+      }
+    },
+    "snr_low_bg_smooth": {
+      "parameters": {
+        "floor_arcsec2": [
+          [
+            3.4803574549398886,
+            -1.4981171810106917
+          ],
+          [
+            -1.498117181010692,
+            0.8475026890741824
+          ]
+        ],
+        "floor_strength": 1.0,
+        "scale_squared": 2.608729491335893
+      },
+      "parameter_source": "snr_low",
+      "parent": "snr_low",
+      "local_fitted": false,
+      "local_floor_weight": 0.0,
+      "floor_support": {
+        "rows": 28,
+        "blocks": 7,
+        "fields": 3
+      },
+      "quantile_support": {
+        "rows": 4,
+        "blocks": 1,
+        "fields": 1
+      },
+      "feature_ranges": {
+        "observed_snr": [
+          5.0108089827870925,
+          9.957749327974938
+        ],
+        "background_score": [
+          0.950232842173768,
+          1.077933448608924
+        ]
+      },
+      "population_support": {
+        "rows": 32,
+        "blocks": 8,
+        "fields": 3
+      }
+    },
+    "snr_low_bg_structured": {
+      "parameters": {
+        "floor_arcsec2": [
+          [
+            3.0252544384364684,
+            -1.1867537011676113
+          ],
+          [
+            -1.1867537011676115,
+            0.6151387327327988
+          ]
+        ],
+        "floor_strength": 1.0,
+        "scale_squared": 2.746682358988962
+      },
+      "parameter_source": "snr_low_bg_structured",
+      "parent": "snr_low",
+      "local_fitted": true,
+      "local_floor_weight": 0.3333333333333333,
+      "floor_support": {
+        "rows": 16,
+        "blocks": 4,
+        "fields": 3
+      },
+      "quantile_support": {
+        "rows": 22,
+        "blocks": 6,
+        "fields": 3
+      },
+      "feature_ranges": {
+        "observed_snr": [
+          5.0108089827870925,
+          9.957749327974938
+        ],
+        "background_score": [
+          1.0273391883923506,
+          1.077933448608924
+        ]
+      },
+      "population_support": {
+        "rows": 38,
+        "blocks": 10,
+        "fields": 3
+      }
+    },
+    "snr_high_bg_smooth": {
+      "parameters": {
+        "floor_arcsec2": [
+          [
+            1.0407957598651953,
+            -0.40173779847920177
+          ],
+          [
+            -0.40173779847920177,
+            0.23716799018616028
+          ]
+        ],
+        "floor_strength": 0.7,
+        "scale_squared": 1.0
+      },
+      "parameter_source": "snr_high",
+      "parent": "snr_high",
+      "local_fitted": false,
+      "local_floor_weight": 0.0,
+      "floor_support": {
+        "rows": 26,
+        "blocks": 7,
+        "fields": 3
+      },
+      "quantile_support": {
+        "rows": 4,
+        "blocks": 1,
+        "fields": 1
+      },
+      "feature_ranges": {
+        "observed_snr": [
+          10.117791248622899,
+          13.75475586984023
+        ],
+        "background_score": [
+          0.950232842173768,
+          1.0873314736554234
+        ]
+      },
+      "population_support": {
+        "rows": 30,
+        "blocks": 8,
+        "fields": 3
+      }
+    },
+    "snr_high_bg_structured": {
+      "parameters": {
+        "floor_arcsec2": [
+          [
+            0.8447305401315186,
+            -0.25037852100639496
+          ],
+          [
+            -0.25037852100639496,
+            0.1601295796582523
+          ]
+        ],
+        "floor_strength": 0.6,
+        "scale_squared": 1.0
+      },
+      "parameter_source": "snr_high_bg_structured",
+      "parent": "snr_high",
+      "local_fitted": true,
+      "local_floor_weight": 0.3333333333333333,
+      "floor_support": {
+        "rows": 12,
+        "blocks": 4,
+        "fields": 3
+      },
+      "quantile_support": {
+        "rows": 28,
+        "blocks": 7,
+        "fields": 3
+      },
+      "feature_ranges": {
+        "observed_snr": [
+          10.321446330406063,
+          13.59390237412986
+        ],
+        "background_score": [
+          1.0273391883923506,
+          1.0873314736554234
+        ]
+      },
+      "population_support": {
+        "rows": 40,
+        "blocks": 11,
+        "fields": 3
+      }
+    }
+  },
+  "formula": "C_cal = scale_squared * (C_raw + 0.05^2 I + floor_strength F)",
+  "partition": "even spatial patch indices fit floor; odd patch indices fit strength/scale; shared exposures remain correlated",
+  "qualification": "empirical grouped calibration, not a conformal or astronomical detection guarantee",
+  "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+  "selection_sha256": "a937052ea6161e1b48061d0a8a90d0b04baa9bcd77de51d2ad1948930c271b7c",
+  "created_at_utc": "2026-10-30T11:29:52.621229+00:00",
+  "selection_lock_commit": "1f1dae2c4d582ccd9d9fed5c46fbc7b56302c62b",
+  "source_results": {
+    "q030m10": "bec345dc40a08d5a8cb4d1e8834343b4945a66cefa9987fe6917fd95d438f2eb",
+    "q180p20": "cef0645eced78a065261b919e96a49169df6ce178b94971a007db6080f04a367",
+    "q300m30": "9473d1f83fd60de15d6422ef7afe96b562320bf4af956944b66f6520ddc9bf00"
+  }
+}

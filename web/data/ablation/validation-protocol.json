@@ -1,0 +1,574 @@
+{
+  "sealed_at_utc": "2026-10-30T11:30:36.411435+00:00",
+  "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+  "selection_sha256": "a937052ea6161e1b48061d0a8a90d0b04baa9bcd77de51d2ad1948930c271b7c",
+  "calibrator_sha256": "c188dcb07f4fe035fdb9d549abbb64e6e19788db3239567ee381880dfb13af4c",
+  "source_hashes": {
+    "ablation_study.py": "1c6aae95ce7c15fb7b6bf26783560778660d65ca6c5bc8d2e13d8187cdacff78",
+    "ablation_model.py": "e8bd406c75d15413a5b36e04b9a39ca804424cdeeb4435e38ca6a5ec40053b4e",
+    "conditional_covariance.py": "59792dba210de5ba127f4ac0e799beee1273f0239a03e5b7f04fe3176ea166bd",
+    "prepare_ablation_data.py": "252cf4c8364c4b5ef9c26407397617b2b203b5858a9b3788fd71667e76a54219",
+    "covariance_model.py": "8ac686fb374ac4e34b92ddd3ef91385ec967da3617cfe32b14a17cd4cac8965c",
+    "covariance_study.py": "7e458882b0fa7f6490064302be8acc9a1a6924dee92319108933cf1b9c0d81f8",
+    "prepare_covariance_data.py": "11c930ab3d2c25e48fc15dc671bcabf2afcc85218fa992b1c3b5ec7998bda5ff",
+    "quality_study.py": "7c72a0af208860aaaaf5d07a2ecdedb7ea78f0ecaa641c0dc8bb59f9c9f35a2d",
+    "quality_model.py": "4ad2caf98be10c189f4f02108e286b348f945879640fb68a21a1a8e85d476940",
+    "prepare_quality_data.py": "3fd23fb68c595ac0d4136e47284825bb9a9ebef233a757f68f8b888adaa85419",
+    "benchmark_accuracy.py": "75a7c9b406d0508d7149ff70163a40c5c1eeb601cd30035e97d178c36b2977e7",
+    "prepare_benchmark_data.py": "f83bb418bf2d5f4d5d62bf2560989ed5a57df7b42e1dce7a901981e270f11088",
+    "release_analysis.py": "628ff978b72872166b9f66f28140e413a486eba5687cbb5b0838fe3095567eca",
+    "joint_motion.py": "1a2fa9bf673610effb24ae18c2f6b6637568d507b34498043cb1d9e2cb1eb59c",
+    "gaia_motion.py": "e8c29852acf4d1a147e58db7d8a44b4cd8578e8622c58b5c63d8bcbc36d06688",
+    "motion_analysis.py": "50369300355b5b8af47bcfdb7d6a430731ade7a5c867912b3819b2680d6b4523",
+    "build_demo.py": "8985b55ba6fd29fd02d1618f1d62d2a58a4ad235f692d1c650dacb1ce53b159e"
+  },
+  "selected_model": "plane_fixed",
+  "rules": {
+    "version": "0.9.0",
+    "seed": 20261030,
+    "bootstrap_draws": 2000,
+    "development_fields": [
+      "v060m30",
+      "v150p45",
+      "v330p10",
+      "barnard",
+      "rw-aur"
+    ],
+    "calibration_fields": [
+      "q030m10",
+      "q180p20",
+      "q300m30"
+    ],
+    "validation_fields": [
+      "w090p10",
+      "w210m20",
+      "w350p35"
+    ],
+    "development_positions_px": [
+      [
+        5.5,
+        5.5
+      ],
+      [
+        57.5,
+        5.5
+      ],
+      [
+        5.5,
+        57.5
+      ],
+      [
+        57.5,
+        57.5
+      ]
+    ],
+    "calibration_positions_px": [
+      [
+        5.5,
+        5.5
+      ],
+      [
+        31.5,
+        5.5
+      ],
+      [
+        57.5,
+        5.5
+      ],
+      [
+        5.5,
+        31.5
+      ],
+      [
+        57.5,
+        31.5
+      ],
+      [
+        5.5,
+        57.5
+      ],
+      [
+        31.5,
+        57.5
+      ],
+      [
+        57.5,
+        57.5
+      ]
+    ],
+    "validation_positions_px": [
+      [
+        5.5,
+        5.5
+      ],
+      [
+        57.5,
+        5.5
+      ],
+      [
+        5.5,
+        57.5
+      ],
+      [
+        57.5,
+        57.5
+      ]
+    ],
+    "snr_per_frame": [
+      2.0,
+      4.0
+    ],
+    "motions_px": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.6,
+        0.05
+      ]
+    ],
+    "development_truth_psfs": [
+      "nearest",
+      "isotropic_015px"
+    ],
+    "calibration_truth_psfs": [
+      "nearest",
+      "isotropic_015px"
+    ],
+    "validation_truth_psfs": [
+      "nearest",
+      "elliptical_006_022px"
+    ],
+    "selection": {
+      "baseline": "plane_fixed",
+      "minimum_group_common": 4,
+      "minimum_real_common": 3,
+      "minimum_pooled_rms_improvement": 0.05,
+      "rule": "no higher paired numeric/accepted RMS or P90 and no fewer numeric/accepted fits in every field/SNR/PSF group and real-control field; otherwise retain simplest baseline",
+      "tie_break": "pooled numeric RMS, then fixed ePSF width, then lower background degree; five leave-one-field-out selection diagnostics"
+    },
+    "promotion": {
+      "coverage68_min": 0.55,
+      "coverage68_max": 0.85,
+      "minimum_supported": 24,
+      "minimum_supported_blocks": 6,
+      "minimum_supported_fraction": 0.8,
+      "maximum_median_area_inflation": 16.0,
+      "minimum_cell_supported": 8,
+      "rule": "pooled and every supported cell must meet 68% coverage band; all four cells need >=8 supported cases and >=2 spatial blocks; no point degradation vs plane_fixed"
+    },
+    "limits": [
+      "known-position local fitting; not blind detection",
+      "no source shot noise added",
+      "three external fields; shared pixels/exposures make case counts correlated",
+      "conditional routing uses observed fitted SNR and original masked background only",
+      "fixed bins, pooled sparse cells and explicit out-of-support abstention; no conditional coverage guarantee",
+      "no automatic WISE 0855 promotion"
+    ]
+  },
+  "covariance_rules": {
+    "version": "0.9.0",
+    "snr_cut": 10.0,
+    "background_cut": 1.5,
+    "probability": 0.68,
+    "background_cut_source": "feature-only development patch median, frozen in selection; default used only in standalone controls",
+    "ellipse68_threshold": 2.27886856637673,
+    "ellipse95_threshold": 5.99146454710798,
+    "minimum_rows_per_partition": 12,
+    "minimum_blocks_per_partition": 3,
+    "minimum_fields_per_partition": 2,
+    "shrinkage_pseudo_blocks": 8.0,
+    "minimum_floor_arcsec": 0.05,
+    "floor_strength_grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "support_multiplicative_margin": 1.25,
+    "floor_patch_parity": 0,
+    "quantile_patch_parity": 1,
+    "bias_subtraction": false,
+    "covariance_shrinking": false
+  },
+  "parameters": {
+    "version": "0.9.0",
+    "selected_model": "plane_fixed",
+    "rules": {
+      "version": "0.9.0",
+      "snr_cut": 10.0,
+      "background_cut": 1.5,
+      "probability": 0.68,
+      "background_cut_source": "feature-only development patch median, frozen in selection; default used only in standalone controls",
+      "ellipse68_threshold": 2.27886856637673,
+      "ellipse95_threshold": 5.99146454710798,
+      "minimum_rows_per_partition": 12,
+      "minimum_blocks_per_partition": 3,
+      "minimum_fields_per_partition": 2,
+      "shrinkage_pseudo_blocks": 8.0,
+      "minimum_floor_arcsec": 0.05,
+      "floor_strength_grid": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "support_multiplicative_margin": 1.25,
+      "floor_patch_parity": 0,
+      "quantile_patch_parity": 1,
+      "bias_subtraction": false,
+      "covariance_shrinking": false
+    },
+    "thresholds": {
+      "snr_cut": 10.0,
+      "background_cut": 1.016051688058784
+    },
+    "accepted_usable": 140,
+    "attempted": 192,
+    "nodes": {
+      "global": {
+        "parameters": {
+          "floor_arcsec2": [
+            [
+              2.266952146180735,
+              -0.9492556997761531
+            ],
+            [
+              -0.9492556997761531,
+              0.5631581746688767
+            ]
+          ],
+          "floor_strength": 1.0,
+          "scale_squared": 1.5144863372667468
+        },
+        "parameter_source": "global",
+        "parent": null,
+        "local_fitted": true,
+        "local_floor_weight": 1.0,
+        "floor_support": {
+          "rows": 82,
+          "blocks": 11,
+          "fields": 3
+        },
+        "quantile_support": {
+          "rows": 58,
+          "blocks": 9,
+          "fields": 3
+        },
+        "feature_ranges": {
+          "observed_snr": [
+            5.0108089827870925,
+            13.75475586984023
+          ],
+          "background_score": [
+            0.950232842173768,
+            1.0873314736554234
+          ]
+        },
+        "population_support": {
+          "rows": 140,
+          "blocks": 20,
+          "fields": 3
+        }
+      },
+      "snr_low": {
+        "parameters": {
+          "floor_arcsec2": [
+            [
+              3.4803574549398886,
+              -1.4981171810106917
+            ],
+            [
+              -1.498117181010692,
+              0.8475026890741824
+            ]
+          ],
+          "floor_strength": 1.0,
+          "scale_squared": 2.608729491335893
+        },
+        "parameter_source": "snr_low",
+        "parent": "global",
+        "local_fitted": true,
+        "local_floor_weight": 0.5789473684210527,
+        "floor_support": {
+          "rows": 44,
+          "blocks": 11,
+          "fields": 3
+        },
+        "quantile_support": {
+          "rows": 26,
+          "blocks": 7,
+          "fields": 3
+        },
+        "feature_ranges": {
+          "observed_snr": [
+            5.0108089827870925,
+            9.957749327974938
+          ],
+          "background_score": [
+            0.950232842173768,
+            1.077933448608924
+          ]
+        },
+        "population_support": {
+          "rows": 70,
+          "blocks": 18,
+          "fields": 3
+        }
+      },
+      "snr_high": {
+        "parameters": {
+          "floor_arcsec2": [
+            [
+              1.0407957598651953,
+              -0.40173779847920177
+            ],
+            [
+              -0.40173779847920177,
+              0.23716799018616028
+            ]
+          ],
+          "floor_strength": 0.7,
+          "scale_squared": 1.0
+        },
+        "parameter_source": "snr_high",
+        "parent": "global",
+        "local_fitted": true,
+        "local_floor_weight": 0.5789473684210527,
+        "floor_support": {
+          "rows": 38,
+          "blocks": 11,
+          "fields": 3
+        },
+        "quantile_support": {
+          "rows": 32,
+          "blocks": 8,
+          "fields": 3
+        },
+        "feature_ranges": {
+          "observed_snr": [
+            10.117791248622899,
+            13.75475586984023
+          ],
+          "background_score": [
+            0.950232842173768,
+            1.0873314736554234
+          ]
+        },
+        "population_support": {
+          "rows": 70,
+          "blocks": 19,
+          "fields": 3
+        }
+      },
+      "snr_low_bg_smooth": {
+        "parameters": {
+          "floor_arcsec2": [
+            [
+              3.4803574549398886,
+              -1.4981171810106917
+            ],
+            [
+              -1.498117181010692,
+              0.8475026890741824
+            ]
+          ],
+          "floor_strength": 1.0,
+          "scale_squared": 2.608729491335893
+        },
+        "parameter_source": "snr_low",
+        "parent": "snr_low",
+        "local_fitted": false,
+        "local_floor_weight": 0.0,
+        "floor_support": {
+          "rows": 28,
+          "blocks": 7,
+          "fields": 3
+        },
+        "quantile_support": {
+          "rows": 4,
+          "blocks": 1,
+          "fields": 1
+        },
+        "feature_ranges": {
+          "observed_snr": [
+            5.0108089827870925,
+            9.957749327974938
+          ],
+          "background_score": [
+            0.950232842173768,
+            1.077933448608924
+          ]
+        },
+        "population_support": {
+          "rows": 32,
+          "blocks": 8,
+          "fields": 3
+        }
+      },
+      "snr_low_bg_structured": {
+        "parameters": {
+          "floor_arcsec2": [
+            [
+              3.0252544384364684,
+              -1.1867537011676113
+            ],
+            [
+              -1.1867537011676115,
+              0.6151387327327988
+            ]
+          ],
+          "floor_strength": 1.0,
+          "scale_squared": 2.746682358988962
+        },
+        "parameter_source": "snr_low_bg_structured",
+        "parent": "snr_low",
+        "local_fitted": true,
+        "local_floor_weight": 0.3333333333333333,
+        "floor_support": {
+          "rows": 16,
+          "blocks": 4,
+          "fields": 3
+        },
+        "quantile_support": {
+          "rows": 22,
+          "blocks": 6,
+          "fields": 3
+        },
+        "feature_ranges": {
+          "observed_snr": [
+            5.0108089827870925,
+            9.957749327974938
+          ],
+          "background_score": [
+            1.0273391883923506,
+            1.077933448608924
+          ]
+        },
+        "population_support": {
+          "rows": 38,
+          "blocks": 10,
+          "fields": 3
+        }
+      },
+      "snr_high_bg_smooth": {
+        "parameters": {
+          "floor_arcsec2": [
+            [
+              1.0407957598651953,
+              -0.40173779847920177
+            ],
+            [
+              -0.40173779847920177,
+              0.23716799018616028
+            ]
+          ],
+          "floor_strength": 0.7,
+          "scale_squared": 1.0
+        },
+        "parameter_source": "snr_high",
+        "parent": "snr_high",
+        "local_fitted": false,
+        "local_floor_weight": 0.0,
+        "floor_support": {
+          "rows": 26,
+          "blocks": 7,
+          "fields": 3
+        },
+        "quantile_support": {
+          "rows": 4,
+          "blocks": 1,
+          "fields": 1
+        },
+        "feature_ranges": {
+          "observed_snr": [
+            10.117791248622899,
+            13.75475586984023
+          ],
+          "background_score": [
+            0.950232842173768,
+            1.0873314736554234
+          ]
+        },
+        "population_support": {
+          "rows": 30,
+          "blocks": 8,
+          "fields": 3
+        }
+      },
+      "snr_high_bg_structured": {
+        "parameters": {
+          "floor_arcsec2": [
+            [
+              0.8447305401315186,
+              -0.25037852100639496
+            ],
+            [
+              -0.25037852100639496,
+              0.1601295796582523
+            ]
+          ],
+          "floor_strength": 0.6,
+          "scale_squared": 1.0
+        },
+        "parameter_source": "snr_high_bg_structured",
+        "parent": "snr_high",
+        "local_fitted": true,
+        "local_floor_weight": 0.3333333333333333,
+        "floor_support": {
+          "rows": 12,
+          "blocks": 4,
+          "fields": 3
+        },
+        "quantile_support": {
+          "rows": 28,
+          "blocks": 7,
+          "fields": 3
+        },
+        "feature_ranges": {
+          "observed_snr": [
+            10.321446330406063,
+            13.59390237412986
+          ],
+          "background_score": [
+            1.0273391883923506,
+            1.0873314736554234
+          ]
+        },
+        "population_support": {
+          "rows": 40,
+          "blocks": 11,
+          "fields": 3
+        }
+      }
+    },
+    "formula": "C_cal = scale_squared * (C_raw + 0.05^2 I + floor_strength F)",
+    "partition": "even spatial patch indices fit floor; odd patch indices fit strength/scale; shared exposures remain correlated",
+    "qualification": "empirical grouped calibration, not a conformal or astronomical detection guarantee",
+    "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+    "selection_sha256": "a937052ea6161e1b48061d0a8a90d0b04baa9bcd77de51d2ad1948930c271b7c",
+    "created_at_utc": "2026-10-30T11:29:52.621229+00:00",
+    "selection_lock_commit": "1f1dae2c4d582ccd9d9fed5c46fbc7b56302c62b",
+    "source_results": {
+      "q030m10": "bec345dc40a08d5a8cb4d1e8834343b4945a66cefa9987fe6917fd95d438f2eb",
+      "q180p20": "cef0645eced78a065261b919e96a49169df6ce178b94971a007db6080f04a367",
+      "q300m30": "9473d1f83fd60de15d6422ef7afe96b562320bf4af956944b66f6520ddc9bf00"
+    }
+  },
+  "requirement": "commit before external validation"
+}
