@@ -1,0 +1,253 @@
+{
+  "purpose": "independent baseline exception accounting on already-opened validation data",
+  "source_sha256": "11d37c9b5d7c88a7b77eb90679d1926583450fede16efa7460e7ea7ab519c20b",
+  "input_sha256": {
+    "validation-v060m30.json": "99919ffeb46ea983b27995efdbff2af5c36d2ee7b95291158a7814d5465f89ea",
+    "validation-v150p45.json": "76873050d90bec19e524eba1a2d6a0e2b08a72b4a85b7062ab2bc6174c92e321",
+    "validation-v330p10.json": "8c4875007998f0efa6fa8cfd500c340cb244e053ff7d6efd78b47366df93952e"
+  },
+  "corrections": [
+    {
+      "field_id": "v060m30",
+      "group": "real_controls",
+      "index": 0,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "Too few valid native pixels"
+      },
+      "original_reason": "Too few valid native pixels",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "real_controls",
+      "index": 0,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "Too few valid native pixels"
+      },
+      "original_reason": "Too few valid native pixels",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "real_controls",
+      "index": 3,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "Too few valid native pixels"
+      },
+      "original_reason": "Too few valid native pixels",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "real_controls",
+      "index": 4,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "Too few valid native pixels"
+      },
+      "original_reason": "Too few valid native pixels",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "real_controls",
+      "index": 6,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "Too few valid native pixels"
+      },
+      "original_reason": "Too few valid native pixels",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "real_controls",
+      "index": 9,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "Too few valid native pixels"
+      },
+      "original_reason": "Too few valid native pixels",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "real_controls",
+      "index": 10,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "Too few valid native pixels"
+      },
+      "original_reason": "Too few valid native pixels",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "injections",
+      "index": 24,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "injections",
+      "index": 25,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "injections",
+      "index": 26,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "injections",
+      "index": 27,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "injections",
+      "index": 28,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "injections",
+      "index": 29,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "injections",
+      "index": 30,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v150p45",
+      "group": "injections",
+      "index": 31,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    },
+    {
+      "field_id": "v330p10",
+      "group": "real_controls",
+      "index": 3,
+      "previous_audited": {
+        "numeric_valid": false,
+        "accepted": false,
+        "quality_reasons": [
+          "fit_exception"
+        ],
+        "reason": "unidentifiable_target"
+      },
+      "original_reason": "unidentifiable_target",
+      "baseline_recovered": false
+    }
+  ],
+  "recovered_baseline": 0,
+  "original_results_modified": false
+}

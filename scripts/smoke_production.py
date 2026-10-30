@@ -45,6 +45,11 @@ def main():
         deployed=session.get(URL+'/data/quality/'+name+'.json',timeout=30);deployed.raise_for_status()
         assert sha256(deployed.content).hexdigest()==sha256((quality/(name+'.json')).read_bytes()).hexdigest()
     results['quality_validation_matches']=True
+    covariance=Path(__file__).resolve().parents[1]/'web/data/covariance'
+    for name in ['design','calibrator','validation-protocol','overview','validation-summary','validation-v060m30','validation-v150p45','validation-v330p10']:
+        deployed=session.get(URL+'/data/covariance/'+name+'.json',timeout=30);deployed.raise_for_status()
+        assert sha256(deployed.content).hexdigest()==sha256((covariance/(name+'.json')).read_bytes()).hexdigest()
+    results['covariance_validation_matches']=True
     response=session.get(URL+'/api/reviews',timeout=30);results['storage_get']=response.status_code
     assert response.status_code==200, response.text
     assert response.json()['storage']=='mongodb'

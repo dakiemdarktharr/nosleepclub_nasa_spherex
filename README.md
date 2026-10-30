@@ -4,7 +4,7 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Quality gate & kiểm chứng mới](https://nosleepclub-nasa-spherex.vercel.app/#quality-validation) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo mới nhất](docs/QUALITY_VALIDATION.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Hiệu chuẩn sai số & kiểm định mới](https://nosleepclub-nasa-spherex.vercel.app/#covariance-validation) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo mới nhất](docs/COVARIANCE_VALIDATION.md).
 
 ## Bắt đầu trên web
 
@@ -13,6 +13,24 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 3. Chọn **Ghi nhận**, lưu điều bạn thấy; có thể chọn **Tôi chưa chắc**, xuất JSON hoặc xóa nhận xét.
 
 Nút **Hướng dẫn 60 giây** giải thích sao lùn nâu, pixel, ellipse sai số và cách đọc ảnh. Người có kinh nghiệm có thể mở bảng tọa độ, dữ liệu Gaia, FITS và cấu hình đầy đủ.
+
+## Nền ảnh/ePSF và hiệu chuẩn covariance — 0.8.0
+
+Thử nền bậc hai và độ rộng ePSF linh hoạt, tách **phát triển / calibration / validation** theo trường và exposure. Thiết kế khóa ở `4e7a50c`; error floor học từ **192** nguồn giả trên ba trường đã mở, rồi khóa calibrator ở `d7d92dc` trước khi fit **122 cutout QR2** của ba trường mới. Tập kiểm định có 96 nguồn giả và 33 sao Gaia giữ ngoài căn chỉnh.
+
+| Trường RA/Dec | RMS nguồn giả cũ → mới, cặp chung | Qua gate /32 | Phủ 68% thô → hiệu chuẩn |
+|---|---:|---:|---:|
+| 60° / −30° | 0,945 → 0,993″ | 32 | 24/32 → 32/32 |
+| 150° / +45° | 1,368 → 1,418″ | 21 | 9/21 → 18/21 |
+| 330° / +10° | 3,096 → 2,843″ | 14 | 0/14 → 10/14 |
+
+**Chưa đạt tiêu chí thay mặc định.** Pooled RMS giảm 2,079→1,961″ nhưng P90 tăng và hai trường tăng RMS. Trên 67/96 mẫu qua gate, ellipse danh nghĩa 68% phủ **49,3%→89,6%**, với diện tích trung vị ×**3,65**; mức phủ mới quá cao so với tiêu chí đã khóa. Hiệu chuẩn không thay centroid, không xác nhận chuyển động và chưa được áp dụng lên WISE 0855.
+
+Demo tách RMS/bias khỏi độ phủ và mức nới ellipse, chuyển được giữa nguồn giả và sao Gaia, có protocol/hash và giới hạn. **73/73 kiểm thử offline đạt**; MongoDB production được kiểm tra riêng bằng review QA của bài test.
+
+[Phương pháp, audit, kết quả và bước tiếp theo](docs/COVARIANCE_VALIDATION.md). Mốc tiếp theo là ablation nền/ePSF trên dữ liệu đã mở, chọn point model rồi hiệu chuẩn theo S/N/nền trước một tập ngoài mới.
+
+![Hiệu chuẩn covariance và ba trường kiểm định](docs/covariance-validation.jpg)
 
 ## Quality gate và nguồn chồng — 0.7.0
 
@@ -63,7 +81,8 @@ Barnard có một outlier Gaia **6,309″**. Chính mục tiêu Barnard lệch d
 
 | Thành phần | Phiên bản | Vai trò |
 |---|---|---|
-| Giao diện và quality gate | 0.7.0 | Chẩn đoán chất lượng, deblend thử nghiệm và đánh giá ba trường mới |
+| Giao diện và hiệu chuẩn covariance | 0.8.0 | Tách calibration/validation, nền/ePSF thử nghiệm; chưa qua gate |
+| Quality gate và deblend | 0.7.0 | Baseline cho thí nghiệm 0.8; chưa thay mặc định |
 | Benchmark ngoài trường trước đó | 0.6.0 | Baseline để phân tích lỗi và phát triển gate |
 | Thí nghiệm catalog IR/ePSF | 0.5.0 | 30 vùng khóa trước; chưa thay số đo mặc định |
 | Phép đo mặc định | 0.3.0 | Pixel gốc, căn chỉnh Gaia; chuyển động chưa xác nhận |

@@ -55,7 +55,6 @@ async function setupRelease() {
     $("patch-overlay").innerHTML=protocol.positions_px.map(([x,y],i)=>`<g><circle cx="${x+64.5}" cy="${192-y-64.5}" r="3.2" fill="none" stroke="#ffb36a" stroke-width=".65"/><text x="${x+68}" y="${192-y-65}" fill="#fff" stroke="#000" stroke-width=".6" paint-order="stroke" font-size="3.3">${i+1}</text></g>`).join("");
     const passed=releasePassed();
     $("release-verdict").textContent=passed.length?"Qua gate điểm ước lượng · cần kiểm chứng thêm":"Chưa giảm sai lệch ổn định";
-    $("next-summary").textContent=passed.length?"Mô hình có tiến bộ trên bộ chẩn đoán. Tiếp tục kiểm tra covariance, sai số ePSF và epoch độc lập trước khi thay phép đo mặc định.":"Giữ phép đo hiện tại làm mặc định. Tập mới đã được mở; lần cải tiến tiếp theo cần một tập kiểm chứng mới.";
     releaseTable();
   } catch {$("release-verdict").textContent="Chưa tải được kết quả";$("release-rows").innerHTML='<tr><td colspan="7">Tải lại trang để lấy kết quả kiểm chứng.</td></tr>';}
 }

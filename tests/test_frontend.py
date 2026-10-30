@@ -26,6 +26,9 @@ class FrontendContract(unittest.TestCase):
         for path in [ROOT/'web/app.js',ROOT/'web/mission.js']:
             targets=set(re.findall(r'\$\("([^"\n]+)"\)',path.read_text(encoding='utf-8')))
             self.assertFalse(targets-set(doc.ids)-{'gaia-nav'},f'{path.name}: missing {targets-set(doc.ids)}')
+        for name in ['quality.js','covariance.js']:
+            targets=set(re.findall(r'el\("([^"\n]+)"\)',(ROOT/'web'/name).read_text(encoding='utf-8')))
+            self.assertFalse(targets-set(doc.ids),f'{name}: missing {targets-set(doc.ids)}')
 
     def test_art_and_observation_sources_are_distinct(self):
         html=(ROOT/'web/index.html').read_text(encoding='utf-8')

@@ -14,6 +14,9 @@ Schema, index và rate limit được tạo khi API kết nối lần đầu. K�
 
 Đã xác minh production từ commit `244f5377bd56149e859c39aa2a09b96688919bf7`, deployment `dpl_6iExhUFB4TxF7vandvCxZzSnA1dt`, runtime Python 3.12 ở `sin1`, trạng thái READY. URL public: https://nosleepclub-nasa-spherex.vercel.app. HTTP: site/GET/POST/DELETE đều 200; Origin lạ 403; hash cũ 400; đọc lại đúng nội dung; phiên khác không thấy review; xóa và xác nhận rỗng. Kiểm tra nút lưu/xóa trên giao diện public cũng qua, badge “MongoDB”, không có lỗi JavaScript. Không để lại review QA. Script chạy lại: `python -m scripts.smoke_production` (cần requests/truststore, chỉ tạo/xóa review riêng của bài test).
 
-38 kiểm thử offline qua. Kiểm tra giao diện desktop và viewport 390 px: không tràn ngang trang; bảng rộng cuộn trong khung. Subtext được ẩn, nhãn/đơn vị/trạng thái chưa xác nhận được giữ lại. Giới hạn khoa học ở hộp bằng chứng và tài liệu accuracy.
+Ở checkpoint triển khai ban đầu, 38 kiểm thử offline qua. Xem README và báo cáo theo phiên bản để biết kiểm chứng mới nhất. Kiểm tra giao diện desktop và viewport 390 px: không tràn ngang trang; bảng rộng cuộn trong khung. Subtext được ẩn, nhãn/đơn vị/trạng thái chưa xác nhận được giữ lại. Giới hạn khoa học ở hộp bằng chứng và tài liệu accuracy.
 
 Biến môi trường mẫu ở `web/.env.example`, tuyệt đối không thay bằng URI thật trong Git. Backend dependency pin trong `web/requirements.txt`, độc lập `requirements.txt` cho phân tích offline. Build từ commit GitHub đã kiểm tra; sau deployment kiểm tra runtime/readiness và API, không chỉ build status.
+
+
+Bản 0.8 bổ sung các sản phẩm tĩnh `data/covariance/`, không đổi schema nhận xét hoặc secret. Smoke test đối chiếu hash design, calibrator, seal, overview và từng trường validation với repo, rồi thực hiện cùng chu trình MongoDB bằng review QA riêng. Bộ phân tích nền/ePSF/covariance vẫn chạy offline; Vercel không chạy fit khoa học khi người dùng mở trang.
