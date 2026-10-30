@@ -7,16 +7,16 @@
   "functions": {
     "api/reviews.py": {
       "maxDuration": 15,
-      "includeFiles": "data/manifest.json",
-      "excludeFiles": "data/**/comparison.fits"
+      "includeFiles": "api/_review_manifest.json",
+      "excludeFiles": "{data/**,assets/**,*.html,*.css,*.js,*.svg}"
     },
     "api/observations.py": {
       "maxDuration": 30,
-      "excludeFiles": "data/**"
+      "excludeFiles": "{data/**,assets/**,*.html,*.css,*.js,*.svg}"
     },
     "api/frame.py": {
       "maxDuration": 120,
-      "excludeFiles": "data/**"
+      "excludeFiles": "{data/**,assets/**,*.html,*.css,*.js,*.svg}"
     }
   },
   "headers": [

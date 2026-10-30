@@ -21,7 +21,7 @@ class ReadinessTest(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         files = ['web/vercel.json', 'web/requirements.txt', 'requirements.txt', 'requirements-ops.txt', 'web/api/reviews.py',
-                 'web/api/observations.py', 'web/api/frame.py', 'web/data/manifest.json', 'web/data/gaia/results.json',
+                 'web/api/observations.py', 'web/api/frame.py', 'web/api/_review_manifest.json', 'web/data/manifest.json', 'web/data/gaia/results.json',
                  'web/data/ablation/validation-summary.json', 'web/data/ablation/validation-protocol.json',
                  'docs/PRODUCTION_READINESS.md', 'docs/REVIEW_API_CONTRACT.md',
                  'docs/OBSERVATION_API_CONTRACT.md', 'docs/FRAME_API_CONTRACT.md']
@@ -81,6 +81,12 @@ class ReadinessTest(unittest.TestCase):
         (self.root / 'requirements-ops.txt').write_text('cryptography>=50\n', encoding='utf-8')
         result = readiness.collect(self.root)
         self.assertFalse(next(v['passed'] for v in result['repository_checks'] if v['name'] == 'pinned_dependencies'))
+
+    def test_stale_review_contract_fails_readiness(self):
+        contract = self.root / 'web/api/_review_manifest.json'
+        contract.write_bytes(contract.read_bytes() + b' ')
+        checks = {c['name']: c['passed'] for c in readiness.collect(self.root)['repository_checks']}
+        self.assertFalse(checks['review_contract'])
 
 
 if __name__ == '__main__':

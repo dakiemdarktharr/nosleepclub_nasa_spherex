@@ -48,7 +48,7 @@ class CommitOutcomeUnknown(Exception):
 
 @lru_cache(maxsize=1)
 def manifest():
-    return json.loads((Path(__file__).resolve().parents[1] / "data/manifest.json").read_text())
+    return json.loads((Path(__file__).resolve().parent / "_review_manifest.json").read_text(encoding="utf-8"))
 
 
 def validate_review(body):

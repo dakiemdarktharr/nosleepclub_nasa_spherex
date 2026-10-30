@@ -8,6 +8,13 @@ import re
 import subprocess
 import sys
 
+try:
+    from scripts.build_review_contract import render_contract
+except ModuleNotFoundError as exc:
+    if exc.name != 'scripts':
+        raise
+    from build_review_contract import render_contract
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -60,8 +67,13 @@ def collect(root=ROOT):
         return (funcs['api/reviews.py']['maxDuration'] >= 15 and
                 funcs['api/observations.py']['maxDuration'] >= 30 and
                 funcs['api/frame.py']['maxDuration'] >= 60 and
-                funcs['api/reviews.py']['includeFiles'] == 'data/manifest.json' and
+                funcs['api/reviews.py']['includeFiles'] == 'api/_review_manifest.json' and
+                all(funcs[name]['excludeFiles'] == '{data/**,assets/**,*.html,*.css,*.js,*.svg}'
+                    for name in ('api/reviews.py', 'api/observations.py', 'api/frame.py')) and
                 all((root / 'web' / name).is_file() for name in ('api/reviews.py', 'api/observations.py', 'api/frame.py')))
+    def review_contract():
+        return ((root / 'web/api/_review_manifest.json').read_bytes() ==
+                render_contract((root / 'web/data/manifest.json').read_bytes()))
     def dependencies():
         science = pinned_dependencies(root / 'requirements.txt')
         web = pinned_dependencies(root / 'web/requirements.txt')
@@ -103,7 +115,7 @@ def collect(root=ROOT):
         return len(rows) == 20 and set(states) == set(range(1, 21))
     def contract_docs():
         return all((root / 'docs' / name).is_file() for name in ('REVIEW_API_CONTRACT.md', 'OBSERVATION_API_CONTRACT.md', 'FRAME_API_CONTRACT.md'))
-    for name, fn in [('serverless_config', config), ('pinned_dependencies', dependencies),
+    for name, fn in [('serverless_config', config), ('review_contract', review_contract), ('pinned_dependencies', dependencies),
                      ('manifest_provenance', provenance), ('validation_protocol', protocol),
                      ('acceptance_ledger', ledger), ('api_contracts', contract_docs)]:
         check(name, fn)
