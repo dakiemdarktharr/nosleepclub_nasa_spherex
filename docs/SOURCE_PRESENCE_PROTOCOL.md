@@ -1,0 +1,29 @@
+# Conditional source-presence calibration and validation
+
+This source/design/input protocol is committed before any new random scene or score. It is an engineering experiment on **one already opened strict WISE 0855 geometry**, with two native frames per season. It does not open any prospective field or certify a real astronomical detection. It addresses the earlier failure in which numerical screening accepted a 16.8-arcsec wrong synthetic vector.
+
+## Decision rule fixed before simulation
+
+Both nearest and bilinear spatial ePSF banks use all 441 common-sky trial positions: a 21×21 grid, quarter-pixel steps, centered at (31.5,31.5), extending ±2.5 pixels. Pixels, original observed VARIANCE errors, infrared neighbor IDs and freely signed plane/neighbor nuisance models remain fixed. Each candidate template is whitened and projected off the full-rank nuisance span, then normalized. Its signed matched-template score is retained; it is **not** calibrated S/N or a probability. Rank-deficient nuisance models or insufficient projected information fail explicitly.
+
+For each variant and season, sum the squared positive parts of the two frame scores at each grid point, then take the maximum over the grid. Take the minimum of the two season maxima, and finally the maximum over the two variants. This entire search/variant/season rule is calibrated together. A positive source must exceed the learned threshold strictly. The grid is a source-presence search, not a precision position or motion estimator; within-season source stationarity is a conditional assumption.
+
+## Independent random stages and fixed counts
+
+The truth family is an independently pixel-integrated, axis-aligned Gaussian, differing from the empirical-ePSF fitter. Target sigma is (0.55,0.70) native pixels; neighbor sigma is (0.70,0.60), with positive neighbor flux 150/(1+index) microJy in the frozen retained order. Target position is (31.73,31.31) before and displaced by (0.55,0.08) common-sky pixels after. Planar background coefficients are (0.04,0.015,-0.01) MJy/sr; curved cases add (0.025,0.020,-0.015) on x²,xy,y² in the fixed normalized local coordinates.
+
+Each realization draws independent Gaussian background with original VARIANCE scales, and ideal source/neighbor Poisson OLS ramp noise using the bound real gain map and nominal header timing. **The scorer always uses original observed VARIANCE, never the generator's oracle source variance.** The original VARIANCE may already contain real-source noise; this is not a validated decomposition of telescope noise. Gain orientation remains conditional on the published R6 binding.
+
+Calibration contains **999 target-absent draws per background**, 1,998 total. The threshold is the maximum whole-decision statistic across both complete calibration cases. Any calibration failure prevents sealing, with the failed record retained. The maximum has an exchangeable predictive tail of at most 1/(999+1) per declared background model, when a fresh draw follows the same continuous distribution; this is not a confidence bound or a sky false-alarm guarantee.
+
+The exact learned threshold, geometry/operator hash and digest of all checksummed calibration records are committed to Git **before** validation is generated. Validation refuses an uncommitted/changed threshold or any changed calibration record. All sources, tests, rules, raw inputs, runtime and thread requests remain fixed. No inspection of validation can revise the decision rule.
+
+Validation contains **999 new null draws per background**, plus **999 positive draws for each of four background×flux cases** (300/600 microJy). Validation totals 5,994; both stages total **7,992** realizations. Every realization uses PCG64 with SeedSequence `[20261101, stage, scenario_index, draw, epoch_index, frame_index_within_epoch]`; stage is 0 for calibration, 1 for validation. Scenarios are planar-null, curved-null, planar-300, planar-600, curved-300, curved-600, in that order. These streams differ from all earlier studies. Sharing a generated realization between the two ePSF variants is deliberate pairing, not additional independent noise samples.
+
+## Conditional engineering gates and publication
+
+Both null validation cases must have a one-sided 97.5% exact binomial upper bound ≤1% for the false-accept rate. Counting score failures conservatively as false accepts prevents failure-driven apparent improvement. The two per-case bounds provide a simultaneous 95% statement by Bonferroni for these declared conditional cases. At 600 microJy, both background cases must have a one-sided 97.5% exact lower bound ≥80% power, with failures counted as misses. The 300-microJy cases are reported in full without this high-flux-domain gate. These gates are not real-sky scientific promotion gates. The fixed denominator, thresholds, failures, accepted counts and bounds remain visible whether they pass or fail.
+
+Atomic per-realization journals preserve original data vectors, seed/state/noise provenance, score/winning-grid summaries and hashes. Immutable terminal failures cannot be rerun selectively. A missing record leaves the study incomplete. Publication independently checks score arithmetic from saved data and geometry, as well as identity, checksums and threshold sealing. Full records remain downloadable/auditable; compact summaries are loaded in the web UI.
+
+The next required work remains real-star PSF correction and signal-preservation controls, common reference-frame covariance, independent calibration/validation fields, and a blind object-level search with false alarms per area/visit. A pass here would support only this simulated decision rule in the declared geometry/noise/PSF/background domain. It would not establish a WISE 0855 motion uncertainty, general source detection accuracy or production readiness.
