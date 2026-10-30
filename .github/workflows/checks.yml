@@ -110,3 +110,5 @@ jobs:
         run: node tests/review-store.test.cjs
       - name: Test explorer request and display races
         run: node tests/explorer.test.cjs
+      - name: Test linked evidence refusals and report loading
+        run: node tests/linked-evidence.test.cjs

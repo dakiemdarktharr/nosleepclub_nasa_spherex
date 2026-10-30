@@ -71,6 +71,23 @@ assert.equal(store.snapshotAllowed(3, 3, 1), false);
 assert.equal(store.snapshotAllowed(3, 4, 0), false);
 console.log("ReviewStore lifecycle cases passed");
 
+// A missing dependency must leave a visible retry, never an endless loading state.
+{
+  const nodes=new Map();let reloads=0;
+  const node=id=>{
+    if(!nodes.has(id))nodes.set(id,{hidden:true,textContent:"",attributes:{"aria-busy":"true"},handlers:{},
+      getContext(){return {};},removeAttribute(key){delete this.attributes[key];},addEventListener(event,fn){this.handlers[event]=fn;}});
+    return nodes.get(id);
+  };
+  assert.throws(()=>vm.runInNewContext(fs.readFileSync("web/app.js","utf8"),{
+    window:{},document:{getElementById:node},location:{reload(){reloads++;}}
+  }),/review_store_unavailable/);
+  assert.equal(node("load-retry").hidden,false);
+  assert.equal(node("workspace").attributes["aria-busy"],undefined);
+  assert.match(node("load-state").textContent,/Chưa tải được/);
+  node("load-retry").handlers.click();assert.equal(reloads,1);
+}
+
 // Run the actual app event handlers with an isolated DOM and controlled HTTP timing.
 async function appCases() {
   const elements = new Map();

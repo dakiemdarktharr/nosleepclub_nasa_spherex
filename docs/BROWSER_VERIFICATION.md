@@ -38,3 +38,28 @@ Local sau sửa mask API 1.1 (31/10/2026 giờ Việt Nam): truy vấn 350°/+35
 Sau merge PR #5, [receipt public fc17f96](evidence/0.10/production-fc17f96.json) đã xác minh byte các asset, API 1.1, policy và 1.335/34/0 pixel qua HTTP. Browser-control session trở nên không khả dụng khi kiểm lại giao diện public; không có ảnh chụp hoặc xác minh tương tác mới của production này. Ảnh production c65d79b phía trên vẫn chỉ chứng nhận đúng phiên bản được ghi. Công cụ fetch protected preview bị auto-review chặn vì tạo/tái sử dụng authenticated share link 23 giờ; không dùng link đó hoặc thay access protection để vượt qua.
 
 PR #6 lên production `906af66`. [37 HTTP responses](evidence/0.10/production-906af66.json) xác minh HTML mới và các JSON phổ qua hash commit. Local trả đúng byte của năm static assets; details `#spectral-reference` dùng điều hướng details sẵn có, không thêm JS. Nhãn hero mới chỉ nói phép đo SPHEREx của dự án là thử nghiệm. Phiên browser-control vẫn không khả dụng, nên chưa có screenshot/reflow/keyboard mới cho panel này; HTTP và CI không được thay thế bằng chứng đó.
+
+
+## Local linked-flux milestone — 2026-10-30 UTC
+
+CUA đã kiểm tra nội dung thật ở `http://127.0.0.1:8767/#linked-flux`, tab 8 của
+IAB đang chọn. [Receipt local](evidence/0.10/linked-local-checks.json) gắn hash
+các asset và hai ảnh chụp: [desktop](evidence/0.10/linked-local-desktop.jpg),
+[mobile](evidence/0.10/linked-local-mobile.jpg). Đây chưa là receipt production.
+
+- Đổi strict ↔ broad cập nhật đúng 7 hàng, biểu đồ, link SVG, trạng thái và số
+  spread 2,281″ ↔ 0,556″. Không giấu bảy nhánh strict bị chặn; mở diagnostic
+  bằng Enter cho đủ hai dòng exposure và các Δχ² có dấu.
+- Kiểm tra 1280×720, 768×1024 và 390×844. Không có document overflow ngang;
+  ở mobile chart cuộn trong vùng riêng (298/650 px), bảng cũng cuộn riêng.
+  Tab đưa focus tới vùng chart có outline; menu mobile mở/đóng được. Viewport
+  override đã hoàn nguyên sau kiểm tra. Chưa kiểm screen reader hoặc full WCAG.
+- Workspace tải xong với strict mặc định, measured/prior overlay đều tắt.
+  Advisory dẫn tới đối chứng mới; không thay số đo/analysis hash lịch sử.
+- Lần mở r8 lúc 19:19 UTC ghi `ReviewStore is not defined`; reload đã phục hồi
+  trước khi đổi code, nguyên nhân chưa xác định. r9 thêm trạng thái lỗi và
+  nút tải lại nếu thiếu module review; fixture JavaScript thực thi actual app
+  xác minh không đứng mãi ở aria-busy. Không quan sát lỗi console r9 trong
+  lượt kiểm tra này, không khẳng định đã xác định nguyên nhân mạng.
+- Ba suite JavaScript thực thi trên Node v24.18.0, 326 test Python local hoàn
+  tất (sáu ca Mongo fixture skip); CI replica set và production cần receipt riêng.
