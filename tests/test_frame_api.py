@@ -7,6 +7,7 @@ from pathlib import Path
 import unittest
 from unittest.mock import patch
 from urllib.parse import urlencode
+from urllib.error import HTTPError
 
 import numpy as np
 from astropy.io import fits
@@ -72,6 +73,24 @@ def request(path, method='GET'):
 
 
 class FrameTest(unittest.TestCase):
+    def test_upstream_http_failure_logs_only_code_and_status(self):
+        with patch.object(api, 'build_opener') as opener:
+            opener.return_value.open.side_effect = HTTPError(URL, 503, 'private upstream body', {}, BytesIO())
+            with self.assertRaises(api.FrameError) as caught:
+                api.fetch(URL)
+        self.assertEqual(caught.exception.upstream_http_status, 503)
+        path = '/api/frame?' + urlencode({'url': URL, 'ra': 350, 'dec': 35, 'fov_deg': .005})
+        with patch.object(api, 'fetch', side_effect=caught.exception), self.assertLogs(api.logger, level='INFO') as logs:
+            status, _, body = request(path)
+        self.assertEqual(status, 502)
+        self.assertEqual(json.loads(body), {'error': 'upstream_http_error'})
+        event = json.loads(logs.records[-1].getMessage())
+        self.assertEqual(event['error_code'], 'upstream_http_error')
+        self.assertEqual(event['upstream_http_status'], 503)
+        self.assertEqual(event['level'], 'error')
+        self.assertNotIn(URL, logs.records[-1].getMessage())
+        self.assertNotIn('private upstream body', logs.records[-1].getMessage())
+
     def test_input_allowlist_and_limits(self):
         self.assertEqual(parameters()['size_px'], 3)
         self.assertLessEqual(parameters(fov_deg=.12)['size_px'], 192)

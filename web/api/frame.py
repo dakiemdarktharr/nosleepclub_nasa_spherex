@@ -5,7 +5,6 @@ from http.client import HTTPException
 from http.server import BaseHTTPRequestHandler
 from io import BytesIO
 import json
-import logging
 import math
 import os
 import re
@@ -23,10 +22,12 @@ from PIL import Image
 
 try:
     from api._access_control import AccessDenied, guard
+    from api._telemetry import emit_request, request_logger
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control'):
+    if exc.name not in ('api', 'api._access_control', 'api._telemetry'):
         raise
     from web.api._access_control import AccessDenied, guard
+    from web.api._telemetry import emit_request, request_logger
 
 HOST = 'irsa.ipac.caltech.edu'
 SCALE_ARCSEC = 6.15
@@ -35,13 +36,14 @@ SOCKET_TIMEOUT = 20
 DEADLINE = 80
 SOURCE = 1 << 21
 FULLSAMPLE = 1 << 12
-logger = logging.getLogger('frame_api')
+logger = request_logger('frame_api')
 PATH = re.compile(r'^/ibe/data/spherex/(?P<release>qr[23])/level2/(?P<period>\d{4}W\d{2}_[0-9][A-Z])/(?P<version>l2b-v\d+-\d{4}-\d{3})/(?P<detector>[1-6])/level2_(?P=period)_(?P<exposure>\d{4}_[0-9])D(?P=detector)_spx_(?P=version)\.fits$')
 
 
 class FrameError(Exception):
-    def __init__(self, code, status=502):
+    def __init__(self, code, status=502, upstream_http_status=None):
         self.code, self.status = code, status
+        self.upstream_http_status = upstream_http_status
         super().__init__(code)
 
 
@@ -140,8 +142,10 @@ def fetch(url):
             return content
     except (TimeoutError, socket.timeout):
         raise FrameError('upstream_timeout', 504)
-    except HTTPError:
-        raise FrameError('upstream_http_error')
+    except HTTPError as exc:
+        upstream_status = exc.code
+        exc.close()
+        raise FrameError('upstream_http_error', upstream_http_status=upstream_status) from None
     except URLError as exc:
         raise FrameError('upstream_timeout', 504) if isinstance(exc.reason, (TimeoutError, socket.timeout)) else FrameError('upstream_unavailable')
     except (OSError, HTTPException):
@@ -223,7 +227,7 @@ class handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def respond(self, status, content, content_type, category, headers=None):
+    def respond(self, status, content, content_type, category, headers=None, error_code=None, upstream_http_status=None):
         self.send_response(status)
         self.send_header('Content-Type', content_type)
         self.send_header('Content-Length', str(len(content)))
@@ -241,8 +245,9 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         if self.command != 'HEAD':
             self.wfile.write(content)
-        logger.warning(json.dumps({'event': 'frame_request', 'request_id': self.request_id, 'status': status,
-                                   'category': category, 'latency_ms': round((time.monotonic() - self.started) * 1000, 2)}))
+        emit_request(logger, {'event': 'frame_request', 'request_id': self.request_id, 'status': status,
+                             'category': category, 'latency_ms': round((time.monotonic() - self.started) * 1000, 2),
+                             'error_code': error_code, 'upstream_http_status': upstream_http_status})
 
     def dispatch(self, method):
         self.request_id, self.started = secrets.token_hex(16), time.monotonic()
@@ -272,7 +277,8 @@ class handler(BaseHTTPRequestHandler):
         except ValueError:
             return self.respond(400, b'{"error":"invalid_parameters"}', 'application/json', 'validation')
         except FrameError as exc:
-            return self.respond(exc.status, json.dumps({'error': exc.code}).encode(), 'application/json', 'upstream_or_fits')
+            return self.respond(exc.status, json.dumps({'error': exc.code}).encode(), 'application/json', 'upstream_or_fits',
+                                error_code=exc.code, upstream_http_status=exc.upstream_http_status)
         except Exception:
             return self.respond(500, b'{"error":"internal_error"}', 'application/json', 'internal')
 

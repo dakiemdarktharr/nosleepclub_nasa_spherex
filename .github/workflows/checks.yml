@@ -24,7 +24,7 @@ jobs:
           python-version: '3.11.9'
       - id: install
         name: Install pinned science and web dependencies
-        run: python -m pip install -r requirements.txt -r web/requirements.txt
+        run: python -m pip install -r requirements.txt -r web/requirements.txt -r requirements-ops.txt
       - name: Compile Python source
         run: python -m compileall -q scripts tests web/api
       - name: Check source whitespace

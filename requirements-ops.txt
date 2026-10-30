@@ -1,0 +1,4 @@
+# Offline operational verification only; never added to the web function bundle.
+cryptography==50.0.2
+cffi==2.0.0
+pycparser==2.23

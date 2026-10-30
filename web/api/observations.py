@@ -3,7 +3,6 @@ from datetime import datetime, timezone
 from hashlib import sha256
 from http.server import BaseHTTPRequestHandler
 import json
-import logging
 import math
 import os
 import re
@@ -17,17 +16,19 @@ import xml.etree.ElementTree as ET
 
 try:
     from api._access_control import AccessDenied, guard
+    from api._telemetry import emit_request, request_logger
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control'):
+    if exc.name not in ('api', 'api._access_control', 'api._telemetry'):
         raise
     from web.api._access_control import AccessDenied, guard
+    from web.api._telemetry import emit_request, request_logger
 
 ENDPOINT = 'https://irsa.ipac.caltech.edu/SIA'
 MAX_BYTES = 2_000_000
 MAX_ROWS = 500
 TIMEOUT = 6
 DEADLINE = 8
-logger = logging.getLogger('observations_api')
+logger = request_logger('observations_api')
 
 
 class UpstreamError(Exception):
@@ -241,9 +242,9 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         if self.command != 'HEAD':
             self.wfile.write(raw)
-        logger.warning(json.dumps({'event': 'observations_request', 'request_id': self.request_id,
-                                   'status': status, 'category': category,
-                                   'latency_ms': round((time.monotonic() - self.started) * 1000, 2)}))
+        emit_request(logger, {'event': 'observations_request', 'request_id': self.request_id,
+                              'status': status, 'category': category,
+                              'latency_ms': round((time.monotonic() - self.started) * 1000, 2)})
 
     def dispatch(self, method):
         self.request_id, self.started = secrets.token_hex(16), time.monotonic()

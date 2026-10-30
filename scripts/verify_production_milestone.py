@@ -53,6 +53,11 @@ def verify(write_smoke=False, report=None):
             report['checks'].append({'path':path,'method':method,'attempt':attempt+1,'status':response.status_code,
                 'elapsed_seconds':round(time.monotonic()-start,3),'request_id':response.headers.get('X-Request-Id'),
                 'cache':response.headers.get('X-Vercel-Cache')})
+            if response.status_code >= 400 and response.headers.get('Content-Type','').startswith('application/json'):
+                try: error_code=response.json().get('error')
+                except (ValueError,AttributeError): error_code=None
+                if isinstance(error_code,str) and re.fullmatch(r'[a-z0-9_]{1,80}',error_code):
+                    report['checks'][-1]['error_code']=error_code
             if response.status_code not in (502,504) or attempt==attempts-1:return response
 
     for asset in ASSETS:

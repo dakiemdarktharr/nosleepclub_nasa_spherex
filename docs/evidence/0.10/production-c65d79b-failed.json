@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-10-30T16:45:11.202605+00:00",
+  "base_url": "https://nosleepclub-nasa-spherex.vercel.app",
+  "local_commit": "c65d79baf90d0b159dc139c159dcf4d3f3cc23bc",
+  "verifier_sha256": "5d351a06eee9634ef350d4178212e528f7df8310eff3f0d17e599f9ebb778119",
+  "checks": [
+    {
+      "path": "/",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.89,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "357aeb21cc67947f53d09585c6deecbc035b90a2e8e7aac1d1275b4a223c0945",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/explorer.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.406,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "c47b640d756f32b3344b5334fbcedcf1b061bb5f46c0d12c5c3e58d3e1782eec",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/app.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.547,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2b70a3f09cf1cb3331ba99e3c37d3ff774a6ef9f6ab4ff8e559a2c3b7c6153dd",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/review-store.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.516,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "17b2827973832d927dbc26f888a4a426352a35de18e25b34ec2b26577678bbc2",
+      "worktree_bytes_match_commit": false
+    },
+    {
+      "path": "/goal-dashboard.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.281,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2f70e0a1f16f40767491d944567bc584e86552cb1427b2cb126f49acf004173a",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/mission.css",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.563,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "c0a5b4ffbe97ac4f822bb88dfd6f91c79d666b3cf8e67563b46264d6fe3f7cf9",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/manifest.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.344,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "3d02506621a3a2ecaa3e2948e2edd46197df95aebd7be64d36df5afab9016c8b",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/continuous-epsf/design.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ea41e9e83133329c04f9d648d193941053a84ca4805cdfd35c746634b6dfec5a",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/continuous-epsf/development-summary.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.515,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ccaa22100157e13bdb110edb28a88aa09e7e6724ab24bdeddbe596b5fd0f5f0b",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/explorer-check/coverage.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.578,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ca6f3cf68eaa238650bc4c3665885d1862aaa2e4ae3bc4583e75cd5c35fc359b",
+      "worktree_bytes_match_commit": false
+    },
+    {
+      "path": "/data/sandwich/design.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.313,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "fe4ea22755062716f7aeea6d6240e0dffdb35fc7c70159e86424f8667081a386",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/sandwich/overview.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.578,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "67db74880fad28a9fdb0ed9bc047983c5b6a1a7e0fea10ce2a65e8f2b6b52408",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/sandwich/development-summary.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 2.156,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "0307a33cc53bc33940499c406404e4c41bfd4e9d4ca3face21084f688d2cee36",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/time-model/development-audit.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.391,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "717ca75c7f567804b8c08882a3422d7535df1e9cf3944f96700f9361a94c57e7",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/external/spiff-reference.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.547,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "610d25410a8cc8cc66e3e86676dcca6e8ffcaf56a153ca9deeb468880a60af60",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/independent-fields/selection.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.313,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2ad20c2dfaf47ca5f31d8f7a1e93df745ba39e1d77d82034bea1fdd1ae9e42b7",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 3.906,
+      "request_id": "ac1e41af4dd3d418e4957a992b3bb04a",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 5.016,
+      "request_id": "061a9e9192b8824006d888e29dce8f5c",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 400,
+      "elapsed_seconds": 0.109,
+      "request_id": "6a868df2f84ad96a187dd79db2d98adf",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/frame",
+      "method": "GET",
+      "attempt": 1,
+      "status": 502,
+      "elapsed_seconds": 1.031,
+      "request_id": "c566ebd74d36abb42f9dbefa1c69c6e9",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/frame",
+      "method": "GET",
+      "attempt": 2,
+      "status": 502,
+      "elapsed_seconds": 0.672,
+      "request_id": "b9fa42cc88dc5237ea657d11f05da6d7",
+      "cache": "MISS"
+    }
+  ],
+  "retry_policy": "One retry only for GET upstream 502/504; every response is retained.",
+  "qualification": "Bounded software/data-access smoke, not scientific, recovery or load acceptance.",
+  "worktree_dirty": true,
+  "deployed_api_commit": "c65d79baf90d0b159dc139c159dcf4d3f3cc23bc",
+  "observations": {
+    "returned_count": 2,
+    "truncated": true,
+    "response_sha256": "96519ebf519af7776c028754314b650f5dca1b70f4d14c36b37f413b3713ef24",
+    "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=CIRCLE+350+35+0.03&MAXREC=5&RESPONSEFORMAT=VOTABLE&BAND=4.42e-06+5e-06"
+  },
+  "passed": false,
+  "failure_type": "RuntimeError",
+  "failure_label": "real frame unavailable",
+  "completed_at_utc": "2026-10-30T16:45:32.013737+00:00"
+}

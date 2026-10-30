@@ -65,8 +65,10 @@ def collect(root=ROOT):
     def dependencies():
         science = pinned_dependencies(root / 'requirements.txt')
         web = pinned_dependencies(root / 'web/requirements.txt')
+        ops = pinned_dependencies(root / 'requirements-ops.txt')
         required = {'pymongo', 'dnspython', 'numpy', 'astropy', 'pillow'}
-        return required <= web.keys() and all(science.get(k, v) == v for k, v in web.items())
+        return (required <= web.keys() and all(science.get(k, v) == v for k, v in web.items())
+                and {'cryptography', 'cffi', 'pycparser'} <= ops.keys() and not (ops.keys() & web.keys()))
     def provenance():
         manifest = read_json('web/data/manifest.json')
         result = read_json('web/data/gaia/results.json')

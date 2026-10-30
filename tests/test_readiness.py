@@ -20,7 +20,7 @@ class ReadinessTest(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
-        files = ['web/vercel.json', 'web/requirements.txt', 'requirements.txt', 'web/api/reviews.py',
+        files = ['web/vercel.json', 'web/requirements.txt', 'requirements.txt', 'requirements-ops.txt', 'web/api/reviews.py',
                  'web/api/observations.py', 'web/api/frame.py', 'web/data/manifest.json', 'web/data/gaia/results.json',
                  'web/data/ablation/validation-summary.json', 'web/data/ablation/validation-protocol.json',
                  'docs/PRODUCTION_READINESS.md', 'docs/REVIEW_API_CONTRACT.md',
@@ -76,6 +76,11 @@ class ReadinessTest(unittest.TestCase):
             self.assertEqual(readiness.main([]), 0)
             self.assertEqual(readiness.main(['--require-science']), 1)
         self.assertIn('"scientific_ready": false', out.getvalue())
+
+    def test_ops_dependencies_are_pinned_and_separate_from_web(self):
+        (self.root / 'requirements-ops.txt').write_text('cryptography>=50\n', encoding='utf-8')
+        result = readiness.collect(self.root)
+        self.assertFalse(next(v['passed'] for v in result['repository_checks'] if v['name'] == 'pinned_dependencies'))
 
 
 if __name__ == '__main__':
