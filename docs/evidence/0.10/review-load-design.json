@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "target": "https://nosleepclub-nasa-spherex.vercel.app",
+  "expected_commit": "80324933bfab21a73a0a2e3f05c447b99f2a81d2",
+  "sources_sha256": {
+    "scripts/verify_review_load.py": "ba8bb55a9dd4910bc2352fb4be433f43b6845743ea713f4b05a3461b1c181450",
+    "tests/test_review_load.py": "4c99cd3c73d66a10e19302347997aed10c9b579b9ad4404f468d7a0f93739f19",
+    "docs/REVIEW_LOAD_PROTOCOL.md": "858f2398773c8346602e96fa4ab35fe19b540b0b52609fe2af90eee787ecb37f"
+  },
+  "rules": {
+    "owners": 12,
+    "groups": 4,
+    "group_size": 3,
+    "waves": 5,
+    "wave_spacing_seconds": 6,
+    "maximum_inflight": 3,
+    "maximum_posts": 12,
+    "request_cap": 84,
+    "timeout_connect_seconds": 5,
+    "timeout_read_seconds": 20,
+    "p95_get_seconds": 3,
+    "p95_write_seconds": 5
+  },
+  "qualification": "Modest baseline; no throughput, availability, failover or recovery claim."
+}
