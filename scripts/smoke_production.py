@@ -35,6 +35,11 @@ def main():
         assert deployed.content.startswith(b'wOF2')
         assert sha256(deployed.content).hexdigest()==record['sha256']
     results['vietnamese_fonts_match']=True
+    benchmark=Path(__file__).resolve().parents[1]/'web/data/benchmark'
+    for name in ['protocol','summary','barnard','rw-aur','r-dra']:
+        deployed=session.get(URL+'/data/benchmark/'+name+'.json',timeout=30);deployed.raise_for_status()
+        assert sha256(deployed.content).hexdigest()==sha256((benchmark/(name+'.json')).read_bytes()).hexdigest()
+    results['external_benchmark_matches']=True
     response=session.get(URL+'/api/reviews',timeout=30);results['storage_get']=response.status_code
     assert response.status_code==200, response.text
     assert response.json()['storage']=='mongodb'

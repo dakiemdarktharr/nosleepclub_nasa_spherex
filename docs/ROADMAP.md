@@ -11,11 +11,13 @@
 - [x] Truyền covariance nội suy cho S/N; đối chứng sao giữ lại, bootstrap và injection nền thật.
 - [x] Mở rộng trường sao tham chiếu, đối chiếu Gaia và kiểm tra đổi tập sao căn chỉnh.
 - [x] Bỏ lần lượt 14 sao, thử affine và 32 injection mỗi cấu hình; giữ cả giới hạn nền ảnh.
-- [ ] Fit chung mục tiêu và nguồn nền, kiểm tra bias/coverage trên injection giữ lại theo vùng trời.
+- [x] Thử fit nhiều nguồn IR/ePSF trên 30 vùng khóa trước; chưa đạt gate thay mặc định.
+- [x] Tải 129 cutout ở ba trường mới và kiểm tra Gaia/nguồn giả theo protocol khóa trước; giữ cả trường không đủ sao căn chỉnh.
+- [ ] Giảm outlier/bias nguồn mờ và kiểm chứng covariance trên các trường chưa mở.
 - [ ] Kiểm tra đáp ứng phổ đầy đủ, injection nhiều vị trí và thêm epoch thứ ba.
 - [ ] Xác minh chuyển động của WISE 0855 bằng dữ liệu này.
 
-Xem kết quả và điều kiện hoàn thành bước tiếp theo tại [WISE0855_GAIA.md](WISE0855_GAIA.md), cùng [research và tài liệu](GAIA_RESEARCH.md).
+Xem [benchmark ngoài trường](EXTERNAL_BENCHMARK.md), [kết quả Gaia](WISE0855_GAIA.md), cùng [research và tài liệu](GAIA_RESEARCH.md).
 
 ## Chuẩn bị
 

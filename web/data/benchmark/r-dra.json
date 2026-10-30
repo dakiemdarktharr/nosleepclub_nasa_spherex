@@ -1,0 +1,5613 @@
+{
+  "field": {
+    "id": "r-dra",
+    "name": "R Dra",
+    "ra": 248.16761083294998,
+    "dec": 66.75497941722,
+    "coordinate_source": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=%40376084&Name=V%2A+R+Dra&submit=submit",
+    "coordinate_epoch": "J2000; field center only, not astrometric truth",
+    "collections": [
+      {
+        "collection": "spherex_qr2",
+        "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+248.16761083294998+66.75497941722+0.05",
+        "rows": 570,
+        "d6": [
+          {
+            "obs_id": "2025W20_2D_0243_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_1D6_spx_l2b-v20-2025-247.fits",
+            "mjd": 60811.955829
+          },
+          {
+            "obs_id": "2025W20_2D_0243_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_2D6_spx_l2b-v20-2025-247.fits",
+            "mjd": 60811.957321
+          },
+          {
+            "obs_id": "2025W20_2D_0243_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_3D6_spx_l2b-v20-2025-247.fits",
+            "mjd": 60811.958814
+          },
+          {
+            "obs_id": "2025W20_2D_0243_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_4D6_spx_l2b-v20-2025-247.fits",
+            "mjd": 60811.960306
+          },
+          {
+            "obs_id": "2025W21_1B_0329_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W21_1B/l2b-v20-2025-248/6/level2_2025W21_1B_0329_1D6_spx_l2b-v20-2025-248.fits",
+            "mjd": 60815.69268
+          },
+          {
+            "obs_id": "2025W21_1B_0329_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W21_1B/l2b-v20-2025-248/6/level2_2025W21_1B_0329_2D6_spx_l2b-v20-2025-248.fits",
+            "mjd": 60815.694173
+          },
+          {
+            "obs_id": "2025W23_1C_0021_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0021_1D6_spx_l2b-v20-2025-251.fits",
+            "mjd": 60828.12619
+          },
+          {
+            "obs_id": "2025W23_1C_0021_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0021_2D6_spx_l2b-v20-2025-251.fits",
+            "mjd": 60828.1277
+          },
+          {
+            "obs_id": "2025W23_1C_0021_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0021_3D6_spx_l2b-v20-2025-251.fits",
+            "mjd": 60828.129192
+          },
+          {
+            "obs_id": "2025W23_1C_0021_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0021_4D6_spx_l2b-v20-2025-251.fits",
+            "mjd": 60828.130684
+          },
+          {
+            "obs_id": "2025W23_1C_0607_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0607_3D6_spx_l2b-v20-2025-251.fits",
+            "mjd": 60831.186215
+          },
+          {
+            "obs_id": "2025W23_2B_0129_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0129_2D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60832.136834
+          },
+          {
+            "obs_id": "2025W23_2B_0130_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0130_1D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60832.138575
+          },
+          {
+            "obs_id": "2025W23_2B_0382_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0382_1D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60833.293508
+          },
+          {
+            "obs_id": "2025W23_2B_0398_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0398_1D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60833.365864
+          },
+          {
+            "obs_id": "2025W23_2B_0603_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0603_1D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60834.309768
+          },
+          {
+            "obs_id": "2025W23_2B_0603_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0603_2D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60834.31126
+          },
+          {
+            "obs_id": "2025W23_2B_0603_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0603_3D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60834.312752
+          },
+          {
+            "obs_id": "2025W23_2B_0632_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0632_1D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60834.448654
+          },
+          {
+            "obs_id": "2025W24_1A_0457_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_1A/l2b-v20-2025-252/6/level2_2025W24_1A_0457_1D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60837.301931
+          },
+          {
+            "obs_id": "2025W24_1A_0631_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_1A/l2b-v20-2025-252/6/level2_2025W24_1A_0631_1D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60838.25287
+          },
+          {
+            "obs_id": "2025W24_1A_0631_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_1A/l2b-v20-2025-252/6/level2_2025W24_1A_0631_2D6_spx_l2b-v20-2025-252.fits",
+            "mjd": 60838.254362
+          },
+          {
+            "obs_id": "2025W24_2D_0033_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0033_1D6_spx_l2b-v20-2025-253.fits",
+            "mjd": 60838.660237
+          },
+          {
+            "obs_id": "2025W24_2D_0033_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0033_2D6_spx_l2b-v20-2025-253.fits",
+            "mjd": 60838.66173
+          },
+          {
+            "obs_id": "2025W24_2D_0033_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0033_3D6_spx_l2b-v20-2025-253.fits",
+            "mjd": 60838.663222
+          },
+          {
+            "obs_id": "2025W24_2D_0033_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0033_4D6_spx_l2b-v20-2025-253.fits",
+            "mjd": 60838.664714
+          },
+          {
+            "obs_id": "2025W24_2D_0074_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0074_1D6_spx_l2b-v20-2025-253.fits",
+            "mjd": 60838.864463
+          },
+          {
+            "obs_id": "2025W52_2A_0161_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0161_2D6_spx_l2b-v22-2026-006.fits",
+            "mjd": 61035.218053
+          },
+          {
+            "obs_id": "2025W52_2A_0161_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0161_3D6_spx_l2b-v22-2026-006.fits",
+            "mjd": 61035.219545
+          },
+          {
+            "obs_id": "2025W52_2A_0161_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0161_4D6_spx_l2b-v22-2026-006.fits",
+            "mjd": 61035.221038
+          },
+          {
+            "obs_id": "2025W52_2A_0227_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_1D6_spx_l2b-v22-2026-006.fits",
+            "mjd": 61035.555995
+          },
+          {
+            "obs_id": "2025W52_2A_0227_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_2D6_spx_l2b-v22-2026-006.fits",
+            "mjd": 61035.557488
+          },
+          {
+            "obs_id": "2025W52_2A_0227_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_3D6_spx_l2b-v22-2026-006.fits",
+            "mjd": 61035.55898
+          },
+          {
+            "obs_id": "2025W52_2A_0227_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_4D6_spx_l2b-v22-2026-006.fits",
+            "mjd": 61035.56049
+          },
+          {
+            "obs_id": "2026W01_1A_0257_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0257_1D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61039.152063
+          },
+          {
+            "obs_id": "2026W01_1A_0257_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0257_2D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61039.153555
+          },
+          {
+            "obs_id": "2026W01_1A_0257_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0257_3D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61039.155048
+          },
+          {
+            "obs_id": "2026W01_1A_0257_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0257_4D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61039.15654
+          },
+          {
+            "obs_id": "2026W01_1A_0404_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0404_1D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61039.898937
+          },
+          {
+            "obs_id": "2026W01_1A_0534_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0534_3D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61040.581643
+          },
+          {
+            "obs_id": "2026W01_1A_0534_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0534_4D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61040.583135
+          },
+          {
+            "obs_id": "2026W01_1A_0656_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0656_1D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61041.189044
+          },
+          {
+            "obs_id": "2026W01_1A_0656_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0656_2D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61041.190536
+          },
+          {
+            "obs_id": "2026W01_1A_0656_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0656_3D6_spx_l2b-v22-2026-007.fits",
+            "mjd": 61041.192029
+          },
+          {
+            "obs_id": "2026W01_2A_0426_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_2A/l2b-v23-2026-008/6/level2_2026W01_2A_0426_1D6_spx_l2b-v23-2026-008.fits",
+            "mjd": 61043.567307
+          },
+          {
+            "obs_id": "2026W01_2A_0426_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_2A/l2b-v23-2026-008/6/level2_2026W01_2A_0426_2D6_spx_l2b-v23-2026-008.fits",
+            "mjd": 61043.5688
+          },
+          {
+            "obs_id": "2026W01_2A_0426_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_2A/l2b-v23-2026-008/6/level2_2026W01_2A_0426_3D6_spx_l2b-v23-2026-008.fits",
+            "mjd": 61043.570292
+          },
+          {
+            "obs_id": "2026W03_1A_0304_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W03_1A/l2b-v23-2026-016/6/level2_2026W03_1A_0304_1D6_spx_l2b-v23-2026-016.fits",
+            "mjd": 61053.410149
+          },
+          {
+            "obs_id": "2026W03_1A_0304_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W03_1A/l2b-v23-2026-016/6/level2_2026W03_1A_0304_2D6_spx_l2b-v23-2026-016.fits",
+            "mjd": 61053.411641
+          },
+          {
+            "obs_id": "2026W03_1A_0304_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W03_1A/l2b-v23-2026-016/6/level2_2026W03_1A_0304_3D6_spx_l2b-v23-2026-016.fits",
+            "mjd": 61053.413133
+          },
+          {
+            "obs_id": "2026W03_1A_0304_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W03_1A/l2b-v23-2026-016/6/level2_2026W03_1A_0304_4D6_spx_l2b-v23-2026-016.fits",
+            "mjd": 61053.414626
+          },
+          {
+            "obs_id": "2026W17_1B_0434_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0434_1D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.331052
+          },
+          {
+            "obs_id": "2026W17_1B_0434_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0434_2D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.332544
+          },
+          {
+            "obs_id": "2026W17_1B_0434_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0434_3D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.334036
+          },
+          {
+            "obs_id": "2026W17_1B_0517_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0517_1D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.808786
+          },
+          {
+            "obs_id": "2026W17_1B_0517_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0517_2D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.810279
+          },
+          {
+            "obs_id": "2026W17_1B_0517_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0517_3D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.811771
+          },
+          {
+            "obs_id": "2026W17_1B_0517_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0517_4D6_spx_l2b-v24-2026-115.fits",
+            "mjd": 61152.813281
+          },
+          {
+            "obs_id": "2026W17_2A_0255_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0255_1D6_spx_l2b-v24-2026-118.fits",
+            "mjd": 61154.638397
+          },
+          {
+            "obs_id": "2026W17_2A_0255_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0255_2D6_spx_l2b-v24-2026-118.fits",
+            "mjd": 61154.639889
+          },
+          {
+            "obs_id": "2026W17_2A_0255_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0255_3D6_spx_l2b-v24-2026-118.fits",
+            "mjd": 61154.641382
+          },
+          {
+            "obs_id": "2026W19_1A_0842_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0842_1D6_spx_l2b-v24-2026-131.fits",
+            "mjd": 61166.253201
+          },
+          {
+            "obs_id": "2026W19_1A_0842_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0842_2D6_spx_l2b-v24-2026-131.fits",
+            "mjd": 61166.254694
+          },
+          {
+            "obs_id": "2026W19_2A_0976_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_0976_1D6_spx_l2b-v24-2026-131.fits",
+            "mjd": 61169.988973
+          },
+          {
+            "obs_id": "2026W19_2A_1286_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_1286_1D6_spx_l2b-v24-2026-131.fits",
+            "mjd": 61170.800582
+          },
+          {
+            "obs_id": "2026W19_2A_1286_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_1286_2D6_spx_l2b-v24-2026-131.fits",
+            "mjd": 61170.802074
+          },
+          {
+            "obs_id": "2026W19_2A_1339_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_1339_1D6_spx_l2b-v24-2026-131.fits",
+            "mjd": 61170.937354
+          },
+          {
+            "obs_id": "2026W19_2A_1339_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_1339_2D6_spx_l2b-v24-2026-131.fits",
+            "mjd": 61170.938846
+          },
+          {
+            "obs_id": "2026W20_1A_0101_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0101_1D6_spx_l2b-v24-2026-135.fits",
+            "mjd": 61171.275048
+          },
+          {
+            "obs_id": "2026W20_1A_0101_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0101_2D6_spx_l2b-v24-2026-135.fits",
+            "mjd": 61171.27654
+          },
+          {
+            "obs_id": "2026W20_1A_0101_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0101_3D6_spx_l2b-v24-2026-135.fits",
+            "mjd": 61171.278032
+          },
+          {
+            "obs_id": "2026W20_1A_0795_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0795_1D6_spx_l2b-v24-2026-135.fits",
+            "mjd": 61173.244185
+          },
+          {
+            "obs_id": "2026W20_1A_0795_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0795_2D6_spx_l2b-v24-2026-135.fits",
+            "mjd": 61173.245677
+          },
+          {
+            "obs_id": "2026W20_1A_0795_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0795_3D6_spx_l2b-v24-2026-135.fits",
+            "mjd": 61173.247187
+          },
+          {
+            "obs_id": "2026W20_2A_0294_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_2A/l2b-v25-2026-140/6/level2_2026W20_2A_0294_2D6_spx_l2b-v25-2026-140.fits",
+            "mjd": 61176.363744
+          },
+          {
+            "obs_id": "2026W20_2A_0294_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_2A/l2b-v25-2026-140/6/level2_2026W20_2A_0294_3D6_spx_l2b-v25-2026-140.fits",
+            "mjd": 61176.365236
+          },
+          {
+            "obs_id": "2026W20_2A_0294_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_2A/l2b-v25-2026-140/6/level2_2026W20_2A_0294_4D6_spx_l2b-v25-2026-140.fits",
+            "mjd": 61176.366728
+          },
+          {
+            "obs_id": "2026W21_2A_0035_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0035_1D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61181.725825
+          },
+          {
+            "obs_id": "2026W21_2A_0104_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0104_1D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61182.132553
+          },
+          {
+            "obs_id": "2026W21_2A_0104_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0104_2D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61182.134045
+          },
+          {
+            "obs_id": "2026W21_2A_0104_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0104_3D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61182.135538
+          },
+          {
+            "obs_id": "2026W21_2A_0104_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0104_4D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61182.13703
+          },
+          {
+            "obs_id": "2026W21_2A_0325_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0325_1D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61183.490505
+          },
+          {
+            "obs_id": "2026W21_2A_0325_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0325_2D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61183.491997
+          },
+          {
+            "obs_id": "2026W21_2A_0325_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0325_3D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61183.49349
+          },
+          {
+            "obs_id": "2026W21_2A_0325_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0325_4D6_spx_l2b-v25-2026-147.fits",
+            "mjd": 61183.494982
+          },
+          {
+            "obs_id": "2026W23_2A_0642_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W23_2A/l2b-v25-2026-160/6/level2_2026W23_2A_0642_4D6_spx_l2b-v25-2026-160.fits",
+            "mjd": 61198.97313
+          },
+          {
+            "obs_id": "2026W24_1A_0125_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_1A/l2b-v25-2026-163/6/level2_2026W24_1A_0125_1D6_spx_l2b-v25-2026-163.fits",
+            "mjd": 61199.579714
+          },
+          {
+            "obs_id": "2026W24_1A_0125_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_1A/l2b-v25-2026-163/6/level2_2026W24_1A_0125_2D6_spx_l2b-v25-2026-163.fits",
+            "mjd": 61199.581206
+          },
+          {
+            "obs_id": "2026W24_1A_0125_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_1A/l2b-v25-2026-163/6/level2_2026W24_1A_0125_3D6_spx_l2b-v25-2026-163.fits",
+            "mjd": 61199.582698
+          },
+          {
+            "obs_id": "2026W24_1A_0125_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_1A/l2b-v25-2026-163/6/level2_2026W24_1A_0125_4D6_spx_l2b-v25-2026-163.fits",
+            "mjd": 61199.584191
+          },
+          {
+            "obs_id": "2026W24_2B_0242_1",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_1D6_spx_l2b-v25-2026-166.fits",
+            "mjd": 61203.856428
+          },
+          {
+            "obs_id": "2026W24_2B_0242_2",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_2D6_spx_l2b-v25-2026-166.fits",
+            "mjd": 61203.85792
+          },
+          {
+            "obs_id": "2026W24_2B_0242_3",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_3D6_spx_l2b-v25-2026-166.fits",
+            "mjd": 61203.859412
+          },
+          {
+            "obs_id": "2026W24_2B_0242_4",
+            "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_4D6_spx_l2b-v25-2026-166.fits",
+            "mjd": 61203.860905
+          }
+        ],
+        "sha256": "aaed55b125e1389b14d491522de69b1f23397b2dc25bdeb1224e21fb88c18e81"
+      },
+      {
+        "collection": "spherex_qr3",
+        "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=circle+248.16761083294998+66.75497941722+0.05",
+        "rows": 0,
+        "d6": [],
+        "sha256": "d2cce5b4542afdde6fa4e4d770e6352b3b9e65476a6f8c2ba7387beb88301414"
+      }
+    ]
+  },
+  "protocol_sha256": "58d1860a985ef0475309d710621039d75078ce95cea1c2b4a0665363411250f3",
+  "training": [
+    {
+      "catalog": {
+        "source_id": "1648324958337066240",
+        "ref_epoch": 2016.0,
+        "ra": 247.77575813853,
+        "dec": 66.71511796081,
+        "parallax": 6.4501,
+        "pmra": 13.768,
+        "pmdec": 8.265,
+        "ra_error": 0.019700000062584877,
+        "dec_error": 0.021700000390410423,
+        "parallax_error": 0.020600000396370888,
+        "pmra_error": 0.027000000700354576,
+        "pmdec_error": 0.029999999329447746,
+        "ra_dec_corr": -0.04439999908208847,
+        "ra_parallax_corr": 0.019099999219179153,
+        "ra_pmra_corr": 0.05310000106692314,
+        "ra_pmdec_corr": 0.04989999905228615,
+        "dec_parallax_corr": 0.11869999766349792,
+        "dec_pmra_corr": 0.048700001090765,
+        "dec_pmdec_corr": -0.34119999408721924,
+        "parallax_pmra_corr": -0.12849999964237213,
+        "parallax_pmdec_corr": -0.17560000717639923,
+        "pmra_pmdec_corr": -0.05209999904036522,
+        "phot_g_mean_mag": 15.212849617004395,
+        "bp_rp": 2.2398180961608887,
+        "ruwe": 1.0019999742507935,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 26,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        122.15235925805382,
+        8.46393329188265
+      ],
+      "brightness": 0.8289278860032577,
+      "match_arcsec": 0.4603565072782713,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            122.15189583829184,
+            8.464798169583315
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.0671089052638365,
+            -0.10160996644985332
+          ],
+          "covariance_px2": [
+            [
+              0.004729165993660699,
+              -0.00031554730156678023
+            ],
+            [
+              -0.00031554730156678,
+              0.002634428029635205
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.7141970188384284e-09,
+              1.0287176064937184e-10
+            ],
+            [
+              1.0287176064937184e-10,
+              1.958692309151614e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            122.15203717316089,
+            8.464862970696746
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.009995245867571612,
+            -0.03570611079053698
+          ],
+          "covariance_px2": [
+            [
+              0.002300997489481145,
+              0.00023984446797115417
+            ],
+            [
+              0.0002398444679711546,
+              0.001883911617913545
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.7335655190289058e-09,
+              1.0097341780017273e-10
+            ],
+            [
+              1.0097341780017274e-10,
+              1.9728051315711485e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            122.15203719042104,
+            8.464862975724827
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.019408899201067698,
+            -0.030430148800476786
+          ],
+          "covariance_px2": [
+            [
+              0.0025073678126137206,
+              0.0005040828728047757
+            ],
+            [
+              0.000504082872804776,
+              0.0018767767215555006
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.7335679352713422e-09,
+              1.0097315403025144e-10
+            ],
+            [
+              1.0097315403025144e-10,
+              1.9728069092974056e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            122.15203720749882,
+            8.46486298070063
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.03288774526215832,
+            -0.02656929045498657
+          ],
+          "covariance_px2": [
+            [
+              0.0014717932426198711,
+              -0.0002491255201617328
+            ],
+            [
+              -0.0002491255201617326,
+              0.0016042035262740187
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.733570321218952e-09,
+              1.0097285848132038e-10
+            ],
+            [
+              1.0097285848132038e-10,
+              1.9728086887245612e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            122.15203722457585,
+            8.464862985673289
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.011458372408583273,
+            -0.050426491350307856
+          ],
+          "covariance_px2": [
+            [
+              0.0016394033297873038,
+              -0.0004195465484324992
+            ],
+            [
+              -0.0004195465484324996,
+              0.0015226506271144057
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.7335727010970877e-09,
+              1.0097260081744233e-10
+            ],
+            [
+              1.0097260081744233e-10,
+              1.972810456476114e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            122.15214107611057,
+            8.464880914300974
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.039028588922207064,
+            -0.023015208512500607
+          ],
+          "covariance_px2": [
+            [
+              0.002019885504581075,
+              -0.0006190565840036697
+            ],
+            [
+              -0.0006190565840036701,
+              0.003669037792071239
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.748529336984422e-09,
+              9.90460376924893e-11
+            ],
+            [
+              9.904603769248928e-11,
+              1.9840628652077536e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            122.15215166258375,
+            8.464881344332294
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.013924213079974379,
+            -0.014964458394651103
+          ],
+          "covariance_px2": [
+            [
+              0.0025035422912903006,
+              -0.0001250322321105051
+            ],
+            [
+              -0.00012503223211050518,
+              0.002132377665118572
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.750108104818518e-09,
+              9.881722072128613e-11
+            ],
+            [
+              9.881722072128613e-11,
+              1.985272791371173e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            122.15215841652714,
+            8.46488147973383
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.0422753339352937,
+            0.00951804978071813
+          ],
+          "covariance_px2": [
+            [
+              0.0013975390207473222,
+              -0.00015197846347470364
+            ],
+            [
+              -0.00015197846347470383,
+              0.0008519725908991191
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.7511215780824531e-09,
+              9.866767847690559e-11
+            ],
+            [
+              9.866767847690559e-11,
+              1.986051985819312e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            122.15030300810245,
+            8.46361761008139
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            122.15030297400908,
+            8.463617627196037
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            122.15022272310506,
+            8.463660220106444
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            122.15022269017216,
+            8.463660238552343
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            122.15019137453605,
+            8.463678156674476
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            122.15017817110756,
+            8.463685937741147
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            122.15012689642528,
+            8.463717468844617
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            122.15012686457192,
+            8.46371748908938
+          ],
+          "rejection": "edge"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1648329798763825408",
+        "ref_epoch": 2016.0,
+        "ra": 248.34619465278,
+        "dec": 66.81912630952,
+        "parallax": 2.9658,
+        "pmra": 6.634,
+        "pmdec": -13.814,
+        "ra_error": 0.04619999974966049,
+        "dec_error": 0.04830000177025795,
+        "parallax_error": 0.046300001442432404,
+        "pmra_error": 0.06700000166893005,
+        "pmdec_error": 0.061000000685453415,
+        "ra_dec_corr": -0.006300000008195639,
+        "ra_parallax_corr": -0.04910000041127205,
+        "ra_pmra_corr": 0.12630000710487366,
+        "ra_pmdec_corr": 0.13379999995231628,
+        "dec_parallax_corr": 0.08640000224113464,
+        "dec_pmra_corr": 0.1421000063419342,
+        "dec_pmdec_corr": -0.2651999890804291,
+        "parallax_pmra_corr": -0.09989999979734421,
+        "parallax_pmdec_corr": -0.021400000900030136,
+        "pmra_pmdec_corr": -0.00860000029206276,
+        "phot_g_mean_mag": 16.9372615814209,
+        "bp_rp": 2.4298510551452637,
+        "ruwe": 1.0069999694824219,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 25,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        -9.659440490727604,
+        69.08647263609046
+      ],
+      "brightness": 0.2101133952362057,
+      "match_arcsec": 1.005833276256104,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            -9.659636993329428,
+            69.08780337178283
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            -9.659573714865559,
+            69.08773598097804
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            -9.659573707128914,
+            69.0877359714929
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            -9.65957369948822,
+            69.08773596211253
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            -9.659573691838403,
+            69.08773595272008
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            -9.65952719927234,
+            69.08767250009365
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            -9.65952246228158,
+            69.08766525217213
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.08952190241805624,
+            0.022061073755878624
+          ],
+          "covariance_px2": [
+            [
+              0.029792985149688738,
+              0.00276949363025753
+            ],
+            [
+              0.0027694936302575294,
+              0.008098243990080621
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.0872104690137942e-08,
+              -4.313819974946081e-11
+            ],
+            [
+              -4.313819974946082e-11,
+              8.48487643332824e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            -9.659519440530751,
+            69.08766054496479
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.1629358788295452,
+            0.13082661529179518
+          ],
+          "covariance_px2": [
+            [
+              0.009754884685496972,
+              0.0002832073599370634
+            ],
+            [
+              0.00028320735993706307,
+              0.009273264692018642
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.0877724818226528e-08,
+              -4.2850524181311927e-11
+            ],
+            [
+              -4.285052418131191e-11,
+              8.48772118520385e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            -9.660400607541831,
+            69.08554222384006
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            -9.660400623439173,
+            69.08554221990448
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            -9.660438051040288,
+            69.08553371955418
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            -9.660438066402193,
+            69.08553371638165
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.08267589299354405,
+            0.018827722093945454
+          ],
+          "covariance_px2": [
+            [
+              0.005514927863236985,
+              -0.0006104721088922944
+            ],
+            [
+              -0.0006104721088922946,
+              0.0064943034414798595
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.2052526604713662e-08,
+              -1.8043877806074936e-10
+            ],
+            [
+              -1.804387780607494e-10,
+              9.53856809780148e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            -9.660452674876659,
+            69.08553080898929
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            -9.660458834786702,
+            69.08552965268038
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            -9.66048276023075,
+            69.08552555732827
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            -9.660482775097847,
+            69.08552555497373
+          ],
+          "rejection": "low_snr"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1648331074370509952",
+        "ref_epoch": 2016.0,
+        "ra": 248.01022487506,
+        "dec": 66.78547588379,
+        "parallax": 0.9731,
+        "pmra": -3.242,
+        "pmdec": 5.769,
+        "ra_error": 0.010200000368058681,
+        "dec_error": 0.01140000019222498,
+        "parallax_error": 0.010900000110268593,
+        "pmra_error": 0.014000000432133675,
+        "pmdec_error": 0.014999999664723873,
+        "ra_dec_corr": -0.01979999989271164,
+        "ra_parallax_corr": -0.06379999965429306,
+        "ra_pmra_corr": -0.04129999876022339,
+        "ra_pmdec_corr": 0.06419999897480011,
+        "dec_parallax_corr": 0.16339999437332153,
+        "dec_pmra_corr": 0.053199999034404755,
+        "dec_pmdec_corr": -0.1867000013589859,
+        "parallax_pmra_corr": -0.042100001126527786,
+        "parallax_pmdec_corr": -0.14810000360012054,
+        "pmra_pmdec_corr": -0.049800001084804535,
+        "phot_g_mean_mag": 13.639152526855469,
+        "bp_rp": 0.8881419897079468,
+        "ruwe": 0.9049999713897705,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 28,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        67.81991714852292,
+        49.40651382614027
+      ],
+      "brightness": 0.581612010755613,
+      "match_arcsec": 0.8973030029082989,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            67.81956488745186,
+            49.40640291411469
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.02854297585932386,
+            0.07683732837062252
+          ],
+          "covariance_px2": [
+            [
+              0.003384911354492107,
+              -0.0006617326027319664
+            ],
+            [
+              -0.0006617326027319657,
+              0.0023619954315007357
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.5542927793718536e-10,
+              2.1939441124905236e-11
+            ],
+            [
+              2.193944112490524e-11,
+              5.036554220777326e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            67.81961561891569,
+            49.406437829465645
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.09731689207345084,
+            -0.028778729092309163
+          ],
+          "covariance_px2": [
+            [
+              0.0024816192923430747,
+              2.1577651930764754e-05
+            ],
+            [
+              2.1577651930764737e-05,
+              0.0020525506920699072
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.59379786929544e-10,
+              2.1657196222651045e-11
+            ],
+            [
+              2.1657196222651042e-11,
+              5.072758808488658e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            67.8196156250971,
+            49.40643783328063
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.0379818444852873,
+            0.04798939619048781
+          ],
+          "covariance_px2": [
+            [
+              0.0018784251628016966,
+              -0.0007670427284438282
+            ],
+            [
+              -0.0007670427284438282,
+              0.003453513067461188
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.5938028612352737e-10,
+              2.1657158419576357e-11
+            ],
+            [
+              2.1657158419576357e-11,
+              5.072763353566609e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            67.81961563120146,
+            49.40643783704982
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.07331306361547263,
+            0.026287018379846927
+          ],
+          "covariance_px2": [
+            [
+              0.005488849017021784,
+              -0.004304487119526952
+            ],
+            [
+              -0.004304487119526948,
+              0.007871120025419088
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.5938077749143906e-10,
+              2.1657118691685604e-11
+            ],
+            [
+              2.1657118691685604e-11,
+              5.072767799725988e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            67.81961563731379,
+            49.40643784081968
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.029697954278276484,
+            -0.058895443442743556
+          ],
+          "covariance_px2": [
+            [
+              0.00314710869867127,
+              -0.00033706285211050375
+            ],
+            [
+              -0.0003370628521105037,
+              0.004519630258908385
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.5938126914631217e-10,
+              2.165708020340279e-11
+            ],
+            [
+              2.1657080203402792e-11,
+              5.072772322354441e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            67.81965300039003,
+            49.40645909092466
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.08797197968885939,
+            0.13164429221101415
+          ],
+          "covariance_px2": [
+            [
+              0.0024767542827501573,
+              -2.149296112618142e-05
+            ],
+            [
+              -2.1492961126181406e-05,
+              0.0020760451711950762
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.6247839919988634e-10,
+              2.1392520809726572e-11
+            ],
+            [
+              2.1392520809726572e-11,
+              5.100883679730154e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            67.81965685058944,
+            49.406461081722966
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.007618369738523256,
+            -0.020465288769479173
+          ],
+          "covariance_px2": [
+            [
+              0.002236008155802925,
+              0.00022187168849283518
+            ],
+            [
+              0.00022187168849283545,
+              0.0014788930870574955
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.6280805642536697e-10,
+              2.1361106364040022e-11
+            ],
+            [
+              2.1361106364040026e-11,
+              5.103872939444585e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            67.81965931278626,
+            49.40646233584376
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.032128529676683115,
+            0.08692286301812402
+          ],
+          "covariance_px2": [
+            [
+              0.003832164455162177,
+              0.00037848593088423603
+            ],
+            [
+              0.00037848593088423603,
+              0.002451046887681631
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.630199605254896e-10,
+              2.134053961944449e-11
+            ],
+            [
+              2.134053961944449e-11,
+              5.105794910342191e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            67.81984455605902,
+            49.40666950456193
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.00028848111799106846,
+            -0.058809667197593285
+          ],
+          "covariance_px2": [
+            [
+              0.0013416887022152967,
+              0.00020444050750543803
+            ],
+            [
+              0.000204440507505438,
+              0.002090131282042006
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.151622255778093e-10,
+              2.4488506168893348e-11
+            ],
+            [
+              2.4488506168893348e-11,
+              5.926655691669743e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            67.81984455449252,
+            49.40666951019807
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.061091904542237785,
+            0.03254573605155997
+          ],
+          "covariance_px2": [
+            [
+              0.0011687169648245707,
+              4.338059365164729e-05
+            ],
+            [
+              4.3380593651647326e-05,
+              0.0018896580221409852
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.151626218173343e-10,
+              2.4488738963198185e-11
+            ],
+            [
+              2.448873896319819e-11,
+              5.926658624025459e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            67.81984094603348,
+            49.406683208042004
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.05507453076619129,
+            -8.720508753157219e-05
+          ],
+          "covariance_px2": [
+            [
+              0.0032581173307668506,
+              -0.0006608694858061534
+            ],
+            [
+              -0.0006608694858061524,
+              0.0037337800267198363
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.16118551321616e-10,
+              2.5030739934229316e-11
+            ],
+            [
+              2.5030739934229316e-11,
+              5.933463095105355e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            67.81984094458619,
+            49.406683213840495
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.08391483720309623,
+            0.06318101627429229
+          ],
+          "covariance_px2": [
+            [
+              0.0028167754006372795,
+              -0.0007907973078434523
+            ],
+            [
+              -0.0007907973078434521,
+              0.00362780958698775
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.161189525764223e-10,
+              2.5030959696556096e-11
+            ],
+            [
+              2.5030959696556093e-11,
+              5.933465771286795e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            67.81983959306932,
+            49.40668880316984
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.07041281971949331,
+            0.10532725939809495
+          ],
+          "covariance_px2": [
+            [
+              0.005565839254591037,
+              0.0014979087973798833
+            ],
+            [
+              0.001497908797379884,
+              0.005099608655770104
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.165042502213324e-10,
+              2.5239602384360246e-11
+            ],
+            [
+              2.523960238436024e-11,
+              5.936016575550778e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            67.81983903369601,
+            49.406691202851626
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.10081268023833445,
+            0.18861205306745177
+          ],
+          "covariance_px2": [
+            [
+              0.003336292815008533,
+              1.7870251042070402e-05
+            ],
+            [
+              1.7870251042070412e-05,
+              0.0022532658250028668
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.166688664946123e-10,
+              2.5327029991446855e-11
+            ],
+            [
+              2.5327029991446855e-11,
+              5.937075221334527e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            67.81983692463118,
+            49.40670077418292
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.012700923210061887,
+            -0.030874084889092046
+          ],
+          "covariance_px2": [
+            [
+              0.0030227331458810352,
+              0.0020582828447059205
+            ],
+            [
+              0.002058282844705923,
+              0.005607914153082892
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.173208146936923e-10,
+              2.566324297461517e-11
+            ],
+            [
+              2.5663242974615168e-11,
+              5.941095146547905e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            67.81983692336127,
+            49.406700780261566
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.07559254412723249,
+            -0.03623276732216141
+          ],
+          "covariance_px2": [
+            [
+              0.0040947684133529685,
+              -0.0009092371825989153
+            ],
+            [
+              -0.0009092371825989157,
+              0.003411868929670102
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.173212254034119e-10,
+              2.566345002080089e-11
+            ],
+            [
+              2.5663450020800894e-11,
+              5.941097583223035e-10
+            ]
+          ]
+        }
+      ],
+      "eligible": true
+    },
+    {
+      "catalog": {
+        "source_id": "1648344165430821248",
+        "ref_epoch": 2016.0,
+        "ra": 247.87603725238,
+        "dec": 66.86820128928,
+        "parallax": 5.8687,
+        "pmra": -13.001,
+        "pmdec": -25.33,
+        "ra_error": 0.03240000084042549,
+        "dec_error": 0.03519999980926514,
+        "parallax_error": 0.03350000083446503,
+        "pmra_error": 0.0430000014603138,
+        "pmdec_error": 0.04699999839067459,
+        "ra_dec_corr": 0.04919999837875366,
+        "ra_parallax_corr": -0.10939999669790268,
+        "ra_pmra_corr": -0.05689999833703041,
+        "ra_pmdec_corr": 0.01720000058412552,
+        "dec_parallax_corr": 0.1396999955177307,
+        "dec_pmra_corr": 0.019099999219179153,
+        "dec_pmdec_corr": -0.32019999623298645,
+        "parallax_pmra_corr": -0.07580000162124634,
+        "parallax_pmdec_corr": -0.1120000034570694,
+        "pmra_pmdec_corr": -0.025499999523162842,
+        "phot_g_mean_mag": 16.234390258789062,
+        "bp_rp": 2.716789960861206,
+        "ruwe": 0.9860000014305115,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 27,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 1,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        98.57173421346432,
+        97.89307168129105
+      ],
+      "brightness": 0.6093561972839779,
+      "match_arcsec": 0.942622156672837,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            98.56994708477785,
+            97.89559730958732
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            98.57021790124755,
+            97.89547515831488
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.06640786626296347,
+            -0.07929674850221602
+          ],
+          "covariance_px2": [
+            [
+              0.001389535033667895,
+              0.00017833830149588127
+            ],
+            [
+              0.00017833830149588113,
+              0.0017685592664722658
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.324450131855978e-09,
+              1.336041191523925e-10
+            ],
+            [
+              1.336041191523925e-10,
+              4.899972381358462e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            98.57021793424896,
+            97.89547514089881
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            98.57021796685561,
+            97.8954751236804
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            98.57021799945325,
+            97.89547510646051
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            98.57041740880578,
+            97.89535780952407
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.06163772169949766,
+            -0.018291624466641565
+          ],
+          "covariance_px2": [
+            [
+              0.0015991398705289062,
+              0.00026814100443931405
+            ],
+            [
+              0.00026814100443931394,
+              0.0016867502805547946
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.357797626969988e-09,
+              1.3231894743379257e-10
+            ],
+            [
+              1.3231894743379257e-10,
+              4.926988079123965e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            98.57043793683152,
+            97.89534432548807
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.05785962374210385,
+            -0.1433420564177652
+          ],
+          "covariance_px2": [
+            [
+              0.0032680919730279263,
+              0.00021554609372928033
+            ],
+            [
+              0.00021554609372928052,
+              0.001727426389903001
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.36133086870097e-09,
+              1.3212790609147302e-10
+            ],
+            [
+              1.3212790609147302e-10,
+              4.929824295582768e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            98.57045106152295,
+            97.89533556054178
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.10895695236186498,
+            -0.08924732068147989
+          ],
+          "covariance_px2": [
+            [
+              0.0029266151146939024,
+              -0.0002766723383603388
+            ],
+            [
+              -0.0002766723383603386,
+              0.0019810118562858356
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              4.3636005017021585e-09,
+              1.3199925868593976e-10
+            ],
+            [
+              1.3199925868593974e-10,
+              4.931644518792287e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            98.57101269963819,
+            97.89132148797555
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            98.57101268588734,
+            97.89132148156322
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            98.57098077766176,
+            97.891307914247
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            98.5709807647674,
+            97.89130790930896
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            98.57096858708631,
+            97.89130344721083
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            98.57096350326039,
+            97.89130170743587
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            98.5709440664799,
+            97.89129575712305
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            98.57094405456264,
+            97.8912957538232
+          ],
+          "rejection": "edge"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1648344268510039936",
+        "ref_epoch": 2016.0,
+        "ra": 247.91983084203,
+        "dec": 66.8816648276,
+        "parallax": 7.6338,
+        "pmra": -35.634,
+        "pmdec": 28.459,
+        "ra_error": 0.012400000356137753,
+        "dec_error": 0.01489999983459711,
+        "parallax_error": 0.013899999670684338,
+        "pmra_error": 0.01600000075995922,
+        "pmdec_error": 0.019999999552965164,
+        "ra_dec_corr": 0.09059999883174896,
+        "ra_parallax_corr": -0.09799999743700027,
+        "ra_pmra_corr": -0.004000000189989805,
+        "ra_pmdec_corr": 0.09730000048875809,
+        "dec_parallax_corr": 0.13619999587535858,
+        "dec_pmra_corr": 0.08160000294446945,
+        "dec_pmdec_corr": -0.19509999454021454,
+        "parallax_pmra_corr": -0.08089999854564667,
+        "parallax_pmdec_corr": -0.27059999108314514,
+        "pmra_pmdec_corr": -0.014000000432133675,
+        "phot_g_mean_mag": 10.408863067626953,
+        "bp_rp": 0.7963770031929016,
+        "ruwe": 1.187000036239624,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 24,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        88.50534907080588,
+        105.8155454046835
+      ],
+      "brightness": 9.894836256314742,
+      "match_arcsec": 0.20520389359805172,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            88.50204366208263,
+            105.81556423211973
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            88.50249808091559,
+            105.81574553703452
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.03939982475013437,
+            -0.03630226850101792
+          ],
+          "covariance_px2": [
+            [
+              8.595773072967835e-05,
+              -2.2046627918850296e-05
+            ],
+            [
+              -2.2046627918850296e-05,
+              7.52570967277269e-05
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.042078961287453e-10,
+              2.7296524200661136e-12
+            ],
+            [
+              2.729652420066115e-12,
+              8.8347123381646e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            88.50249813623091,
+            105.81574555569722
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.028184003633739962,
+            -0.023375347929217583
+          ],
+          "covariance_px2": [
+            [
+              7.332171278352563e-05,
+              -2.9521836585949315e-06
+            ],
+            [
+              -2.9521836585949395e-06,
+              7.282817867062978e-05
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.042086866494568e-10,
+              2.729336158424654e-12
+            ],
+            [
+              2.729336158424655e-12,
+              8.834720488955256e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            88.50249819090033,
+            105.8157455741233
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.048010160657341316,
+            -0.05224616308369434
+          ],
+          "covariance_px2": [
+            [
+              5.7048865630908696e-05,
+              8.59428789058488e-06
+            ],
+            [
+              8.594287890584869e-06,
+              5.5076243374506216e-05
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.042094639365087e-10,
+              2.7290189041719018e-12
+            ],
+            [
+              2.729018904171903e-12,
+              8.834728404640517e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            88.50249824557287,
+            105.8157455925657
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.017509049769927287,
+            -0.02059120188583563
+          ],
+          "covariance_px2": [
+            [
+              9.294111885960544e-05,
+              -2.0121846248009465e-05
+            ],
+            [
+              -2.0121846248009475e-05,
+              0.00010872479757721694
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.042102384731909e-10,
+              2.7287028703777433e-12
+            ],
+            [
+              2.7287028703777445e-12,
+              8.834736391417919e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            88.50283298802945,
+            105.815843982583
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.03788543138153955,
+            -0.018976899704199468
+          ],
+          "covariance_px2": [
+            [
+              5.569373360260065e-05,
+              5.096349299698926e-06
+            ],
+            [
+              5.096349299698927e-06,
+              7.195336073065221e-05
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.091080335036432e-10,
+              7.153287978598638e-13
+            ],
+            [
+              7.153287978598626e-13,
+              8.886834013826737e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            88.50286751603622,
+            105.81585250570407
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.05901829857964458,
+            0.0022131589812772745
+          ],
+          "covariance_px2": [
+            [
+              6.121464044333531e-05,
+              -1.0583667564500142e-05
+            ],
+            [
+              -1.0583667564500154e-05,
+              5.450575530020647e-05
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.096289865844481e-10,
+              4.982624917722293e-13
+            ],
+            [
+              4.982624917722328e-13,
+              8.892607047525032e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            88.50288960122728,
+            105.81585779963362
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.009304685414434744,
+            -0.004931741686903024
+          ],
+          "covariance_px2": [
+            [
+              8.684733509866053e-05,
+              -1.086400143614955e-05
+            ],
+            [
+              -1.0864001436149549e-05,
+              7.389308976090167e-05
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.099637884711369e-10,
+              3.584121979633094e-13
+            ],
+            [
+              3.584121979633101e-13,
+              8.896341170991169e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            88.50523617627235,
+            105.81601901064845
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            88.5052361707832,
+            105.81601904363589
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            88.50522419519567,
+            105.81609976356113
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            88.505224190694,
+            105.81609979797797
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            88.50522006996908,
+            105.81613303370003
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            88.50521843470449,
+            105.81614735183302
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            88.50521270190482,
+            105.81620473564261
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            88.50521269866613,
+            105.81620477219738
+          ],
+          "rejection": "edge"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1648331417967903488",
+        "ref_epoch": 2016.0,
+        "ra": 248.15262899681,
+        "dec": 66.81185788028,
+        "parallax": 1.4709,
+        "pmra": -35.417,
+        "pmdec": -38.281,
+        "ra_error": 0.05570000037550926,
+        "dec_error": 0.06129999831318855,
+        "parallax_error": 0.058400001376867294,
+        "pmra_error": 0.07599999755620956,
+        "pmdec_error": 0.07800000160932541,
+        "ra_dec_corr": -0.025800000876188278,
+        "ra_parallax_corr": -0.11919999867677689,
+        "ra_pmra_corr": 0.05079999938607216,
+        "ra_pmdec_corr": 0.05700000002980232,
+        "dec_parallax_corr": 0.13510000705718994,
+        "dec_pmra_corr": 0.0333000011742115,
+        "dec_pmdec_corr": -0.3188000023365021,
+        "parallax_pmra_corr": -0.16329999268054962,
+        "parallax_pmdec_corr": -0.08739999681711197,
+        "pmra_pmdec_corr": -0.015599999576807022,
+        "phot_g_mean_mag": 17.36504554748535,
+        "bp_rp": 1.8461090326309204,
+        "ruwe": 0.9789999723434448,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 27,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        35.0093100448121,
+        64.73465249897843
+      ],
+      "brightness": 0.1661961248369531,
+      "match_arcsec": 5.261437852680631,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            35.00715422455735,
+            64.73698268679692
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            35.007399982977354,
+            64.73677531272385
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            35.007400012855086,
+            64.73677528688074
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            35.00740004238052,
+            64.73677526135187
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            35.0074000718993,
+            64.73677523582371
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            35.00758127707795,
+            64.73661544028613
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            35.00760004991441,
+            64.73659851904563
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            35.007612069016716,
+            64.73658764783686
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            35.01056698325421,
+            64.73278484823078
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            35.0105670014136,
+            64.73278482516471
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            35.0106104285016,
+            64.73273031292804
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            35.01061044662115,
+            64.73273029048022
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            35.010627803636936,
+            64.73270888706159
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            35.010635197705824,
+            64.73269983547132
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            35.01066437147779,
+            64.73266450589935
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            35.01066438983873,
+            64.7326644838603
+          ],
+          "rejection": "low_snr"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1636317535447754368",
+        "ref_epoch": 2016.0,
+        "ra": 248.45684558241,
+        "dec": 66.66270335106,
+        "parallax": 0.5372,
+        "pmra": -3.055,
+        "pmdec": 1.285,
+        "ra_error": 0.012000000104308128,
+        "dec_error": 0.01119999960064888,
+        "parallax_error": 0.011300000362098217,
+        "pmra_error": 0.01600000075995922,
+        "pmdec_error": 0.014000000432133675,
+        "ra_dec_corr": 0.06289999932050705,
+        "ra_parallax_corr": -0.10029999911785126,
+        "ra_pmra_corr": 0.3422999978065491,
+        "ra_pmdec_corr": 0.21709999442100525,
+        "dec_parallax_corr": 0.10189999639987946,
+        "dec_pmra_corr": 0.211899995803833,
+        "dec_pmdec_corr": 0.017000000923871994,
+        "parallax_pmra_corr": -0.15729999542236328,
+        "parallax_pmdec_corr": -0.11710000038146973,
+        "pmra_pmdec_corr": 0.053700000047683716,
+        "phot_g_mean_mag": 13.815803527832031,
+        "bp_rp": 0.7282490134239197,
+        "ruwe": 1.0240000486373901,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 25,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        -35.56530332905028,
+        -22.35787985636417
+      ],
+      "brightness": 0.362697582857364,
+      "match_arcsec": 0.1694955767235778,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            -35.565565827012435,
+            -22.35783917666432
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.1007911734292648,
+            0.006608154541620337
+          ],
+          "covariance_px2": [
+            [
+              0.003991476770176463,
+              -6.899641693380257e-05
+            ],
+            [
+              -6.899641693380152e-05,
+              0.003952221089496892
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.293400118679158e-10,
+              -3.9914375934437116e-11
+            ],
+            [
+              -3.991437593443711e-11,
+              4.56125183576067e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            -35.565530732474414,
+            -22.357830513550425
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.02508177490162211,
+            -0.015950265044505585
+          ],
+          "covariance_px2": [
+            [
+              0.0049451354949170915,
+              -0.0002678827486451537
+            ],
+            [
+              -0.00026788274864515416,
+              0.004335144603289529
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.367543159725061e-10,
+              -4.0213615884757484e-11
+            ],
+            [
+              -4.021361588475749e-11,
+              4.5938163467820463e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            -35.56553072819629,
+            -22.357830512728654
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.1642589494891027,
+            0.11083121918527539
+          ],
+          "covariance_px2": [
+            [
+              0.010506221949340252,
+              -0.0009637020700939602
+            ],
+            [
+              -0.0009637020700939611,
+              0.01596266886778319
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.367552387937289e-10,
+              -4.021367335796224e-11
+            ],
+            [
+              -4.021367335796224e-11,
+              4.59382032455914e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            -35.56553072398707,
+            -22.357830511940065
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.21704729303981907,
+            -0.019929979860002334
+          ],
+          "covariance_px2": [
+            [
+              0.008437923459221503,
+              0.0011140347460466473
+            ],
+            [
+              0.001114034746046648,
+              0.007033737983854671
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.367561488358696e-10,
+              -4.0213727233021065e-11
+            ],
+            [
+              -4.021372723302107e-11,
+              4.5938242951076867e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            -35.56553071975827,
+            -22.357830511128263
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.16505085172100564,
+            0.04302923947641801
+          ],
+          "covariance_px2": [
+            [
+              0.007240567805035683,
+              -0.00018728007623520926
+            ],
+            [
+              -0.00018728007623520905,
+              0.008247125140551053
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.367570634385737e-10,
+              -4.0213780476114117e-11
+            ],
+            [
+              -4.021378047611411e-11,
+              4.5938283020509836e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            -35.56550486423056,
+            -22.357826608423437
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.09379460112094051,
+            -0.12937293336918287
+          ],
+          "covariance_px2": [
+            [
+              0.004846874727292395,
+              -0.0004832836457362034
+            ],
+            [
+              -0.00048328364573620245,
+              0.005254396641315668
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.424310552323009e-10,
+              -4.0651004883962957e-11
+            ],
+            [
+              -4.0651004883962957e-11,
+              4.61843468557744e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            -35.56550219567339,
+            -22.357826322392647
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.09568510373654249,
+            0.09039119561752429
+          ],
+          "covariance_px2": [
+            [
+              0.0034306231333992143,
+              -0.001350149209836692
+            ],
+            [
+              -0.0013501492098366924,
+              0.004832192499775383
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.430274337661462e-10,
+              -4.070843857575327e-11
+            ],
+            [
+              -4.0708438575753266e-11,
+              4.6210205370570687e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            -35.56550048855637,
+            -22.357826150823122
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.010106373927065704,
+            -0.0205915096317284
+          ],
+          "covariance_px2": [
+            [
+              0.002706809747024289,
+              9.003658893798992e-05
+            ],
+            [
+              9.003658893799001e-05,
+              0.0030778784428128203
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.434100124777843e-10,
+              -4.0746481766041696e-11
+            ],
+            [
+              -4.0746481766041696e-11,
+              4.622680238138525e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            -35.56528622246033,
+            -22.357879780949396
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.010206467224911364,
+            0.01237224571988449
+          ],
+          "covariance_px2": [
+            [
+              0.0017313183382881253,
+              4.5238579559804116e-05
+            ],
+            [
+              4.523857955980414e-05,
+              0.003102993920330606
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              7.06999968478171e-10,
+              -5.6328076609246124e-11
+            ],
+            [
+              -5.6328076609246124e-11,
+              5.32677361633326e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            -35.56528622247292,
+            -22.35787977912586
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.06527643352971779,
+            -0.10103004360193069
+          ],
+          "covariance_px2": [
+            [
+              0.004647008480384818,
+              0.0008205749718729984
+            ],
+            [
+              0.0008205749718729984,
+              0.009221995378096424
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              7.070002373459611e-10,
+              -5.632786135667446e-11
+            ],
+            [
+              -5.632786135667445e-11,
+              5.326776255591641e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            -35.56528616986951,
+            -22.35787528884361
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.01812180948300579,
+            0.04938743039712179
+          ],
+          "covariance_px2": [
+            [
+              0.004660182715362103,
+              0.0003021027271317981
+            ],
+            [
+              0.00030210272713179835,
+              0.006038701051482325
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              7.076510519081854e-10,
+              -5.581833093444252e-11
+            ],
+            [
+              -5.5818330934442525e-11,
+              5.332832803373991e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            -35.56528616981048,
+            -22.35787528691904
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            -35.56528610443715,
+            -22.357873420377274
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.04120654004902491,
+            0.01917797956220113
+          ],
+          "covariance_px2": [
+            [
+              0.007249953279392496,
+              0.0009917180981664003
+            ],
+            [
+              0.0009917180981664003,
+              0.008892547277245286
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              7.07921625224301e-10,
+              -5.5616367040189734e-11
+            ],
+            [
+              -5.561636704018973e-11,
+              5.335110786342145e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            -35.56528606858252,
+            -22.357872613382902
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.09295203347133452,
+            -0.04205090584444804
+          ],
+          "covariance_px2": [
+            [
+              0.0036008113947810483,
+              0.0017064694793300398
+            ],
+            [
+              0.0017064694793300394,
+              0.005998336413263576
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              7.080385039467334e-10,
+              -5.5530846374102854e-11
+            ],
+            [
+              -5.553084637410285e-11,
+              5.33605630333609e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            -35.56528587919706,
+            -22.357869363040756
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.13072380157282026,
+            0.013306975339638427
+          ],
+          "covariance_px2": [
+            [
+              0.002907120410945601,
+              -0.00104440016768329
+            ],
+            [
+              -0.0010444001676832898,
+              0.0028676294576114175
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              7.085095581115231e-10,
+              -5.519633143438037e-11
+            ],
+            [
+              -5.5196331434380356e-11,
+              5.339652976675895e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            -35.56528587905365,
+            -22.357869360959555
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.03442532492120165,
+            -0.12539739011291573
+          ],
+          "covariance_px2": [
+            [
+              0.005105657350707755,
+              -0.0013829016787333484
+            ],
+            [
+              -0.0013829016787333481,
+              0.004015727460785039
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              7.08509866410614e-10,
+              -5.519612179446424e-11
+            ],
+            [
+              -5.5196121794464247e-11,
+              5.339655181416597e-10
+            ]
+          ]
+        }
+      ],
+      "eligible": true
+    },
+    {
+      "catalog": {
+        "source_id": "1648324958337177472",
+        "ref_epoch": 2016.0,
+        "ra": 247.77721423902,
+        "dec": 66.72559646076,
+        "parallax": 4.8902,
+        "pmra": -12.063,
+        "pmdec": 30.089,
+        "ra_error": 0.02539999969303608,
+        "dec_error": 0.029400000348687172,
+        "parallax_error": 0.026599999517202377,
+        "pmra_error": 0.035999998450279236,
+        "pmdec_error": 0.03999999910593033,
+        "ra_dec_corr": -0.041600000113248825,
+        "ra_parallax_corr": 0.0015999999595806003,
+        "ra_pmra_corr": 0.07639999687671661,
+        "ra_pmdec_corr": 0.12070000171661377,
+        "dec_parallax_corr": 0.0794999971985817,
+        "dec_pmra_corr": 0.13699999451637268,
+        "dec_pmdec_corr": -0.34940001368522644,
+        "parallax_pmra_corr": -0.07429999858140945,
+        "parallax_pmdec_corr": -0.11550000309944153,
+        "pmra_pmdec_corr": -0.07750000059604645,
+        "phot_g_mean_mag": 15.812031745910645,
+        "bp_rp": 2.1527841091156006,
+        "ruwe": 0.9829999804496765,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 25,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        121.8173486258653,
+        14.630253296169773
+      ],
+      "brightness": 0.45456863663626074,
+      "match_arcsec": 0.4213167779323717,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            121.8158095066888,
+            14.629635628398415
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            121.8160403670871,
+            14.629817379389937
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.02725309679109955,
+            -0.04884653282910101
+          ],
+          "covariance_px2": [
+            [
+              0.009206758736297053,
+              0.0009319255278361011
+            ],
+            [
+              0.0009319255278361023,
+              0.0067945154203975
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.089182441923868e-09,
+              2.1080073712608568e-10
+            ],
+            [
+              2.1080073712608566e-10,
+              3.532884622043328e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            121.81604039521753,
+            14.629817399308003
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            121.81604042300818,
+            14.629817418988917
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            121.8160404508009,
+            14.629817438680675
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            121.8162104463145,
+            14.62992886776675
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.04109450240682122,
+            -0.06712416230549856
+          ],
+          "covariance_px2": [
+            [
+              0.004108123437458494,
+              -0.0024738459959632725
+            ],
+            [
+              -0.002473845995963273,
+              0.011602324124173446
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.1115675043878386e-09,
+              2.1022901326918574e-10
+            ],
+            [
+              2.1022901326918574e-10,
+              3.552524969328031e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            121.81622794982593,
+            14.629939354073969
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.03950729914267015,
+            0.008377913498661016
+          ],
+          "covariance_px2": [
+            [
+              0.008769993833072363,
+              0.0008986960963274968
+            ],
+            [
+              0.0008986960963274971,
+              0.004685652114755936
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.1139371302557956e-09,
+              2.1013600148719268e-10
+            ],
+            [
+              2.1013600148719265e-10,
+              3.554595194116228e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            121.81623914126315,
+            14.629945965120083
+          ],
+          "rejection": "poor_psf_fit"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            121.81678968498656,
+            14.631086105319941
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            121.81678967415307,
+            14.631086134403983
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            121.81676459928237,
+            14.631156774702067
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            121.8167645891794,
+            14.631156804614765
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            121.81675504244423,
+            14.63118560884844
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            121.81675106130986,
+            14.63119797219656
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            121.81673586697798,
+            14.631247265897333
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            121.81673585766688,
+            14.631247297169995
+          ],
+          "rejection": "low_snr"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1648326843826192768",
+        "ref_epoch": 2016.0,
+        "ra": 248.21320540298,
+        "dec": 66.70540268299,
+        "parallax": 1.7445,
+        "pmra": -3.681,
+        "pmdec": 2.296,
+        "ra_error": 0.010900000110268593,
+        "dec_error": 0.011300000362098217,
+        "parallax_error": 0.010700000450015068,
+        "pmra_error": 0.014999999664723873,
+        "pmdec_error": 0.01600000075995922,
+        "ra_dec_corr": 0.08619999885559082,
+        "ra_parallax_corr": -0.04089999943971634,
+        "ra_pmra_corr": 0.28859999775886536,
+        "ra_pmdec_corr": 0.2451000064611435,
+        "dec_parallax_corr": 0.08030000329017639,
+        "dec_pmra_corr": 0.23170000314712524,
+        "dec_pmdec_corr": -0.0012000000569969416,
+        "parallax_pmra_corr": -0.07900000363588333,
+        "parallax_pmdec_corr": -0.09049999713897705,
+        "pmra_pmdec_corr": 0.10329999774694443,
+        "phot_g_mean_mag": 12.515624046325684,
+        "bp_rp": 0.7387459874153137,
+        "ruwe": 1.1200000047683716,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 25,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        20.951481949973466,
+        2.486876054604327
+      ],
+      "brightness": 1.3615203141891363,
+      "match_arcsec": 1.9951376664945046,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            20.95096212743083,
+            2.4871056341097493
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.011600560806261484,
+            -0.014150371202256373
+          ],
+          "covariance_px2": [
+            [
+              0.0008754675025353643,
+              4.227619457152856e-05
+            ],
+            [
+              4.2276194571528465e-05,
+              0.0008051901151404871
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.491128219878226e-10,
+              -7.492860293182285e-11
+            ],
+            [
+              -7.492860293182285e-11,
+              5.951490725077652e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            20.951041446952672,
+            2.487123612297495
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.05675260733084997,
+            -0.058035457222469056
+          ],
+          "covariance_px2": [
+            [
+              0.001413553017755993,
+              -2.9453397452278592e-05
+            ],
+            [
+              -2.9453397452278548e-05,
+              0.0012385974671458245
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.542661134328073e-10,
+              -7.546377656212112e-11
+            ],
+            [
+              -7.546377656212112e-11,
+              5.994323846157551e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            20.951041456609506,
+            2.4871236137072046
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.007563017814256057,
+            0.02706295370281131
+          ],
+          "covariance_px2": [
+            [
+              0.0011348970606288615,
+              9.215945410683353e-05
+            ],
+            [
+              9.215945410683355e-05,
+              0.000932050133702999
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.542667575416902e-10,
+              -7.546384771271768e-11
+            ],
+            [
+              -7.546384771271768e-11,
+              5.994329107058333e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            20.95104146616648,
+            2.487123615105684
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.02366994683331214,
+            -0.016869930790450738
+          ],
+          "covariance_px2": [
+            [
+              0.0012236218310484968,
+              8.365347704555453e-05
+            ],
+            [
+              8.365347704555464e-05,
+              0.001066142533393254
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.542673942948022e-10,
+              -7.546392010496254e-11
+            ],
+            [
+              -7.546392010496254e-11,
+              5.994334271883947e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            20.951041475711925,
+            2.4871236164925072
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.0011948169979270062,
+            0.0060188075175489075
+          ],
+          "covariance_px2": [
+            [
+              0.0007910101132487322,
+              0.0001138677647135583
+            ],
+            [
+              0.00011386776471355824,
+              0.000994105670084141
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.542680321989175e-10,
+              -7.54639933768838e-11
+            ],
+            [
+              -7.54639933768838e-11,
+              5.994339513502824e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            20.951099879517123,
+            2.487128799005337
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.06368802785440408,
+            -0.02943176782964274
+          ],
+          "covariance_px2": [
+            [
+              0.001283220673030858,
+              4.1101017979914424e-05
+            ],
+            [
+              4.110101797991435e-05,
+              0.0007687311156733445
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.582491833986024e-10,
+              -7.595719895552177e-11
+            ],
+            [
+              -7.595719895552177e-11,
+              6.026345765168831e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            20.951105891060706,
+            2.4871289499487084
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.030700367034253162,
+            0.02112649667636246
+          ],
+          "covariance_px2": [
+            [
+              0.0009340089780523431,
+              -7.125630620730773e-05
+            ],
+            [
+              -7.125630620730777e-05,
+              0.0015809124875964945
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.586699882489786e-10,
+              -7.601463495828596e-11
+            ],
+            [
+              -7.601463495828596e-11,
+              6.029691400018925e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            20.951109734461795,
+            2.4871290087483153
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.03211106877918368,
+            0.022193265129601958
+          ],
+          "covariance_px2": [
+            [
+              0.0010100861708383473,
+              -1.9587676666731207e-05
+            ],
+            [
+              -1.9587676666731193e-05,
+              0.0009367146852587544
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              5.58940194643425e-10,
+              -7.605210013943408e-11
+            ],
+            [
+              -7.605210013943408e-11,
+              6.031836922657142e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            20.951257639111184,
+            2.4867943059843363
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.02200651163058609,
+            0.000851744531944032
+          ],
+          "covariance_px2": [
+            [
+              0.0007428493930733954,
+              -1.0315987015111556e-05
+            ],
+            [
+              -1.0315987015111534e-05,
+              0.0010677646383263685
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.187055225752442e-10,
+              -8.765247696184908e-11
+            ],
+            [
+              -8.765247696184908e-11,
+              6.874135494959981e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            20.951257634874093,
+            2.486794310662823
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.037708894258958736,
+            -0.044528159836825676
+          ],
+          "covariance_px2": [
+            [
+              0.0010007002320136244,
+              4.158048154320747e-05
+            ],
+            [
+              4.158048154320748e-05,
+              0.0013663043928924979
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.187059176632164e-10,
+              -8.765236361821398e-11
+            ],
+            [
+              -8.765236361821398e-11,
+              6.874139595620314e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            20.95124779676363,
+            2.4868059601044905
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.06418889429714625,
+            -0.017411331779945804
+          ],
+          "covariance_px2": [
+            [
+              0.0010714353168308384,
+              -0.00013884988917381227
+            ],
+            [
+              -0.00013884988917381221,
+              0.0012619659487048676
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.196588401131621e-10,
+              -8.738370957988347e-11
+            ],
+            [
+              -8.738370957988347e-11,
+              6.883873295277259e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            20.951247792784702,
+            2.486805965132877
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.012955667994503983,
+            0.030380031156472587
+          ],
+          "covariance_px2": [
+            [
+              0.0015610721520201002,
+              -0.0004939333597494439
+            ],
+            [
+              -0.0004939333597494439,
+              0.0016871894693057396
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.19659241522158e-10,
+              -8.738360025045881e-11
+            ],
+            [
+              -8.738360025045882e-11,
+              6.883877263249581e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            20.951244032753024,
+            2.486810862766916
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.08557130551764303,
+            0.07042510560677506
+          ],
+          "covariance_px2": [
+            [
+              0.005820472182876625,
+              0.0010115879051260867
+            ],
+            [
+              0.0010115879051260852,
+              0.002437378485851501
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.200447537898023e-10,
+              -8.728078962724248e-11
+            ],
+            [
+              -8.728078962724248e-11,
+              6.887632041926798e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            20.951242462035705,
+            2.4868129890912805
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.058825841275528035,
+            -0.006052519520316935
+          ],
+          "covariance_px2": [
+            [
+              0.0014798098308133416,
+              -0.0003358680453826906
+            ],
+            [
+              -0.00033586804538269106,
+              0.0016649231288211872
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.202097239317494e-10,
+              -8.723784345156379e-11
+            ],
+            [
+              -8.723784345156382e-11,
+              6.889209104613433e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            20.95123645062487,
+            2.4868216029158177
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.04686836093483038,
+            0.0042883921202454545
+          ],
+          "covariance_px2": [
+            [
+              0.000993210654753855,
+              7.9568424194968e-05
+            ],
+            [
+              7.956842419496796e-05,
+              0.001319874850118756
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.208646434662519e-10,
+              -8.707363904520588e-11
+            ],
+            [
+              -8.707363904520588e-11,
+              6.8953046335108e-10
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            20.951236446938847,
+            2.486821608447862
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.0003074055902487771,
+            0.024349284397538362
+          ],
+          "covariance_px2": [
+            [
+              0.0010309290969534167,
+              0.0001964249052955845
+            ],
+            [
+              0.0001964249052955848,
+              0.001528601909464805
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.208650576159643e-10,
+              -8.707353811888548e-11
+            ],
+            [
+              -8.707353811888548e-11,
+              6.895308477708094e-10
+            ]
+          ]
+        }
+      ],
+      "eligible": true
+    },
+    {
+      "catalog": {
+        "source_id": "1636317260569843840",
+        "ref_epoch": 2016.0,
+        "ra": 248.25434085538,
+        "dec": 66.67967537696,
+        "parallax": 2.102,
+        "pmra": -11.774,
+        "pmdec": 15.697,
+        "ra_error": 0.02539999969303608,
+        "dec_error": 0.025499999523162842,
+        "parallax_error": 0.024399999529123306,
+        "pmra_error": 0.03700000047683716,
+        "pmdec_error": 0.03500000014901161,
+        "ra_dec_corr": 0.10260000079870224,
+        "ra_parallax_corr": -0.03240000084042549,
+        "ra_pmra_corr": 0.2815999984741211,
+        "ra_pmdec_corr": 0.24619999527931213,
+        "dec_parallax_corr": 0.1281999945640564,
+        "dec_pmra_corr": 0.22130000591278076,
+        "dec_pmdec_corr": -0.0966000035405159,
+        "parallax_pmra_corr": -0.044599998742341995,
+        "parallax_pmdec_corr": -0.05009999871253967,
+        "pmra_pmdec_corr": 0.18160000443458557,
+        "phot_g_mean_mag": 15.6494779586792,
+        "bp_rp": 1.4487040042877197,
+        "ruwe": 1.0609999895095825,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 25,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        11.421032082412719,
+        -12.541794173939692
+      ],
+      "brightness": 0.2026843176636911,
+      "match_arcsec": 0.8808332649761056,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            11.420014690403928,
+            -12.54220400027156
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.10652351870132293,
+            0.09920236954578421
+          ],
+          "covariance_px2": [
+            [
+              0.012551687785198383,
+              -0.0021315257489059433
+            ],
+            [
+              -0.002131525748905941,
+              0.013408425748223651
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.3300250906699416e-09,
+              -6.46779271616735e-10
+            ],
+            [
+              -6.467792716167349e-10,
+              2.8265322610086734e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            11.420150992785985,
+            -12.54211084216226
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.13813947984020913,
+            -0.006524983520218797
+          ],
+          "covariance_px2": [
+            [
+              0.01573680795532802,
+              0.0017631353616427991
+            ],
+            [
+              0.0017631353616428,
+              0.009927850952854127
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.357516725999617e-09,
+              -6.494023305283607e-10
+            ],
+            [
+              -6.494023305283606e-10,
+              2.8473116438507905e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            11.420151009368226,
+            -12.542110831781734
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            11.420151025769886,
+            -12.542110821515294
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            11.420151042164733,
+            -12.542110811245756
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            11.420251460193377,
+            -12.542051823413168
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.03006287924873874,
+            0.06869184210776069
+          ],
+          "covariance_px2": [
+            [
+              0.020140943707371996,
+              0.0017851597880051888
+            ],
+            [
+              0.0017851597880051877,
+              0.008020019890794082
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.378741966061014e-09,
+              -6.516636659815863e-10
+            ],
+            [
+              -6.516636659815863e-10,
+              2.8622764579889284e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            11.420261823906422,
+            -12.542046164146122
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.21649885264621638,
+            -0.12616241431449104
+          ],
+          "covariance_px2": [
+            [
+              0.006703401180678981,
+              -9.282804562080018e-06
+            ],
+            [
+              -9.282804562080018e-06,
+              0.008594242151405175
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.380985707292959e-09,
+              -6.519234639578735e-10
+            ],
+            [
+              -6.519234639578735e-10,
+              2.863812942065699e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            11.420268453659585,
+            -12.542042584645138
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.05923720159972845,
+            0.037439657627805545
+          ],
+          "covariance_px2": [
+            [
+              0.007732235203964967,
+              -0.000507045669160336
+            ],
+            [
+              -0.0005070456691603361,
+              0.012590216563282056
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.3824266853371132e-09,
+              -6.520927649927785e-10
+            ],
+            [
+              -6.520927649927785e-10,
+              2.864795635338416e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            11.421090999675393,
+            -12.541314784787168
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            11.421090999514846,
+            -12.541314770464552
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            11.421090919530325,
+            -12.541280064424086
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.07925874658416099,
+            -0.03527676191813356
+          ],
+          "covariance_px2": [
+            [
+              0.0073771281201616915,
+              0.0003706351708016989
+            ],
+            [
+              0.00037063517080169794,
+              0.008290456821913008
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.763788251674921e-09,
+              -7.357136074765357e-10
+            ],
+            [
+              -7.357136074765357e-10,
+              3.236682928786257e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            11.421090919625538,
+            -12.541280049767913
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.007481658091581522,
+            0.022946624473103583
+          ],
+          "covariance_px2": [
+            [
+              0.0072279905068698995,
+              -0.0007936241924407303
+            ],
+            [
+              -0.0007936241924407307,
+              0.00851017081310654
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              3.763791091013e-09,
+              -7.357136049469396e-10
+            ],
+            [
+              -7.357136049469396e-10,
+              3.236684995338435e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            11.42109106197633,
+            -12.541265945313
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            11.421091154083065,
+            -12.541259899142517
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            11.421091705846326,
+            -12.541235836086578
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            11.421091706286212,
+            -12.541235820842743
+          ],
+          "rejection": "low_snr"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1636314443071299712",
+        "ref_epoch": 2016.0,
+        "ra": 248.40992667965,
+        "dec": 66.6370729497,
+        "parallax": 0.9727,
+        "pmra": 4.697,
+        "pmdec": -0.018,
+        "ra_error": 0.014999999664723873,
+        "dec_error": 0.01600000075995922,
+        "parallax_error": 0.015200000256299973,
+        "pmra_error": 0.019999999552965164,
+        "pmdec_error": 0.020999999716877937,
+        "ra_dec_corr": 0.06270000338554382,
+        "ra_parallax_corr": -0.03060000017285347,
+        "ra_pmra_corr": 0.2567000091075897,
+        "ra_pmdec_corr": 0.19930000603199005,
+        "dec_parallax_corr": 0.1875,
+        "dec_pmra_corr": 0.19930000603199005,
+        "dec_pmdec_corr": -0.13580000400543213,
+        "parallax_pmra_corr": -0.10379999876022339,
+        "parallax_pmdec_corr": -0.08910000324249268,
+        "pmra_pmdec_corr": 0.013799999840557575,
+        "phot_g_mean_mag": 14.542362213134766,
+        "bp_rp": 0.8041759729385376,
+        "ruwe": 0.9850000143051147,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 25,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        -24.755867519004106,
+        -37.40936266134791
+      ],
+      "brightness": 0.22801218829964864,
+      "match_arcsec": 0.6086000112561067,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            -24.75579869037064,
+            -37.40916675180179
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.0768910576753683,
+            0.03124696056050169
+          ],
+          "covariance_px2": [
+            [
+              0.011682578218944632,
+              -0.001914541740076934
+            ],
+            [
+              -0.001914541740076934,
+              0.0072764234923736485
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              9.722495748730893e-10,
+              -3.7185739582439155e-11
+            ],
+            [
+              -3.7185739582439155e-11,
+              1.0054013002488935e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            -24.75579181677481,
+            -37.40916379742458
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            -24.755791815917682,
+            -37.40916379748019
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            -24.755791815074126,
+            -37.409163797553575
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            -24.75579181424208,
+            -37.40916379763678
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            -24.755786805354717,
+            -37.409166123421514
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.028183307944207314,
+            0.13075222166730782
+          ],
+          "covariance_px2": [
+            [
+              0.006453633824454882,
+              -0.00024306659177743652
+            ],
+            [
+              -0.00024306659177743655,
+              0.00933217507755747
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              9.900474726038531e-10,
+              -3.738858123411831e-11
+            ],
+            [
+              -3.738858123411831e-11,
+              1.0181590274702546e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            -24.75578631510509,
+            -37.40916658088008
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.0936429587310208,
+            -0.09724736075906293
+          ],
+          "covariance_px2": [
+            [
+              0.006242183080195817,
+              -0.001338656899017605
+            ],
+            [
+              -0.001338656899017606,
+              0.007464356659502039
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              9.908679866557994e-10,
+              -3.742625215020821e-11
+            ],
+            [
+              -3.7426252150208214e-11,
+              1.0187219718666905e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            -24.755786005211796,
+            -37.409166895041665
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.041286783834973306,
+            -0.08801408914374065
+          ],
+          "covariance_px2": [
+            [
+              0.00459222879440022,
+              -4.7367206440141724e-05
+            ],
+            [
+              -4.7367206440141744e-05,
+              0.006931785550924005
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              9.913948207538097e-10,
+              -3.745196594669462e-11
+            ],
+            [
+              -3.745196594669462e-11,
+              1.0190826802888297e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            -24.75629464550464,
+            -37.40946547704334
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            -24.756294652404733,
+            -37.40946547529418
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            -24.75631094211861,
+            -37.40946102729065
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            -24.75631094882067,
+            -37.40946102532823
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            -24.756317333252028,
+            -37.40945910709772
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            -24.756320030225602,
+            -37.40945826662032
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            -24.756330534862236,
+            -37.40945481921129
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            -24.7563305414116,
+            -37.409454816989
+          ],
+          "rejection": "edge"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1636318428800953984",
+        "ref_epoch": 2016.0,
+        "ra": 248.55924664787,
+        "dec": 66.74072929941,
+        "parallax": 2.1279,
+        "pmra": 4.648,
+        "pmdec": -16.432,
+        "ra_error": 0.017000000923871994,
+        "dec_error": 0.01769999973475933,
+        "parallax_error": 0.01720000058412552,
+        "pmra_error": 0.023000000044703484,
+        "pmdec_error": 0.024000000208616257,
+        "ra_dec_corr": 0.08160000294446945,
+        "ra_parallax_corr": -0.10050000250339508,
+        "ra_pmra_corr": 0.1565999984741211,
+        "ra_pmdec_corr": 0.2705000042915344,
+        "dec_parallax_corr": 0.02070000022649765,
+        "dec_pmra_corr": 0.25279998779296875,
+        "dec_pmdec_corr": 0.13860000669956207,
+        "parallax_pmra_corr": -0.0917000025510788,
+        "parallax_pmdec_corr": -0.2386000007390976,
+        "pmra_pmdec_corr": 0.10119999945163727,
+        "phot_g_mean_mag": 14.826393127441406,
+        "bp_rp": 1.2119239568710327,
+        "ruwe": 0.9359999895095825,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 25,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 1,
+        "non_single_star": 0,
+        "phot_variable_flag": "VARIABLE"
+      },
+      "anchor": [
+        -59.03599713394976,
+        23.41674097125373
+      ],
+      "brightness": 0.35013446827957145,
+      "match_arcsec": 0.3472974999078123,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            -59.036140188774596,
+            23.418041322915677
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.014032012698457663,
+            -0.016774141106246532
+          ],
+          "covariance_px2": [
+            [
+              0.002539074820678703,
+              -0.0009493717115930426
+            ],
+            [
+              -0.0009493717115930432,
+              0.002973619799780041
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.2639266167044746e-09,
+              -1.7027788647373837e-10
+            ],
+            [
+              -1.7027788647373837e-10,
+              1.339739187350444e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            -59.03609456729582,
+            23.417956984412044
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            -59.03609456171404,
+            23.417956973226552
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            -59.036094556205,
+            23.417956962186135
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            -59.036094550687665,
+            23.41795695113657
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            -59.03606103025761,
+            23.41788487739884
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            -59.036057614642274,
+            23.417876920192924
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            -59.03605543574443,
+            23.41787177682839
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            -59.036684441085086,
+            23.415782299887454
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            -59.036684452458104,
+            23.415782292694555
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.002378336620758148,
+            0.07195788045193297
+          ],
+          "covariance_px2": [
+            [
+              0.0032771370867121412,
+              0.00042273592329417656
+            ],
+            [
+              0.00042273592329417705,
+              0.003984563802561845
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.4248727941738325e-09,
+              -1.99006146547832e-10
+            ],
+            [
+              -1.99006146547832e-10,
+              1.6124394566129429e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            -59.03671125141305,
+            23.415765780321294
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.15190777970789782,
+            0.05388817728048423
+          ],
+          "covariance_px2": [
+            [
+              0.005998388262139922,
+              -0.0007386914364347817
+            ],
+            [
+              -0.0007386914364347823,
+              0.004307452927292675
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.4268908484061194e-09,
+              -1.97340151452417e-10
+            ],
+            [
+              -1.97340151452417e-10,
+              1.6136711957094837e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            -59.03671126241241,
+            23.415765773717013
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.0012836877089554832,
+            0.008847521752070264
+          ],
+          "covariance_px2": [
+            [
+              0.003291966841708254,
+              2.4756787246085803e-05
+            ],
+            [
+              2.4756787246085783e-05,
+              0.004834078900958506
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.4268916989232666e-09,
+              -1.9733946862614922e-10
+            ],
+            [
+              -1.9733946862614922e-10,
+              1.613671649808651e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            -59.03672172199924,
+            23.415759554855143
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.03220338879592788,
+            -0.01936098974292122
+          ],
+          "covariance_px2": [
+            [
+              0.010029529457978206,
+              -0.0006832479952001897
+            ],
+            [
+              -0.0006832479952001891,
+              0.008483500873498542
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.4277126682851623e-09,
+              -1.9669460230061106e-10
+            ],
+            [
+              -1.9669460230061103e-10,
+              1.614100982775722e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            -59.03672613240002,
+            23.415756969911257
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.08635146333696042,
+            0.20124363306203463
+          ],
+          "covariance_px2": [
+            [
+              0.007173558629603119,
+              0.0018218785714146485
+            ],
+            [
+              0.0018218785714146494,
+              0.00930411637674139
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.4280647461719843e-09,
+              -1.9642378235913076e-10
+            ],
+            [
+              -1.9642378235913078e-10,
+              1.6142734243854028e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            -59.03674326217181,
+            23.415747137437016
+          ],
+          "rejection": null,
+          "delta_px": [
+            0.09634271984887732,
+            0.020570856001825177
+          ],
+          "covariance_px2": [
+            [
+              0.007714205212178383,
+              0.001944432100542113
+            ],
+            [
+              0.0019444321005421155,
+              0.011216987457414288
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.4294668817912439e-09,
+              -1.9537895542813995e-10
+            ],
+            [
+              -1.9537895542813992e-10,
+              1.614894995401461e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            -59.036743272812714,
+            23.415747131423487
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.05018258540931697,
+            0.19430568967836237
+          ],
+          "covariance_px2": [
+            [
+              0.006378741096510535,
+              -0.0019599704452509074
+            ],
+            [
+              -0.0019599704452509087,
+              0.005657381846475629
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              1.4294677532215653e-09,
+              -1.9537830222534524e-10
+            ],
+            [
+              -1.9537830222534526e-10,
+              1.6148953602274313e-09
+            ]
+          ]
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1648330352816037632",
+        "ref_epoch": 2016.0,
+        "ra": 248.51734222972,
+        "dec": 66.8758739798,
+        "parallax": 0.6333,
+        "pmra": 1.443,
+        "pmdec": 1.323,
+        "ra_error": 0.013199999928474426,
+        "dec_error": 0.014299999922513962,
+        "parallax_error": 0.0142000000923872,
+        "pmra_error": 0.01899999938905239,
+        "pmdec_error": 0.019999999552965164,
+        "ra_dec_corr": 0.0038999998942017555,
+        "ra_parallax_corr": -0.0471000000834465,
+        "ra_pmra_corr": -0.07850000262260437,
+        "ra_pmdec_corr": 0.11379999667406082,
+        "dec_parallax_corr": 0.07150000333786011,
+        "dec_pmra_corr": 0.09470000118017197,
+        "dec_pmdec_corr": -0.04280000180006027,
+        "parallax_pmra_corr": -0.17110000550746918,
+        "parallax_pmdec_corr": -0.20200000703334808,
+        "pmra_pmdec_corr": 0.04089999943971634,
+        "phot_g_mean_mag": 14.369636535644531,
+        "bp_rp": 1.0925350189208984,
+        "ruwe": 0.9879999756813049,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 25,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        -48.900939366657965,
+        102.49539335833275
+      ],
+      "brightness": 0.40279630478926626,
+      "match_arcsec": 0.3287887849501903,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            -48.90098079136601,
+            102.49545027077588
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            -48.90096733379944,
+            102.49545954716213
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            -48.900967332157975,
+            102.49545954801968
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            -48.900967330531614,
+            102.4954595488489
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            -48.90096732890902,
+            102.49545954968512
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            -48.90095744132201,
+            102.49546345947114
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            -48.900956433975864,
+            102.49546372490018
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            -48.90095579140139,
+            102.49546388118532
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            -48.901144878912035,
+            102.49538604483574
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            -48.901144882311286,
+            102.49538604685934
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            -48.90115289233725,
+            102.49539107647001
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            -48.901152895614345,
+            102.49539107863194
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            -48.90115602214517,
+            102.49539317431633
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            -48.9011573405172,
+            102.49539408116814
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            -48.90116246128139,
+            102.49539773816892
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            -48.90116246445993,
+            102.4953977404987
+          ],
+          "rejection": "edge"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1648353751797866496",
+        "ref_epoch": 2016.0,
+        "ra": 248.52730388353,
+        "dec": 66.86574621767,
+        "parallax": 1.7732,
+        "pmra": -11.087,
+        "pmdec": 5.179,
+        "ra_error": 0.021800000220537186,
+        "dec_error": 0.02329999953508377,
+        "parallax_error": 0.022299999371170998,
+        "pmra_error": 0.029999999329447746,
+        "pmdec_error": 0.03200000151991844,
+        "ra_dec_corr": -0.07010000199079514,
+        "ra_parallax_corr": -0.056699998676776886,
+        "ra_pmra_corr": -0.02800000086426735,
+        "ra_pmdec_corr": 0.2630999982357025,
+        "dec_parallax_corr": 0.06920000165700912,
+        "dec_pmra_corr": 0.24379999935626984,
+        "dec_pmdec_corr": -0.051100000739097595,
+        "parallax_pmra_corr": -0.1289999932050705,
+        "parallax_pmdec_corr": -0.16179999709129333,
+        "pmra_pmdec_corr": -0.02969999983906746,
+        "phot_g_mean_mag": 15.381649017333984,
+        "bp_rp": 1.360653042793274,
+        "ruwe": 1.0299999713897705,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 24,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 0,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        -51.20518029196897,
+        96.58597215609623
+      ],
+      "brightness": 0.2601080906382904,
+      "match_arcsec": 1.3165243667385764,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            -51.20610061590858,
+            96.58605773961268
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            -51.20597916374899,
+            96.58609139635082
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            -51.205979148968325,
+            96.58609139964653
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            -51.20597913435007,
+            96.58609140290447
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            -51.20597911974346,
+            96.58609140617172
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            -51.20588963563648,
+            96.586108021483
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            -51.20588039729594,
+            96.58610935333319
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            -51.20587448702699,
+            96.58611016798882
+          ],
+          "rejection": "low_snr"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            -51.205078524162445,
+            96.58601376685844
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            -51.20507852351993,
+            96.58601377349122
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            -51.205076729882194,
+            96.58603007671351
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            -51.20507672902335,
+            96.58603008368141
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            -51.20507587025901,
+            96.58603683275811
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            -51.20507547883514,
+            96.58603974622108
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            -51.20507378114199,
+            96.58605145572554
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            -51.205073779993256,
+            96.5860514631943
+          ],
+          "rejection": "edge"
+        }
+      ],
+      "eligible": false
+    },
+    {
+      "catalog": {
+        "source_id": "1648345093143759104",
+        "ref_epoch": 2016.0,
+        "ra": 247.89178681503,
+        "dec": 66.89354942661,
+        "parallax": 5.4011,
+        "pmra": 3.522,
+        "pmdec": -30.404,
+        "ra_error": 0.03840000182390213,
+        "dec_error": 0.04149999842047691,
+        "parallax_error": 0.03929999843239784,
+        "pmra_error": 0.050999999046325684,
+        "pmdec_error": 0.054999999701976776,
+        "ra_dec_corr": 0.009399999864399433,
+        "ra_parallax_corr": -0.11710000038146973,
+        "ra_pmra_corr": -0.09300000220537186,
+        "ra_pmdec_corr": 0.014000000432133675,
+        "dec_parallax_corr": 0.10760000348091125,
+        "dec_pmra_corr": 0.004699999932199717,
+        "dec_pmdec_corr": -0.3587999939918518,
+        "parallax_pmra_corr": -0.1023000031709671,
+        "parallax_pmdec_corr": -0.10040000081062317,
+        "pmra_pmdec_corr": -0.019899999722838402,
+        "phot_g_mean_mag": 16.531551361083984,
+        "bp_rp": 2.5667989253997803,
+        "ruwe": 1.0360000133514404,
+        "astrometric_params_solved": 31,
+        "visibility_periods_used": 27,
+        "duplicated_source": 0,
+        "ipd_frac_multi_peak": 1,
+        "non_single_star": 0,
+        "phot_variable_flag": "NOT_AVAILABLE"
+      },
+      "anchor": [
+        94.8582212142401,
+        112.70635370720028
+      ],
+      "brightness": 0.31727332954343884,
+      "match_arcsec": 3.423972467115949,
+      "split": "training",
+      "entries": [
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch": "before",
+          "expected_px": [
+            94.85739808389735,
+            112.70905886573534
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_1",
+          "epoch": "before",
+          "expected_px": [
+            94.85756175367442,
+            112.70890678661871
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_2",
+          "epoch": "before",
+          "expected_px": [
+            94.85756177364058,
+            112.70890676577086
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_3",
+          "epoch": "before",
+          "expected_px": [
+            94.85756179337588,
+            112.70890674515981
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W23_1C_0021_4",
+          "epoch": "before",
+          "expected_px": [
+            94.85756181311177,
+            112.70890672456719
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W24_1A_0457_1",
+          "epoch": "before",
+          "expected_px": [
+            94.85768220897998,
+            112.70876951523361
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.05602080942182397,
+            0.07587523619002923
+          ],
+          "covariance_px2": [
+            [
+              0.005629847174543876,
+              -0.0008220681628791113
+            ],
+            [
+              -0.0008220681628791103,
+              0.005468941490472184
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.099827281978106e-09,
+              1.7319863763681806e-10
+            ],
+            [
+              1.7319863763681806e-10,
+              6.7106501665620235e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_1A_0631_2",
+          "epoch": "before",
+          "expected_px": [
+            94.85769454585666,
+            112.70875406709065
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.00516719706891422,
+            -0.047880946208508135
+          ],
+          "covariance_px2": [
+            [
+              0.013599662773184936,
+              0.0013240457282176234
+            ],
+            [
+              0.0013240457282176245,
+              0.00862662315673055
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.105193589820436e-09,
+              1.729626548913129e-10
+            ],
+            [
+              1.7296265489131287e-10,
+              6.7144952108705616e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W24_2D_0074_1",
+          "epoch": "before",
+          "expected_px": [
+            94.85770242553801,
+            112.70874405418289
+          ],
+          "rejection": null,
+          "delta_px": [
+            -0.04027137224385058,
+            0.013495067990007215
+          ],
+          "covariance_px2": [
+            [
+              0.008090913734011034,
+              0.0012286522893702359
+            ],
+            [
+              0.0012286522893702352,
+              0.003908766595479617
+            ]
+          ],
+          "gaia_covariance_px2": [
+            [
+              6.108639201579453e-09,
+              1.728008802480563e-10
+            ],
+            [
+              1.728008802480563e-10,
+              6.716961572528701e-09
+            ]
+          ]
+        },
+        {
+          "obs_id": "2025W52_2A_0227_3",
+          "epoch": "after",
+          "expected_px": [
+            94.85686541703916,
+            112.70442252970882
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2025W52_2A_0227_4",
+          "epoch": "after",
+          "expected_px": [
+            94.85686539398677,
+            112.70442251899841
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_3",
+          "epoch": "after",
+          "expected_px": [
+            94.85681128514358,
+            112.70439857247055
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0257_4",
+          "epoch": "after",
+          "expected_px": [
+            94.85681126300805,
+            112.7043985631701
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0534_4",
+          "epoch": "after",
+          "expected_px": [
+            94.85679023571745,
+            112.70438990829535
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_1A_0656_1",
+          "epoch": "after",
+          "expected_px": [
+            94.85678138621729,
+            112.70438637536766
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_2",
+          "epoch": "after",
+          "expected_px": [
+            94.85674711719349,
+            112.70437331191302
+          ],
+          "rejection": "edge"
+        },
+        {
+          "obs_id": "2026W01_2A_0426_3",
+          "epoch": "after",
+          "expected_px": [
+            94.85674709595364,
+            112.70437330412406
+          ],
+          "rejection": "edge"
+        }
+      ],
+      "eligible": false
+    }
+  ],
+  "training_eligible": 3,
+  "configurations": [
+    {
+      "configuration": "strict",
+      "pairs": 0,
+      "real_controls": [],
+      "injections": [],
+      "unavailable_reason": "Fewer than two spectrally matched pairs"
+    },
+    {
+      "configuration": "broad",
+      "pairs": 8,
+      "real_controls": [],
+      "injections": [],
+      "unavailable_reason": "2025W21_1B_0329_2: only 3 usable references for translation"
+    }
+  ]
+}

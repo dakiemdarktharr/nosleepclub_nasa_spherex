@@ -4,7 +4,7 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Cách triển khai](docs/DEPLOYMENT.md) · [Kiểm chứng khoa học mới nhất](docs/QR3_CATWISE_VALIDATION.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Benchmark dataset mới](https://nosleepclub-nasa-spherex.vercel.app/#external-benchmark) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo kiểm chứng mới nhất](docs/EXTERNAL_BENCHMARK.md).
 
 ## Bắt đầu trên web
 
@@ -14,7 +14,23 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 Nút **Hướng dẫn 60 giây** giải thích sao lùn nâu, pixel, ellipse sai số và cách đọc ảnh. Người có kinh nghiệm có thể mở bảng tọa độ, dữ liệu Gaia, FITS và cấu hình đầy đủ.
 
-## Giao diện dễ đọc — 0.5.4
+## Kiểm tra trên dataset mới — 0.6.0
+
+Đã tải **129 cutout QR2** ở ba trường Barnard’s Star, RW Aur và R Draconis, đối chiếu **6.736 hàng Gaia DR3**. Khóa code/dataset/chia mẫu tại commit `8aa2536` trước khi đo. Không thay số đo WISE 0855.
+
+| Trường, phổ rộng | Sao giữ ngoài đo được / thử | RMS lệch vector so Gaia | Nguồn giả fit được / thử | RMS nguồn giả hợp lệ |
+|---|---:|---:|---:|---:|
+| Barnard | 11/11 | 1,921″ | 15/16 | 2,103″ |
+| RW Aur | 11/11 | 0,182″ | 13/16 | 6,009″ |
+| R Dra | Chưa đo được | Chỉ 3 sao căn chỉnh, cần ≥4 | — | — |
+
+![Benchmark độ chính xác trên các trường mới](docs/external-benchmark.jpg)
+
+Barnard có một outlier Gaia **6,309″**. Chính mục tiêu Barnard lệch dự báo **2,628″**, χ²r rất cao dù solver hội tụ. Nguồn mờ trên nền RW Aur phục hồi kém hơn nhiều so với sao Gaia sáng. Phổ chặt/rộng Barnard dùng đúng cùng cặp ảnh; không tính là hai kiểm chứng độc lập.
+
+**Chưa có tỷ lệ chính xác chung hoặc precision/recall tìm kiếm mù.** Đây là kiểm tra local fitting ở vị trí đã biết; 32 tình huống nguồn giả duy nhất, dùng cùng họ ePSF với fitter và ngân sách ellipse còn thiếu hệ thống. [Dataset, phương pháp, kết quả theo độ sáng và cách tái tạo](docs/EXTERNAL_BENCHMARK.md).
+
+## Giao diện dễ đọc
 
 - Dùng **Be Vietnam Pro** ở năm độ đậm 400–800, gồm bộ ký tự Vietnamese và Latin. Font WOFF2 được phục vụ ngay từ repo, dùng được khi mở demo offline; không gọi dịch vụ font bên ngoài lúc chạy.
 - Tăng khoảng cách dòng để dấu tiếng Việt không bị cắt. Bảng, chỉ dẫn và nhãn điều khiển dùng cỡ chữ lớn hơn trên desktop/mobile.
@@ -27,7 +43,7 @@ Nút **Hướng dẫn 60 giây** giải thích sao lùn nâu, pixel, ellipse sai
 
 | Thành phần | Phiên bản | Vai trò |
 |---|---|---|
-| Giao diện | 0.5.4 | Font tiếng Việt, so ảnh, kiểm chứng và nhận xét |
+| Giao diện và benchmark mới | 0.6.0 | Font tiếng Việt, so ảnh, kiểm chứng ba trường và nhận xét |
 | Thí nghiệm catalog IR/ePSF | 0.5.0 | 30 vùng khóa trước; chưa thay số đo mặc định |
 | Phép đo mặc định | 0.3.0 | Pixel gốc, căn chỉnh Gaia; chuyển động chưa xác nhận |
 
@@ -83,10 +99,13 @@ Lệnh `--demo` tải 6 cutout được chọn và kiểm tra FITS; lưu trong `
 
 `prepare_gaia_data.py` tải cutout rộng của đúng 20 exposure cũ và truy vấn Gaia DR3 qua IRSA TAP, lưu ADQL/URL/hash. `gaia_motion.py --publish` cache centroid sao tham chiếu, chạy đổi tập sao, 14 lượt bỏ từng sao, affine, 256 bootstrap căn chỉnh và 32 injection mỗi cấu hình; sau đó thêm sản phẩm Gaia vào demo. Chạy các bước theo thứ tự trên nếu tái tạo toàn bộ manifest. 31 kiểm thử kiểm tra cả các sản phẩm đã commit mà không cần tải raw.
 
-Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Toàn bộ suite hiện có 46 kiểm thử offline, gồm API, deblending, propagation CatWISE, ePSF, lock và giao diện.
+Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Toàn bộ suite hiện có 49 kiểm thử offline, gồm API, deblending, propagation CatWISE, ePSF, lock, benchmark ngoài trường và giao diện.
+
+Benchmark 0.6.0: `python -m scripts.prepare_benchmark_data --download`, rồi `python -m scripts.benchmark_accuracy`. Cần calibration D6 của quy trình trước. Protocol đã có trong repo; script kiểm tra hash và từ chối thay nguồn đã khóa. Xem báo cáo trước khi diễn giải số đo hoặc tạo tập kiểm chứng mới.
 
 ## Tài liệu
 
+- [Benchmark ba trường mới: dataset, độ chính xác và các lỗi](docs/EXTERNAL_BENCHMARK.md)
 - [QR3, CatWISE, ePSF và 30 vùng khóa trước](docs/QR3_CATWISE_VALIDATION.md)
 - [Font tiếng Việt, tương phản và bố cục](docs/READABILITY.md)
 - [Thiết kế luồng cho người mới](docs/UI_DESIGN.md)
