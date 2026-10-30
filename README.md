@@ -32,6 +32,8 @@ Bước khoa học kế tiếp dùng [30 trường chọn trước](docs/INDEPEN
 
 [Đối chứng phổ độc lập](docs/SPECTRAL_REFERENCE_RESULTS.md) đã tải JWST/NIRSpec G395M và PRISM thật cùng response lab SPHEREx R7. 102/102 phép tích phân G395M chạy được, nhưng **0/102 đủ hỗ trợ toàn dải**; phần trọng số thiếu 0,014–0,159% không phải sai số flux. Đối chứng mới dùng riêng PRISM, không ghép/scale hoặc deconvolve LSF. [Binder theo HDU/pixel và renderer có đơn vị](docs/WISE_LINKED_PROTOCOL.md) đã nối vào fit WISE có điều kiện; [quy ước màu calibration chính thức](docs/PHOTOMETRIC_CONVENTION_AUDIT.md), response qua footprint nguồn, LSF, biến thiên phổ và uncertainty hệ thống vẫn chưa được xác minh. Chưa thể dùng kết quả để giảm sai số công bố.
 
+**Đối chứng đã phát hành qua [PR #7](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/7) tại `8032493`.** [CI](docs/evidence/0.10/ci-pr7-e26cfa0.json) hoàn tất 326 test Python (13 ca raw-cache/photutils tùy chọn skip), sáu ca Mongo replica set thật và ba suite Node 24 đạt. [45 phản hồi production](docs/evidence/0.10/production-8032493.json) xác minh 31 artifact theo Git blob, commit cả ba API và cleanup QA; lượt này không cần retry upstream. [Kiểm tra browser public](docs/evidence/0.10/linked-production-browser.json) xác minh bảng/biểu đồ/diagnostic và đường về ảnh thật. Đây là nghiệm thu phần mềm trong phạm vi đã thử, chưa chứng minh accuracy, SLO, backup/restore hoặc chịu tải production.
+
 [Nguồn và quyền sử dụng](NOTICE.md): font, dữ liệu và minh họa có điều kiện riêng; quyết định giấy phép mã nguồn đang chờ chủ repo. Không coi repo public là giấy phép chung cho mọi asset.
 
 ## Bắt đầu trên web

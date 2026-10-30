@@ -63,3 +63,20 @@ các asset và hai ảnh chụp: [desktop](evidence/0.10/linked-local-desktop.jp
   lượt kiểm tra này, không khẳng định đã xác định nguyên nhân mạng.
 - Ba suite JavaScript thực thi trên Node v24.18.0, 326 test Python local hoàn
   tất (sáu ca Mongo fixture skip); CI replica set và production cần receipt riêng.
+
+
+## Public linked-flux release — 8032493
+
+[Public browser receipt](evidence/0.10/linked-production-browser.json) và
+[ảnh public](evidence/0.10/linked-production-desktop.jpg) xác minh nhánh
+strict/broad đổi đúng bảng bảy hàng, KPI, SVG; mở chẩn đoán bằng Enter và
+quay về ảnh thật được. Workspace mặc định strict, cả hai overlay measured và
+prior đều tắt. Không quan sát console error/warning trong lượt này. Kiểm tra
+public ở 1280×720; tablet/mobile ở phần local trên cùng asset được hash.
+
+[45 response checks](evidence/0.10/production-8032493.json) so 31 static
+artifact với Git blob và kiểm cả ba API đúng commit; QA guest đã xóa sạch,
+không cần retry upstream ở lượt này. `worktree_dirty:true` trong receipt do
+bằng chứng CI còn chưa commit khi chạy verifier; các asset được chứng nhận
+bằng **Git blob 8032493**, không dùng byte trong working tree để thay thế.
+Đây vẫn là kiểm tra có phạm vi, không phải SLO hoặc nghiệm thu thiên văn.
