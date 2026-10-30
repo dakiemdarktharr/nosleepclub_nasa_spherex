@@ -1,0 +1,3831 @@
+{
+  "audit_coverage": {
+    "completed_saved_points": 718,
+    "fit_failures": "inputs/checksums retained; optimizer failure trajectories not rerun",
+    "preparation_failures": "replayed without positional fitting"
+  },
+  "audit_source_sha256": "37cc2ff7a5eac324163140a7240a4fcd0e75dd952d2a3201c325984f57886113",
+  "counts": {
+    "expected": 840,
+    "missing": 0,
+    "recorded": 840,
+    "statuses": {
+      "fit_completed": 718,
+      "fit_failed": 0,
+      "preparation_failed": 122
+    }
+  },
+  "data_role": "measured native image residuals versus propagated Gaia, opened image-selected field",
+  "design_sha256": "ff81d4dc39336853e52d332ca8fbd3338c22ae818f267df226f3a58eaad72d17",
+  "download": {
+    "bytes": 14164757,
+    "path": "data/reference-stars/records.json.gz",
+    "sha256": "6685f36be7332d22d2201922cb6a6c8b3264d516af6a59b23cb94cdbaf17de6e",
+    "uncompressed_bytes": 85370211,
+    "uncompressed_sha256": "98dbfc7216d2bcdaee495cd171045b30532dbd143107c172c01464b46758dc38"
+  },
+  "failure_reasons": {
+    "ValueError: insufficient fixed-anchor core mask coverage": 6,
+    "ValueError: insufficient native edge margin for full search/PSF support": 116
+  },
+  "frames": [
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.1916081325885718,
+              0.0957644767116561
+            ],
+            "median_radial_arcsec": 0.3547375812685741,
+            "n": 18,
+            "p90_radial_arcsec": 1.0165580657409157,
+            "rms_arcsec": 0.6255695519632314
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.1916081325885718,
+              0.0957644767116561
+            ],
+            "median_radial_arcsec": 0.3547375812685741,
+            "n": 18,
+            "p90_radial_arcsec": 1.0165580657409157,
+            "rms_arcsec": 0.6255695519632314
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.1916081325885718,
+              0.0957644767116561
+            ],
+            "median_radial_arcsec": 0.3547375812685741,
+            "n": 18,
+            "p90_radial_arcsec": 1.0165580657409157,
+            "rms_arcsec": 0.6255695519632314
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.19373174355843034,
+              0.0743657277456088
+            ],
+            "median_radial_arcsec": 0.3157604591071933,
+            "n": 18,
+            "p90_radial_arcsec": 0.9326460368190751,
+            "rms_arcsec": 0.5824676166440311
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.19373174355843034,
+              0.0743657277456088
+            ],
+            "median_radial_arcsec": 0.3157604591071933,
+            "n": 18,
+            "p90_radial_arcsec": 0.9326460368190751,
+            "rms_arcsec": 0.5824676166440311
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.19373174355843034,
+              0.0743657277456088
+            ],
+            "median_radial_arcsec": 0.3157604591071933,
+            "n": 18,
+            "p90_radial_arcsec": 0.9326460368190751,
+            "rms_arcsec": 0.5824676166440311
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.4315653131204961,
+      "median_model_shift_arcsec": 0.0836792649459184,
+      "mjd_midpoint_utc": 60989.366934557,
+      "obs_id": "2025W46_1A_0090_2",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.040667689925403844,
+              0.03715557975243209
+            ],
+            "median_radial_arcsec": 0.285898163982897,
+            "n": 18,
+            "p90_radial_arcsec": 0.759673436064472,
+            "rms_arcsec": 0.45913027844414817
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.040667689925403844,
+              0.03715557975243209
+            ],
+            "median_radial_arcsec": 0.285898163982897,
+            "n": 18,
+            "p90_radial_arcsec": 0.759673436064472,
+            "rms_arcsec": 0.45913027844414817
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.040667689925403844,
+              0.03715557975243209
+            ],
+            "median_radial_arcsec": 0.285898163982897,
+            "n": 18,
+            "p90_radial_arcsec": 0.759673436064472,
+            "rms_arcsec": 0.45913027844414817
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.057728295039750174,
+              0.031215839510764145
+            ],
+            "median_radial_arcsec": 0.2836229901104201,
+            "n": 18,
+            "p90_radial_arcsec": 0.7754168128244381,
+            "rms_arcsec": 0.44213366890812617
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.057728295039750174,
+              0.031215839510764145
+            ],
+            "median_radial_arcsec": 0.2836229901104201,
+            "n": 18,
+            "p90_radial_arcsec": 0.7754168128244381,
+            "rms_arcsec": 0.44213366890812617
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.057728295039750174,
+              0.031215839510764145
+            ],
+            "median_radial_arcsec": 0.2836229901104201,
+            "n": 18,
+            "p90_radial_arcsec": 0.7754168128244381,
+            "rms_arcsec": 0.44213366890812617
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.13036869393870829,
+      "median_model_shift_arcsec": 0.044957238781251574,
+      "mjd_midpoint_utc": 60989.368426814,
+      "obs_id": "2025W46_1A_0090_3",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.05612128239430661,
+              0.2809109140164297
+            ],
+            "median_radial_arcsec": 0.3194648186154564,
+            "n": 18,
+            "p90_radial_arcsec": 0.7261550916225222,
+            "rms_arcsec": 0.637941764824086
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.05612128239430661,
+              0.2809109140164297
+            ],
+            "median_radial_arcsec": 0.3194648186154564,
+            "n": 18,
+            "p90_radial_arcsec": 0.7261550916225222,
+            "rms_arcsec": 0.637941764824086
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.05612128239430661,
+              0.2809109140164297
+            ],
+            "median_radial_arcsec": 0.3194648186154564,
+            "n": 18,
+            "p90_radial_arcsec": 0.7261550916225222,
+            "rms_arcsec": 0.637941764824086
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.06197163989391784,
+              0.2909445105393021
+            ],
+            "median_radial_arcsec": 0.29985624000968925,
+            "n": 18,
+            "p90_radial_arcsec": 0.731297730480269,
+            "rms_arcsec": 0.6369286835141489
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.06197163989391784,
+              0.2909445105393021
+            ],
+            "median_radial_arcsec": 0.29985624000968925,
+            "n": 18,
+            "p90_radial_arcsec": 0.731297730480269,
+            "rms_arcsec": 0.6369286835141489
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.06197163989391784,
+              0.2909445105393021
+            ],
+            "median_radial_arcsec": 0.29985624000968925,
+            "n": 18,
+            "p90_radial_arcsec": 0.731297730480269,
+            "rms_arcsec": 0.6369286835141489
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.21607772621114413,
+      "median_model_shift_arcsec": 0.05699176859748421,
+      "mjd_midpoint_utc": 60989.977657659,
+      "obs_id": "2025W46_1A_0238_1",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.15269347579342973,
+              0.042339690871141464
+            ],
+            "median_radial_arcsec": 0.4620325574419798,
+            "n": 18,
+            "p90_radial_arcsec": 0.9237495688867253,
+            "rms_arcsec": 0.7520149002834335
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.15269347579342973,
+              0.042339690871141464
+            ],
+            "median_radial_arcsec": 0.4620325574419798,
+            "n": 18,
+            "p90_radial_arcsec": 0.9237495688867253,
+            "rms_arcsec": 0.7520149002834335
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.15269347579342973,
+              0.042339690871141464
+            ],
+            "median_radial_arcsec": 0.4620325574419798,
+            "n": 18,
+            "p90_radial_arcsec": 0.9237495688867253,
+            "rms_arcsec": 0.7520149002834335
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.14903763377060228,
+              0.05682092109767326
+            ],
+            "median_radial_arcsec": 0.45192980964420315,
+            "n": 18,
+            "p90_radial_arcsec": 0.8463055107152531,
+            "rms_arcsec": 0.7474288964497251
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.14903763377060228,
+              0.05682092109767326
+            ],
+            "median_radial_arcsec": 0.45192980964420315,
+            "n": 18,
+            "p90_radial_arcsec": 0.8463055107152531,
+            "rms_arcsec": 0.7474288964497251
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.14903763377060228,
+              0.05682092109767326
+            ],
+            "median_radial_arcsec": 0.45192980964420315,
+            "n": 18,
+            "p90_radial_arcsec": 0.8463055107152531,
+            "rms_arcsec": 0.7474288964497251
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.22259645078301346,
+      "median_model_shift_arcsec": 0.08114548802716362,
+      "mjd_midpoint_utc": 60989.979149916,
+      "obs_id": "2025W46_1A_0238_2",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.06234517823155824,
+              0.13908745188535188
+            ],
+            "median_radial_arcsec": 0.3424220398026167,
+            "n": 18,
+            "p90_radial_arcsec": 0.6956222585038572,
+            "rms_arcsec": 0.46498541712106783
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.06234517823155824,
+              0.13908745188535188
+            ],
+            "median_radial_arcsec": 0.3424220398026167,
+            "n": 18,
+            "p90_radial_arcsec": 0.6956222585038572,
+            "rms_arcsec": 0.46498541712106783
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.06234517823155824,
+              0.13908745188535188
+            ],
+            "median_radial_arcsec": 0.3424220398026167,
+            "n": 18,
+            "p90_radial_arcsec": 0.6956222585038572,
+            "rms_arcsec": 0.46498541712106783
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.06821070604133007,
+              0.18629547795492493
+            ],
+            "median_radial_arcsec": 0.29928154651920513,
+            "n": 18,
+            "p90_radial_arcsec": 0.741704183300635,
+            "rms_arcsec": 0.4697440962730302
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.06821070604133007,
+              0.18629547795492493
+            ],
+            "median_radial_arcsec": 0.29928154651920513,
+            "n": 18,
+            "p90_radial_arcsec": 0.741704183300635,
+            "rms_arcsec": 0.4697440962730302
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.06821070604133007,
+              0.18629547795492493
+            ],
+            "median_radial_arcsec": 0.29928154651920513,
+            "n": 18,
+            "p90_radial_arcsec": 0.741704183300635,
+            "rms_arcsec": 0.4697440962730302
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.2435109062583761,
+      "median_model_shift_arcsec": 0.07925530471186357,
+      "mjd_midpoint_utc": 60993.507267173,
+      "obs_id": "2025W46_2A_0214_2",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.08105489287882232,
+              0.08596132017152527
+            ],
+            "median_radial_arcsec": 0.395256844178112,
+            "n": 18,
+            "p90_radial_arcsec": 0.9046395222195276,
+            "rms_arcsec": 0.60401529770117
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.08105489287882232,
+              0.08596132017152527
+            ],
+            "median_radial_arcsec": 0.395256844178112,
+            "n": 18,
+            "p90_radial_arcsec": 0.9046395222195276,
+            "rms_arcsec": 0.60401529770117
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.08105489287882232,
+              0.08596132017152527
+            ],
+            "median_radial_arcsec": 0.395256844178112,
+            "n": 18,
+            "p90_radial_arcsec": 0.9046395222195276,
+            "rms_arcsec": 0.60401529770117
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.09715673032415693,
+              0.10915996044037882
+            ],
+            "median_radial_arcsec": 0.3752143834396567,
+            "n": 18,
+            "p90_radial_arcsec": 0.9359537858849327,
+            "rms_arcsec": 0.5896301345971671
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.09715673032415693,
+              0.10915996044037882
+            ],
+            "median_radial_arcsec": 0.3752143834396567,
+            "n": 18,
+            "p90_radial_arcsec": 0.9359537858849327,
+            "rms_arcsec": 0.5896301345971671
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.09715673032415693,
+              0.10915996044037882
+            ],
+            "median_radial_arcsec": 0.3752143834396567,
+            "n": 18,
+            "p90_radial_arcsec": 0.9359537858849327,
+            "rms_arcsec": 0.5896301345971671
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.18620304156006728,
+      "median_model_shift_arcsec": 0.055571880632931316,
+      "mjd_midpoint_utc": 60993.508759418,
+      "obs_id": "2025W46_2A_0214_3",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.11943874093307404,
+              0.01843798334438153
+            ],
+            "median_radial_arcsec": 0.4205433568309278,
+            "n": 18,
+            "p90_radial_arcsec": 0.8745061187661474,
+            "rms_arcsec": 0.552361664994927
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.11943874093307404,
+              0.01843798334438153
+            ],
+            "median_radial_arcsec": 0.4205433568309278,
+            "n": 18,
+            "p90_radial_arcsec": 0.8745061187661474,
+            "rms_arcsec": 0.552361664994927
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.11943874093307404,
+              0.01843798334438153
+            ],
+            "median_radial_arcsec": 0.4205433568309278,
+            "n": 18,
+            "p90_radial_arcsec": 0.8745061187661474,
+            "rms_arcsec": 0.552361664994927
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.09890426938467772,
+              0.030363803160582306
+            ],
+            "median_radial_arcsec": 0.4159295639772738,
+            "n": 18,
+            "p90_radial_arcsec": 0.9675836284974981,
+            "rms_arcsec": 0.5609987868548525
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.09890426938467772,
+              0.030363803160582306
+            ],
+            "median_radial_arcsec": 0.4159295639772738,
+            "n": 18,
+            "p90_radial_arcsec": 0.9675836284974981,
+            "rms_arcsec": 0.5609987868548525
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.09890426938467772,
+              0.030363803160582306
+            ],
+            "median_radial_arcsec": 0.4159295639772738,
+            "n": 18,
+            "p90_radial_arcsec": 0.9675836284974981,
+            "rms_arcsec": 0.5609987868548525
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.22796071771293164,
+      "median_model_shift_arcsec": 0.083948537256821,
+      "mjd_midpoint_utc": 60993.510251698,
+      "obs_id": "2025W46_2A_0214_4",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.6205303050455149,
+              0.40954763678764594
+            ],
+            "median_radial_arcsec": 0.4107734442715578,
+            "n": 18,
+            "p90_radial_arcsec": 0.9749615819710724,
+            "rms_arcsec": 3.2313045768653033
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.6205303050455149,
+              0.40954763678764594
+            ],
+            "median_radial_arcsec": 0.4107734442715578,
+            "n": 18,
+            "p90_radial_arcsec": 0.9749615819710724,
+            "rms_arcsec": 3.2313045768653033
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.08205507813942593,
+              -0.11572670500935338
+            ],
+            "median_radial_arcsec": 0.4016405687553144,
+            "n": 17,
+            "p90_radial_arcsec": 0.6434563963488212,
+            "rms_arcsec": 0.5520055464222451
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 17,
+          "planned": 21,
+          "reasons": {
+            "better_final_weight_mode": 1
+          },
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.64197940382093,
+              0.4281477051070961
+            ],
+            "median_radial_arcsec": 0.37686659994599536,
+            "n": 18,
+            "p90_radial_arcsec": 0.9613440009256433,
+            "rms_arcsec": 3.227509636419775
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.64197940382093,
+              0.4281477051070961
+            ],
+            "median_radial_arcsec": 0.37686659994599536,
+            "n": 18,
+            "p90_radial_arcsec": 0.9613440009256433,
+            "rms_arcsec": 3.227509636419775
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.1052521508133115,
+              -0.09529163568494
+            ],
+            "median_radial_arcsec": 0.36857420282019193,
+            "n": 17,
+            "p90_radial_arcsec": 0.6286705704253903,
+            "rms_arcsec": 0.5496259163829373
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 17,
+          "planned": 21,
+          "reasons": {
+            "better_final_weight_mode": 1
+          },
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 17,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.3275769855343248,
+      "median_model_shift_arcsec": 0.07096644292854681,
+      "mjd_midpoint_utc": 60993.574916062,
+      "obs_id": "2025W46_2A_0226_1",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.05849211125008994,
+              -0.05138709631655155
+            ],
+            "median_radial_arcsec": 0.4928981701227643,
+            "n": 18,
+            "p90_radial_arcsec": 0.9997935890490744,
+            "rms_arcsec": 0.6574497314597324
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.05849211125008994,
+              -0.05138709631655155
+            ],
+            "median_radial_arcsec": 0.4928981701227643,
+            "n": 18,
+            "p90_radial_arcsec": 0.9997935890490744,
+            "rms_arcsec": 0.6574497314597324
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.05849211125008994,
+              -0.05138709631655155
+            ],
+            "median_radial_arcsec": 0.4928981701227643,
+            "n": 18,
+            "p90_radial_arcsec": 0.9997935890490744,
+            "rms_arcsec": 0.6574497314597324
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.08411378141311682,
+              -0.046262264284217466
+            ],
+            "median_radial_arcsec": 0.4260206144938871,
+            "n": 18,
+            "p90_radial_arcsec": 0.9661790816525676,
+            "rms_arcsec": 0.6386586650969021
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.08411378141311682,
+              -0.046262264284217466
+            ],
+            "median_radial_arcsec": 0.4260206144938871,
+            "n": 18,
+            "p90_radial_arcsec": 0.9661790816525676,
+            "rms_arcsec": 0.6386586650969021
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.08411378141311682,
+              -0.046262264284217466
+            ],
+            "median_radial_arcsec": 0.4260206144938871,
+            "n": 18,
+            "p90_radial_arcsec": 0.9661790816525676,
+            "rms_arcsec": 0.6386586650969021
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.16825842979836977,
+      "median_model_shift_arcsec": 0.0678329089282925,
+      "mjd_midpoint_utc": 60993.577900564,
+      "obs_id": "2025W46_2A_0226_3",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.18207487875959857,
+              0.080073594358552
+            ],
+            "median_radial_arcsec": 0.5224689145321391,
+            "n": 18,
+            "p90_radial_arcsec": 1.2115174546377194,
+            "rms_arcsec": 0.7430686602945754
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.18207487875959857,
+              0.080073594358552
+            ],
+            "median_radial_arcsec": 0.5224689145321391,
+            "n": 18,
+            "p90_radial_arcsec": 1.2115174546377194,
+            "rms_arcsec": 0.7430686602945754
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.18207487875959857,
+              0.080073594358552
+            ],
+            "median_radial_arcsec": 0.5224689145321391,
+            "n": 18,
+            "p90_radial_arcsec": 1.2115174546377194,
+            "rms_arcsec": 0.7430686602945754
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.1880818681402409,
+              0.07164093467258666
+            ],
+            "median_radial_arcsec": 0.5164517114162395,
+            "n": 18,
+            "p90_radial_arcsec": 1.2453180885752038,
+            "rms_arcsec": 0.7541804551738004
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.1880818681402409,
+              0.07164093467258666
+            ],
+            "median_radial_arcsec": 0.5164517114162395,
+            "n": 18,
+            "p90_radial_arcsec": 1.2453180885752038,
+            "rms_arcsec": 0.7541804551738004
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.1880818681402409,
+              0.07164093467258666
+            ],
+            "median_radial_arcsec": 0.5164517114162395,
+            "n": 18,
+            "p90_radial_arcsec": 1.2453180885752038,
+            "rms_arcsec": 0.7541804551738004
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2025-11",
+      "maximum_model_shift_arcsec": 0.1735286860496003,
+      "median_model_shift_arcsec": 0.060290017347808464,
+      "mjd_midpoint_utc": 60993.579392833,
+      "obs_id": "2025W46_2A_0226_4",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.08047436112897856,
+              -0.019826346135155694
+            ],
+            "median_radial_arcsec": 0.327046515519886,
+            "n": 17,
+            "p90_radial_arcsec": 0.6635918775482905,
+            "rms_arcsec": 0.42069861767462025
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.08047436112897856,
+              -0.019826346135155694
+            ],
+            "median_radial_arcsec": 0.327046515519886,
+            "n": 17,
+            "p90_radial_arcsec": 0.6635918775482905,
+            "rms_arcsec": 0.42069861767462025
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.08047436112897856,
+              -0.019826346135155694
+            ],
+            "median_radial_arcsec": 0.327046515519886,
+            "n": 17,
+            "p90_radial_arcsec": 0.6635918775482905,
+            "rms_arcsec": 0.42069861767462025
+          },
+          "completed": 17,
+          "failed": 4,
+          "negative_target_flux": 0,
+          "numerically_supported": 17,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.07924210511337745,
+              -0.013618059478934873
+            ],
+            "median_radial_arcsec": 0.3178804187684729,
+            "n": 17,
+            "p90_radial_arcsec": 0.6119337462827908,
+            "rms_arcsec": 0.40816825379974275
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.07924210511337745,
+              -0.013618059478934873
+            ],
+            "median_radial_arcsec": 0.3178804187684729,
+            "n": 17,
+            "p90_radial_arcsec": 0.6119337462827908,
+            "rms_arcsec": 0.40816825379974275
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.07924210511337745,
+              -0.013618059478934873
+            ],
+            "median_radial_arcsec": 0.3178804187684729,
+            "n": 17,
+            "p90_radial_arcsec": 0.6119337462827908,
+            "rms_arcsec": 0.40816825379974275
+          },
+          "completed": 17,
+          "failed": 4,
+          "negative_target_flux": 0,
+          "numerically_supported": 17,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 17,
+      "common_numerical": 17,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.12960907353946746,
+      "median_model_shift_arcsec": 0.04445285888834255,
+      "mjd_midpoint_utc": 61152.76095428,
+      "obs_id": "2026W17_1B_0507_3",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.02092135350301756,
+              0.08721763811418493
+            ],
+            "median_radial_arcsec": 0.29340755634722804,
+            "n": 19,
+            "p90_radial_arcsec": 0.6456513639382765,
+            "rms_arcsec": 0.48498627250492454
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.02092135350301756,
+              0.08721763811418493
+            ],
+            "median_radial_arcsec": 0.29340755634722804,
+            "n": 19,
+            "p90_radial_arcsec": 0.6456513639382765,
+            "rms_arcsec": 0.48498627250492454
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.02092135350301756,
+              0.08721763811418493
+            ],
+            "median_radial_arcsec": 0.29340755634722804,
+            "n": 19,
+            "p90_radial_arcsec": 0.6456513639382765,
+            "rms_arcsec": 0.48498627250492454
+          },
+          "completed": 19,
+          "failed": 2,
+          "negative_target_flux": 0,
+          "numerically_supported": 19,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.029790009579633597,
+              0.08646167339605897
+            ],
+            "median_radial_arcsec": 0.2293039918699066,
+            "n": 19,
+            "p90_radial_arcsec": 0.6849655776786429,
+            "rms_arcsec": 0.4571230593231033
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.029790009579633597,
+              0.08646167339605897
+            ],
+            "median_radial_arcsec": 0.2293039918699066,
+            "n": 19,
+            "p90_radial_arcsec": 0.6849655776786429,
+            "rms_arcsec": 0.4571230593231033
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.029790009579633597,
+              0.08646167339605897
+            ],
+            "median_radial_arcsec": 0.2293039918699066,
+            "n": 19,
+            "p90_radial_arcsec": 0.6849655776786429,
+            "rms_arcsec": 0.4571230593231033
+          },
+          "completed": 19,
+          "failed": 2,
+          "negative_target_flux": 0,
+          "numerically_supported": 19,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 19,
+      "common_numerical": 19,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.17358529316196875,
+      "median_model_shift_arcsec": 0.06539069971201811,
+      "mjd_midpoint_utc": 61153.437123226,
+      "obs_id": "2026W17_1B_0634_1",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.25357687199548457,
+              0.06489769949945776
+            ],
+            "median_radial_arcsec": 0.3179970465909074,
+            "n": 18,
+            "p90_radial_arcsec": 1.2776937971355273,
+            "rms_arcsec": 0.7463505228536673
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.25357687199548457,
+              0.06489769949945776
+            ],
+            "median_radial_arcsec": 0.3179970465909074,
+            "n": 18,
+            "p90_radial_arcsec": 1.2776937971355273,
+            "rms_arcsec": 0.7463505228536673
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.25357687199548457,
+              0.06489769949945776
+            ],
+            "median_radial_arcsec": 0.3179970465909074,
+            "n": 18,
+            "p90_radial_arcsec": 1.2776937971355273,
+            "rms_arcsec": 0.7463505228536673
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.2213414517613514,
+              0.06907216718459945
+            ],
+            "median_radial_arcsec": 0.29868667813328975,
+            "n": 18,
+            "p90_radial_arcsec": 1.2211484949134868,
+            "rms_arcsec": 0.6827994412478507
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.2213414517613514,
+              0.06907216718459945
+            ],
+            "median_radial_arcsec": 0.29868667813328975,
+            "n": 18,
+            "p90_radial_arcsec": 1.2211484949134868,
+            "rms_arcsec": 0.6827994412478507
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.2213414517613514,
+              0.06907216718459945
+            ],
+            "median_radial_arcsec": 0.29868667813328975,
+            "n": 18,
+            "p90_radial_arcsec": 1.2211484949134868,
+            "rms_arcsec": 0.6827994412478507
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.3223739888499841,
+      "median_model_shift_arcsec": 0.08164662149351352,
+      "mjd_midpoint_utc": 61153.438615495,
+      "obs_id": "2026W17_1B_0634_2",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.2747110739940196,
+              -0.08298390096311722
+            ],
+            "median_radial_arcsec": 0.4103655378527776,
+            "n": 18,
+            "p90_radial_arcsec": 1.2428451890446757,
+            "rms_arcsec": 0.6949302667754542
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.2747110739940196,
+              -0.08298390096311722
+            ],
+            "median_radial_arcsec": 0.4103655378527776,
+            "n": 18,
+            "p90_radial_arcsec": 1.2428451890446757,
+            "rms_arcsec": 0.6949302667754542
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.2747110739940196,
+              -0.08298390096311722
+            ],
+            "median_radial_arcsec": 0.4103655378527776,
+            "n": 18,
+            "p90_radial_arcsec": 1.2428451890446757,
+            "rms_arcsec": 0.6949302667754542
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.2406270996320879,
+              -0.05732537313904614
+            ],
+            "median_radial_arcsec": 0.3187372535909743,
+            "n": 18,
+            "p90_radial_arcsec": 1.1632061705070367,
+            "rms_arcsec": 0.663226291205571
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.2406270996320879,
+              -0.05732537313904614
+            ],
+            "median_radial_arcsec": 0.3187372535909743,
+            "n": 18,
+            "p90_radial_arcsec": 1.1632061705070367,
+            "rms_arcsec": 0.663226291205571
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.2406270996320879,
+              -0.05732537313904614
+            ],
+            "median_radial_arcsec": 0.3187372535909743,
+            "n": 18,
+            "p90_radial_arcsec": 1.1632061705070367,
+            "rms_arcsec": 0.663226291205571
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.24489246495529537,
+      "median_model_shift_arcsec": 0.09624781490195988,
+      "mjd_midpoint_utc": 61153.44010774,
+      "obs_id": "2026W17_1B_0634_3",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.039628739240597885,
+              -0.03996154335933409
+            ],
+            "median_radial_arcsec": 0.3243984921059417,
+            "n": 19,
+            "p90_radial_arcsec": 0.8702863987444013,
+            "rms_arcsec": 0.5590821885572574
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.039628739240597885,
+              -0.03996154335933409
+            ],
+            "median_radial_arcsec": 0.3243984921059417,
+            "n": 19,
+            "p90_radial_arcsec": 0.8702863987444013,
+            "rms_arcsec": 0.5590821885572574
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.008121195904042056,
+              -0.06342376045621867
+            ],
+            "median_radial_arcsec": 0.31922477107694475,
+            "n": 18,
+            "p90_radial_arcsec": 0.9043808600577545,
+            "rms_arcsec": 0.5489648783029425
+          },
+          "completed": 19,
+          "failed": 2,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {
+            "multiple_near_best_modes": 1
+          },
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.040323230188109675,
+              -0.026748828656362668
+            ],
+            "median_radial_arcsec": 0.3321613611592016,
+            "n": 19,
+            "p90_radial_arcsec": 0.7944901574037971,
+            "rms_arcsec": 0.5454931941513728
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.040323230188109675,
+              -0.026748828656362668
+            ],
+            "median_radial_arcsec": 0.3321613611592016,
+            "n": 19,
+            "p90_radial_arcsec": 0.7944901574037971,
+            "rms_arcsec": 0.5454931941513728
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.009224850714934858,
+              -0.047791905014613084
+            ],
+            "median_radial_arcsec": 0.31078509902304036,
+            "n": 18,
+            "p90_radial_arcsec": 0.8382277389037356,
+            "rms_arcsec": 0.5359134518541324
+          },
+          "completed": 19,
+          "failed": 2,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {
+            "multiple_near_best_modes": 1
+          },
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 19,
+      "common_numerical": 18,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.17489928150492476,
+      "median_model_shift_arcsec": 0.03599771428550304,
+      "mjd_midpoint_utc": 61153.441599997,
+      "obs_id": "2026W17_1B_0634_4",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.24248882353360143,
+              0.22046049769154286
+            ],
+            "median_radial_arcsec": 0.3646863205889893,
+            "n": 18,
+            "p90_radial_arcsec": 0.9737135186511924,
+            "rms_arcsec": 0.6636080920594286
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.24248882353360143,
+              0.22046049769154286
+            ],
+            "median_radial_arcsec": 0.3646863205889893,
+            "n": 18,
+            "p90_radial_arcsec": 0.9737135186511924,
+            "rms_arcsec": 0.6636080920594286
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.24248882353360143,
+              0.22046049769154286
+            ],
+            "median_radial_arcsec": 0.3646863205889893,
+            "n": 18,
+            "p90_radial_arcsec": 0.9737135186511924,
+            "rms_arcsec": 0.6636080920594286
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.2351820814832519,
+              0.2357673304795266
+            ],
+            "median_radial_arcsec": 0.33694087942044026,
+            "n": 18,
+            "p90_radial_arcsec": 0.9338649332537736,
+            "rms_arcsec": 0.6270619670822939
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.2351820814832519,
+              0.2357673304795266
+            ],
+            "median_radial_arcsec": 0.33694087942044026,
+            "n": 18,
+            "p90_radial_arcsec": 0.9338649332537736,
+            "rms_arcsec": 0.6270619670822939
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.2351820814832519,
+              0.2357673304795266
+            ],
+            "median_radial_arcsec": 0.33694087942044026,
+            "n": 18,
+            "p90_radial_arcsec": 0.9338649332537736,
+            "rms_arcsec": 0.6270619670822939
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.23992110848484335,
+      "median_model_shift_arcsec": 0.07098961261806375,
+      "mjd_midpoint_utc": 61156.086177138,
+      "obs_id": "2026W17_2A_0591_1",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.08965843921426317,
+              -0.054118810104539644
+            ],
+            "median_radial_arcsec": 0.4672863388748758,
+            "n": 18,
+            "p90_radial_arcsec": 0.9979179404644927,
+            "rms_arcsec": 0.7204990725846094
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.08965843921426317,
+              -0.054118810104539644
+            ],
+            "median_radial_arcsec": 0.4672863388748758,
+            "n": 18,
+            "p90_radial_arcsec": 0.9979179404644927,
+            "rms_arcsec": 0.7204990725846094
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.08965843921426317,
+              -0.054118810104539644
+            ],
+            "median_radial_arcsec": 0.4672863388748758,
+            "n": 18,
+            "p90_radial_arcsec": 0.9979179404644927,
+            "rms_arcsec": 0.7204990725846094
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.11036569486777306,
+              -0.056580077347872994
+            ],
+            "median_radial_arcsec": 0.449324966264287,
+            "n": 18,
+            "p90_radial_arcsec": 1.0345181386863875,
+            "rms_arcsec": 0.7087439369632181
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.11036569486777306,
+              -0.056580077347872994
+            ],
+            "median_radial_arcsec": 0.449324966264287,
+            "n": 18,
+            "p90_radial_arcsec": 1.0345181386863875,
+            "rms_arcsec": 0.7087439369632181
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.11036569486777306,
+              -0.056580077347872994
+            ],
+            "median_radial_arcsec": 0.449324966264287,
+            "n": 18,
+            "p90_radial_arcsec": 1.0345181386863875,
+            "rms_arcsec": 0.7087439369632181
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.14618026672919587,
+      "median_model_shift_arcsec": 0.053036790463111605,
+      "mjd_midpoint_utc": 61156.153381895,
+      "obs_id": "2026W17_2A_0609_1",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.05043851265490664,
+              0.04935750456213339
+            ],
+            "median_radial_arcsec": 0.29479046401235753,
+            "n": 17,
+            "p90_radial_arcsec": 0.5052530107961841,
+            "rms_arcsec": 0.3516164350140584
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.05043851265490664,
+              0.04935750456213339
+            ],
+            "median_radial_arcsec": 0.29479046401235753,
+            "n": 17,
+            "p90_radial_arcsec": 0.5052530107961841,
+            "rms_arcsec": 0.3516164350140584
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.05043851265490664,
+              0.04935750456213339
+            ],
+            "median_radial_arcsec": 0.29479046401235753,
+            "n": 17,
+            "p90_radial_arcsec": 0.5052530107961841,
+            "rms_arcsec": 0.3516164350140584
+          },
+          "completed": 17,
+          "failed": 4,
+          "negative_target_flux": 0,
+          "numerically_supported": 17,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.05444124049684526,
+              0.05722906697961655
+            ],
+            "median_radial_arcsec": 0.2693744141882808,
+            "n": 17,
+            "p90_radial_arcsec": 0.4422603140527962,
+            "rms_arcsec": 0.34690943874906643
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.05444124049684526,
+              0.05722906697961655
+            ],
+            "median_radial_arcsec": 0.2693744141882808,
+            "n": 17,
+            "p90_radial_arcsec": 0.4422603140527962,
+            "rms_arcsec": 0.34690943874906643
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.05444124049684526,
+              0.05722906697961655
+            ],
+            "median_radial_arcsec": 0.2693744141882808,
+            "n": 17,
+            "p90_radial_arcsec": 0.4422603140527962,
+            "rms_arcsec": 0.34690943874906643
+          },
+          "completed": 17,
+          "failed": 4,
+          "negative_target_flux": 0,
+          "numerically_supported": 17,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 17,
+      "common_numerical": 17,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.13935187792039486,
+      "median_model_shift_arcsec": 0.07634855163910319,
+      "mjd_midpoint_utc": 61156.154891907,
+      "obs_id": "2026W17_2A_0609_2",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.017490723652184962,
+              0.008946729316894875
+            ],
+            "median_radial_arcsec": 0.33149047594070696,
+            "n": 17,
+            "p90_radial_arcsec": 0.802847215873953,
+            "rms_arcsec": 0.4856131313633015
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.017490723652184962,
+              0.008946729316894875
+            ],
+            "median_radial_arcsec": 0.33149047594070696,
+            "n": 17,
+            "p90_radial_arcsec": 0.802847215873953,
+            "rms_arcsec": 0.4856131313633015
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.017490723652184962,
+              0.008946729316894875
+            ],
+            "median_radial_arcsec": 0.33149047594070696,
+            "n": 17,
+            "p90_radial_arcsec": 0.802847215873953,
+            "rms_arcsec": 0.4856131313633015
+          },
+          "completed": 17,
+          "failed": 4,
+          "negative_target_flux": 0,
+          "numerically_supported": 17,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.028265776266640206,
+              0.03956545205054324
+            ],
+            "median_radial_arcsec": 0.36021371753033943,
+            "n": 17,
+            "p90_radial_arcsec": 0.7084881010467191,
+            "rms_arcsec": 0.4762439890070404
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.028265776266640206,
+              0.03956545205054324
+            ],
+            "median_radial_arcsec": 0.36021371753033943,
+            "n": 17,
+            "p90_radial_arcsec": 0.7084881010467191,
+            "rms_arcsec": 0.4762439890070404
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.028265776266640206,
+              0.03956545205054324
+            ],
+            "median_radial_arcsec": 0.36021371753033943,
+            "n": 17,
+            "p90_radial_arcsec": 0.7084881010467191,
+            "rms_arcsec": 0.4762439890070404
+          },
+          "completed": 17,
+          "failed": 4,
+          "negative_target_flux": 0,
+          "numerically_supported": 17,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 17,
+      "common_numerical": 17,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.26734153258013027,
+      "median_model_shift_arcsec": 0.04416556456029307,
+      "mjd_midpoint_utc": 61156.493846861,
+      "obs_id": "2026W17_2A_0692_1",
+      "planned_pairs": 21
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.03201042774593128,
+              0.09079378365937409
+            ],
+            "median_radial_arcsec": 0.3333003745273908,
+            "n": 18,
+            "p90_radial_arcsec": 0.6612604272378702,
+            "rms_arcsec": 0.6633485934651173
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.03201042774593128,
+              0.09079378365937409
+            ],
+            "median_radial_arcsec": 0.3333003745273908,
+            "n": 18,
+            "p90_radial_arcsec": 0.6612604272378702,
+            "rms_arcsec": 0.6633485934651173
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.03201042774593128,
+              0.09079378365937409
+            ],
+            "median_radial_arcsec": 0.3333003745273908,
+            "n": 18,
+            "p90_radial_arcsec": 0.6612604272378702,
+            "rms_arcsec": 0.6633485934651173
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.04391653053253557,
+              0.08047199966929688
+            ],
+            "median_radial_arcsec": 0.2794974795294466,
+            "n": 18,
+            "p90_radial_arcsec": 0.6912640547534861,
+            "rms_arcsec": 0.6580862928265597
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.04391653053253557,
+              0.08047199966929688
+            ],
+            "median_radial_arcsec": 0.2794974795294466,
+            "n": 18,
+            "p90_radial_arcsec": 0.6912640547534861,
+            "rms_arcsec": 0.6580862928265597
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.04391653053253557,
+              0.08047199966929688
+            ],
+            "median_radial_arcsec": 0.2794974795294466,
+            "n": 18,
+            "p90_radial_arcsec": 0.6912640547534861,
+            "rms_arcsec": 0.6580862928265597
+          },
+          "completed": 18,
+          "failed": 3,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 21,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "common_completed": 18,
+      "common_numerical": 18,
+      "epoch": "2026-04",
+      "maximum_model_shift_arcsec": 0.200204752257821,
+      "median_model_shift_arcsec": 0.07337037347414396,
+      "mjd_midpoint_utc": 61156.495339106,
+      "obs_id": "2026W17_2A_0692_2",
+      "planned_pairs": 21
+    }
+  ],
+  "journal_digest": "7094fd1ffb8fa1c5a04d17dc573279f38b05421c64218766d482f9b33e6c75ff",
+  "promotion": false,
+  "protocol_commit": "71f63ca4bab85e9ee51c539cd46ae5bfd50c8bc2",
+  "qualification": [
+    "21 previously image-selected stars, not unseen validation",
+    "self excluded from old training registration; shared/upstream WCS dependence remains",
+    "not 840 independent measurements; no confidence interval or PSF correction learned",
+    "nearest/bilinear difference is sensitivity; residual includes catalogue/registration/model effects",
+    "no calibrated uncertainty, source-presence validation or scientific promotion"
+  ],
+  "schema": "reference-star-overview-1",
+  "sources": [
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.007926397631710463,
+              0.024229929433843105
+            ],
+            "median_radial_arcsec": 0.10277837461346326,
+            "n": 20,
+            "p90_radial_arcsec": 0.34297043170919767,
+            "rms_arcsec": 0.21879260315541077
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.007926397631710463,
+              0.024229929433843105
+            ],
+            "median_radial_arcsec": 0.10277837461346326,
+            "n": 20,
+            "p90_radial_arcsec": 0.34297043170919767,
+            "rms_arcsec": 0.21879260315541077
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.007926397631710463,
+              0.024229929433843105
+            ],
+            "median_radial_arcsec": 0.10277837461346326,
+            "n": 20,
+            "p90_radial_arcsec": 0.34297043170919767,
+            "rms_arcsec": 0.21879260315541077
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.03272006672661602,
+              0.010925884198661138
+            ],
+            "median_radial_arcsec": 0.14654907027186292,
+            "n": 20,
+            "p90_radial_arcsec": 0.2815344730328573,
+            "rms_arcsec": 0.18167998846078365
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.03272006672661602,
+              0.010925884198661138
+            ],
+            "median_radial_arcsec": 0.14654907027186292,
+            "n": 20,
+            "p90_radial_arcsec": 0.2815344730328573,
+            "rms_arcsec": 0.18167998846078365
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.03272006672661602,
+              0.010925884198661138
+            ],
+            "median_radial_arcsec": 0.14654907027186292,
+            "n": 20,
+            "p90_radial_arcsec": 0.2815344730328573,
+            "rms_arcsec": 0.18167998846078365
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 1.9333959817886353,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 13.183659553527832,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.24489246495529537,
+      "median_model_shift_arcsec": 0.04939400412408748,
+      "planned_pairs": 20,
+      "source_id": "5756849094111431424"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.02169405462404265,
+              0.04012280622600039
+            ],
+            "median_radial_arcsec": 0.2727773294013941,
+            "n": 20,
+            "p90_radial_arcsec": 0.4836387532376914,
+            "rms_arcsec": 0.3279052390240322
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.02169405462404265,
+              0.04012280622600039
+            ],
+            "median_radial_arcsec": 0.2727773294013941,
+            "n": 20,
+            "p90_radial_arcsec": 0.4836387532376914,
+            "rms_arcsec": 0.3279052390240322
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.02169405462404265,
+              0.04012280622600039
+            ],
+            "median_radial_arcsec": 0.2727773294013941,
+            "n": 20,
+            "p90_radial_arcsec": 0.4836387532376914,
+            "rms_arcsec": 0.3279052390240322
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.012706552085982693,
+              0.06724929501021443
+            ],
+            "median_radial_arcsec": 0.25650151442800045,
+            "n": 20,
+            "p90_radial_arcsec": 0.4514559210270556,
+            "rms_arcsec": 0.3155599400322028
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.012706552085982693,
+              0.06724929501021443
+            ],
+            "median_radial_arcsec": 0.25650151442800045,
+            "n": 20,
+            "p90_radial_arcsec": 0.4514559210270556,
+            "rms_arcsec": 0.3155599400322028
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.012706552085982693,
+              0.06724929501021443
+            ],
+            "median_radial_arcsec": 0.25650151442800045,
+            "n": 20,
+            "p90_radial_arcsec": 0.4514559210270556,
+            "rms_arcsec": 0.3155599400322028
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.8407109975814819,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 12.43194580078125,
+      "legacy_split": "heldout",
+      "maximum_model_shift_arcsec": 0.22796071771293164,
+      "median_model_shift_arcsec": 0.06623658688826406,
+      "planned_pairs": 20,
+      "source_id": "5756861674071053312"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.06581405501802415,
+              -0.014408127492552603
+            ],
+            "median_radial_arcsec": 0.3778756984288617,
+            "n": 20,
+            "p90_radial_arcsec": 0.5487482758302029,
+            "rms_arcsec": 0.46687867409439326
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.06581405501802415,
+              -0.014408127492552603
+            ],
+            "median_radial_arcsec": 0.3778756984288617,
+            "n": 20,
+            "p90_radial_arcsec": 0.5487482758302029,
+            "rms_arcsec": 0.46687867409439326
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.06581405501802415,
+              -0.014408127492552603
+            ],
+            "median_radial_arcsec": 0.3778756984288617,
+            "n": 20,
+            "p90_radial_arcsec": 0.5487482758302029,
+            "rms_arcsec": 0.46687867409439326
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.05545182457806114,
+              0.008786675933999063
+            ],
+            "median_radial_arcsec": 0.3254922303927731,
+            "n": 20,
+            "p90_radial_arcsec": 0.468476378582136,
+            "rms_arcsec": 0.41292427751476685
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.05545182457806114,
+              0.008786675933999063
+            ],
+            "median_radial_arcsec": 0.3254922303927731,
+            "n": 20,
+            "p90_radial_arcsec": 0.468476378582136,
+            "rms_arcsec": 0.41292427751476685
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.05545182457806114,
+              0.008786675933999063
+            ],
+            "median_radial_arcsec": 0.3254922303927731,
+            "n": 20,
+            "p90_radial_arcsec": 0.468476378582136,
+            "rms_arcsec": 0.41292427751476685
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.7110409736633301,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 15.992385864257812,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.1735286860496003,
+      "median_model_shift_arcsec": 0.09260276048029982,
+      "planned_pairs": 20,
+      "source_id": "5756861914589220736"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.07327927531872865,
+              -0.09704516313003614
+            ],
+            "median_radial_arcsec": 0.2315292562973896,
+            "n": 20,
+            "p90_radial_arcsec": 0.4223792300442468,
+            "rms_arcsec": 0.2917688469313405
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.07327927531872865,
+              -0.09704516313003614
+            ],
+            "median_radial_arcsec": 0.2315292562973896,
+            "n": 20,
+            "p90_radial_arcsec": 0.4223792300442468,
+            "rms_arcsec": 0.2917688469313405
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.07327927531872865,
+              -0.09704516313003614
+            ],
+            "median_radial_arcsec": 0.2315292562973896,
+            "n": 20,
+            "p90_radial_arcsec": 0.4223792300442468,
+            "rms_arcsec": 0.2917688469313405
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.055915740103129795,
+              -0.09434721885865424
+            ],
+            "median_radial_arcsec": 0.19521469997449659,
+            "n": 20,
+            "p90_radial_arcsec": 0.35564738877381524,
+            "rms_arcsec": 0.25312883121879476
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.055915740103129795,
+              -0.09434721885865424
+            ],
+            "median_radial_arcsec": 0.19521469997449659,
+            "n": 20,
+            "p90_radial_arcsec": 0.35564738877381524,
+            "rms_arcsec": 0.25312883121879476
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.055915740103129795,
+              -0.09434721885865424
+            ],
+            "median_radial_arcsec": 0.19521469997449659,
+            "n": 20,
+            "p90_radial_arcsec": 0.35564738877381524,
+            "rms_arcsec": 0.25312883121879476
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 1.218135952949524,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 12.5593843460083,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.13127591133483305,
+      "median_model_shift_arcsec": 0.054508535769814175,
+      "planned_pairs": 20,
+      "source_id": "5756864938246197376"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.14092138234786017,
+              0.10761716724670378
+            ],
+            "median_radial_arcsec": 0.6844696524295188,
+            "n": 20,
+            "p90_radial_arcsec": 1.5724522922149227,
+            "rms_arcsec": 0.9379330087515407
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.14092138234786017,
+              0.10761716724670378
+            ],
+            "median_radial_arcsec": 0.6844696524295188,
+            "n": 20,
+            "p90_radial_arcsec": 1.5724522922149227,
+            "rms_arcsec": 0.9379330087515407
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.14092138234786017,
+              0.10761716724670378
+            ],
+            "median_radial_arcsec": 0.6844696524295188,
+            "n": 20,
+            "p90_radial_arcsec": 1.5724522922149227,
+            "rms_arcsec": 0.9379330087515407
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.14387908345785297,
+              0.12507798493451908
+            ],
+            "median_radial_arcsec": 0.6999700638608718,
+            "n": 20,
+            "p90_radial_arcsec": 1.5846098266708621,
+            "rms_arcsec": 0.9310165457878328
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.14387908345785297,
+              0.12507798493451908
+            ],
+            "median_radial_arcsec": 0.6999700638608718,
+            "n": 20,
+            "p90_radial_arcsec": 1.5846098266708621,
+            "rms_arcsec": 0.9310165457878328
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.14387908345785297,
+              0.12507798493451908
+            ],
+            "median_radial_arcsec": 0.6999700638608718,
+            "n": 20,
+            "p90_radial_arcsec": 1.5846098266708621,
+            "rms_arcsec": 0.9310165457878328
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.6727399826049805,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 13.626962661743164,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.3275769855343248,
+      "median_model_shift_arcsec": 0.08920953025147209,
+      "planned_pairs": 20,
+      "source_id": "5756941835340702080"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.28337538555795244,
+              0.3840893279773113
+            ],
+            "median_radial_arcsec": 0.8047656961789733,
+            "n": 20,
+            "p90_radial_arcsec": 1.5169757580717838,
+            "rms_arcsec": 1.1255561942731869
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.28337538555795244,
+              0.3840893279773113
+            ],
+            "median_radial_arcsec": 0.8047656961789733,
+            "n": 20,
+            "p90_radial_arcsec": 1.5169757580717838,
+            "rms_arcsec": 1.1255561942731869
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.28337538555795244,
+              0.3840893279773113
+            ],
+            "median_radial_arcsec": 0.8047656961789733,
+            "n": 20,
+            "p90_radial_arcsec": 1.5169757580717838,
+            "rms_arcsec": 1.1255561942731869
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.297189653989813,
+              0.42287836254471517
+            ],
+            "median_radial_arcsec": 0.8320023854565314,
+            "n": 20,
+            "p90_radial_arcsec": 1.6231911624706024,
+            "rms_arcsec": 1.146284063910863
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.297189653989813,
+              0.42287836254471517
+            ],
+            "median_radial_arcsec": 0.8320023854565314,
+            "n": 20,
+            "p90_radial_arcsec": 1.6231911624706024,
+            "rms_arcsec": 1.146284063910863
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.297189653989813,
+              0.42287836254471517
+            ],
+            "median_radial_arcsec": 0.8320023854565314,
+            "n": 20,
+            "p90_radial_arcsec": 1.6231911624706024,
+            "rms_arcsec": 1.146284063910863
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.9569479823112488,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 14.571992874145508,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.2745477069051994,
+      "median_model_shift_arcsec": 0.0890150208431455,
+      "planned_pairs": 20,
+      "source_id": "5756942110218608640"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.0005577720723734664,
+              -0.34313212683619077
+            ],
+            "median_radial_arcsec": 0.4004408197065964,
+            "n": 2,
+            "p90_radial_arcsec": 0.5831130356837277,
+            "rms_arcsec": 0.4609686854634587
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.0005577720723734664,
+              -0.34313212683619077
+            ],
+            "median_radial_arcsec": 0.4004408197065964,
+            "n": 2,
+            "p90_radial_arcsec": 0.5831130356837277,
+            "rms_arcsec": 0.4609686854634587
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.0005577720723734664,
+              -0.34313212683619077
+            ],
+            "median_radial_arcsec": 0.4004408197065964,
+            "n": 2,
+            "p90_radial_arcsec": 0.5831130356837277,
+            "rms_arcsec": 0.4609686854634587
+          },
+          "completed": 2,
+          "failed": 18,
+          "negative_target_flux": 0,
+          "numerically_supported": 2,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.05284051592722003,
+              -0.3276587830836605
+            ],
+            "median_radial_arcsec": 0.3449741872675258,
+            "n": 2,
+            "p90_radial_arcsec": 0.6104472261220283,
+            "rms_arcsec": 0.4786709071128843
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.05284051592722003,
+              -0.3276587830836605
+            ],
+            "median_radial_arcsec": 0.3449741872675258,
+            "n": 2,
+            "p90_radial_arcsec": 0.6104472261220283,
+            "rms_arcsec": 0.4786709071128843
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.05284051592722003,
+              -0.3276587830836605
+            ],
+            "median_radial_arcsec": 0.3449741872675258,
+            "n": 2,
+            "p90_radial_arcsec": 0.6104472261220283,
+            "rms_arcsec": 0.4786709071128843
+          },
+          "completed": 2,
+          "failed": 18,
+          "negative_target_flux": 0,
+          "numerically_supported": 2,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.8511549830436707,
+      "common_completed": 2,
+      "common_numerical": 2,
+      "g_mag": 13.981247901916504,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.17489928150492476,
+      "median_model_shift_arcsec": 0.12458913846070413,
+      "planned_pairs": 20,
+      "source_id": "5756942655678337920"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.5444283036061336,
+              0.36673621237502824
+            ],
+            "median_radial_arcsec": 0.45193979392113254,
+            "n": 19,
+            "p90_radial_arcsec": 0.9935678056906585,
+            "rms_arcsec": 3.150424985459982
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.5444283036061336,
+              0.36673621237502824
+            ],
+            "median_radial_arcsec": 0.45193979392113254,
+            "n": 19,
+            "p90_radial_arcsec": 0.9935678056906585,
+            "rms_arcsec": 3.150424985459982
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.03164047811486161,
+              -0.1317346340117278
+            ],
+            "median_radial_arcsec": 0.3711135721908918,
+            "n": 18,
+            "p90_radial_arcsec": 0.7124903285920609,
+            "rms_arcsec": 0.5683562778605976
+          },
+          "completed": 19,
+          "failed": 1,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 20,
+          "reasons": {
+            "better_final_weight_mode": 1
+          },
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.5484936251871954,
+              0.39619066023326277
+            ],
+            "median_radial_arcsec": 0.39412563385122157,
+            "n": 19,
+            "p90_radial_arcsec": 0.8917412171164986,
+            "rms_arcsec": 3.141366186168014
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.5484936251871954,
+              0.39619066023326277
+            ],
+            "median_radial_arcsec": 0.39412563385122157,
+            "n": 19,
+            "p90_radial_arcsec": 0.8917412171164986,
+            "rms_arcsec": 3.141366186168014
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.03639089853368148,
+              -0.09994410856331765
+            ],
+            "median_radial_arcsec": 0.3468593246184498,
+            "n": 18,
+            "p90_radial_arcsec": 0.651021720205074,
+            "rms_arcsec": 0.5337614768179014
+          },
+          "completed": 19,
+          "failed": 1,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 20,
+          "reasons": {
+            "better_final_weight_mode": 1
+          },
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 1.1257530450820923,
+      "common_completed": 19,
+      "common_numerical": 18,
+      "g_mag": 13.974357604980469,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.18263384754102482,
+      "median_model_shift_arcsec": 0.04679593304757863,
+      "planned_pairs": 20,
+      "source_id": "5756945443113219072"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.031089811205119965,
+              0.07058890246929683
+            ],
+            "median_radial_arcsec": 0.304929609172652,
+            "n": 20,
+            "p90_radial_arcsec": 0.7959584564475809,
+            "rms_arcsec": 0.4670545138556304
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.031089811205119965,
+              0.07058890246929683
+            ],
+            "median_radial_arcsec": 0.304929609172652,
+            "n": 20,
+            "p90_radial_arcsec": 0.7959584564475809,
+            "rms_arcsec": 0.4670545138556304
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.031089811205119965,
+              0.07058890246929683
+            ],
+            "median_radial_arcsec": 0.304929609172652,
+            "n": 20,
+            "p90_radial_arcsec": 0.7959584564475809,
+            "rms_arcsec": 0.4670545138556304
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.02794827025571795,
+              0.056312193445734335
+            ],
+            "median_radial_arcsec": 0.28618103561959657,
+            "n": 20,
+            "p90_radial_arcsec": 0.6894117574509127,
+            "rms_arcsec": 0.4431959422202423
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.02794827025571795,
+              0.056312193445734335
+            ],
+            "median_radial_arcsec": 0.28618103561959657,
+            "n": 20,
+            "p90_radial_arcsec": 0.6894117574509127,
+            "rms_arcsec": 0.4431959422202423
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.02794827025571795,
+              0.056312193445734335
+            ],
+            "median_radial_arcsec": 0.28618103561959657,
+            "n": 20,
+            "p90_radial_arcsec": 0.6894117574509127,
+            "rms_arcsec": 0.4431959422202423
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 2.2026479244232178,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 15.339062690734863,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.1748901768717905,
+      "median_model_shift_arcsec": 0.050268740518661995,
+      "planned_pairs": 20,
+      "source_id": "5756956163351495040"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.12074468820871216,
+              0.01015766057223722
+            ],
+            "median_radial_arcsec": 0.4886704814477528,
+            "n": 20,
+            "p90_radial_arcsec": 0.8681704497576088,
+            "rms_arcsec": 0.5657624566582542
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.12074468820871216,
+              0.01015766057223722
+            ],
+            "median_radial_arcsec": 0.4886704814477528,
+            "n": 20,
+            "p90_radial_arcsec": 0.8681704497576088,
+            "rms_arcsec": 0.5657624566582542
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.12074468820871216,
+              0.01015766057223722
+            ],
+            "median_radial_arcsec": 0.4886704814477528,
+            "n": 20,
+            "p90_radial_arcsec": 0.8681704497576088,
+            "rms_arcsec": 0.5657624566582542
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.11386648563590052,
+              0.020621270567884008
+            ],
+            "median_radial_arcsec": 0.4665347672844215,
+            "n": 20,
+            "p90_radial_arcsec": 0.8224291920831223,
+            "rms_arcsec": 0.5571881443976504
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.11386648563590052,
+              0.020621270567884008
+            ],
+            "median_radial_arcsec": 0.4665347672844215,
+            "n": 20,
+            "p90_radial_arcsec": 0.8224291920831223,
+            "rms_arcsec": 0.5571881443976504
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.11386648563590052,
+              0.020621270567884008
+            ],
+            "median_radial_arcsec": 0.4665347672844215,
+            "n": 20,
+            "p90_radial_arcsec": 0.8224291920831223,
+            "rms_arcsec": 0.5571881443976504
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 2.009708881378174,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 15.516289710998535,
+      "legacy_split": "heldout",
+      "maximum_model_shift_arcsec": 0.18435038702972315,
+      "median_model_shift_arcsec": 0.06220945488725691,
+      "planned_pairs": 20,
+      "source_id": "5756957675180073600"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.14044809780400702,
+              0.1845375352523965
+            ],
+            "median_radial_arcsec": 0.840407438850571,
+            "n": 19,
+            "p90_radial_arcsec": 1.5846073842903403,
+            "rms_arcsec": 1.088356197450223
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.14044809780400702,
+              0.1845375352523965
+            ],
+            "median_radial_arcsec": 0.840407438850571,
+            "n": 19,
+            "p90_radial_arcsec": 1.5846073842903403,
+            "rms_arcsec": 1.088356197450223
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.11454162994319612,
+              0.17354748918949695
+            ],
+            "median_radial_arcsec": 0.8928494967415537,
+            "n": 18,
+            "p90_radial_arcsec": 1.5848923707146503,
+            "rms_arcsec": 1.1053281045650187
+          },
+          "completed": 19,
+          "failed": 1,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 20,
+          "reasons": {
+            "multiple_near_best_modes": 1
+          },
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.13518960787672737,
+              0.18209361903271132
+            ],
+            "median_radial_arcsec": 0.7766828695980651,
+            "n": 19,
+            "p90_radial_arcsec": 1.4419761540003027,
+            "rms_arcsec": 1.0228673878142782
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.13518960787672737,
+              0.18209361903271132
+            ],
+            "median_radial_arcsec": 0.7766828695980651,
+            "n": 19,
+            "p90_radial_arcsec": 1.4419761540003027,
+            "rms_arcsec": 1.0228673878142782
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.10936158271958686,
+              0.1726529008794095
+            ],
+            "median_radial_arcsec": 0.87744153702905,
+            "n": 18,
+            "p90_radial_arcsec": 1.4654017360980223,
+            "rms_arcsec": 1.0380232441571609
+          },
+          "completed": 19,
+          "failed": 1,
+          "negative_target_flux": 0,
+          "numerically_supported": 18,
+          "planned": 20,
+          "reasons": {
+            "multiple_near_best_modes": 1
+          },
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 1.6029109954833984,
+      "common_completed": 19,
+      "common_numerical": 18,
+      "g_mag": 15.778339385986328,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.4315653131204961,
+      "median_model_shift_arcsec": 0.0779288409384567,
+      "planned_pairs": 20,
+      "source_id": "5756958431094222592"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.11996187675388295,
+              0.028293085009632856
+            ],
+            "median_radial_arcsec": 0.4764842239376515,
+            "n": 20,
+            "p90_radial_arcsec": 0.782377334452717,
+            "rms_arcsec": 0.5502090983982226
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.11996187675388295,
+              0.028293085009632856
+            ],
+            "median_radial_arcsec": 0.4764842239376515,
+            "n": 20,
+            "p90_radial_arcsec": 0.782377334452717,
+            "rms_arcsec": 0.5502090983982226
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.11996187675388295,
+              0.028293085009632856
+            ],
+            "median_radial_arcsec": 0.4764842239376515,
+            "n": 20,
+            "p90_radial_arcsec": 0.782377334452717,
+            "rms_arcsec": 0.5502090983982226
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.11417943026930255,
+              0.042156820530460826
+            ],
+            "median_radial_arcsec": 0.4530148254497316,
+            "n": 20,
+            "p90_radial_arcsec": 0.7130581905708414,
+            "rms_arcsec": 0.5133868706370959
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.11417943026930255,
+              0.042156820530460826
+            ],
+            "median_radial_arcsec": 0.4530148254497316,
+            "n": 20,
+            "p90_radial_arcsec": 0.7130581905708414,
+            "rms_arcsec": 0.5133868706370959
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.11417943026930255,
+              0.042156820530460826
+            ],
+            "median_radial_arcsec": 0.4530148254497316,
+            "n": 20,
+            "p90_radial_arcsec": 0.7130581905708414,
+            "rms_arcsec": 0.5133868706370959
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 1.5596179962158203,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 14.777305603027344,
+      "legacy_split": "heldout",
+      "maximum_model_shift_arcsec": 0.24832957195339536,
+      "median_model_shift_arcsec": 0.0707588754392667,
+      "planned_pairs": 20,
+      "source_id": "5756958671612389632"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "completed": 0,
+          "failed": 20,
+          "negative_target_flux": 0,
+          "numerically_supported": 0,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "completed": 0,
+          "failed": 20,
+          "negative_target_flux": 0,
+          "numerically_supported": 0,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 1.1922160387039185,
+      "common_completed": 0,
+      "common_numerical": 0,
+      "g_mag": 11.26170539855957,
+      "legacy_split": "heldout",
+      "maximum_model_shift_arcsec": null,
+      "median_model_shift_arcsec": null,
+      "planned_pairs": 20,
+      "source_id": "5756959015209770112"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.014677889460199387,
+              -0.11824666924856853
+            ],
+            "median_radial_arcsec": 0.5912901888555355,
+            "n": 20,
+            "p90_radial_arcsec": 1.1439477022891673,
+            "rms_arcsec": 0.8347659305581675
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.014677889460199387,
+              -0.11824666924856853
+            ],
+            "median_radial_arcsec": 0.5912901888555355,
+            "n": 20,
+            "p90_radial_arcsec": 1.1439477022891673,
+            "rms_arcsec": 0.8347659305581675
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.014677889460199387,
+              -0.11824666924856853
+            ],
+            "median_radial_arcsec": 0.5912901888555355,
+            "n": 20,
+            "p90_radial_arcsec": 1.1439477022891673,
+            "rms_arcsec": 0.8347659305581675
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.003777278841310605,
+              -0.09215626806026436
+            ],
+            "median_radial_arcsec": 0.673543519443115,
+            "n": 20,
+            "p90_radial_arcsec": 1.0436816110511022,
+            "rms_arcsec": 0.849383380336749
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.003777278841310605,
+              -0.09215626806026436
+            ],
+            "median_radial_arcsec": 0.673543519443115,
+            "n": 20,
+            "p90_radial_arcsec": 1.0436816110511022,
+            "rms_arcsec": 0.849383380336749
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.003777278841310605,
+              -0.09215626806026436
+            ],
+            "median_radial_arcsec": 0.673543519443115,
+            "n": 20,
+            "p90_radial_arcsec": 1.0436816110511022,
+            "rms_arcsec": 0.849383380336749
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.7473300099372864,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 14.027478218078613,
+      "legacy_split": "heldout",
+      "maximum_model_shift_arcsec": 0.19504335803372208,
+      "median_model_shift_arcsec": 0.07638006462469105,
+      "planned_pairs": 20,
+      "source_id": "5756960355239574528"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.04925940564765745,
+              0.1634182305182297
+            ],
+            "median_radial_arcsec": 0.3662228528730773,
+            "n": 20,
+            "p90_radial_arcsec": 0.5618929949346251,
+            "rms_arcsec": 0.40652272818984664
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.04925940564765745,
+              0.1634182305182297
+            ],
+            "median_radial_arcsec": 0.3662228528730773,
+            "n": 20,
+            "p90_radial_arcsec": 0.5618929949346251,
+            "rms_arcsec": 0.40652272818984664
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.04925940564765745,
+              0.1634182305182297
+            ],
+            "median_radial_arcsec": 0.3662228528730773,
+            "n": 20,
+            "p90_radial_arcsec": 0.5618929949346251,
+            "rms_arcsec": 0.40652272818984664
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.05820383712072087,
+              0.17290601710486783
+            ],
+            "median_radial_arcsec": 0.3430817777140481,
+            "n": 20,
+            "p90_radial_arcsec": 0.5646307230352758,
+            "rms_arcsec": 0.4189403657608825
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.05820383712072087,
+              0.17290601710486783
+            ],
+            "median_radial_arcsec": 0.3430817777140481,
+            "n": 20,
+            "p90_radial_arcsec": 0.5646307230352758,
+            "rms_arcsec": 0.4189403657608825
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.05820383712072087,
+              0.17290601710486783
+            ],
+            "median_radial_arcsec": 0.3430817777140481,
+            "n": 20,
+            "p90_radial_arcsec": 0.5646307230352758,
+            "rms_arcsec": 0.4189403657608825
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.8378859758377075,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 13.63157844543457,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.17054342955098845,
+      "median_model_shift_arcsec": 0.0500890189621402,
+      "planned_pairs": 20,
+      "source_id": "5756960454022809088"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.0009415492724892963,
+              0.13298579540817757
+            ],
+            "median_radial_arcsec": 0.30372930319758795,
+            "n": 20,
+            "p90_radial_arcsec": 0.5832183951082943,
+            "rms_arcsec": 0.3549675462677794
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.0009415492724892963,
+              0.13298579540817757
+            ],
+            "median_radial_arcsec": 0.30372930319758795,
+            "n": 20,
+            "p90_radial_arcsec": 0.5832183951082943,
+            "rms_arcsec": 0.3549675462677794
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.0009415492724892963,
+              0.13298579540817757
+            ],
+            "median_radial_arcsec": 0.30372930319758795,
+            "n": 20,
+            "p90_radial_arcsec": 0.5832183951082943,
+            "rms_arcsec": 0.3549675462677794
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.0011180543549646552,
+              0.13383301735598577
+            ],
+            "median_radial_arcsec": 0.3098118186794994,
+            "n": 20,
+            "p90_radial_arcsec": 0.5622113733954521,
+            "rms_arcsec": 0.3578731230124198
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.0011180543549646552,
+              0.13383301735598577
+            ],
+            "median_radial_arcsec": 0.3098118186794994,
+            "n": 20,
+            "p90_radial_arcsec": 0.5622113733954521,
+            "rms_arcsec": 0.3578731230124198
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.0011180543549646552,
+              0.13383301735598577
+            ],
+            "median_radial_arcsec": 0.3098118186794994,
+            "n": 20,
+            "p90_radial_arcsec": 0.5622113733954521,
+            "rms_arcsec": 0.3578731230124198
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.6935039758682251,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 12.715166091918945,
+      "legacy_split": "heldout",
+      "maximum_model_shift_arcsec": 0.12177456327246454,
+      "median_model_shift_arcsec": 0.04303597874333159,
+      "planned_pairs": 20,
+      "source_id": "5756960522742285696"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.07352039539215777,
+              0.07822885132380616
+            ],
+            "median_radial_arcsec": 0.27619410226186225,
+            "n": 20,
+            "p90_radial_arcsec": 0.5122427323677047,
+            "rms_arcsec": 0.3349701257724511
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.07352039539215777,
+              0.07822885132380616
+            ],
+            "median_radial_arcsec": 0.27619410226186225,
+            "n": 20,
+            "p90_radial_arcsec": 0.5122427323677047,
+            "rms_arcsec": 0.3349701257724511
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.07352039539215777,
+              0.07822885132380616
+            ],
+            "median_radial_arcsec": 0.27619410226186225,
+            "n": 20,
+            "p90_radial_arcsec": 0.5122427323677047,
+            "rms_arcsec": 0.3349701257724511
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.07575584565534167,
+              0.05418692988733855
+            ],
+            "median_radial_arcsec": 0.245222716098431,
+            "n": 20,
+            "p90_radial_arcsec": 0.46642178434358966,
+            "rms_arcsec": 0.2936737651186067
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.07575584565534167,
+              0.05418692988733855
+            ],
+            "median_radial_arcsec": 0.245222716098431,
+            "n": 20,
+            "p90_radial_arcsec": 0.46642178434358966,
+            "rms_arcsec": 0.2936737651186067
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.07575584565534167,
+              0.05418692988733855
+            ],
+            "median_radial_arcsec": 0.245222716098431,
+            "n": 20,
+            "p90_radial_arcsec": 0.46642178434358966,
+            "rms_arcsec": 0.2936737651186067
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.8360570073127747,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 12.412317276000977,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.21003031502039685,
+      "median_model_shift_arcsec": 0.08467775560456084,
+      "planned_pairs": 20,
+      "source_id": "5756961003778621824"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.05912128107717044,
+              0.01417022393060248
+            ],
+            "median_radial_arcsec": 0.21113727831151435,
+            "n": 19,
+            "p90_radial_arcsec": 0.37143470926535843,
+            "rms_arcsec": 0.24606885749184523
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.05912128107717044,
+              0.01417022393060248
+            ],
+            "median_radial_arcsec": 0.21113727831151435,
+            "n": 19,
+            "p90_radial_arcsec": 0.37143470926535843,
+            "rms_arcsec": 0.24606885749184523
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.05912128107717044,
+              0.01417022393060248
+            ],
+            "median_radial_arcsec": 0.21113727831151435,
+            "n": 19,
+            "p90_radial_arcsec": 0.37143470926535843,
+            "rms_arcsec": 0.24606885749184523
+          },
+          "completed": 19,
+          "failed": 1,
+          "negative_target_flux": 0,
+          "numerically_supported": 19,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.02730691114789491,
+              0.026224270563613646
+            ],
+            "median_radial_arcsec": 0.17546476564471636,
+            "n": 19,
+            "p90_radial_arcsec": 0.2704607305761702,
+            "rms_arcsec": 0.1968864477493255
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.02730691114789491,
+              0.026224270563613646
+            ],
+            "median_radial_arcsec": 0.17546476564471636,
+            "n": 19,
+            "p90_radial_arcsec": 0.2704607305761702,
+            "rms_arcsec": 0.1968864477493255
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.02730691114789491,
+              0.026224270563613646
+            ],
+            "median_radial_arcsec": 0.17546476564471636,
+            "n": 19,
+            "p90_radial_arcsec": 0.2704607305761702,
+            "rms_arcsec": 0.1968864477493255
+          },
+          "completed": 19,
+          "failed": 1,
+          "negative_target_flux": 0,
+          "numerically_supported": 19,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.14363199472427368,
+      "common_completed": 19,
+      "common_numerical": 19,
+      "g_mag": 10.789581298828125,
+      "legacy_split": "heldout",
+      "maximum_model_shift_arcsec": 0.15765374310172806,
+      "median_model_shift_arcsec": 0.08530951342715021,
+      "planned_pairs": 20,
+      "source_id": "5756961076794790528"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.0076173466572099615,
+              0.04423717472715939
+            ],
+            "median_radial_arcsec": 0.3262825510863759,
+            "n": 20,
+            "p90_radial_arcsec": 0.4828338083216238,
+            "rms_arcsec": 0.3758517206236976
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.0076173466572099615,
+              0.04423717472715939
+            ],
+            "median_radial_arcsec": 0.3262825510863759,
+            "n": 20,
+            "p90_radial_arcsec": 0.4828338083216238,
+            "rms_arcsec": 0.3758517206236976
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.0076173466572099615,
+              0.04423717472715939
+            ],
+            "median_radial_arcsec": 0.3262825510863759,
+            "n": 20,
+            "p90_radial_arcsec": 0.4828338083216238,
+            "rms_arcsec": 0.3758517206236976
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              0.004532418953288868,
+              0.04080298356391392
+            ],
+            "median_radial_arcsec": 0.3049989404268524,
+            "n": 20,
+            "p90_radial_arcsec": 0.4807584183356215,
+            "rms_arcsec": 0.3524102664078179
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              0.004532418953288868,
+              0.04080298356391392
+            ],
+            "median_radial_arcsec": 0.3049989404268524,
+            "n": 20,
+            "p90_radial_arcsec": 0.4807584183356215,
+            "rms_arcsec": 0.3524102664078179
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              0.004532418953288868,
+              0.04080298356391392
+            ],
+            "median_radial_arcsec": 0.3049989404268524,
+            "n": 20,
+            "p90_radial_arcsec": 0.4807584183356215,
+            "rms_arcsec": 0.3524102664078179
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 0.741877019405365,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 12.442839622497559,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.200204752257821,
+      "median_model_shift_arcsec": 0.03878751730854044,
+      "planned_pairs": 20,
+      "source_id": "5756962107586225536"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "completed": 0,
+          "failed": 20,
+          "negative_target_flux": 0,
+          "numerically_supported": 0,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": null,
+            "median_radial_arcsec": null,
+            "n": 0,
+            "p90_radial_arcsec": null,
+            "rms_arcsec": null
+          },
+          "completed": 0,
+          "failed": 20,
+          "negative_target_flux": 0,
+          "numerically_supported": 0,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 1.1349610090255737,
+      "common_completed": 0,
+      "common_numerical": 0,
+      "g_mag": 10.817672729492188,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": null,
+      "median_model_shift_arcsec": null,
+      "planned_pairs": 20,
+      "source_id": "5756962382464133248"
+    },
+    {
+      "arms": [
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.04706426541417841,
+              -0.04028129750959376
+            ],
+            "median_radial_arcsec": 0.35152094644759974,
+            "n": 20,
+            "p90_radial_arcsec": 1.050136168375279,
+            "rms_arcsec": 0.5909052147542047
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.04706426541417841,
+              -0.04028129750959376
+            ],
+            "median_radial_arcsec": 0.35152094644759974,
+            "n": 20,
+            "p90_radial_arcsec": 1.050136168375279,
+            "rms_arcsec": 0.5909052147542047
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.04706426541417841,
+              -0.04028129750959376
+            ],
+            "median_radial_arcsec": 0.35152094644759974,
+            "n": 20,
+            "p90_radial_arcsec": 1.050136168375279,
+            "rms_arcsec": 0.5909052147542047
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "nearest"
+        },
+        {
+          "all_completed": {
+            "mean_east_north_arcsec": [
+              -0.023719687971689912,
+              -0.02963520255578197
+            ],
+            "median_radial_arcsec": 0.377573982019746,
+            "n": 20,
+            "p90_radial_arcsec": 1.0663661904236397,
+            "rms_arcsec": 0.5872461301974864
+          },
+          "common_completed": {
+            "mean_east_north_arcsec": [
+              -0.023719687971689912,
+              -0.02963520255578197
+            ],
+            "median_radial_arcsec": 0.377573982019746,
+            "n": 20,
+            "p90_radial_arcsec": 1.0663661904236397,
+            "rms_arcsec": 0.5872461301974864
+          },
+          "common_numerical": {
+            "mean_east_north_arcsec": [
+              -0.023719687971689912,
+              -0.02963520255578197
+            ],
+            "median_radial_arcsec": 0.377573982019746,
+            "n": 20,
+            "p90_radial_arcsec": 1.0663661904236397,
+            "rms_arcsec": 0.5872461301974864
+          },
+          "completed": 20,
+          "failed": 0,
+          "negative_target_flux": 0,
+          "numerically_supported": 20,
+          "planned": 20,
+          "reasons": {},
+          "variant": "bilinear"
+        }
+      ],
+      "bp_rp": 2.0156409740448,
+      "common_completed": 20,
+      "common_numerical": 20,
+      "g_mag": 15.548577308654785,
+      "legacy_split": "training",
+      "maximum_model_shift_arcsec": 0.2435109062583761,
+      "median_model_shift_arcsec": 0.08901957129925961,
+      "planned_pairs": 20,
+      "source_id": "5756963035299165312"
+    }
+  ],
+  "sources_with_completed_pair": 19,
+  "summary": {
+    "arms": [
+      {
+        "all_completed": {
+          "mean_east_north_arcsec": [
+            -0.017430534899502935,
+            0.07336190717705601
+          ],
+          "median_radial_arcsec": 0.38025470452017746,
+          "n": 359,
+          "p90_radial_arcsec": 0.8761524703301004,
+          "rms_arcsec": 0.9343273358848854
+        },
+        "common_completed": {
+          "mean_east_north_arcsec": [
+            -0.017430534899502935,
+            0.07336190717705601
+          ],
+          "median_radial_arcsec": 0.38025470452017746,
+          "n": 359,
+          "p90_radial_arcsec": 0.8761524703301004,
+          "rms_arcsec": 0.9343273358848854
+        },
+        "common_numerical": {
+          "mean_east_north_arcsec": [
+            0.008152052140697112,
+            0.04654161026566348
+          ],
+          "median_radial_arcsec": 0.37712587738086767,
+          "n": 357,
+          "p90_radial_arcsec": 0.8593375655382208,
+          "rms_arcsec": 0.6037166447257573
+        },
+        "completed": 359,
+        "failed": 61,
+        "negative_target_flux": 0,
+        "numerically_supported": 357,
+        "planned": 420,
+        "reasons": {
+          "better_final_weight_mode": 1,
+          "multiple_near_best_modes": 1
+        },
+        "variant": "nearest"
+      },
+      {
+        "all_completed": {
+          "mean_east_north_arcsec": [
+            -0.022826797145914596,
+            0.08251342560631404
+          ],
+          "median_radial_arcsec": 0.3455384217124869,
+          "n": 359,
+          "p90_radial_arcsec": 0.9421668971701945,
+          "rms_arcsec": 0.9240567029855422
+        },
+        "common_completed": {
+          "mean_east_north_arcsec": [
+            -0.022826797145914596,
+            0.08251342560631404
+          ],
+          "median_radial_arcsec": 0.3455384217124869,
+          "n": 359,
+          "p90_radial_arcsec": 0.9421668971701945,
+          "rms_arcsec": 0.9240567029855422
+        },
+        "common_numerical": {
+          "mean_east_north_arcsec": [
+            0.002721088148072413,
+            0.05586464075154864
+          ],
+          "median_radial_arcsec": 0.34481853423247083,
+          "n": 357,
+          "p90_radial_arcsec": 0.8971381946413494,
+          "rms_arcsec": 0.5886221460829432
+        },
+        "completed": 359,
+        "failed": 61,
+        "negative_target_flux": 0,
+        "numerically_supported": 357,
+        "planned": 420,
+        "reasons": {
+          "better_final_weight_mode": 1,
+          "multiple_near_best_modes": 1
+        },
+        "variant": "bilinear"
+      }
+    ],
+    "common_completed": 359,
+    "common_numerical": 357,
+    "maximum_model_shift_arcsec": 0.4315653131204961,
+    "median_model_shift_arcsec": 0.06687937646529653,
+    "planned_pairs": 420
+  }
+}

@@ -4,26 +4,32 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Đối chứng WISE mới](docs/NEIGHBOR_INTERVENTION_RESULTS.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Kiểm nghiệm mới](docs/REFERENCE_PRESENCE_RESULTS.md).
 
 ## Goal production đang thực hiện — 0.10
 
-[Mở vùng trời](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Đối chứng nguồn chồng/nền/ePSF](https://nosleepclub-nasa-spherex.vercel.app/#neighbor-intervention) · [20 tiêu chí nghiệm thu](docs/PRODUCTION_READINESS.md).
+[Mở vùng trời](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Sao thật & nhận nguồn](https://nosleepclub-nasa-spherex.vercel.app/#reference-presence) · [20 tiêu chí nghiệm thu](docs/PRODUCTION_READINESS.md).
 
 Luồng RA/Dec → metadata IRSA → cutout thật → so/nhấp nháy cùng thang hiển thị → xuất bằng chứng đã hoạt động. Năm mục tiêu của đề có hai cutout thật với nguồn, epoch và hash. Review khách riêng có ID ổn định, hết hạn, xóa theo ID, quota atomic và CI replica set thật; chưa có phân công chuyên gia hoặc chia sẻ nhận xét công khai.
 
-**Đối chứng mới: 288/288 fit hoàn tất, chưa chứng minh tăng độ chính xác.** Protocol `32573ad` khóa trước 32 fit ảnh thật và 256 fit control Gaussian có source Poisson lý tưởng. Độ trải giữa tám mô hình là **0,435″ broad / 1,158″ strict**; broad 8/8 và strict 4/8 cặp qua kiểm tra số học. Những con số này đo độ nhạy giả định, chưa là accuracy trên trời thật.
+**Đã kiểm tra 840 lượt sao thật và 7.992 mô phỏng có calibration/validation tách riêng.** Trên 21 sao Gaia đã mở × 20 ảnh × 2 ePSF, có **718 fit hoàn tất và 122 lượt lỗi chuẩn bị**, giữ đủ mẫu số. Cùng 359 cặp đo được, nội suy ePSF giảm RMS **0,934″ → 0,924″** nhưng tăng P90 **0,876″ → 0,942″**. Chưa chọn nó làm mô hình mới; hai sao không có kết quả vẫn hiện `0/20`.
 
-| Control trên một geometry | RMS hàng xóm có dấu → không âm (″) | Cặp cùng qua số học /16 |
-|---|---:|---:|
-| Plane · 300 µJy | 14,535 → 14,263 | 1/16 |
-| Plane · 600 µJy | 3,661 → 3,358 | 7/16 |
-| Bậc hai · 300 µJy | 12,742 → 13,741 | 0/16 |
-| Bậc hai · 600 µJy | 2,511 → 2,189 | 8/16 |
+Ngưỡng nhận nguồn **17,7038** được khóa trong Git sau 1.998 null calibration, trước 5.994 lượt validation riêng. Đây là điểm số, không phải sigma hay xác suất phát hiện.
 
-RMS trên đủ 16 cặp mỗi ca. **Một draw qua số học vẫn lệch 16,8″ so truth.** Không chọn NNLS từ ba ca đẹp hơn, không đổi phép đo WISE hoặc cấp covariance hiệu chuẩn. Noise dùng VARIANCE gốc và source variance oracle; Gaussian khác family fitter nhưng chưa phải PSF máy đo. 64 draw không phải 64 trường trời độc lập.
+| Validation trên một geometry đã mở | Chấp nhận /999 | Cận một phía 97,5% | Kết quả |
+|---|---:|---:|---|
+| Plane · không có mục tiêu | 0 | Báo nhầm ≤0,369% | Đạt điều kiện mô phỏng |
+| Bậc hai · không có mục tiêu | 0 | Báo nhầm ≤0,369% | Đạt điều kiện mô phỏng |
+| Plane · 600 µJy | 928 | Thu hồi ≥91,12% | Đạt ≥80% |
+| Bậc hai · 600 µJy | 870 | Thu hồi ≥84,85% | Đạt ≥80% |
+| Plane · 300 µJy | 46 | Thu hồi ≥3,39% | Chỉ báo cáo; phần lớn bị bỏ sót |
+| Bậc hai · 300 µJy | 55 | Thu hồi ≥4,17% | Chỉ báo cáo; phần lớn bị bỏ sót |
 
-[Báo cáo, mẫu số và giới hạn](docs/NEIGHBOR_INTERVENTION_RESULTS.md) · [Protocol](docs/NEIGHBOR_INTERVENTION_PROTOCOL.md) · [Overview 53 KB](web/data/neighbor-intervention/overview.json) · [32 fit và audit 19,2 MB](web/data/neighbor-intervention/development.json) · [64 draw đủ hai nhánh 5,2 MB](web/data/neighbor-intervention/controls.json). Web chỉ tự tải overview khi mở mục chuyên sâu. Kiểm toán BVLS độc lập replay 2.583 successful final starts; giữ chín failure. Tính đúng của phép tính không chứng nhận đúng nguồn.
+**Chưa xác nhận false-alarm trên bầu trời thật hoặc hiệu chuẩn sai số chuyển động.** Tất cả mô phỏng dùng một bố cục đã mở, Gaussian khác family fitter và noise có điều kiện; scorer dùng VARIANCE quan sát, không dùng error oracle. Audit QR độc lập tính lại đủ 7.992 điểm số từ dữ liệu lưu; không sinh lại noise để chứng minh detector model.
+
+[Báo cáo & giới hạn](docs/REFERENCE_PRESENCE_RESULTS.md) · [Protocol sao thật](docs/REFERENCE_STAR_PROTOCOL.md) · [Protocol nhận nguồn](docs/SOURCE_PRESENCE_PROTOCOL.md) · [Overview sao thật](web/data/reference-stars/overview.json) · [Overview mô phỏng](web/data/source-presence/overview.json). Các audit đầy đủ có SHA và link tải riêng: **14,2 MB / 71,1 MB gzip**; web chỉ tự tải hai overview khi mở mục mới.
+
+[Đối chứng nguồn chồng trước](docs/NEIGHBOR_INTERVENTION_RESULTS.md) giữ đủ 288 lượt, kể cả một draw qua số học vẫn lệch **16,8″**. Không bỏ failure đó hoặc chọn NNLS chỉ từ các ca thuận lợi. Linked-flux và các sản phẩm khoa học cũ vẫn giữ nguyên.
 
 **Chưa đạt nghiệm thu khoa học/production.** [Study linked-flux trước](docs/WISE_LINKED_RESULTS.md) giữ đủ 28 fit và nghiệm cạnh tranh; [ePSF liên tục](docs/CONTINUOUS_EPSF_RESULTS.md) ổn định Hessian nhưng RMS không giảm ở cả sáu ca; [sandwich covariance](docs/SANDWICH_RESULTS.md) vẫn thiếu phủ ở nguồn mờ. Không ghi đè các sản phẩm 0.3–0.9 hoặc gọi chúng là kiểm định chưa mở.
 
@@ -31,9 +37,9 @@ RMS trên đủ 16 cặp mỗi ca. **Một draw qua số học vẫn lệch 16,8
 
 **API review đạt baseline tải nhỏ:** [60/60 request](docs/REVIEW_LOAD_RESULTS.md), 12/12 phiên QA xác minh sạch; p95 GET **1,937 s**, POST **0,203 s**, DELETE **0,141 s**. Protocol `d7fd8f9` khóa trước đo trên production `8032493`, tối đa ba request đồng thời, cách đợt ít nhất sáu giây. Chưa chứng minh SLO, saturation, failover hoặc recovery production. [Runbook](docs/OPERATIONS.md) giữ cả lịch sử lỗi 502/504.
 
-**Đã phát hành qua [PR #8](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/8) và [PR #9](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/9) tại `f2e2aa4`.** [CI](docs/evidence/0.10/ci-pr9-f88b340.json) hoàn tất 387 test Python (13 optional raw-cache/photutils skip), sáu ca Mongo replica set thật và bốn suite Node 24. [54 phản hồi public](docs/evidence/0.10/production-f2e2aa4.json) xác minh 40 artifact theo Git, commit cả ba API và cleanup QA; lượt này không cần retry upstream. [Browser public](docs/evidence/0.10/neighbor-production-browser.json) xác minh bảng/bộ lọc và ca 0/16. Hai [build lỗi trước đó](docs/OPERATIONS.md#sự-cố-đóng-gói-sau-pr-8) vẫn được giữ; API nay dùng contract 3 KB, tách báo cáo khỏi function bundle. Đây là nghiệm thu phần mềm trong phạm vi đã thử, chưa phải accuracy, recovery hay SLO production.
+**Lịch sử phát hành trước phép thử mới: [PR #8](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/8) và [PR #9](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/9) tại `f2e2aa4`.** [CI](docs/evidence/0.10/ci-pr9-f88b340.json) hoàn tất 387 test Python (13 optional raw-cache/photutils skip), sáu ca Mongo replica set thật và bốn suite Node 24. [54 phản hồi public](docs/evidence/0.10/production-f2e2aa4.json) xác minh 40 artifact theo Git, commit cả ba API và cleanup QA; lượt này không cần retry upstream. [Browser public](docs/evidence/0.10/neighbor-production-browser.json) xác minh bảng/bộ lọc và ca 0/16. Hai [build lỗi trước đó](docs/OPERATIONS.md#sự-cố-đóng-gói-sau-pr-8) vẫn được giữ; API nay dùng contract 3 KB, tách báo cáo khỏi function bundle. Đây là nghiệm thu phần mềm trong phạm vi đã thử, chưa phải accuracy, recovery hay SLO production.
 
-Bước khoa học tiếp theo: giữ sao thật ngoài xây PSF/căn chỉnh, thêm null control và kiểm hàng xóm trước một gate mới; nối time model từng exposure và covariance căn chỉnh chung. [30 tâm trường dành trước](docs/INDEPENDENT_FIELD_SELECTION.md) vẫn chưa query/đo: **12 calibration / 12 validation / 6 final holdout**. Khóa evaluator, power, miền hỗ trợ, gate và overlap trước khi mở.
+Bước khoa học tiếp theo: khóa phép học hiệu chỉnh ePSF trên tập development riêng, kiểm sai lệch và giữ tín hiệu trên sao ngoài bước học, rồi lượng hóa covariance căn chỉnh chung. Chưa áp dụng gate mô phỏng này để xác nhận nguồn trong workspace. [30 tâm trường dành trước](docs/INDEPENDENT_FIELD_SELECTION.md) vẫn chưa query/đo: **12 calibration / 12 validation / 6 final holdout**. Khóa evaluator, power, miền hỗ trợ, gate và overlap trước khi mở.
 
 [Nguồn và quyền sử dụng](NOTICE.md): font, dữ liệu và minh họa có điều kiện riêng; giấy phép mã nguồn đang chờ chủ repo. Repo public không tự tạo giấy phép chung cho mọi asset.
 

@@ -1,0 +1,165 @@
+{
+  "audit_counts": {
+    "failures_without_realization": 0,
+    "records": 7992,
+    "saved_realizations_replayed": 7992
+  },
+  "audit_qualification": "QR template projection and saved-data score replay; does not regenerate or prove noise draws",
+  "audit_source_sha256": "7b4b71c6de08dbd31a5a794c8a1915f2100130d22f11c7499da2936fdf9d51ae",
+  "calibration": {
+    "completed": 1998,
+    "failed": 0,
+    "missing": 0,
+    "planned": 1998,
+    "recorded": 1998
+  },
+  "cases": [
+    {
+      "accepted": 0,
+      "background": "plane",
+      "completed": 999,
+      "conservative_events": 0,
+      "failed": 0,
+      "false_accept_upper": 0.003685762865739383,
+      "flux_ujy": 0.0,
+      "gate_pass": true,
+      "one_sided_confidence": 0.975,
+      "planned": 999,
+      "power_lower": null,
+      "role": "null",
+      "scenario": "plane_null"
+    },
+    {
+      "accepted": 0,
+      "background": "quadratic",
+      "completed": 999,
+      "conservative_events": 0,
+      "failed": 0,
+      "false_accept_upper": 0.003685762865739383,
+      "flux_ujy": 0.0,
+      "gate_pass": true,
+      "one_sided_confidence": 0.975,
+      "planned": 999,
+      "power_lower": null,
+      "role": "null",
+      "scenario": "quadratic_null"
+    },
+    {
+      "accepted": 46,
+      "background": "plane",
+      "completed": 999,
+      "conservative_events": 46,
+      "failed": 0,
+      "false_accept_upper": null,
+      "flux_ujy": 300.0,
+      "gate_pass": null,
+      "one_sided_confidence": 0.975,
+      "planned": 999,
+      "power_lower": 0.033905601204850186,
+      "role": "positive",
+      "scenario": "plane_300uJy"
+    },
+    {
+      "accepted": 928,
+      "background": "plane",
+      "completed": 999,
+      "conservative_events": 928,
+      "failed": 0,
+      "false_accept_upper": null,
+      "flux_ujy": 600.0,
+      "gate_pass": true,
+      "one_sided_confidence": 0.975,
+      "planned": 999,
+      "power_lower": 0.9111956058213843,
+      "role": "positive",
+      "scenario": "plane_600uJy"
+    },
+    {
+      "accepted": 55,
+      "background": "quadratic",
+      "completed": 999,
+      "conservative_events": 55,
+      "failed": 0,
+      "false_accept_upper": null,
+      "flux_ujy": 300.0,
+      "gate_pass": null,
+      "one_sided_confidence": 0.975,
+      "planned": 999,
+      "power_lower": 0.041740806506430965,
+      "role": "positive",
+      "scenario": "quadratic_300uJy"
+    },
+    {
+      "accepted": 870,
+      "background": "quadratic",
+      "completed": 999,
+      "conservative_events": 870,
+      "failed": 0,
+      "false_accept_upper": null,
+      "flux_ujy": 600.0,
+      "gate_pass": true,
+      "one_sided_confidence": 0.975,
+      "planned": 999,
+      "power_lower": 0.8484790228616641,
+      "role": "positive",
+      "scenario": "quadratic_600uJy"
+    }
+  ],
+  "conditional_gates_passed": true,
+  "download": {
+    "bytes": 71148124,
+    "path": "data/source-presence/records.json.gz",
+    "sha256": "71a59bb09c1ea7149bfcff2f5b6c0fa310121cb2590ea91fb3d611744d60cf68",
+    "uncompressed_bytes": 405365271,
+    "uncompressed_sha256": "11a0a05604caae7100daa018e790e4e1d88a9a71a9bc8d2db0673e9e9db0a536"
+  },
+  "geometry_sha256": "935e9e88e7435bcd5fbe3db02a463de4c6e4e4be83048d5805628b3f29066380",
+  "promotion": false,
+  "protocol_commit": "627fe211bd144d0d0e9f9b5b2042316418c54788",
+  "qualification": [
+    "one opened geometry; independent RNG streams are not independent sky fields",
+    "Gaussian PSF truth deliberately differs from fitter; not calibrated telescope PSF truth",
+    "original variance may include real-source shot noise; ideal added source noise is not a detector budget",
+    "threshold is conditional on these backgrounds, masks, nuisance/PSF/noise assumptions and fixed search",
+    "no covariance calibration, real-sky false-alarm rate, blind-search power or scientific promotion"
+  ],
+  "schema": "source-presence-overview-1",
+  "threshold": {
+    "acceptance_comparison": "strictly greater than threshold",
+    "calibration_counts": {
+      "plane_null": 999,
+      "quadratic_null": 999
+    },
+    "calibration_digest": "54d52e15e605d4f57b69204b0c246471794c744045c7d94cfe8821bcca1c26dd",
+    "case_maxima": {
+      "plane_null": 17.70381304535502,
+      "quadratic_null": 14.249253061190013
+    },
+    "design_sha256": "6296129a1946d4f120d77496c1e6d50d03e831ba6c05773b90e457f13552ac6c",
+    "geometry_sha256": "935e9e88e7435bcd5fbe3db02a463de4c6e4e4be83048d5805628b3f29066380",
+    "max_order_statistic_qualification": "per-background 1/(999+1) exchangeable predictive tail under the declared model; not a confidence bound or real-sky FPR",
+    "protocol_commit": "627fe211bd144d0d0e9f9b5b2042316418c54788",
+    "qualification": [
+      "one opened geometry; independent RNG streams are not independent sky fields",
+      "Gaussian PSF truth deliberately differs from fitter; not calibrated telescope PSF truth",
+      "original variance may include real-source shot noise; ideal added source noise is not a detector budget",
+      "threshold is conditional on these backgrounds, masks, nuisance/PSF/noise assumptions and fixed search",
+      "no covariance calibration, real-sky false-alarm rate, blind-search power or scientific promotion"
+    ],
+    "sealed_at_utc": "2026-10-30T23:11:42.913424+00:00",
+    "threshold": 17.70381304535502,
+    "threshold_commit": "6fc5b7c7506333c0f320405718f08ca7d9cfa693",
+    "validation_generated": false,
+    "value": 17.70381304535502,
+    "version": "source-presence-threshold.1"
+  },
+  "threshold_commit": "6fc5b7c7506333c0f320405718f08ca7d9cfa693",
+  "validation": {
+    "completed": 5994,
+    "failed": 0,
+    "missing": 0,
+    "planned": 5994,
+    "recorded": 5994
+  },
+  "validation_journal_sha256": "1a262301614d08d0007c408df5700517736086b6b03d5c36e15b828ed4e3e7cc"
+}

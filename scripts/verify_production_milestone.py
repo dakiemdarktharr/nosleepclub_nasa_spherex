@@ -33,7 +33,10 @@ ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js
         'data/neighbor-intervention/design.json','data/neighbor-intervention/development.json',
         'data/neighbor-intervention/controls.json','data/neighbor-intervention/overview.json',
         'data/neighbor-intervention/figures.json','data/neighbor-intervention/real-sensitivity-broad.svg',
-        'data/neighbor-intervention/real-sensitivity-strict.svg','data/neighbor-intervention/control-error-pairs.svg')
+        'data/neighbor-intervention/real-sensitivity-strict.svg','data/neighbor-intervention/control-error-pairs.svg',
+        'reference-evidence.js','data/reference-stars/design.json','data/reference-stars/overview.json',
+        'data/reference-stars/records.json.gz','data/source-presence/design.json',
+        'data/source-presence/threshold.json','data/source-presence/overview.json','data/source-presence/records.json.gz')
 
 
 def require(condition, label):

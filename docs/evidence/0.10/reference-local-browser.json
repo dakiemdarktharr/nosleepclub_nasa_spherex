@@ -1,0 +1,28 @@
+{
+  "at_utc": "2026-10-30T23:39:38.099Z",
+  "observed": {
+    "documentWidth": 1265,
+    "font": "\"Be Vietnam Pro\", Arial, sans-serif",
+    "presenceRows": 6,
+    "sourceRows": 21,
+    "stars": "ePSF gần nhất\t359/420\t0,934\t0,380\t0,876\nePSF nội suy\t359/420\t0,924\t0,346\t0,942",
+    "status": "Đã kiểm tra xong hai phép thử. Sai số chuyển động WISE 0855 vẫn chưa được hiệu chuẩn.",
+    "url": "http://127.0.0.1:8767/#reference-presence",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "console": [],
+  "verified_interactions": [
+    "common_numerical selects 357/420",
+    "ArrowRight selects presence tab",
+    "390px viewport: document width375, native table region298/790px, ArrowRight scroll works",
+    "deep-link overlap corrected: desktop top94.48 >header84; mobile top130.28 >header72",
+    "temporary viewport reset to1280"
+  ],
+  "limits": [
+    "no screen-reader certification",
+    "no browser network capture; lazy downloads verified by source and Node VM tests"
+  ]
+}
