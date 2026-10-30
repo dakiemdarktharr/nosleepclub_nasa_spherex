@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "receipt_written_at_utc": "2026-10-30T22:22:37.901876+00:00",
+  "release_commit": "6381f6aa7754d2b2da805fe464ce9df706b0d5e5",
+  "url": "https://nosleepclub-nasa-spherex.vercel.app/#neighbor-intervention",
+  "method": "CUA fresh public reload; waited for real rows and all aria-busy panels; screenshot inspected.",
+  "checks": {
+    "rows": 8,
+    "fit_count": "288/288",
+    "strict_numerical_support": "4/8",
+    "section_top_px": 94.484375,
+    "frontend_unchanged_from_f2e2aa4": true,
+    "detailed_controls_prior_evidence": "neighbor-production-browser.json"
+  },
+  "screenshot": {
+    "path": "neighbor-production-final.jpg",
+    "sha256": "bc6285d287a6d1354d2eadded90ec78e8518aa982a037ad5cc063f70c8dc5cb6",
+    "bytes": 68698
+  },
+  "public_api_evidence": "production-6381f6a.json",
+  "qualification": "Default desktop view only; prior identical-source interaction/mobile receipts are separate. Scientific and full accessibility gates remain open."
+}

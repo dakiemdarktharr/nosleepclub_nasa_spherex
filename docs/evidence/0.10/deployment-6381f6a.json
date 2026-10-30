@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "deployment_id": "dpl_FWKEGadifcmQHBsJCRiaDF1r4bow",
+  "commit": "6381f6aa7754d2b2da805fe464ce9df706b0d5e5",
+  "state": "READY",
+  "target": "production",
+  "url": "nosleepclub-nasa-spherex-3q70oh4lj-acne-a6cd.vercel.app",
+  "source": "git",
+  "building_at": 1793398726191,
+  "ready_at": 1793398762694,
+  "public_alias": "https://nosleepclub-nasa-spherex.vercel.app",
+  "public_verification": "production-6381f6a.json",
+  "code_assets_unchanged_from": "f2e2aa4247e5baf3d91063e67b830f0665c9f569",
+  "qualification": "Documentation release; actual API commit and QA cleanup verified again, not inferred from READY or unchanged source."
+}
