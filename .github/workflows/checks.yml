@@ -42,6 +42,7 @@ jobs:
         run: |
           docker run --detach --name codex-review-test --publish 127.0.0.1:27027:27017 mongo:8.0@sha256:b9924c330a8bbc5800fe9c69f04a84e221eca7b28fd049a0354147d9908fa142 --replSet codex-review-test --bind_ip_all
           for attempt in {1..30}; do
+            if [ "$(docker inspect --format '{{.State.Running}}' codex-review-test)" != "true" ]; then docker logs codex-review-test; exit 1; fi
             if docker exec codex-review-test mongosh --quiet --eval 'db.adminCommand({ping:1}).ok' >/dev/null 2>&1; then break; fi
             sleep 1
           done
@@ -84,7 +85,9 @@ jobs:
           retention-days: 7
       - name: Remove disposable MongoDB container
         if: ${{ always() }}
-        run: docker rm --force --volumes codex-review-test || true
+        run: |
+          docker logs --tail 100 codex-review-test || true
+          docker rm --force --volumes codex-review-test || true
 
   javascript:
     name: JavaScript syntax and review store
