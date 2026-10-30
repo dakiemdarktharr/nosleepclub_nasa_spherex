@@ -4,7 +4,7 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Đối chứng WISE mới](docs/WISE_LINKED_RESULTS.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Đối chứng WISE mới](docs/NEIGHBOR_INTERVENTION_RESULTS.md).
 
 ## Goal production đang thực hiện — 0.10
 
@@ -31,7 +31,7 @@ RMS trên đủ 16 cặp mỗi ca. **Một draw qua số học vẫn lệch 16,8
 
 **API review đạt baseline tải nhỏ:** [60/60 request](docs/REVIEW_LOAD_RESULTS.md), 12/12 phiên QA xác minh sạch; p95 GET **1,937 s**, POST **0,203 s**, DELETE **0,141 s**. Protocol `d7fd8f9` khóa trước đo trên production `8032493`, tối đa ba request đồng thời, cách đợt ít nhất sáu giây. Chưa chứng minh SLO, saturation, failover hoặc recovery production. [Runbook](docs/OPERATIONS.md) giữ cả lịch sử lỗi 502/504.
 
-Bằng chứng release hiện có: [PR #7](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/7) tại `8032493`, [CI 326 test Python và ba suite Node](docs/evidence/0.10/ci-pr7-e26cfa0.json), [45 response production](docs/evidence/0.10/production-8032493.json), [browser public](docs/evidence/0.10/linked-production-browser.json). Milestone nguồn chồng mới đang được nghiệm thu riêng; không dùng receipt cũ để xác nhận bản chưa phát hành.
+**Đã phát hành qua [PR #8](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/8) và [PR #9](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/9) tại `f2e2aa4`.** [CI](docs/evidence/0.10/ci-pr9-f88b340.json) hoàn tất 387 test Python (13 optional raw-cache/photutils skip), sáu ca Mongo replica set thật và bốn suite Node 24. [54 phản hồi public](docs/evidence/0.10/production-f2e2aa4.json) xác minh 40 artifact theo Git, commit cả ba API và cleanup QA; lượt này không cần retry upstream. [Browser public](docs/evidence/0.10/neighbor-production-browser.json) xác minh bảng/bộ lọc và ca 0/16. Hai [build lỗi trước đó](docs/OPERATIONS.md#sự-cố-đóng-gói-sau-pr-8) vẫn được giữ; API nay dùng contract 3 KB, tách báo cáo khỏi function bundle. Đây là nghiệm thu phần mềm trong phạm vi đã thử, chưa phải accuracy, recovery hay SLO production.
 
 Bước khoa học tiếp theo: giữ sao thật ngoài xây PSF/căn chỉnh, thêm null control và kiểm hàng xóm trước một gate mới; nối time model từng exposure và covariance căn chỉnh chung. [30 tâm trường dành trước](docs/INDEPENDENT_FIELD_SELECTION.md) vẫn chưa query/đo: **12 calibration / 12 validation / 6 final holdout**. Khóa evaluator, power, miền hỗ trợ, gate và overlap trước khi mở.
 

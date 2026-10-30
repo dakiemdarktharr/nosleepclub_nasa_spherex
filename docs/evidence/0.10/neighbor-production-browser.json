@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "receipt_written_at_utc": "2026-10-30T22:12:59.795015+00:00",
+  "url": "https://nosleepclub-nasa-spherex.vercel.app/#neighbor-intervention",
+  "release_commit": "f2e2aa4247e5baf3d91063e67b830f0665c9f569",
+  "deployment_id": "dpl_FDtN1owqLjUdrdCSoaY9gn1Z5Yp9",
+  "frontend_version": "0.10.0-r10",
+  "api_commit_evidence": "production-f2e2aa4.json",
+  "method": "CUA actual public DOM controls and screenshot; exact static source hashes verified separately by committed HTTP verifier.",
+  "checks": {
+    "deep_link_reload_opens_section": true,
+    "waited_for_all_aria_busy_panels_to_finish": true,
+    "section_top_after_load_px": 94.484375,
+    "viewport_width": 1280,
+    "document_scroll_width": 1265,
+    "planned_fit_count": "288/288",
+    "real_rows": 8,
+    "control_rows": 4,
+    "strict_numerical_support": "4/8",
+    "strict_primary_change_arcsec": "0,460",
+    "broad_numerical_support": "8/8",
+    "broad_primary_change_arcsec": "0,080",
+    "common_supported_per_case": [
+      1,
+      7,
+      0,
+      8
+    ],
+    "zero_supported_case_displays_dashes": true,
+    "worse_supported_quadratic_600_rms_visible": true,
+    "console_errors_or_warnings_observed": 0,
+    "final_configuration": "strict",
+    "final_control_selection": "common_completed"
+  },
+  "screenshot": {
+    "path": "neighbor-production-desktop.jpg",
+    "sha256": "bc6285d287a6d1354d2eadded90ec78e8518aa982a037ad5cc063f70c8dc5cb6",
+    "bytes": 68698
+  },
+  "limits": [
+    "Full screen-reader, every navigation path and production mobile interaction not certified; local mobile/tablet evidence is separate.",
+    "Numerical screening is not astrometric/source validity; the synthetic16.8-arcsec false accept remains visible.",
+    "No review was written through this browser; disposable Python verifier lifecycle has separate evidence."
+  ]
+}

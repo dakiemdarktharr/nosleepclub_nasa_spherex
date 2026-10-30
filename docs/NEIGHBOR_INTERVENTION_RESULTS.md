@@ -138,6 +138,15 @@ Plot dùng `requirements-figures.txt` tùy chọn; không đưa Matplotlib vào 
 runtime. Test sản phẩm/figure không cần Matplotlib. Replay vị trí/renderer
 cần raw cache đúng hash, runtime Windows gốc và thread request đã khóa.
 
+Phần mềm đã phát hành qua PR #8 và #9 tại `f2e2aa4`:
+[387 test CI](evidence/0.10/ci-pr9-f88b340.json), 13 optional raw-cache/
+photutils skip, sáu test Mongo fixture thật và bốn suite Node đạt.
+[54 response public](evidence/0.10/production-f2e2aa4.json) xác minh 40
+artifact, commit API và cleanup QA; [browser](evidence/0.10/neighbor-production-browser.json)
+đổi được mẫu và giữ ca 0/16. Hai build lỗi trước đó được giữ trong runbook;
+API contract tối giản tách static report khỏi function. Các bằng chứng này
+không thay kết luận khoa học chưa đạt ở trên.
+
 ## Những giới hạn vẫn cần xử lý
 
 Control dùng empirical VARIANCE gốc làm thang Gaussian; nó có thể đã chứa
