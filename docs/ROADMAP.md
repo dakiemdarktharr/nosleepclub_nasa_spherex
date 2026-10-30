@@ -13,6 +13,7 @@
 - [x] Bỏ lần lượt 14 sao, thử affine và 32 injection mỗi cấu hình; giữ cả giới hạn nền ảnh.
 - [x] Thử fit nhiều nguồn IR/ePSF trên 30 vùng khóa trước; chưa đạt gate thay mặc định.
 - [x] Tải 129 cutout ở ba trường mới và kiểm tra Gaia/nguồn giả theo protocol khóa trước; giữ cả trường không đủ sao căn chỉnh.
+- [x] Thêm quality gate, IR deblend/Huber và kiểm tra khóa trước trên 115 cutout ở ba trường khác; chưa qua gate thay mặc định.
 - [ ] Giảm outlier/bias nguồn mờ và kiểm chứng covariance trên các trường chưa mở.
 - [ ] Kiểm tra đáp ứng phổ đầy đủ, injection nhiều vị trí và thêm epoch thứ ba.
 - [ ] Xác minh chuyển động của WISE 0855 bằng dữ liệu này.

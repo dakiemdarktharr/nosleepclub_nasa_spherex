@@ -1,0 +1,2991 @@
+{
+  "version": "0.7.0",
+  "phase": "development",
+  "protocol_sha256": "adb363991fe6ba247e9bcfa5cf4eee79ad3ee5518a7284a016a8c644dad55b15",
+  "current_measurement_changed": false,
+  "passed": false,
+  "fields": [
+    {
+      "field": {
+        "id": "barnard",
+        "name": "Barnard star",
+        "ra": 269.45207695861876,
+        "dec": 4.693364966576667,
+        "coordinate_source": "https://simbad.cds.unistra.fr/simbad/sim-basic?Ident=Barnard%27s+star",
+        "coordinate_epoch": "J2000; field center only, not astrometric truth",
+        "collections": [
+          {
+            "collection": "spherex_qr2",
+            "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+269.45207695861876+4.693364966576667+0.05",
+            "rows": 256,
+            "d6": [
+              {
+                "obs_id": "2025W33_2C_0321_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0321_1D6_spx_l2b-v20-2025-266.fits",
+                "mjd": 60902.864715
+              },
+              {
+                "obs_id": "2025W33_2C_0321_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0321_2D6_spx_l2b-v20-2025-266.fits",
+                "mjd": 60902.866207
+              },
+              {
+                "obs_id": "2025W33_2C_0321_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0321_3D6_spx_l2b-v20-2025-266.fits",
+                "mjd": 60902.867699
+              },
+              {
+                "obs_id": "2025W33_2C_0386_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0386_3D6_spx_l2b-v20-2025-266.fits",
+                "mjd": 60903.138366
+              },
+              {
+                "obs_id": "2025W33_2C_0386_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0386_4D6_spx_l2b-v20-2025-266.fits",
+                "mjd": 60903.139858
+              },
+              {
+                "obs_id": "2025W34_1B_0164_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W34_1B/l2b-v20-2025-267/6/level2_2025W34_1B_0164_1D6_spx_l2b-v20-2025-267.fits",
+                "mjd": 60905.853257
+              },
+              {
+                "obs_id": "2025W34_1B_0164_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W34_1B/l2b-v20-2025-267/6/level2_2025W34_1B_0164_2D6_spx_l2b-v20-2025-267.fits",
+                "mjd": 60905.854749
+              },
+              {
+                "obs_id": "2025W34_1B_0164_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W34_1B/l2b-v20-2025-267/6/level2_2025W34_1B_0164_3D6_spx_l2b-v20-2025-267.fits",
+                "mjd": 60905.856241
+              },
+              {
+                "obs_id": "2025W34_2B_0030_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W34_2B/l2b-v20-2025-269/6/level2_2025W34_2B_0030_1D6_spx_l2b-v20-2025-269.fits",
+                "mjd": 60908.63919
+              },
+              {
+                "obs_id": "2025W34_2B_0030_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W34_2B/l2b-v20-2025-267/6/level2_2025W34_2B_0030_2D6_spx_l2b-v20-2025-267.fits",
+                "mjd": 60908.640682
+              },
+              {
+                "obs_id": "2025W34_2B_0030_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W34_2B/l2b-v20-2025-269/6/level2_2025W34_2B_0030_3D6_spx_l2b-v20-2025-269.fits",
+                "mjd": 60908.642174
+              },
+              {
+                "obs_id": "2025W34_2B_0030_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W34_2B/l2b-v20-2025-267/6/level2_2025W34_2B_0030_4D6_spx_l2b-v20-2025-267.fits",
+                "mjd": 60908.643666
+              },
+              {
+                "obs_id": "2025W35_1A_0008_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W35_1A/l2b-v20-2025-270/6/level2_2025W35_1A_0008_1D6_spx_l2b-v20-2025-270.fits",
+                "mjd": 60912.034425
+              },
+              {
+                "obs_id": "2025W35_1A_0008_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W35_1A/l2b-v20-2025-270/6/level2_2025W35_1A_0008_2D6_spx_l2b-v20-2025-270.fits",
+                "mjd": 60912.035917
+              },
+              {
+                "obs_id": "2025W35_1A_0008_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W35_1A/l2b-v20-2025-270/6/level2_2025W35_1A_0008_3D6_spx_l2b-v20-2025-270.fits",
+                "mjd": 60912.037409
+              },
+              {
+                "obs_id": "2025W35_1A_0008_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W35_1A/l2b-v20-2025-270/6/level2_2025W35_1A_0008_4D6_spx_l2b-v20-2025-270.fits",
+                "mjd": 60912.038901
+              },
+              {
+                "obs_id": "2025W35_1A_0484_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W35_1A/l2b-v20-2025-270/6/level2_2025W35_1A_0484_1D6_spx_l2b-v20-2025-270.fits",
+                "mjd": 60914.482593
+              },
+              {
+                "obs_id": "2025W35_1A_0484_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W35_1A/l2b-v20-2025-270/6/level2_2025W35_1A_0484_2D6_spx_l2b-v20-2025-270.fits",
+                "mjd": 60914.484085
+              },
+              {
+                "obs_id": "2026W12_1A_0598_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_1A/l2b-v24-2026-082/6/level2_2026W12_1A_0598_1D6_spx_l2b-v24-2026-082.fits",
+                "mjd": 61118.309231
+              },
+              {
+                "obs_id": "2026W12_1A_0598_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_1A/l2b-v24-2026-082/6/level2_2026W12_1A_0598_2D6_spx_l2b-v24-2026-082.fits",
+                "mjd": 61118.310724
+              },
+              {
+                "obs_id": "2026W12_1A_0598_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_1A/l2b-v24-2026-082/6/level2_2026W12_1A_0598_3D6_spx_l2b-v24-2026-082.fits",
+                "mjd": 61118.312216
+              },
+              {
+                "obs_id": "2026W12_1A_0598_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_1A/l2b-v24-2026-082/6/level2_2026W12_1A_0598_4D6_spx_l2b-v24-2026-082.fits",
+                "mjd": 61118.313708
+              },
+              {
+                "obs_id": "2026W12_1A_0610_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_1A/l2b-v24-2026-082/6/level2_2026W12_1A_0610_1D6_spx_l2b-v24-2026-082.fits",
+                "mjd": 61118.37704
+              },
+              {
+                "obs_id": "2026W12_1A_0610_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_1A/l2b-v24-2026-082/6/level2_2026W12_1A_0610_2D6_spx_l2b-v24-2026-082.fits",
+                "mjd": 61118.378532
+              },
+              {
+                "obs_id": "2026W12_1A_0610_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_1A/l2b-v24-2026-082/6/level2_2026W12_1A_0610_3D6_spx_l2b-v24-2026-082.fits",
+                "mjd": 61118.380025
+              },
+              {
+                "obs_id": "2026W12_1A_0610_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_1A/l2b-v24-2026-082/6/level2_2026W12_1A_0610_4D6_spx_l2b-v24-2026-082.fits",
+                "mjd": 61118.381517
+              },
+              {
+                "obs_id": "2026W12_2A_0324_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_2A/l2b-v24-2026-083/6/level2_2026W12_2A_0324_1D6_spx_l2b-v24-2026-083.fits",
+                "mjd": 61120.278599
+              },
+              {
+                "obs_id": "2026W12_2A_0324_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_2A/l2b-v24-2026-083/6/level2_2026W12_2A_0324_2D6_spx_l2b-v24-2026-083.fits",
+                "mjd": 61120.280091
+              },
+              {
+                "obs_id": "2026W12_2A_0520_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_2A/l2b-v24-2026-083/6/level2_2026W12_2A_0520_1D6_spx_l2b-v24-2026-083.fits",
+                "mjd": 61121.364125
+              },
+              {
+                "obs_id": "2026W12_2A_0520_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_2A/l2b-v24-2026-083/6/level2_2026W12_2A_0520_2D6_spx_l2b-v24-2026-083.fits",
+                "mjd": 61121.365617
+              },
+              {
+                "obs_id": "2026W12_2A_0520_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_2A/l2b-v24-2026-083/6/level2_2026W12_2A_0520_3D6_spx_l2b-v24-2026-083.fits",
+                "mjd": 61121.367109
+              },
+              {
+                "obs_id": "2026W12_2A_0520_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W12_2A/l2b-v24-2026-083/6/level2_2026W12_2A_0520_4D6_spx_l2b-v24-2026-083.fits",
+                "mjd": 61121.368602
+              },
+              {
+                "obs_id": "2026W13_1A_0129_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W13_1A/l2b-v24-2026-088/6/level2_2026W13_1A_0129_1D6_spx_l2b-v24-2026-088.fits",
+                "mjd": 61122.654126
+              },
+              {
+                "obs_id": "2026W13_1A_0129_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W13_1A/l2b-v24-2026-088/6/level2_2026W13_1A_0129_2D6_spx_l2b-v24-2026-088.fits",
+                "mjd": 61122.655618
+              },
+              {
+                "obs_id": "2026W13_1A_0129_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W13_1A/l2b-v24-2026-088/6/level2_2026W13_1A_0129_3D6_spx_l2b-v24-2026-088.fits",
+                "mjd": 61122.65711
+              },
+              {
+                "obs_id": "2026W13_1A_0129_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W13_1A/l2b-v24-2026-088/6/level2_2026W13_1A_0129_4D6_spx_l2b-v24-2026-088.fits",
+                "mjd": 61122.658602
+              },
+              {
+                "obs_id": "2026W13_1A_0549_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W13_1A/l2b-v24-2026-088/6/level2_2026W13_1A_0549_1D6_spx_l2b-v24-2026-088.fits",
+                "mjd": 61124.894266
+              },
+              {
+                "obs_id": "2026W15_2A_0137_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W15_2A/l2b-v24-2026-105/6/level2_2026W15_2A_0137_1D6_spx_l2b-v24-2026-105.fits",
+                "mjd": 61140.030061
+              },
+              {
+                "obs_id": "2026W19_1A_0046_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0046_1D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61164.133134
+              },
+              {
+                "obs_id": "2026W19_1A_0216_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0216_1D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61164.60712
+              },
+              {
+                "obs_id": "2026W19_1A_0326_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0326_1D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61164.879119
+              },
+              {
+                "obs_id": "2026W19_1A_0403_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0403_1D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61165.082972
+              }
+            ],
+            "sha256": "ef9a24658e28e3263a6b8ad2f59ab4dc7f4a045e3c77cc57ff47da5c3d72b5e7"
+          },
+          {
+            "collection": "spherex_qr3",
+            "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=circle+269.45207695861876+4.693364966576667+0.05",
+            "rows": 124,
+            "d6": [
+              {
+                "obs_id": "2026W33_2A_0594_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W33_2A/l2b-v27-2026-241/6/level2_2026W33_2A_0594_4D6_spx_l2b-v27-2026-241.fits",
+                "mjd": 61268.630812
+              },
+              {
+                "obs_id": "2026W34_1A_0007_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0007_1D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61269.033418
+              },
+              {
+                "obs_id": "2026W34_1A_0007_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0007_2D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61269.034911
+              },
+              {
+                "obs_id": "2026W34_1A_0007_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0007_3D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61269.036403
+              },
+              {
+                "obs_id": "2026W34_1A_0007_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0007_4D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61269.037895
+              },
+              {
+                "obs_id": "2026W34_1A_0176_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0176_1D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61269.849451
+              },
+              {
+                "obs_id": "2026W34_1A_0176_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0176_2D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61269.850943
+              },
+              {
+                "obs_id": "2026W34_1A_0238_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0238_1D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61270.188637
+              },
+              {
+                "obs_id": "2026W34_1A_0238_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0238_2D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61270.190129
+              },
+              {
+                "obs_id": "2026W34_1A_0308_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0308_1D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61270.594779
+              },
+              {
+                "obs_id": "2026W34_1A_0308_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0308_2D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61270.596271
+              },
+              {
+                "obs_id": "2026W34_1A_0308_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0308_3D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61270.597764
+              },
+              {
+                "obs_id": "2026W34_1A_0308_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0308_4D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61270.599256
+              },
+              {
+                "obs_id": "2026W34_1A_0431_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0431_1D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61271.206071
+              },
+              {
+                "obs_id": "2026W34_1A_0431_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0431_2D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61271.207563
+              },
+              {
+                "obs_id": "2026W34_1A_0431_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0431_3D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61271.209055
+              },
+              {
+                "obs_id": "2026W34_1A_0431_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_1A/l2b-v27-2026-243/6/level2_2026W34_1A_0431_4D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61271.210547
+              },
+              {
+                "obs_id": "2026W34_2A_0081_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W34_2A/l2b-v27-2026-243/6/level2_2026W34_2A_0081_1D6_spx_l2b-v27-2026-243.fits",
+                "mjd": 61272.906175
+              },
+              {
+                "obs_id": "2026W38_2A_0562_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_2A/l2b-v27-2026-264/6/level2_2026W38_2A_0562_1D6_spx_l2b-v27-2026-264.fits",
+                "mjd": 61303.185466
+              }
+            ],
+            "sha256": "7ab73e174f67236f932b8b944a1eae8f371cb3995298d2106e329995bea363e8"
+          }
+        ]
+      },
+      "phase": "development",
+      "protocol_sha256": "adb363991fe6ba247e9bcfa5cf4eee79ad3ee5518a7284a016a8c644dad55b15",
+      "rules": {
+        "version": "0.7.0",
+        "spectral_configuration": "broad",
+        "spectral_mismatch_max": 0.5,
+        "positions_px": [
+          [
+            5.5,
+            5.5
+          ],
+          [
+            57.5,
+            5.5
+          ],
+          [
+            5.5,
+            57.5
+          ],
+          [
+            57.5,
+            57.5
+          ]
+        ],
+        "snr_per_frame": [
+          2.0,
+          4.0
+        ],
+        "motions_px": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.6,
+            0.05
+          ]
+        ],
+        "truth_psfs": [
+          "nearest",
+          "blurred_015px"
+        ],
+        "gaussian_blur_native_px": 0.15,
+        "ellipse_threshold": 2.3,
+        "recovery_tolerance_px": 1.0,
+        "injection_frame": "identical Gaussian Gaia registration for both models; isolates centroid/deblending effect",
+        "real_frame": "baseline Gaussian registration vs candidate IR-centroid training + median/MAD rejection",
+        "gate": "each new field, SNR and truth PSF: paired numerical RMS lower, P90 no higher, no fewer numerical fits or quality-accepted fits; real Gaia paired RMS no higher with >=3 common, no fewer numerical/accepted fits; no default WISE promotion",
+        "models": [
+          "baseline",
+          "ir_robust"
+        ],
+        "minimum_common_per_group": 4,
+        "bootstrap_draws": 2000,
+        "seed": 20261030,
+        "limits": [
+          "known-position local fitting, not blind detection",
+          "no extra source shot noise",
+          "blur is an assumed PSF perturbation, not independent physical calibration",
+          "conditional IRLS covariance; no neighbour-position, PSF or shared-frame systematic covariance",
+          "broad spectra only; default WISE 0855 measurement remains unchanged"
+        ]
+      },
+      "model_rules": {
+        "version": "0.7.0",
+        "neighbour_radius_px": 8.0,
+        "target_match_radius_px": 0.35,
+        "max_neighbours": 24,
+        "svd_relative_cut": 1e-08,
+        "fit_bound_px": 2.5,
+        "reference_bound_px": 1.3,
+        "derivative_step_px": 0.002,
+        "huber_threshold": 2.5,
+        "irls_iterations": 2,
+        "chi2_max": 3.0,
+        "core_rms_max": 2.5,
+        "core_radius_native_px": 2.5,
+        "core_coverage_min": 0.75,
+        "core_usable_frame_fraction": 0.8,
+        "outlier_sigma": 5.0,
+        "core_outlier_fraction_max": 0.1,
+        "epoch_snr_min": 5.0,
+        "information_fraction_min": 0.05,
+        "registration_mahalanobis_max": 4.0,
+        "registration_scatter_floor_px": 0.02,
+        "registration_sources_min": 4,
+        "model_disagreement_floor_px": 0.2,
+        "model_disagreement_sigma": 3.0
+      },
+      "pairs": 10,
+      "catalog_screening": {
+        "queried": 11054,
+        "selected": 5125,
+        "gaia_positions": 2397,
+        "rejections": {
+          "faint_ir": 5640,
+          "artifact_or_poor_fit": 281,
+          "large_motion": 5,
+          "duplicate_gaia_match": 3
+        }
+      },
+      "unavailable": {},
+      "planned_injections": 32,
+      "real_summary": {
+        "models": {
+          "baseline": {
+            "numeric_valid": {
+              "attempted": 11,
+              "valid": 11,
+              "rejected": 0,
+              "rmse_arcsec": 1.9211439511154504,
+              "p90_arcsec": 0.4472045569782624,
+              "bias_east_north_arcsec": [
+                0.3684613951093262,
+                0.44358738330216646
+              ],
+              "within_68_ellipse": 8,
+              "reasons": {
+                "low_epoch_snr": 1,
+                "poor_global_fit": 6,
+                "structured_core_residual": 1
+              }
+            },
+            "accepted": {
+              "attempted": 11,
+              "valid": 5,
+              "rejected": 6,
+              "rmse_arcsec": 0.27552602648849595,
+              "p90_arcsec": 0.40639031801906655,
+              "bias_east_north_arcsec": [
+                0.007240927825240634,
+                -0.08531648920563348
+              ],
+              "within_68_ellipse": 4,
+              "reasons": {
+                "low_epoch_snr": 1,
+                "poor_global_fit": 6,
+                "structured_core_residual": 1
+              }
+            }
+          },
+          "ir_robust": {
+            "numeric_valid": {
+              "attempted": 11,
+              "valid": 11,
+              "rejected": 0,
+              "rmse_arcsec": 0.25609766924870137,
+              "p90_arcsec": 0.33841429214805185,
+              "bias_east_north_arcsec": [
+                0.04981529260928374,
+                -0.04831493215866675
+              ],
+              "within_68_ellipse": 8,
+              "reasons": {
+                "poor_global_fit": 3,
+                "model_disagreement": 1
+              }
+            },
+            "accepted": {
+              "attempted": 11,
+              "valid": 8,
+              "rejected": 3,
+              "rmse_arcsec": 0.25470898668450137,
+              "p90_arcsec": 0.3459878203281255,
+              "bias_east_north_arcsec": [
+                -0.005940597803608637,
+                -0.028199358893195962
+              ],
+              "within_68_ellipse": 5,
+              "reasons": {
+                "poor_global_fit": 3,
+                "model_disagreement": 1
+              }
+            }
+          }
+        },
+        "paired_numeric": {
+          "common": 11,
+          "attempted": 11,
+          "baseline_rms": 1.9211439511154504,
+          "candidate_rms": 0.25609766924870137,
+          "improvement_percent": 86.66952213029083,
+          "ci95_percent": null
+        },
+        "paired_accepted": {
+          "common": 5,
+          "attempted": 11,
+          "baseline_rms": 0.27552602648849595,
+          "candidate_rms": 0.24149575527120493,
+          "improvement_percent": 12.351018758916366,
+          "ci95_percent": null
+        }
+      },
+      "injection_summary": {
+        "models": {
+          "baseline": {
+            "numeric_valid": {
+              "attempted": 32,
+              "valid": 30,
+              "rejected": 2,
+              "rmse_arcsec": 2.2229295464176677,
+              "p90_arcsec": 4.021265203619171,
+              "bias_east_north_arcsec": [
+                1.1340153199830516,
+                0.008514944396408501
+              ],
+              "within_68_ellipse": 13,
+              "reasons": {
+                "low_epoch_snr": 8,
+                "nonpositive_flux": 2
+              }
+            },
+            "accepted": {
+              "attempted": 32,
+              "valid": 24,
+              "rejected": 8,
+              "rmse_arcsec": 2.09201586276281,
+              "p90_arcsec": 4.021496809799366,
+              "bias_east_north_arcsec": [
+                1.0773671142845014,
+                -0.35172781977306483
+              ],
+              "within_68_ellipse": 10,
+              "reasons": {
+                "low_epoch_snr": 8,
+                "nonpositive_flux": 2
+              }
+            }
+          },
+          "ir_robust": {
+            "numeric_valid": {
+              "attempted": 32,
+              "valid": 32,
+              "rejected": 0,
+              "rmse_arcsec": 1.9875509077313855,
+              "p90_arcsec": 3.9137575352688696,
+              "bias_east_north_arcsec": [
+                0.9929822202173928,
+                -0.3698428236491459
+              ],
+              "within_68_ellipse": 11,
+              "reasons": {
+                "low_epoch_snr": 1
+              }
+            },
+            "accepted": {
+              "attempted": 32,
+              "valid": 31,
+              "rejected": 1,
+              "rmse_arcsec": 1.9636943425108975,
+              "p90_arcsec": 4.052103625549223,
+              "bias_east_north_arcsec": [
+                0.9516075924022575,
+                -0.33978592144251135
+              ],
+              "within_68_ellipse": 11,
+              "reasons": {
+                "low_epoch_snr": 1
+              }
+            }
+          }
+        },
+        "paired_numeric": {
+          "common": 30,
+          "attempted": 32,
+          "baseline_rms": 2.2229295464176677,
+          "candidate_rms": 2.0104182777045203,
+          "improvement_percent": 9.559964194799475,
+          "ci95_percent": [
+            0.14116038254416985,
+            31.34607931385175
+          ]
+        },
+        "paired_accepted": {
+          "common": 24,
+          "attempted": 32,
+          "baseline_rms": 2.09201586276281,
+          "candidate_rms": 2.1027049918833094,
+          "improvement_percent": -0.5109487605119201,
+          "ci95_percent": [
+            -8.837647841936258,
+            2.9163706464767736
+          ]
+        }
+      },
+      "groups": [
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 7,
+                "rejected": 1,
+                "rmse_arcsec": 2.5117477057751945,
+                "p90_arcsec": 3.8333376833595993,
+                "bias_east_north_arcsec": [
+                  1.0959169857355755,
+                  0.17951935152442353
+                ],
+                "within_68_ellipse": 2,
+                "reasons": {
+                  "low_epoch_snr": 4,
+                  "nonpositive_flux": 1
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 4,
+                "rejected": 4,
+                "rmse_arcsec": 2.678924689301985,
+                "p90_arcsec": 3.559425418357453,
+                "bias_east_north_arcsec": [
+                  1.6338654631143557,
+                  -0.8202209936164424
+                ],
+                "within_68_ellipse": 0,
+                "reasons": {
+                  "low_epoch_snr": 4,
+                  "nonpositive_flux": 1
+                }
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 2.1705296802879652,
+                "p90_arcsec": 2.9400978748874538,
+                "bias_east_north_arcsec": [
+                  1.0908416894591113,
+                  -0.5502288070642456
+                ],
+                "within_68_ellipse": 3,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 2.1705296802879652,
+                "p90_arcsec": 2.9400978748874538,
+                "bias_east_north_arcsec": [
+                  1.0908416894591113,
+                  -0.5502288070642456
+                ],
+                "within_68_ellipse": 3,
+                "reasons": {}
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 7,
+            "attempted": 8,
+            "baseline_rms": 2.511747705775195,
+            "candidate_rms": 2.2488516735539195,
+            "improvement_percent": 10.466657603261886,
+            "ci95_percent": [
+              -0.1434881614174488,
+              32.671234025316764
+            ]
+          },
+          "paired_accepted": {
+            "common": 4,
+            "attempted": 8,
+            "baseline_rms": 2.678924689301985,
+            "candidate_rms": 2.664351159284796,
+            "improvement_percent": 0.5440067081910582,
+            "ci95_percent": [
+              -0.7368394284806179,
+              2.308284814977557
+            ]
+          },
+          "truth_psf": "nearest",
+          "snr_per_frame": 2.0,
+          "passed": true
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.6655921956214668,
+                "p90_arcsec": 2.086535676167424,
+                "bias_east_north_arcsec": [
+                  0.7912778675454368,
+                  -0.06707887333732515
+                ],
+                "within_68_ellipse": 5,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.6655921956214668,
+                "p90_arcsec": 2.086535676167424,
+                "bias_east_north_arcsec": [
+                  0.7912778675454368,
+                  -0.06707887333732515
+                ],
+                "within_68_ellipse": 5,
+                "reasons": {}
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.69945756483507,
+                "p90_arcsec": 2.240017480636207,
+                "bias_east_north_arcsec": [
+                  0.8537890909002559,
+                  -0.11056432946230563
+                ],
+                "within_68_ellipse": 3,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.69945756483507,
+                "p90_arcsec": 2.240017480636207,
+                "bias_east_north_arcsec": [
+                  0.8537890909002559,
+                  -0.11056432946230563
+                ],
+                "within_68_ellipse": 3,
+                "reasons": {}
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 8,
+            "attempted": 8,
+            "baseline_rms": 1.665592195621467,
+            "candidate_rms": 1.69945756483507,
+            "improvement_percent": -2.033232942771268,
+            "ci95_percent": [
+              -14.88681725627825,
+              3.8613791268326425
+            ]
+          },
+          "paired_accepted": {
+            "common": 8,
+            "attempted": 8,
+            "baseline_rms": 1.665592195621467,
+            "candidate_rms": 1.69945756483507,
+            "improvement_percent": -2.033232942771268,
+            "ci95_percent": [
+              -14.88681725627825,
+              3.8613791268326425
+            ]
+          },
+          "truth_psf": "nearest",
+          "snr_per_frame": 4.0,
+          "passed": false
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 7,
+                "rejected": 1,
+                "rmse_arcsec": 2.9003813281138604,
+                "p90_arcsec": 3.863124838372556,
+                "bias_east_north_arcsec": [
+                  1.9605473394044934,
+                  0.06377057961374875
+                ],
+                "within_68_ellipse": 1,
+                "reasons": {
+                  "low_epoch_snr": 4,
+                  "nonpositive_flux": 1
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 4,
+                "rejected": 4,
+                "rmse_arcsec": 2.789951817186635,
+                "p90_arcsec": 3.62613459282042,
+                "bias_east_north_arcsec": [
+                  1.6740348917148877,
+                  -0.9282506285032093
+                ],
+                "within_68_ellipse": 0,
+                "reasons": {
+                  "low_epoch_snr": 4,
+                  "nonpositive_flux": 1
+                }
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 2.27624306170327,
+                "p90_arcsec": 3.083680993586729,
+                "bias_east_north_arcsec": [
+                  1.1441084586489236,
+                  -0.643527916210199
+                ],
+                "within_68_ellipse": 2,
+                "reasons": {
+                  "low_epoch_snr": 1
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 7,
+                "rejected": 1,
+                "rmse_arcsec": 2.222538569690825,
+                "p90_arcsec": 3.2220270838670864,
+                "bias_east_north_arcsec": [
+                  0.982467426672114,
+                  -0.5495166482323965
+                ],
+                "within_68_ellipse": 2,
+                "reasons": {
+                  "low_epoch_snr": 1
+                }
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 7,
+            "attempted": 8,
+            "baseline_rms": 2.90038132811386,
+            "candidate_rms": 2.3476580913653122,
+            "improvement_percent": 19.056916116198686,
+            "ci95_percent": [
+              1.1129379590576027,
+              45.85872407675017
+            ]
+          },
+          "paired_accepted": {
+            "common": 4,
+            "attempted": 8,
+            "baseline_rms": 2.7899518171866347,
+            "candidate_rms": 2.7589013843737473,
+            "improvement_percent": 1.1129379590576027,
+            "ci95_percent": [
+              -0.7313335673824861,
+              3.2403706631938256
+            ]
+          },
+          "truth_psf": "blurred_015px",
+          "snr_per_frame": 2.0,
+          "passed": true
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.6956295088996192,
+                "p90_arcsec": 2.1359087473195912,
+                "bias_east_north_arcsec": [
+                  0.7868732978934454,
+                  -0.11386877492204363
+                ],
+                "within_68_ellipse": 5,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.6956295088996192,
+                "p90_arcsec": 2.1359087473195912,
+                "bias_east_north_arcsec": [
+                  0.7868732978934454,
+                  -0.11386877492204363
+                ],
+                "within_68_ellipse": 5,
+                "reasons": {}
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.7380439751792867,
+                "p90_arcsec": 2.3073713702606176,
+                "bias_east_north_arcsec": [
+                  0.8831896418612806,
+                  -0.17505024185983326
+                ],
+                "within_68_ellipse": 3,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.7380439751792867,
+                "p90_arcsec": 2.3073713702606176,
+                "bias_east_north_arcsec": [
+                  0.8831896418612806,
+                  -0.17505024185983326
+                ],
+                "within_68_ellipse": 3,
+                "reasons": {}
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 8,
+            "attempted": 8,
+            "baseline_rms": 1.695629508899619,
+            "candidate_rms": 1.7380439751792867,
+            "improvement_percent": -2.5013993951539915,
+            "ci95_percent": [
+              -15.580590812771188,
+              2.918165782770321
+            ]
+          },
+          "paired_accepted": {
+            "common": 8,
+            "attempted": 8,
+            "baseline_rms": 1.695629508899619,
+            "candidate_rms": 1.7380439751792867,
+            "improvement_percent": -2.5013993951539915,
+            "ci95_percent": [
+              -15.580590812771188,
+              2.918165782770321
+            ]
+          },
+          "truth_psf": "blurred_015px",
+          "snr_per_frame": 4.0,
+          "passed": false
+        }
+      ],
+      "real_passed": true,
+      "passed": false
+    },
+    {
+      "field": {
+        "id": "rw-aur",
+        "name": "RW Aur",
+        "ra": 76.95652603458332,
+        "dec": 30.401438173888888,
+        "coordinate_source": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=RW+Aur",
+        "coordinate_epoch": "J2000; field center only, not astrometric truth",
+        "collections": [
+          {
+            "collection": "spherex_qr2",
+            "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+76.95652603458332+30.401438173888888+0.05",
+            "rows": 226,
+            "d6": [
+              {
+                "obs_id": "2025W37_2A_0051_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W37_2A/l2b-v20-2025-267/6/level2_2025W37_2A_0051_1D6_spx_l2b-v20-2025-267.fits",
+                "mjd": 60929.677476
+              },
+              {
+                "obs_id": "2025W38_1A_0538_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0538_1D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60935.106637
+              },
+              {
+                "obs_id": "2025W38_1A_0538_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0538_2D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60935.108129
+              },
+              {
+                "obs_id": "2025W38_1A_0538_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0538_3D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60935.109621
+              },
+              {
+                "obs_id": "2025W38_1A_0691_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0691_1D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60935.921941
+              },
+              {
+                "obs_id": "2025W38_1A_0691_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0691_2D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60935.923433
+              },
+              {
+                "obs_id": "2025W38_1A_0691_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0691_3D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60935.924925
+              },
+              {
+                "obs_id": "2025W38_1A_0691_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0691_4D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60935.926418
+              },
+              {
+                "obs_id": "2025W38_1A_0738_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0738_1D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60936.193798
+              },
+              {
+                "obs_id": "2025W38_1A_0738_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0738_3D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60936.196782
+              },
+              {
+                "obs_id": "2025W38_1A_0738_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_1A/l2b-v20-2025-268/6/level2_2025W38_1A_0738_4D6_spx_l2b-v20-2025-268.fits",
+                "mjd": 60936.198274
+              },
+              {
+                "obs_id": "2025W38_2C_0023_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_2C/l2b-v20-2025-269/6/level2_2025W38_2C_0023_1D6_spx_l2b-v20-2025-269.fits",
+                "mjd": 60936.598803
+              },
+              {
+                "obs_id": "2025W38_2C_0023_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_2C/l2b-v20-2025-269/6/level2_2025W38_2C_0023_2D6_spx_l2b-v20-2025-269.fits",
+                "mjd": 60936.600295
+              },
+              {
+                "obs_id": "2025W38_2C_0023_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_2C/l2b-v20-2025-269/6/level2_2025W38_2C_0023_3D6_spx_l2b-v20-2025-269.fits",
+                "mjd": 60936.601787
+              },
+              {
+                "obs_id": "2025W38_2C_0023_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_2C/l2b-v20-2025-269/6/level2_2025W38_2C_0023_4D6_spx_l2b-v20-2025-269.fits",
+                "mjd": 60936.60328
+              },
+              {
+                "obs_id": "2025W38_2C_0342_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_2C/l2b-v20-2025-269/6/level2_2025W38_2C_0342_1D6_spx_l2b-v20-2025-269.fits",
+                "mjd": 60938.230566
+              },
+              {
+                "obs_id": "2025W38_2C_0342_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W38_2C/l2b-v20-2025-269/6/level2_2025W38_2C_0342_2D6_spx_l2b-v20-2025-269.fits",
+                "mjd": 60938.232058
+              },
+              {
+                "obs_id": "2026W08_2A_0233_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W08_2A/l2b-v24-2026-089/6/level2_2026W08_2A_0233_1D6_spx_l2b-v24-2026-089.fits",
+                "mjd": 61091.719616
+              },
+              {
+                "obs_id": "2026W08_2A_0233_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W08_2A/l2b-v24-2026-089/6/level2_2026W08_2A_0233_2D6_spx_l2b-v24-2026-089.fits",
+                "mjd": 61091.721108
+              },
+              {
+                "obs_id": "2026W08_2A_0233_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W08_2A/l2b-v24-2026-089/6/level2_2026W08_2A_0233_3D6_spx_l2b-v24-2026-089.fits",
+                "mjd": 61091.7226
+              },
+              {
+                "obs_id": "2026W08_2A_0233_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W08_2A/l2b-v24-2026-089/6/level2_2026W08_2A_0233_4D6_spx_l2b-v24-2026-089.fits",
+                "mjd": 61091.724093
+              },
+              {
+                "obs_id": "2026W08_2A_0361_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W08_2A/l2b-v24-2026-089/6/level2_2026W08_2A_0361_1D6_spx_l2b-v24-2026-089.fits",
+                "mjd": 61092.397775
+              },
+              {
+                "obs_id": "2026W08_2A_0361_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W08_2A/l2b-v24-2026-089/6/level2_2026W08_2A_0361_2D6_spx_l2b-v24-2026-089.fits",
+                "mjd": 61092.399285
+              },
+              {
+                "obs_id": "2026W08_2A_0361_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W08_2A/l2b-v24-2026-089/6/level2_2026W08_2A_0361_3D6_spx_l2b-v24-2026-089.fits",
+                "mjd": 61092.400777
+              },
+              {
+                "obs_id": "2026W08_2A_0361_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W08_2A/l2b-v24-2026-089/6/level2_2026W08_2A_0361_4D6_spx_l2b-v24-2026-089.fits",
+                "mjd": 61092.402269
+              },
+              {
+                "obs_id": "2026W09_2A_0224_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0224_2D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61098.644638
+              },
+              {
+                "obs_id": "2026W09_2A_0224_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0224_3D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61098.64613
+              },
+              {
+                "obs_id": "2026W09_2A_0224_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0224_4D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61098.647622
+              },
+              {
+                "obs_id": "2026W09_2A_0289_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0289_1D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61098.984854
+              },
+              {
+                "obs_id": "2026W09_2A_0289_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0289_2D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61098.986346
+              },
+              {
+                "obs_id": "2026W09_2A_0289_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0289_3D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61098.987838
+              },
+              {
+                "obs_id": "2026W09_2A_0552_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0552_1D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61100.477411
+              },
+              {
+                "obs_id": "2026W09_2A_0552_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0552_2D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61100.478903
+              },
+              {
+                "obs_id": "2026W09_2A_0552_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0552_3D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61100.480395
+              },
+              {
+                "obs_id": "2026W09_2A_0552_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W09_2A/l2b-v24-2026-094/6/level2_2026W09_2A_0552_4D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61100.481887
+              },
+              {
+                "obs_id": "2026W10_1A_0120_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W10_1A/l2b-v24-2026-094/6/level2_2026W10_1A_0120_1D6_spx_l2b-v24-2026-094.fits",
+                "mjd": 61101.563363
+              }
+            ],
+            "sha256": "42b4bf74f3e05d50f2e562daee5758b4eb8abf9ff085e367899094d1e58ed55b"
+          },
+          {
+            "collection": "spherex_qr3",
+            "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=circle+76.95652603458332+30.401438173888888+0.05",
+            "rows": 114,
+            "d6": [
+              {
+                "obs_id": "2026W37_2A_0581_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W37_2A/l2b-v27-2026-259/6/level2_2026W37_2A_0581_1D6_spx_l2b-v27-2026-259.fits",
+                "mjd": 61296.297591
+              },
+              {
+                "obs_id": "2026W37_2A_0581_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W37_2A/l2b-v27-2026-259/6/level2_2026W37_2A_0581_2D6_spx_l2b-v27-2026-259.fits",
+                "mjd": 61296.299083
+              },
+              {
+                "obs_id": "2026W37_2A_0581_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W37_2A/l2b_retry-v27-2026-261/6/level2_2026W37_2A_0581_3D6_spx_l2b_retry-v27-2026-261.fits",
+                "mjd": 61296.300575
+              },
+              {
+                "obs_id": "2026W37_2A_0581_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W37_2A/l2b-v27-2026-259/6/level2_2026W37_2A_0581_4D6_spx_l2b-v27-2026-259.fits",
+                "mjd": 61296.302067
+              },
+              {
+                "obs_id": "2026W38_1A_0162_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b_retry-v27-2026-262/6/level2_2026W38_1A_0162_1D6_spx_l2b_retry-v27-2026-262.fits",
+                "mjd": 61297.855434
+              },
+              {
+                "obs_id": "2026W38_1A_0162_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0162_2D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61297.856926
+              },
+              {
+                "obs_id": "2026W38_1A_0162_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0162_3D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61297.858418
+              },
+              {
+                "obs_id": "2026W38_1A_0162_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0162_4D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61297.85991
+              },
+              {
+                "obs_id": "2026W38_1A_0213_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0213_1D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61298.129191
+              },
+              {
+                "obs_id": "2026W38_1A_0213_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0213_2D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61298.130684
+              },
+              {
+                "obs_id": "2026W38_1A_0359_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0359_1D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61298.876811
+              },
+              {
+                "obs_id": "2026W38_1A_0359_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0359_2D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61298.878303
+              },
+              {
+                "obs_id": "2026W38_1A_0359_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0359_3D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61298.879796
+              },
+              {
+                "obs_id": "2026W38_1A_0359_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0359_4D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61298.881306
+              },
+              {
+                "obs_id": "2026W38_1A_0435_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0435_1D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61299.283575
+              },
+              {
+                "obs_id": "2026W38_1A_0435_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0435_2D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61299.285067
+              },
+              {
+                "obs_id": "2026W38_1A_0435_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0435_3D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61299.286559
+              },
+              {
+                "obs_id": "2026W38_1A_0435_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0435_4D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61299.288052
+              },
+              {
+                "obs_id": "2026W38_1A_0565_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0565_1D6_spx_l2b-v27-2026-261.fits",
+                "mjd": 61299.895897
+              }
+            ],
+            "sha256": "acaa14f177822028a184af2147064d6d11969a606d46c37e2402a65e211ff07c"
+          }
+        ]
+      },
+      "phase": "development",
+      "protocol_sha256": "adb363991fe6ba247e9bcfa5cf4eee79ad3ee5518a7284a016a8c644dad55b15",
+      "rules": {
+        "version": "0.7.0",
+        "spectral_configuration": "broad",
+        "spectral_mismatch_max": 0.5,
+        "positions_px": [
+          [
+            5.5,
+            5.5
+          ],
+          [
+            57.5,
+            5.5
+          ],
+          [
+            5.5,
+            57.5
+          ],
+          [
+            57.5,
+            57.5
+          ]
+        ],
+        "snr_per_frame": [
+          2.0,
+          4.0
+        ],
+        "motions_px": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.6,
+            0.05
+          ]
+        ],
+        "truth_psfs": [
+          "nearest",
+          "blurred_015px"
+        ],
+        "gaussian_blur_native_px": 0.15,
+        "ellipse_threshold": 2.3,
+        "recovery_tolerance_px": 1.0,
+        "injection_frame": "identical Gaussian Gaia registration for both models; isolates centroid/deblending effect",
+        "real_frame": "baseline Gaussian registration vs candidate IR-centroid training + median/MAD rejection",
+        "gate": "each new field, SNR and truth PSF: paired numerical RMS lower, P90 no higher, no fewer numerical fits or quality-accepted fits; real Gaia paired RMS no higher with >=3 common, no fewer numerical/accepted fits; no default WISE promotion",
+        "models": [
+          "baseline",
+          "ir_robust"
+        ],
+        "minimum_common_per_group": 4,
+        "bootstrap_draws": 2000,
+        "seed": 20261030,
+        "limits": [
+          "known-position local fitting, not blind detection",
+          "no extra source shot noise",
+          "blur is an assumed PSF perturbation, not independent physical calibration",
+          "conditional IRLS covariance; no neighbour-position, PSF or shared-frame systematic covariance",
+          "broad spectra only; default WISE 0855 measurement remains unchanged"
+        ]
+      },
+      "model_rules": {
+        "version": "0.7.0",
+        "neighbour_radius_px": 8.0,
+        "target_match_radius_px": 0.35,
+        "max_neighbours": 24,
+        "svd_relative_cut": 1e-08,
+        "fit_bound_px": 2.5,
+        "reference_bound_px": 1.3,
+        "derivative_step_px": 0.002,
+        "huber_threshold": 2.5,
+        "irls_iterations": 2,
+        "chi2_max": 3.0,
+        "core_rms_max": 2.5,
+        "core_radius_native_px": 2.5,
+        "core_coverage_min": 0.75,
+        "core_usable_frame_fraction": 0.8,
+        "outlier_sigma": 5.0,
+        "core_outlier_fraction_max": 0.1,
+        "epoch_snr_min": 5.0,
+        "information_fraction_min": 0.05,
+        "registration_mahalanobis_max": 4.0,
+        "registration_scatter_floor_px": 0.02,
+        "registration_sources_min": 4,
+        "model_disagreement_floor_px": 0.2,
+        "model_disagreement_sigma": 3.0
+      },
+      "pairs": 10,
+      "catalog_screening": {
+        "queried": 8797,
+        "selected": 4096,
+        "gaia_positions": 1762,
+        "rejections": {
+          "faint_ir": 4478,
+          "artifact_or_poor_fit": 215,
+          "large_motion": 7,
+          "duplicate_gaia_match": 1
+        }
+      },
+      "unavailable": {},
+      "planned_injections": 32,
+      "real_summary": {
+        "models": {
+          "baseline": {
+            "numeric_valid": {
+              "attempted": 11,
+              "valid": 11,
+              "rejected": 0,
+              "rmse_arcsec": 0.18220784669115517,
+              "p90_arcsec": 0.16197758961533737,
+              "bias_east_north_arcsec": [
+                -0.05349733385386502,
+                0.07279097507572536
+              ],
+              "within_68_ellipse": 9,
+              "reasons": {
+                "poor_global_fit": 1
+              }
+            },
+            "accepted": {
+              "attempted": 11,
+              "valid": 10,
+              "rejected": 1,
+              "rmse_arcsec": 0.19047903190651494,
+              "p90_arcsec": 0.1970146896477584,
+              "bias_east_north_arcsec": [
+                -0.06269661352301566,
+                0.07708313981775544
+              ],
+              "within_68_ellipse": 8,
+              "reasons": {
+                "poor_global_fit": 1
+              }
+            }
+          },
+          "ir_robust": {
+            "numeric_valid": {
+              "attempted": 11,
+              "valid": 11,
+              "rejected": 0,
+              "rmse_arcsec": 1.0986356041004715,
+              "p90_arcsec": 0.49468170660236344,
+              "bias_east_north_arcsec": [
+                0.044466786985855176,
+                -0.29530250901400285
+              ],
+              "within_68_ellipse": 6,
+              "reasons": {
+                "poor_global_fit": 1,
+                "model_disagreement": 1
+              }
+            },
+            "accepted": {
+              "attempted": 11,
+              "valid": 9,
+              "rejected": 2,
+              "rmse_arcsec": 0.18917448320202399,
+              "p90_arcsec": 0.2160092143137166,
+              "bias_east_north_arcsec": [
+                -0.030572538419329894,
+                0.0350405214521949
+              ],
+              "within_68_ellipse": 6,
+              "reasons": {
+                "poor_global_fit": 1,
+                "model_disagreement": 1
+              }
+            }
+          }
+        },
+        "paired_numeric": {
+          "common": 11,
+          "attempted": 11,
+          "baseline_rms": 0.18220784669115517,
+          "candidate_rms": 1.0986356041004715,
+          "improvement_percent": -502.9573501094462,
+          "ci95_percent": null
+        },
+        "paired_accepted": {
+          "common": 9,
+          "attempted": 11,
+          "baseline_rms": 0.1977358774755817,
+          "candidate_rms": 0.18917448320202399,
+          "improvement_percent": 4.32971213057426,
+          "ci95_percent": null
+        }
+      },
+      "injection_summary": {
+        "models": {
+          "baseline": {
+            "numeric_valid": {
+              "attempted": 32,
+              "valid": 26,
+              "rejected": 6,
+              "rmse_arcsec": 6.005943295534486,
+              "p90_arcsec": 14.660474670772654,
+              "bias_east_north_arcsec": [
+                -1.4412907754115531,
+                -1.1365378522693674
+              ],
+              "within_68_ellipse": 16,
+              "reasons": {
+                "low_epoch_snr": 16,
+                "poor_global_fit": 24,
+                "nonpositive_flux": 6
+              }
+            },
+            "accepted": {
+              "attempted": 32,
+              "valid": 8,
+              "rejected": 24,
+              "rmse_arcsec": 10.656089806881896,
+              "p90_arcsec": 15.382037957187723,
+              "bias_east_north_arcsec": [
+                -6.221206664820821,
+                -4.583214963230874
+              ],
+              "within_68_ellipse": 0,
+              "reasons": {
+                "low_epoch_snr": 16,
+                "poor_global_fit": 24,
+                "nonpositive_flux": 6
+              }
+            }
+          },
+          "ir_robust": {
+            "numeric_valid": {
+              "attempted": 32,
+              "valid": 32,
+              "rejected": 0,
+              "rmse_arcsec": 5.510857957323738,
+              "p90_arcsec": 13.449152231239829,
+              "bias_east_north_arcsec": [
+                -0.8265609392353803,
+                -0.7265857907210513
+              ],
+              "within_68_ellipse": 12,
+              "reasons": {
+                "model_disagreement": 6,
+                "poor_global_fit": 8
+              }
+            },
+            "accepted": {
+              "attempted": 32,
+              "valid": 18,
+              "rejected": 14,
+              "rmse_arcsec": 7.165929297499413,
+              "p90_arcsec": 14.862279340833458,
+              "bias_east_north_arcsec": [
+                -2.1723030218520805,
+                -1.7319992095061199
+              ],
+              "within_68_ellipse": 4,
+              "reasons": {
+                "model_disagreement": 6,
+                "poor_global_fit": 8
+              }
+            }
+          }
+        },
+        "paired_numeric": {
+          "common": 26,
+          "attempted": 32,
+          "baseline_rms": 6.005943295534485,
+          "candidate_rms": 5.986904296952505,
+          "improvement_percent": 0.31700263630752845,
+          "ci95_percent": [
+            0.15262887193890906,
+            12.299426113682998
+          ]
+        },
+        "paired_accepted": {
+          "common": 8,
+          "attempted": 32,
+          "baseline_rms": 10.656089806881896,
+          "candidate_rms": 10.64196304014078,
+          "improvement_percent": 0.13256989193158875,
+          "ci95_percent": [
+            0.13256989193158875,
+            0.13256989193158875
+          ]
+        }
+      },
+      "groups": [
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 5,
+                "rejected": 3,
+                "rmse_arcsec": 9.59953380467667,
+                "p90_arcsec": 15.12761461610091,
+                "bias_east_north_arcsec": [
+                  -4.622394505322579,
+                  -2.7042134815712298
+                ],
+                "within_68_ellipse": 3,
+                "reasons": {
+                  "low_epoch_snr": 6,
+                  "poor_global_fit": 6,
+                  "nonpositive_flux": 3
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 2,
+                "rejected": 6,
+                "rmse_arcsec": 15.056840932167438,
+                "p90_arcsec": 15.354137610831023,
+                "bias_east_north_arcsec": [
+                  -12.638853769332886,
+                  -8.157752292730628
+                ],
+                "within_68_ellipse": 0,
+                "reasons": {
+                  "low_epoch_snr": 6,
+                  "poor_global_fit": 6,
+                  "nonpositive_flux": 3
+                }
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 7.7272058375883965,
+                "p90_arcsec": 14.882545653542469,
+                "bias_east_north_arcsec": [
+                  -2.298958667066816,
+                  -1.3695433184562371
+                ],
+                "within_68_ellipse": 2,
+                "reasons": {
+                  "model_disagreement": 3,
+                  "poor_global_fit": 2
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 3,
+                "rejected": 5,
+                "rmse_arcsec": 12.328356730093557,
+                "p90_arcsec": 15.268989785826578,
+                "bias_east_north_arcsec": [
+                  -7.93267219307198,
+                  -5.053590154300738
+                ],
+                "within_68_ellipse": 0,
+                "reasons": {
+                  "model_disagreement": 3,
+                  "poor_global_fit": 2
+                }
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 5,
+            "attempted": 8,
+            "baseline_rms": 9.59953380467667,
+            "candidate_rms": 9.576588243583606,
+            "improvement_percent": 0.2390278690605263,
+            "ci95_percent": [
+              0.0979804860377631,
+              11.398920011998959
+            ]
+          },
+          "paired_accepted": {
+            "common": 2,
+            "attempted": 8,
+            "baseline_rms": 15.056840932167436,
+            "candidate_rms": 15.042088166240166,
+            "improvement_percent": 0.0979804860377631,
+            "ci95_percent": [
+              0.0979804860377631,
+              0.0979804860377631
+            ]
+          },
+          "truth_psf": "nearest",
+          "snr_per_frame": 2.0,
+          "passed": true
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.0412507112010072,
+                "p90_arcsec": 1.3368272059114863,
+                "bias_east_north_arcsec": [
+                  0.5243624616408832,
+                  -0.15919786127819052
+                ],
+                "within_68_ellipse": 5,
+                "reasons": {
+                  "poor_global_fit": 6,
+                  "low_epoch_snr": 2
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 2,
+                "rejected": 6,
+                "rmse_arcsec": 1.0198176332657238,
+                "p90_arcsec": 1.0493318196170698,
+                "bias_east_north_arcsec": [
+                  0.13335986829620552,
+                  -0.9597189975555177
+                ],
+                "within_68_ellipse": 0,
+                "reasons": {
+                  "poor_global_fit": 6,
+                  "low_epoch_snr": 2
+                }
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 0.9927047215533249,
+                "p90_arcsec": 1.339832397170199,
+                "bias_east_north_arcsec": [
+                  0.5876576330608639,
+                  -0.13430255462907673
+                ],
+                "within_68_ellipse": 4,
+                "reasons": {
+                  "poor_global_fit": 2
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 6,
+                "rejected": 2,
+                "rmse_arcsec": 1.0842175154610783,
+                "p90_arcsec": 1.4376288593340139,
+                "bias_east_north_arcsec": [
+                  0.6683860391873991,
+                  -0.04700560574469261
+                ],
+                "within_68_ellipse": 2,
+                "reasons": {
+                  "poor_global_fit": 2
+                }
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 8,
+            "attempted": 8,
+            "baseline_rms": 1.0412507112010072,
+            "candidate_rms": 0.9927047215533249,
+            "improvement_percent": 4.662276733687709,
+            "ci95_percent": [
+              -1.975794957281618,
+              16.241639217572878
+            ]
+          },
+          "paired_accepted": {
+            "common": 2,
+            "attempted": 8,
+            "baseline_rms": 1.0198176332657238,
+            "candidate_rms": 0.946132765194182,
+            "improvement_percent": 7.225298491415922,
+            "ci95_percent": [
+              7.225298491415922,
+              7.225298491415922
+            ]
+          },
+          "truth_psf": "nearest",
+          "snr_per_frame": 4.0,
+          "passed": false
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 5,
+                "rejected": 3,
+                "rmse_arcsec": 9.578008155767128,
+                "p90_arcsec": 15.075533178360766,
+                "bias_east_north_arcsec": [
+                  -4.609246327742232,
+                  -2.661791478268356
+                ],
+                "within_68_ellipse": 3,
+                "reasons": {
+                  "low_epoch_snr": 6,
+                  "poor_global_fit": 6,
+                  "nonpositive_flux": 3
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 2,
+                "rejected": 6,
+                "rmse_arcsec": 15.008269260800747,
+                "p90_arcsec": 15.29010941008884,
+                "bias_east_north_arcsec": [
+                  -12.561532171962178,
+                  -8.186039115180458
+                ],
+                "within_68_ellipse": 0,
+                "reasons": {
+                  "low_epoch_snr": 6,
+                  "poor_global_fit": 6,
+                  "nonpositive_flux": 3
+                }
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 7.723661416510871,
+                "p90_arcsec": 14.840480156203483,
+                "bias_east_north_arcsec": [
+                  -2.226702082012156,
+                  -1.2369704803303283
+                ],
+                "within_68_ellipse": 2,
+                "reasons": {
+                  "model_disagreement": 3,
+                  "poor_global_fit": 2
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 3,
+                "rejected": 5,
+                "rmse_arcsec": 12.290163391304946,
+                "p90_arcsec": 15.208717946803509,
+                "bias_east_north_arcsec": [
+                  -7.871252634216591,
+                  -5.0595431042018975
+                ],
+                "within_68_ellipse": 0,
+                "reasons": {
+                  "model_disagreement": 3,
+                  "poor_global_fit": 2
+                }
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 5,
+            "attempted": 8,
+            "baseline_rms": 9.578008155767128,
+            "candidate_rms": 9.554630917918104,
+            "improvement_percent": 0.2440720186163925,
+            "ci95_percent": [
+              0.10641476931179117,
+              8.142039338528907
+            ]
+          },
+          "paired_accepted": {
+            "common": 2,
+            "attempted": 8,
+            "baseline_rms": 15.008269260800747,
+            "candidate_rms": 14.992298245689174,
+            "improvement_percent": 0.10641476931179117,
+            "ci95_percent": [
+              0.10641476931179117,
+              0.10641476931179117
+            ]
+          },
+          "truth_psf": "blurred_015px",
+          "snr_per_frame": 2.0,
+          "passed": true
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.1031293416115775,
+                "p90_arcsec": 1.3994156471887762,
+                "bias_east_north_arcsec": [
+                  0.5612180389370762,
+                  -0.18079705869751225
+                ],
+                "within_68_ellipse": 5,
+                "reasons": {
+                  "poor_global_fit": 6,
+                  "low_epoch_snr": 2
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 2,
+                "rejected": 6,
+                "rmse_arcsec": 1.101075303019693,
+                "p90_arcsec": 1.167228506811544,
+                "bias_east_north_arcsec": [
+                  0.18219941371557394,
+                  -1.0293494474568903
+                ],
+                "within_68_ellipse": 0,
+                "reasons": {
+                  "poor_global_fit": 6,
+                  "low_epoch_snr": 2
+                }
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 8,
+                "valid": 8,
+                "rejected": 0,
+                "rmse_arcsec": 1.0621220766184363,
+                "p90_arcsec": 1.4214065192230776,
+                "bias_east_north_arcsec": [
+                  0.631759359076585,
+                  -0.165526809468564
+                ],
+                "within_68_ellipse": 4,
+                "reasons": {
+                  "poor_global_fit": 2
+                }
+              },
+              "accepted": {
+                "attempted": 8,
+                "valid": 6,
+                "rejected": 2,
+                "rmse_arcsec": 1.165269301381014,
+                "p90_arcsec": 1.5259178557410649,
+                "bias_east_north_arcsec": [
+                  0.7166673089006431,
+                  -0.09242539352234963
+                ],
+                "within_68_ellipse": 2,
+                "reasons": {
+                  "poor_global_fit": 2
+                }
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 8,
+            "attempted": 8,
+            "baseline_rms": 1.1031293416115777,
+            "candidate_rms": 1.0621220766184363,
+            "improvement_percent": 3.7173578334189994,
+            "ci95_percent": [
+              -2.9834196492882548,
+              15.678429549615602
+            ]
+          },
+          "paired_accepted": {
+            "common": 2,
+            "attempted": 8,
+            "baseline_rms": 1.101075303019693,
+            "candidate_rms": 1.0377471237630913,
+            "improvement_percent": 5.751484851483313,
+            "ci95_percent": [
+              5.751484851483313,
+              5.751484851483313
+            ]
+          },
+          "truth_psf": "blurred_015px",
+          "snr_per_frame": 4.0,
+          "passed": false
+        }
+      ],
+      "real_passed": false,
+      "passed": false
+    },
+    {
+      "field": {
+        "id": "r-dra",
+        "name": "R Dra",
+        "ra": 248.16761083294998,
+        "dec": 66.75497941722,
+        "coordinate_source": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=%40376084&Name=V%2A+R+Dra&submit=submit",
+        "coordinate_epoch": "J2000; field center only, not astrometric truth",
+        "collections": [
+          {
+            "collection": "spherex_qr2",
+            "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+248.16761083294998+66.75497941722+0.05",
+            "rows": 570,
+            "d6": [
+              {
+                "obs_id": "2025W20_2D_0243_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_1D6_spx_l2b-v20-2025-247.fits",
+                "mjd": 60811.955829
+              },
+              {
+                "obs_id": "2025W20_2D_0243_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_2D6_spx_l2b-v20-2025-247.fits",
+                "mjd": 60811.957321
+              },
+              {
+                "obs_id": "2025W20_2D_0243_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_3D6_spx_l2b-v20-2025-247.fits",
+                "mjd": 60811.958814
+              },
+              {
+                "obs_id": "2025W20_2D_0243_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_4D6_spx_l2b-v20-2025-247.fits",
+                "mjd": 60811.960306
+              },
+              {
+                "obs_id": "2025W21_1B_0329_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W21_1B/l2b-v20-2025-248/6/level2_2025W21_1B_0329_1D6_spx_l2b-v20-2025-248.fits",
+                "mjd": 60815.69268
+              },
+              {
+                "obs_id": "2025W21_1B_0329_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W21_1B/l2b-v20-2025-248/6/level2_2025W21_1B_0329_2D6_spx_l2b-v20-2025-248.fits",
+                "mjd": 60815.694173
+              },
+              {
+                "obs_id": "2025W23_1C_0021_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0021_1D6_spx_l2b-v20-2025-251.fits",
+                "mjd": 60828.12619
+              },
+              {
+                "obs_id": "2025W23_1C_0021_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0021_2D6_spx_l2b-v20-2025-251.fits",
+                "mjd": 60828.1277
+              },
+              {
+                "obs_id": "2025W23_1C_0021_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0021_3D6_spx_l2b-v20-2025-251.fits",
+                "mjd": 60828.129192
+              },
+              {
+                "obs_id": "2025W23_1C_0021_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0021_4D6_spx_l2b-v20-2025-251.fits",
+                "mjd": 60828.130684
+              },
+              {
+                "obs_id": "2025W23_1C_0607_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_1C/l2b-v20-2025-251/6/level2_2025W23_1C_0607_3D6_spx_l2b-v20-2025-251.fits",
+                "mjd": 60831.186215
+              },
+              {
+                "obs_id": "2025W23_2B_0129_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0129_2D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60832.136834
+              },
+              {
+                "obs_id": "2025W23_2B_0130_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0130_1D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60832.138575
+              },
+              {
+                "obs_id": "2025W23_2B_0382_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0382_1D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60833.293508
+              },
+              {
+                "obs_id": "2025W23_2B_0398_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0398_1D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60833.365864
+              },
+              {
+                "obs_id": "2025W23_2B_0603_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0603_1D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60834.309768
+              },
+              {
+                "obs_id": "2025W23_2B_0603_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0603_2D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60834.31126
+              },
+              {
+                "obs_id": "2025W23_2B_0603_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0603_3D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60834.312752
+              },
+              {
+                "obs_id": "2025W23_2B_0632_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W23_2B/l2b-v20-2025-252/6/level2_2025W23_2B_0632_1D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60834.448654
+              },
+              {
+                "obs_id": "2025W24_1A_0457_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_1A/l2b-v20-2025-252/6/level2_2025W24_1A_0457_1D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60837.301931
+              },
+              {
+                "obs_id": "2025W24_1A_0631_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_1A/l2b-v20-2025-252/6/level2_2025W24_1A_0631_1D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60838.25287
+              },
+              {
+                "obs_id": "2025W24_1A_0631_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_1A/l2b-v20-2025-252/6/level2_2025W24_1A_0631_2D6_spx_l2b-v20-2025-252.fits",
+                "mjd": 60838.254362
+              },
+              {
+                "obs_id": "2025W24_2D_0033_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0033_1D6_spx_l2b-v20-2025-253.fits",
+                "mjd": 60838.660237
+              },
+              {
+                "obs_id": "2025W24_2D_0033_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0033_2D6_spx_l2b-v20-2025-253.fits",
+                "mjd": 60838.66173
+              },
+              {
+                "obs_id": "2025W24_2D_0033_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0033_3D6_spx_l2b-v20-2025-253.fits",
+                "mjd": 60838.663222
+              },
+              {
+                "obs_id": "2025W24_2D_0033_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0033_4D6_spx_l2b-v20-2025-253.fits",
+                "mjd": 60838.664714
+              },
+              {
+                "obs_id": "2025W24_2D_0074_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W24_2D/l2b-v20-2025-253/6/level2_2025W24_2D_0074_1D6_spx_l2b-v20-2025-253.fits",
+                "mjd": 60838.864463
+              },
+              {
+                "obs_id": "2025W52_2A_0161_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0161_2D6_spx_l2b-v22-2026-006.fits",
+                "mjd": 61035.218053
+              },
+              {
+                "obs_id": "2025W52_2A_0161_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0161_3D6_spx_l2b-v22-2026-006.fits",
+                "mjd": 61035.219545
+              },
+              {
+                "obs_id": "2025W52_2A_0161_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0161_4D6_spx_l2b-v22-2026-006.fits",
+                "mjd": 61035.221038
+              },
+              {
+                "obs_id": "2025W52_2A_0227_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_1D6_spx_l2b-v22-2026-006.fits",
+                "mjd": 61035.555995
+              },
+              {
+                "obs_id": "2025W52_2A_0227_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_2D6_spx_l2b-v22-2026-006.fits",
+                "mjd": 61035.557488
+              },
+              {
+                "obs_id": "2025W52_2A_0227_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_3D6_spx_l2b-v22-2026-006.fits",
+                "mjd": 61035.55898
+              },
+              {
+                "obs_id": "2025W52_2A_0227_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_4D6_spx_l2b-v22-2026-006.fits",
+                "mjd": 61035.56049
+              },
+              {
+                "obs_id": "2026W01_1A_0257_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0257_1D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61039.152063
+              },
+              {
+                "obs_id": "2026W01_1A_0257_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0257_2D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61039.153555
+              },
+              {
+                "obs_id": "2026W01_1A_0257_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0257_3D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61039.155048
+              },
+              {
+                "obs_id": "2026W01_1A_0257_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0257_4D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61039.15654
+              },
+              {
+                "obs_id": "2026W01_1A_0404_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0404_1D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61039.898937
+              },
+              {
+                "obs_id": "2026W01_1A_0534_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0534_3D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61040.581643
+              },
+              {
+                "obs_id": "2026W01_1A_0534_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0534_4D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61040.583135
+              },
+              {
+                "obs_id": "2026W01_1A_0656_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0656_1D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61041.189044
+              },
+              {
+                "obs_id": "2026W01_1A_0656_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0656_2D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61041.190536
+              },
+              {
+                "obs_id": "2026W01_1A_0656_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_1A/l2b-v22-2026-007/6/level2_2026W01_1A_0656_3D6_spx_l2b-v22-2026-007.fits",
+                "mjd": 61041.192029
+              },
+              {
+                "obs_id": "2026W01_2A_0426_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_2A/l2b-v23-2026-008/6/level2_2026W01_2A_0426_1D6_spx_l2b-v23-2026-008.fits",
+                "mjd": 61043.567307
+              },
+              {
+                "obs_id": "2026W01_2A_0426_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_2A/l2b-v23-2026-008/6/level2_2026W01_2A_0426_2D6_spx_l2b-v23-2026-008.fits",
+                "mjd": 61043.5688
+              },
+              {
+                "obs_id": "2026W01_2A_0426_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W01_2A/l2b-v23-2026-008/6/level2_2026W01_2A_0426_3D6_spx_l2b-v23-2026-008.fits",
+                "mjd": 61043.570292
+              },
+              {
+                "obs_id": "2026W03_1A_0304_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W03_1A/l2b-v23-2026-016/6/level2_2026W03_1A_0304_1D6_spx_l2b-v23-2026-016.fits",
+                "mjd": 61053.410149
+              },
+              {
+                "obs_id": "2026W03_1A_0304_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W03_1A/l2b-v23-2026-016/6/level2_2026W03_1A_0304_2D6_spx_l2b-v23-2026-016.fits",
+                "mjd": 61053.411641
+              },
+              {
+                "obs_id": "2026W03_1A_0304_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W03_1A/l2b-v23-2026-016/6/level2_2026W03_1A_0304_3D6_spx_l2b-v23-2026-016.fits",
+                "mjd": 61053.413133
+              },
+              {
+                "obs_id": "2026W03_1A_0304_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W03_1A/l2b-v23-2026-016/6/level2_2026W03_1A_0304_4D6_spx_l2b-v23-2026-016.fits",
+                "mjd": 61053.414626
+              },
+              {
+                "obs_id": "2026W17_1B_0434_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0434_1D6_spx_l2b-v24-2026-115.fits",
+                "mjd": 61152.331052
+              },
+              {
+                "obs_id": "2026W17_1B_0434_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0434_2D6_spx_l2b-v24-2026-115.fits",
+                "mjd": 61152.332544
+              },
+              {
+                "obs_id": "2026W17_1B_0434_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0434_3D6_spx_l2b-v24-2026-115.fits",
+                "mjd": 61152.334036
+              },
+              {
+                "obs_id": "2026W17_1B_0517_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0517_1D6_spx_l2b-v24-2026-115.fits",
+                "mjd": 61152.808786
+              },
+              {
+                "obs_id": "2026W17_1B_0517_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0517_2D6_spx_l2b-v24-2026-115.fits",
+                "mjd": 61152.810279
+              },
+              {
+                "obs_id": "2026W17_1B_0517_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0517_3D6_spx_l2b-v24-2026-115.fits",
+                "mjd": 61152.811771
+              },
+              {
+                "obs_id": "2026W17_1B_0517_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0517_4D6_spx_l2b-v24-2026-115.fits",
+                "mjd": 61152.813281
+              },
+              {
+                "obs_id": "2026W17_2A_0255_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0255_1D6_spx_l2b-v24-2026-118.fits",
+                "mjd": 61154.638397
+              },
+              {
+                "obs_id": "2026W17_2A_0255_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0255_2D6_spx_l2b-v24-2026-118.fits",
+                "mjd": 61154.639889
+              },
+              {
+                "obs_id": "2026W17_2A_0255_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0255_3D6_spx_l2b-v24-2026-118.fits",
+                "mjd": 61154.641382
+              },
+              {
+                "obs_id": "2026W19_1A_0842_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0842_1D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61166.253201
+              },
+              {
+                "obs_id": "2026W19_1A_0842_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0842_2D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61166.254694
+              },
+              {
+                "obs_id": "2026W19_2A_0976_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_0976_1D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61169.988973
+              },
+              {
+                "obs_id": "2026W19_2A_1286_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_1286_1D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61170.800582
+              },
+              {
+                "obs_id": "2026W19_2A_1286_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_1286_2D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61170.802074
+              },
+              {
+                "obs_id": "2026W19_2A_1339_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_1339_1D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61170.937354
+              },
+              {
+                "obs_id": "2026W19_2A_1339_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_2A/l2b-v24-2026-131/6/level2_2026W19_2A_1339_2D6_spx_l2b-v24-2026-131.fits",
+                "mjd": 61170.938846
+              },
+              {
+                "obs_id": "2026W20_1A_0101_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0101_1D6_spx_l2b-v24-2026-135.fits",
+                "mjd": 61171.275048
+              },
+              {
+                "obs_id": "2026W20_1A_0101_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0101_2D6_spx_l2b-v24-2026-135.fits",
+                "mjd": 61171.27654
+              },
+              {
+                "obs_id": "2026W20_1A_0101_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0101_3D6_spx_l2b-v24-2026-135.fits",
+                "mjd": 61171.278032
+              },
+              {
+                "obs_id": "2026W20_1A_0795_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0795_1D6_spx_l2b-v24-2026-135.fits",
+                "mjd": 61173.244185
+              },
+              {
+                "obs_id": "2026W20_1A_0795_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0795_2D6_spx_l2b-v24-2026-135.fits",
+                "mjd": 61173.245677
+              },
+              {
+                "obs_id": "2026W20_1A_0795_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0795_3D6_spx_l2b-v24-2026-135.fits",
+                "mjd": 61173.247187
+              },
+              {
+                "obs_id": "2026W20_2A_0294_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_2A/l2b-v25-2026-140/6/level2_2026W20_2A_0294_2D6_spx_l2b-v25-2026-140.fits",
+                "mjd": 61176.363744
+              },
+              {
+                "obs_id": "2026W20_2A_0294_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_2A/l2b-v25-2026-140/6/level2_2026W20_2A_0294_3D6_spx_l2b-v25-2026-140.fits",
+                "mjd": 61176.365236
+              },
+              {
+                "obs_id": "2026W20_2A_0294_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_2A/l2b-v25-2026-140/6/level2_2026W20_2A_0294_4D6_spx_l2b-v25-2026-140.fits",
+                "mjd": 61176.366728
+              },
+              {
+                "obs_id": "2026W21_2A_0035_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0035_1D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61181.725825
+              },
+              {
+                "obs_id": "2026W21_2A_0104_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0104_1D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61182.132553
+              },
+              {
+                "obs_id": "2026W21_2A_0104_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0104_2D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61182.134045
+              },
+              {
+                "obs_id": "2026W21_2A_0104_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0104_3D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61182.135538
+              },
+              {
+                "obs_id": "2026W21_2A_0104_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0104_4D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61182.13703
+              },
+              {
+                "obs_id": "2026W21_2A_0325_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0325_1D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61183.490505
+              },
+              {
+                "obs_id": "2026W21_2A_0325_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0325_2D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61183.491997
+              },
+              {
+                "obs_id": "2026W21_2A_0325_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0325_3D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61183.49349
+              },
+              {
+                "obs_id": "2026W21_2A_0325_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W21_2A/l2b-v25-2026-147/6/level2_2026W21_2A_0325_4D6_spx_l2b-v25-2026-147.fits",
+                "mjd": 61183.494982
+              },
+              {
+                "obs_id": "2026W23_2A_0642_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W23_2A/l2b-v25-2026-160/6/level2_2026W23_2A_0642_4D6_spx_l2b-v25-2026-160.fits",
+                "mjd": 61198.97313
+              },
+              {
+                "obs_id": "2026W24_1A_0125_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_1A/l2b-v25-2026-163/6/level2_2026W24_1A_0125_1D6_spx_l2b-v25-2026-163.fits",
+                "mjd": 61199.579714
+              },
+              {
+                "obs_id": "2026W24_1A_0125_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_1A/l2b-v25-2026-163/6/level2_2026W24_1A_0125_2D6_spx_l2b-v25-2026-163.fits",
+                "mjd": 61199.581206
+              },
+              {
+                "obs_id": "2026W24_1A_0125_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_1A/l2b-v25-2026-163/6/level2_2026W24_1A_0125_3D6_spx_l2b-v25-2026-163.fits",
+                "mjd": 61199.582698
+              },
+              {
+                "obs_id": "2026W24_1A_0125_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_1A/l2b-v25-2026-163/6/level2_2026W24_1A_0125_4D6_spx_l2b-v25-2026-163.fits",
+                "mjd": 61199.584191
+              },
+              {
+                "obs_id": "2026W24_2B_0242_1",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_1D6_spx_l2b-v25-2026-166.fits",
+                "mjd": 61203.856428
+              },
+              {
+                "obs_id": "2026W24_2B_0242_2",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_2D6_spx_l2b-v25-2026-166.fits",
+                "mjd": 61203.85792
+              },
+              {
+                "obs_id": "2026W24_2B_0242_3",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_3D6_spx_l2b-v25-2026-166.fits",
+                "mjd": 61203.859412
+              },
+              {
+                "obs_id": "2026W24_2B_0242_4",
+                "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_4D6_spx_l2b-v25-2026-166.fits",
+                "mjd": 61203.860905
+              }
+            ],
+            "sha256": "aaed55b125e1389b14d491522de69b1f23397b2dc25bdeb1224e21fb88c18e81"
+          },
+          {
+            "collection": "spherex_qr3",
+            "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=circle+248.16761083294998+66.75497941722+0.05",
+            "rows": 0,
+            "d6": [],
+            "sha256": "d2cce5b4542afdde6fa4e4d770e6352b3b9e65476a6f8c2ba7387beb88301414"
+          }
+        ]
+      },
+      "phase": "development",
+      "protocol_sha256": "adb363991fe6ba247e9bcfa5cf4eee79ad3ee5518a7284a016a8c644dad55b15",
+      "rules": {
+        "version": "0.7.0",
+        "spectral_configuration": "broad",
+        "spectral_mismatch_max": 0.5,
+        "positions_px": [
+          [
+            5.5,
+            5.5
+          ],
+          [
+            57.5,
+            5.5
+          ],
+          [
+            5.5,
+            57.5
+          ],
+          [
+            57.5,
+            57.5
+          ]
+        ],
+        "snr_per_frame": [
+          2.0,
+          4.0
+        ],
+        "motions_px": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.6,
+            0.05
+          ]
+        ],
+        "truth_psfs": [
+          "nearest",
+          "blurred_015px"
+        ],
+        "gaussian_blur_native_px": 0.15,
+        "ellipse_threshold": 2.3,
+        "recovery_tolerance_px": 1.0,
+        "injection_frame": "identical Gaussian Gaia registration for both models; isolates centroid/deblending effect",
+        "real_frame": "baseline Gaussian registration vs candidate IR-centroid training + median/MAD rejection",
+        "gate": "each new field, SNR and truth PSF: paired numerical RMS lower, P90 no higher, no fewer numerical fits or quality-accepted fits; real Gaia paired RMS no higher with >=3 common, no fewer numerical/accepted fits; no default WISE promotion",
+        "models": [
+          "baseline",
+          "ir_robust"
+        ],
+        "minimum_common_per_group": 4,
+        "bootstrap_draws": 2000,
+        "seed": 20261030,
+        "limits": [
+          "known-position local fitting, not blind detection",
+          "no extra source shot noise",
+          "blur is an assumed PSF perturbation, not independent physical calibration",
+          "conditional IRLS covariance; no neighbour-position, PSF or shared-frame systematic covariance",
+          "broad spectra only; default WISE 0855 measurement remains unchanged"
+        ]
+      },
+      "model_rules": {
+        "version": "0.7.0",
+        "neighbour_radius_px": 8.0,
+        "target_match_radius_px": 0.35,
+        "max_neighbours": 24,
+        "svd_relative_cut": 1e-08,
+        "fit_bound_px": 2.5,
+        "reference_bound_px": 1.3,
+        "derivative_step_px": 0.002,
+        "huber_threshold": 2.5,
+        "irls_iterations": 2,
+        "chi2_max": 3.0,
+        "core_rms_max": 2.5,
+        "core_radius_native_px": 2.5,
+        "core_coverage_min": 0.75,
+        "core_usable_frame_fraction": 0.8,
+        "outlier_sigma": 5.0,
+        "core_outlier_fraction_max": 0.1,
+        "epoch_snr_min": 5.0,
+        "information_fraction_min": 0.05,
+        "registration_mahalanobis_max": 4.0,
+        "registration_scatter_floor_px": 0.02,
+        "registration_sources_min": 4,
+        "model_disagreement_floor_px": 0.2,
+        "model_disagreement_sigma": 3.0
+      },
+      "pairs": 8,
+      "catalog_screening": {
+        "queried": 3278,
+        "selected": 966,
+        "gaia_positions": 202,
+        "rejections": {
+          "faint_ir": 2177,
+          "artifact_or_poor_fit": 132,
+          "large_motion": 3
+        }
+      },
+      "unavailable": {
+        "baseline": "2025W21_1B_0329_2: only 3 usable references for translation"
+      },
+      "planned_injections": 32,
+      "real_summary": {
+        "models": {
+          "baseline": {
+            "numeric_valid": {
+              "attempted": 8,
+              "valid": 0,
+              "rejected": 8,
+              "rmse_arcsec": null,
+              "p90_arcsec": null,
+              "bias_east_north_arcsec": null,
+              "within_68_ellipse": 0,
+              "reasons": {
+                "registration_unavailable": 8
+              }
+            },
+            "accepted": {
+              "attempted": 8,
+              "valid": 0,
+              "rejected": 8,
+              "rmse_arcsec": null,
+              "p90_arcsec": null,
+              "bias_east_north_arcsec": null,
+              "within_68_ellipse": 0,
+              "reasons": {
+                "registration_unavailable": 8
+              }
+            }
+          },
+          "ir_robust": {
+            "numeric_valid": {
+              "attempted": 8,
+              "valid": 8,
+              "rejected": 0,
+              "rmse_arcsec": 0.6193037416060797,
+              "p90_arcsec": 0.9983536833719034,
+              "bias_east_north_arcsec": [
+                0.08916378630984428,
+                -0.15723236964380438
+              ],
+              "within_68_ellipse": 5,
+              "reasons": {
+                "poor_global_fit": 2,
+                "core_outliers": 1,
+                "structured_core_residual": 1
+              }
+            },
+            "accepted": {
+              "attempted": 8,
+              "valid": 6,
+              "rejected": 2,
+              "rmse_arcsec": 0.6969473817161611,
+              "p90_arcsec": 1.06755916476697,
+              "bias_east_north_arcsec": [
+                0.18890451082844803,
+                -0.1978678846712436
+              ],
+              "within_68_ellipse": 3,
+              "reasons": {
+                "poor_global_fit": 2,
+                "core_outliers": 1,
+                "structured_core_residual": 1
+              }
+            }
+          }
+        },
+        "paired_numeric": {
+          "common": 0,
+          "attempted": 8,
+          "baseline_rms": null,
+          "candidate_rms": null,
+          "improvement_percent": null,
+          "ci95_percent": null
+        },
+        "paired_accepted": {
+          "common": 0,
+          "attempted": 8,
+          "baseline_rms": null,
+          "candidate_rms": null,
+          "improvement_percent": null,
+          "ci95_percent": null
+        }
+      },
+      "injection_summary": {
+        "models": {
+          "baseline": {
+            "numeric_valid": {
+              "attempted": 0,
+              "valid": 0,
+              "rejected": 0,
+              "rmse_arcsec": null,
+              "p90_arcsec": null,
+              "bias_east_north_arcsec": null,
+              "within_68_ellipse": 0,
+              "reasons": {}
+            },
+            "accepted": {
+              "attempted": 0,
+              "valid": 0,
+              "rejected": 0,
+              "rmse_arcsec": null,
+              "p90_arcsec": null,
+              "bias_east_north_arcsec": null,
+              "within_68_ellipse": 0,
+              "reasons": {}
+            }
+          },
+          "ir_robust": {
+            "numeric_valid": {
+              "attempted": 0,
+              "valid": 0,
+              "rejected": 0,
+              "rmse_arcsec": null,
+              "p90_arcsec": null,
+              "bias_east_north_arcsec": null,
+              "within_68_ellipse": 0,
+              "reasons": {}
+            },
+            "accepted": {
+              "attempted": 0,
+              "valid": 0,
+              "rejected": 0,
+              "rmse_arcsec": null,
+              "p90_arcsec": null,
+              "bias_east_north_arcsec": null,
+              "within_68_ellipse": 0,
+              "reasons": {}
+            }
+          }
+        },
+        "paired_numeric": {
+          "common": 0,
+          "attempted": 0,
+          "baseline_rms": null,
+          "candidate_rms": null,
+          "improvement_percent": null,
+          "ci95_percent": null
+        },
+        "paired_accepted": {
+          "common": 0,
+          "attempted": 0,
+          "baseline_rms": null,
+          "candidate_rms": null,
+          "improvement_percent": null,
+          "ci95_percent": null
+        }
+      },
+      "groups": [
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 0,
+            "attempted": 0,
+            "baseline_rms": null,
+            "candidate_rms": null,
+            "improvement_percent": null,
+            "ci95_percent": null
+          },
+          "paired_accepted": {
+            "common": 0,
+            "attempted": 0,
+            "baseline_rms": null,
+            "candidate_rms": null,
+            "improvement_percent": null,
+            "ci95_percent": null
+          },
+          "truth_psf": "nearest",
+          "snr_per_frame": 2.0,
+          "passed": false
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 0,
+            "attempted": 0,
+            "baseline_rms": null,
+            "candidate_rms": null,
+            "improvement_percent": null,
+            "ci95_percent": null
+          },
+          "paired_accepted": {
+            "common": 0,
+            "attempted": 0,
+            "baseline_rms": null,
+            "candidate_rms": null,
+            "improvement_percent": null,
+            "ci95_percent": null
+          },
+          "truth_psf": "nearest",
+          "snr_per_frame": 4.0,
+          "passed": false
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 0,
+            "attempted": 0,
+            "baseline_rms": null,
+            "candidate_rms": null,
+            "improvement_percent": null,
+            "ci95_percent": null
+          },
+          "paired_accepted": {
+            "common": 0,
+            "attempted": 0,
+            "baseline_rms": null,
+            "candidate_rms": null,
+            "improvement_percent": null,
+            "ci95_percent": null
+          },
+          "truth_psf": "blurred_015px",
+          "snr_per_frame": 2.0,
+          "passed": false
+        },
+        {
+          "models": {
+            "baseline": {
+              "numeric_valid": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              }
+            },
+            "ir_robust": {
+              "numeric_valid": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              },
+              "accepted": {
+                "attempted": 0,
+                "valid": 0,
+                "rejected": 0,
+                "rmse_arcsec": null,
+                "p90_arcsec": null,
+                "bias_east_north_arcsec": null,
+                "within_68_ellipse": 0,
+                "reasons": {}
+              }
+            }
+          },
+          "paired_numeric": {
+            "common": 0,
+            "attempted": 0,
+            "baseline_rms": null,
+            "candidate_rms": null,
+            "improvement_percent": null,
+            "ci95_percent": null
+          },
+          "paired_accepted": {
+            "common": 0,
+            "attempted": 0,
+            "baseline_rms": null,
+            "candidate_rms": null,
+            "improvement_percent": null,
+            "ci95_percent": null
+          },
+          "truth_psf": "blurred_015px",
+          "snr_per_frame": 4.0,
+          "passed": false
+        }
+      ],
+      "real_passed": false,
+      "passed": false
+    }
+  ]
+}

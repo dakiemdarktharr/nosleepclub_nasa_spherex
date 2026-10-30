@@ -161,9 +161,26 @@ dialog .evidence-table table { font-size: 13px; }
 .benchmark-pairs { display: block; font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 5px; }
 .external-benchmark .benchmark-explanation { margin: 18px 0 24px; }
 .external-benchmark details p { margin-bottom: 18px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.quality-validation > p { color: var(--muted); font-size: 14px; line-height: 1.8; }
+.quality-validation .quality-protocol { font-size: 12px; margin-top: 12px; }
+.quality-validation .benchmark-explanation { margin: 18px 0 24px; }
+.quality-validation .benchmark-toolbar label { font-size: 12px; color: var(--muted); }
+.quality-validation .benchmark-toolbar select { margin-left: 12px; font-size: 13px; }
+.quality-validation tbody th { min-width: 170px; font-weight: 600; }
+.quality-validation details p, .quality-validation details li { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+.quality-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
+.quality-cases article { background: var(--surface); padding: 20px; border: 1px solid var(--line); }
+.quality-cases h3 { font-size: 16px; margin-bottom: 14px; }
+.quality-cases strong { color: var(--amber); font-size: 14px; }
+.measurement-quality { font-size: 13px; padding: 12px 16px; background: var(--surface); border-left: 2px solid #96d9e7; margin: 0 0 22px; line-height: 1.8; }
+.measurement-quality[data-blocked="true"] { border-color: var(--amber); color: #ffd3a4; background: #2b2117; }
 @media (max-width: 1000px) { .benchmark-fields { grid-template-columns: 1fr; } }
 @media (max-width: 760px) {
   .external-benchmark .benchmark-toolbar { align-items: flex-start; }
   .external-benchmark .benchmark-toolbar select { display: block; margin-left: 0; }
   .external-benchmark .section-heading { flex-wrap: wrap; }
+  .quality-validation .section-heading { flex-wrap: wrap; }
+  .quality-validation .benchmark-toolbar { align-items: flex-start; }
+  .quality-validation .benchmark-toolbar select { display: block; margin-left: 0; }
+  .quality-cases { grid-template-columns: 1fr; }
 }

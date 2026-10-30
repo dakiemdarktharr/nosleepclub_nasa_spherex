@@ -4,7 +4,7 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Benchmark dataset mới](https://nosleepclub-nasa-spherex.vercel.app/#external-benchmark) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo kiểm chứng mới nhất](docs/EXTERNAL_BENCHMARK.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Quality gate & kiểm chứng mới](https://nosleepclub-nasa-spherex.vercel.app/#quality-validation) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo mới nhất](docs/QUALITY_VALIDATION.md).
 
 ## Bắt đầu trên web
 
@@ -14,7 +14,27 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 Nút **Hướng dẫn 60 giây** giải thích sao lùn nâu, pixel, ellipse sai số và cách đọc ảnh. Người có kinh nghiệm có thể mở bảng tọa độ, dữ liệu Gaia, FITS và cấu hình đầy đủ.
 
-## Kiểm tra trên dataset mới — 0.6.0
+## Quality gate và nguồn chồng — 0.7.0
+
+Thêm mô hình hàng xóm CatWISE/Gaia, hai vòng giảm trọng số Huber cho pixel outlier và gate kiểm tra residual, lõi ảnh, suy biến nguồn chồng, bất đồng centroid giữa hai mô hình. Căn chỉnh từ chối outlier theo median/MAD và vẫn cần ít nhất 4 sao.
+
+Code, catalog, chia mẫu và rule được khóa tại **`330449c`** trước khi đánh giá ba trường mới: **115 cutout QR2**, 58 exposure ghép phổ, 33 sao heldout và 96 tình huống nguồn giả qua hai họ ePSF.
+
+| Trường RA/Dec | RMS nguồn giả trên cặp chung, trước gate | Qua gate cũ → mới /32 |
+|---|---:|---:|
+| 30° / −10° | 1,826 → 1,471″ | 24 → 20 |
+| 180° / +20° | 1,989 → 1,991″ | 28 → 28 |
+| 300° / −30° | 5,279 → 3,725″ | 8 → 8 |
+
+**Chưa đạt tiêu chí thay mặc định.** Hai trường giảm RMS nguồn giả ở điểm ước lượng, nhưng sai lệch sao thật xấu hơn ở hai trường; nhóm cùng qua gate ở trường cuối còn tăng RMS 4,397→5,282″. Chỉ 8/56 nguồn giả được nhận nằm trong ellipse danh nghĩa 68%, nên chưa có ngân sách sai số được hiệu chuẩn.
+
+Trên các trường phát triển đã mở, outlier 6,309″ giảm xuống 0,283″ nhưng vẫn bị gate loại; một ca RW Aur có residual nhỏ mà lệch hơn bị gate bất đồng chặn. Demo cho xem lý do từ chối và số lượt trước/sau gate. Với bộ ảnh WISE 0855 cũ, UI chỉ kiểm tra cơ bản từ dữ liệu đã xuất và ghi rõ chưa chạy gate mới đầy đủ; số đo khoa học giữ nguyên.
+
+[Phương pháp, kết quả theo trường/độ sáng, giới hạn và cách tái tạo](docs/QUALITY_VALIDATION.md). 59/59 kiểm thử offline đạt; đây là kiểm chứng phần mềm và dữ liệu, không phải xác nhận phát hiện thiên văn.
+
+![So sánh trước và sau quality gate](docs/quality-validation.jpg)
+
+## Kiểm tra ngoài trường trước đó — 0.6.0
 
 Đã tải **129 cutout QR2** ở ba trường Barnard’s Star, RW Aur và R Draconis, đối chiếu **6.736 hàng Gaia DR3**. Khóa code/dataset/chia mẫu tại commit `8aa2536` trước khi đo. Không thay số đo WISE 0855.
 
@@ -43,7 +63,8 @@ Barnard có một outlier Gaia **6,309″**. Chính mục tiêu Barnard lệch d
 
 | Thành phần | Phiên bản | Vai trò |
 |---|---|---|
-| Giao diện và benchmark mới | 0.6.0 | Font tiếng Việt, so ảnh, kiểm chứng ba trường và nhận xét |
+| Giao diện và quality gate | 0.7.0 | Chẩn đoán chất lượng, deblend thử nghiệm và đánh giá ba trường mới |
+| Benchmark ngoài trường trước đó | 0.6.0 | Baseline để phân tích lỗi và phát triển gate |
 | Thí nghiệm catalog IR/ePSF | 0.5.0 | 30 vùng khóa trước; chưa thay số đo mặc định |
 | Phép đo mặc định | 0.3.0 | Pixel gốc, căn chỉnh Gaia; chuyển động chưa xác nhận |
 
@@ -99,12 +120,15 @@ Lệnh `--demo` tải 6 cutout được chọn và kiểm tra FITS; lưu trong `
 
 `prepare_gaia_data.py` tải cutout rộng của đúng 20 exposure cũ và truy vấn Gaia DR3 qua IRSA TAP, lưu ADQL/URL/hash. `gaia_motion.py --publish` cache centroid sao tham chiếu, chạy đổi tập sao, 14 lượt bỏ từng sao, affine, 256 bootstrap căn chỉnh và 32 injection mỗi cấu hình; sau đó thêm sản phẩm Gaia vào demo. Chạy các bước theo thứ tự trên nếu tái tạo toàn bộ manifest. 31 kiểm thử kiểm tra cả các sản phẩm đã commit mà không cần tải raw.
 
-Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Toàn bộ suite hiện có 49 kiểm thử offline, gồm API, deblending, propagation CatWISE, ePSF, lock, benchmark ngoài trường và giao diện.
+Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Toàn bộ suite hiện có 59 kiểm thử offline, gồm API, deblending, quality gate, propagation CatWISE, ePSF, lock, các benchmark và giao diện.
 
 Benchmark 0.6.0: `python -m scripts.prepare_benchmark_data --download`, rồi `python -m scripts.benchmark_accuracy`. Cần calibration D6 của quy trình trước. Protocol đã có trong repo; script kiểm tra hash và từ chối thay nguồn đã khóa. Xem báo cáo trước khi diễn giải số đo hoặc tạo tập kiểm chứng mới.
 
+Quality study 0.7.0: `python -m scripts.prepare_quality_data`, `python -m scripts.prepare_quality_data --new`, rồi `python -m scripts.quality_study` và `python -m scripts.build_quality_overview`. Dùng protocol đã commit; không chạy `--lock` đè lên tập đã mở. Đọc báo cáo để tách kết quả phát triển, đánh giá mới và các giới hạn covariance.
+
 ## Tài liệu
 
+- [Quality gate, nguồn chồng và đánh giá khóa trước 0.7.0](docs/QUALITY_VALIDATION.md)
 - [Benchmark ba trường mới: dataset, độ chính xác và các lỗi](docs/EXTERNAL_BENCHMARK.md)
 - [QR3, CatWISE, ePSF và 30 vùng khóa trước](docs/QR3_CATWISE_VALIDATION.md)
 - [Font tiếng Việt, tương phản và bố cục](docs/READABILITY.md)

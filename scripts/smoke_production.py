@@ -40,6 +40,11 @@ def main():
         deployed=session.get(URL+'/data/benchmark/'+name+'.json',timeout=30);deployed.raise_for_status()
         assert sha256(deployed.content).hexdigest()==sha256((benchmark/(name+'.json')).read_bytes()).hexdigest()
     results['external_benchmark_matches']=True
+    quality=Path(__file__).resolve().parents[1]/'web/data/quality'
+    for name in ['protocol','overview','evaluation-summary','evaluation-q030m10','evaluation-q180p20','evaluation-q300m30']:
+        deployed=session.get(URL+'/data/quality/'+name+'.json',timeout=30);deployed.raise_for_status()
+        assert sha256(deployed.content).hexdigest()==sha256((quality/(name+'.json')).read_bytes()).hexdigest()
+    results['quality_validation_matches']=True
     response=session.get(URL+'/api/reviews',timeout=30);results['storage_get']=response.status_code
     assert response.status_code==200, response.text
     assert response.json()['storage']=='mongodb'
