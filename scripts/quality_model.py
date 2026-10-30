@@ -17,7 +17,8 @@ RULES={'version':'0.7.0','neighbour_radius_px':8.,'target_match_radius_px':.35,
     'core_radius_native_px':2.5,'core_coverage_min':.75,'core_usable_frame_fraction':.80,
     'outlier_sigma':5.,'core_outlier_fraction_max':.10,'epoch_snr_min':5.,
     'information_fraction_min':.05,'registration_mahalanobis_max':4.,
-    'registration_scatter_floor_px':.02,'registration_sources_min':4}
+    'registration_scatter_floor_px':.02,'registration_sources_min':4,
+    'model_disagreement_floor_px':.20,'model_disagreement_sigma':3.}
 
 
 def positions(catalog,frames):
@@ -84,7 +85,12 @@ def diagnostics(samples,position):
         information=float((projected@projected)/max(p@p,1e-20))
         center=s['native_center']+s['jacobian']@(position-s['anchor'])
         core=(s['x']-center[0])**2+(s['y']-center[1])**2<=RULES['core_radius_native_px']**2
-        yy,xx=np.indices(s['frame']['data'].shape);possible=((xx-center[0])**2+(yy-center[1])**2<=RULES['core_radius_native_px']**2).sum()
+        radius=RULES['core_radius_native_px']
+        # Count the full geometric core, including pixels outside the cutout.
+        # A truncated edge must not appear to have 100% valid coverage.
+        yy,xx=np.meshgrid(np.arange(np.floor(center[1]-radius),np.ceil(center[1]+radius)+1),
+            np.arange(np.floor(center[0]-radius),np.ceil(center[0]+radius)+1),indexing='ij')
+        possible=((xx-center[0])**2+(yy-center[1])**2<=radius**2).sum()
         score=float(np.sqrt(np.mean(raw[core]**2))) if core.any() else 1e10
         chi=float(raw@raw/max(1,len(raw)-s['rank']-1));error=amplitude_error*max(1.,np.sqrt(chi))
         details.append({'obs_id':s['frame']['record']['obs_id'],'mjd':s['frame']['mjd'],'amplitude':float(amplitude),
@@ -104,6 +110,8 @@ def gate(fit):
     snr=float(np.sqrt(sum(max(d['snr'],0.)**2 for d in details)))
     if snr<RULES['epoch_snr_min']:reasons.append('low_epoch_snr')
     if fit['reduced_chi2']>RULES['chi2_max']:reasons.append('poor_global_fit')
+    comparison=fit.get('model_comparison')
+    if comparison and comparison['shift_px']>comparison['limit_px']:reasons.append('model_disagreement')
     required=int(np.ceil(RULES['core_usable_frame_fraction']*len(details)))
     checks=[('core_coverage','core_coverage_min',True,'insufficient_core_pixels'),
         ('core_rms','core_rms_max',False,'structured_core_residual'),
@@ -112,7 +120,8 @@ def gate(fit):
     for key,limit,minimum,label in checks:
         count=sum(d.get(key,1. if minimum else 0.)>=RULES[limit] if minimum else d.get(key,0.)<=RULES[limit] for d in details)
         if count<required:reasons.append(label)
-    return {'accepted':not reasons,'reasons':reasons,'epoch_snr':snr,'required_good_frames':required}
+    return {'accepted':not reasons,'reasons':reasons,'epoch_snr':snr,'required_good_frames':required,
+        'model_comparison':comparison}
 
 
 def fit(frames,catalog,xy,anchor,target_id=None,reference=False):
@@ -135,6 +144,10 @@ def fit(frames,catalog,xy,anchor,target_id=None,reference=False):
         'at_boundary':bool(np.any(np.abs(result.x-np.asarray(anchor))>.95*bound)),
         'reduced_chi2':float(chi2),'per_frame':details,'effective_mjd':float(np.average(times,weights=weights)) if weights.sum() else float(np.mean(times)),
         'samples':samples}
+    baseline=motion.fit_position(frames,np.asarray(anchor),bound=bound,multistart=not reference)
+    limit=max(RULES['model_disagreement_floor_px'],RULES['model_disagreement_sigma']*
+        np.sqrt(max(np.linalg.eigvalsh(baseline['covariance']+covariance).max(),0.)))
+    output['model_comparison']={'shift_px':float(np.linalg.norm(baseline['position']-result.x)),'limit_px':float(limit)}
     output['quality']=gate(output)
     return output
 

@@ -35,6 +35,11 @@ class QualityControls(unittest.TestCase):
             {'amplitude':10.,'snr':20.,'core_coverage':1.,'core_rms':1.,'core_outlier_fraction':0.,'information_fraction':.001}]}
         self.assertIn('unresolved_blend',model.gate(fit)['reasons'])
 
+    def test_low_residual_does_not_override_model_disagreement(self):
+        f={'success':True,'at_boundary':False,'reduced_chi2':1.,'model_comparison':{'shift_px':.5,'limit_px':.2},
+           'per_frame':[{'amplitude':10.,'snr':20.,'core_coverage':1.,'core_rms':1.,'core_outlier_fraction':0.,'information_fraction':.8}]}
+        self.assertIn('model_disagreement',model.gate(f)['reasons'])
+
     def test_robust_pixel_fit_preserves_large_residual_warning(self):
         f=synthetic_frame();anchor=np.array([31.5,31.5]);truth=anchor+[.18,.05]
         f['data']=model.motion.render_source(f,truth,5)+2
@@ -43,6 +48,13 @@ class QualityControls(unittest.TestCase):
         self.assertGreater(result['per_frame'][0]['downweighted_pixels'],0)
         self.assertFalse(result['quality']['accepted'])
         self.assertGreater(result['reduced_chi2'],3)
+
+    def test_truncated_core_is_not_reported_as_full_coverage(self):
+        f=synthetic_frame();anchor=np.array([-.2,31.5])
+        f['data']=model.motion.render_source(f,anchor,5)+2
+        fitted=model.baseline_fit([f],anchor)
+        self.assertLess(fitted['per_frame'][0]['core_coverage'],.75)
+        self.assertIn('insufficient_core_pixels',fitted['quality']['reasons'])
 
 
 if __name__=='__main__':unittest.main()
