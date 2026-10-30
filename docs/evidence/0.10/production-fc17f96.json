@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-10-30T17:32:11.068352+00:00",
+  "base_url": "https://nosleepclub-nasa-spherex.vercel.app",
+  "local_commit": "fc17f963b1775080ff80e9f39fb8e3c4c735da8d",
+  "verifier_sha256": "45d1a847fa98a275e3349ac303919abe530ed0c357f8848274bf251d7f3d15f4",
+  "checks": [
+    {
+      "path": "/",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.937,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "8c12b4d1e210d5a84b511967172fa8c980cd14c013a9029f83d7c32e6bcc6b6c",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/explorer.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.532,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "f06dd85296c5da9fdc6b6f863fca71707c369bc8ae0d8f86c4401ccda5d5d496",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/app.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.532,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2b70a3f09cf1cb3331ba99e3c37d3ff774a6ef9f6ab4ff8e559a2c3b7c6153dd",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/review-store.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.312,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "17b2827973832d927dbc26f888a4a426352a35de18e25b34ec2b26577678bbc2",
+      "worktree_bytes_match_commit": false
+    },
+    {
+      "path": "/goal-dashboard.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2f70e0a1f16f40767491d944567bc584e86552cb1427b2cb126f49acf004173a",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/mission.css",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.312,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "c0a5b4ffbe97ac4f822bb88dfd6f91c79d666b3cf8e67563b46264d6fe3f7cf9",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/manifest.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.578,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "3d02506621a3a2ecaa3e2948e2edd46197df95aebd7be64d36df5afab9016c8b",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/continuous-epsf/design.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.328,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ea41e9e83133329c04f9d648d193941053a84ca4805cdfd35c746634b6dfec5a",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/continuous-epsf/development-summary.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.671,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ccaa22100157e13bdb110edb28a88aa09e7e6724ab24bdeddbe596b5fd0f5f0b",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/explorer-check/coverage.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.313,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ca6f3cf68eaa238650bc4c3665885d1862aaa2e4ae3bc4583e75cd5c35fc359b",
+      "worktree_bytes_match_commit": false
+    },
+    {
+      "path": "/data/sandwich/design.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "fe4ea22755062716f7aeea6d6240e0dffdb35fc7c70159e86424f8667081a386",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/sandwich/overview.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.547,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "67db74880fad28a9fdb0ed9bc047983c5b6a1a7e0fea10ce2a65e8f2b6b52408",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/sandwich/development-summary.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 1.296,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "0307a33cc53bc33940499c406404e4c41bfd4e9d4ca3face21084f688d2cee36",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/time-model/development-audit.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.313,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "717ca75c7f567804b8c08882a3422d7535df1e9cf3944f96700f9361a94c57e7",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/external/spiff-reference.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "610d25410a8cc8cc66e3e86676dcca6e8ffcaf56a153ca9deeb468880a60af60",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/independent-fields/selection.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.343,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2ad20c2dfaf47ca5f31d8f7a1e93df745ba39e1d77d82034bea1fdd1ae9e42b7",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/mask-audit/development-audit.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.406,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "394f36bfbca7763b454612fd14e261c30eeb7e32107840368e847f8b50b1f1ec",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/native-gain/development-audit.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.312,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "e72ad8bb42d0971ae3c0930d19f80cbdd569eeef8a64832b0c73fdab72387686",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 504,
+      "elapsed_seconds": 6.891,
+      "request_id": "651df6aace8d33a97c56de81776e294b",
+      "cache": "MISS",
+      "error_code": "upstream_timeout"
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 2,
+      "status": 200,
+      "elapsed_seconds": 6.156,
+      "request_id": "e70354c0dedea45b1b9995dbb2da3eaf",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 5.203,
+      "request_id": "6572dab0a4285bd12e790c704d898139",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 400,
+      "elapsed_seconds": 0.125,
+      "request_id": "d1c90ef722a6e8014799ba17fd261384",
+      "cache": "MISS",
+      "error_code": "out_of_range"
+    },
+    {
+      "path": "/api/frame",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 2.703,
+      "request_id": "ef294743dd62fea1fe32f32582bc4105",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.125,
+      "request_id": "81785685b805a7d29e06673160b17f9c",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "POST",
+      "attempt": 1,
+      "status": 403,
+      "elapsed_seconds": 0.125,
+      "request_id": "1334e924de898a1c11635a082b9f1755",
+      "cache": "MISS",
+      "error_code": "origin_required"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "POST",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.156,
+      "request_id": "1782da5c360ad819df98e1cb6f92b5f4",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.141,
+      "request_id": "a3dbc66892855685504b04e97960afbe",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.422,
+      "request_id": "8820d7d72e2eb2088b054a93f8d5a050",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "DELETE",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.109,
+      "request_id": "c5b83eade39ed27926b2250d138c2ad1",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.125,
+      "request_id": "682b1491ec3d9b17747e55889861dde9",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "POST",
+      "attempt": 1,
+      "status": 400,
+      "elapsed_seconds": 0.11,
+      "request_id": "7bcc28241efca5dfe14e9deae9798d1e",
+      "cache": "MISS",
+      "error_code": "invalid_review"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "DELETE",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.14,
+      "request_id": "4976058da48b4044ddbec1fc8d197a38",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.11,
+      "request_id": "2d3b8ed5306cfec0f4dd502e5a5cfa6f",
+      "cache": "MISS"
+    }
+  ],
+  "retry_policy": "One retry only for GET upstream 502/504; every response is retained.",
+  "qualification": "Bounded software/data-access smoke, not scientific, recovery or load acceptance.",
+  "worktree_dirty": true,
+  "deployed_api_commit": "fc17f963b1775080ff80e9f39fb8e3c4c735da8d",
+  "observations": {
+    "returned_count": 2,
+    "truncated": true,
+    "response_sha256": "96519ebf519af7776c028754314b650f5dca1b70f4d14c36b37f413b3713ef24",
+    "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=CIRCLE+350+35+0.03&MAXREC=5&RESPONSEFORMAT=VOTABLE&BAND=4.42e-06+5e-06"
+  },
+  "frame": {
+    "X-Frame-Cutout-SHA256": "514ac17f7c8d2b7de1f723e4464dfc85a1caacf666f868e70fd844c9d80de8a6",
+    "X-Frame-Cutout-URL": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_2A/l2b-v20-2025-258/6/level2_2025W26_2A_0314_1D6_spx_l2b-v20-2025-258.fits?center=350%2C35&size=0.10279859",
+    "X-Frame-Grid-Size-Px": "37",
+    "X-Frame-Grid-Scale-Arcsec": "6.15",
+    "X-Frame-Contrast-Low": "-0.03993401527404785",
+    "X-Frame-Contrast-High": "0.30724066197872507",
+    "X-Frame-Valid-Pixels": "1335",
+    "X-Frame-Contract": "1.1",
+    "X-Frame-Mask-Policy": "source-only-allowlist-v2",
+    "X-Frame-Masked-Pixels": "34",
+    "X-Frame-Missing-Pixels": "0",
+    "png_sha256": "04bf12c3e852cb2e309e723a0ebee58f59101da89a3dc10d9f7f81aa93e2e815"
+  },
+  "review_lifecycle": {
+    "stable_id": true,
+    "expiry": true,
+    "scope_isolation": true,
+    "cross_origin_rejected": true,
+    "cross_owner_delete_ineffective": true,
+    "stale_post_rejected": true,
+    "id_only_delete": true,
+    "cleanup_verified": true
+  },
+  "completed_at_utc": "2026-10-30T17:32:43.251871+00:00",
+  "passed": true
+}

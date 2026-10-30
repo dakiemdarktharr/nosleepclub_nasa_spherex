@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "checked_at_utc": "2026-10-30T17:39:10Z",
+  "deployment_id": "dpl_DumRTkDDUx5F5zuowTE8nn8vPp7h",
+  "commit": "fc17f963b1775080ff80e9f39fb8e3c4c735da8d",
+  "environment": "production",
+  "source": "Vercel get_runtime_logs; exact application request IDs from production-fc17f96.json",
+  "records": [
+    {
+      "at_utc": "2026-10-30T17:32:33.537Z",
+      "path": "/api/observations",
+      "platform_level": "info",
+      "stream": "stdout",
+      "application": {"event": "observations_request", "request_id": "e70354c0dedea45b1b9995dbb2da3eaf", "status": 200, "category": "ok", "latency_ms": 6032.1, "level": "info"}
+    },
+    {
+      "at_utc": "2026-10-30T17:32:27.374Z",
+      "path": "/api/observations",
+      "platform_level": "info",
+      "stream": "stderr",
+      "application": {"event": "observations_request", "request_id": "651df6aace8d33a97c56de81776e294b", "status": 504, "category": "upstream", "latency_ms": 6754.23, "level": "error"}
+    }
+  ],
+  "conclusions": {
+    "successful_request_no_longer_application_warning": true,
+    "error_has_application_error_level": true,
+    "provider_error_level_matches_application": false,
+    "monitoring_requirement": "Parse application JSON status/level. Filtering only Vercel platform level misses this 504. Deduplicate by application request_id; do not infer request counts from log-line counts.",
+    "qualification": "Two controlled request records, not an availability, load or latency baseline. No review bodies, cookies, IP addresses or database credentials are included."
+  }
+}

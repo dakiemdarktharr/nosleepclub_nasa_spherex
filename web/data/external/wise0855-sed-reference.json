@@ -1,0 +1,209 @@
+{
+  "stage": "mast_stage3_alternative_retrieved_author_table_not_retrieved",
+  "metadata_checked_utc": "2026-10-30T17:24:13Z",
+  "object": "WISE J085510.83-071442.5",
+  "reference": {
+    "authors": "Luhman et al.",
+    "article": "JWST/NIRSpec Observations of the Coldest Known Brown Dwarf",
+    "publication": "Astronomical Journal 167, 5 (2024)",
+    "article_doi": "https://doi.org/10.3847/1538-3881/ad0b72",
+    "article_publication_date": "2023-12-05",
+    "article_bibcode": "2024AJ....167....5L",
+    "article_open_copy": "https://eprints.whiterose.ac.uk/id/eprint/206433/1/Luhman_2024_AJ_167_5.pdf",
+    "article_license": "CC BY 4.0, per article; independently confirm table reuse terms before redistribution",
+    "catalog_doi": "https://doi.org/10.26093/cds/vizier.51670005",
+    "catalog_id": "J/AJ/167/5",
+    "table_id": "J/AJ/167/5/fig4",
+    "table_catalog_url": "https://vizier.cds.unistra.fr/viz-bin/VizieR-2?-source=J/AJ/167/5",
+    "table_readme_url": "https://cdsarc.cds.unistra.fr/viz-bin/ReadMe/J/AJ/167/5?format=html&tex=true",
+    "catalog_record_url": "https://dc.g-vo.org/rr/q/lp/custom/CDS.VizieR/J/AJ/167/5",
+    "catalog_record_updated_utc": "2024-11-06T20:20:34Z",
+    "catalog_record_update_note": "Registry metadata update; not a versioned immutable table snapshot.",
+    "data_origin": "Electronic figure 4 data of the published paper, as described by CDS ReadMe",
+    "filename": "fig4.dat",
+    "records_per_readme": 1488,
+    "columns": [
+      {
+        "name": "Wave",
+        "unit": "um",
+        "description": "wavelength"
+      },
+      {
+        "name": "Flux",
+        "unit": "Jy",
+        "description": "flux density; may be blank"
+      },
+      {
+        "name": "e_Flux",
+        "unit": "Jy",
+        "description": "flux density uncertainty; may be blank"
+      }
+    ],
+    "table_retrieved": false,
+    "local_path": null,
+    "sha256": null,
+    "bytes": null,
+    "retrieval_result": "Direct CDS fig4.dat, CDS VizieR table export, and Harvard VizieR mirror timed out from the workspace; no spectrum values were downloaded. The browser research service exposed the CDS ReadMe and registry metadata.",
+    "retrieval_route": "Open the CDS catalog URL, select J/AJ/167/5/fig4 and export all rows, or obtain fig4.dat through the FTP link shown by the catalog and verify against its ReadMe. Archive original bytes, access time and SHA-256; do not treat the registry update date as a file version."
+  },
+  "observation": {
+    "mission": "JWST",
+    "instrument": "NIRSpec",
+    "program": "GTO 1230",
+    "date_utc": "2023-04-17",
+    "mode": "S200A1 fixed slit, G395M/F290LP, three nods",
+    "exposure_seconds_total": 3931,
+    "spectral_resolution_approximate": 1000,
+    "useful_wavelength_um": [
+      [
+        2.87,
+        5.09
+      ],
+      [
+        5.37,
+        5.54
+      ]
+    ],
+    "paper_mast_raw_doi": "https://doi.org/10.17909/1fsf-6j64",
+    "processing": "Authors used ESA NIRSpec custom reduction, calibrated with commissioning standard stars and then rescaled to multi-epoch Spitzer [4.5] photometry; extracted nod spectra were combined with outlier rejection.",
+    "distinction": "The published author extraction combines observations; it is neither an individual exposure spectrum nor a SPHEREx instrument spectral response."
+  },
+  "limitations": [
+    "The published spectrum and its uncertainties are not an exact ground truth and are not contemporaneous with WISE SPHEREx cutouts.",
+    "Spitzer [4.5] sets the absolute scaling; its multi-epoch scatter and other calibration systematics are not independent pointwise errors.",
+    "The CDS ReadMe lists per-row errors but does not specify the full wavelength covariance; do not assume independent spectral samples.",
+    "Miles et al. 2026 reports wavelength-dependent time variability in NIRSpec time-series data, with CO features up to 10 percent peak-to-peak at some wavelengths; this is a preprint result and not a universal amplitude prior.",
+    "A future simulation requires version-locked SPHEREx per-pixel spectral response and PSF, absolute unit conversion and source-noise protocol. A monochromatic interpolation is not equivalent to a bandpass integral.",
+    "The author figure 4 table has not been obtained; its license and integrity must be verified separately before caching or redistribution. The retrieved MAST x1d is a different extraction."
+  ],
+  "variability_reference": {
+    "doi": "https://doi.org/10.48550/arXiv.2609.20664",
+    "url": "https://arxiv.org/abs/2609.20664",
+    "status": "preprint as consulted"
+  },
+  "astrometry_context": {
+    "source": "Kirkpatrick et al. 2021, Table 5",
+    "doi": "https://doi.org/10.3847/1538-4365/abd107",
+    "url": "https://openaccess.inaf.it/bitstream/20.500.12386/36781/3/1_Kirkpatrick_2021_ApJS_253_7%20min.pdf",
+    "reference_epoch_mjd": 57633.39,
+    "ra_deg": 133.780984,
+    "dec_deg": -7.243932,
+    "position_marginal_error_mas": [
+      2.3,
+      2.3
+    ],
+    "pm_ra_reported_mas_per_year": -8123.7,
+    "pm_ra_reported_error_mas_per_year": 1.3,
+    "pm_dec_mas_per_year": 673.2,
+    "pm_dec_error_mas_per_year": 1.3,
+    "parallax_mas": 439.0,
+    "parallax_error_mas": 2.4,
+    "note": "Published external astrometry context, not inferred from the spectrum. This object's Table 5 row lists 19 Spitzer epochs, zero WISE epochs in each WISE band and 46 Gaia re-registration stars. Confirm the RA proper-motion convention before numerical propagation. These marginal uncertainties are not a full covariance and do not alone provide a calibrated 2025/2026 positional uncertainty. The current local WISE prior is unchanged."
+  },
+  "mast_x1d": {
+    "status": "retrieved_public_stage3_alternative_not_author_figure4",
+    "product_metadata": {
+      "obsID": 349842177,
+      "obs_collection": "JWST",
+      "dataproduct_type": "spectrum",
+      "obs_id": "jw01230-o007_t001-s000000001_nirspec_f290lp-g395m-s200a1-subs200a1",
+      "description": "exposure/target (L2b/L3): 1D extracted spectrum",
+      "type": "D",
+      "dataURI": "mast:JWST/product/jw01230-o007_t001-s000000001_nirspec_f290lp-g395m-s200a1-subs200a1_x1d.fits",
+      "productType": "SCIENCE",
+      "productGroupDescription": "Minimum Recommended Products",
+      "productSubGroupDescription": "X1D",
+      "productDocumentationURL": null,
+      "project": "CALJWST",
+      "prvversion": "3.0.0",
+      "proposal_id": "1230",
+      "productFilename": "jw01230-o007_t001-s000000001_nirspec_f290lp-g395m-s200a1-subs200a1_x1d.fits",
+      "size": 322560,
+      "parent_obsid": 349842177,
+      "dataRights": "PUBLIC",
+      "calib_level": 3,
+      "filters": "F290LP;G395M"
+    },
+    "bytes": 322560,
+    "sha256": "9474fbbcfe1304fa6763fd3a9ea3190f419785763f53a1827ac997aef84e19a6",
+    "local_path": "data/raw/external/wise0855/jw01230-o007_t001-s000000001_nirspec_f290lp-g395m-s200a1-subs200a1_x1d.fits",
+    "retrieved_utc": "2026-10-30T17:43:39Z",
+    "download_url": "https://mast.stsci.edu/jwst/api/v0.1/Download/file?uri=mast%3AJWST%2Fproduct%2Fjw01230-o007_t001-s000000001_nirspec_f290lp-g395m-s200a1-subs200a1_x1d.fits",
+    "calibration_pipeline": "3.0.0",
+    "crds_context": "jwst_1584.pmap",
+    "fits_date": "2026-10-12T10:03:39.892",
+    "association": {
+      "path": "data/raw/external/wise0855/jw01230-o007_20261012t042609_spec3_00002_asn.json",
+      "sha256": "183ac8c266af059a547c4574db3ed49fe7aa51de258c292b80736167fed42ecd",
+      "uri": "mast:JWST/product/jw01230-o007_20261012t042609_spec3_00002_asn.json",
+      "observation": "o007",
+      "science_members": [
+        {
+          "expname": "jw01230007001_05101_00001_nrs1_cal.fits",
+          "exptype": "science",
+          "exposerr": "null",
+          "asn_candidate": "[('o007', 'observation')]"
+        },
+        {
+          "expname": "jw01230007001_05101_00002_nrs1_cal.fits",
+          "exptype": "science",
+          "exposerr": "null",
+          "asn_candidate": "[('o007', 'observation')]"
+        },
+        {
+          "expname": "jw01230007001_05101_00003_nrs1_cal.fits",
+          "exptype": "science",
+          "exposerr": "null",
+          "asn_candidate": "[('o007', 'observation')]"
+        }
+      ],
+      "provenance_version_id": "20261012t042609"
+    },
+    "metadata_snapshot": {
+      "path": "data/raw/external/wise0855/mast-products-349842177.json",
+      "sha256": "f340ff61cff7ddeca73b4ab10fbcce5010ca39514840c7388eab9b3358803c39",
+      "service": "Mast.Caom.Products",
+      "parameters": {
+        "obsid": "349842177"
+      },
+      "endpoint": "https://mast.stsci.edu/api/v0/invoke",
+      "format": "json",
+      "page": 1,
+      "pagesize": 1000
+    },
+    "discovery": {
+      "service": "Mast.Caom.Filtered",
+      "filters": "F290LP;G395M",
+      "obsid": 349842177,
+      "target_name": "WISE0855-0714",
+      "instrument_name": "NIRSPEC/SLIT",
+      "t_min_mjd": 60051.61311364584,
+      "t_max_mjd": 60051.66776594907,
+      "dataRights": "PUBLIC"
+    },
+    "parser": "scripts/parse_wise0855_x1d.py",
+    "parser_sha256": "960facdf0bbf9c25782b8ecf65f369fd5fc4045c3ad2bc8258b4cac186cbfd8d",
+    "parser_summary": {
+      "rows": 1254,
+      "usable": 1233,
+      "dq_nonzero": 21,
+      "invalid_flux": 21,
+      "wavelength_range_um": [
+        2.848702907562256,
+        5.10024881362915
+      ],
+      "d6_4_4_to_5_0_rows": 335,
+      "d6_4_4_to_5_0_usable": 335,
+      "usable_negative_flux": 26
+    },
+    "units": {
+      "WAVELENGTH": "um",
+      "FLUX": "Jy",
+      "FLUX_ERROR": "Jy",
+      "DQ": "uint32 bitmask"
+    },
+    "selection_rule": "DQ equals zero, finite flux and error, strictly positive error; rows kept in source file and parser; negative measured flux remains usable",
+    "data_use_policy": "https://archive.stsci.edu/publishing/data-use",
+    "caveat": "MAST pipeline extraction combining three NRS1 science exposure members; not Luhman authors custom extraction or its Spitzer photometric rescaling, and not a PSF, source detection or SPHEREx bandpass."
+  }
+}
