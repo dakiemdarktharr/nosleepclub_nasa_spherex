@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "repository": "dakiemdarktharr/nosleepclub_nasa_spherex",
+  "pull_request": 6,
+  "head_commit": "6d45a2116d33b68ec47710e5cac3c3b97127d376",
+  "merge_commit": "906af662afab4bbc5c60cf2b9199ec38b04c98a9",
+  "github_actions": {
+    "pull_request_run_id": 41104386675,
+    "push_run_id": 41104341677,
+    "required_jobs": {
+      "Python tests and repository evidence": "success",
+      "JavaScript syntax and review store": "success"
+    },
+    "python_tests_ran": 273,
+    "raw_cache_tests_skipped": 11,
+    "python_elapsed_seconds": 11.226,
+    "raw_transcript_sha256": "e5513679c5a0ad20835b1e02957c7f85d167f463264caa1a31ead1b1699a1c18",
+    "transcript_note": "Downloaded gh run view --log, serialized locally as UTF-8; no production credentials."
+  },
+  "local": {
+    "python_tests_ran": 273,
+    "mongo_fixture_tests_skipped": 6,
+    "python_elapsed_seconds": 30.339,
+    "raw_replays_ran": true,
+    "http_static_assets_matched": 5
+  },
+  "scope": "Unit/contract/numerical checks plus real loopback Mongo concurrency/recovery in CI and existing-data raw replays locally. Not independent sky accuracy, actual production backup or load acceptance."
+}
