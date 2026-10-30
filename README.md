@@ -4,7 +4,7 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Chọn mô hình & hiệu chuẩn theo nhóm](https://nosleepclub-nasa-spherex.vercel.app/#model-selection) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo mới nhất](docs/ABLATION_VALIDATION.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo covariance mới](docs/SANDWICH_RESULTS.md).
 
 ## Goal production đang thực hiện — 0.10
 
@@ -13,6 +13,12 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 Đã thêm luồng RA/Dec → metadata IRSA → từng cutout thật → đối chiếu/nhấp nháy cùng thang hiển thị → xuất bằng chứng. Năm mục tiêu của đề đều có hai cutout thật được kiểm tra, có nguồn/epoch/hash. Review riêng có ID ổn định, hết hạn cục bộ và máy chủ, quản lý được phân tích cũ; có quota, log đã lọc và CI.
 
 **Chưa đạt nghiệm thu khoa học/production.** Monte Carlo noise trên ba trường đã mở cho thấy ellipse thô vẫn thiếu phủ ở nguồn mờ. [Đối chứng ePSF](docs/CONTINUOUS_EPSF_RESULTS.md) đã khóa ở `f138e11` trước 384 lượt ghép cặp: Hessian nhạy với bước sai phân giảm từ 304/768 xuống 0/768 epoch-fit, nhưng RMS không giảm ở cả sáu ca. Profile mới vẫn chỉ phủ 31/64, 36/64 và 34/64 lượt S/N thấp. Chưa thay centroid, calibrator hay số đo WISE đã công bố. Các trạng thái được theo dõi trong ledger; test phần mềm, khám phá dữ liệu và xác nhận thiên văn được nghiệm thu riêng.
+
+Đối chứng tiếp theo khóa ở `3995f2e`, dùng **768 lượt nhiễu mới** trên đúng ba trường đã mở. Covariance sandwich cho ellipse 68% chứa truth ở **73/128, 71/128, 65/128** lượt nguồn mờ; chưa đạt 68% và chưa tốt hơn nhất quán so với Hessian profile. [Bảng tương tác](https://nosleepclub-nasa-spherex.vercel.app/#sandwich-details) đổi được mức 50/68/95% và mẫu quality; [báo cáo](docs/SANDWICH_RESULTS.md) giữ diện tích ellipse, mọi mẫu số, mode và sáu phép trên nền gốc. Vị trí fit giống nhau giữa ba cách tính covariance.
+
+[Audit thời gian từng exposure](docs/ASTROMETRIC_TIME_MODEL.md) đọc 31 header cache WISE: MJD-AVG sau MJD-OBS khoảng 57,56 giây; hai thời điểm tổng hợp không đủ rank để fit tự do cả proper motion và parallax. Module GLS mới nhận covariance đầy đủ giữa exposure, nhưng chưa nối vào phép đo nguồn. [SPIFF](docs/EXTERNAL_REFERENCE_DATA.md) bổ sung catalog/template phổ có phiên bản và checksum để phát triển kiểm tra phổ; chưa tạo ra kết quả accuracy hay truth astrometry mới.
+
+Review production đã kiểm trên commit `c88fe57`: quota ghi bằng transaction, bốn test cạnh tranh thật trong CI và [24 response checks trên production](docs/evidence/0.10/production-c88fe57.json) đều đạt. Phiên QA được xóa sạch. Chưa có bằng chứng chịu tải Atlas M0, backup/restore hoặc kiểm định khoa học độc lập đạt yêu cầu.
 
 ## Bắt đầu trên web
 
@@ -107,7 +113,8 @@ Barnard có một outlier Gaia **6,309″**. Chính mục tiêu Barnard lệch d
 
 | Thành phần | Phiên bản | Vai trò |
 |---|---|---|
-| Giao diện và chọn mô hình | 0.9.0 | Ablation 2×2, covariance theo S/N/nền, miền hỗ trợ và ca cần review; chưa qua gate tổng |
+| Explorer và kiểm chứng hiện tại | 0.10 | RA/Dec, chuỗi ảnh thật, review riêng, chẩn đoán ePSF/covariance; chưa đạt nghiệm thu khoa học |
+| Chọn mô hình theo nhóm | 0.9.0 | Ablation 2×2, covariance theo S/N/nền; giữ trong lịch sử, chưa qua gate tổng |
 | Hiệu chuẩn covariance chung | 0.8.0 | Đối chứng lịch sử; không thay mặc định |
 | Quality gate và deblend | 0.7.0 | Baseline cho thí nghiệm 0.8; chưa thay mặc định |
 | Benchmark ngoài trường trước đó | 0.6.0 | Baseline để phân tích lỗi và phát triển gate |

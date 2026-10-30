@@ -1,0 +1,304 @@
+{
+  "dataset": "SPHEREx Photometry and Image Fitting Framework (SPIFF) library",
+  "authors": "Jonathan Gagne et al.",
+  "doi": "10.5281/zenodo.19051216",
+  "version": "QR2-2026-04-24",
+  "source": "https://zenodo.org/records/19051216",
+  "paper": "https://arxiv.org/abs/2604.22012",
+  "license": {
+    "id": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "retrieved_at_utc": "2026-10-30T16:08:46.810218+00:00",
+  "metadata_sha256": "11504c14cd99f7030d2c247815f9c6584c056e852af526697084d0770bf82f42",
+  "builder_sha256": "ab2043546985efe2947b38864576e1a66fec47469a51334f4d3db8a8ec7f372a",
+  "files": [
+    {
+      "name": "00_README.txt",
+      "bytes": 2338,
+      "provider_md5": "b5ca7d52456b54ccc93755bdbbdf4754",
+      "sha256": "b80342db6c1594387d8aea5f6b8fa543893a26debaf13fd34adc71003d008fa8",
+      "url": "https://zenodo.org/api/records/19051216/files/00_README.txt/content",
+      "path": "data/raw/external/spiff/00_README.txt"
+    },
+    {
+      "name": "spiff_zenodo_manifest.csv",
+      "bytes": 4237,
+      "provider_md5": "2b7ac7eff4c11953c29bfbec14495acb",
+      "sha256": "91c4e53a72f29974776e0ca218c1ddcdf4ddcdaee09f0cb01459e1c94e689569",
+      "url": "https://zenodo.org/api/records/19051216/files/spiff_zenodo_manifest.csv/content",
+      "path": "data/raw/external/spiff/spiff_zenodo_manifest.csv"
+    },
+    {
+      "name": "spiff_tables.zip",
+      "bytes": 784867,
+      "provider_md5": "d5ed51c8075a355876cacccd18c4e21f",
+      "sha256": "bcb004f128ae9faf03d2f03a1bea0f82c89b1cb030741d8146c3db274ed73471",
+      "url": "https://zenodo.org/api/records/19051216/files/spiff_tables.zip/content",
+      "path": "data/raw/external/spiff/spiff_tables.zip",
+      "archive_members": [
+        {
+          "name": "spiff_tables/data_spherex_spectra_spiff_fulltable.csv",
+          "bytes": 9617
+        },
+        {
+          "name": "spiff_tables/data_spherex_spectra_spiff_fulltable.tex",
+          "bytes": 10749
+        },
+        {
+          "name": "spiff_tables/data_spherex_spectra_spiff_preview.tex",
+          "bytes": 1359
+        },
+        {
+          "name": "spiff_tables/pcat_spherex_bins_bandpasses_fulltable.csv",
+          "bytes": 1674
+        },
+        {
+          "name": "spiff_tables/pcat_spherex_bins_bandpasses_fulltable.tex",
+          "bytes": 2560
+        },
+        {
+          "name": "spiff_tables/pcat_spherex_bins_bandpasses_preview.tex",
+          "bytes": 672
+        },
+        {
+          "name": "spiff_tables/spherex_autotype_datasets_fulltable.csv",
+          "bytes": 1289519
+        },
+        {
+          "name": "spiff_tables/spherex_autotype_datasets_fulltable.tex",
+          "bytes": 1673872
+        },
+        {
+          "name": "spiff_tables/spherex_autotype_datasets_fulltable_ref.csv",
+          "bytes": 5129
+        },
+        {
+          "name": "spiff_tables/spherex_autotype_datasets_preview.tex",
+          "bytes": 11803
+        },
+        {
+          "name": "spiff_tables/spherex_template_grids_fulltable.csv",
+          "bytes": 2657
+        },
+        {
+          "name": "spiff_tables/spherex_template_grids_fulltable.tex",
+          "bytes": 4379
+        },
+        {
+          "name": "spiff_tables/spherex_template_grids_fulltable_ref.csv",
+          "bytes": 321
+        },
+        {
+          "name": "spiff_tables/spherex_template_grids_preview.tex",
+          "bytes": 2724
+        }
+      ]
+    },
+    {
+      "name": "spiff_templates_hybrid_csv.zip",
+      "bytes": 81282,
+      "provider_md5": "5e00408a1f284059f993e9da112954fe",
+      "sha256": "b867eecf1fc12cc11f649d8e960e83d6832cc518c20baf5cba6712e1f4eefe5a",
+      "url": "https://zenodo.org/api/records/19051216/files/spiff_templates_hybrid_csv.zip/content",
+      "path": "data/raw/external/spiff/spiff_templates_hybrid_csv.zip",
+      "archive_members": [
+        {
+          "name": "spiff_templates/hybrid_csv/L0 β_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L0 γ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L0 δ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L0_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L1 β_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L1 γ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L1_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L2 β_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L2 γ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L2_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L3 β_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L3 γ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L3_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L4 β_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L4 γ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L4_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L5 β_γ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L5_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L6_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L7 γ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L7_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L8_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/L9_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/M8 β_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/M8_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/M9 β_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/M9 γ_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/M9_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T0_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T1_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T2_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T3_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T4_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T5_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T6_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T7_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T8_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/T9_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/Y0_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/Y1_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/d_sdL8_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/d_sdT1_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/d_sdT8_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/esdL8_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/sdL3.5_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/sdM9.5_spherex_standard.csv",
+          "bytes": 4823
+        },
+        {
+          "name": "spiff_templates/hybrid_csv/sdT4_spherex_standard.csv",
+          "bytes": 4823
+        }
+      ]
+    }
+  ],
+  "purpose": "development SED references and catalog inventory; not astrometric truth",
+  "limits": [
+    "No new SPHEREx images or individual-source spectra downloaded by this script",
+    "No accuracy, completeness or independent validation result from this inventory",
+    "SPHEREx-derived templates share instrument/pixel provenance; prevent overlap with validation sources/exposures",
+    "L0-Y1 templates do not bracket the much colder WISE 0855 spectrum"
+  ]
+}

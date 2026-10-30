@@ -1,0 +1,1091 @@
+{
+  "role": "header and sampling geometry audit; no astrometric fit, source measurement or detection",
+  "manifest_path": "data/raw/wise0855/coadd/manifest.json",
+  "manifest_sha256": "522c2d739c5143e4752b8d1a54acdf852e5ace8e0fcaafde91a93f52473efe67",
+  "source_hashes": {
+    "scripts/astrometric_time_model.py": "aee34803f117e072ad4b49f38ec733b4cf459a76474e13843163a8c5d6791b7f",
+    "scripts/audit_exposure_times.py": "a42144855eecb1422788e634a47e0de8a710ca1e7e6e4675e088a87c93ba0a45",
+    "requirements.txt": "6a72e6a6e45a29266d807d680d1ba0dcb118c08ae1c25f8cc9850a1cb996e8e7"
+  },
+  "direction": {
+    "ra_deg": 133.76037473328523,
+    "dec_deg": -7.242149767967145,
+    "source": "manifest cutout center; only defines tangent basis"
+  },
+  "illustrative_assumptions": {
+    "mu_east_arcsec_per_year": -8.06,
+    "mu_north_arcsec_per_year": 0.7,
+    "parallax_arcsec": 0.454,
+    "source": "Luhman 2014 Tables 1–2, illustrative literature values, not a new fit",
+    "source_url": "https://arxiv.org/pdf/1404.6501",
+    "qualification": "linear proper motion and first-order Earth parallax only; unmodeled acceleration/systematics not bounded"
+  },
+  "exposures": [
+    {
+      "obs_id": "2025W46_1A_0075_4",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0075_4D6_spx_l2b-v20-2025-318.fits",
+      "sha256": "ccf37a3bfd7b759199cd8354f02661c4b85f2711349acbe66fcb9f7227e1499e",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0075_4D6_spx_l2b-v20-2025-318.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0075_4D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60989.296807454,
+        "midpoint_mjd_absolute": 60989.297473643,
+        "end_mjd_absolute": 60989.298139832,
+        "midpoint_mjd_tdb": 60989.29827436832,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7038.267116019635,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1359751015980968e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60989.296807454,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_1A_0076_1",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0076_1D6_spx_l2b-v20-2025-318.fits",
+      "sha256": "f19c2a96e4e9b94362b223b8c84d44ad11ced2f7d3743e3914e94447518c9cd7",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0076_1D6_spx_l2b-v20-2025-318.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0076_1D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60989.298548414,
+        "midpoint_mjd_absolute": 60989.299214604,
+        "end_mjd_absolute": 60989.299880793,
+        "midpoint_mjd_tdb": 60989.30001532932,
+        "duration_seconds": 115.11754535604268,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7036.527781169608,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1354472478136696e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60989.298548414,
+      "avg_minus_obs_seconds": 57.558815740048885
+    },
+    {
+      "obs_id": "2025W46_1A_0076_2",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0076_2D6_spx_l2b-v20-2025-318.fits",
+      "sha256": "ced294ce14a122fca357ab66d1d13624b7f10c68b43b94ea25adbcc20be73d00",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0076_2D6_spx_l2b-v20-2025-318.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0076_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60989.300040671,
+        "midpoint_mjd_absolute": 60989.300706861,
+        "end_mjd_absolute": 60989.30137305,
+        "midpoint_mjd_tdb": 60989.30150758632,
+        "duration_seconds": 115.11754598468542,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7034.832173921952,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.134932664493176e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60989.300040671,
+      "avg_minus_obs_seconds": 57.55881636869162
+    },
+    {
+      "obs_id": "2025W46_1A_0076_3",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0076_3D6_spx_l2b-v20-2025-318.fits",
+      "sha256": "123e3664ba44966f48a07cb179c226d78f6777df482bdebb43d019ae30d1a61a",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0076_3D6_spx_l2b-v20-2025-318.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0076_3D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60989.301532928,
+        "midpoint_mjd_absolute": 60989.302199117,
+        "end_mjd_absolute": 60989.302865307,
+        "midpoint_mjd_tdb": 60989.30299984232,
+        "duration_seconds": 115.11754535604268,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7032.962214509657,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.134365168733237e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60989.301532928,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_1A_0090_2",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits",
+      "sha256": "feea63d0786667acb978b47c6b78cba35f0ab9df1fd3891985444d1890af48bd",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60989.366268368,
+        "midpoint_mjd_absolute": 60989.366934557,
+        "end_mjd_absolute": 60989.367600747,
+        "midpoint_mjd_tdb": 60989.36773528233,
+        "duration_seconds": 115.11754535604268,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7036.796441568776,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.135528780940212e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60989.366268368,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_1A_0090_3",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits",
+      "sha256": "29d52efb7c26e037e78e7814755672210b5a6ada196c45ad950df7930f73ec86",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60989.367760625,
+        "midpoint_mjd_absolute": 60989.368426814,
+        "end_mjd_absolute": 60989.369093003,
+        "midpoint_mjd_tdb": 60989.369227539326,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7035.109188146829,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.135016732840878e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60989.367760625,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_1A_0238_1",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits",
+      "sha256": "f6aa3cbacc6287c2c432fc6a1377cdb5292897a5d95f0a0fa81830f822323d4b",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60989.97699147,
+        "midpoint_mjd_absolute": 60989.977657659,
+        "end_mjd_absolute": 60989.978323848,
+        "midpoint_mjd_tdb": 60989.978458384445,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7037.218015382641,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.135656720268893e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60989.97699147,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_1A_0238_2",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits",
+      "sha256": "f4613db6e7d5179bf67b951fa3ed501628c7fec53dc049c817923c3e1d55c880",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60989.978483727,
+        "midpoint_mjd_absolute": 60989.979149916,
+        "end_mjd_absolute": 60989.979816105,
+        "midpoint_mjd_tdb": 60989.97995064144,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7035.57789824941,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1351589771024948e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60989.978483727,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_2A_0214_2",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits",
+      "sha256": "7267dd46ddc9df4cce5518b5dbf7d072ac18ecbfe34140ad597aab6350528ab4",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60993.506600984,
+        "midpoint_mjd_absolute": 60993.507267173,
+        "end_mjd_absolute": 60993.507933362,
+        "midpoint_mjd_tdb": 60993.50806789916,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7038.346727833201,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.135999262211607e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60993.506600984,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_2A_0214_3",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits",
+      "sha256": "d4a13b010edb0e4233e159b6b5d7cb5636f32db8959f86127a74043ea782800d",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60993.508093229,
+        "midpoint_mjd_absolute": 60993.508759418,
+        "end_mjd_absolute": 60993.509425608,
+        "midpoint_mjd_tdb": 60993.50956014416,
+        "duration_seconds": 115.11754535604268,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7036.768967119973,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1355204429874736e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60993.508093229,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_2A_0214_4",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits",
+      "sha256": "82b706e57cfc03a0e40a726b384cc276f7fb710b6139870f8cc2e2e6e6656d71",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60993.509585509,
+        "midpoint_mjd_absolute": 60993.510251698,
+        "end_mjd_absolute": 60993.510917888,
+        "midpoint_mjd_tdb": 60993.51105242415,
+        "duration_seconds": 115.11754598468542,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7034.973490594149,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.13497555131294e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60993.509585509,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_2A_0226_1",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits",
+      "sha256": "b1b11f7f34dd2a11a470ebcbbc192b88957788fa4cfbbef32b77356381b01281",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60993.574249873,
+        "midpoint_mjd_absolute": 60993.574916062,
+        "end_mjd_absolute": 60993.575582251,
+        "midpoint_mjd_tdb": 60993.575716788175,
+        "duration_seconds": 115.11745860334486,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7038.450598479149,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.136030784901763e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60993.574249873,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_2A_0226_2",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0226_2D6_spx_l2b-v20-2025-321.fits",
+      "sha256": "922ad3cc5ea37f401d3190a79b81801e4b69f96085e6eded7a738e6478119ec6",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_2D6_spx_l2b-v20-2025-321.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_2D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60993.57574213,
+        "midpoint_mjd_absolute": 60993.576408319,
+        "end_mjd_absolute": 60993.577074508,
+        "midpoint_mjd_tdb": 60993.57720904517,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7036.900824000877,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1355604589473603e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60993.57574213,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_2A_0226_3",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits",
+      "sha256": "0631177da70f81127f6d003ffadd09a7445c0a353e300e875ab3ae9d8f5b48c7",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60993.577234375,
+        "midpoint_mjd_absolute": 60993.577900564,
+        "end_mjd_absolute": 60993.578566753,
+        "midpoint_mjd_tdb": 60993.57870129017,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7035.13117205644,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.13502340452338e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60993.577234375,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_2A_0226_4",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits",
+      "sha256": "489d2e2ac1d9740539a3ee240647715e115263ba7e742ecf0532c803a236a76e",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60993.578726644,
+        "midpoint_mjd_absolute": 60993.579392833,
+        "end_mjd_absolute": 60993.580059022,
+        "midpoint_mjd_tdb": 60993.58019355917,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7033.184142396266,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1344325194649344e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60993.578726644,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2025W46_2A_0289_1",
+      "epoch": "2025-11",
+      "path": "data/raw/wise0855/coadd/level2_2025W46_2A_0289_1D6_spx_l2b-v20-2025-321.fits",
+      "sha256": "4c792a660fbaa7d828d808f988e2a99172afe1fff65044553cf6e83de00cc8f0",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0289_1D6_spx_l2b-v20-2025-321.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0289_1D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 60993.912885139,
+        "midpoint_mjd_absolute": 60993.913551328,
+        "end_mjd_absolute": 60993.914217517,
+        "midpoint_mjd_tdb": 60993.91435205424,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7039.425231834738,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1363265668813905e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.4+psffix1",
+      "mjd_obs_header": 60993.912885139,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_1B_0227_2",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0227_2D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "0ca0e1a573cc6df7ce47d34f3a3a07629a7ab0b6e7118204ccf267734a90c0aa",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0227_2D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0227_2D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61151.197933206,
+        "midpoint_mjd_absolute": 61151.198599395,
+        "end_mjd_absolute": 61151.199265584,
+        "midpoint_mjd_tdb": 61151.19940015383,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7037.147468261577,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1356353106105784e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61151.197933206,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_1B_0227_3",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0227_3D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "f98ba164571655f09b197d811423612c4f4bf791b9ffd789e2fd152b05e3ef98",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0227_3D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0227_3D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61151.199425463,
+        "midpoint_mjd_absolute": 61151.200091652,
+        "end_mjd_absolute": 61151.200757841,
+        "midpoint_mjd_tdb": 61151.20089241083,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7038.331288571899,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1359945767006445e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61151.199425463,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_1B_0227_4",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0227_4D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "ec4e6f629c85c5e12e50d8acabae2e985b9d06c593b2f0f4b47801a3c76e5044",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0227_4D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0227_4D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61151.20091772,
+        "midpoint_mjd_absolute": 61151.201583909,
+        "end_mjd_absolute": 61151.202250098,
+        "midpoint_mjd_tdb": 61151.202384667835,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7039.2396865670935,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1362702575561863e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61151.20091772,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_1B_0507_1",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0507_1D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "7cdbaa5a999838644cece6797c2c21b04695e1111a017d7db82ad4af1a958ce3",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_1D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_1D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61152.757303588,
+        "midpoint_mjd_absolute": 61152.757969777,
+        "end_mjd_absolute": 61152.758635966,
+        "midpoint_mjd_tdb": 61152.758770535685,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7035.580527913672,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1351597751536765e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61152.757303588,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_1B_0507_2",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0507_2D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "e5cdb0bd83b8c059fc9a179d6ac335c126571b5efd5492d647fbd9aa528a7ab7",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_2D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_2D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61152.758795833,
+        "midpoint_mjd_absolute": 61152.759462023,
+        "end_mjd_absolute": 61152.760128212,
+        "midpoint_mjd_tdb": 61152.76026278169,
+        "duration_seconds": 115.11754598468542,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7037.028332438596,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1355991552405986e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61152.758795833,
+      "avg_minus_obs_seconds": 57.55881636869162
+    },
+    {
+      "obs_id": "2026W17_1B_0507_3",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "f96e48cbc53465ecb6089ca9cec9a8fa0b15cf5416fca59a59cc5d4859136578",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61152.76028809,
+        "midpoint_mjd_absolute": 61152.76095428,
+        "end_mjd_absolute": 61152.761620469,
+        "midpoint_mjd_tdb": 61152.761755038686,
+        "duration_seconds": 115.11754535604268,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7038.217632729918,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1359600843966977e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61152.76028809,
+      "avg_minus_obs_seconds": 57.558815740048885
+    },
+    {
+      "obs_id": "2026W17_1B_0634_1",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "21795106fc179df6fb36bb0439c1d50fe3511d4f3dde082ccb52cb8f9264f993",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61153.436457037,
+        "midpoint_mjd_absolute": 61153.437123226,
+        "end_mjd_absolute": 61153.437789416,
+        "midpoint_mjd_tdb": 61153.43792398462,
+        "duration_seconds": 115.11754535604268,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7035.728204432762,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1352045920613993e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61153.436457037,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_1B_0634_2",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "ce3232d78000ecbd853427503f4d0ed52f0e1c7d9eeff9e884b8e68f221e1642",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61153.437949306,
+        "midpoint_mjd_absolute": 61153.438615495,
+        "end_mjd_absolute": 61153.439281684,
+        "midpoint_mjd_tdb": 61153.43941625361,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7037.090577940185,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.135618045521315e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61153.437949306,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_1B_0634_3",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "cede6458ecae451af104ce39bb98e97cc64b903ee0d35d8a90fa4cb3775f8e7c",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61153.439441551,
+        "midpoint_mjd_absolute": 61153.44010774,
+        "end_mjd_absolute": 61153.440773929,
+        "midpoint_mjd_tdb": 61153.44090849862,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7038.192540497478,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.13595246939959e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61153.439441551,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_1B_0634_4",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits",
+      "sha256": "00727e09a969103e2962c4f9194d3a0fa5eced38d352521dae4c1be4a77fe810",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61153.440933808,
+        "midpoint_mjd_absolute": 61153.441599997,
+        "end_mjd_absolute": 61153.442266186,
+        "midpoint_mjd_tdb": 61153.442400755615,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7039.015160363653,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1362021182866333e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61153.440933808,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_2A_0591_1",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits",
+      "sha256": "a7dc389e76df1f8bf61b918cde68bc9e8ef3472e58219e2bf083932080ced500",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61156.085510949,
+        "midpoint_mjd_absolute": 61156.086177138,
+        "end_mjd_absolute": 61156.086843328,
+        "midpoint_mjd_tdb": 61156.08697789632,
+        "duration_seconds": 115.11754535604268,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7037.247179141644,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.135665570893922e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61156.085510949,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_2A_0609_1",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits",
+      "sha256": "d8d56f727b6659d13ccb0f12a9cce89aeeae444f2e36f40a803086a3a23ec9f8",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61156.152715706,
+        "midpoint_mjd_absolute": 61156.153381895,
+        "end_mjd_absolute": 61156.154048084,
+        "midpoint_mjd_tdb": 61156.15418265331,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7036.672009288377,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1354910181999827e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61156.152715706,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_2A_0609_2",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits",
+      "sha256": "63f19b3bd42ffa06e5d11ea1ece990f3025e54c28b84fb48dd32fd4e7663c82c",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61156.154225718,
+        "midpoint_mjd_absolute": 61156.154891907,
+        "end_mjd_absolute": 61156.155558096,
+        "midpoint_mjd_tdb": 61156.15569266531,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7037.753232731751,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1358191481666692e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61156.154225718,
+      "avg_minus_obs_seconds": 57.5587296159938
+    },
+    {
+      "obs_id": "2026W17_2A_0692_1",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits",
+      "sha256": "fb5d38636cf9f08c0870206e51e9c8a2da83c257b465c7ab6c529a329af3a4f4",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61156.493180671,
+        "midpoint_mjd_absolute": 61156.493846861,
+        "end_mjd_absolute": 61156.49451305,
+        "midpoint_mjd_tdb": 61156.49464761926,
+        "duration_seconds": 115.11754535604268,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7037.504198828104,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.1357435712939994e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61156.493180671,
+      "avg_minus_obs_seconds": 57.558815740048885
+    },
+    {
+      "obs_id": "2026W17_2A_0692_2",
+      "epoch": "2026-04",
+      "path": "data/raw/wise0855/coadd/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits",
+      "sha256": "1e8aa8f601a8bdd29ce90a11c59646ef983b217c521eea3136f2258166623a99",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.12",
+      "time": {
+        "input_scale": "utc",
+        "start_mjd_absolute": 61156.494672917,
+        "midpoint_mjd_absolute": 61156.495339106,
+        "end_mjd_absolute": 61156.496005295,
+        "midpoint_mjd_tdb": 61156.49613986426,
+        "duration_seconds": 115.1174592319876,
+        "ephemeris": "astropy builtin Earth barycentric ICRS; spacecraft position not added"
+      },
+      "spacecraft_parallax_bound": {
+        "available": true,
+        "radius_km": 7038.37879836286,
+        "assumed_parallax_arcsec": 0.454,
+        "bound_arcsec": 2.136008994984137e-05,
+        "assumptions": "header values are km in an orthonormal Cartesian geocentric frame; orientation not used",
+        "interpretation": "maximum first-order angular error from omitted spacecraft position, not an uncertainty or fitted correction"
+      },
+      "pipeline_version": "6.5.6",
+      "mjd_obs_header": 61156.494672917,
+      "avg_minus_obs_seconds": 57.5587296159938
+    }
+  ],
+  "valid_exposures": 31,
+  "attempted_exposures": 31,
+  "reference_mjd_tdb": 60993.91435205424,
+  "epochs": {
+    "2025-11": {
+      "spread": {
+        "exposure_count": 16,
+        "first_mjd_tdb": 60989.29827436832,
+        "last_mjd_tdb": 60993.91435205424,
+        "midpoint_span_days": 4.61607768592512,
+        "earth_only_max_pairwise_illustrative_displacement_arcsec": 0.10775009409959162,
+        "spacecraft_omission_max_pairwise_bound_arcsec": 4.272653133762781e-05,
+        "earth_model_plus_spacecraft_max_pairwise_upper_arcsec": 0.10779281711627642,
+        "qualification": "illustrative literature motion, fixed direction and first-order parallax; not a measured displacement or comprehensive bound"
+      },
+      "design_geometry_identity_weights": {
+        "pm_only": {
+          "rank": 4,
+          "condition": 2.672627252291806,
+          "dof": 28,
+          "singular_values_scaled": [
+            1.3245332598420843,
+            1.3245332598420843,
+            0.49559221500352635,
+            0.49559221500352624
+          ],
+          "column_norms_whitened": [
+            4.0,
+            4.0,
+            0.03445648802215676,
+            0.03445648802215676
+          ],
+          "max_condition": 1000.0,
+          "reason": null
+        },
+        "pm_parallax": {
+          "rank": 5,
+          "condition": 17682.89445636091,
+          "dof": 27,
+          "singular_values_scaled": [
+            1.636658976375501,
+            1.3245332598420851,
+            0.5668751066001001,
+            0.49559221500352646,
+            9.255605638627563e-05
+          ],
+          "column_norms_whitened": [
+            4.0,
+            4.0,
+            0.03445648802215676,
+            0.03445648802215676,
+            3.9301687846256868
+          ],
+          "max_condition": 1000.0,
+          "reason": "ill_conditioned"
+        }
+      }
+    },
+    "2026-04": {
+      "spread": {
+        "exposure_count": 15,
+        "first_mjd_tdb": 61151.19940015383,
+        "last_mjd_tdb": 61156.49613986426,
+        "midpoint_span_days": 5.296739710429392,
+        "earth_only_max_pairwise_illustrative_displacement_arcsec": 0.12625722019250404,
+        "spacecraft_omission_max_pairwise_bound_arcsec": 4.2725405151123725e-05,
+        "earth_model_plus_spacecraft_max_pairwise_upper_arcsec": 0.12629993663556,
+        "qualification": "illustrative literature motion, fixed direction and first-order parallax; not a measured displacement or comprehensive bound"
+      },
+      "design_geometry_identity_weights": {
+        "pm_only": {
+          "rank": 4,
+          "condition": 167.18707117248778,
+          "dof": 26,
+          "singular_values_scaled": [
+            1.4141882654343125,
+            1.4141882654343125,
+            0.008458717863268787,
+            0.008458717863268787
+          ],
+          "column_norms_whitened": [
+            3.872983346207417,
+            3.872983346207417,
+            1.6955152936989,
+            1.6955152936989
+          ],
+          "max_condition": 1000.0,
+          "reason": null
+        },
+        "pm_parallax": {
+          "rank": 5,
+          "condition": 8429.27007216509,
+          "dof": 25,
+          "singular_values_scaled": [
+            1.731993158068266,
+            1.414188265434313,
+            0.014130045480491247,
+            0.008458717863268796,
+            0.00020547368197248862
+          ],
+          "column_norms_whitened": [
+            3.872983346207417,
+            3.872983346207417,
+            1.6955152936989,
+            1.6955152936989,
+            3.7999037107671874
+          ],
+          "max_condition": 1000.0,
+          "reason": "ill_conditioned"
+        }
+      }
+    }
+  },
+  "combined_design_identity_weights": {
+    "pm_only": {
+      "rank": 4,
+      "condition": 2.31023850630255,
+      "dof": 58,
+      "singular_values_scaled": [
+        1.297845639463203,
+        1.297845639463203,
+        0.561779935674415,
+        0.5617799356744149
+      ],
+      "column_norms_whitened": [
+        5.5677643628300215,
+        5.5677643628300215,
+        1.695865372231442,
+        1.695865372231442
+      ],
+      "max_condition": 1000.0,
+      "reason": null
+    },
+    "pm_parallax": {
+      "rank": 5,
+      "condition": 113.54818158500004,
+      "dof": 57,
+      "singular_values_scaled": [
+        1.403731598655025,
+        1.2978456394632032,
+        1.0145860087881988,
+        0.5617799356744152,
+        0.01236243134025196
+      ],
+      "column_norms_whitened": [
+        5.5677643628300215,
+        5.5677643628300215,
+        1.695865372231442,
+        1.695865372231442,
+        5.466762742862396
+      ],
+      "max_condition": 1000.0,
+      "reason": null
+    }
+  },
+  "collapsed_two_season_design_identity_weights": {
+    "pm_only": {
+      "rank": 4,
+      "condition": 2.310715998075193,
+      "dof": 58,
+      "singular_values_scaled": [
+        1.297887957078183,
+        1.297887957078183,
+        0.5616821617885163,
+        0.5616821617885162
+      ],
+      "column_norms_whitened": [
+        5.5677643628300215,
+        5.5677643628300215,
+        1.6955932331725534,
+        1.6955932331725534
+      ],
+      "max_condition": 1000.0,
+      "reason": null
+    },
+    "pm_parallax": {
+      "rank": 4,
+      "condition": null,
+      "dof": 57,
+      "singular_values_scaled": [
+        1.403761961673632,
+        1.2978879570781827,
+        1.0146193152893335,
+        0.5616821617885164,
+        2.355267131785532e-16
+      ],
+      "column_norms_whitened": [
+        5.5677643628300215,
+        5.5677643628300215,
+        1.6955932331725534,
+        1.6955932331725534,
+        5.469383750900483
+      ],
+      "max_condition": 1000.0,
+      "reason": "rank_deficient"
+    }
+  },
+  "qualification": "Identity weights assess numerical design only; rank/condition do not establish precision, independent epochs, or parallax measurement. Spacecraft axes not applied."
+}
