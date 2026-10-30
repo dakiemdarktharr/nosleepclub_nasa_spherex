@@ -30,3 +30,7 @@ Vercel bundle/timeout và nhận diện môi trường, MongoDB quota/TTL/owner 
 - Trang chỉ tải overview sandwich khoảng 177 KB khi mở; bản audit 8,2 MB là liên kết tải chủ động. Cả hai chứa hash để đối chiếu; biểu đồ/bảng không thêm một phép đo WISE mới.
 
 Screen-reader thực, keyboard toàn trang, reflow 200–400%, mobile/touch thực, mất cookie nhiều tab, load/restore và khoa học độc lập vẫn chưa được nghiệm thu đầy đủ.
+
+Bảng sandwich sau đó đã kiểm trên **production c65d79b**: deep link tự mở, cả sáu hàng mặc định khớp JSON; đổi 95%/accepted giữ đúng 95/124, 108/124 và 101/124 ở w090p10 SNR2, không có JS error trong thao tác. [Ảnh production](evidence/0.10/sandwich-production.png). [Receipt 30 response checks](evidence/0.10/production-c65d79b.json) xác minh hash các artifact mới; lượt fail 502 trước đó được giữ riêng trong evidence. Kiểm chứng này không thay phép đo khoa học hay các audit còn thiếu.
+
+Local sau sửa mask API 1.1 (31/10/2026 giờ Việt Nam): truy vấn 350°/+35° trả 77 quan sát; ảnh đầu thật hiển thị 1.335 pixel khả dụng, 34 bị loại, 0 thiếu trên grid 37×37, cùng mức xám −0,0399–0,3072 MJy/sr. Không có JS error trong đường này. Test JS thực thi thêm ca từ chối ghép hai mask policy khác nhau, rồi tìm lại vùng để reset policy; toàn bộ suite explorer đạt trong V8. Chưa dùng thử local này để xác nhận policy mới đã deploy.

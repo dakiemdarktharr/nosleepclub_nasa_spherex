@@ -7,6 +7,7 @@ from pathlib import Path
 import unittest
 from unittest.mock import patch
 from urllib.parse import urlencode
+from urllib.error import HTTPError
 
 import numpy as np
 from astropy.io import fits
@@ -48,8 +49,9 @@ def synthetic(rotation=0, sip=False, center_flag=0, top_flag=0, bottom_nan=False
     zh = fits.ImageHDU(np.full((5, 5), zodi, dtype=np.float32), name='ZODI')
     zh.header['BUNIT'] = 'MJy / sr'
     output = BytesIO()
-    fits.HDUList([fits.PrimaryHDU(), fits.ImageHDU(data, header=hdr, name='IMAGE'),
-                  fits.ImageHDU(flags, name='FLAGS'), zh]).writeto(output)
+    flag_hdu = fits.ImageHDU(flags, name='FLAGS')
+    flag_hdu.header['HIERARCH MP_SOURCE'], flag_hdu.header['HIERARCH MP_FULLSAMPLE'] = 21, 12
+    fits.HDUList([fits.PrimaryHDU(), fits.ImageHDU(data, header=hdr, name='IMAGE'), flag_hdu, zh]).writeto(output)
     return output.getvalue()
 
 
@@ -72,6 +74,24 @@ def request(path, method='GET'):
 
 
 class FrameTest(unittest.TestCase):
+    def test_upstream_http_failure_logs_only_code_and_status(self):
+        with patch.object(api, 'build_opener') as opener:
+            opener.return_value.open.side_effect = HTTPError(URL, 503, 'private upstream body', {}, BytesIO())
+            with self.assertRaises(api.FrameError) as caught:
+                api.fetch(URL)
+        self.assertEqual(caught.exception.upstream_http_status, 503)
+        path = '/api/frame?' + urlencode({'url': URL, 'ra': 350, 'dec': 35, 'fov_deg': .005})
+        with patch.object(api, 'fetch', side_effect=caught.exception), self.assertLogs(api.logger, level='INFO') as logs:
+            status, _, body = request(path)
+        self.assertEqual(status, 502)
+        self.assertEqual(json.loads(body), {'error': 'upstream_http_error'})
+        event = json.loads(logs.records[-1].getMessage())
+        self.assertEqual(event['error_code'], 'upstream_http_error')
+        self.assertEqual(event['upstream_http_status'], 503)
+        self.assertEqual(event['level'], 'error')
+        self.assertNotIn(URL, logs.records[-1].getMessage())
+        self.assertNotIn('private upstream body', logs.records[-1].getMessage())
+
     def test_input_allowlist_and_limits(self):
         self.assertEqual(parameters()['size_px'], 3)
         self.assertLessEqual(parameters(fov_deg=.12)['size_px'], 192)
@@ -98,6 +118,25 @@ class FrameTest(unittest.TestCase):
         raw = np.array(Image.open(BytesIO(api.render(synthetic(zodi=10), p)[0])))
         self.assertLess(corrected[1, 1, 0], raw[1, 1, 0])
 
+    def test_fullsample_is_masked_and_source_alone_remains_visible(self):
+        p = parameters(low=0, high=100)
+        for flag in [api.FULLSAMPLE, api.FULLSAMPLE | api.SOURCE]:
+            png, info = api.render(synthetic(center_flag=flag), p)
+            rgb = np.array(Image.open(BytesIO(png)))
+            self.assertEqual(tuple(rgb[1, 1]), (255, 140, 0))
+            self.assertEqual(info['valid_pixels'] + info['masked_pixels'] + info['missing_pixels'], 9)
+            self.assertEqual(info['masked_pixels'], 1)
+        png, info = api.render(synthetic(center_flag=api.SOURCE), p)
+        rgb = np.array(Image.open(BytesIO(png)))
+        self.assertEqual(rgb[1, 1, 0], rgb[1, 1, 1])
+        self.assertEqual(info['masked_pixels'], 0)
+        with fits.open(BytesIO(synthetic())) as hdus:
+            hdus['FLAGS'].header['MP_SOURCE'] = 20
+            invalid = BytesIO(); hdus.writeto(invalid)
+        with self.assertRaises(api.FrameError) as error:
+            api.render(invalid.getvalue(), p)
+        self.assertEqual(error.exception.code, 'invalid_flag_layout')
+
     def test_wcs_rotation_and_sip_keep_north_up_east_left(self):
         for rotation in (0, 90, 180, 270):
             with self.subTest(rotation=rotation):
@@ -116,6 +155,8 @@ class FrameTest(unittest.TestCase):
         self.assertEqual(headers['X-Frame-Cutout-SHA256'], api.sha256(raw).hexdigest())
         self.assertEqual(headers['X-Frame-Obs-ID'], '2025W51_1A_0021_3')
         self.assertEqual(headers['X-Frame-Grid-Scale-Arcsec'], '6.15')
+        self.assertEqual(headers['X-Frame-Contract'], '1.1')
+        self.assertEqual(headers['X-Frame-Mask-Policy'], 'source-only-allowlist-v2')
         self.assertIn('max-age=300', headers['Cache-Control'])
         self.assertEqual(Image.open(BytesIO(body)).size, (3, 3))
         with patch.object(api, 'fetch', side_effect=api.FrameError('upstream_timeout', 504)):

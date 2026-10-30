@@ -6,7 +6,7 @@
     wise0855:[133.7601213914074,-7.242127941212259], barnard:[269.44626688537255,4.768222216475269],
     epsilon:[331.04583333,-56.78333333], rwaur:[76.95652603458332,30.401438173888888], rdra:[248.16761083294998,66.75497941722]
   };
-  let rows=[], query=null, provenance=null, current=-1, displayed=-1, reference=-1, generation=0, request=null, timer=null, range=null;
+  let rows=[], query=null, provenance=null, current=-1, displayed=-1, reference=-1, generation=0, request=null, timer=null, range=null, maskPolicy=null;
   let frameQueue=Promise.resolve(), pendingFrames=new Map();
   const images=new Map();
   function coordinate(raw, ra) {
@@ -90,6 +90,8 @@
       if(!response.headers.get("Content-Type")?.startsWith("image/png"))throw new Error("Máy chủ chưa cung cấp ảnh PNG.");
       const blob=await response.blob();if(seq!==generation)throw new DOMException("Đã đổi vùng trời","AbortError");
       const info={src:URL.createObjectURL(blob),headers:Object.fromEntries([...response.headers].filter(([key])=>key.startsWith("x-frame-"))),row};
+      const incomingPolicy=response.headers.get("X-Frame-Mask-Policy")||"undeclared";
+      if(maskPolicy!==null&&incomingPolicy!==maskPolicy){URL.revokeObjectURL(info.src);throw new Error("Hai ảnh dùng quy tắc loại pixel khác nhau. Hãy tìm lại vùng trời trước khi so sánh.");}
       const low=Number(response.headers.get("X-Frame-Contrast-Low")),high=Number(response.headers.get("X-Frame-Contrast-High"));
       const valid=Number(response.headers.get("X-Frame-Valid-Pixels"));
       if(valid>0){
@@ -97,6 +99,7 @@
         if(range&&(Math.abs(low-range[0])>1e-9||Math.abs(high-range[1])>1e-9)){URL.revokeObjectURL(info.src);throw new Error("Ảnh không cùng thang tương phản với ảnh đối chiếu.");}
         if(!range)range=[low,high];
       }
+      if(maskPolicy===null)maskPolicy=incomingPolicy;
       images.set(index,info);return info;
     })();
     jobs.set(index,task);frameQueue=task.catch(()=>{});task.then(()=>jobs.delete(index),()=>jobs.delete(index));return task;
@@ -106,7 +109,9 @@
     displayed=index;
     img.alt=`Ảnh SPHEREx ${query.release.toUpperCase()}, detector ${info.row.detector}, ${displayMjd(info.row.t_min_mjd)}, ${info.row.obs_id}. Bắc ở trên, Đông bên trái. Cam là pixel bị mask, tím là thiếu dữ liệu.`;
     el("explorer-frame-label").textContent=`${index+1}/${rows.length} · ${displayMjd(info.row.t_min_mjd)} · ${info.row.obs_id}`;
-    el("explorer-frame-meta").textContent=`${query.release.toUpperCase()} · D${info.row.detector} · 6,15″/pixel · ZODI đã trừ · mức xám ${range?range.map(x=>x.toFixed(4)).join("–"):"theo ảnh"} MJy/sr. Cam: mask; tím: thiếu dữ liệu.`;
+    const counts=["x-frame-valid-pixels","x-frame-masked-pixels","x-frame-missing-pixels"].map(key=>info.headers[key]===undefined?null:Number(info.headers[key]));
+    const quality=counts.every(v=>Number.isInteger(v)&&v>=0)?` ${counts[0]} pixel khả dụng; ${counts[1]} bị loại; ${counts[2]} thiếu.`:"";
+    el("explorer-frame-meta").textContent=`${query.release.toUpperCase()} · D${info.row.detector} · 6,15″/pixel · ZODI đã trừ · mức xám ${range?range.map(x=>x.toFixed(4)).join("–"):"theo ảnh"} MJy/sr. Cam: mask; tím: thiếu dữ liệu.${quality}`;
     const sha=info.headers["x-frame-cutout-sha256"]||"";
     el("explorer-frame-hash").textContent=sha?`SHA-256 cutout: ${sha}`:"Hash cutout xem trong gói bằng chứng.";
     el("explorer-download-fits").href=info.headers["x-frame-cutout-url"];
@@ -125,7 +130,7 @@
   }
   el("explorer-form").addEventListener("submit",async event=>{
     event.preventDefault();let next;try{next=inputQuery();}catch(error){setStatus(error.message,true);return;}
-    request?.abort();stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;range=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
+    request?.abort();stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
     resetDisplay();el("explorer-results").hidden=true;el("explorer-search").disabled=true;
     setStatus("Đang truy vấn độ phủ SPHEREx tại IRSA…");
     try {
@@ -152,7 +157,7 @@
   });
   el("explorer-export").addEventListener("click",()=>{
     const bundle={schema_version:1,kind:"observation-display-evidence",exported_at:new Date().toISOString(),query:{...query,p:query.p.toString()},provenance,
-      observations:rows,display_range_mjy_sr:range,loaded_frames:[...images].map(([index,info])=>({index,...info.row,headers:info.headers})),
+      observations:rows,display_range_mjy_sr:range,mask_policy:maskPolicy,loaded_frames:[...images].map(([index,info])=>({index,...info.row,headers:info.headers})),
       review_note:el("explorer-note").value,qualification:"User visual inspection; no registered astrometry, spectral matching, calibrated detection probability or fitted motion. Pixel wavelengths require science calibration."};
     const url=URL.createObjectURL(new Blob([JSON.stringify(bundle,null,2)],{type:"application/json"})),a=document.createElement("a");a.href=url;a.download="spherex-observation-review.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   });

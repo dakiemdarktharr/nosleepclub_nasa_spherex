@@ -1,0 +1,22 @@
+{
+  "scope": "synthetic disposable loopback replica-set recovery only; not production backup, RPO or RTO",
+  "ci_run_id": 41095342121,
+  "ci_url": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41095342121",
+  "source_commit": "8f0afc0c61e765ee854830597ad0193887148c07",
+  "python_tests": 220,
+  "raw_cache_skips": 5,
+  "real_restore_tests_passed": [
+    "test_expired_rows_and_auth_failures_never_restore",
+    "test_real_source_to_independent_target_preserves_bson_and_indexes"
+  ],
+  "ci_log_sha256": "62fe972f89be96e44a7e3ddbb95dc805f93b51b5de1a73e18cb882f226e0f648",
+  "source_sha256": {
+    "scripts/review_backup.py": "bb7f4a38592585397b37e04b47a6fb7f6e228d3488ca3cb45eff853180063218",
+    "tests/test_review_backup.py": "7eece8c3b5ccf6be34f41cea6ed0de2116e697c2c3baa8e942702506da1d72e3",
+    "tests/test_review_backup_mongo.py": "8bd141ee42a8fc6622fd9b8b042655bed5d29f0e0ecfeb32b8b923ddaaf753cf",
+    "requirements-ops.txt": "ddd7a7137821185f43784b70ee323045d7462ccf8ebecc4ad4239671d82f9faa",
+    "web/requirements.txt": "c403766a3a3b585d78f6d996789ef5a5626191585ce986a12c8c3c4cbdb88de8",
+    ".github/workflows/checks.yml": "443045578fa249f923c32e1f177c7c8fa69498f78559a9a8c5fd0ac24967cf49"
+  },
+  "credential_scope": "No production credentials. Fixture is unauthenticated loopback."
+}

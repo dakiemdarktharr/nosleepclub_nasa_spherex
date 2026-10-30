@@ -5,13 +5,19 @@ from hashlib import sha256
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler
 import json
-import logging
 import os
 from pathlib import Path
 import re
 import secrets
 import time
 from urllib.parse import urlsplit
+
+try:
+    from api._telemetry import emit_request, request_logger
+except ModuleNotFoundError as exc:
+    if exc.name not in ('api', 'api._telemetry'):
+        raise
+    from web.api._telemetry import emit_request, request_logger
 
 COOKIE = "__Host-spherex-review"
 TOKEN = re.compile(r"^[A-Za-z0-9_-]{43}$")
@@ -27,7 +33,7 @@ DB_TIMEOUT_SECONDS = 10
 MAX_TRANSACTION_ATTEMPTS = 4
 MAX_COMMIT_ATTEMPTS = 3
 CONTRACT_VERSION = "1.1"
-logger = logging.getLogger("review_api")
+logger = request_logger("review_api")
 
 
 class ReviewQuota(Exception):
@@ -194,9 +200,9 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         if self.request_method != "OTHER" or self.command != "HEAD":
             self.wfile.write(data)
-        logger.warning(json.dumps({"event": "review_request", "request_id": self.request_id,
-                                   "method": self.request_method, "status": code,
-                                   "category": category, "latency_ms": round((time.monotonic() - self.started) * 1000, 2)}))
+        emit_request(logger, {"event": "review_request", "request_id": self.request_id,
+                              "method": self.request_method, "status": code,
+                              "category": category, "latency_ms": round((time.monotonic() - self.started) * 1000, 2)})
 
     def session(self, create=False):
         cookie = SimpleCookie()

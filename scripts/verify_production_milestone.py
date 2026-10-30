@@ -22,7 +22,8 @@ ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js
         'data/continuous-epsf/development-summary.json','data/explorer-check/coverage.json',
         'data/sandwich/design.json','data/sandwich/overview.json','data/sandwich/development-summary.json',
         'data/time-model/development-audit.json','data/external/spiff-reference.json',
-        'data/independent-fields/selection.json')
+        'data/independent-fields/selection.json',
+        'data/mask-audit/development-audit.json','data/native-gain/development-audit.json')
 
 
 def require(condition, label):
@@ -53,6 +54,11 @@ def verify(write_smoke=False, report=None):
             report['checks'].append({'path':path,'method':method,'attempt':attempt+1,'status':response.status_code,
                 'elapsed_seconds':round(time.monotonic()-start,3),'request_id':response.headers.get('X-Request-Id'),
                 'cache':response.headers.get('X-Vercel-Cache')})
+            if response.status_code >= 400 and response.headers.get('Content-Type','').startswith('application/json'):
+                try: error_code=response.json().get('error')
+                except (ValueError,AttributeError): error_code=None
+                if isinstance(error_code,str) and re.fullmatch(r'[a-z0-9_]{1,80}',error_code):
+                    report['checks'][-1]['error_code']=error_code
             if response.status_code not in (502,504) or attempt==attempts-1:return response
 
     for asset in ASSETS:
@@ -83,9 +89,13 @@ def verify(write_smoke=False, report=None):
     require(response.headers.get('X-App-Commit')==report['local_commit'],'frame API commit mismatch')
     require(response.headers.get('X-Frame-Cutout-SHA256')==PINNED_CUTOUT_SHA,'pinned cutout changed')
     require(response.headers.get('X-Frame-Unit')=='MJy/sr','frame unit mismatch')
+    require(response.headers.get('X-Frame-Contract')=='1.1' and response.headers.get('X-Frame-Mask-Policy')=='source-only-allowlist-v2','frame mask contract mismatch')
     require(int(response.headers.get('X-Frame-Valid-Pixels','0'))>0,'frame has no valid pixels')
+    require(sum(int(response.headers.get(k,'-1')) for k in ['X-Frame-Valid-Pixels','X-Frame-Masked-Pixels','X-Frame-Missing-Pixels'])
+            ==int(response.headers.get('X-Frame-Grid-Size-Px','0'))**2,'frame mask counts mismatch')
     report['frame']={k:response.headers.get(k) for k in ['X-Frame-Cutout-SHA256','X-Frame-Cutout-URL',
-        'X-Frame-Grid-Size-Px','X-Frame-Grid-Scale-Arcsec','X-Frame-Contrast-Low','X-Frame-Contrast-High','X-Frame-Valid-Pixels']}
+        'X-Frame-Grid-Size-Px','X-Frame-Grid-Scale-Arcsec','X-Frame-Contrast-Low','X-Frame-Contrast-High','X-Frame-Valid-Pixels',
+        'X-Frame-Contract','X-Frame-Mask-Policy','X-Frame-Masked-Pixels','X-Frame-Missing-Pixels']}
     report['frame']['png_sha256']=sha256(response.content).hexdigest()
 
     response=request('/api/reviews');require(response.status_code==200,'review GET unavailable')
