@@ -47,7 +47,7 @@
   "dependency_check": "pip check passed; optional offline figures separate from frozen science and web requirements",
   "follow_up_tests": {
     "result": "OK",
-    "scope": "Publication, figure LF serialization/hash/coordinate audit and frontend targets after final text/encoding changes",
+    "scope": "Publication, canonical SVG LF/trailing whitespace/hash/coordinate audit and frontend targets after final text/encoding changes",
     "tests_run": 9
   },
   "javascript": {
@@ -74,11 +74,11 @@
   "sha256": {
     "docs/evidence/0.10/linked-local-desktop.jpg": "65cf81b27208dfbc34b863babd3a083def379ce49671544a569344e805324924",
     "docs/evidence/0.10/linked-local-mobile.jpg": "1d8f72d5307ac39d05141d83ac2aefa3e87191e27fd113d1556bfcc350035946",
-    "scripts/plot_linked_study.py": "5eb9d844b93a03512915eac0747fe535c329dc85987d6c0dc22d046934954514",
+    "scripts/plot_linked_study.py": "574d1b6aa980070c1d986b9347a5894ba058a77c3df74d38f16fbcd1e0bf42a2",
     "tests/linked-evidence.test.cjs": "cbe0ab55b58739ade9318e4596151b48b11538a0654b4b770f2077265c242ffb",
     "tests/review-store.test.cjs": "01bebed6df3f2119179243f9fa561f2b9d872730bdbc98f028d0a96787effe62",
     "web/app.js": "c76aed86477d2c33396a242edb414f566114b356db914300c7f2b7ea0524dc83",
-    "web/data/linked-flux/figures.json": "7168f20975a69021e7d5ed5d14be309a78fdf5e53a11cf62a31f8bfce031c474",
+    "web/data/linked-flux/figures.json": "49ad62436965e749279500a93eecde246715d7888450d2c2f9a802a8de396276",
     "web/data/linked-flux/overview.json": "32628d537809f3c65b06e25eb59fa99dca9c862009dbde287708fdf530cba611",
     "web/index.html": "dcd7fc8b9ebab78af740167d71d504ebec0849e679d0da69dfe6cd0b6bf8dd61",
     "web/linked-evidence.js": "fdda8cee06549c8d0b6493aba831a834191ad4fff141e7644c78c6c4e12def44",

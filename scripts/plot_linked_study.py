@@ -105,8 +105,10 @@ def render():
         fig.text(.13,.045,'Các điểm biểu diễn giả định mô hình; chưa đo độ chính xác.',fontsize=10,color='#c7d6e6')
         path=OUT/f'sensitivity-{configuration}.svg'
         fig.savefig(path,format='svg',metadata={'Date':None,'Creator':'Matplotlib; scripts.plot_linked_study'})
-        # Match the repository's LF contract on Windows before hashing/export.
-        path.write_bytes(path.read_bytes().replace(b'\r\n',b'\n'))
+        # Canonical text before hashing/export, including on Windows. Newlines
+        # remain separators inside SVG path attributes when trailing spaces go.
+        lines=path.read_bytes().replace(b'\r\n',b'\n').split(b'\n')
+        path.write_bytes(b'\n'.join(line.rstrip(b' \t') for line in lines))
         plt.close(fig)
         manifest['figures'].append({'configuration':configuration,'path':path.relative_to(ROOT/'web').as_posix(),
             'sha256':sha256(path.read_bytes()).hexdigest(),'bytes':path.stat().st_size,

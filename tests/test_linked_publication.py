@@ -142,6 +142,7 @@ class LinkedPublicationTests(unittest.TestCase):
         for figure in manifest['figures']:
             raw=(root/'web'/figure['path']).read_bytes()
             self.assertNotIn(b'\r',raw)
+            self.assertTrue(all(line==line.rstrip(b' \t') for line in raw.split(b'\n')))
             self.assertEqual(len(raw),figure['bytes']);self.assertEqual(sha256(raw).hexdigest(),figure['sha256'])
             rows={r['variant']:r for r in full['pairs'] if r['configuration']==figure['configuration']}
             self.assertEqual(set(rows),set(figure['values_arcsec']))

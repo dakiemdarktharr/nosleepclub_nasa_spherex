@@ -2,10 +2,10 @@
   "dependency_manifest_sha256": "6e73d507401a635ca162ca32987d949faf197fec2c6d23e849f46cea8b15c7d3",
   "figures": [
     {
-      "bytes": 78841,
+      "bytes": 76963,
       "configuration": "broad",
       "path": "data/linked-flux/sensitivity-broad.svg",
-      "sha256": "9f1975209b7d968ce8f55e7259cb10dd56f8496f5b2673b128d79ecf145723e2",
+      "sha256": "d2fc0b67aa6a69871fe33de73bd0cfc490e8df5fc75eb5e73d43a0735965d6f6",
       "values_arcsec": {
         "independent": [
           0.0,
@@ -38,10 +38,10 @@
       }
     },
     {
-      "bytes": 79747,
+      "bytes": 77858,
       "configuration": "strict",
       "path": "data/linked-flux/sensitivity-strict.svg",
-      "sha256": "bb2d4f45febe29bee705b37e3dfe9497bf01efbba64bd20f6a0e4c4b8fba74bc",
+      "sha256": "3c56c6ecbfe804d31a9f170ee9c54ad12e012531c6e471905de41a5bbef4619c",
       "values_arcsec": {
         "independent": [
           0.0,
@@ -87,7 +87,7 @@
   },
   "qualification": "Opened-data model sensitivity; no uncertainty ellipse, validation, accuracy or detection claim.",
   "quantity": "difference of east/north displacement vectors from independent control, arcsec",
-  "script_sha256": "5eb9d844b93a03512915eac0747fe535c329dc85987d6c0dc22d046934954514",
+  "script_sha256": "574d1b6aa980070c1d986b9347a5894ba058a77c3df74d38f16fbcd1e0bf42a2",
   "source_bytes": 4788083,
   "source_sha256": "a5bffe162ae8ccd88a6fc5311d1e8ddc279c56092b072a782652da5a7f1cfd0a",
   "version": "0.10.0-linked-figures.1"
