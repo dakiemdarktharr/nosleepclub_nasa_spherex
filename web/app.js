@@ -271,7 +271,7 @@ function evidenceContent() {
 }
 function motionPanel(scene) {
   const active=scene.kind==="coadd";$("motion-panel").hidden=!active;$("motion-overlay-label").hidden=!active;
-  $("science-status").textContent=active?"Dấu hiệu chuyển động · cần xác minh thêm":"Ảnh đơn · chưa đo chuyển động độc lập";
+  $("science-status").textContent=active?"Ước lượng thử nghiệm · chưa hiệu chuẩn":"Ảnh đơn · chưa đo chuyển động độc lập";
   $("target-subtitle").textContent=active?"Centroid fit độc lập từng epoch":"Vùng vị trí dự kiến";
   if(!active)return;
   const m=scene.motion;

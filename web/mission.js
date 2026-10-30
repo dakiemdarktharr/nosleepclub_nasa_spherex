@@ -11,6 +11,15 @@ navigation.querySelectorAll("a").forEach(link=>link.addEventListener("click",()=
 function navigationState(){navigation.querySelectorAll("a").forEach(a=>{const active=a.hash===(location.hash||"#home");a.classList.toggle("active",active);if(active)a.setAttribute("aria-current","location");else a.removeAttribute("aria-current");});}
 window.addEventListener("hashchange",navigationState);navigationState();
 const guide=$("guide-dialog");
+for(const dialog of [guide,$("evidence-dialog")])dialog.addEventListener("keydown",event=>{
+  if(event.key!=="Tab"||event.altKey||event.ctrlKey||event.metaKey)return;
+  const items=[...dialog.querySelectorAll('button,a[href],input,select,textarea,[tabindex]')].filter(node=>node.tabIndex>=0&&!node.disabled&&node.getClientRects().length);
+  if(!items.length)return;
+  const first=items[0],last=items[items.length-1];
+  if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+  else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&menuButton.getAttribute("aria-expanded")==="true"){navigation.classList.remove("open");menuButton.setAttribute("aria-expanded","false");menuButton.focus();}});
 [$("guide-open"),$("workspace-help")].forEach(button=>button.addEventListener("click",()=>guide.showModal()));
 $("guide-close").addEventListener("click",()=>guide.close());
 $("guide-start").addEventListener("click",()=>{guide.close();location.hash="workspace";canvas.focus({preventScroll:true});});

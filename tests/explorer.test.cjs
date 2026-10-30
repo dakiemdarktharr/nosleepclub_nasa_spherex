@@ -196,6 +196,22 @@ async function emptySearchClearsPreviousProvenance() {
   assert.equal(h.element("explorer-pin").disabled,true);
 }
 
+async function boundedUpstreamRetry() {
+  for(const status of [502,504]){
+    const h=harness(),submit=h.element("explorer-form").fire("submit");await flush();
+    find(h,"observations")[0].resolve({ok:false,status,json:async()=>({error:"upstream_timeout"})});await flush();
+    assert.equal(find(h,"observations").length,2);
+    assert.equal(h.element("explorer-status").textContent.includes("2/2"),true);
+    find(h,"observations")[1].resolve({ok:false,status,json:async()=>({error:"upstream_timeout"})});await submit;
+    assert.equal(find(h,"observations").length,2);
+    assert.equal(h.element("explorer-status").textContent.includes("chưa thành công"),true);
+    assert.equal(h.element("explorer-status").textContent.includes("Không có quan sát"),false);
+  }
+  const h=harness(),submit=h.element("explorer-form").fire("submit");await flush();
+  find(h,"observations")[0].resolve({ok:false,status:429,json:async()=>({error:"rate_limited"})});await submit;
+  assert.equal(find(h,"observations").length,1);
+}
+
 async function main() {
   await coordinateCases();
   await serializedContrastAndBlink();
@@ -203,6 +219,7 @@ async function main() {
   await refusesInconsistentContrast();
   await changedSearchRejectsOldResult();
   await emptySearchClearsPreviousProvenance();
+  await boundedUpstreamRetry();
   console.log("Explorer DOM and HTTP race cases passed");
 }
 let timeout;

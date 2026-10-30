@@ -1,0 +1,38 @@
+# Local isolated science jobs
+
+This is a bounded **single-host prototype**, not a production queue or a scientific release gate. It does not download anything, accept arbitrary URLs or commands, expose a web API, or modify frozen 0.3–0.9 products. The only public kind is `spectral-audit` on the already opened cached fields `w350p35` and `w090p10` in `data/raw/quality`. The untracked output is under the ignored `data/raw/jobs/` directory.
+
+## Run and inspect
+
+Use the existing science environment from the repository root. The exact interpreter can be changed to the installed scientific environment; no Node runtime is needed.
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.science_jobs submit w350p35
+# Replace JOB_ID with the returned 64-character identity.
+.\.venv\Scripts\python.exe -m scripts.science_jobs run JOB_ID --timeout 300
+.\.venv\Scripts\python.exe -m scripts.science_jobs status JOB_ID
+Get-Content -Raw data/raw/jobs/JOB_ID/result.json
+```
+
+In another terminal, `python -m scripts.science_jobs cancel JOB_ID` requests cancellation of the current running attempt. A timeout or failure requires `run JOB_ID --resume`; a stale `running` state is first marked failed and reported, then requires an explicit `--resume` (or pass it on that first inspection). A failed or cancelled run exits nonzero. Retry starts the whole six-frame audit again: the checkpoint is the atomic attempt/state record, **not** a per-frame scientific checkpoint. A completed result is published exclusively and is not overwritten by a retry. Re-submitting an identical identity returns the same ID.
+
+Each identity includes the input manifest hash, selected frame/Gaia/spectral-calibration hashes, processing source hashes, Python implementation/version, operating system, machine architecture, scientific package versions, and fixed configuration. Inputs must resolve to existing files inside `data/raw` and match their manifest hashes; they are checked both before and after worker processing. No paths, executable commands, positions or URLs are accepted from a client. The worker is a new interpreter process per job; mutable `benchmark_accuracy.context` WCS state therefore lives only in that process. On Windows the supervisor starts the base interpreter directly with the active environment's package directory, avoiding the virtual-environment launcher orphaning its child on timeout/cancel. A lock held by the supervisor prevents a second supervisor claiming the same job. Its write end of a private stdin pipe stays open while the worker runs. The worker checks that pipe before science starts and a watchdog exits on parent death; a separate worker lock prevents a resumed worker from processing until the previous worker exits. The new worker waits at most three seconds for that lock, then fails safely. State transitions and attempt outputs are separate atomic writes; publication uses exclusive rename on Windows and exclusive hard-link creation on POSIX, refusing to replace an existing result. Before publication or crash recovery, the supervisor checks that the JSON has the exact job ID, identity and ordered selected frame IDs, plus the whitelisted kind and configuration. If publication succeeds but state writing is interrupted, a subsequent run reconciles the already-published result only after those checks pass.
+
+## What the audit measures
+
+The first three downloaded frames in each declared before/after epoch and the first five Gaia DR3 `source_id` values within 0.05 degrees of the field center are selected without using an image-fit result. The catalog positions are **fixed at the Gaia reference epoch**; no proper-motion or parallax propagation, SPHEREx-epoch source crossmatch, source position fit, detection, or motion inference is claimed. Every output records the Gaia source ID and reference epoch, frame metadata/URLs/hashes and header MJD/time system as present, pipeline version, calibration URL/hash and header units, native-pixel coordinates and subpixel offsets, CWAVE/CBAND samples, calibration support, and the clipped native 11 × 11 valid-pixel mask and counts. Validity requires the frozen bad-bit mask, finite image and variance, and positive variance. A valid mask or available wavelength is not source detection or astrometric acceptance. Raw CWAVE and CBAND values retain their FITS-header unit strings; the particular calibration used here declares `um`. A missing unit is explicitly `unspecified`, with no unit conversion or spectral threshold inferred from it. Out-of-frame or unsupported locations remain explicit nulls.
+
+## Verification (2026-10-30)
+
+`python -m unittest tests.test_science_jobs -v`: eight tests passed on Windows. These exercise duplicate claim, idempotent identity and immutable publication, cancellation and explicit retry, timeout, worker crash, stale-supervisor recovery, rejected paths/configuration and malformed or mismatched results during publication and recovery, supervisor death while a disposable worker runs, parent death before the watchdog starts, and two actual opened-field workers run concurrently and serially. The supervisor-death test observes the worker process exit within two seconds and checks that a resumed worker starts only after its lock is released. The real-field test is skipped when the two cached input manifests are absent; required cached input checksums still must match.
+
+A separate pair of real supervisor jobs was run concurrently and each worker was rerun serially. Each serial artifact was byte-for-byte identical to its concurrently published artifact. These hashes refer to the exact source/runtime identities on this machine, and the files remain in the ignored local job directories:
+
+| Opened field | Job ID | Result SHA-256 | Spectral support / 30 | Valid central pixel / 30 |
+| --- | --- | --- | --- | --- |
+| w350p35 | `e42182cb121a4374011196841d3b478521be6d19226a6cb6812dce3cd9414377` | `be876dcc26b53c90b46db737f25c17af66b9a676a4070fac4cd1f082ce5b6e30` | 27 | 26 |
+| w090p10 | `af0e2c1f3845ce91a9801d56ebe2f3f132617cfa83c3c2631e714fe8d68c3a66` | `6f85e40fd2b8257db7fc29e5a29824c8088fadb043d7c9ac3192f43b436fd444` | 30 | 30 |
+
+## Remaining limits
+
+This is local orchestration for trusted operators on one host/filesystem. It has no authentication, tenant isolation, distributed queue, lease/heartbeat, quotas, retention policy, service monitoring, durable storage replication, or power-loss/host-failure certification. Locks and exclusive publication assume a filesystem that supports the selected operation; network filesystems have not been verified. The watchdog polls every 100 ms on Windows and waits for pipe readiness on POSIX; the two-second exit bound was tested on this Windows host and still depends on OS scheduling. A native operation that holds the Python GIL may delay the watchdog, so a hard deadline across supervisor death is not guaranteed. During such a delay the separate worker lock prevents overlapping science; a recovery attempt may fail safely after three seconds and require another retry. The child never publishes a result; only the supervisor holding its claim lock can publish. POSIX behavior has not been validated on a Linux host here. A crash during initial job-directory creation may leave an incomplete directory requiring operator inspection. Input checks before and after do not lock out concurrent local mutation, and package versions are recorded rather than fully reproducible environment locks. This is an exploratory spectral audit on opened fields; it does not close the scientific spectral-compatibility gate or ledger item 15's production-readiness requirement.
