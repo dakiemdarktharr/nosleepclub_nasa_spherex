@@ -1,0 +1,111 @@
+{
+  "formula": "C_cal = scale_squared * (C_raw + floor_arcsec2)",
+  "floor_arcsec2": [
+    [
+      1.8926921072869594,
+      -0.5976929082290123
+    ],
+    [
+      -0.5976929082290123,
+      0.8868354053911772
+    ]
+  ],
+  "scale_squared": 1.0,
+  "accepted": 146,
+  "attempted": 192,
+  "fields": [
+    "q030m10",
+    "q180p20",
+    "q300m30"
+  ],
+  "spatial_blocks": [
+    [
+      "q030m10",
+      0
+    ],
+    [
+      "q030m10",
+      1
+    ],
+    [
+      "q030m10",
+      2
+    ],
+    [
+      "q030m10",
+      3
+    ],
+    [
+      "q030m10",
+      4
+    ],
+    [
+      "q030m10",
+      7
+    ],
+    [
+      "q180p20",
+      0
+    ],
+    [
+      "q180p20",
+      2
+    ],
+    [
+      "q180p20",
+      3
+    ],
+    [
+      "q180p20",
+      4
+    ],
+    [
+      "q180p20",
+      5
+    ],
+    [
+      "q180p20",
+      6
+    ],
+    [
+      "q180p20",
+      7
+    ],
+    [
+      "q300m30",
+      0
+    ],
+    [
+      "q300m30",
+      1
+    ],
+    [
+      "q300m30",
+      2
+    ],
+    [
+      "q300m30",
+      3
+    ],
+    [
+      "q300m30",
+      4
+    ],
+    [
+      "q300m30",
+      6
+    ]
+  ],
+  "weighting": "equal fields, equal accepted patches per field, equal trials within patch",
+  "quantile": "weighted empirical 0.68 left inverse; no finite-sample coverage guarantee",
+  "bias_subtraction": false,
+  "fitted_from": "calibration injections only",
+  "design_sha256": "1e5805754bd5afba8ed50cf7b7ddff4f1c18345fc34999de5c4d1f17e8889f7d",
+  "created_at_utc": "2026-10-30T08:40:42.915711+00:00",
+  "design_lock_commit": "4e7a50c0f0dd617cf2aa380badcc0a70387b1c55",
+  "source_results": {
+    "q030m10": "325b9bb5c9a4514929adb6a572fcb95a1670f690a73695eb57f0d2cb493bf057",
+    "q180p20": "6e2933dd175568438e005f7df1a41c6c918f4271079abec82c5d31db565d443c",
+    "q300m30": "5f146368f0bbd8ee587172eb52bddc21f0e80b55b845cad6daaa00073172dce4"
+  }
+}
