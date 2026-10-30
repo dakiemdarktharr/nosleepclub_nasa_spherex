@@ -112,3 +112,5 @@ jobs:
         run: node tests/explorer.test.cjs
       - name: Test linked evidence refusals and report loading
         run: node tests/linked-evidence.test.cjs
+      - name: Test neighbor factorial and all control denominators
+        run: node tests/neighbor-evidence.test.cjs

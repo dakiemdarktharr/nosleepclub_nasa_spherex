@@ -62,3 +62,15 @@ metadata 200 mất 3,141/5,781 giây, frame 200 mất 2,657 giây; không có re
 upstream trong lượt này. Các 400/403 là input/Origin probe có chủ đích.
 Lượt này không xóa hay thay thế lịch sử 502/504; chưa có SLO/load/recovery
 production được chứng minh. Reviewer guest/credential scope giữ nguyên.
+
+## Baseline review mức tải nhỏ
+
+Protocol `d7fd8f9` đã khóa trước một lần đo trên production `8032493`:
+[60/60 API request đạt](REVIEW_LOAD_RESULTS.md), 12/12 phiên khách QA được
+xác minh rỗng sau cùng, không cần cleanup phụ hoặc retry. p95 GET 1,937 s,
+POST 0,203 s, DELETE 0,141 s. Tối đa ba request cùng lúc; đợt sau cách lúc
+hoàn tất đợt trước ít nhất sáu giây. [Receipt](evidence/0.10/review-load-8032493.json)
+giữ đủ latency/status/request ID đã lọc và kiểm toán lại nguồn/cadence.
+Baseline hai phút dưới 0,5 request/s này không thay thế SLO, saturation,
+quan sát dài hạn, failover, backup/restore hoặc rollback. Không đo lại để
+thay receipt bất lợi; các lỗi upstream từ trước vẫn thuộc lịch sử vận hành.
