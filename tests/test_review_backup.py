@@ -147,8 +147,8 @@ class EncryptedBackup(unittest.TestCase):
         class Client:
             def __init__(self, exists=False):
                 self.db = DB(); self.exists = exists
-            def list_database_names(self, filter):
-                return [filter['name']] if self.exists else []
+            def list_databases(self, *, filter, nameOnly):
+                return nullcontext(iter([{'name': filter['name']}] if self.exists else []))
             def __getitem__(self, key): return self.db
             def start_session(self): return Session()
             def close(self): pass

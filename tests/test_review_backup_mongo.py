@@ -43,7 +43,7 @@ class FixtureDrill(unittest.TestCase):
     def dbname(self, source):
         prefix = 'review_backup_src_' if source else 'review_backup_dst_'
         name = prefix + uuid4().hex
-        self.assertNotIn(name, self.client.list_database_names(filter={'name': name}))
+        self.assertFalse(backup.database_exists(self.client, name))
         return name
 
     def tearDown(self):
@@ -94,8 +94,8 @@ class FixtureDrill(unittest.TestCase):
         changed = bytearray(token); changed[len(changed)//2] = ord('A') if changed[len(changed)//2] != ord('A') else ord('B')
         with self.assertRaises(backup.BackupError):
             backup.restore_fixture(URI, tampered_target, bytes(changed), self.key)
-        self.assertNotIn(wrong_target, self.client.list_database_names(filter={'name': wrong_target}))
-        self.assertNotIn(tampered_target, self.client.list_database_names(filter={'name': tampered_target}))
+        self.assertFalse(backup.database_exists(self.client, wrong_target))
+        self.assertFalse(backup.database_exists(self.client, tampered_target))
         receipt = backup.restore_fixture(URI, target, token, self.key)
         self.owned_names.append(target)
         self.assertEqual(receipt['restored_count'], 1)

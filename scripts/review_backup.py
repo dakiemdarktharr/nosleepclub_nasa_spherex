@@ -233,12 +233,18 @@ def _read_indexes(collection):
     return validate_indexes(entries)
 
 
+def database_exists(client, name):
+    # list_database_names has no filter keyword in the pinned PyMongo driver.
+    with client.list_databases(filter={'name': name}, nameOnly=True) as cursor:
+        return any(row.get('name') == name for row in cursor)
+
+
 def snapshot_fixture(uri, source_name, key):
     validate_uri(uri); validate_name(source_name, source=True); _fernet(key)
     client = _fixture_client(uri)
     try:
         with timeout(10):
-            if source_name not in client.list_database_names(filter={'name': source_name}):
+            if not database_exists(client, source_name):
                 raise BackupError('source_missing')
             db = client[source_name]
             if db.list_collection_names() != ['reviews']:
@@ -273,7 +279,7 @@ def restore_fixture(uri, target_name, ciphertext, key):
     client = _fixture_client(uri)
     try:
         with timeout(10):
-            if target_name in client.list_database_names(filter={'name': target_name}):
+            if database_exists(client, target_name):
                 raise BackupError('target_exists')
             db = client[target_name]
             collection = db.create_collection('reviews')
