@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "deployment_id": "dpl_3n4x5xx4CfRcksPDJVevyyxkiR3p",
+  "commit": "ffbd7c1fd74076dd5e4838ebf0022ef561993066",
+  "state": "ERROR",
+  "error_code": "ENOENT",
+  "error_message": "ENOENT: no such file or directory, lstat '/vercel/path0/web/.vercel/python/.venv/lib/python3.12/site-packages/vercel_runtime/__pycache__/__init__.cpython-312.pyc'",
+  "error_step": "buildStep",
+  "building_at": 1793397373798,
+  "ready_at": 1793397398651,
+  "build_events": [
+    {
+      "created": 1793397398000,
+      "date": 1793397398000,
+      "type": "stdout",
+      "text": "Deploying outputs...",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397397930,
+      "date": 1793397397930,
+      "type": "stderr",
+      "text": "Build Completed in /vercel/output [20s]",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397391972,
+      "date": 1793397391972,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397391938,
+      "date": 1793397391938,
+      "type": "stdout",
+      "text": "Bundle size (226.29 MB) exceeds the standard size; optimizing dependencies.",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397391579,
+      "date": 1793397391579,
+      "type": "stdout",
+      "text": "Installing required dependencies from uv.lock...",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397391553,
+      "date": 1793397391553,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397391539,
+      "date": 1793397391539,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397386583,
+      "date": 1793397386583,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397386169,
+      "date": 1793397386169,
+      "type": "stdout",
+      "text": "Installing required dependencies from uv.lock...",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397386139,
+      "date": 1793397386139,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397386130,
+      "date": 1793397386130,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397380849,
+      "date": 1793397380849,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397378626,
+      "date": 1793397378626,
+      "type": "stdout",
+      "text": "Installing required dependencies from web/requirements.txt...",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397378093,
+      "date": 1793397378093,
+      "type": "stdout",
+      "text": "Creating virtual environment at \"/vercel/path0/web/.vercel/python/.venv\"...",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397378092,
+      "date": 1793397378092,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397378051,
+      "date": 1793397378051,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397377561,
+      "date": 1793397377561,
+      "type": "stderr",
+      "text": "Vercel CLI 65.4.0",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397377548,
+      "date": 1793397377548,
+      "type": "stdout",
+      "text": "Running \"vercel build\"",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397376967,
+      "date": 1793397376967,
+      "type": "stdout",
+      "text": "Cloning completed: 3.348s",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397373620,
+      "date": 1793397373620,
+      "type": "stdout",
+      "text": "Skipping build cache, deployment was triggered without cache.",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397373619,
+      "date": 1793397373619,
+      "type": "stdout",
+      "text": "Cloning github.com/dakiemdarktharr/nosleepclub_nasa_spherex (Branch: main, Commit: ffbd7c1)",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397373579,
+      "date": 1793397373579,
+      "type": "stdout",
+      "text": "Build machine configuration: 2 cores, 8 GB",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397373578,
+      "date": 1793397373578,
+      "type": "stdout",
+      "text": "Running build in Washington, D.C., USA (East) – iad1",
+      "info": {
+        "type": "build",
+        "name": "bld_22m5nrzxe",
+        "entrypoint": "."
+      }
+    }
+  ],
+  "cache_skipped_confirmed": true,
+  "interpretation": "The same missing-runtime-bytecode output error repeats without build cache, so a stale cache alone is not an adequate explanation. Build logs show a 226.29 MB function artifact entering dependency optimization. A minimal review contract and function-only asset exclusions are being prepared; actual success must be verified, not inferred from configuration."
+}

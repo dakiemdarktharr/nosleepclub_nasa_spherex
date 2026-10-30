@@ -74,3 +74,23 @@ giữ đủ latency/status/request ID đã lọc và kiểm toán lại nguồn/
 Baseline hai phút dưới 0,5 request/s này không thay thế SLO, saturation,
 quan sát dài hạn, failover, backup/restore hoặc rollback. Không đo lại để
 thay receipt bất lợi; các lỗi upstream từ trước vẫn thuộc lịch sử vận hành.
+
+## Sự cố đóng gói sau PR #8
+
+PR #8 merge ở `ffbd7c1` sau [382 test CI](evidence/0.10/ci-pr8-2151ac4.json),
+13 optional raw-cache/photutils skip và bốn suite Node đạt. Hai deployment
+[cached](evidence/0.10/deployment-ffbd7c1-failed.json) và
+[không cache](evidence/0.10/deployment-ffbd7c1-nocache-failed.json) cùng lỗi
+`ENOENT` khi đóng gói bytecode `vercel_runtime`. Log ghi bundle 226,29 MB vào
+bước tối ưu dependency. Rebuild không cache xác nhận stale cache đơn thuần
+chưa giải thích đầy đủ lỗi. Bản public trước đó vẫn phục vụ; CI xanh không
+đồng nghĩa source mới đã phát hành.
+
+API review chỉ cần ID selection, hash, detection qualification và analysis
+hash, nên contract server mới giữ đúng các trường đó trong 3.084 byte, có
+hash nguồn và kiểm tra stale. `data/**` và UI assets được loại khỏi ba function
+bằng `excludeFiles`, vẫn giữ trên CDN. Source/product khoa học không đổi.
+Test isolated chỉ có thư mục `api` xác minh đọc contract và từ chối review
+sai/analysis cũ. Cần build Vercel và smoke đủ artifact/API/cleanup trên commit
+mới trước khi coi đây là khắc phục đã kiểm chứng. [Vercel Python configuration](https://vercel.com/docs/functions/runtimes/python/api-directory)
+mô tả phạm vi loại file khỏi function; điều này không tự chứng minh build.

@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "deployment_id": "dpl_GfM7t3pvn7U2mcaUHETjfpcgBtf5",
+  "commit": "ffbd7c1fd74076dd5e4838ebf0022ef561993066",
+  "state": "ERROR",
+  "error_code": "ENOENT",
+  "error_message": "ENOENT: no such file or directory, lstat '/vercel/path0/web/.vercel/python/.venv/lib/python3.12/site-packages/vercel_runtime/__pycache__/__init__.cpython-312.pyc'",
+  "error_step": "buildStep",
+  "building_at": 1793397271454,
+  "ready_at": 1793397289257,
+  "build_events": [
+    {
+      "created": 1793397288732,
+      "date": 1793397288732,
+      "type": "stdout",
+      "text": "Deploying outputs...",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397288681,
+      "date": 1793397288681,
+      "type": "stderr",
+      "text": "Build Completed in /vercel/output [13s]",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397284325,
+      "date": 1793397284325,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397284298,
+      "date": 1793397284298,
+      "type": "stdout",
+      "text": "Bundle size (226.29 MB) exceeds the standard size; optimizing dependencies.",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397284052,
+      "date": 1793397284052,
+      "type": "stdout",
+      "text": "Installing required dependencies from uv.lock...",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397284035,
+      "date": 1793397284035,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397284028,
+      "date": 1793397284028,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397280934,
+      "date": 1793397280934,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397280717,
+      "date": 1793397280717,
+      "type": "stdout",
+      "text": "Installing required dependencies from uv.lock...",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397280697,
+      "date": 1793397280697,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397280688,
+      "date": 1793397280688,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397276502,
+      "date": 1793397276502,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397275682,
+      "date": 1793397275682,
+      "type": "stdout",
+      "text": "Installing required dependencies from web/requirements.txt...",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397275384,
+      "date": 1793397275384,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397275341,
+      "date": 1793397275341,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397274889,
+      "date": 1793397274889,
+      "type": "stderr",
+      "text": "Vercel CLI 65.4.0",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397274881,
+      "date": 1793397274881,
+      "type": "stdout",
+      "text": "Running \"vercel build\"",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397274517,
+      "date": 1793397274517,
+      "type": "stdout",
+      "text": "Restored build cache from previous deployment (AH4SZFa3yuCrq1N41ni4pYkzU4F2)",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397274430,
+      "date": 1793397274430,
+      "type": "stdout",
+      "text": "Cloning completed: 3.143s",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397271287,
+      "date": 1793397271287,
+      "type": "stdout",
+      "text": "Cloning github.com/dakiemdarktharr/nosleepclub_nasa_spherex (Branch: main, Commit: ffbd7c1)",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397271143,
+      "date": 1793397271143,
+      "type": "stdout",
+      "text": "Build machine configuration: 2 cores, 8 GB",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793397271142,
+      "date": 1793397271142,
+      "type": "stdout",
+      "text": "Running build in Washington, D.C., USA (East) – iad1",
+      "info": {
+        "type": "build",
+        "name": "bld_ngj1a9lst",
+        "entrypoint": "."
+      }
+    }
+  ],
+  "interpretation": "The cached build completed dependency optimization, then deployment output lstat failed for a vercel_runtime bytecode file. Exact root cause is not established. No runtime or scientific source is changed for the first no-cache rebuild.",
+  "next_action": {
+    "method": "Vercel create_deployment",
+    "forceNew": "1",
+    "same_deployment_source": "dpl_GfM7t3pvn7U2mcaUHETjfpcgBtf5",
+    "target": "production",
+    "documentation": "https://vercel.com/docs/deployments/troubleshoot-a-build"
+  }
+}
