@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-10-30T15:48:22.937000+00:00",
+  "base_url": "https://nosleepclub-nasa-spherex.vercel.app",
+  "local_commit": "fbdc9b85e732c65e04f5a3341674b04cd6508709",
+  "verifier_sha256": "4601235c8ac20aaa3463e24e08dd802f15b2b9bc76d4539631155968db140d8c",
+  "checks": [
+    {
+      "path": "/",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 1.235,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "e4ffcf59b8f2699264c7e43283be41d2209598d633b687839e9554550cb0e8e9",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/explorer.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.532,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "c47b640d756f32b3344b5334fbcedcf1b061bb5f46c0d12c5c3e58d3e1782eec",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/app.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.312,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2b70a3f09cf1cb3331ba99e3c37d3ff774a6ef9f6ab4ff8e559a2c3b7c6153dd",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/review-store.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "17b2827973832d927dbc26f888a4a426352a35de18e25b34ec2b26577678bbc2",
+      "worktree_bytes_match_commit": false
+    },
+    {
+      "path": "/goal-dashboard.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 1.703,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "219541178e8c88cfbb94244decf92b54c3b3e1c7378bb4d164a03f06eedff8d6",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/mission.css",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.422,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "c0a5b4ffbe97ac4f822bb88dfd6f91c79d666b3cf8e67563b46264d6fe3f7cf9",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/manifest.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.766,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "3d02506621a3a2ecaa3e2948e2edd46197df95aebd7be64d36df5afab9016c8b",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/continuous-epsf/design.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.562,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ea41e9e83133329c04f9d648d193941053a84ca4805cdfd35c746634b6dfec5a",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/continuous-epsf/development-summary.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 4.859,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ccaa22100157e13bdb110edb28a88aa09e7e6724ab24bdeddbe596b5fd0f5f0b",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/explorer-check/coverage.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.625,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ca6f3cf68eaa238650bc4c3665885d1862aaa2e4ae3bc4583e75cd5c35fc359b",
+      "worktree_bytes_match_commit": false
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 3.297,
+      "request_id": "9b6cd773434e36d59e3d6f67ac382a11",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 2.39,
+      "request_id": "ec066f3e2b7b1dc2be543be276869de8",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/observations",
+      "method": "GET",
+      "attempt": 1,
+      "status": 400,
+      "elapsed_seconds": 0.11,
+      "request_id": "27c9bd2438fd5ef1aa34f4d05ca656cd",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/frame",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 2.734,
+      "request_id": "cf5eecf69d88eb50246db4f3c09c408a",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.125,
+      "request_id": "beb38371f544cec310d65083f2c0f180",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "POST",
+      "attempt": 1,
+      "status": 403,
+      "elapsed_seconds": 0.406,
+      "request_id": "88a3e2c6963487ea5f56eee612025ec0",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "POST",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.125,
+      "request_id": "3a169ec10b6076ad3e75a478c841ab67",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.11,
+      "request_id": "72dc3ae88a6101a047a8346afb359db2",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.484,
+      "request_id": "b5cf5297fdc5bcd09b77127511ff8ed1",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "DELETE",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.688,
+      "request_id": "38cba266af51588ce49ec98c18530ee9",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.125,
+      "request_id": "dec5c328cd43614665945a201b774f03",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "POST",
+      "attempt": 1,
+      "status": 400,
+      "elapsed_seconds": 0.109,
+      "request_id": "c0864f379cecae67d470946afa6c1596",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "DELETE",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.125,
+      "request_id": "8c00f4cdf9b7e39adea3b19d38771510",
+      "cache": "MISS"
+    },
+    {
+      "path": "/api/reviews",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.172,
+      "request_id": "cba60709985f2681c29e4c14f53591e9",
+      "cache": "MISS"
+    }
+  ],
+  "retry_policy": "One retry only for GET upstream 502/504; every response is retained.",
+  "qualification": "Bounded software/data-access smoke, not scientific, recovery or load acceptance.",
+  "worktree_dirty": true,
+  "deployed_api_commit": "fbdc9b85e732c65e04f5a3341674b04cd6508709",
+  "observations": {
+    "returned_count": 2,
+    "truncated": true,
+    "response_sha256": "96519ebf519af7776c028754314b650f5dca1b70f4d14c36b37f413b3713ef24",
+    "query_url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=CIRCLE+350+35+0.03&MAXREC=5&RESPONSEFORMAT=VOTABLE&BAND=4.42e-06+5e-06"
+  },
+  "frame": {
+    "X-Frame-Cutout-SHA256": "514ac17f7c8d2b7de1f723e4464dfc85a1caacf666f868e70fd844c9d80de8a6",
+    "X-Frame-Cutout-URL": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_2A/l2b-v20-2025-258/6/level2_2025W26_2A_0314_1D6_spx_l2b-v20-2025-258.fits?center=350%2C35&size=0.10279859",
+    "X-Frame-Grid-Size-Px": "37",
+    "X-Frame-Grid-Scale-Arcsec": "6.15",
+    "X-Frame-Contrast-Low": "-0.03993401527404785",
+    "X-Frame-Contrast-High": "0.30724066197872507",
+    "X-Frame-Valid-Pixels": "1335",
+    "png_sha256": "04bf12c3e852cb2e309e723a0ebee58f59101da89a3dc10d9f7f81aa93e2e815"
+  },
+  "review_lifecycle": {
+    "stable_id": true,
+    "expiry": true,
+    "scope_isolation": true,
+    "cross_origin_rejected": true,
+    "cross_owner_delete_ineffective": true,
+    "stale_post_rejected": true,
+    "id_only_delete": true,
+    "cleanup_verified": true
+  },
+  "completed_at_utc": "2026-10-30T15:48:46.292924+00:00",
+  "passed": true
+}

@@ -1,0 +1,35 @@
+{
+  "image": "docker.io/library/mongo:8.0",
+  "digest": "sha256:b9924c330a8bbc5800fe9c69f04a84e221eca7b28fd049a0354147d9908fa142",
+  "retrieved_at_utc": "2026-10-30T15:45:38.463843+00:00",
+  "source": "https://registry-1.docker.io/v2/library/mongo/manifests/8.0",
+  "platforms": [
+    {
+      "architecture": "amd64",
+      "os": "linux"
+    },
+    {
+      "architecture": "unknown",
+      "os": "unknown"
+    },
+    {
+      "architecture": "arm64",
+      "os": "linux",
+      "variant": "v8"
+    },
+    {
+      "architecture": "unknown",
+      "os": "unknown"
+    },
+    {
+      "architecture": "amd64",
+      "os": "windows",
+      "os.version": "10.0.26100.33674"
+    },
+    {
+      "architecture": "amd64",
+      "os": "windows",
+      "os.version": "10.0.20348.5773"
+    }
+  ]
+}

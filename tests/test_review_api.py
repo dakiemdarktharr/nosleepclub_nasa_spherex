@@ -44,13 +44,13 @@ class Reviews:
                     rows.append({k: v for k, v in row.items() if projection.get(k) != 0})
         return Cursor(rows)
 
-    def find_one(self, query, projection):
+    def find_one(self, query, projection, **kwargs):
         return next((row for row in self.rows if matches(row, query)), None)
 
-    def count_documents(self, query, limit):
+    def count_documents(self, query, limit, **kwargs):
         return min(limit, sum(matches(row, query) for row in self.rows))
 
-    def update_one(self, query, update, upsert):
+    def update_one(self, query, update, upsert, **kwargs):
         row = self.find_one(query, {})
         if row is None:
             row = dict(query)
@@ -73,6 +73,30 @@ class Limits:
         return row
 
 
+class Guard:
+    def update_one(self, query, update, **kwargs):
+        return types.SimpleNamespace(matched_count=1)
+
+
+class Session:
+    in_transaction = False
+    def __enter__(self):
+        return self
+    def __exit__(self, *args):
+        pass
+    def start_transaction(self, **kwargs):
+        self.in_transaction = True
+    def commit_transaction(self):
+        self.in_transaction = False
+    def abort_transaction(self):
+        self.in_transaction = False
+
+
+class Client:
+    def start_session(self):
+        return Session()
+
+
 class MemorySocket:
     def __init__(self, request):
         self.input = BytesIO(request)
@@ -87,10 +111,9 @@ class MemorySocket:
 
 class ReviewHandlerTest(unittest.TestCase):
     def setUp(self):
-        self.db = types.SimpleNamespace(reviews=Reviews(), limits=Limits())
+        self.db = types.SimpleNamespace(reviews=Reviews(), limits=Limits(), review_guard=Guard(), client=Client())
         self.patches = [patch.object(api, 'database', return_value=self.db),
-                        patch.dict(os.environ, {'MONGODB_URI': 'private-uri'}),
-                        patch.dict('sys.modules', {'pymongo': types.SimpleNamespace(ReturnDocument=types.SimpleNamespace(AFTER=True))})]
+                        patch.dict(os.environ, {'MONGODB_URI': 'private-uri'})]
         for p in self.patches:
             p.start()
         self.addCleanup(lambda: [p.stop() for p in reversed(self.patches)])
@@ -216,6 +239,166 @@ class ReviewHandlerTest(unittest.TestCase):
         self.assertEqual(status, 405)
         self.assertEqual(headers['Allow'], 'GET, POST, DELETE')
         self.assertIsNone(body)
+
+    def test_unpaired_surrogate_is_rejected_before_storage(self):
+        cookie = self.session()
+        with patch.object(api, 'database') as database:
+            status, _, body = self.request('POST', {**self.item(), 'note': '\ud800'}, cookie)
+        self.assertEqual((status, body['error']), (400, 'invalid_review'))
+        database.assert_not_called()
+
+    def test_physical_global_limit_allows_edits_but_not_new_rows(self):
+        first, second, third = self.session(), self.session(), self.session()
+        item = self.item()
+        with patch.object(api, 'GLOBAL_REVIEW_LIMIT', 2):
+            self.assertEqual(self.request('POST', item, first)[0], 200)
+            self.assertEqual(self.request('POST', item, second)[0], 200)
+            self.assertEqual(self.request('POST', item, third)[2]['error'], 'storage_limit')
+            self.assertEqual(self.request('POST', {**item, 'note': 'edited'}, first)[0], 200)
+            self.db.reviews.rows[1]['expires_at'] = datetime.now(timezone.utc) - timedelta(seconds=1)
+            self.assertEqual(self.request('POST', item, third)[2]['error'], 'storage_limit')
+            self.assertEqual(self.request('POST', item, second)[0], 200)
+
+    def test_resurrecting_expired_review_obeys_live_owner_limit(self):
+        cookie = self.session()
+        item = self.item()
+        self.assertEqual(self.request('POST', item, cookie)[0], 200)
+        old = self.db.reviews.rows[0]
+        old['expires_at'] = datetime.now(timezone.utc) - timedelta(seconds=1)
+        self.db.reviews.rows.extend({**old, 'key': f'extra-{i}',
+                                     'expires_at': datetime.now(timezone.utc) + timedelta(days=1)} for i in range(100))
+        self.assertEqual(self.request('POST', item, cookie)[2]['error'], 'review_limit')
+
+    def test_global_post_limit_preserves_reads_and_deletes(self):
+        cookie = self.session()
+        item = self.item()
+        with patch.object(api, 'POST_GLOBAL_LIMIT', 2):
+            self.assertEqual(self.request('POST', item, cookie)[0], 200)
+            self.assertEqual(self.request('POST', item, cookie)[0], 200)
+            status, headers, body = self.request('POST', item, cookie)
+            self.assertEqual((status, body['error']), (429, 'rate_limited'))
+            self.assertIn('Retry-After', headers)
+            self.assertEqual(self.request('GET', cookie=cookie)[0], 200)
+            self.assertEqual(self.request('DELETE', item, cookie)[0], 200)
+
+    def test_transient_conflict_retries_transaction_from_guard(self):
+        from pymongo.errors import OperationFailure
+        class ConflictGuard(Guard):
+            calls = 0
+            def update_one(self, query, update, **kwargs):
+                if 'session' in kwargs:
+                    self.calls += 1
+                    if self.calls == 1:
+                        raise OperationFailure('conflict', details={'errorLabels': ['TransientTransactionError']})
+                return super().update_one(query, update, **kwargs)
+        self.db.review_guard = ConflictGuard()
+        cookie = self.session()
+        self.assertEqual(self.request('POST', self.item(), cookie)[0], 200)
+        self.assertEqual(self.db.review_guard.calls, 2)
+        self.assertEqual(len(self.db.reviews.rows), 1)
+
+    def test_unknown_commit_is_not_retried_as_a_new_transaction(self):
+        from pymongo.errors import OperationFailure
+        class UnknownSession(Session):
+            starts = 0
+            commits = 0
+            def start_transaction(self, **kwargs):
+                self.starts += 1
+                super().start_transaction(**kwargs)
+            def commit_transaction(self):
+                self.commits += 1
+                labels = ['UnknownTransactionCommitResult'] if self.commits == 1 else ['TransientTransactionError']
+                raise OperationFailure('private failure', details={'errorLabels': labels})
+        session = UnknownSession()
+        self.db.client = types.SimpleNamespace(start_session=lambda: session)
+        cookie = self.session()
+        with self.assertLogs('review_api', level='WARNING') as logs:
+            status, _, body = self.request('POST', self.item(), cookie)
+        self.assertEqual((status, body['error']), (503, 'save_outcome_unknown'))
+        self.assertEqual((session.starts, session.commits), (1, 2))
+        self.assertNotIn('private failure', str(logs.output))
+
+    def test_unknown_commit_is_retried_on_same_transaction(self):
+        from pymongo.errors import OperationFailure
+        class UnknownThenCommitted(Session):
+            starts = 0
+            commits = 0
+            def start_transaction(self, **kwargs):
+                self.starts += 1
+                super().start_transaction(**kwargs)
+            def commit_transaction(self):
+                self.commits += 1
+                if self.commits == 1:
+                    raise OperationFailure('ambiguous', details={'errorLabels': ['UnknownTransactionCommitResult']})
+                super().commit_transaction()
+        session = UnknownThenCommitted()
+        self.db.client = types.SimpleNamespace(start_session=lambda: session)
+        cookie = self.session()
+        self.assertEqual(self.request('POST', self.item(), cookie)[0], 200)
+        self.assertEqual((session.starts, session.commits), (1, 2))
+
+    def test_missing_guard_fails_closed_before_upsert(self):
+        class MissingGuard(Guard):
+            def update_one(self, query, update, **kwargs):
+                return types.SimpleNamespace(matched_count=0 if 'session' in kwargs else 1)
+        self.db.review_guard = MissingGuard()
+        cookie = self.session()
+        status, _, body = self.request('POST', self.item(), cookie)
+        self.assertEqual((status, body['error']), (503, 'storage_unavailable'))
+        self.assertEqual(self.db.reviews.rows, [])
+
+    def test_conflict_retries_are_bounded(self):
+        from pymongo.errors import OperationFailure
+        class ConflictGuard(Guard):
+            calls = 0
+            def update_one(self, query, update, **kwargs):
+                if 'session' in kwargs:
+                    self.calls += 1
+                    raise OperationFailure('conflict', details={'errorLabels': ['TransientTransactionError']})
+                return super().update_one(query, update, **kwargs)
+        self.db.review_guard = ConflictGuard()
+        cookie = self.session()
+        self.assertEqual(self.request('POST', self.item(), cookie)[0], 503)
+        self.assertEqual(self.db.review_guard.calls, api.MAX_TRANSACTION_ATTEMPTS)
+        self.assertEqual(self.db.reviews.rows, [])
+
+    def test_transaction_writes_shared_guard_before_counts_and_upsert(self):
+        events = []
+        class TracedGuard(Guard):
+            def update_one(self, query, update, **kwargs):
+                events.append('guard' if 'session' in kwargs else 'initialize')
+                return super().update_one(query, update, **kwargs)
+        class TracedReviews(Reviews):
+            def find_one(self, query, projection, **kwargs):
+                if 'session' in kwargs:
+                    events.append('find')
+                return super().find_one(query, projection, **kwargs)
+            def count_documents(self, query, limit, **kwargs):
+                self.assert_session(kwargs)
+                events.append('owner_count' if 'owner' in query else 'global_count')
+                return super().count_documents(query, limit, **kwargs)
+            def update_one(self, query, update, upsert, **kwargs):
+                self.assert_session(kwargs)
+                events.append('upsert')
+                return super().update_one(query, update, upsert, **kwargs)
+            @staticmethod
+            def assert_session(kwargs):
+                if 'session' not in kwargs:
+                    raise AssertionError('transaction operation lacks session')
+        self.db.review_guard = TracedGuard()
+        self.db.reviews = TracedReviews()
+        cookie = self.session()
+        self.assertEqual(self.request('POST', self.item(), cookie)[0], 200)
+        self.assertEqual(events, ['initialize', 'guard', 'find', 'owner_count', 'global_count', 'upsert'])
+
+    def test_commit_header_stays_available_and_is_validated(self):
+        commit = 'a' * 40
+        with patch.dict(os.environ, {'VERCEL_GIT_COMMIT_SHA': commit}):
+            status, headers, _ = self.request('GET')
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['X-App-Commit'], commit)
+        with patch.dict(os.environ, {'VERCEL_GIT_COMMIT_SHA': 'bad-commit'}):
+            self.assertNotIn('X-App-Commit', self.request('GET')[1])
 
 
 if __name__ == '__main__':

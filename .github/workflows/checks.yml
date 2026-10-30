@@ -37,7 +37,35 @@ jobs:
               raise SystemExit('\n'.join(bad))
           print(f'No trailing whitespace in {len(files)} source files')
           PY
+      - name: Start disposable MongoDB replica set
+        id: mongo
+        run: |
+          docker run --detach --name codex-review-test --publish 127.0.0.1:27027:27017 mongo:8.0@sha256:b9924c330a8bbc5800fe9c69f04a84e221eca7b28fd049a0354147d9908fa142 --replSet codex-review-test --bind_ip_all
+          for attempt in {1..30}; do
+            if docker exec codex-review-test mongosh --quiet --eval 'db.adminCommand({ping:1}).ok' >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          docker exec codex-review-test mongosh --quiet --eval 'rs.initiate({_id:"codex-review-test",members:[{_id:0,host:"127.0.0.1:27017"}]})'
+          python - <<'PY'
+          import time
+          from pymongo import MongoClient
+          client=MongoClient('mongodb://127.0.0.1:27027/?directConnection=true',serverSelectionTimeoutMS=1000)
+          for attempt in range(60):
+              try:
+                  hello=client.admin.command('hello')
+                  if hello.get('isWritablePrimary') and hello.get('setName')=='codex-review-test':
+                      print('Disposable loopback replica set ready')
+                      client.close()
+                      break
+              except Exception:
+                  pass
+              time.sleep(.5)
+          else:
+              raise SystemExit('Replica set did not become primary')
+          PY
       - name: Run all Python unit tests
+        env:
+          REVIEW_TEST_MONGODB_URI: mongodb://127.0.0.1:27027/?directConnection=true
         run: |
           set -o pipefail
           python -m unittest discover -s tests -v 2>&1 | tee "$RUNNER_TEMP/unittest.log"
@@ -54,6 +82,9 @@ jobs:
             ${{ runner.temp }}/unittest.log
           if-no-files-found: warn
           retention-days: 7
+      - name: Remove disposable MongoDB container
+        if: ${{ always() }}
+        run: docker rm --force --volumes codex-review-test || true
 
   javascript:
     name: JavaScript syntax and review store
