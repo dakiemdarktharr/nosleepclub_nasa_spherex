@@ -2,11 +2,14 @@
 import copy
 import unittest
 from unittest.mock import patch
+from tempfile import TemporaryDirectory
+from pathlib import Path
 import numpy as np
 from scripts import ablation_model as model
 from scripts import ablation_study as study
 from scripts import conditional_covariance as cc
 from tests.test_motion import synthetic_frame
+from scripts.run_ablation import guard
 
 
 class AblationControls(unittest.TestCase):
@@ -146,6 +149,18 @@ class SelectionControls(unittest.TestCase):
                 r['truth_delta_px']=[999.,999.]
                 for v in r['models'].values():v.update(error_arcsec=1e8,accepted=False)
         self.assertEqual(study.feature_thresholds(fields),expected)
+
+    def test_completed_phase_artifacts_cannot_be_overwritten(self):
+        with TemporaryDirectory() as folder:
+            out=Path(folder);(out/'selection.json').write_text('{}')
+            with self.assertRaisesRegex(RuntimeError,'Do not overwrite'):guard('develop',out)
+            (out/'calibrator.json').write_text('{}')
+            with self.assertRaisesRegex(RuntimeError,'Do not overwrite'):guard('calibrate',out)
+
+    def test_partial_field_result_can_resume_before_phase_completion(self):
+        with TemporaryDirectory() as folder:
+            out=Path(folder);(out/'validation-some-field.json').write_text('{}')
+            guard('validate',out)
 
 
 if __name__=='__main__':unittest.main()
