@@ -22,6 +22,8 @@ Review production đã kiểm trên commit `c88fe57`: quota ghi bằng transacti
 
 Bước khoa học kế tiếp dùng [30 trường chọn trước](docs/INDEPENDENT_FIELD_SELECTION.md): **12 calibration / 12 validation / 6 final holdout**. Mới chọn tâm trường bằng hình học; chưa tải/đo các trường này. Evaluator, gain/PSF/SED truth, ngân sách sai số và gate phải khóa riêng trước đo; vẫn phải kiểm tra overlap observation/pixel. [Bộ sinh Poisson ramp](docs/SOURCE_RAMP_NOISE.md) đã có kiểm thử nhưng chưa áp dụng gain thực.
 
+[Audit mask](docs/SCIENCE_MASK_AUDIT.md) xác nhận policy cũ cho phép FULLSAMPLE cần sửa, nhưng 31 cutout WISE không có bit này. API ảnh 1.1 loại FULLSAMPLE, công bố số pixel khả dụng/bị loại/thiếu và policy; frontend không ghép hai policy khác nhau. [Audit gain](docs/NATIVE_GAIN_BINDING.md) ghép UUID/đơn vị/hash đúng cho D6 QR2, tìm một pixel gain âm không có flag; orientation vẫn có điều kiện theo source R6 công khai. Chưa đo lại centroid hay tuyên bố giảm bias từ những audit này.
+
 [Nguồn và quyền sử dụng](NOTICE.md): font, dữ liệu và minh họa có điều kiện riêng; quyết định giấy phép mã nguồn đang chờ chủ repo. Không coi repo public là giấy phép chung cho mọi asset.
 
 ## Bắt đầu trên web

@@ -36,6 +36,8 @@ SOCKET_TIMEOUT = 20
 DEADLINE = 80
 SOURCE = 1 << 21
 FULLSAMPLE = 1 << 12
+FRAME_CONTRACT = '1.1'
+MASK_POLICY = 'source-only-allowlist-v2'
 logger = request_logger('frame_api')
 PATH = re.compile(r'^/ibe/data/spherex/(?P<release>qr[23])/level2/(?P<period>\d{4}W\d{2}_[0-9][A-Z])/(?P<version>l2b-v\d+-\d{4}-\d{3})/(?P<detector>[1-6])/level2_(?P=period)_(?P<exposure>\d{4}_[0-9])D(?P=detector)_spx_(?P=version)\.fits$')
 
@@ -158,6 +160,10 @@ def render(content, p):
     try:
         with fits.open(BytesIO(content), memmap=False, lazy_load_hdus=True) as hdus:
             image_hdu, flags_hdu = hdus['IMAGE'], hdus['FLAGS']
+            layout = {key: [card.value for card in flags_hdu.header.cards if card.keyword == key]
+                      for key in ('MP_SOURCE', 'MP_FULLSAMPLE')}
+            if layout != {'MP_SOURCE': [21], 'MP_FULLSAMPLE': [12]}:
+                raise FrameError('invalid_flag_layout')
             image = np.asarray(image_hdu.data, dtype=float)
             flags = np.asarray(flags_hdu.data)
             if image.ndim != 2 or image.shape != flags.shape or max(image.shape) > 512 or not np.issubdtype(flags.dtype, np.integer):
@@ -195,7 +201,9 @@ def render(content, p):
             ix = np.clip(np.floor(np.where(finite, nx, 0) + 0.5), 0, image.shape[1] - 1).astype(int)
             iy = np.clip(np.floor(np.where(finite, ny, 0) + 0.5), 0, image.shape[0] - 1).astype(int)
             sampled = image[iy, ix]
-            bad = (flags[iy, ix].astype(np.int64) & ~(SOURCE | FULLSAMPLE)) != 0
+            # FULLSAMPLE is the rotating full-history readout region, not a
+            # declaration that a pixel has a usable nominal science ramp.
+            bad = (flags[iy, ix].astype(np.int64) & ~SOURCE) != 0
             available = inside & np.isfinite(sampled)
             valid = available & ~bad
             low, high = p['low'], p['high']
@@ -216,7 +224,8 @@ def render(content, p):
             output = BytesIO()
             Image.fromarray(pixels).save(output, format='PNG')
             return output.getvalue(), {'low': low, 'high': high, 'mode': mode, 'mjd': mjd,
-                                       'valid_pixels': int(valid.sum()), 'fov_deg': n * SCALE_ARCSEC / 3600}
+                                       'valid_pixels': int(valid.sum()), 'masked_pixels': int((available & bad).sum()),
+                                       'missing_pixels': int((~available).sum()), 'fov_deg': n * SCALE_ARCSEC / 3600}
     except FrameError:
         raise
     except Exception:
@@ -260,14 +269,16 @@ class handler(BaseHTTPRequestHandler):
             content = fetch(url)
             retrieved = datetime.now(timezone.utc).isoformat()
             png, meta = render(content, p)
-            h = {'X-Frame-Contract': '1.0', 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
+            h = {'X-Frame-Contract': FRAME_CONTRACT, 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
                  'X-Frame-Cutout-SHA256': sha256(content).hexdigest(), 'X-Frame-Retrieved-At': retrieved,
                  'X-Frame-Release': p['release'], 'X-Frame-Obs-ID': p['obs_id'], 'X-Frame-Detector': p['detector'],
                  'X-Frame-Grid-RA-Deg': p['ra'], 'X-Frame-Grid-Dec-Deg': p['dec'],
                  'X-Frame-Grid-Scale-Arcsec': SCALE_ARCSEC, 'X-Frame-Grid-Size-Px': p['size_px'],
                  'X-Frame-Grid-FOV-Deg': meta['fov_deg'], 'X-Frame-Unit': 'MJy/sr', 'X-Frame-Zodi': p['zodi'],
                  'X-Frame-Contrast-Mode': meta['mode'], 'X-Frame-Contrast-Low': meta['low'],
-                 'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels']}
+                 'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels'],
+                 'X-Frame-Mask-Policy': MASK_POLICY, 'X-Frame-Masked-Pixels': meta['masked_pixels'],
+                 'X-Frame-Missing-Pixels': meta['missing_pixels']}
             if meta['mjd'] is not None:
                 h['X-Frame-MJD-Obs'] = meta['mjd']
             return self.respond(200, png, 'image/png', 'ok', h)

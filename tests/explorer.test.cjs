@@ -73,6 +73,8 @@ function observations(call, ids) {
 function frame(call, id, options={}) {
   const values={"content-type":"image/png","x-frame-contrast-low":String(options.low??0.5),
     "x-frame-contrast-high":String(options.high??2.5),"x-frame-valid-pixels":"20",
+    "x-frame-masked-pixels":"3","x-frame-missing-pixels":"2",
+    "x-frame-mask-policy":options.policy??"source-only-allowlist-v2",
     "x-frame-cutout-url":options.cutout??`https://irsa.ipac.caltech.edu/${id}.fits?center=350,35&size=0.1`,
     "x-frame-cutout-sha256":"a".repeat(64)};
   const headers={get:key=>values[key.toLowerCase()]??null,*[Symbol.iterator](){yield* Object.entries(values);}};
@@ -181,6 +183,22 @@ async function changedSearchRejectsOldResult() {
   assert.equal(h.element("explorer-frame-label").textContent.includes("NEW"),true);
 }
 
+async function incompatibleMaskPoliciesCannotBeCompared() {
+  const h=harness();const {submit}=await begin(h,["A","B"]);
+  frame(find(h,"frame")[0],"A",{policy:"legacy-mask"});await submit;
+  assert.equal(h.element("explorer-frame-meta").textContent.includes("20 pixel khả dụng; 3 bị loại; 2 thiếu"),true);
+  h.element("explorer-pin").fire("click");h.element("explorer-current").value="1";
+  const b=h.element("explorer-current").fire("change");await flush();
+  frame(find(h,"frame")[1],"B");await b;
+  assert.equal(h.element("explorer-image").hidden,true);
+  assert.equal(h.element("explorer-status").textContent.includes("quy tắc loại pixel khác nhau"),true);
+  assert.equal(h.element("explorer-play").disabled,true);
+  const {submit:fresh}=await begin(h,["NEW"]);
+  frame(find(h,"frame")[2],"NEW");await fresh;
+  assert.equal(h.element("explorer-image").src,"blob:NEW");
+  assert.equal(h.element("explorer-image").hidden,false);
+}
+
 async function emptySearchClearsPreviousProvenance() {
   const h=harness();const {submit}=await begin(h,["OLD"]);
   frame(find(h,"frame")[0],"OLD");await submit;
@@ -219,6 +237,7 @@ async function main() {
   await refusesInconsistentContrast();
   await changedSearchRejectsOldResult();
   await emptySearchClearsPreviousProvenance();
+  await incompatibleMaskPoliciesCannotBeCompared();
   await boundedUpstreamRetry();
   console.log("Explorer DOM and HTTP race cases passed");
 }

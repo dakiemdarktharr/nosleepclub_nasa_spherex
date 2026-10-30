@@ -24,6 +24,8 @@ Hai test Mongo sẽ tự skip nếu không có `REVIEW_TEST_MONGODB_URI`. Với 
 
 Các test fake chỉ kiểm tra luồng chứ không chứng minh transaction hay độ bền MongoDB thật. CI chạy fixture MongoDB là bằng chứng cho thử nghiệm tổng hợp trên fixture đó, không phải Atlas M0, production backup, RPO, RTO hay bài diễn tập khôi phục người dùng thật. Không có kết quả synthetic live nào được ghi trong tài liệu này nếu chưa thực sự chạy.
 
+Bổ sung đã chạy: [CI 41095342121](evidence/0.10/backup-fixture-ci-8f0afc0.json) tại `8f0afc0` đạt hai test restore MongoDB thật, trong suite 220 test (năm raw-cache skip). Source→target tổng hợp khác UUID giữ BSON/index/owner/key; key sai hoặc token bị sửa không tạo target, bản hết hạn không được hồi sinh. Lượt trước `77ad00f` thất bại vì gọi keyword `filter` không được `list_database_names` hỗ trợ; đã chuyển sang cursor `list_databases` đúng API, không bỏ test. Không suy độ bền Atlas hay thời gian phục hồi production từ receipt fixture này.
+
 ## Điều kiện trước khi thiết kế backup production
 
 Primitive này bị giới hạn ở fixture; chưa có đường backup production. Thiết kế thật cần xác định danh tính/quyền MongoDB, đích mã hóa, nơi giữ/rotate/khôi phục key, retention/xóa bản sao, lịch và giám sát, restore tách biệt, kiểm chứng đủ dữ liệu và gate chuyển bản restore sang production. Quyền sửa và triển khai web đã có; nếu thiết kế cần xuất review riêng sang đích mới, mở rộng nơi nhận credential hoặc phát sinh chi phí, phải có chấp thuận cụ thể cho phạm vi mới đó. Credential hiện vẫn chỉ dùng ở production Vercel. Kiểm tra lại availability và giá của backup M0 trước khi chọn dịch vụ.
