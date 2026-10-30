@@ -20,6 +20,10 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 Review production đã kiểm trên commit `c88fe57`: quota ghi bằng transaction, bốn test cạnh tranh thật trong CI và [24 response checks trên production](docs/evidence/0.10/production-c88fe57.json) đều đạt. Phiên QA được xóa sạch. Chưa có bằng chứng chịu tải Atlas M0, backup/restore hoặc kiểm định khoa học độc lập đạt yêu cầu.
 
+Bước khoa học kế tiếp dùng [30 trường chọn trước](docs/INDEPENDENT_FIELD_SELECTION.md): **12 calibration / 12 validation / 6 final holdout**. Mới chọn tâm trường bằng hình học; chưa tải/đo các trường này. Evaluator, gain/PSF/SED truth, ngân sách sai số và gate phải khóa riêng trước đo; vẫn phải kiểm tra overlap observation/pixel. [Bộ sinh Poisson ramp](docs/SOURCE_RAMP_NOISE.md) đã có kiểm thử nhưng chưa áp dụng gain thực.
+
+[Nguồn và quyền sử dụng](NOTICE.md): font, dữ liệu và minh họa có điều kiện riêng; quyết định giấy phép mã nguồn đang chờ chủ repo. Không coi repo public là giấy phép chung cho mọi asset.
+
 ## Bắt đầu trên web
 
 1. Chọn **Bắt đầu quan sát**. Kéo vạch trước/sau hoặc bật **Nhấp nháy** để tìm điểm đổi vị trí.
