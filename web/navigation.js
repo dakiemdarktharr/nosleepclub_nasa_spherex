@@ -1,4 +1,10 @@
 "use strict";
+function expandLinkedSection(){
+  const target=document.getElementById(location.hash.slice(1));if(!target)return;
+  for(let p=target;p;p=p.parentElement)if(p.tagName==="DETAILS")p.open=true;
+}
+expandLinkedSection();
+window.addEventListener("hashchange",()=>{expandLinkedSection();const target=document.getElementById(location.hash.slice(1));if(target)requestAnimationFrame(()=>target.scrollIntoView({block:"start"}));});
 // Keep an incoming section link aligned after asynchronous evidence panels grow.
 // Stop as soon as the reader scrolls, types or navigates somewhere else.
 (function initialSectionLink(){

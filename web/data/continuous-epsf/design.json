@@ -1,0 +1,76 @@
+{
+  "rules": {
+    "version": "0.10.0-continuous-epsf-development.1",
+    "fields": [
+      "w350p35",
+      "w090p10",
+      "w210m20"
+    ],
+    "cases": [
+      {
+        "snr_per_frame": 2.0,
+        "motion": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "snr_per_frame": 4.0,
+        "motion": [
+          0.6,
+          0.05
+        ]
+      }
+    ],
+    "patch_index": 1,
+    "draws_per_case": 64,
+    "seed": 20261030,
+    "pad_oversampled_pixels_per_edge": 16,
+    "truth_psf": "nearest frozen source_image",
+    "backgrounds": [
+      "original exposure pixels",
+      "signal only plus independent Gaussian native-pixel noise"
+    ],
+    "candidate": "plane_fixed target padding, fixed original neighbour templates",
+    "ellipse68_threshold": 2.27886856637673,
+    "ellipse95_threshold": 5.99146454710798,
+    "covariance": "candidate GN and observed profile Hessian with original registration covariance; no conditional calibration",
+    "selection": "all attempts and common numeric/common accepted subsets, separately by field and case",
+    "qualification": "opened fields and matched old truth only; diagnostic development, not independent validation or physical PSF proof"
+  },
+  "source_hashes": {
+    "scripts/continuous_epsf_model.py": "ee442d0c5a7fbc6211b4ec376e9209a4bf26654fd81304e78cebea40f91ba9af",
+    "scripts/run_continuous_epsf_study.py": "799e6599f065f7d416a553282d07dd7b2420817c55f9047dcbdc153da0f625bb",
+    "scripts/diagnose_bias.py": "b9550531dea4b0fa775ca46ca83d1ea91743eadd471cada33116e27dd99e7882",
+    "scripts/profile_uncertainty.py": "3c0ca10352365566ce0479843d748a3e6347e48fe36ad04f354b02d1e16db9c6",
+    "tests/test_continuous_epsf.py": "92899a81877ede7638efdc915d7e8a33a22c2a85eb31b670dc37c248920249b6",
+    "docs/CONTINUOUS_EPSF_PROTOCOL.md": "071ff82963313f6d19b675bac6872b402e2e0d1e1023d95fc5d035aa27030047",
+    "requirements.txt": "6a72e6a6e45a29266d807d680d1ba0dcb118c08ae1c25f8cc9850a1cb996e8e7",
+    "scripts/ablation_study.py": "1c6aae95ce7c15fb7b6bf26783560778660d65ca6c5bc8d2e13d8187cdacff78",
+    "scripts/ablation_model.py": "e8bd406c75d15413a5b36e04b9a39ca804424cdeeb4435e38ca6a5ec40053b4e",
+    "scripts/conditional_covariance.py": "59792dba210de5ba127f4ac0e799beee1273f0239a03e5b7f04fe3176ea166bd",
+    "scripts/prepare_ablation_data.py": "252cf4c8364c4b5ef9c26407397617b2b203b5858a9b3788fd71667e76a54219",
+    "scripts/covariance_model.py": "8ac686fb374ac4e34b92ddd3ef91385ec967da3617cfe32b14a17cd4cac8965c",
+    "scripts/covariance_study.py": "7e458882b0fa7f6490064302be8acc9a1a6924dee92319108933cf1b9c0d81f8",
+    "scripts/prepare_covariance_data.py": "11c930ab3d2c25e48fc15dc671bcabf2afcc85218fa992b1c3b5ec7998bda5ff",
+    "scripts/quality_study.py": "7c72a0af208860aaaaf5d07a2ecdedb7ea78f0ecaa641c0dc8bb59f9c9f35a2d",
+    "scripts/quality_model.py": "4ad2caf98be10c189f4f02108e286b348f945879640fb68a21a1a8e85d476940",
+    "scripts/prepare_quality_data.py": "3fd23fb68c595ac0d4136e47284825bb9a9ebef233a757f68f8b888adaa85419",
+    "scripts/benchmark_accuracy.py": "75a7c9b406d0508d7149ff70163a40c5c1eeb601cd30035e97d178c36b2977e7",
+    "scripts/prepare_benchmark_data.py": "f83bb418bf2d5f4d5d62bf2560989ed5a57df7b42e1dce7a901981e270f11088",
+    "scripts/release_analysis.py": "628ff978b72872166b9f66f28140e413a486eba5687cbb5b0838fe3095567eca",
+    "scripts/joint_motion.py": "1a2fa9bf673610effb24ae18c2f6b6637568d507b34498043cb1d9e2cb1eb59c",
+    "scripts/gaia_motion.py": "e8c29852acf4d1a147e58db7d8a44b4cd8578e8622c58b5c63d8bcbc36d06688",
+    "scripts/motion_analysis.py": "50369300355b5b8af47bcfdb7d6a430731ade7a5c867912b3819b2680d6b4523",
+    "scripts/build_demo.py": "8985b55ba6fd29fd02d1618f1d62d2a58a4ad235f692d1c650dacb1ce53b159e"
+  },
+  "opened_product_hashes": {
+    "web/data/ablation/design.json": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+    "web/data/ablation/validation-w350p35.json": "c48c7decf4bc13a6d7e308900129a82c70138f35ff08ac5381181afb9abbc9a8",
+    "web/data/ablation/validation-w090p10.json": "63ab311d9fa21a985d0d9ea224f96058f08dcf0dd5eadf364cc7ad6933ede531",
+    "web/data/ablation/validation-w210m20.json": "f822392288f06e7f1c3526f7ab413454f531aff81cc2cd710db5ef508076d640"
+  },
+  "paired_baseline_path": "data/raw/benchmark/bias-gaussian64-development.json",
+  "paired_baseline_sha256": "98d284e521f6b188435e49c4af701da55fc25b55a17fc3b29639456bbc209d30",
+  "status": "development protocol, not calibration or validation"
+}

@@ -1,0 +1,75 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python tests and repository evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11.9'
+      - id: install
+        name: Install pinned science and web dependencies
+        run: python -m pip install -r requirements.txt -r web/requirements.txt
+      - name: Compile Python source
+        run: python -m compileall -q scripts tests web/api
+      - name: Check source whitespace
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files = list(Path('scripts').glob('*.py')) + list(Path('tests').glob('*.py'))
+          files += list(Path('web/api').glob('*.py')) + list(Path('web').glob('*.js'))
+          bad = [f'{p}:{i}' for p in files for i, line in enumerate(p.read_text(encoding='utf-8-sig').splitlines(), 1)
+                 if line.rstrip(' \t') != line]
+          if bad:
+              raise SystemExit('\n'.join(bad))
+          print(f'No trailing whitespace in {len(files)} source files')
+          PY
+      - name: Run all Python unit tests
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -v 2>&1 | tee "$RUNNER_TEMP/unittest.log"
+      - name: Create evidence report
+        if: ${{ always() && steps.install.outcome == 'success' }}
+        run: python scripts/check_readiness.py > "$RUNNER_TEMP/readiness.json"
+      - name: Upload evidence and test output
+        if: ${{ always() && steps.install.outcome == 'success' }}
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: python-readiness-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/readiness.json
+            ${{ runner.temp }}/unittest.log
+          if-no-files-found: warn
+          retention-days: 7
+
+  javascript:
+    name: JavaScript syntax and review store
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Check browser JavaScript syntax
+        run: for source in web/*.js; do node --check "$source"; done
+      - name: Test ReviewStore pure cases
+        run: node tests/review-store.test.cjs
+      - name: Test explorer request and display races
+        run: node tests/explorer.test.cjs

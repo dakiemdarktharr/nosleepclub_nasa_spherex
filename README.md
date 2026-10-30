@@ -6,6 +6,14 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 **[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Chọn mô hình & hiệu chuẩn theo nhóm](https://nosleepclub-nasa-spherex.vercel.app/#model-selection) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo mới nhất](docs/ABLATION_VALIDATION.md).
 
+## Goal production đang thực hiện — 0.10
+
+[Mở vùng trời](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [20 tiêu chí nghiệm thu](docs/PRODUCTION_READINESS.md) · [Hướng dẫn explorer](docs/SKY_EXPLORER.md) · [Chẩn đoán mới](docs/BIAS_DIAGNOSTICS.md).
+
+Đã thêm luồng RA/Dec → metadata IRSA → từng cutout thật → đối chiếu/nhấp nháy cùng thang hiển thị → xuất bằng chứng. Năm mục tiêu của đề đều có hai cutout thật được kiểm tra, có nguồn/epoch/hash. Review riêng có ID ổn định, hết hạn cục bộ và máy chủ, quản lý được phân tích cũ; có quota, log đã lọc và CI.
+
+**Chưa đạt nghiệm thu khoa học/production.** Monte Carlo noise trên ba trường đã mở cho thấy ellipse thô vẫn thiếu phủ ở nguồn mờ. [Đối chứng ePSF](docs/CONTINUOUS_EPSF_RESULTS.md) đã khóa ở `f138e11` trước 384 lượt ghép cặp: Hessian nhạy với bước sai phân giảm từ 304/768 xuống 0/768 epoch-fit, nhưng RMS không giảm ở cả sáu ca. Profile mới vẫn chỉ phủ 31/64, 36/64 và 34/64 lượt S/N thấp. Chưa thay centroid, calibrator hay số đo WISE đã công bố. Các trạng thái được theo dõi trong ledger; test phần mềm, khám phá dữ liệu và xác nhận thiên văn được nghiệm thu riêng.
+
 ## Bắt đầu trên web
 
 1. Chọn **Bắt đầu quan sát**. Kéo vạch trước/sau hoặc bật **Nhấp nháy** để tìm điểm đổi vị trí.
@@ -123,7 +131,7 @@ Barnard có một outlier Gaia **6,309″**. Chính mục tiêu Barnard lệch d
 
 **Dấu hiệu chuyển động, chưa xác nhận.** Phổ chặt là cấu hình chính: **3,06″ ± 0,99″**; phổ rộng là kiểm tra độ nhạy và dùng chung một phần ảnh. Nguồn giả đứng yên cùng độ sáng trên tám nền ảnh khác vẫn có RMS lệch **2,72″** ở cấu hình rộng; nguồn dịch chuyển bằng nửa độ sáng chỉ có **2/8** lượt nằm trong ellipse sai số 68%. Vector rộng còn chênh **1,21″** so với dự báo ngoài. Gaia làm rõ độ ổn định của frame, chưa giải quyết toàn bộ blending, ePSF và đáp ứng phổ. Chưa có vision model được huấn luyện.
 
-## Mở demo ngay
+## Mở bộ ảnh demo offline
 
 Ứng dụng dùng các sản phẩm nhỏ đã có sẵn trong repo; chỉ cần Python để mở, không cần Node hoặc tải lại dữ liệu.
 
@@ -158,7 +166,7 @@ Lệnh `--demo` tải 6 cutout được chọn và kiểm tra FITS; lưu trong `
 
 `prepare_gaia_data.py` tải cutout rộng của đúng 20 exposure cũ và truy vấn Gaia DR3 qua IRSA TAP, lưu ADQL/URL/hash. `gaia_motion.py --publish` cache centroid sao tham chiếu, chạy đổi tập sao, 14 lượt bỏ từng sao, affine, 256 bootstrap căn chỉnh và 32 injection mỗi cấu hình; sau đó thêm sản phẩm Gaia vào demo. Chạy các bước theo thứ tự trên nếu tái tạo toàn bộ manifest. 31 kiểm thử kiểm tra cả các sản phẩm đã commit mà không cần tải raw.
 
-Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Toàn bộ suite hiện có 59 kiểm thử offline, gồm API, deblending, quality gate, propagation CatWISE, ePSF, lock, các benchmark và giao diện.
+Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Ở checkpoint 0.7, suite có 59 kiểm thử offline. CI và báo cáo theo phiên bản ghi kết quả mới nhất; số ca lịch sử không phải số ca hiện tại.
 
 Benchmark 0.6.0: `python -m scripts.prepare_benchmark_data --download`, rồi `python -m scripts.benchmark_accuracy`. Cần calibration D6 của quy trình trước. Protocol đã có trong repo; script kiểm tra hash và từ chối thay nguồn đã khóa. Xem báo cáo trước khi diễn giải số đo hoặc tạo tập kiểm chứng mới.
 

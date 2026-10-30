@@ -6,9 +6,19 @@ const ctx = canvas.getContext("2d");
 const state = { manifest: null, scene: null, images: {}, pixels: null, mode: "wipe", wipe: .5,
   zoom: 1, center: [32,32], selected: "target", blinkAfter: false, timer: null, loading: 0 };
 const number = (value, digits=2) => Number(value).toLocaleString("vi-VN", {maximumFractionDigits:digits, minimumFractionDigits:digits});
-let reviews = {};
+let reviews = ReviewStore.read();
 let remoteStorage = false;
-try { reviews = JSON.parse(localStorage.getItem("nosleepclub.reviews.v1") || "{}"); } catch { reviews = {}; }
+let reviewScope = null;
+let reviewVersion = 0, reviewPending = 0, reviewDraftRevision = 0;
+const reviewMutations = new Set(), reviewDrafts = new Map();
+
+function beginReviewMutation(key) {
+  if(reviewMutations.has(key))return false;
+  reviewMutations.add(key);reviewPending++;reviewVersion++;return true;
+}
+function endReviewMutation(key) {
+  reviewMutations.delete(key);reviewPending--;reviewVersion++;
+}
 
 async function reviewApi(method="GET", body) {
   const response = await fetch("/api/reviews", {method, credentials:"same-origin", cache:"no-store",
@@ -16,18 +26,66 @@ async function reviewApi(method="GET", body) {
   if(!response.ok)throw new Error(`HTTP ${response.status}`);
   return response.json();
 }
+async function reviewSnapshot() {
+  const result=await reviewApi();
+  if(typeof result.session_scope!=="string"||!result.session_scope||!Array.isArray(result.reviews))throw new Error("invalid_review_snapshot");
+  return result;
+}
 async function syncReviews() {
   if(location.protocol!=="https:")return;
+  const version=reviewVersion;
   try {
-    const result=await reviewApi();
+    const result=await reviewSnapshot();
+    if(!ReviewStore.snapshotAllowed(version,reviewVersion,reviewPending))return;
     remoteStorage=true;
-    for(const item of result.reviews) {
-      const key=`${item.analysis_sha256}:${item.scene_id}:${item.selection}`;
-      if(!reviews[key]||reviews[key].saved_at<item.saved_at)reviews[key]=item;
-    }
+    reviewScope=result.session_scope;
+    reviews=ReviewStore.merge(reviews,result.reviews,result.session_scope);
+    try {ReviewStore.write(reviews);} catch {}
     if(state.scene)loadReview();
-  } catch { remoteStorage=false; }
+  } catch { if(ReviewStore.snapshotAllowed(version,reviewVersion,reviewPending))remoteStorage=false; }
   $("storage-status").textContent=remoteStorage?"MongoDB":"Trình duyệt";
+  reviewHistory();
+}
+
+function reviewHistory() {
+  const root=$("review-history-list");if(!root)return;
+  reviews=ReviewStore.clean(reviews);root.replaceChildren();
+  const rows=Object.entries(reviews).sort((a,b)=>b[1].saved_at.localeCompare(a[1].saved_at));
+  $("review-history-count").textContent=String(rows.length);
+  if(!rows.length){root.textContent="Chưa có nhận xét còn hiệu lực.";return;}
+  for(const [key,item] of rows) {
+    const article=document.createElement("article"),title=document.createElement("strong"),note=document.createElement("p"),meta=document.createElement("p"),button=document.createElement("button");
+    title.textContent=`${item.scene_id} · ${item.selection}`;
+    note.textContent=item.note||"Không có ghi chú.";
+    meta.className="review-history-meta";
+    const where=item.sync_state==="cloud"?"MongoDB":item.sync_state==="detached"?"Bản cục bộ · mất phiên máy chủ cũ":item.cloud_pending?"Bản nháp cục bộ · có thể còn bản máy chủ":"Bản cục bộ";
+    meta.textContent=`${item.analysis_sha256===state.manifest?.analysis_sha256?"Phân tích hiện tại":"Phân tích cũ"} ${item.analysis_sha256.slice(0,10)} · ${where} · hết hạn cục bộ ${new Date(item.expires_at).toLocaleDateString("vi-VN")}${item.cloud_expires_at?` · bản máy chủ hết hạn ${new Date(item.cloud_expires_at).toLocaleDateString("vi-VN")}`:""}`;
+    button.type="button";button.className="text-button";button.textContent="Xóa nhận xét";
+    button.addEventListener("click",async()=>{button.disabled=true;await removeReview(key,$("review-history-feedback"));});
+    article.append(title,note,meta,button);root.append(article);
+  }
+}
+
+async function removeReview(key,feedback) {
+  const item=reviews[key];if(!item)return;
+  if(!beginReviewMutation(key)){feedback.textContent="Đang xử lý nhận xét này. Hãy chờ rồi thử lại.";return;}
+  const revision=reviewDrafts.get(key)?.revision;
+  let plan=ReviewStore.deletePlan(item,null,[]);
+  try {
+    if(location.protocol==="https:" && plan!=="local" && !item.archive_id && item.sync_state!=="detached") {
+      const snapshot=await reviewSnapshot();
+      plan=ReviewStore.deletePlan(item,snapshot.session_scope,snapshot.reviews);
+      if(plan==="remote")await reviewApi("DELETE",item.review_id?{review_id:item.review_id}:item);
+    }
+    const next={...reviews};delete next[key];
+    let localCleared=true;
+    try{ReviewStore.write(next);}catch{localCleared=false;}
+    reviews=next;
+    if(reviewDrafts.get(key)?.revision===revision)reviewDrafts.delete(key);
+    if(state.scene)loadReview();reviewHistory();
+    feedback.textContent=localCleared?(plan==="detached"?"Đã xóa bản cục bộ. Phiên máy chủ cũ không còn quyền truy cập; bản đó hết hạn theo thời hạn máy chủ.":"Đã xóa nhận xét."):"Trình duyệt đang chặn cập nhật bản cục bộ. Hãy xóa dữ liệu trang hoặc thử lại.";
+  } catch {feedback.textContent="Chưa xác minh hoặc xóa được bản máy chủ. Hãy thử lại; bản nhận xét vẫn được giữ.";reviewHistory();}
+  finally {endReviewMutation(key);}
 }
 
 async function getJson(url) {
@@ -152,8 +210,8 @@ function keyForSelection() {
   return `${state.manifest.analysis_sha256}:${state.scene.id}:${state.selected}`;
 }
 function loadReview() {
-  const saved=reviews[keyForSelection()];
-  $("review-status").value=saved?.status||"uncertain";$("review-note").value=saved?.note||"";
+  const key=keyForSelection(),saved=reviews[key],draft=reviewDrafts.get(key);
+  $("review-status").value=draft?.status||saved?.status||"uncertain";$("review-note").value=draft?.note??saved?.note??"";
   $("review-feedback").textContent="";
   $("clear-review").hidden=!saved;
 }
@@ -339,34 +397,52 @@ $("focus-selection").addEventListener("click",()=>{
 $("evidence-open").addEventListener("click",()=>{if(state.scene)$("evidence-dialog").showModal();});
 $("evidence-close").addEventListener("click",()=>$("evidence-dialog").close());
 $("download-manifest").addEventListener("click",()=>download("wise0855-evidence.json",state.manifest));
+["review-note","review-status"].forEach(id=>$(id).addEventListener(id==="review-note"?"input":"change",()=>{
+  if(!state.scene)return;
+  reviewDrafts.set(keyForSelection(),{status:$("review-status").value,note:$("review-note").value,revision:++reviewDraftRevision});
+}));
 $("save-review").addEventListener("click",async()=>{
   const s=state.scene;
   const key=keyForSelection(),item={scene_id:s.id,selection:state.selected,status:$("review-status").value,note:$("review-note").value,
     saved_at:new Date().toISOString(),analysis_sha256:state.manifest.analysis_sha256,
     input_sha256:[s.before.sha256,s.after.sha256],target_detection:s.target_detection};
+  if(!beginReviewMutation(key))return;
+  const previous=reviews[key],revision=reviewDrafts.get(key)?.revision;
   $("save-review").disabled=true;
-  let cloud=false,local=false;
-  if(location.protocol==="https:")try {
-    if(!remoteStorage)await reviewApi();
-    const result=await reviewApi("POST",item);Object.assign(item,result.review);cloud=true;remoteStorage=true;
-  } catch { remoteStorage=false; }
-  reviews[key]=item;
-  try{localStorage.setItem("nosleepclub.reviews.v1",JSON.stringify(reviews));local=true;}catch{}
-  $("storage-status").textContent=cloud?"MongoDB":"Trình duyệt";
-  if(key===keyForSelection()) {
-    $("review-feedback").textContent=cloud?"Đã lưu MongoDB.":local?"Đã lưu trên trình duyệt. Chưa đồng bộ.":"Chưa lưu được. Hãy xuất JSON.";
-    $("clear-review").hidden=false;
-  }
-  $("save-review").disabled=false;
+  let cloud=false,local=false,detached=false,postAttempted=false,scopeAtSend=null;
+  try {
+    if(location.protocol==="https:")try {
+      if(previous && (previous.sync_state==="cloud" || previous.review_id || previous.cloud_scope || previous.cloud_pending)) {
+        const snapshot=await reviewSnapshot();
+        reviewScope=snapshot.session_scope;
+        detached=ReviewStore.deletePlan(previous,snapshot.session_scope,snapshot.reviews)!=="remote";
+      } else if(!remoteStorage){const snapshot=await reviewSnapshot();reviewScope=snapshot.session_scope;}
+      if(!detached){
+        postAttempted=true;scopeAtSend=reviewScope;
+        const result=await reviewApi("POST",item);
+        if(typeof result.session_scope!=="string"||!result.session_scope||!result.review)throw new Error("invalid_review_response");
+        Object.assign(item,result.review,{cloud_scope:result.session_scope});cloud=true;remoteStorage=true;reviewScope=result.session_scope;
+      }
+    } catch { remoteStorage=false; }
+    item.expires_at=item.expires_at||new Date(Date.parse(item.saved_at)+180*86400000).toISOString();
+    const stored=cloud?{...item,sync_state:"cloud"}:ReviewStore.localDraft(item,previous);
+    if(!cloud && postAttempted){stored.cloud_pending=true;if(!stored.cloud_scope && scopeAtSend)stored.cloud_scope=scopeAtSend;}
+    reviews={...reviews,[key]:stored};
+    if(detached)reviews=ReviewStore.detach(reviews,key);
+    try{ReviewStore.write(reviews);local=true;}catch{}
+    if(reviewDrafts.get(key)?.revision===revision)reviewDrafts.delete(key);
+    $("storage-status").textContent=cloud?"MongoDB":"Trình duyệt";
+    if(key===keyForSelection()) {
+      const editedAgain=reviewDrafts.has(key);
+      $("review-feedback").textContent=(cloud?"Đã lưu MongoDB.":local?(detached?"Phiên máy chủ đã đổi; bản nháp được giữ trong lịch sử cục bộ, chưa gửi lên phiên mới.":"Đã lưu trên trình duyệt. Chưa đồng bộ."):"Chưa lưu được. Hãy xuất JSON.")+(editedAgain?" Phần vừa sửa chưa được lưu.":"");
+      $("clear-review").hidden=detached;
+    }
+    reviewHistory();
+  } finally {$("save-review").disabled=false;endReviewMutation(key);}
 });
-$("export-reviews").addEventListener("click",()=>download("wise0855-reviews.json",{schema_version:1,reviews:Object.values(reviews)}));
+$("export-reviews").addEventListener("click",()=>download("wise0855-reviews.json",{schema_version:2,exported_at:new Date().toISOString(),scope:"private guest opinions; not astronomical confirmations",reviews:Object.values(ReviewStore.clean(reviews))}));
 $("clear-review").addEventListener("click",async()=>{
-  const key=keyForSelection(),next={...reviews};delete next[key];
-  if(location.protocol==="https:")try {
-    await reviewApi("DELETE",reviews[key]);
-  } catch {$("review-feedback").textContent="Chưa xóa được trên máy chủ. Hãy thử lại.";return;}
-  try{localStorage.setItem("nosleepclub.reviews.v1",JSON.stringify(next));reviews=next;loadReview();$("review-feedback").textContent="Đã xóa nhận xét của vùng này.";}
-  catch{$("review-feedback").textContent="Trình duyệt không cho cập nhật lưu trữ. Nhận xét vẫn được giữ lại.";}
+  await removeReview(keyForSelection(),$("review-feedback"));
 });
 let dragging=false;
 function pointerPixel(event) {
@@ -400,7 +476,7 @@ getJson("data/manifest.json").then(async manifest=>{
     [state.gaia,state.gaiaMap]=await Promise.all([getJson(manifest.gaia_results),getJson(manifest.gaia_map)]);
     setupGaiaPanel();
   }
-  await loadScene(manifest.scenes[0]);
+  await loadScene(manifest.scenes.find(s=>s.motion?.spectral_configuration==="strict")||manifest.scenes[0]);
   await setupAccuracy();
   await syncReviews();
 })

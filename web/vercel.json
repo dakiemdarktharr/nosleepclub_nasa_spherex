@@ -1,12 +1,45 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "regions": ["sin1"],
-  "functions": {"api/reviews.py": {"maxDuration": 15, "includeFiles": "data/manifest.json", "excludeFiles": "data/**/comparison.fits"}},
-  "headers": [{"source": "/(.*)", "headers": [
-    {"key": "X-Content-Type-Options", "value": "nosniff"},
-    {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"},
-    {"key": "X-Frame-Options", "value": "DENY"},
-    {"key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"}
-  ]}]
+  "regions": [
+    "sin1"
+  ],
+  "functions": {
+    "api/reviews.py": {
+      "maxDuration": 15,
+      "includeFiles": "data/manifest.json",
+      "excludeFiles": "data/**/comparison.fits"
+    },
+    "api/observations.py": {
+      "maxDuration": 30,
+      "excludeFiles": "data/**"
+    },
+    "api/frame.py": {
+      "maxDuration": 120,
+      "excludeFiles": "data/**"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+        }
+      ]
+    }
+  ]
 }
