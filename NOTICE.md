@@ -15,6 +15,8 @@ license has been applied by that draft.
 | Gaia DR3 | ESA Gaia / DPAC via IRSA; query and release in manifests | Preserve release, source IDs, query and provenance; catalog predictions are not new measurements |
 | CatWISE 2020 | NASA / IPAC IRSA; catalog and correction-table URLs in protocols | Retain catalog version and correction qualifications |
 | SPIFF reference inventory | Jonathan Gagné et al., DOI `10.5281/zenodo.19051216`, QR2-2026-04-24 | Publisher metadata: CC-BY-4.0. Credit authors/version/DOI, identify modifications; downloaded archives stay in ignored raw cache |
+| JWST/NIRSpec external references | NASA / ESA / CSA / STScI MAST, program 1230; exact G395M/PRISM products, associations, calibration contexts, URLs and hashes in `web/data/external/wise0855-sed-reference.json` and `wise0855-prism-reference.json` | Raw spectra stay in ignored cache. Retrieved pipeline products are distinct from Luhman et al. author extractions and their Spitzer normalization; no blanket code-license grant is asserted for external data |
+| SPHEREx laboratory spectral response | Howard Hui / SPHEREx calibration delivery R7, July 2026; archive and selected CSV hashes in `web/data/spectral-response/` | Preserve delivery, source and response qualifications. Raw tar is not redistributed in Git; signed laboratory measurements are not a certified nonnegative photon model |
 | Python and service dependencies | `requirements.txt`, `web/requirements.txt`, pinned CI actions and container digest | Separate upstream licenses apply; packages are not relicensed by this project |
 
 Scientific figures, masks, hashes and uncertainty labels must remain attached to

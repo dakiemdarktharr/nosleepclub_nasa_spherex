@@ -23,7 +23,10 @@ ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js
         'data/sandwich/design.json','data/sandwich/overview.json','data/sandwich/development-summary.json',
         'data/time-model/development-audit.json','data/external/spiff-reference.json',
         'data/independent-fields/selection.json',
-        'data/mask-audit/development-audit.json','data/native-gain/development-audit.json')
+        'data/mask-audit/development-audit.json','data/native-gain/development-audit.json',
+        'data/external/wise0855-sed-reference.json','data/spectral-response/v2-design.json',
+        'data/spectral-response/v2-development-audit.json',
+        'data/external/wise0855-prism-reference.json')
 
 
 def require(condition, label):

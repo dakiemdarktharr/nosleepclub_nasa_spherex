@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "recorded_at_utc": "2026-10-30T17:57:00Z",
+  "command": "python -B -m scripts.audit_spectral_reference --run",
+  "commit": "b3eb94cadf6c41554639fb816d1db92cb6101a19",
+  "design_path": "web/data/spectral-response/design.json",
+  "design_sha256": "f72bf0aa33349c9ee8613c7b0dab284c875689d1c6048dc948c5a132c7e51605",
+  "exit_code": 1,
+  "status": "aborted_before_output_publication",
+  "exception": "ValueError: unresolvable response zero crossing",
+  "reproduction": {
+    "completed_before_failure": 3,
+    "failed_attempt": 4,
+    "kind": "Cent",
+    "channel": 2,
+    "shift_um": -0.0064,
+    "interval_um": [4.960334300994873, 4.961964],
+    "normalized_response_endpoints": [-0.0000012431168452443072, 2.08798958096408e-29],
+    "cause": "The root fraction rounded to 1.0; deriving the second lobe span as h*(1-fraction) incorrectly gave zero. A finite small positive lobe still exists."
+  },
+  "qualification": "Reproduced on the recorded existing laboratory/JWST development inputs. No 30-field data or sky fit was opened. No completed study output or performance claim was produced. Version 1 source/design remain archived unchanged; a revised protocol must be committed before retry."
+}

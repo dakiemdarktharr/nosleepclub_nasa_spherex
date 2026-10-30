@@ -1,0 +1,280 @@
+{
+  "stage": "retrieved_prism_independent_product_no_sed_merge",
+  "object": "WISE 0855-0714",
+  "program": "1230",
+  "observation_date_utc": "2023-04-17",
+  "product": {
+    "metadata": {
+      "obsID": 349842176,
+      "obs_collection": "JWST",
+      "dataproduct_type": "spectrum",
+      "obs_id": "jw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1",
+      "description": "exposure/target (L2b/L3): 1D extracted spectrum",
+      "type": "D",
+      "dataURI": "mast:JWST/product/jw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits",
+      "productType": "SCIENCE",
+      "productGroupDescription": "Minimum Recommended Products",
+      "productSubGroupDescription": "X1D",
+      "productDocumentationURL": null,
+      "project": "CALJWST",
+      "prvversion": "3.0.0",
+      "proposal_id": "1230",
+      "productFilename": "jw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits",
+      "size": 198720,
+      "parent_obsid": 349842176,
+      "dataRights": "PUBLIC",
+      "calib_level": 3,
+      "filters": "CLEAR;PRISM"
+    },
+    "path": "data/raw/external/wise0855/jw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits",
+    "sha256": "17164197d803117d02c0e1e89ce64d5521ba86b523d3ba0cc03679974df53e3f",
+    "bytes": 198720,
+    "cache_written_utc": "2026-10-30T18:01:21.928924+00:00",
+    "url": "https://mast.stsci.edu/jwst/api/v0.1/Download/file?uri=mast%3AJWST%2Fproduct%2Fjw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits",
+    "primary_header": {
+      "DATE": "2026-10-12T10:03:40.226",
+      "PROGRAM": "01230",
+      "OBSERVTN": "007",
+      "INSTRUME": "NIRSPEC",
+      "DETECTOR": "NRS1",
+      "TARGNAME": "WISE 0855-0714",
+      "DATE-OBS": "2023-04-17",
+      "DATE-BEG": "2023-04-17T16:06:57.096",
+      "DATE-END": "2023-04-17T20:24:24.051",
+      "EXP_TYPE": "NRS_FIXEDSLIT",
+      "GRATING": "PRISM",
+      "FILTER": "CLEAR",
+      "CAL_VER": "3.0.0",
+      "CRDS_CTX": "jwst_1584.pmap",
+      "ASNTABLE": "jw01230-o007_20261012t042609_spec3_00001_asn.json",
+      "EXPCOUNT": 7,
+      "NINTS": 3,
+      "NUMDTHPT": 3,
+      "EFFEXPTM": 15185.826000000001
+    },
+    "extract1d_columns": [
+      {
+        "name": "WAVELENGTH",
+        "unit": "um",
+        "format": "D"
+      },
+      {
+        "name": "FLUX",
+        "unit": "Jy",
+        "format": "D"
+      },
+      {
+        "name": "FLUX_ERROR",
+        "unit": "Jy",
+        "format": "D"
+      },
+      {
+        "name": "FLUX_VAR_POISSON",
+        "unit": "Jy^2",
+        "format": "D"
+      },
+      {
+        "name": "FLUX_VAR_RNOISE",
+        "unit": "Jy^2",
+        "format": "D"
+      },
+      {
+        "name": "FLUX_VAR_FLAT",
+        "unit": "Jy^2",
+        "format": "D"
+      },
+      {
+        "name": "SURF_BRIGHT",
+        "unit": "MJy/sr",
+        "format": "D"
+      },
+      {
+        "name": "SB_ERROR",
+        "unit": "MJy/sr",
+        "format": "D"
+      },
+      {
+        "name": "SB_VAR_POISSON",
+        "unit": "MJy^2 / sr^2",
+        "format": "D"
+      },
+      {
+        "name": "SB_VAR_RNOISE",
+        "unit": "MJy^2 / sr^2",
+        "format": "D"
+      },
+      {
+        "name": "SB_VAR_FLAT",
+        "unit": "MJy^2 / sr^2",
+        "format": "D"
+      },
+      {
+        "name": "DQ",
+        "unit": null,
+        "format": "J"
+      },
+      {
+        "name": "BACKGROUND",
+        "unit": "MJy/sr",
+        "format": "D"
+      },
+      {
+        "name": "BKGD_ERROR",
+        "unit": "MJy/sr",
+        "format": "D"
+      },
+      {
+        "name": "BKGD_VAR_POISSON",
+        "unit": "MJy^2 / sr^2",
+        "format": "D"
+      },
+      {
+        "name": "BKGD_VAR_RNOISE",
+        "unit": "MJy^2 / sr^2",
+        "format": "D"
+      },
+      {
+        "name": "BKGD_VAR_FLAT",
+        "unit": "MJy^2 / sr^2",
+        "format": "D"
+      },
+      {
+        "name": "NPIXELS",
+        "unit": null,
+        "format": "D"
+      }
+    ],
+    "parser_summary": {
+      "rows": 434,
+      "usable": 410,
+      "dq_nonzero": 24,
+      "nonfinite_flux": 24,
+      "nonfinite_error": 0,
+      "nonpositive_error": 24,
+      "usable_negative_flux": 29,
+      "wavelength_range_um": [
+        0.5495997667312622,
+        5.3812575340271
+      ],
+      "usable_wavelength_range_um": [
+        0.5981883406639099,
+        5.30105447769165
+      ],
+      "diagnostic_interval": {
+        "interval_um": [
+          4.26602,
+          5.110683
+        ],
+        "maximum_gap_um": 0.01,
+        "in_interval_rows": 100,
+        "in_interval_usable_rows": 100,
+        "bracket_range_um": [
+          4.2642903327941895,
+          5.113555431365966
+        ],
+        "bracket_rows": 102,
+        "bracket_usable_rows": 102,
+        "max_bracket_gap_um": 0.009301185607910156,
+        "fully_bracketed_and_usable": true
+      },
+      "previous_g395m_missing_tail": {
+        "interval_um": [
+          5.093073844909667,
+          5.110683
+        ],
+        "maximum_gap_um": 0.01,
+        "in_interval_rows": 2,
+        "in_interval_usable_rows": 2,
+        "bracket_range_um": [
+          5.090540409088135,
+          5.113555431365966
+        ],
+        "bracket_rows": 4,
+        "bracket_usable_rows": 4,
+        "max_bracket_gap_um": 0.007684230804443359,
+        "fully_bracketed_and_usable": true
+      }
+    }
+  },
+  "provenance": {
+    "metadata_snapshot": {
+      "path": "data/raw/external/wise0855/mast-products-349842176.json",
+      "sha256": "663449493384f7b806863b551cfe8e2fb3e15f82ce4860d75b8825640951f2ca",
+      "bytes": 44665,
+      "service": "Mast.Caom.Products",
+      "endpoint": "https://mast.stsci.edu/api/v0/invoke",
+      "parameters": {
+        "obsid": "349842176"
+      },
+      "format": "json",
+      "page": 1,
+      "pagesize": 1000
+    },
+    "association": {
+      "path": "data/raw/external/wise0855/jw01230-o007_20261012t042609_spec3_00001_asn.json",
+      "sha256": "1f550a1e6dd3f7ca8df364aed0042043de32086a5e77ce8916983e452fc55b29",
+      "bytes": 3259,
+      "uri": "mast:JWST/product/jw01230-o007_20261012t042609_spec3_00001_asn.json",
+      "url": "https://mast.stsci.edu/jwst/api/v0.1/Download/file?uri=mast%3AJWST%2Fproduct%2Fjw01230-o007_20261012t042609_spec3_00001_asn.json",
+      "version_id": "20261012t042609",
+      "code_version": "3.0.0",
+      "members": [
+        {
+          "expname": "jw01230007001_07101_00001_nrs1_cal.fits",
+          "exptype": "science",
+          "exposerr": "null",
+          "asn_candidate": "[('o007', 'observation')]"
+        },
+        {
+          "expname": "jw01230007001_07101_00002_nrs1_cal.fits",
+          "exptype": "science",
+          "exposerr": "null",
+          "asn_candidate": "[('o007', 'observation')]"
+        },
+        {
+          "expname": "jw01230007001_07101_00003_nrs1_cal.fits",
+          "exptype": "science",
+          "exposerr": "null",
+          "asn_candidate": "[('o007', 'observation')]"
+        },
+        {
+          "expname": "jw01230007001_02101_00001_nrs1_cal.fits",
+          "exptype": "target_acquisition",
+          "exposerr": "null",
+          "asn_candidate": "[('o007', 'observation')]"
+        },
+        {
+          "expname": "jw01230007001_02101_00002_nrs1_cal.fits",
+          "exptype": "target_acquisition",
+          "exposerr": "null",
+          "asn_candidate": "[('o007', 'observation')]"
+        }
+      ]
+    },
+    "parser": "scripts/parse_wise0855_prism.py",
+    "parser_sha256": "f50d0378aa52c92d9d5576c9f01636c48dbabb91c5780594102be75ba41e8762",
+    "mast_policy": "https://archive.stsci.edu/publishing/data-use"
+  },
+  "comparison_scope": {
+    "response_interval_um": [
+      4.26602,
+      5.110683
+    ],
+    "source": "R7 lab response extent and ±0.0064 µm shifts, prior prefreeze diagnostic; no bandpass performed here",
+    "old_g395m_usable_end_um": 5.093073844909667,
+    "max_allowed_gap_um": 0.01
+  },
+  "interpretation": [
+    "MAST stage-3 PRISM is not the author-extracted figure 3 data and is not combined with G395M here.",
+    "Association names three science members and two target-acquisition members; EXPCOUNT=7 is a separate header value, not an independently verified count of science exposures.",
+    "The pointwise DQ/finite/positive-error checks and 0.01 µm sampling criterion are descriptive, not proof of calibration or independent uncertainty.",
+    "PRISM wavelength-dependent resolution and line-spread function smooth spectral structure; coverage alone does not make this exact truth for any higher-resolution response.",
+    "No rescaling, merged spectrum, source injection, spectral integration, centroid fitting, or claim of astronomical validation."
+  ],
+  "sources": {
+    "paper": "https://doi.org/10.3847/1538-3881/ad0b72",
+    "jwst_dispersers": "https://jwst-docs.stsci.edu/jwst-near-infrared-spectrograph/nirspec-instrumentation/nirspec-dispersers-and-filters",
+    "nirspec_instrument_paper": "https://doi.org/10.1051/0004-6361/202142663",
+    "mast_products_api": "https://mast.stsci.edu/api/v0/_services.html"
+  }
+}

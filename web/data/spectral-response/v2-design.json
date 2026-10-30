@@ -1,0 +1,59 @@
+{
+  "rules": {
+    "version": "0.10.0-spectral-reference-development.2",
+    "scope": "17 nominal D6 laboratory channels and one existing MAST WISE 0855 spectrum; no new sky fields or fits",
+    "channels": 17,
+    "detector": 6,
+    "response_kinds": [
+      "Cent",
+      "Allpix"
+    ],
+    "wavelength_shifts_um": [
+      -0.0064,
+      0.0,
+      0.0064
+    ],
+    "shift_interpretation": "sensitivity only; not a QR2/QR3 release mapping or correction",
+    "maximum_spectral_gap_um": 0.01,
+    "spectrum_mask": "DQ==0, flux/error finite, error>0; negative flux retained",
+    "response_interpretation": "signed_laboratory_measurement",
+    "weighting": "photon convention: F_nu*R/lambda, normalized by R/lambda; diagnostic, pipeline calibration convention not verified",
+    "missing_support": "no extrapolation, no bridging invalid samples; full-band mean null if any nonzero absolute response weight unsupported",
+    "uncertainty": "no diagonal independent-sample error or confidence interval; full spectral covariance/calibration/variability unknown",
+    "numerical_failure": "retain every attempt; numerical integration failures are separate from partial spectral support, never zero flux",
+    "qualifications": [
+      "R7 laboratory response is not the exact per-pixel QR2 response; no detector-coordinate binding is performed.",
+      "Signed response samples cannot serve as nonnegative physical photon truth without a separately validated model.",
+      "No centroid, motion, astrometric truth, injection, detection or scientific promotion is produced.",
+      "Cent and Allpix share laboratory measurements; they are sensitivity variants, not independent validation sources."
+    ]
+  },
+  "sources": {
+    "scripts/lab_spectral_response.py": "806307f66a4016ce16cb033aae5860a28552a06f2f4b4cb976c98f7d11fcd638",
+    "scripts/parse_wise0855_x1d.py": "960facdf0bbf9c25782b8ecf65f369fd5fc4045c3ad2bc8258b4cac186cbfd8d",
+    "scripts/spectral_bandpass.py": "c29d4c94a07b6e7bfef3d93147d77d223f4c375ac83af66477c6d0a4a568bbd9",
+    "scripts/audit_spectral_reference.py": "9bde0c5c4e19916a48e6e49c668c5f5cd2a6110e73cd3f239417edb4d95767aa",
+    "scripts/spectral_bandpass_v2.py": "f22f07015bb05f736a040933fab4f950a73b1ea4d9e0541f2891b0b597882abf",
+    "scripts/audit_spectral_reference_v2.py": "767406f03251747aa8f0ada96c42f0f1e9b9205c327f707a3688b561b5d63387",
+    "tests/test_lab_spectral_response.py": "1aefdcf4282a08046102a017021dd33c98519e0e331c7e0e1355e5b9d26d905a",
+    "tests/test_wise0855_x1d.py": "b1c2908044ba843b948d75749c0d62b5ef41cd87fcf9ec57ba50a9db22e50202",
+    "tests/test_spectral_bandpass.py": "66f7ec3908d642c59a65f2467192ecf8577ba8ff878a3b6522bed8ea982673db",
+    "tests/test_spectral_bandpass_v2.py": "6868269fb6dcc75e2692c34f8e7e7da022b3c01594f07a2543ee2d6f8fc534ce",
+    "docs/SPECTRAL_REFERENCE_PROTOCOL.md": "24905d3f71c0e2c6c3f5c13326829db8e6a6e2c66f08eb248dc30e53c03a5fd5",
+    "docs/SPECTRAL_REFERENCE_V2.md": "b3e61f4c67e72248b6db7dbd56131af3b6f88256172b7a63f55214f47b8377ce",
+    "web/data/spectral-response/design.json": "f72bf0aa33349c9ee8613c7b0dab284c875689d1c6048dc948c5a132c7e51605",
+    "web/data/external/wise0855-sed-reference.json": "b17b4fb59e662b0372939f8627b01f1b75772dae542538f10111c30fd38d9343",
+    "requirements.txt": "6a72e6a6e45a29266d807d680d1ba0dcb118c08ae1c25f8cc9850a1cb996e8e7"
+  },
+  "raw": {
+    "data/raw/external/spherex-spectral-calibration/SPHERExSpectralFiles_202607.tar": {
+      "sha256": "45ff6c57ca68da00a595a4e8a5c2f875cc98b094fde143d9ce109e69df252f09",
+      "bytes": 436705280
+    },
+    "data/raw/external/wise0855/jw01230-o007_t001-s000000001_nirspec_f290lp-g395m-s200a1-subs200a1_x1d.fits": {
+      "sha256": "9474fbbcfe1304fa6763fd3a9ea3190f419785763f53a1827ac997aef84e19a6",
+      "bytes": 322560
+    }
+  },
+  "status": "development diagnostic, not validation or calibration"
+}
