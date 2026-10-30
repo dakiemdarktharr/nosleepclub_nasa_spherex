@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-10-30 22:12:53 UTC",
+  "deployment_id": "dpl_FDtN1owqLjUdrdCSoaY9gn1Z5Yp9",
+  "commit": "f2e2aa4247e5baf3d91063e67b830f0665c9f569",
+  "state": "READY",
+  "target": "production",
+  "url": "nosleepclub-nasa-spherex-o8l0b2wcx-acne-a6cd.vercel.app",
+  "source": "git",
+  "building_at": 1793398067805,
+  "ready_at": 1793398112785,
+  "public_alias": "https://nosleepclub-nasa-spherex.vercel.app",
+  "public_verification": "production-f2e2aa4.json",
+  "build_events": [
+    {
+      "created": 1793398118712,
+      "date": 1793398118712,
+      "type": "stdout",
+      "text": "Build cache uploaded: 626.000ms",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398118086,
+      "date": 1793398118086,
+      "type": "stdout",
+      "text": "Uploading build cache [40.25 MB]",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398118086,
+      "date": 1793398118086,
+      "type": "stdout",
+      "text": "Created build cache: 5s",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398112937,
+      "date": 1793398112937,
+      "type": "stdout",
+      "text": "Creating build cache...",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398112933,
+      "date": 1793398112933,
+      "type": "stdout",
+      "text": "Deployment completed",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398083197,
+      "date": 1793398083197,
+      "type": "stdout",
+      "text": "Deploying outputs...",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398083160,
+      "date": 1793398083160,
+      "type": "stderr",
+      "text": "Build Completed in /vercel/output [12s]",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398079930,
+      "date": 1793398079930,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398079728,
+      "date": 1793398079728,
+      "type": "stdout",
+      "text": "Installing required dependencies from uv.lock...",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398079707,
+      "date": 1793398079707,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398079699,
+      "date": 1793398079699,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398076603,
+      "date": 1793398076603,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398076354,
+      "date": 1793398076354,
+      "type": "stdout",
+      "text": "Installing required dependencies from uv.lock...",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398076335,
+      "date": 1793398076335,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398076323,
+      "date": 1793398076323,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398072645,
+      "date": 1793398072645,
+      "type": "stdout",
+      "text": "Compiling Python bytecode...",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398071905,
+      "date": 1793398071905,
+      "type": "stdout",
+      "text": "Installing required dependencies from web/requirements.txt...",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398071602,
+      "date": 1793398071602,
+      "type": "stdout",
+      "text": "Using uv 0.13.5 (x86_64-unknown-linux-gnu)",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398071576,
+      "date": 1793398071576,
+      "type": "stdout",
+      "text": "Using Python 3.12 from web/.python-version",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398071228,
+      "date": 1793398071228,
+      "type": "stderr",
+      "text": "Vercel CLI 65.4.0",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398071219,
+      "date": 1793398071219,
+      "type": "stdout",
+      "text": "Running \"vercel build\"",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398070889,
+      "date": 1793398070889,
+      "type": "stdout",
+      "text": "Restored build cache from previous deployment (AH4SZFa3yuCrq1N41ni4pYkzU4F2)",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398070801,
+      "date": 1793398070801,
+      "type": "stdout",
+      "text": "Cloning completed: 3.167s",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398067634,
+      "date": 1793398067634,
+      "type": "stdout",
+      "text": "Cloning github.com/dakiemdarktharr/nosleepclub_nasa_spherex (Branch: main, Commit: f2e2aa4)",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398067513,
+      "date": 1793398067513,
+      "type": "stdout",
+      "text": "Build machine configuration: 2 cores, 8 GB",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    },
+    {
+      "created": 1793398067513,
+      "date": 1793398067513,
+      "type": "stdout",
+      "text": "Running build in Washington, D.C., USA (East) – iad1",
+      "info": {
+        "type": "build",
+        "name": "bld_bg5t0jfop",
+        "entrypoint": "."
+      }
+    }
+  ],
+  "bundle_optimization_warning_observed": false,
+  "qualifications": [
+    "READY is deployment metadata only; the separate 54-response public receipt verifies served assets, API commit and QA lifecycle.",
+    "No artifact byte size is independently reported here; exclusion behavior and the generated contract are checked in CI and actual review validation succeeds.",
+    "Two ffbd7c1 build failures, including without cache, are retained separately. Exact provider-internal cause was not established."
+  ]
+}

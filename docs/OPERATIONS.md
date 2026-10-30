@@ -94,3 +94,19 @@ Test isolated chỉ có thư mục `api` xác minh đọc contract và từ ch�
 sai/analysis cũ. Cần build Vercel và smoke đủ artifact/API/cleanup trên commit
 mới trước khi coi đây là khắc phục đã kiểm chứng. [Vercel Python configuration](https://vercel.com/docs/functions/runtimes/python/api-directory)
 mô tả phạm vi loại file khỏi function; điều này không tự chứng minh build.
+
+PR #9 sau đó qua [CI 387 ca](evidence/0.10/ci-pr9-f88b340.json), 13 optional
+raw-cache/photutils skip, sáu ca Mongo fixture thật và bốn suite Node. Main
+`f2e2aa4` build thành công, deployment `dpl_FDtN1owqLjUdrdCSoaY9gn1Z5Yp9`
+READY; log ghi build 12 giây và không có cảnh báo tối ưu bundle như hai lần
+lỗi. Không có số đo độc lập byte size từng function nên không suy ra mức
+giảm cụ thể. [Metadata và log](evidence/0.10/deployment-f2e2aa4.json).
+
+[54 response public](evidence/0.10/production-f2e2aa4.json) xác minh 40 static
+asset theo Git blob, API commit, nguồn cutout/mask và toàn bộ vòng đời review
+QA với cleanup. Contract mới thực sự phục vụ POST hợp lệ và chặn analysis
+cũ, không chỉ qua test fake. Hai metadata GET 200 mất 1,453/1,094 giây,
+frame 200 mất 2,688 giây; không có retry upstream trong lượt này. Browser
+public xác minh bảng và đổi mẫu, gồm ca 0/16; viewport mobile/tablet được
+kiểm riêng local. Đây là khắc phục đóng gói đã kiểm chứng trong release này,
+chưa xác định chính xác lỗi nội bộ builder hoặc chứng minh SLO/recovery.
