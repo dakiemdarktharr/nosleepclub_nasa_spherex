@@ -23,6 +23,25 @@
   const displayMjd=v=>Number.isFinite(v)?`MJD ${v.toFixed(5)}`:"Không có MJD";
   function stop() {if(timer){clearInterval(timer);current=displayed;renderList();el("explorer-previous").disabled=current===0;el("explorer-next").disabled=current===rows.length-1;}timer=null;el("explorer-play").textContent="Phát 2 ảnh đã tải";}
   function setStatus(text,error=false) {el("explorer-status").textContent=text;el("explorer-status").classList.toggle("is-error",error);}
+  function apiError(response,code) {
+    if(response.status===429){const retry=response.headers?.get("Retry-After");return `Đã đạt giới hạn tạm thời${retry&&/^\d{1,5}$/.test(retry)?`. Thử lại sau ${retry} giây`:". Hãy thử lại sau"}`;}
+    if(code==="upstream_timeout")return "IRSA phản hồi quá chậm";
+    if(response.status===503)return "Dịch vụ tạm chưa sẵn sàng";
+    if(response.status===502)return "Chưa đọc được dữ liệu nguồn từ IRSA";
+    return `Máy chủ chưa xử lý được yêu cầu (HTTP ${response.status})`;
+  }
+  async function fetchObservations(url,signal) {
+    for(let attempt=0;attempt<2;attempt++){
+      if(signal.aborted)throw new DOMException("Đã đổi vùng trời","AbortError");
+      const response=await fetch(url,{signal});
+      if(attempt===0&&[502,504].includes(response.status)){
+        await response.json().catch(()=>{});
+        if(signal.aborted)throw new DOMException("Đã đổi vùng trời","AbortError");
+        setStatus("IRSA đang chậm hoặc tạm lỗi. Đang thử lại lần 2/2…");continue;
+      }
+      return response;
+    }
+  }
   function clearImages() {for(const item of images.values())URL.revokeObjectURL(item.src);images.clear();}
   function resetDisplay() {
     el("explorer-image").hidden=true;el("explorer-image").removeAttribute("src");
@@ -67,7 +86,7 @@
       const p=new URLSearchParams({url:row.access_url,ra:search.ra.toString(),dec:search.dec.toString(),fov_deg:search.fov.toString(),zodi:"subtract"});
       if(range){p.set("low",range[0].toString());p.set("high",range[1].toString());}
       const response=await fetch(`/api/frame?${p}`,{signal});
-      if(!response.ok){let error;try{error=(await response.json()).error;}catch{}throw new Error(error||`Ảnh trả HTTP ${response.status}`);}
+      if(!response.ok){let error;try{error=(await response.json()).error;}catch{}throw new Error(apiError(response,error));}
       if(!response.headers.get("Content-Type")?.startsWith("image/png"))throw new Error("Máy chủ chưa cung cấp ảnh PNG.");
       const blob=await response.blob();if(seq!==generation)throw new DOMException("Đã đổi vùng trời","AbortError");
       const info={src:URL.createObjectURL(blob),headers:Object.fromEntries([...response.headers].filter(([key])=>key.startsWith("x-frame-"))),row};
@@ -110,7 +129,7 @@
     resetDisplay();el("explorer-results").hidden=true;el("explorer-search").disabled=true;
     setStatus("Đang truy vấn độ phủ SPHEREx tại IRSA…");
     try {
-      const response=await fetch(`/api/observations?${query.p}`,{signal:request.signal});const data=await response.json();if(!response.ok)throw new Error(data.error||`HTTP ${response.status}`);if(seq!==generation)return;
+      const response=await fetchObservations(`/api/observations?${query.p}`,request.signal);const data=await response.json();if(!response.ok)throw new Error(apiError(response,data.error));if(seq!==generation)return;
       rows=data.observations.slice().sort((a,b)=>(a.t_min_mjd??Infinity)-(b.t_min_mjd??Infinity));provenance=data.provenance;
       el("explorer-results").hidden=false;el("explorer-count").textContent=`${rows.length} quan sát D${query.det} · ${query.release.toUpperCase()}`;
       el("explorer-display").hidden=!rows.length;el("explorer-current").disabled=!rows.length;

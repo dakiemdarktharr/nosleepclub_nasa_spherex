@@ -99,6 +99,8 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control", "private, no-store")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("X-Request-ID", self.request_id)
+        commit = os.environ.get("VERCEL_GIT_COMMIT_SHA", "")
+        if re.fullmatch(r"[0-9a-f]{40}", commit): self.send_header("X-App-Commit", commit)
         if hasattr(self, "rate_remaining"):
             self.send_header("RateLimit-Limit", str(LIMIT))
             self.send_header("RateLimit-Remaining", str(self.rate_remaining))
