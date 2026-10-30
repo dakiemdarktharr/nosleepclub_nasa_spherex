@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "role": "field centers for observation discovery, not measured source positions",
+  "targets": [
+    {"id":"wise0855","name":"WISE 0855","ra_deg":133.7601213914074,"dec_deg":-7.242127941212259,"fov_deg":0.06,"coordinate_epoch":"2026-01-01","coordinate_type":"existing Luhman/observer prediction, guide only","source":"scripts/build_demo.py:expected_position; docs/WISE0855_GAIA.md"},
+    {"id":"barnard","name":"Barnard’s Star","ra_deg":269.44626688537255,"dec_deg":4.768222216475269,"fov_deg":0.06,"coordinate_epoch":"J2026.0 TCB","coordinate_type":"Gaia DR3 space-motion prediction, no observer parallax, guide only","source":"web/data/benchmark/protocol.json positive_control; Gaia DR3 4472832130942575872; RV -110.11 km/s"},
+    {"id":"epsilon","name":"Epsilon Indi B","ra_deg":331.04583333,"dec_deg":-56.78333333,"fov_deg":0.12,"coordinate_epoch":"historical ESO field center, approximately 2004","coordinate_type":"coarse field center; wider field accommodates proper motion; binary unresolved","source":"https://www.hq.eso.org/sci/activities/vltsv/visirsv/sterzik.html"},
+    {"id":"rwaur","name":"RW Aurigae","ra_deg":76.95652603458332,"dec_deg":30.401438173888888,"fov_deg":0.06,"coordinate_epoch":"catalog J2000 field center","coordinate_type":"field center only","source":"https://simbad.cds.unistra.fr/simbad/sim-id?Ident=RW+Aur"},
+    {"id":"rdra","name":"R Draconis","ra_deg":248.16761083294998,"dec_deg":66.75497941722,"fov_deg":0.06,"coordinate_epoch":"catalog J2000 field center","coordinate_type":"field center only","source":"https://simbad.cds.unistra.fr/simbad/sim-id?Ident=V%2A+R+Dra"}
+  ]
+}

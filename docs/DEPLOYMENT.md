@@ -1,6 +1,6 @@
 # Vercel + MongoDB
 
-Vercel project: `nosleepclub-nasa-spherex`, root `web/`, production public, preview vẫn có SSO. Static HTML/CSS/JS, một Python 3.12 Function `/api/reviews`, Singapore `sin1`. Không cài Node hoặc các dependency khoa học lên runtime web. Hướng dẫn [Python /api chính thức](https://vercel.com/docs/functions/runtimes/python/api-directory).
+Vercel project: `nosleepclub-nasa-spherex`, root `web/`, production public, preview vẫn có SSO. Static HTML/CSS/JS, các Python Functions `/api/reviews`, `/api/observations`, `/api/frame`, Singapore `sin1`. Không dùng Node ở runtime web. Bản 0.10 cài riêng Astropy/NumPy/Pillow để đọc FITS/WCS và dựng ảnh; các phép fit khoa học nặng vẫn chạy offline. Hướng dẫn [Python /api chính thức](https://vercel.com/docs/functions/runtimes/python/api-directory).
 
 MongoDB Atlas project riêng `NoSleepClub_NASA_SPHEREx`, cluster M0 `nosleepclub-spherex`, AWS Singapore. Database `nosleepclub_nasa_spherex`; DB user chỉ có `readWrite` database này và giới hạn cluster này. `MONGODB_URI` là biến **sensitive chỉ production** trong Vercel; không có ở frontend, repo hoặc preview. Không log URI, cookie hay nội dung nhận xét.
 
@@ -23,3 +23,6 @@ Bản 0.8 bổ sung các sản phẩm tĩnh `data/covariance/`, không đổi sc
 
 
 Bản 0.9 thêm `data/ablation/` và bảng chọn mô hình/hiệu chuẩn có miền hỗ trợ; runtime web và schema MongoDB không đổi. Script smoke đối chiếu hash design, selection, calibrator, seal, summary và ba kết quả trường mới trước chu trình review QA. Wrapper offline `python -m scripts.run_ablation <phase>` chặn ghi đè các phase hoàn tất; không chạy các fit qua API web.
+
+
+Bản 0.10 thêm hai API đọc dữ liệu IRSA và dựng ảnh thật. Frame có deadline/socket/byte caps, cache và quota; cấu hình maxDuration=120 cần được deployment thực chấp nhận (Hobby cần Fluid compute). Guard production cần system env VERCEL_ENV đúng và URI MongoDB hiện có; thiếu ngữ cảnh triển khai thì fail-closed, local chỉ bật rõ bởi serve_app. Xem SKY_EXPLORER.md và API_ABUSE_CONTROLS.md. Chưa coi cấu hình file là bằng chứng deployment hoặc SLO. Goal và các nghiệm thu còn mở ở PRODUCTION_READINESS.md.

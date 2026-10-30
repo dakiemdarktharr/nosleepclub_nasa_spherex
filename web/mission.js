@@ -57,7 +57,7 @@ async function setupRelease() {
     $("release-verdict").textContent=passed.length?"Qua gate điểm ước lượng · cần kiểm chứng thêm":"Chưa giảm sai lệch ổn định";
     releaseTable();
   } catch {$("release-verdict").textContent="Chưa tải được kết quả";$("release-rows").innerHTML='<tr><td colspan="7">Tải lại trang để lấy kết quả kiểm chứng.</td></tr>';}
-  finally {$("validation").removeAttribute("aria-busy");}
+  finally {$("release-validation").removeAttribute("aria-busy");}
 }
 [$("release-spectrum"),$("release-truth")].forEach(select=>select.addEventListener("change",releaseTable));
 $("release-evidence").addEventListener("click",()=>{

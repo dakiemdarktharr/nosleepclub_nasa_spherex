@@ -8,7 +8,7 @@ The user authorized implementation, verification, repository updates and deploym
 
 | ID | Finding and chosen work | Acceptance evidence | State |
 |---|---|---|---|
-| 01 | RA/Dec query, time series, spectral/FOV controls and five challenge targets | Coordinate parsing/coverage tests, actual IRSA data, browser journeys including no-data states | Open |
+| 01 | RA/Dec query, time series, spectral/FOV controls and five challenge targets | SKY_EXPLORER.md; five live QR2 queries + ten FITS/PNG hashes; BROWSER_VERIFICATION.md local query/pin/blink; deployment pending | In progress |
 | 02 | WISE 0855 scientific contract and uncertainty budget | Conditional/raw/calibrated uncertainty distinguished; target-like independent controls and successful release gate | Open |
 | 03 | Per-exposure time model and identifiable motion/parallax | Design-rank checks and withheld-epoch predictions; unsupported parameters withheld | Open |
 | 04 | Local spectral compatibility and chromatic null tests | Per-source CWAVE/CBAND audit, leave-band-out controls; response limits explicit | Open |
@@ -25,7 +25,7 @@ The user authorized implementation, verification, repository updates and deploym
 | 15 | Isolated, resumable science jobs | Concurrent fields never share mutable WCS; bounded work, idempotent artifacts and visible failure states | Open |
 | 16 | Reproducibility, release provenance and documentation | Clean-environment check, immutable input versions and release manifests; stale instructions corrected; license decision recorded | Open |
 | 17 | Review lifecycle and scientific follow-through | Stable owner-scoped IDs, deletion across analysis versions, explicit expiry and review export/history | In progress: API specialist |
-| 18 | Task-based accessible frontend | Clear current analysis, default matches primary config, archive separated; keyboard/mobile/browser evidence | Open |
+| 18 | Task-based accessible frontend | Clear current analysis, default matches primary config, archive separated; BROWSER_VERIFICATION.md local keyboard/mobile; full accessibility pending | In progress |
 | 19 | Guest security and abuse resistance | Cross-owner/Origin/input tests, trustworthy rate identity, no secret logging, explicit guest limits | In progress: API specialist |
 | 20 | CI, observability, load, recovery and release | Required automated checks, sanitized diagnostics, tested restore/rollback and measured service objectives | In progress: API specialist (logging) |
 
@@ -47,4 +47,15 @@ All 20 acceptance items have evidence or an explicitly approved scope decision; 
 
 - Baseline: `d56a920`, public deployment and locked 0.9 products; scientific gate failed.
 - `/goal` created and active. No token limit was requested.
-- Supporting agent: review/API backend specialist, Terra xhigh, limited to API/tests/contract. Root owns science, frontend and integration.
+- Supporting work is serial: review/API specialist followed by numerical/statistical specialist, both Terra xhigh. Root owns science acceptance, frontend and integration. At most one supporting agent is active.
+
+
+## Checkpoint 0.10 in progress
+
+- `a33dd64`: opened-field diagnostic runner and this ledger. `ecd61de`: profile-curvature comparison frozen before its Monte Carlo evaluation.
+- `f138e11`: continuous target-ePSF candidate and paired development protocol committed before Monte Carlo. The diagnostic found finite jumps at the old template boundary; padding removes the sampled jumps, but that alone is not a physical PSF or uncertainty validation.
+- All five challenge targets: 43/42/57/36/89 D6 QR2 observations in the checked queries, ten real cutouts rendered. This verifies data access/display, not source motion or variability.
+- Six opened-field cases replay exactly; 64 fresh Gaussian-noise draws/case show raw uncertainty undercoverage in all low-SNR groups. Profile-LR helps partially; full profile Hessian is often step-unstable. No point model/calibrator is promoted. See BIAS_DIAGNOSTICS.md.
+- Backend lifecycle, API limits, source-provenance, and JS race controls implemented and tested locally. Review-store/explorer tests execute the real JS with DOM/HTTP test doubles. Full deployment, real Mongo quotas/expiry and browser evidence still being collected.
+- 142 Python tests passed locally; both real JS lifecycle/race suites passed in V8. Local browser verified a 77-frame query, two real images with the same contrast, pin/blink, review save/delete, strict WISE default, archived deep link and mobile menu/layout. See BROWSER_VERIFICATION.md; these checks do not close cloud or scientific gates.
+- Added CI and operational runbooks. Backup/restore/load/rollback and external scientific acceptance remain unverified. No paid infrastructure or credential scope changed.
