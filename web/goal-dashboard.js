@@ -29,4 +29,32 @@
     }
     el("continuous-epsf-note").textContent=`Hessian nhạy với bước sai phân giảm từ ${before}/${total} xuống ${after}/${total} epoch-fit. RMS sai số chưa giảm ở cả sáu ca; uncertainty nguồn mờ vẫn thiếu coverage. Chưa thay phép đo WISE hoặc hiệu chuẩn khoa học.`;
   }).catch(error=>{el("continuous-epsf-note").textContent=`Chưa tải được đối chứng ePSF: ${error.message}. Mở JSON hoặc báo cáo nguồn.`;});
+  const sandwichDetails=el("sandwich-details");
+  let sandwichData=null, sandwichPending=false;
+  function renderSandwich(){
+    if(!sandwichData)return;
+    const level=el("sandwich-level").value,selection=el("sandwich-selection").value,rows=el("sandwich-rows");rows.replaceChildren();
+    const methods=["gauss_newton","profile_hessian","exposure_sandwich"];
+    for(const item of sandwichData.cases){
+      const s=item.summary.selections[selection],tr=document.createElement("tr");
+      const counts=methods.map(method=>{const c=s.methods[method].centroid_only.coverage[level];return `${c.inside}/${c.denominator} (${n(c.fraction*100,1)}%)`;});
+      const areas=methods.map(method=>n(s.methods[method].centroid_only.median_ellipse68_area_arcsec2,2)).join(" / ");
+      for(const text of [item.field,n(item.snr_per_frame,0),...counts,areas,n(s.rms_arcsec,3)]){const td=document.createElement("td");td.textContent=text;tr.append(td);}rows.append(tr);
+    }
+    el("sandwich-note").textContent=`Mức ${level}% · ${selection==="accepted"?"chỉ các lượt qua quality gate":"toàn bộ lượt thử"}. Mẫu số trong mỗi ô là số covariance tính được; cả ba cách đều hỗ trợ 128/128 lượt mỗi ca trước lọc. Diện tích luôn ở mức 68%; RMS dùng cùng vị trí fit cho cả ba cách.`;
+  }
+  async function loadSandwich(){
+    if(sandwichData||sandwichPending)return;
+    sandwichPending=true;el("sandwich-retry").hidden=true;el("sandwich-note").textContent="Đang tải kết quả…";
+    try{
+      const response=await fetch("data/sandwich/overview.json");if(!response.ok)throw Error(response.status);
+      const data=await response.json();if(data.version!=="0.10.0-sandwich-overview.1"||data.cases.length!==6)throw Error("định dạng chưa tương thích");
+      sandwichData=data;renderSandwich();
+    }catch(error){el("sandwich-note").textContent=`Chưa tải được kết quả: ${error.message}. Bạn có thể thử lại hoặc tải JSON nguồn.`;el("sandwich-retry").hidden=false;}
+    finally{sandwichPending=false;}
+  }
+  sandwichDetails.addEventListener("toggle",()=>{if(sandwichDetails.open)loadSandwich();});
+  el("sandwich-level").addEventListener("change",renderSandwich);el("sandwich-selection").addEventListener("change",renderSandwich);
+  el("sandwich-retry").addEventListener("click",loadSandwich);
+  if(sandwichDetails.open)loadSandwich();
 })();

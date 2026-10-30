@@ -10,6 +10,8 @@ Ngày 2026-10-30, kiểm tra thủ công trong trình duyệt theo phương phá
 - Mở báo cáo ePSF bằng Enter, thấy cả sáu hàng có mẫu số và giá trị đúng. Kho thí nghiệm cũ mở theo deep link. Điều khiển thời gian nhận phím End để tới ảnh cuối.
 - Menu mobile mở và đóng khi chọn liên kết; layout 390 × 844 không có input/select/button phần Khám phá tràn ngang. Nút đóng bằng Escape đã được bổ sung; kiểm tra production sau deploy còn cần ghi nhận.
 
+Bổ sung production `c88fe57`: Tab/Shift+Tab vòng trong dialog và Escape trả về nút mở đều đã thử trên URL public; menu mobile Escape đóng và trả focus đúng. [Ảnh focus](evidence/0.10/dialog-keyboard-production.png). Bảng sandwich mới được thử riêng local: hai select có tên accessible tường minh; Enter mở details, các lựa chọn 50/68/95% và mẫu accepted hiển thị đúng. Chiều ngang document mobile không tăng theo bảng; vùng bảng cuộn ngang riêng. Phần này chưa thay thế screen-reader/reflow audit.
+
 Ảnh kiểm tra vòng focus: [dialog-keyboard-local.jpg](evidence/0.10/dialog-keyboard-local.jpg). Kiểm tra web/dữ liệu thật và giới hạn môi trường ở [BROWSER_VERIFICATION.md](BROWSER_VERIFICATION.md).
 
 ## Còn cần kiểm tra

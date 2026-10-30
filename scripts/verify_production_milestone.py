@@ -19,7 +19,10 @@ PINNED_FRAME='https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_
 PINNED_CUTOUT_SHA='514ac17f7c8d2b7de1f723e4464dfc85a1caacf666f868e70fd844c9d80de8a6'
 ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js','mission.css',
         'data/manifest.json','data/continuous-epsf/design.json',
-        'data/continuous-epsf/development-summary.json','data/explorer-check/coverage.json')
+        'data/continuous-epsf/development-summary.json','data/explorer-check/coverage.json',
+        'data/sandwich/design.json','data/sandwich/overview.json','data/sandwich/development-summary.json',
+        'data/time-model/development-audit.json','data/external/spiff-reference.json',
+        'data/independent-fields/selection.json')
 
 
 def require(condition, label):

@@ -21,3 +21,12 @@ Kiểm tra trực tiếp ngày 2026-10-30 trên trình duyệt trong ứng dụn
 ## Chưa nghiệm thu
 
 Vercel bundle/timeout và nhận diện môi trường, MongoDB quota/TTL/owner isolation thật, review mất cookie nhiều tab, screen-reader, bàn phím toàn trang, phục hồi dữ liệu, tải đồng thời và phép đo khoa học độc lập. Không gọi trang đã đạt production chỉ dựa trên những bước ở trên.
+
+## Bổ sung sau triển khai và nghiên cứu mới
+
+- Production `c88fe57`, deployment `dpl_CWVm5qSJb2d7npBPv1ngV7vw3HGG`: [24 response checks](evidence/0.10/production-c88fe57.json) đạt, gồm commit API, cutout thật, review transaction/isolation/expiry và cleanup QA. Đây bổ sung bằng chứng API còn thiếu ở phần trên; không phải phép tải đồng thời hay chờ TTL 180 ngày thực sự trôi qua.
+- Trình duyệt production xác nhận mặc định phổ chặt, nhãn chưa hiệu chuẩn, overlays đo/dự báo chưa bật và lưu trữ MongoDB. Tab từ nút cuối dialog về nút đóng; Shift+Tab quay lại nút cuối; Escape đóng và trả focus về `workspace-help`. [Ảnh focus production](evidence/0.10/dialog-keyboard-production.png). Menu mobile Escape trả `aria-expanded=false`, focus về nút menu; document không tràn ngang ở viewport yêu cầu 390 × 844 (content area đo được 375 pixel).
+- Bảng sandwich mới đã thử **local**, chưa dùng ảnh chụp này để xác nhận deployment: mở bằng Enter, mặc định 68%/toàn bộ; đổi 50/95% và accepted cập nhật đúng tử/mẫu. Ví dụ w090p10 SNR2 ở 95% accepted cho GN/H/sandwich là 95/124, 108/124, 101/124. Không có lỗi JavaScript trong các thao tác này. [Desktop](evidence/0.10/sandwich-desktop.png), [mobile](evidence/0.10/sandwich-mobile.png); bảng giữ cuộn ngang riêng, control không tràn trang.
+- Trang chỉ tải overview sandwich khoảng 177 KB khi mở; bản audit 8,2 MB là liên kết tải chủ động. Cả hai chứa hash để đối chiếu; biểu đồ/bảng không thêm một phép đo WISE mới.
+
+Screen-reader thực, keyboard toàn trang, reflow 200–400%, mobile/touch thực, mất cookie nhiều tab, load/restore và khoa học độc lập vẫn chưa được nghiệm thu đầy đủ.

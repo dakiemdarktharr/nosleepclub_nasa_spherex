@@ -1,0 +1,1230 @@
+{
+  "stage": "field_selection_only",
+  "status": "prospective_geometry_only",
+  "source_path": "scripts/select_independent_fields.py",
+  "source_sha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626",
+  "rules": {
+    "base_ra_deg": [
+      12,
+      48,
+      84,
+      120,
+      156,
+      192,
+      228,
+      264,
+      300,
+      336
+    ],
+    "declination_deg": [
+      -45,
+      0,
+      45
+    ],
+    "ra_offset_candidates_deg": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+    ],
+    "offset_choice": "first offset in ascending order satisfying both separation rules using cached center metadata only",
+    "cached_center_minimum_deg_inclusive": 6.0,
+    "new_field_minimum_deg_exclusive": 6.0,
+    "distance": "spherical great-circle; RA wraps modulo 360; 1e-12 degree roundoff treated as equality",
+    "split_sha256_input": "nosleepclub-independent-fields-20261030-v1|field_id",
+    "split_per_declination_ring": {
+      "calibration": 4,
+      "validation": 4,
+      "final_holdout": 2
+    },
+    "field_id": "r{RA:03d}{p|m}{abs(Dec):02d}; coordinates integer degrees",
+    "old_fields_role": "development",
+    "evidence": "cached manifests only; no outcomes, images, spectra or new-field queries"
+  },
+  "chosen_ra_offset_deg": 10,
+  "rejected_offsets": [
+    {
+      "offset_deg": 0,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r156p45",
+        "candidate_ra_deg": 156,
+        "candidate_dec_deg": 45,
+        "cached_ra_deg": 150.0,
+        "cached_dec_deg": 45.0,
+        "manifest_path": "data/raw/quality/v150p45/manifest.json",
+        "manifest_sha256": "3aa6b26d1ddc1c4cdb066393853181c4978210a659a381c104698a222c601b77",
+        "distance_deg": 4.241670935281657
+      },
+      "conflict_count": 1
+    },
+    {
+      "offset_deg": 1,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r157p45",
+        "candidate_ra_deg": 157,
+        "candidate_dec_deg": 45,
+        "cached_ra_deg": 150.0,
+        "cached_dec_deg": 45.0,
+        "manifest_path": "data/raw/quality/v150p45/manifest.json",
+        "manifest_sha256": "3aa6b26d1ddc1c4cdb066393853181c4978210a659a381c104698a222c601b77",
+        "distance_deg": 4.948207271494043
+      },
+      "conflict_count": 1
+    },
+    {
+      "offset_deg": 2,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r158p45",
+        "candidate_ra_deg": 158,
+        "candidate_dec_deg": 45,
+        "cached_ra_deg": 150.0,
+        "cached_dec_deg": 45.0,
+        "manifest_path": "data/raw/quality/v150p45/manifest.json",
+        "manifest_sha256": "3aa6b26d1ddc1c4cdb066393853181c4978210a659a381c104698a222c601b77",
+        "distance_deg": 5.654554720574203
+      },
+      "conflict_count": 2
+    },
+    {
+      "offset_deg": 3,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r267p00",
+        "candidate_ra_deg": 267,
+        "candidate_dec_deg": 0,
+        "cached_ra_deg": 269.45207695861876,
+        "cached_dec_deg": 4.693364966576667,
+        "manifest_path": "data/raw/benchmark/barnard/manifest.json",
+        "manifest_sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "distance_deg": 5.294043829569214
+      },
+      "conflict_count": 1
+    },
+    {
+      "offset_deg": 4,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r268p00",
+        "candidate_ra_deg": 268,
+        "candidate_dec_deg": 0,
+        "cached_ra_deg": 269.45207695861876,
+        "cached_dec_deg": 4.693364966576667,
+        "manifest_path": "data/raw/benchmark/barnard/manifest.json",
+        "manifest_sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "distance_deg": 4.912380666024253
+      },
+      "conflict_count": 1
+    },
+    {
+      "offset_deg": 5,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r269p00",
+        "candidate_ra_deg": 269,
+        "candidate_dec_deg": 0,
+        "cached_ra_deg": 269.45207695861876,
+        "cached_dec_deg": 4.693364966576667,
+        "manifest_path": "data/raw/benchmark/barnard/manifest.json",
+        "manifest_sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "distance_deg": 4.71503880821913
+      },
+      "conflict_count": 1
+    },
+    {
+      "offset_deg": 6,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r270p00",
+        "candidate_ra_deg": 270,
+        "candidate_dec_deg": 0,
+        "cached_ra_deg": 269.45207695861876,
+        "cached_dec_deg": 4.693364966576667,
+        "manifest_path": "data/raw/benchmark/barnard/manifest.json",
+        "manifest_sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "distance_deg": 4.7251690521561445
+      },
+      "conflict_count": 1
+    },
+    {
+      "offset_deg": 7,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r271p00",
+        "candidate_ra_deg": 271,
+        "candidate_dec_deg": 0,
+        "cached_ra_deg": 269.45207695861876,
+        "cached_dec_deg": 4.693364966576667,
+        "manifest_path": "data/raw/benchmark/barnard/manifest.json",
+        "manifest_sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "distance_deg": 4.941495581407834
+      },
+      "conflict_count": 1
+    },
+    {
+      "offset_deg": 8,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r272p00",
+        "candidate_ra_deg": 272,
+        "candidate_dec_deg": 0,
+        "cached_ra_deg": 269.45207695861876,
+        "cached_dec_deg": 4.693364966576667,
+        "manifest_path": "data/raw/benchmark/barnard/manifest.json",
+        "manifest_sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "distance_deg": 5.3390128161167025
+      },
+      "conflict_count": 1
+    },
+    {
+      "offset_deg": 9,
+      "nearest_conflict": {
+        "kind": "cached_center",
+        "candidate_id": "r273p00",
+        "candidate_ra_deg": 273,
+        "candidate_dec_deg": 0,
+        "cached_ra_deg": 269.45207695861876,
+        "cached_dec_deg": 4.693364966576667,
+        "manifest_path": "data/raw/benchmark/barnard/manifest.json",
+        "manifest_sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "distance_deg": 5.8810932783775005
+      },
+      "conflict_count": 1
+    }
+  ],
+  "nearest_cached_center": {
+    "kind": "cached_center",
+    "candidate_id": "r274p00",
+    "candidate_ra_deg": 274,
+    "candidate_dec_deg": 0,
+    "cached_ra_deg": 269.45207695861876,
+    "cached_dec_deg": 4.693364966576667,
+    "manifest_path": "data/raw/benchmark/barnard/manifest.json",
+    "manifest_sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+    "distance_deg": 6.531843243130991
+  },
+  "nearest_new_field_pair": {
+    "kind": "candidate_pair",
+    "candidate_id": "r058m45",
+    "other_candidate_id": "r094m45",
+    "distance_deg": 25.242832961521106
+  },
+  "exclusion_manifests": [
+    {
+      "path": "data/raw/benchmark/barnard/manifest.json",
+      "sha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+      "centers": [
+        {
+          "ra_deg": 269.45207695861876,
+          "dec_deg": 4.693364966576667,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}",
+            "/records/38/{cutout_center_ra,cutout_center_dec}",
+            "/records/39/{cutout_center_ra,cutout_center_dec}",
+            "/records/40/{cutout_center_ra,cutout_center_dec}",
+            "/records/41/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/benchmark/r-dra/manifest.json",
+      "sha256": "e8f9d2790b79b84da4717d777cb756352dec051b804fbf0380ac2c72a0411586",
+      "centers": [
+        {
+          "ra_deg": 248.16761083294998,
+          "dec_deg": 66.75497941722,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}",
+            "/records/38/{cutout_center_ra,cutout_center_dec}",
+            "/records/39/{cutout_center_ra,cutout_center_dec}",
+            "/records/40/{cutout_center_ra,cutout_center_dec}",
+            "/records/41/{cutout_center_ra,cutout_center_dec}",
+            "/records/42/{cutout_center_ra,cutout_center_dec}",
+            "/records/43/{cutout_center_ra,cutout_center_dec}",
+            "/records/44/{cutout_center_ra,cutout_center_dec}",
+            "/records/45/{cutout_center_ra,cutout_center_dec}",
+            "/records/46/{cutout_center_ra,cutout_center_dec}",
+            "/records/47/{cutout_center_ra,cutout_center_dec}",
+            "/records/48/{cutout_center_ra,cutout_center_dec}",
+            "/records/49/{cutout_center_ra,cutout_center_dec}",
+            "/records/50/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/benchmark/rw-aur/manifest.json",
+      "sha256": "09cd2d377801b8f0b325de11448cef0783b6ddd9aea94c1557560a37b8dcede8",
+      "centers": [
+        {
+          "ra_deg": 76.95652603458332,
+          "dec_deg": 30.401438173888888,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/q030m10/manifest.json",
+      "sha256": "b927ce13aa58d3b5a35e060b004233ecdd08a6080a86cf95b7d3729a998338da",
+      "centers": [
+        {
+          "ra_deg": 30.0,
+          "dec_deg": -10.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}",
+            "/records/38/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/q180p20/manifest.json",
+      "sha256": "8bca01b91c6fc78f2b4e84d458f6383a221b0d81b2d454a12e5f6e75d690770c",
+      "centers": [
+        {
+          "ra_deg": 180.0,
+          "dec_deg": 20.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/q300m30/manifest.json",
+      "sha256": "a1446f0e0adfffa30133b0b021c59e57fdf5a6005c20e298c89f50860c99c0bb",
+      "centers": [
+        {
+          "ra_deg": 300.0,
+          "dec_deg": -30.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}",
+            "/records/38/{cutout_center_ra,cutout_center_dec}",
+            "/records/39/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/v060m30/manifest.json",
+      "sha256": "86f3e657242b28933c4e35ccb4726ff12a5510fdef599eb3a6561f744eb88795",
+      "centers": [
+        {
+          "ra_deg": 60.0,
+          "dec_deg": -30.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}",
+            "/records/38/{cutout_center_ra,cutout_center_dec}",
+            "/records/39/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/v150p45/manifest.json",
+      "sha256": "3aa6b26d1ddc1c4cdb066393853181c4978210a659a381c104698a222c601b77",
+      "centers": [
+        {
+          "ra_deg": 150.0,
+          "dec_deg": 45.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}",
+            "/records/38/{cutout_center_ra,cutout_center_dec}",
+            "/records/39/{cutout_center_ra,cutout_center_dec}",
+            "/records/40/{cutout_center_ra,cutout_center_dec}",
+            "/records/41/{cutout_center_ra,cutout_center_dec}",
+            "/records/42/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/v330p10/manifest.json",
+      "sha256": "4c50a3fff6b0cbab0e95b27c4b18df9d844bd43ef6b4e56f4884420ad741eee3",
+      "centers": [
+        {
+          "ra_deg": 330.0,
+          "dec_deg": 10.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}",
+            "/records/38/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/w090p10/manifest.json",
+      "sha256": "03b80dd990842cc2b60574e4183f24e53044d7fa20a92f0ec36f718e46dd6a90",
+      "centers": [
+        {
+          "ra_deg": 90.0,
+          "dec_deg": 10.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/w210m20/manifest.json",
+      "sha256": "decd5bf97b101a6a5215f263ccbec71ec23126690962f89abf6dae238edea02f",
+      "centers": [
+        {
+          "ra_deg": 210.0,
+          "dec_deg": -20.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/quality/w350p35/manifest.json",
+      "sha256": "88e8e1db06ee6864d66eff7a13097f7407ffab1a245dcfd750efbb2c7a043260",
+      "centers": [
+        {
+          "ra_deg": 350.0,
+          "dec_deg": 35.0,
+          "json_pointers": [
+            "/field/{ra,dec}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}",
+            "/records/31/{cutout_center_ra,cutout_center_dec}",
+            "/records/32/{cutout_center_ra,cutout_center_dec}",
+            "/records/33/{cutout_center_ra,cutout_center_dec}",
+            "/records/34/{cutout_center_ra,cutout_center_dec}",
+            "/records/35/{cutout_center_ra,cutout_center_dec}",
+            "/records/36/{cutout_center_ra,cutout_center_dec}",
+            "/records/37/{cutout_center_ra,cutout_center_dec}",
+            "/records/38/{cutout_center_ra,cutout_center_dec}",
+            "/records/39/{cutout_center_ra,cutout_center_dec}",
+            "/records/40/{cutout_center_ra,cutout_center_dec}",
+            "/records/41/{cutout_center_ra,cutout_center_dec}",
+            "/records/42/{cutout_center_ra,cutout_center_dec}",
+            "/records/43/{cutout_center_ra,cutout_center_dec}",
+            "/records/44/{cutout_center_ra,cutout_center_dec}",
+            "/records/45/{cutout_center_ra,cutout_center_dec}",
+            "/records/46/{cutout_center_ra,cutout_center_dec}",
+            "/records/47/{cutout_center_ra,cutout_center_dec}",
+            "/records/48/{cutout_center_ra,cutout_center_dec}",
+            "/records/49/{cutout_center_ra,cutout_center_dec}",
+            "/records/50/{cutout_center_ra,cutout_center_dec}",
+            "/records/51/{cutout_center_ra,cutout_center_dec}",
+            "/records/52/{cutout_center_ra,cutout_center_dec}",
+            "/records/53/{cutout_center_ra,cutout_center_dec}",
+            "/records/54/{cutout_center_ra,cutout_center_dec}",
+            "/records/55/{cutout_center_ra,cutout_center_dec}",
+            "/records/56/{cutout_center_ra,cutout_center_dec}",
+            "/records/57/{cutout_center_ra,cutout_center_dec}",
+            "/records/58/{cutout_center_ra,cutout_center_dec}",
+            "/records/59/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/wise0855/coadd/manifest.json",
+      "sha256": "522c2d739c5143e4752b8d1a54acdf852e5ace8e0fcaafde91a93f52473efe67",
+      "centers": [
+        {
+          "ra_deg": 133.76037473328523,
+          "dec_deg": -7.242149767967145,
+          "json_pointers": [
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}",
+            "/records/20/{cutout_center_ra,cutout_center_dec}",
+            "/records/21/{cutout_center_ra,cutout_center_dec}",
+            "/records/22/{cutout_center_ra,cutout_center_dec}",
+            "/records/23/{cutout_center_ra,cutout_center_dec}",
+            "/records/24/{cutout_center_ra,cutout_center_dec}",
+            "/records/25/{cutout_center_ra,cutout_center_dec}",
+            "/records/26/{cutout_center_ra,cutout_center_dec}",
+            "/records/27/{cutout_center_ra,cutout_center_dec}",
+            "/records/28/{cutout_center_ra,cutout_center_dec}",
+            "/records/29/{cutout_center_ra,cutout_center_dec}",
+            "/records/30/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/wise0855/gaia-wide/manifest.json",
+      "sha256": "1c31c51b73df908e78a1ab7c162fc0b70f9e7a576d0194f246f3f86380c51a07",
+      "centers": [
+        {
+          "ra_deg": 133.76037473328523,
+          "dec_deg": -7.242149767967145,
+          "json_pointers": [
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}",
+            "/records/6/{cutout_center_ra,cutout_center_dec}",
+            "/records/7/{cutout_center_ra,cutout_center_dec}",
+            "/records/8/{cutout_center_ra,cutout_center_dec}",
+            "/records/9/{cutout_center_ra,cutout_center_dec}",
+            "/records/10/{cutout_center_ra,cutout_center_dec}",
+            "/records/11/{cutout_center_ra,cutout_center_dec}",
+            "/records/12/{cutout_center_ra,cutout_center_dec}",
+            "/records/13/{cutout_center_ra,cutout_center_dec}",
+            "/records/14/{cutout_center_ra,cutout_center_dec}",
+            "/records/15/{cutout_center_ra,cutout_center_dec}",
+            "/records/16/{cutout_center_ra,cutout_center_dec}",
+            "/records/17/{cutout_center_ra,cutout_center_dec}",
+            "/records/18/{cutout_center_ra,cutout_center_dec}",
+            "/records/19/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/wise0855/manifest.json",
+      "sha256": "a1b96f14444de9321f182c5322467d9b3aaa38d39c5274cd82cfe562415d6c39",
+      "centers": [
+        {
+          "ra_deg": 133.79512917,
+          "dec_deg": -7.24514722,
+          "json_pointers": [
+            "/{center_ra_deg,center_dec_deg}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "data/raw/wise0855/target-centered/manifest.json",
+      "sha256": "48210bddc6cac7407867d50c11d850f842da3a59596cf95ac68689dc69f373b7",
+      "centers": [
+        {
+          "ra_deg": 133.76037473328523,
+          "dec_deg": -7.242149767967145,
+          "json_pointers": [
+            "/{center_ra_deg,center_dec_deg}",
+            "/records/0/{cutout_center_ra,cutout_center_dec}",
+            "/records/1/{cutout_center_ra,cutout_center_dec}",
+            "/records/2/{cutout_center_ra,cutout_center_dec}",
+            "/records/3/{cutout_center_ra,cutout_center_dec}",
+            "/records/4/{cutout_center_ra,cutout_center_dec}",
+            "/records/5/{cutout_center_ra,cutout_center_dec}"
+          ]
+        }
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "id": "r238m45",
+      "ra_deg": 238,
+      "dec_deg": -45,
+      "split_sha256": "07ce80b133a4b67643a7d03d29126bc284cb00082813b043f007a61fa98bd64e",
+      "role": "calibration"
+    },
+    {
+      "id": "r166m45",
+      "ra_deg": 166,
+      "dec_deg": -45,
+      "split_sha256": "221aab3241f141f2018408c5f67c457ae31e60d18314637397b2b8b467eec010",
+      "role": "calibration"
+    },
+    {
+      "id": "r130m45",
+      "ra_deg": 130,
+      "dec_deg": -45,
+      "split_sha256": "4ca1890c61793d3cdda76c0ec565a520f3e4878f5d516dd030217b5967a7bd6c",
+      "role": "calibration"
+    },
+    {
+      "id": "r022m45",
+      "ra_deg": 22,
+      "dec_deg": -45,
+      "split_sha256": "7d9670c36fae5aeca80d8a0245081b1ecacf0edd46733da4c6f880b6d6293240",
+      "role": "calibration"
+    },
+    {
+      "id": "r202m45",
+      "ra_deg": 202,
+      "dec_deg": -45,
+      "split_sha256": "9e4a4a5f375f65b1ef02e665d95df72e86b00b1eb3f536d480efe549bb00ddd6",
+      "role": "validation"
+    },
+    {
+      "id": "r094m45",
+      "ra_deg": 94,
+      "dec_deg": -45,
+      "split_sha256": "a843be1d88ba9928f699628717ea1b93e6e6eb3770b42491c3939c6ebcbd4541",
+      "role": "validation"
+    },
+    {
+      "id": "r274m45",
+      "ra_deg": 274,
+      "dec_deg": -45,
+      "split_sha256": "b0448f3fae390e645d9aef32c47ad9098c49c7e3ec7bc6681eb8d4640a2e5c49",
+      "role": "validation"
+    },
+    {
+      "id": "r346m45",
+      "ra_deg": 346,
+      "dec_deg": -45,
+      "split_sha256": "c11f2a14e2605f026a9b1c4d3457472a48dce5e2610c0020b727e0c89d662142",
+      "role": "validation"
+    },
+    {
+      "id": "r310m45",
+      "ra_deg": 310,
+      "dec_deg": -45,
+      "split_sha256": "ee22fb93d58e4e9f667fbfee89a0b471fe4a00b7e196baa26f247357a5965d1b",
+      "role": "final_holdout"
+    },
+    {
+      "id": "r058m45",
+      "ra_deg": 58,
+      "dec_deg": -45,
+      "split_sha256": "f7a099138ce20fbf289665c8ba303fbafaf5520e1fea4b3d929e93f44a06a957",
+      "role": "final_holdout"
+    },
+    {
+      "id": "r238p00",
+      "ra_deg": 238,
+      "dec_deg": 0,
+      "split_sha256": "13272e60ff5ed42d7e103c812d4a11b78f8298dfe46a35e266c501e97f36da58",
+      "role": "calibration"
+    },
+    {
+      "id": "r274p00",
+      "ra_deg": 274,
+      "dec_deg": 0,
+      "split_sha256": "39172c7134248c6e64c490b52b258b04330cacb7749c45accd892ebec562e0e6",
+      "role": "calibration"
+    },
+    {
+      "id": "r346p00",
+      "ra_deg": 346,
+      "dec_deg": 0,
+      "split_sha256": "4801350875831eeacc1d63739b0cdb5a8ee43347a446e17799976f9c4d9eb46e",
+      "role": "calibration"
+    },
+    {
+      "id": "r310p00",
+      "ra_deg": 310,
+      "dec_deg": 0,
+      "split_sha256": "88a671ce9dc611225ea4172c3f46f5a6542c8544598c2c50a67cf4807530c325",
+      "role": "calibration"
+    },
+    {
+      "id": "r058p00",
+      "ra_deg": 58,
+      "dec_deg": 0,
+      "split_sha256": "9610388367e124fb737bbfc199486ff0e0b55a9d0dcff3006433bd68af8f79be",
+      "role": "validation"
+    },
+    {
+      "id": "r094p00",
+      "ra_deg": 94,
+      "dec_deg": 0,
+      "split_sha256": "a6293263775a08409c2b9a609c8e261023f2207b355c39b96a1ac1fe6ece98a3",
+      "role": "validation"
+    },
+    {
+      "id": "r130p00",
+      "ra_deg": 130,
+      "dec_deg": 0,
+      "split_sha256": "dd805deb09b2eed16e367b4a0c1cb8b094d6d85ce25d929cdf7f01ae4bdf14df",
+      "role": "validation"
+    },
+    {
+      "id": "r022p00",
+      "ra_deg": 22,
+      "dec_deg": 0,
+      "split_sha256": "f1cb9e96aab70595ddef9c6bfcaecc2539ba5458f6f580f05c1d4137940d7210",
+      "role": "validation"
+    },
+    {
+      "id": "r166p00",
+      "ra_deg": 166,
+      "dec_deg": 0,
+      "split_sha256": "f87cc3453718ec021dddddc4c2194172e4f5c6fb7342910c956e7bc08c696de3",
+      "role": "final_holdout"
+    },
+    {
+      "id": "r202p00",
+      "ra_deg": 202,
+      "dec_deg": 0,
+      "split_sha256": "f901b1e4132e62e78d291ae24d7a14d705a9b5569b537959244348a1c5536194",
+      "role": "final_holdout"
+    },
+    {
+      "id": "r130p45",
+      "ra_deg": 130,
+      "dec_deg": 45,
+      "split_sha256": "0c322bddaac4f4c872b4b58c13aea9754a067896245c1a53fdd48b9d3fe4509a",
+      "role": "calibration"
+    },
+    {
+      "id": "r058p45",
+      "ra_deg": 58,
+      "dec_deg": 45,
+      "split_sha256": "2260bf1348ada72146c16be68ef4d13ae52b3fe5a9fd697c9efe27dfd64b4890",
+      "role": "calibration"
+    },
+    {
+      "id": "r274p45",
+      "ra_deg": 274,
+      "dec_deg": 45,
+      "split_sha256": "384f6bab6c4c34a6e1d63ebc63f1efb62d0790909934b5f7341b853b458202d9",
+      "role": "calibration"
+    },
+    {
+      "id": "r094p45",
+      "ra_deg": 94,
+      "dec_deg": 45,
+      "split_sha256": "39fb0e0d061ab454ea7a791da56a7ae555faa3b34712c8384a4ca6451efc56b6",
+      "role": "calibration"
+    },
+    {
+      "id": "r022p45",
+      "ra_deg": 22,
+      "dec_deg": 45,
+      "split_sha256": "426c6d7e2589a56579de9bf684f6f82d5c9ea524ed239dcbb695704563f61a3d",
+      "role": "validation"
+    },
+    {
+      "id": "r202p45",
+      "ra_deg": 202,
+      "dec_deg": 45,
+      "split_sha256": "913d66a7f5733e91d9ee5359ca15eb051f1d292ff584fd31a7e17c2e40844616",
+      "role": "validation"
+    },
+    {
+      "id": "r166p45",
+      "ra_deg": 166,
+      "dec_deg": 45,
+      "split_sha256": "91f4d2aa65eada02ccd2c485e7be154b15ff722913892bc7b56e3cb72a61f1ab",
+      "role": "validation"
+    },
+    {
+      "id": "r346p45",
+      "ra_deg": 346,
+      "dec_deg": 45,
+      "split_sha256": "983c3c3f1a1c25de8b030ad94c6974dd39c2f333030610498478abf3cd321b2d",
+      "role": "validation"
+    },
+    {
+      "id": "r238p45",
+      "ra_deg": 238,
+      "dec_deg": 45,
+      "split_sha256": "a4a2f168f31596b99e9c65f79ccac1c0631379958f2c21e7d34aa1ceca3f5d06",
+      "role": "final_holdout"
+    },
+    {
+      "id": "r310p45",
+      "ra_deg": 310,
+      "dec_deg": 45,
+      "split_sha256": "e13397386d8554a5e282a0c9da2ee021b9c1a70031ef242a376a646c632f9020",
+      "role": "final_holdout"
+    }
+  ],
+  "limitations": [
+    "field selection only; not a sealed analysis/calibration protocol or independent validation",
+    "geometry alone does not establish nonoverlapping exposures, pixels, sources, instrument systematics or time",
+    "before measurement, lock evaluator, absolute gates, power, PSF/SED/gain truth, support routing and exposure/time/source disjointness",
+    "future metadata queries require committed selection and source guard; compare exact observation IDs before any measurements"
+  ]
+}
