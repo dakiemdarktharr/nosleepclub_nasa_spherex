@@ -1,0 +1,571 @@
+{
+  "dependency_manifest_sha256": "6e73d507401a635ca162ca32987d949faf197fec2c6d23e849f46cea8b15c7d3",
+  "figures": [
+    {
+      "bytes": 86871,
+      "configuration": "broad",
+      "minimum_axis_span_arcsec": 0.1,
+      "missing_variants": [],
+      "path": "data/neighbor-intervention/real-sensitivity-broad.svg",
+      "planned_pairs": 8,
+      "plotted_delta_east_north": {
+        "plane_bilinear_free": [
+          -0.15169837637614814,
+          0.13196424462594153
+        ],
+        "plane_bilinear_nonnegative": [
+          -0.06837556487506502,
+          -0.0006903126979198176
+        ],
+        "plane_nearest_free": [
+          0.0,
+          0.0
+        ],
+        "plane_nearest_nonnegative": [
+          0.037899072581234705,
+          -0.07053911978632482
+        ],
+        "quadratic_bilinear_free": [
+          -0.2838740285474093,
+          0.22198326245018726
+        ],
+        "quadratic_bilinear_nonnegative": [
+          -0.19504993570541984,
+          0.06751181976379803
+        ],
+        "quadratic_nearest_free": [
+          -0.1310530332495512,
+          0.08606850011127884
+        ],
+        "quadratic_nearest_nonnegative": [
+          -0.0840550513007865,
+          -0.01141529527825949
+        ]
+      },
+      "plotted_pairs": 8,
+      "role": "real_model_sensitivity",
+      "sha256": "1f3ffabea1d30c6ca8273c0bf880f8b29a3d51bc3be10255c671d9bdcd04d83b",
+      "units": "arcsec"
+    },
+    {
+      "bytes": 89802,
+      "configuration": "strict",
+      "minimum_axis_span_arcsec": 0.1,
+      "missing_variants": [],
+      "path": "data/neighbor-intervention/real-sensitivity-strict.svg",
+      "planned_pairs": 8,
+      "plotted_delta_east_north": {
+        "plane_bilinear_free": [
+          -0.010769893148870224,
+          -0.009165273699652754
+        ],
+        "plane_bilinear_nonnegative": [
+          0.25815796828438753,
+          -0.326195745559153
+        ],
+        "plane_nearest_free": [
+          0.0,
+          0.0
+        ],
+        "plane_nearest_nonnegative": [
+          0.3269302575588777,
+          -0.32407768298971346
+        ],
+        "quadratic_bilinear_free": [
+          -0.5494320184577592,
+          0.433034928462032
+        ],
+        "quadratic_bilinear_nonnegative": [
+          -0.21173445293761306,
+          0.09854003258961813
+        ],
+        "quadratic_nearest_free": [
+          -0.517183243533542,
+          0.43653795211284335
+        ],
+        "quadratic_nearest_nonnegative": [
+          -0.1327177416415788,
+          0.08708224198085995
+        ]
+      },
+      "plotted_pairs": 8,
+      "role": "real_model_sensitivity",
+      "sha256": "c1d27ef04865014f6de9586ce4e72ab55e4e243a09a7608088df3bdd502b3dee",
+      "units": "arcsec"
+    },
+    {
+      "bytes": 90988,
+      "path": "data/neighbor-intervention/control-error-pairs.svg",
+      "planned_paired_draws": 64,
+      "plotted_paired_draws": 64,
+      "points": [
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 0,
+          "free_error_arcsec": 20.669627308093315,
+          "nonnegative_error_arcsec": 20.67275769539634
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 1,
+          "free_error_arcsec": 17.83428657309951,
+          "nonnegative_error_arcsec": 17.86679987495319
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 2,
+          "free_error_arcsec": 9.337509589340552,
+          "nonnegative_error_arcsec": 9.337487967720286
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 3,
+          "free_error_arcsec": 11.027139949724639,
+          "nonnegative_error_arcsec": 10.931251666115447
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 4,
+          "free_error_arcsec": 6.9852424079108495,
+          "nonnegative_error_arcsec": 5.681383388769593
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 5,
+          "free_error_arcsec": 22.04453800648411,
+          "nonnegative_error_arcsec": 21.930187628532355
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 6,
+          "free_error_arcsec": 22.930532709073102,
+          "nonnegative_error_arcsec": 20.860104077525637
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 7,
+          "free_error_arcsec": 2.8543759625567686,
+          "nonnegative_error_arcsec": 2.8592706075624768
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "plane_300uJy",
+          "draw": 8,
+          "free_error_arcsec": 16.780201352273735,
+          "nonnegative_error_arcsec": 16.768696809782128
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 9,
+          "free_error_arcsec": 17.042508119102397,
+          "nonnegative_error_arcsec": 16.39047883402896
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 10,
+          "free_error_arcsec": 12.02407159866211,
+          "nonnegative_error_arcsec": 12.036780641814417
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 11,
+          "free_error_arcsec": 2.910176054656346,
+          "nonnegative_error_arcsec": 4.766051774484105
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 12,
+          "free_error_arcsec": 14.538699418999418,
+          "nonnegative_error_arcsec": 14.489655075052646
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 13,
+          "free_error_arcsec": 19.989626054014828,
+          "nonnegative_error_arcsec": 19.89977517614397
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 14,
+          "free_error_arcsec": 2.3011700942880147,
+          "nonnegative_error_arcsec": 2.305226274616574
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_300uJy",
+          "draw": 15,
+          "free_error_arcsec": 4.0432570899603695,
+          "nonnegative_error_arcsec": 4.043088468178887
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 0,
+          "free_error_arcsec": 4.855077420757635,
+          "nonnegative_error_arcsec": 4.86016927755463
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 1,
+          "free_error_arcsec": 0.6434594802998971,
+          "nonnegative_error_arcsec": 0.6211796227930083
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 2,
+          "free_error_arcsec": 5.309674420075548,
+          "nonnegative_error_arcsec": 1.5503060836434468
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "plane_600uJy",
+          "draw": 3,
+          "free_error_arcsec": 0.9771473016510664,
+          "nonnegative_error_arcsec": 0.9863562339500813
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 4,
+          "free_error_arcsec": 4.421789512339701,
+          "nonnegative_error_arcsec": 4.421082278587728
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "plane_600uJy",
+          "draw": 5,
+          "free_error_arcsec": 0.993180644355425,
+          "nonnegative_error_arcsec": 0.9105314597974777
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "plane_600uJy",
+          "draw": 6,
+          "free_error_arcsec": 3.790071301690994,
+          "nonnegative_error_arcsec": 2.9752023274326365
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 7,
+          "free_error_arcsec": 8.588408742528804,
+          "nonnegative_error_arcsec": 8.59091796474658
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "plane_600uJy",
+          "draw": 8,
+          "free_error_arcsec": 3.806072938395544,
+          "nonnegative_error_arcsec": 3.672342520546883
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 9,
+          "free_error_arcsec": 3.106485337026234,
+          "nonnegative_error_arcsec": 2.881026125677254
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "plane_600uJy",
+          "draw": 10,
+          "free_error_arcsec": 1.6737027312259067,
+          "nonnegative_error_arcsec": 1.672228977663741
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "plane_600uJy",
+          "draw": 11,
+          "free_error_arcsec": 2.3834717916777346,
+          "nonnegative_error_arcsec": 2.3589194003384013
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 12,
+          "free_error_arcsec": 2.972747822187237,
+          "nonnegative_error_arcsec": 2.997949627790866
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 13,
+          "free_error_arcsec": 2.5224664103947823,
+          "nonnegative_error_arcsec": 2.462502403660219
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "plane_600uJy",
+          "draw": 14,
+          "free_error_arcsec": 1.114705482099388,
+          "nonnegative_error_arcsec": 1.1163713637224695
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "plane_600uJy",
+          "draw": 15,
+          "free_error_arcsec": 1.8879442652638543,
+          "nonnegative_error_arcsec": 1.8877567310440189
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 0,
+          "free_error_arcsec": 4.447340502650614,
+          "nonnegative_error_arcsec": 4.457584465500046
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 1,
+          "free_error_arcsec": 8.53384823846236,
+          "nonnegative_error_arcsec": 8.533848239133276
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 2,
+          "free_error_arcsec": 19.77858740146327,
+          "nonnegative_error_arcsec": 19.787523630342317
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 3,
+          "free_error_arcsec": 17.0107746543837,
+          "nonnegative_error_arcsec": 17.06944206498341
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 4,
+          "free_error_arcsec": 4.354965967633049,
+          "nonnegative_error_arcsec": 11.201991101659218
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 5,
+          "free_error_arcsec": 1.04191567439872,
+          "nonnegative_error_arcsec": 1.1122979246637992
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 6,
+          "free_error_arcsec": 6.33930722932306,
+          "nonnegative_error_arcsec": 18.35306512561282
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 7,
+          "free_error_arcsec": 16.180060958648607,
+          "nonnegative_error_arcsec": 16.186719769943608
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 8,
+          "free_error_arcsec": 2.4742238763401847,
+          "nonnegative_error_arcsec": 2.4741355603570403
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 9,
+          "free_error_arcsec": 7.3257117679004455,
+          "nonnegative_error_arcsec": 6.560891539395447
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 10,
+          "free_error_arcsec": 24.18451589752555,
+          "nonnegative_error_arcsec": 24.183813585175226
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 11,
+          "free_error_arcsec": 11.46241148486004,
+          "nonnegative_error_arcsec": 12.224682800257662
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 12,
+          "free_error_arcsec": 13.045725240632665,
+          "nonnegative_error_arcsec": 13.412766606310907
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 13,
+          "free_error_arcsec": 10.364081721558517,
+          "nonnegative_error_arcsec": 10.374986332377384
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 14,
+          "free_error_arcsec": 20.076184557764915,
+          "nonnegative_error_arcsec": 20.07618455985311
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_300uJy",
+          "draw": 15,
+          "free_error_arcsec": 6.773576372123235,
+          "nonnegative_error_arcsec": 6.774663497720696
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "quadratic_600uJy",
+          "draw": 0,
+          "free_error_arcsec": 3.537615780846552,
+          "nonnegative_error_arcsec": 3.537615454321404
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "quadratic_600uJy",
+          "draw": 1,
+          "free_error_arcsec": 2.4486532188841053,
+          "nonnegative_error_arcsec": 2.5268607046803924
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_600uJy",
+          "draw": 2,
+          "free_error_arcsec": 0.8157529786817431,
+          "nonnegative_error_arcsec": 0.8157562366993508
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_600uJy",
+          "draw": 3,
+          "free_error_arcsec": 4.584466188249339,
+          "nonnegative_error_arcsec": 3.7866423640927134
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_600uJy",
+          "draw": 4,
+          "free_error_arcsec": 1.7411110627950628,
+          "nonnegative_error_arcsec": 1.7400777246328807
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_600uJy",
+          "draw": 5,
+          "free_error_arcsec": 1.6649111433111357,
+          "nonnegative_error_arcsec": 1.6651457726523096
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_600uJy",
+          "draw": 6,
+          "free_error_arcsec": 3.8868746296146957,
+          "nonnegative_error_arcsec": 1.7179763180115972
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "quadratic_600uJy",
+          "draw": 7,
+          "free_error_arcsec": 0.8142151233360008,
+          "nonnegative_error_arcsec": 1.1731216210330373
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "quadratic_600uJy",
+          "draw": 8,
+          "free_error_arcsec": 1.3029097342762763,
+          "nonnegative_error_arcsec": 1.3053673296840569
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "quadratic_600uJy",
+          "draw": 9,
+          "free_error_arcsec": 1.8073478460495394,
+          "nonnegative_error_arcsec": 1.815097830613131
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_600uJy",
+          "draw": 10,
+          "free_error_arcsec": 2.6584532932200946,
+          "nonnegative_error_arcsec": 2.6584532845766886
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "quadratic_600uJy",
+          "draw": 11,
+          "free_error_arcsec": 0.8945071558948579,
+          "nonnegative_error_arcsec": 1.154668187619691
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_600uJy",
+          "draw": 12,
+          "free_error_arcsec": 2.7993065690313848,
+          "nonnegative_error_arcsec": 2.164034220605465
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "quadratic_600uJy",
+          "draw": 13,
+          "free_error_arcsec": 2.432610929247317,
+          "nonnegative_error_arcsec": 2.4329493725013607
+        },
+        {
+          "both_numerically_supported": true,
+          "case": "quadratic_600uJy",
+          "draw": 14,
+          "free_error_arcsec": 1.9496807598876498,
+          "nonnegative_error_arcsec": 1.886408036455463
+        },
+        {
+          "both_numerically_supported": false,
+          "case": "quadratic_600uJy",
+          "draw": 15,
+          "free_error_arcsec": 2.9582817215300734,
+          "nonnegative_error_arcsec": 2.248294287503539
+        }
+      ],
+      "role": "all_common_completed_control_errors",
+      "sha256": "1e53b9a9c56fd1dcdf9ebde2c612a8ecfbedfeaecae3d84c2f28dc7cf2e586c4",
+      "units": "arcsec"
+    }
+  ],
+  "font": {
+    "family": "DejaVu Sans",
+    "sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22"
+  },
+  "packages": {
+    "Pillow": "13.0.0",
+    "fonttools": "4.68.0",
+    "matplotlib": "3.11.2",
+    "numpy": "2.4.6"
+  },
+  "qualification": "opened-data model sensitivity and one-geometry synthetic oracle-noise controls, not real-source accuracy or calibrated confidence",
+  "script_sha256": "85659450590fb54721557dd900d466f9ad879030da12871209a0317dcfe9d8a1",
+  "source_controls_sha256": "59e6ddc47196d328723c112252a725f8d2397f8637546dc321def4a47e1317bf",
+  "source_overview_sha256": "558f03c0da2b9c108a2cb2f97e85c7c901ba01157a4bf662a7f41daedfdd41d6",
+  "version": "0.10.0-neighbor-figures.1"
+}

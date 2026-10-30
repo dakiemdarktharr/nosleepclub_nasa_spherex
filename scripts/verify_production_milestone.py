@@ -17,7 +17,7 @@ ROOT=Path(__file__).resolve().parents[1]
 BASE='https://nosleepclub-nasa-spherex.vercel.app'
 PINNED_FRAME='https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_2A/l2b-v20-2025-258/6/level2_2025W26_2A_0314_1D6_spx_l2b-v20-2025-258.fits'
 PINNED_CUTOUT_SHA='514ac17f7c8d2b7de1f723e4464dfc85a1caacf666f868e70fd844c9d80de8a6'
-ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js','mission.css','linked-evidence.js',
+ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js','mission.css','linked-evidence.js','neighbor-evidence.js',
         'data/manifest.json','data/continuous-epsf/design.json',
         'data/continuous-epsf/development-summary.json','data/explorer-check/coverage.json',
         'data/sandwich/design.json','data/sandwich/overview.json','data/sandwich/development-summary.json',
@@ -29,7 +29,11 @@ ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js
         'data/external/wise0855-prism-reference.json','data/external/photometric-convention.json',
         'data/linked-flux/design.json','data/linked-flux/overview.json','data/linked-flux/development.json',
         'data/linked-flux/mode-diagnostics.json','data/linked-flux/figures.json',
-        'data/linked-flux/sensitivity-broad.svg','data/linked-flux/sensitivity-strict.svg')
+        'data/linked-flux/sensitivity-broad.svg','data/linked-flux/sensitivity-strict.svg',
+        'data/neighbor-intervention/design.json','data/neighbor-intervention/development.json',
+        'data/neighbor-intervention/controls.json','data/neighbor-intervention/overview.json',
+        'data/neighbor-intervention/figures.json','data/neighbor-intervention/real-sensitivity-broad.svg',
+        'data/neighbor-intervention/real-sensitivity-strict.svg','data/neighbor-intervention/control-error-pairs.svg')
 
 
 def require(condition, label):

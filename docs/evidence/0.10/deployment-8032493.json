@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "projectId": "prj_8kXBz8dZqwBeDhmfRUMDwhN8VKQi",
+  "id": "dpl_AH4SZFa3yuCrq1N41ni4pYkzU4F2",
+  "url": "nosleepclub-nasa-spherex-2yw1oji2d-acne-a6cd.vercel.app",
+  "readyState": "READY",
+  "target": "production",
+  "alias": [
+    "nosleepclub-nasa-spherex.vercel.app",
+    "nosleepclub-nasa-spherex-acne-a6cd.vercel.app",
+    "nosleepclub-nasa-spherex-git-main-acne-a6cd.vercel.app"
+  ],
+  "meta": {
+    "githubCommitRef": "main",
+    "githubCommitSha": "80324933bfab21a73a0a2e3f05c447b99f2a81d2",
+    "githubCommitMessage": "Merge PR #7: audited WISE linked-flux model sensitivity\n\nAudit WISE linked-flux fits and expose competing position modes",
+    "githubRepo": "nosleepclub_nasa_spherex",
+    "githubOrg": "dakiemdarktharr"
+  },
+  "createdAt": 1793390695160,
+  "ready": 1793390746163,
+  "verified_commit": "80324933bfab21a73a0a2e3f05c447b99f2a81d2",
+  "qualification": "Vercel READY metadata; actual public asset/API/review checks are in production-8032493.json."
+}

@@ -1,0 +1,729 @@
+{
+  "schema_version": 1,
+  "source": {
+    "path": "data/raw/benchmark/review-load-20261030T212116Z-830728dd97894881a0689981e96ea2d7.json",
+    "sha256": "e9245bd39cf2af3b036dcc2b70f0c0cba792094211fd36456d0716428fe4c0c7",
+    "bytes": 18760
+  },
+  "report": {
+    "schema_version": 1,
+    "target": "https://nosleepclub-nasa-spherex.vercel.app",
+    "expected_commit": "80324933bfab21a73a0a2e3f05c447b99f2a81d2",
+    "design_sha256": "4f1712517329e7ba3e52fdd6264025f5806edbe65af48b6b43af146891db4fdc",
+    "sources_sha256": {
+      "scripts/verify_review_load.py": "ba8bb55a9dd4910bc2352fb4be433f43b6845743ea713f4b05a3461b1c181450",
+      "tests/test_review_load.py": "4c99cd3c73d66a10e19302347997aed10c9b579b9ad4404f468d7a0f93739f19",
+      "docs/REVIEW_LOAD_PROTOCOL.md": "858f2398773c8346602e96fa4ab35fe19b540b0b52609fe2af90eee787ecb37f"
+    },
+    "runtime": {
+      "python": "3.11.9",
+      "requests": "2.34.2",
+      "truststore": "0.10.5",
+      "local_commit": "d7fd8f93595301e4f8a3f7b5700af5bc046ce2dc"
+    },
+    "started_at_utc": "2026-10-30T21:21:16.101334+00:00",
+    "passed": true,
+    "manifest": {
+      "status": 200,
+      "latency_seconds": 1.5789999999979045,
+      "error": null
+    },
+    "manifest_sha256": "3d02506621a3a2ecaa3e2948e2edd46197df95aebd7be64d36df5afab9016c8b",
+    "planned_attempts": 60,
+    "cleanup_attempts": 0,
+    "owners_touched": 12,
+    "owners_cleanup_verified": 12,
+    "unexpected_errors": 0,
+    "fatal": false,
+    "p95_get_seconds": 1.9369999999980791,
+    "p95_write_seconds": 0.18800000000192085,
+    "p95_post_seconds": 0.20300000000133878,
+    "p95_delete_seconds": 0.14100000000325963,
+    "records": [
+      {
+        "owner": 0,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "da22d5fed53bbd59f5e61a95cbe7e2b8",
+        "error": null,
+        "latency_seconds": 1.9369999999980791,
+        "started_monotonic_seconds": 37593.906
+      },
+      {
+        "owner": 1,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "367d19d4bbc719d2369999002436bc33",
+        "error": null,
+        "latency_seconds": 1.9219999999986612,
+        "started_monotonic_seconds": 37593.906
+      },
+      {
+        "owner": 2,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "f16ec87b549c8ee4fca2ebe1c36bc0d4",
+        "error": null,
+        "latency_seconds": 2.0309999999954016,
+        "started_monotonic_seconds": 37593.906
+      },
+      {
+        "owner": 0,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "938a2fff11556240437df9ef22c339dc",
+        "error": null,
+        "latency_seconds": 0.18800000000192085,
+        "started_monotonic_seconds": 37601.937
+      },
+      {
+        "owner": 1,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "d69f0ef691a5d8a08e893aaf6f0952a4",
+        "error": null,
+        "latency_seconds": 0.20300000000133878,
+        "started_monotonic_seconds": 37601.937
+      },
+      {
+        "owner": 2,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "0d7ec34fb894536bc9dbc1fa67901523",
+        "error": null,
+        "latency_seconds": 0.17199999999866122,
+        "started_monotonic_seconds": 37601.937
+      },
+      {
+        "owner": 0,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "592ff3c81cb35f13c61609a69f4607b0",
+        "error": null,
+        "latency_seconds": 0.3600000000005821,
+        "started_monotonic_seconds": 37608.171
+      },
+      {
+        "owner": 1,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "9e6f50f4307e5b238928708556ca9dd1",
+        "error": null,
+        "latency_seconds": 0.3280000000013388,
+        "started_monotonic_seconds": 37608.203
+      },
+      {
+        "owner": 2,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "01a58b1bf825aa8bea5335bf5d71bcf3",
+        "error": null,
+        "latency_seconds": 0.13999999999941792,
+        "started_monotonic_seconds": 37608.25
+      },
+      {
+        "owner": 0,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "1104cab11d1a07f187217f0d670f9561",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37614.593
+      },
+      {
+        "owner": 1,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "c3bf7760f03093035e28b637b70345d9",
+        "error": null,
+        "latency_seconds": 0.13999999999941792,
+        "started_monotonic_seconds": 37614.656
+      },
+      {
+        "owner": 2,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "a2c795b8a91713d39f9ce8645bd648f8",
+        "error": null,
+        "latency_seconds": 0.14099999999598367,
+        "started_monotonic_seconds": 37614.718
+      },
+      {
+        "owner": 0,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "a3b8dcd6dd301ff84c77afa806019224",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37620.859
+      },
+      {
+        "owner": 1,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "ebbf38c0b0985a7b4acca515d0dac34d",
+        "error": null,
+        "latency_seconds": 0.15600000000267755,
+        "started_monotonic_seconds": 37620.859
+      },
+      {
+        "owner": 2,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "d9994f2b549966d506a7c99331d58208",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37620.859
+      },
+      {
+        "owner": 3,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "41de88f4e504e5257dd9585c2d29d3cf",
+        "error": null,
+        "latency_seconds": 0.5160000000032596,
+        "started_monotonic_seconds": 37627.015
+      },
+      {
+        "owner": 4,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "0e98ae26f4583d4c76c85f7118d4b47b",
+        "error": null,
+        "latency_seconds": 0.5310000000026776,
+        "started_monotonic_seconds": 37627.015
+      },
+      {
+        "owner": 5,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "b2ba3bc817777d7f1ec0528913d37f7d",
+        "error": null,
+        "latency_seconds": 0.5310000000026776,
+        "started_monotonic_seconds": 37627.015
+      },
+      {
+        "owner": 3,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "59f4f8892ec57c32b8b21d8c49723584",
+        "error": null,
+        "latency_seconds": 0.17199999999866122,
+        "started_monotonic_seconds": 37633.546
+      },
+      {
+        "owner": 4,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "10289de8fb3cc33cf440a44bebfdaec8",
+        "error": null,
+        "latency_seconds": 0.1879999999946449,
+        "started_monotonic_seconds": 37633.546
+      },
+      {
+        "owner": 5,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "92a271c65ee27f153f5daa91afee2d7e",
+        "error": null,
+        "latency_seconds": 0.1569999999992433,
+        "started_monotonic_seconds": 37633.546
+      },
+      {
+        "owner": 3,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "869c417ac5ba52c60ceb73444d9c571f",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37639.75
+      },
+      {
+        "owner": 4,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "90b39fecaad4a6aa73bcc8b33821b983",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37639.75
+      },
+      {
+        "owner": 5,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "3fc0deff9c31c40b56c02cb5543b7c6e",
+        "error": null,
+        "latency_seconds": 0.13999999999941792,
+        "started_monotonic_seconds": 37639.75
+      },
+      {
+        "owner": 3,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "ed9eda5791eee8c14c3336861d052e80",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37645.89
+      },
+      {
+        "owner": 4,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "c9c5f8c1f970c179f2f159ba3adc7bca",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37645.89
+      },
+      {
+        "owner": 5,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "9b6ee982d08744de36a6feb225b9aaf1",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37645.89
+      },
+      {
+        "owner": 3,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "94310ddd9a0db174c7f07e6a358a1967",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37652.062
+      },
+      {
+        "owner": 4,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "1addfe48a24b84a87f359a7cb9d6ff51",
+        "error": null,
+        "latency_seconds": 0.14100000000325963,
+        "started_monotonic_seconds": 37652.14
+      },
+      {
+        "owner": 5,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "64e985bca1c27ede22d2f99093be58eb",
+        "error": null,
+        "latency_seconds": 0.11000000000058208,
+        "started_monotonic_seconds": 37652.171
+      },
+      {
+        "owner": 6,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "8fda297034c35007df68cebfd1958ea6",
+        "error": null,
+        "latency_seconds": 0.5159999999959837,
+        "started_monotonic_seconds": 37658.296
+      },
+      {
+        "owner": 7,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "b306fcb200bd221a5b18b50c160bdaa9",
+        "error": null,
+        "latency_seconds": 0.5,
+        "started_monotonic_seconds": 37658.296
+      },
+      {
+        "owner": 8,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "c087ba4220a21ee47fc769293c385221",
+        "error": null,
+        "latency_seconds": 0.5319999999992433,
+        "started_monotonic_seconds": 37658.296
+      },
+      {
+        "owner": 6,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "1700025aacf0d4e07f610f720ff58927",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37664.843
+      },
+      {
+        "owner": 7,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "6ebb632a86f606f18241e3a73722354d",
+        "error": null,
+        "latency_seconds": 0.17200000000593718,
+        "started_monotonic_seconds": 37664.859
+      },
+      {
+        "owner": 8,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "458675f451193a2dde5fc7f057a6a70b",
+        "error": null,
+        "latency_seconds": 0.14100000000325963,
+        "started_monotonic_seconds": 37664.859
+      },
+      {
+        "owner": 6,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "c39d02f59ddc3584eff18695d1540c20",
+        "error": null,
+        "latency_seconds": 0.10899999999674037,
+        "started_monotonic_seconds": 37671.031
+      },
+      {
+        "owner": 7,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "03811c8db113aaf646d480931e82b5a5",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37671.031
+      },
+      {
+        "owner": 8,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "e06863507ca136399446d772951fc024",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37671.046
+      },
+      {
+        "owner": 6,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "87716b7bfae7e969d2ead3ec19975a13",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37677.203
+      },
+      {
+        "owner": 7,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "2afc2b0b8a46df29d32e8cddf2368a84",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37677.234
+      },
+      {
+        "owner": 8,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "2de75268602f5ad13bc16a1cea85ca52",
+        "error": null,
+        "latency_seconds": 0.14100000000325963,
+        "started_monotonic_seconds": 37677.234
+      },
+      {
+        "owner": 6,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "6b6094d150bd72f7b21df71c2c34f8d0",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37683.375
+      },
+      {
+        "owner": 7,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "7de7e60f31b7b5da9e13504308164f31",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37683.375
+      },
+      {
+        "owner": 8,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "136c3adf8cc1f816ca32d82f4faefe35",
+        "error": null,
+        "latency_seconds": 0.10899999999674037,
+        "started_monotonic_seconds": 37683.375
+      },
+      {
+        "owner": 9,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "2bde9346856ba51045300cee46fd4a8d",
+        "error": null,
+        "latency_seconds": 0.625,
+        "started_monotonic_seconds": 37689.5
+      },
+      {
+        "owner": 10,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "36930dc0871f0cade71e69c4cbf4ae5f",
+        "error": null,
+        "latency_seconds": 0.8589999999967404,
+        "started_monotonic_seconds": 37689.5
+      },
+      {
+        "owner": 11,
+        "method": "GET",
+        "stage": "initial",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "72d486044567a25bc701a59e28a68c81",
+        "error": null,
+        "latency_seconds": 0.6560000000026776,
+        "started_monotonic_seconds": 37689.5
+      },
+      {
+        "owner": 9,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "1b172b18e91eca2482b2c8e25a047c2c",
+        "error": null,
+        "latency_seconds": 0.15600000000267755,
+        "started_monotonic_seconds": 37696.359
+      },
+      {
+        "owner": 10,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "0c2ce6e9ea8a24c4a339b24988d57c02",
+        "error": null,
+        "latency_seconds": 0.17200000000593718,
+        "started_monotonic_seconds": 37696.359
+      },
+      {
+        "owner": 11,
+        "method": "POST",
+        "stage": "post",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "fb4a40f19073f6a8ca0c502ca64ec69c",
+        "error": null,
+        "latency_seconds": 0.13999999999941792,
+        "started_monotonic_seconds": 37696.375
+      },
+      {
+        "owner": 9,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "3e93ceadbb763bc42e0650a07f5eb219",
+        "error": null,
+        "latency_seconds": 0.11000000000058208,
+        "started_monotonic_seconds": 37702.546
+      },
+      {
+        "owner": 10,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "617b67487e80f7709c660b99c725b165",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37702.562
+      },
+      {
+        "owner": 11,
+        "method": "GET",
+        "stage": "readback",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "48282ab9286eb9993171c26812fc37f6",
+        "error": null,
+        "latency_seconds": 0.10900000000401633,
+        "started_monotonic_seconds": 37702.562
+      },
+      {
+        "owner": 9,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "cc556fd88b9ff7b820125ac170301ec6",
+        "error": null,
+        "latency_seconds": 0.14100000000325963,
+        "started_monotonic_seconds": 37708.687
+      },
+      {
+        "owner": 10,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "241e04762b9299496a53f94fd330c837",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37708.687
+      },
+      {
+        "owner": 11,
+        "method": "DELETE",
+        "stage": "delete",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "5ffdc3841c6a2680d10a62a8af61ba7b",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37708.687
+      },
+      {
+        "owner": 9,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "c2b5ee9ca7c4931318da05fc2441e9fe",
+        "error": null,
+        "latency_seconds": 0.13999999999941792,
+        "started_monotonic_seconds": 37714.828
+      },
+      {
+        "owner": 10,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "f4eb1e2d3579e0ebe7a6f6898b5b813e",
+        "error": null,
+        "latency_seconds": 0.13999999999941792,
+        "started_monotonic_seconds": 37714.828
+      },
+      {
+        "owner": 11,
+        "method": "GET",
+        "stage": "final",
+        "phase": "planned",
+        "status": 200,
+        "request_id": "9689b4ec857b2a386c2b0c34fc837606",
+        "error": null,
+        "latency_seconds": 0.125,
+        "started_monotonic_seconds": 37714.828
+      }
+    ],
+    "completed_at_utc": "2026-10-30T21:23:18.793184+00:00"
+  },
+  "independent_receipt_audit": {
+    "method": "Recompute nearest-rank percentiles, complete five-stage owner counts, frozen Git source hashes, event-interval concurrency and completion-to-next-start wave spacing from retained receipt. Does not inspect Vercel or Mongo directly.",
+    "percentiles": {
+      "get": {
+        "n": 36,
+        "p95_seconds": 1.9369999999980791
+      },
+      "post": {
+        "n": 12,
+        "p95_seconds": 0.20300000000133878
+      },
+      "delete": {
+        "n": 12,
+        "p95_seconds": 0.14100000000325963
+      },
+      "write": {
+        "n": 24,
+        "p95_seconds": 0.18800000000192085
+      }
+    },
+    "maximum_overlapping_recorded_requests": 3,
+    "minimum_completed_wave_to_next_start_seconds": 6.0
+  }
+}

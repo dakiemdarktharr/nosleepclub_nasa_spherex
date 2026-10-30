@@ -10,6 +10,7 @@ license has been applied by that draft.
 |---|---|---|
 | Original project code | Git history and scientific source hashes | Owner code-license decision pending; do not infer an open-source grant from visibility |
 | Be Vietnam Pro fonts | `web/assets/fonts/provenance.json`, local `OFL.txt` | SIL Open Font License, retained with the font files |
+| DejaVu glyphs in linked-study SVG figures | Matplotlib 3.11.2 bundled DejaVu Sans; font hash in `web/data/linked-flux/figures.json` | Upstream Bitstream/DejaVu/Arev notices retained in [DEJAVU-LICENSE.txt](docs/licenses/DEJAVU-LICENSE.txt); no new license for the project code |
 | Canva illustrations | `web/assets/provenance.json`, media IDs and URLs | Artistic illustrations only. Account/content-specific rights are not established by the provenance JSON; no MIT or public-domain grant is asserted |
 | SPHEREx cutouts and calibration products | NASA / Caltech / IPAC IRSA; source URLs, versions and hashes in each manifest | Preserve mission/archive credit and processing qualifications; project code licensing does not replace upstream terms |
 | Gaia DR3 | ESA Gaia / DPAC via IRSA; query and release in manifests | Preserve release, source IDs, query and provenance; catalog predictions are not new measurements |

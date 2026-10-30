@@ -1,0 +1,1404 @@
+{
+  "controls": {
+    "cases": [
+      {
+        "arms": [
+          {
+            "attempts": {
+              "active_neighbor_coefficient_count": 0,
+              "completed_epochs": 32,
+              "completed_pairs": 16,
+              "epochs_with_multiple_near_modes": 23,
+              "failed_epochs": 0,
+              "negative_target_frame_count": 9,
+              "numerically_supported_pairs": 1,
+              "planned_epochs": 32,
+              "planned_pairs": 16
+            },
+            "selections": {
+              "all_completed": {
+                "mean_error_east_north_arcsec": [
+                  3.1286187804812573,
+                  2.7264939489110223
+                ],
+                "n": 16,
+                "p90_arcsec": 21.357082657288714,
+                "rms_arcsec": 14.535444043070926
+              },
+              "common_completed": {
+                "mean_error_east_north_arcsec": [
+                  3.1286187804812573,
+                  2.7264939489110223
+                ],
+                "n": 16,
+                "p90_arcsec": 21.357082657288714,
+                "rms_arcsec": 14.535444043070926
+              },
+              "common_numerically_supported": {
+                "mean_error_east_north_arcsec": [
+                  16.64263786193992,
+                  2.144239356782054
+                ],
+                "n": 1,
+                "p90_arcsec": 16.780201352273735,
+                "rms_arcsec": 16.780201352273735
+              }
+            },
+            "variant": "plane_nearest_free"
+          },
+          {
+            "attempts": {
+              "active_neighbor_coefficient_count": 43,
+              "completed_epochs": 32,
+              "completed_pairs": 16,
+              "epochs_with_multiple_near_modes": 22,
+              "failed_epochs": 0,
+              "negative_target_frame_count": 11,
+              "numerically_supported_pairs": 1,
+              "planned_epochs": 32,
+              "planned_pairs": 16
+            },
+            "selections": {
+              "all_completed": {
+                "mean_error_east_north_arcsec": [
+                  2.8081470073380044,
+                  3.1579112470703055
+                ],
+                "n": 16,
+                "p90_arcsec": 20.766430886460988,
+                "rms_arcsec": 14.262812498421178
+              },
+              "common_completed": {
+                "mean_error_east_north_arcsec": [
+                  2.8081470073380044,
+                  3.1579112470703055
+                ],
+                "n": 16,
+                "p90_arcsec": 20.766430886460988,
+                "rms_arcsec": 14.262812498421178
+              },
+              "common_numerically_supported": {
+                "mean_error_east_north_arcsec": [
+                  16.628782455586048,
+                  2.1616629578153224
+                ],
+                "n": 1,
+                "p90_arcsec": 16.768696809782128,
+                "rms_arcsec": 16.768696809782128
+              }
+            },
+            "variant": "plane_nearest_nonnegative"
+          }
+        ],
+        "background_truth": "plane",
+        "case": "plane_300uJy",
+        "paired": {
+          "common_completed": {
+            "mean_paired_radial_error_difference_arcsec": -0.1546228954726904,
+            "n": 16,
+            "rms_difference_nonnegative_minus_free_arcsec": -0.27263154464974626
+          },
+          "common_numerically_supported": {
+            "mean_paired_radial_error_difference_arcsec": -0.011504542491607594,
+            "n": 1,
+            "rms_difference_nonnegative_minus_free_arcsec": -0.011504542491607594
+          }
+        },
+        "planned_draws": 16,
+        "target_flux_jy": 0.0003
+      },
+      {
+        "arms": [
+          {
+            "attempts": {
+              "active_neighbor_coefficient_count": 0,
+              "completed_epochs": 32,
+              "completed_pairs": 16,
+              "epochs_with_multiple_near_modes": 11,
+              "failed_epochs": 0,
+              "negative_target_frame_count": 2,
+              "numerically_supported_pairs": 7,
+              "planned_epochs": 32,
+              "planned_pairs": 16
+            },
+            "selections": {
+              "all_completed": {
+                "mean_error_east_north_arcsec": [
+                  0.21633917686175178,
+                  -0.38140880983954983
+                ],
+                "n": 16,
+                "p90_arcsec": 5.082375920416592,
+                "rms_arcsec": 3.660796881207269
+              },
+              "common_completed": {
+                "mean_error_east_north_arcsec": [
+                  0.21633917686175178,
+                  -0.38140880983954983
+                ],
+                "n": 16,
+                "p90_arcsec": 5.082375920416592,
+                "rms_arcsec": 3.660796881207269
+              },
+              "common_numerically_supported": {
+                "mean_error_east_north_arcsec": [
+                  0.4699710528831926,
+                  -1.4673700480654635
+                ],
+                "n": 7,
+                "p90_arcsec": 3.7964719563728138,
+                "rms_arcsec": 2.4058512972629797
+              }
+            },
+            "variant": "plane_nearest_free"
+          },
+          {
+            "attempts": {
+              "active_neighbor_coefficient_count": 48,
+              "completed_epochs": 32,
+              "completed_pairs": 16,
+              "epochs_with_multiple_near_modes": 10,
+              "failed_epochs": 0,
+              "negative_target_frame_count": 4,
+              "numerically_supported_pairs": 7,
+              "planned_epochs": 32,
+              "planned_pairs": 16
+            },
+            "selections": {
+              "all_completed": {
+                "mean_error_east_north_arcsec": [
+                  -0.33260667871578753,
+                  0.2062781555974989
+                ],
+                "n": 16,
+                "p90_arcsec": 4.640625778071179,
+                "rms_arcsec": 3.358040590277412
+              },
+              "common_completed": {
+                "mean_error_east_north_arcsec": [
+                  -0.33260667871578753,
+                  0.2062781555974989
+                ],
+                "n": 16,
+                "p90_arcsec": 4.640625778071179,
+                "rms_arcsec": 3.358040590277412
+              },
+              "common_numerically_supported": {
+                "mean_error_east_north_arcsec": [
+                  0.23436288021712892,
+                  -1.3846804095907674
+                ],
+                "n": 7,
+                "p90_arcsec": 3.2540584046783354,
+                "rms_arcsec": 2.1956785527707146
+              }
+            },
+            "variant": "plane_nearest_nonnegative"
+          }
+        ],
+        "background_truth": "plane",
+        "case": "plane_600uJy",
+        "paired": {
+          "common_completed": {
+            "mean_paired_radial_error_difference_arcsec": -0.3175977001887693,
+            "n": 16,
+            "rms_difference_nonnegative_minus_free_arcsec": -0.3027562909298567
+          },
+          "common_numerically_supported": {
+            "mean_paired_radial_error_difference_arcsec": -0.1494857010920526,
+            "n": 7,
+            "rms_difference_nonnegative_minus_free_arcsec": -0.21017274449226564
+          }
+        },
+        "planned_draws": 16,
+        "target_flux_jy": 0.0006
+      },
+      {
+        "arms": [
+          {
+            "attempts": {
+              "active_neighbor_coefficient_count": 0,
+              "completed_epochs": 32,
+              "completed_pairs": 16,
+              "epochs_with_multiple_near_modes": 27,
+              "failed_epochs": 0,
+              "negative_target_frame_count": 13,
+              "numerically_supported_pairs": 0,
+              "planned_epochs": 32,
+              "planned_pairs": 16
+            },
+            "selections": {
+              "all_completed": {
+                "mean_error_east_north_arcsec": [
+                  -2.420197004133013,
+                  -1.572114309164081
+                ],
+                "n": 16,
+                "p90_arcsec": 19.927385979614094,
+                "rms_arcsec": 12.742159515910346
+              },
+              "common_completed": {
+                "mean_error_east_north_arcsec": [
+                  -2.420197004133013,
+                  -1.572114309164081
+                ],
+                "n": 16,
+                "p90_arcsec": 19.927385979614094,
+                "rms_arcsec": 12.742159515910346
+              },
+              "common_numerically_supported": {
+                "mean_error_east_north_arcsec": null,
+                "n": 0,
+                "p90_arcsec": null,
+                "rms_arcsec": null
+              }
+            },
+            "variant": "plane_nearest_free"
+          },
+          {
+            "attempts": {
+              "active_neighbor_coefficient_count": 27,
+              "completed_epochs": 32,
+              "completed_pairs": 16,
+              "epochs_with_multiple_near_modes": 26,
+              "failed_epochs": 0,
+              "negative_target_frame_count": 15,
+              "numerically_supported_pairs": 0,
+              "planned_epochs": 32,
+              "planned_pairs": 16
+            },
+            "selections": {
+              "all_completed": {
+                "mean_error_east_north_arcsec": [
+                  -2.0509525963909323,
+                  -0.6338027103015004
+                ],
+                "n": 16,
+                "p90_arcsec": 19.931854095097712,
+                "rms_arcsec": 13.741209762222798
+              },
+              "common_completed": {
+                "mean_error_east_north_arcsec": [
+                  -2.0509525963909323,
+                  -0.6338027103015004
+                ],
+                "n": 16,
+                "p90_arcsec": 19.931854095097712,
+                "rms_arcsec": 13.741209762222798
+              },
+              "common_numerically_supported": {
+                "mean_error_east_north_arcsec": null,
+                "n": 0,
+                "p90_arcsec": null,
+                "rms_arcsec": null
+              }
+            },
+            "variant": "plane_nearest_nonnegative"
+          }
+        ],
+        "background_truth": "quadratic",
+        "case": "quadratic_300uJy",
+        "paired": {
+          "common_completed": {
+            "mean_paired_radial_error_difference_arcsec": 1.2119603286010645,
+            "n": 16,
+            "rms_difference_nonnegative_minus_free_arcsec": 0.9990502463124535
+          },
+          "common_numerically_supported": {
+            "mean_paired_radial_error_difference_arcsec": null,
+            "n": 0,
+            "rms_difference_nonnegative_minus_free_arcsec": null
+          }
+        },
+        "planned_draws": 16,
+        "target_flux_jy": 0.0003
+      },
+      {
+        "arms": [
+          {
+            "attempts": {
+              "active_neighbor_coefficient_count": 0,
+              "completed_epochs": 32,
+              "completed_pairs": 16,
+              "epochs_with_multiple_near_modes": 8,
+              "failed_epochs": 0,
+              "negative_target_frame_count": 0,
+              "numerically_supported_pairs": 9,
+              "planned_epochs": 32,
+              "planned_pairs": 16
+            },
+            "selections": {
+              "all_completed": {
+                "mean_error_east_north_arcsec": [
+                  -0.025686402260897398,
+                  0.2735306382013252
+                ],
+                "n": 16,
+                "p90_arcsec": 3.712245205230624,
+                "rms_arcsec": 2.5112937980326797
+              },
+              "common_completed": {
+                "mean_error_east_north_arcsec": [
+                  -0.025686402260897398,
+                  0.2735306382013252
+                ],
+                "n": 16,
+                "p90_arcsec": 3.712245205230624,
+                "rms_arcsec": 2.5112937980326797
+              },
+              "common_numerically_supported": {
+                "mean_error_east_north_arcsec": [
+                  0.5745675774164493,
+                  -0.8711536281677954
+                ],
+                "n": 8,
+                "p90_arcsec": 2.775341987472839,
+                "rms_arcsec": 2.0813651868762597
+              }
+            },
+            "variant": "plane_nearest_free"
+          },
+          {
+            "attempts": {
+              "active_neighbor_coefficient_count": 22,
+              "completed_epochs": 32,
+              "completed_pairs": 16,
+              "epochs_with_multiple_near_modes": 10,
+              "failed_epochs": 0,
+              "negative_target_frame_count": 0,
+              "numerically_supported_pairs": 8,
+              "planned_epochs": 32,
+              "planned_pairs": 16
+            },
+            "selections": {
+              "all_completed": {
+                "mean_error_east_north_arcsec": [
+                  0.21293364558947656,
+                  0.008277389147504671
+                ],
+                "n": 16,
+                "p90_arcsec": 3.098034369449046,
+                "rms_arcsec": 2.1887061015573206
+              },
+              "common_completed": {
+                "mean_error_east_north_arcsec": [
+                  0.21293364558947656,
+                  0.008277389147504671
+                ],
+                "n": 16,
+                "p90_arcsec": 3.098034369449046,
+                "rms_arcsec": 2.1887061015573206
+              },
+              "common_numerically_supported": {
+                "mean_error_east_north_arcsec": [
+                  0.6174728937359537,
+                  -1.0015782472738617
+                ],
+                "n": 8,
+                "p90_arcsec": 2.8300871295726955,
+                "rms_arcsec": 2.123839771911041
+              }
+            },
+            "variant": "plane_nearest_nonnegative"
+          }
+        ],
+        "background_truth": "quadratic",
+        "case": "quadratic_600uJy",
+        "paired": {
+          "common_completed": {
+            "mean_paired_radial_error_difference_arcsec": -0.22926433682329664,
+            "n": 16,
+            "rms_difference_nonnegative_minus_free_arcsec": -0.3225876964753591
+          },
+          "common_numerically_supported": {
+            "mean_paired_radial_error_difference_arcsec": 0.0805684985607797,
+            "n": 8,
+            "rms_difference_nonnegative_minus_free_arcsec": 0.04247458503478141
+          }
+        },
+        "planned_draws": 16,
+        "target_flux_jy": 0.0006
+      }
+    ],
+    "p90_method": "numpy percentile, linear interpolation",
+    "qualification": "16 paired noise draws per case on one opened geometry; Gaussian PSF and oracle noise, not independent sky validation"
+  },
+  "counts": {
+    "control_attempts": 256,
+    "failed": 0,
+    "fit_completed": 288,
+    "planned": 288,
+    "real_attempts": 32,
+    "recorded": 288
+  },
+  "limitations": [
+    "Opened WISE geometry and development-only synthetic Gaussian truth; no independent sky validation or science promotion.",
+    "Control background uses empirical original VARIANCE, which may already contain original source shot noise; added synthetic Poisson does not establish a physical noise budget.",
+    "Control errors use oracle expected-source variance; no confidence interval, coverage or detection probability.",
+    "Renderer and linear KKT replayed at saved fit positions; successful final-start costs checked independently by linear BVLS, without positional optimization. Position Jacobian/rank is not independently recomputed.",
+    "No statistical model winner is selected; 16 draws per case share one opened geometry."
+  ],
+  "provenance": {
+    "controls_report": {
+      "bytes": 5179378,
+      "path": "web/data/neighbor-intervention/controls.json",
+      "sha256": "59e6ddc47196d328723c112252a725f8d2397f8637546dc321def4a47e1317bf"
+    },
+    "design_sha256": "119f7d628c716f7e372778bf9983ecbfc5c256c02b9b32aebc7972de819f57d6",
+    "input_hashes": {
+      "data/raw/benchmark/calibration-uuid-lookup.xml": {
+        "bytes": 2068,
+        "sha256": "ab874eda2c3bf25083375e51f06f59716463ee43135d5f8c957a3cdfeef2703c"
+      },
+      "data/raw/external/spherex-spectral-calibration/SPHERExSpectralFiles_202607.tar": {
+        "bytes": 436705280,
+        "sha256": "45ff6c57ca68da00a595a4e8a5c2f875cc98b094fde143d9ce109e69df252f09"
+      },
+      "data/raw/external/wise0855/jw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits": {
+        "bytes": 198720,
+        "sha256": "17164197d803117d02c0e1e89ce64d5521ba86b523d3ba0cc03679974df53e3f"
+      },
+      "data/raw/wise0855/calibration/abs_gain_matrix_D6_spx_cal-agm-v7-2025-218.fits": {
+        "bytes": 16652160,
+        "sha256": "b297b1f286cd66b0ce109c5cb884ab08ca980376edf9f161cbf9cd754674bdb8"
+      },
+      "data/raw/wise0855/calibration/epsf_D6_spx_cal-epsf-v1-2026-191.fits": {
+        "bytes": 7943040,
+        "sha256": "52f85faeb93d67ed2020b68a628fc947c1f0b78cbf9282ca193ec6d588ac1a36"
+      },
+      "data/raw/wise0855/calibration/spectral_wcs_D6_spx_cal-wcs-v4-2025-254.fits": {
+        "bytes": 33312960,
+        "sha256": "8872df333578ac80c308c7077bb86e4d3d2a639ee53c75f0f2fe94ee04ab6a96"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits": {
+        "bytes": 5613120,
+        "sha256": "a06699c974d9783092ff7d1b75098ec551850940198056d0f485879b8ae333d3"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits": {
+        "bytes": 5613120,
+        "sha256": "f409eea02ba7a14bd0696c61826a493a6bb777ea1d44b98ab1eed0e564cb2b8b"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits": {
+        "bytes": 5613120,
+        "sha256": "a80f3f4af737cbd54d479f150956303dd0746a0756ac5a50093059b41f7e8348"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits": {
+        "bytes": 5613120,
+        "sha256": "a0c4c1789c071b0e895a889b4ce8e4b16d2dfe18dabcb247e5e4743b97eba1eb"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "2c8a39da068e62ce5d830446a91910b6982e0c9e29275f21a6ef16c82983770b"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "338553867c86356e6700f3ca397297819e3c3fa7dd7ea7d0405cf86f4933d4a4"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "2ecd5c1339c554da0f5a7b7c00bae5302148e1ba00d0e23551b69629a6721345"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "a3fd7c7e5759326ebcd1cf8bb3b9c5288aff7fc08335d474e74bb9f1b3eb8630"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "8ea7979eaed8331e7a1d80925caf80dfcbc33c6327360935faa4743a7ea8574f"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "2c87bd5dbf17c87abdada7856b6e02bf94495c60312b306d142a9ee6bcc18a57"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "4469a791bd31ab5f904b011e211525eceaa94ec99e1f2a791a991acd597b5d39"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "d46e81c853576d19126661c32845acd2b830a0638e7c33530c672af8710f6ad3"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "8af9f225f987ace1bca0009a2cd2aed746d62172aa5c141d0d67fe018ca97983"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "15bc55d68daa40deeb268366086e1a25977ee24c93e72ac2d7bbb65001096331"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "495cc393eb420e23fcdabe0ad65d7a200e433bcc2ee152789130bfb4f5491ce9"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5616000,
+        "sha256": "784fefd1a27e35eb2bf52f4ca0eb90005b73a3d2dffc1416ec470411c8aa975d"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5616000,
+        "sha256": "b20b2c4ea62b87d02d9fb1004c4b6ac33c4224901eab75793fc20e4e9d4e5748"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5616000,
+        "sha256": "3b4f35b30f6271488ec49ffc3900c6be3d2204422d1aff1d8969227625698d69"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5616000,
+        "sha256": "2aea402a25f4c1814af63eaea099fec697e421d8c9ad66d5c4e394a6d80b225f"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5613120,
+        "sha256": "da688a28a2d51689eaa1be35973d41a6603676ae66cd6730c43b34aab5d8c9b9"
+      },
+      "data/raw/wise0855/gaia-wide/manifest.json": {
+        "bytes": 21730,
+        "sha256": "1c31c51b73df908e78a1ab7c162fc0b70f9e7a576d0194f246f3f86380c51a07"
+      }
+    },
+    "opened_products": {
+      "web/data/external/photometric-convention.json": "3a1f719edd3a36d7c94777172752384265b43b5c41c4c2484abe2d09d530bbd5",
+      "web/data/external/wise0855-prism-reference.json": "f7d1fd41d22bb8de2a2e686eb9fa8c74c9a3502566e07c45503cf33b83099961",
+      "web/data/gaia/results.json": "2b2ea5996f01a96ba00cb2252841c0a9287b36dfe08b6cc64a13f66ecd4158aa",
+      "web/data/release/protocol.json": "79803094b4aeee039e589f8b3ceb3af5fcfbcc61bd929c89cc2ed26fbf51fac1"
+    },
+    "protocol_commit": "32573ad53d6cafa47ef2cc79b0971b22bd3203bd",
+    "publisher_source_sha256": "279842419f1a9a4f8762f9f5be63be4cb3cacd34b1cb2eadeb91dcf555154d8f",
+    "raw_report_bytes": 87581267,
+    "raw_report_path": "data/raw/benchmark/neighbor-intervention.json",
+    "raw_report_sha256": "428e070cd75b078875420653745e4be2dacce7da95342033ae8f6ab923ce520a",
+    "real_report": {
+      "bytes": 19232175,
+      "path": "web/data/neighbor-intervention/development.json",
+      "sha256": "0d1c2781f30572165261309bfbb0447da1876bc3f77a13533c4b71e5e1f02a85"
+    },
+    "runtime": {
+      "packages": {
+        "Pillow": "13.0.0",
+        "astropy": "8.0.2",
+        "numpy": "2.4.6",
+        "requests": "2.34.2",
+        "scipy": "1.17.1",
+        "truststore": "0.10.5"
+      },
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python": "3.11.9",
+      "thread_environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "thread_qualification": "environment requests recorded before CLI imports; not independent verification of every backend thread"
+    },
+    "source_hashes": {
+      "docs/NEIGHBOR_INTERVENTION_PROTOCOL.md": "58b1e6f5373f6fad506ffb35696bd007710fd04b035dc2bfa1178bf0f3d93325",
+      "docs/WISE_LINKED_PROTOCOL.md": "74c781518e813fd24eed8b4ad18e9753f92d60206426291b7d9df8d4fa2a5ba2",
+      "requirements.txt": "6a72e6a6e45a29266d807d680d1ba0dcb118c08ae1c25f8cc9850a1cb996e8e7",
+      "scripts/ablation_model.py": "e8bd406c75d15413a5b36e04b9a39ca804424cdeeb4435e38ca6a5ec40053b4e",
+      "scripts/audit_native_gain.py": "6d6ed67bc9fe1091ebaa82c651d67236ccf79aae62174f4ca7b3851a5483e2ba",
+      "scripts/benchmark_accuracy.py": "75a7c9b406d0508d7149ff70163a40c5c1eeb601cd30035e97d178c36b2977e7",
+      "scripts/build_demo.py": "8985b55ba6fd29fd02d1618f1d62d2a58a4ad235f692d1c650dacb1ce53b159e",
+      "scripts/conditional_covariance.py": "59792dba210de5ba127f4ac0e799beee1273f0239a03e5b7f04fe3176ea166bd",
+      "scripts/constrained_linear_profile.py": "edf00bdc5a5dff4876e0d602149fcdd3b031d2e73fd470da83d3a861768de78b",
+      "scripts/covariance_model.py": "8ac686fb374ac4e34b92ddd3ef91385ec967da3617cfe32b14a17cd4cac8965c",
+      "scripts/gaia_motion.py": "e8c29852acf4d1a147e58db7d8a44b4cd8578e8622c58b5c63d8bcbc36d06688",
+      "scripts/independent_scene_control.py": "9e14624f25f953b4a8b3ca079c66a68997674bf341d428ef1cc47c0662294963",
+      "scripts/joint_motion.py": "1a2fa9bf673610effb24ae18c2f6b6637568d507b34498043cb1d9e2cb1eb59c",
+      "scripts/lab_pixel_binding.py": "f60807a0e44599ad59f798db226439395999f50ec5c4e413a31cf0b4286778ff",
+      "scripts/lab_spectral_response.py": "806307f66a4016ce16cb033aae5860a28552a06f2f4b4cb976c98f7d11fcd638",
+      "scripts/linked_epoch_model.py": "a89e04db5be4adaa067c3eeb4196f58ad7abec3cf5b915b9e9832ed5c5f2d805",
+      "scripts/motion_analysis.py": "50369300355b5b8af47bcfdb7d6a430731ade7a5c867912b3819b2680d6b4523",
+      "scripts/native_flux_template.py": "e8a600cbd4f491539515998791ec47573ff25f8fbc74ef796ccb5289f47b5653",
+      "scripts/native_gain_binding.py": "7f69bf86e3217a89e02674ff320575f3057c6a1d5c87d8b3f223fca601e5667a",
+      "scripts/neighbor_epoch_model.py": "e9f13f1d6b07a7ab20d03020e259b0e976232798dda2fccde2935e074132e6de",
+      "scripts/neighbor_intervention_inputs.py": "cad03e60d98870f5221bafc9df921990caafd31e013f1e245635ac429a9789e0",
+      "scripts/parse_wise0855_prism.py": "f50d0378aa52c92d9d5576c9f01636c48dbabb91c5780594102be75ba41e8762",
+      "scripts/profile_uncertainty.py": "3c0ca10352365566ce0479843d748a3e6347e48fe36ad04f354b02d1e16db9c6",
+      "scripts/quality_model.py": "4ad2caf98be10c189f4f02108e286b348f945879640fb68a21a1a8e85d476940",
+      "scripts/release_analysis.py": "628ff978b72872166b9f66f28140e413a486eba5687cbb5b0838fe3095567eca",
+      "scripts/run_neighbor_intervention.py": "2caac018498524d03141cb1909f2a8f4452476802c4b30804809797a9e4a4cba",
+      "scripts/run_wise_linked_study.py": "24f82db89f686ed45d83ed03bbbb55dd6babca9865c87639f5a1617788e600c4",
+      "scripts/science_jobs.py": "71de8715954d36b97ba4b4ea046d4e057295287b4248fd7930f9133956b06877",
+      "scripts/science_mask_policy.py": "20e33d2aa3fb3c54c253647fa49bcd97f8f15aa24c594d12e54304a4fb9ffde3",
+      "scripts/sed_flux_coefficient.py": "a78700af3f266260a34e87682381daf9a94555a4aba329c33859b538f8a92390",
+      "scripts/source_ramp_noise.py": "8e0a0302560a84a87f232ff04834755d4c1345389369f68fd6a11c4e86980f9a",
+      "scripts/spectral_bandpass_v2.py": "f22f07015bb05f736a040933fab4f950a73b1ea4d9e0541f2891b0b597882abf",
+      "scripts/wcs_pixel_area.py": "89b77fedeafc52b4e68765c56ec7cd130aaad4f32bf97549de03c5238d00edaa",
+      "scripts/wise_linked_inputs.py": "ce2a21d3c709d1ae89bc13dc4988fbf8fb9cd353e2f4bd7c61da0b8bf07df29e",
+      "tests/test_constrained_linear_profile.py": "b16dbb571feff7fed5d82eaaa3bae6447f16c82222c8902fe6e9720e59f2c8a8",
+      "tests/test_independent_scene_control.py": "89d2b0c5f83f470d48a5f9ccbab26839c405beec477e421a18f977689fd75e3a",
+      "tests/test_lab_pixel_binding.py": "4d61e877b27f55ade17fbcaa2c80a3c6dd77c21c73428cb3138e8c298b1a0751",
+      "tests/test_linked_epoch_model.py": "7e739f5ed34f11891476befa31539d758f47cffc33e1f327662b934dd818931d",
+      "tests/test_native_flux_template.py": "183a39d7576397b6ebf7d79803a4db31720ff49b7db7692e792fb8cd6822fc1f",
+      "tests/test_neighbor_epoch_model.py": "7995d89240aa206382893c752164a1454607895c7fc72a336203af3883575266",
+      "tests/test_neighbor_intervention_inputs.py": "1f65ca3714697d984826b05f27f5252cfe264b1f93492cc6740128781782d021",
+      "tests/test_neighbor_intervention_study.py": "8fbb1a4a6ae8e0b84c23113c19bad33439d5dbc08287007907d0dace95bd521f",
+      "tests/test_sed_flux_coefficient.py": "8b8ca7bcc1c6b91372f07d2a266322e2b9389566023cfda9f93bc98aebf9991d",
+      "tests/test_wcs_pixel_area.py": "b74bc4f49170af86f070a69aa5ff5dc57af494bf8a7a64117b741dda204f0b4d",
+      "tests/test_wise_linked_inputs.py": "10f999b6b2f6ef73300aa8bdf2ed22bd46892cdae74798d069a9b2c0c5301215",
+      "tests/test_wise_linked_study.py": "2792155349b825633ddf081cfd65ede6d65a9b92f971757fc9cd72e6f2dd9670"
+    }
+  },
+  "real": {
+    "configurations": [
+      {
+        "complete_pairs": 8,
+        "configuration": "broad",
+        "frames_per_epoch": {
+          "after": 10,
+          "before": 10
+        },
+        "max_pairwise_spread_arcsec": 0.43486466023266207,
+        "max_pairwise_variants": [
+          "plane_nearest_nonnegative",
+          "quadratic_bilinear_free"
+        ],
+        "numerical_supported_pairs": 8,
+        "pairs": [
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 1,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.0,
+            "east_north_arcsec": [
+              -3.0659807829214105,
+              0.08767081943948388
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "nearest",
+            "nonnegative_neighbors": false,
+            "numerical_support_both": true,
+            "variant": "plane_nearest_free"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 1,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.08007563376425551,
+            "east_north_arcsec": [
+              -3.028081710340176,
+              0.017131699653159062
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "nearest",
+            "nonnegative_neighbors": true,
+            "numerical_support_both": true,
+            "variant": "plane_nearest_nonnegative"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 1,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.2010645648911186,
+            "east_north_arcsec": [
+              -3.2176791592975587,
+              0.2196350640654254
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "bilinear",
+            "nonnegative_neighbors": false,
+            "numerical_support_both": true,
+            "variant": "plane_bilinear_free"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 1,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.06837904944941202,
+            "east_north_arcsec": [
+              -3.1343563477964755,
+              0.08698050674156406
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "bilinear",
+            "nonnegative_neighbors": true,
+            "numerical_support_both": true,
+            "variant": "plane_bilinear_nonnegative"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 2,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.15678866105466038,
+            "east_north_arcsec": [
+              -3.1970338161709617,
+              0.17373931955076272
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "nearest",
+            "nonnegative_neighbors": false,
+            "numerical_support_both": true,
+            "variant": "quadratic_nearest_free"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 2,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.08482665038457964,
+            "east_north_arcsec": [
+              -3.150035834222197,
+              0.07625552416122439
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "nearest",
+            "nonnegative_neighbors": true,
+            "numerical_support_both": true,
+            "variant": "quadratic_nearest_nonnegative"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 2,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.36036236331193644,
+            "east_north_arcsec": [
+              -3.34985481146882,
+              0.30965408188967114
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "bilinear",
+            "nonnegative_neighbors": false,
+            "numerical_support_both": true,
+            "variant": "quadratic_bilinear_free"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 2,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.2064033023633778,
+            "east_north_arcsec": [
+              -3.2610307186268304,
+              0.1551826392032819
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "bilinear",
+            "nonnegative_neighbors": true,
+            "numerical_support_both": true,
+            "variant": "quadratic_bilinear_nonnegative"
+          }
+        ],
+        "refusal_counts": {},
+        "refusal_counts_are_nonexclusive": true,
+        "spread_basis": "all completed pairs, including numerical refusals; model sensitivity only"
+      },
+      {
+        "complete_pairs": 8,
+        "configuration": "strict",
+        "frames_per_epoch": {
+          "after": 2,
+          "before": 2
+        },
+        "max_pairwise_spread_arcsec": 1.1581149965544622,
+        "max_pairwise_variants": [
+          "plane_nearest_nonnegative",
+          "quadratic_bilinear_free"
+        ],
+        "numerical_supported_pairs": 4,
+        "pairs": [
+          {
+            "after_reasons": [
+              "multiple_near_best_modes"
+            ],
+            "after_status": "fit_completed",
+            "background_order": 1,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.0,
+            "east_north_arcsec": [
+              -2.533856779570843,
+              0.499912318521522
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [
+                  "multiple_near_best_modes"
+                ],
+                "numerical_support": false,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "nearest",
+            "nonnegative_neighbors": false,
+            "numerical_support_both": false,
+            "variant": "plane_nearest_free"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 1,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.4603365485375839,
+            "east_north_arcsec": [
+              -2.2069265220119654,
+              0.17583463553180856
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "nearest",
+            "nonnegative_neighbors": true,
+            "numerical_support_both": true,
+            "variant": "plane_nearest_nonnegative"
+          },
+          {
+            "after_reasons": [
+              "multiple_near_best_modes"
+            ],
+            "after_status": "fit_completed",
+            "background_order": 1,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.014141882492356818,
+            "east_north_arcsec": [
+              -2.5446266727197133,
+              0.49074704482186926
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [
+                  "multiple_near_best_modes"
+                ],
+                "numerical_support": false,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "bilinear",
+            "nonnegative_neighbors": false,
+            "numerical_support_both": false,
+            "variant": "plane_bilinear_free"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 1,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.4159918280562907,
+            "east_north_arcsec": [
+              -2.2756988112864556,
+              0.17371657296236906
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "bilinear",
+            "nonnegative_neighbors": true,
+            "numerical_support_both": true,
+            "variant": "plane_bilinear_nonnegative"
+          },
+          {
+            "after_reasons": [
+              "multiple_near_best_modes"
+            ],
+            "after_status": "fit_completed",
+            "background_order": 2,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.6767893993161758,
+            "east_north_arcsec": [
+              -3.051040023104385,
+              0.9364502706343654
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [
+                  "multiple_near_best_modes"
+                ],
+                "numerical_support": false,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "nearest",
+            "nonnegative_neighbors": false,
+            "numerical_support_both": false,
+            "variant": "quadratic_nearest_free"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 2,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.15873662405019803,
+            "east_north_arcsec": [
+              -2.666574521212422,
+              0.586994560502382
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "nearest",
+            "nonnegative_neighbors": true,
+            "numerical_support_both": true,
+            "variant": "quadratic_nearest_nonnegative"
+          },
+          {
+            "after_reasons": [
+              "multiple_near_best_modes"
+            ],
+            "after_status": "fit_completed",
+            "background_order": 2,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.6995675751310124,
+            "east_north_arcsec": [
+              -3.0832887980286023,
+              0.932947246983554
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [
+                  "multiple_near_best_modes"
+                ],
+                "numerical_support": false,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "bilinear",
+            "nonnegative_neighbors": false,
+            "numerical_support_both": false,
+            "variant": "quadratic_bilinear_free"
+          },
+          {
+            "after_reasons": [],
+            "after_status": "fit_completed",
+            "background_order": 2,
+            "before_reasons": [],
+            "before_status": "fit_completed",
+            "change_from_primary_control_arcsec": 0.23354146651837504,
+            "east_north_arcsec": [
+              -2.745591232508456,
+              0.5984523511111401
+            ],
+            "epochs": {
+              "after": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              },
+              "before": {
+                "failure": null,
+                "failure_stage": null,
+                "numerical_reasons": [],
+                "numerical_support": true,
+                "status": "fit_completed"
+              }
+            },
+            "epsf_kind": "bilinear",
+            "nonnegative_neighbors": true,
+            "numerical_support_both": true,
+            "variant": "quadratic_bilinear_nonnegative"
+          }
+        ],
+        "refusal_counts": {
+          "multiple_near_best_modes": 4
+        },
+        "refusal_counts_are_nonexclusive": true,
+        "spread_basis": "all completed pairs, including numerical refusals; model sensitivity only"
+      }
+    ]
+  },
+  "rules": {
+    "anchor": [
+      31.5,
+      31.5
+    ],
+    "configurations": [
+      "broad",
+      "strict"
+    ],
+    "controls": {
+      "background_plane_coefficients_mjysr": [
+        0.04,
+        0.015,
+        -0.01
+      ],
+      "before_position": [
+        31.73,
+        31.31
+      ],
+      "cases": [
+        {
+          "background": "plane",
+          "id": "plane_300uJy",
+          "target_flux_jy": 0.0003
+        },
+        {
+          "background": "plane",
+          "id": "plane_600uJy",
+          "target_flux_jy": 0.0006
+        },
+        {
+          "background": "quadratic",
+          "id": "quadratic_300uJy",
+          "target_flux_jy": 0.0003
+        },
+        {
+          "background": "quadratic",
+          "id": "quadratic_600uJy",
+          "target_flux_jy": 0.0006
+        }
+      ],
+      "configuration": "strict",
+      "displacement_sky_px": [
+        0.55,
+        0.08
+      ],
+      "draws_per_case": 16,
+      "estimands": "all attempts/failures, all completed pair error/RMS, common-completed and common-screened pairs; no covariance coverage",
+      "fitter_error": "oracle sqrt(original variance + known expected-source variance), conditional control only",
+      "inference": "pilot on one opened geometry; no model selection, validation, coverage calibration or scientific promotion",
+      "neighbor_flux_jy": "0.00015/(1+index) in frozen retained neighbor order",
+      "neighbor_sigma_xy_native": [
+        0.7,
+        0.6
+      ],
+      "pixels": "same native geometry, original VARIANCE as diagonal Gaussian background-error scale; not injections on original noisy images",
+      "psf": "axis-aligned pixel-integrated positive Gaussian; independent family from empirical ePSF, not telescope truth",
+      "quadratic_coefficients_mjysr": [
+        0.025,
+        0.02,
+        -0.015
+      ],
+      "rng": "PCG64 SeedSequence([prefix,case_index,draw,epoch_index,frame_index])",
+      "seed_prefix": 20261031,
+      "source_noise": "exact ideal Poisson OLS ramp of target+neighbors using per-pixel bound gain and nominal header timing",
+      "target_sigma_xy_native": [
+        0.55,
+        0.7
+      ],
+      "variants": [
+        "plane_nearest_free",
+        "plane_nearest_nonnegative"
+      ]
+    },
+    "final_mode_audit": "nine finite starts with fixed final weights; delta chi2 5.991 is heuristic",
+    "max_irls_iterations": 20,
+    "neighbor_flux": "same semantic native Jy columns, either signed or NNLS >=0; positions fixed from opened catalog",
+    "position_bound_px": 2.5,
+    "primary_contrast": [
+      "plane_nearest_free",
+      "plane_nearest_nonnegative"
+    ],
+    "promotion": false,
+    "registration": "frozen Gaia offsets, fixed; no propagation of shared reference/calibration uncertainty",
+    "scope": "development on opened 20 WISE wide cutouts; no new sky field",
+    "selection": "reuse original strict SOURCE-only pixels/errors/catalog IDs; no frame, neighbor or hard case dropped",
+    "spatial_psf": "nearest or bilinear mixture of individually normalized raw tables, fixed at anchor/catalog coordinates; full native phase normalization follows",
+    "start_offsets": [
+      [
+        -1.5,
+        -1.5
+      ],
+      [
+        0.0,
+        -1.5
+      ],
+      [
+        1.5,
+        -1.5
+      ],
+      [
+        -1.5,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1.5,
+        0.0
+      ],
+      [
+        -1.5,
+        1.5
+      ],
+      [
+        0.0,
+        1.5
+      ],
+      [
+        1.5,
+        1.5
+      ]
+    ],
+    "target_flux": "independent SIGNED Jy per frame; no external spectral ratio or positivity on target",
+    "thread_environment_request": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "time_model": "one position per epoch; within-season motion/parallax not yet fitted",
+    "uncertainty": "no covariance/confidence/SNR returned for these active-constraint fits",
+    "variants": [
+      {
+        "background_order": 1,
+        "epsf_kind": "nearest",
+        "id": "plane_nearest_free",
+        "nonnegative_neighbors": false
+      },
+      {
+        "background_order": 1,
+        "epsf_kind": "nearest",
+        "id": "plane_nearest_nonnegative",
+        "nonnegative_neighbors": true
+      },
+      {
+        "background_order": 1,
+        "epsf_kind": "bilinear",
+        "id": "plane_bilinear_free",
+        "nonnegative_neighbors": false
+      },
+      {
+        "background_order": 1,
+        "epsf_kind": "bilinear",
+        "id": "plane_bilinear_nonnegative",
+        "nonnegative_neighbors": true
+      },
+      {
+        "background_order": 2,
+        "epsf_kind": "nearest",
+        "id": "quadratic_nearest_free",
+        "nonnegative_neighbors": false
+      },
+      {
+        "background_order": 2,
+        "epsf_kind": "nearest",
+        "id": "quadratic_nearest_nonnegative",
+        "nonnegative_neighbors": true
+      },
+      {
+        "background_order": 2,
+        "epsf_kind": "bilinear",
+        "id": "quadratic_bilinear_free",
+        "nonnegative_neighbors": false
+      },
+      {
+        "background_order": 2,
+        "epsf_kind": "bilinear",
+        "id": "quadratic_bilinear_nonnegative",
+        "nonnegative_neighbors": true
+      }
+    ],
+    "version": "0.10.0-neighbor-intervention.1"
+  },
+  "schema": "neighbor-intervention-overview-1",
+  "schema_version": 1
+}

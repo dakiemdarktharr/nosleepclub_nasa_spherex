@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "protocol_commit": "32573ad53d6cafa47ef2cc79b0971b22bd3203bd",
+  "publisher_commit": "055053f4ca6fdcf1a2b5de82818135ba7b47720c",
+  "source_raw_sha256": "428e070cd75b078875420653745e4be2dacce7da95342033ae8f6ab923ce520a",
+  "raw_bytes": 87581267,
+  "artifacts": [
+    {
+      "path": "web/data/neighbor-intervention/design.json",
+      "sha256": "119f7d628c716f7e372778bf9983ecbfc5c256c02b9b32aebc7972de819f57d6",
+      "bytes": 16377
+    },
+    {
+      "path": "web/data/neighbor-intervention/development.json",
+      "sha256": "0d1c2781f30572165261309bfbb0447da1876bc3f77a13533c4b71e5e1f02a85",
+      "bytes": 19232175
+    },
+    {
+      "path": "web/data/neighbor-intervention/controls.json",
+      "sha256": "59e6ddc47196d328723c112252a725f8d2397f8637546dc321def4a47e1317bf",
+      "bytes": 5179378
+    },
+    {
+      "path": "web/data/neighbor-intervention/overview.json",
+      "sha256": "558f03c0da2b9c108a2cb2f97e85c7c901ba01157a4bf662a7f41daedfdd41d6",
+      "bytes": 53184
+    },
+    {
+      "path": "web/data/neighbor-intervention/figures.json",
+      "sha256": "4d79d49ea09702588c4b9faedfc4e7b1513fa5e34f412c69d78eb1d43669839b",
+      "bytes": 18667
+    },
+    {
+      "path": "web/data/neighbor-intervention/real-sensitivity-broad.svg",
+      "sha256": "1f3ffabea1d30c6ca8273c0bf880f8b29a3d51bc3be10255c671d9bdcd04d83b",
+      "bytes": 86871
+    },
+    {
+      "path": "web/data/neighbor-intervention/real-sensitivity-strict.svg",
+      "sha256": "c1d27ef04865014f6de9586ce4e72ab55e4e243a09a7608088df3bdd502b3dee",
+      "bytes": 89802
+    },
+    {
+      "path": "web/data/neighbor-intervention/control-error-pairs.svg",
+      "sha256": "1e53b9a9c56fd1dcdf9ebde2c612a8ecfbedfeaecae3d84c2f28dc7cf2e586c4",
+      "bytes": 90988
+    }
+  ],
+  "counts": {
+    "control_attempts": 256,
+    "failed": 0,
+    "fit_completed": 288,
+    "planned": 288,
+    "real_attempts": 32,
+    "recorded": 288
+  },
+  "audit": {
+    "epoch_audits": 288,
+    "linear_frame_audits": 704,
+    "successful_final_starts_replayed": 2583,
+    "failed_final_starts_retained": 9,
+    "maximum_mode_cost_abs_difference": 1.5916157281026244e-12,
+    "maximum_scaled_kkt_violation": 1.2879801392085e-13
+  },
+  "local_release_tests": {
+    "python_total": 382,
+    "skipped_real_mongo_fixture": 6,
+    "elapsed_seconds": 44.807,
+    "node_suites": [
+      "review-store",
+      "explorer",
+      "linked-evidence",
+      "neighbor-evidence"
+    ]
+  },
+  "science_promoted": false,
+  "qualification": "Development model-sensitivity and one-geometry synthetic oracle-noise stress tests only. Numerical support does not validate source identity or astrometric error; prospective fields remain unopened."
+}

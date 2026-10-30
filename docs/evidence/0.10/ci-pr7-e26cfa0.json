@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-10-30 20:04:19 UTC",
+  "repo": "dakiemdarktharr/nosleepclub_nasa_spherex",
+  "pr": 7,
+  "head_sha": "e26cfa0b0e5cbf395c5fcc82e9acf5a540b96457",
+  "run_url": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41119967552",
+  "workflow_runs": [
+    {
+      "id": 41119967552,
+      "name": "Checks",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 29,
+      "jobs_url": "https://api.github.com/repos/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41119967552/jobs",
+      "logs_url": "https://api.github.com/repos/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41119967552/logs",
+      "workflow_id": 401878997
+    }
+  ],
+  "jobs": [
+    {
+      "id": 124283888827,
+      "name": "Python tests and repository evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41119967552,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install pinned science and web dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile Python source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Check source whitespace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Start disposable MongoDB replica set",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Run all Python unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Create evidence report",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Upload evidence and test output",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Remove disposable MongoDB container",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        },
+        {
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        }
+      ]
+    },
+    {
+      "id": 124283888874,
+      "name": "JavaScript syntax and review store",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41119967552,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Check browser JavaScript syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Test ReviewStore pure cases",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test explorer request and display races",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Test linked evidence refusals and report loading",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    }
+  ],
+  "python": {
+    "tests_run": 326,
+    "elapsed_seconds": 16.894,
+    "skipped": 13,
+    "skip_scope": "12 optional ignored raw/cache cases and one optional photutils comparison; local raw checks run separately",
+    "result": "OK",
+    "mongo_fixture": "four real quota concurrency and two encrypted backup/restore tests passed on disposable loopback replica set; no production URI"
+  },
+  "javascript": {
+    "suites": 3,
+    "result": "passed",
+    "test_summaries": [
+      "2026-10-30T20:01:38.2626444Z ReviewStore lifecycle cases passed",
+      "2026-10-30T20:01:38.7025076Z Review UI race cases passed",
+      "2026-10-30T20:01:38.7910166Z Explorer DOM and HTTP race cases passed",
+      "2026-10-30T20:01:38.8812227Z Linked evidence: all denominators, refusals, model switches, failures and retries passed"
+    ]
+  },
+  "qualification": "Software/fixture CI evidence; not independent science acceptance, Atlas load/recovery or a production backup."
+}

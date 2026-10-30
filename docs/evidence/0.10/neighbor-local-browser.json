@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "target": "http://127.0.0.1:8767/#neighbor-intervention",
+  "frontend_version": "0.10.0-r10",
+  "method": "CUA IAB browser 2, tab 8; actual DOM controls, rendered text and screenshots against audited local static products.",
+  "checks": {
+    "default_closed_without_deep_link": true,
+    "deep_link_reload_opens_section": true,
+    "keyboard_anchor_opens_section": true,
+    "direct_disclosure_toggle": true,
+    "planned_fit_count": "288/288",
+    "real_table_rows": 8,
+    "strict_support": "4/8",
+    "strict_primary_change_arcsec_display": "0,460",
+    "broad_support": "8/8",
+    "broad_primary_change_arcsec_display": "0,080",
+    "common_supported_draws_per_case": [
+      1,
+      7,
+      0,
+      8
+    ],
+    "zero_supported_case_displays_dashes": true,
+    "worse_quadratic_600_supported_rms_visible": true,
+    "real_chart_loaded": true,
+    "control_chart_loaded_after_scroll": true,
+    "font": "Be Vietnam Pro",
+    "new_console_errors_or_warnings_observed": 0
+  },
+  "reflow": [
+    {
+      "viewport_width": 1280,
+      "document_scroll_width": 1265
+    },
+    {
+      "viewport_width": 768,
+      "document_scroll_width": 753,
+      "table_container_width": 610,
+      "table_scroll_width": 1100
+    },
+    {
+      "viewport_width": 390,
+      "document_scroll_width": 375,
+      "table_container_width": 298,
+      "table_scroll_width": 1100,
+      "chart_width": 650
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "neighbor-local-desktop.jpg",
+      "sha256": "bc6285d287a6d1354d2eadded90ec78e8518aa982a037ad5cc063f70c8dc5cb6",
+      "bytes": 68698
+    },
+    {
+      "path": "neighbor-local-mobile.jpg",
+      "sha256": "30968fff398c541621596bd03662b3ea5deac211c6179d2bb1e069334590e983",
+      "bytes": 40678
+    },
+    {
+      "path": "neighbor-local-controls.jpg",
+      "sha256": "88526f9b28a7d287c6996458fe5dddd0ec542a1ef0d4775026233297bd3e7b0c",
+      "bytes": 59599
+    }
+  ],
+  "interaction_note": "An initial anchor click immediately after reload did not change hash; the cause was not established. Keyboard Enter, direct disclosure and deep-link reload were verified. This receipt does not certify every mouse/navigation or accessibility path.",
+  "temporary_viewport_reset": true,
+  "qualification": "Local interface verification only; not full accessibility, production verification or scientific acceptance. No QA review was written through this browser.",
+  "receipt_written_at_utc": "2026-10-30T21:51:32.268608+00:00",
+  "source_sha256": {
+    "web/index.html": "ccfb51104b54cca5672b1e413fdabd9b48ca0d7b2e081f276e746382dfcc5ec8",
+    "web/mission.css": "f1bbda14767a234430a636a8dcb0f20a3a1c8a4db863c32a9867693ea9a95f63",
+    "web/neighbor-evidence.js": "2f373e6db8b39c6feae111fbf1a8615531340310afed660845a1d8a55ca02bd4",
+    "web/data/neighbor-intervention/overview.json": "558f03c0da2b9c108a2cb2f97e85c7c901ba01157a4bf662a7f41daedfdd41d6",
+    "web/data/neighbor-intervention/figures.json": "4d79d49ea09702588c4b9faedfc4e7b1513fa5e34f412c69d78eb1d43669839b"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "base_url": "https://nosleepclub-nasa-spherex.vercel.app/#linked-flux",
+  "checked_at_utc": "2026-10-30T20:13:06.038212+00:00",
+  "checks": {
+    "broad_primary_change_display_arcsec": "0,116",
+    "broad_spread_display_arcsec": "0,556",
+    "chart_loaded": true,
+    "console_errors_observed": 0,
+    "console_warnings_observed": 0,
+    "diagnostic_enter_open": true,
+    "diagnostic_rows": 2,
+    "document_width_px": 1265,
+    "measured_overlay_default": false,
+    "prior_overlay_default": false,
+    "return_to_real_images_link": true,
+    "returned_to_strict": true,
+    "strict_denominator": 7,
+    "strict_rows": 7,
+    "strict_screened_pairs": 0,
+    "viewport_px": [
+      1280,
+      720
+    ],
+    "visible_scientific_advisory": true,
+    "workspace_default": "coadd-gaia-strict"
+  },
+  "deployed_commit": "80324933bfab21a73a0a2e3f05c447b99f2a81d2",
+  "method": "CUA selected IAB 2, new production tab; DOM, actual select controls and keyboard",
+  "qualification": "Bounded public UI verification. Mobile/tablet checks were local on matching assets, not a full screen-reader/WCAG or scientific accuracy audit.",
+  "schema_version": 1,
+  "screenshot": {
+    "path": "docs/evidence/0.10/linked-production-desktop.jpg",
+    "sha256": "b25c7a83000ff51ac094caa9739cb6235ff489a4aab10fb91224c7ff957389b1"
+  }
+}

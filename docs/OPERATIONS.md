@@ -49,3 +49,28 @@ Theo dõi số request, tỷ lệ lỗi 4xx/5xx và timeout theo endpoint/catego
 Đừng giả định M0 có backup miễn phí tự động. [Tài liệu MongoDB Free Cluster Backups](https://www.mongodb.com/docs/atlas/backup/cloud-backup/free-cluster-backup/) hiện mô tả tính năng snapshot M0 là private preview trả phí tùy chọn, cần payment method; các trang tổng quan có thể mô tả khác theo phiên bản/triển khai. Kiểm tra trực tiếp tier, khu vực, trạng thái backup, chi phí và khả năng áp dụng tại thời điểm vận hành; **không tự bật dịch vụ trả phí**. Nếu chưa có backup đã được kiểm chứng, ghi rõ nguy cơ mất review. Review guest có TTL 180 ngày, mang dữ liệu riêng tư; bản sao cũng phải được mã hóa, giới hạn truy cập và có thời hạn xóa phù hợp.
 
 Để lên kế hoạch một drill không phá dữ liệu, người vận hành chuẩn bị quyền tối thiểu hiện có, nơi lưu mã hóa có kiểm soát và **database sandbox tách biệt** có thể restore; nếu quyền hoặc môi trường chưa có, dừng và ghi blocker, không mở rộng quyền tùy tiện. Dùng công cụ MongoDB Database Tools theo [mongodump](https://www.mongodb.com/docs/database-tools/mongodump/) và [mongorestore](https://www.mongodb.com/docs/database-tools/mongorestore/) với config chứa URI/secret được bảo vệ, không đặt URI hay mật khẩu trên command line, log hoặc CI artifact. Xuất riêng database review, ghi phiên bản tool, thời điểm và hash archive; chỉ restore vào sandbox bằng cấu hình đích riêng và kiểm tra namespace, index, TTL, số bản ghi còn hiệu lực cùng việc đọc/xóa review thử. Không copy bản restore lên production hoặc thay đổi collection hiện hữu như một phần drill. Xóa bản tạm theo chính sách sau khi được phép, xác minh quyền và ghi bằng chứng thời gian sao lưu/khôi phục để đo RPO/RTO thực tế. Không coi tài liệu này là bằng chứng rằng backup hay restore đã diễn ra.
+
+
+## Release 8032493
+
+PR #7 qua hai check bắt buộc tại e26cfa0; Vercel production
+`dpl_AH4SZFa3yuCrq1N41ni4pYkzU4F2` READY, public alias giữ nguyên.
+[Deployment metadata](evidence/0.10/deployment-8032493.json) tách khỏi
+[bằng chứng 45 response](evidence/0.10/production-8032493.json). 31 static
+asset khớp Git blob, cả ba API đúng commit và phiên QA được cleanup. Hai GET
+metadata 200 mất 3,141/5,781 giây, frame 200 mất 2,657 giây; không có retry
+upstream trong lượt này. Các 400/403 là input/Origin probe có chủ đích.
+Lượt này không xóa hay thay thế lịch sử 502/504; chưa có SLO/load/recovery
+production được chứng minh. Reviewer guest/credential scope giữ nguyên.
+
+## Baseline review mức tải nhỏ
+
+Protocol `d7fd8f9` đã khóa trước một lần đo trên production `8032493`:
+[60/60 API request đạt](REVIEW_LOAD_RESULTS.md), 12/12 phiên khách QA được
+xác minh rỗng sau cùng, không cần cleanup phụ hoặc retry. p95 GET 1,937 s,
+POST 0,203 s, DELETE 0,141 s. Tối đa ba request cùng lúc; đợt sau cách lúc
+hoàn tất đợt trước ít nhất sáu giây. [Receipt](evidence/0.10/review-load-8032493.json)
+giữ đủ latency/status/request ID đã lọc và kiểm toán lại nguồn/cadence.
+Baseline hai phút dưới 0,5 request/s này không thay thế SLO, saturation,
+quan sát dài hạn, failover, backup/restore hoặc rollback. Không đo lại để
+thay receipt bất lợi; các lỗi upstream từ trước vẫn thuộc lịch sử vận hành.
