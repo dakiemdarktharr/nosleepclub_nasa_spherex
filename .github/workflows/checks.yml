@@ -11,7 +11,9 @@ permissions:
 jobs:
   python:
     name: Python tests and repository evidence
-    runs-on: ubuntu-latest
+    # MongoDB 8.0 refuses affected kernels >=6.19 (SERVER-121912).
+    # The Ubuntu 22.04 image currently uses the compatible 6.8 Azure kernel.
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -40,6 +42,7 @@ jobs:
       - name: Start disposable MongoDB replica set
         id: mongo
         run: |
+          uname -sr
           docker run --detach --name codex-review-test --publish 127.0.0.1:27027:27017 mongo:8.0@sha256:b9924c330a8bbc5800fe9c69f04a84e221eca7b28fd049a0354147d9908fa142 --replSet codex-review-test --bind_ip_all
           for attempt in {1..30}; do
             if [ "$(docker inspect --format '{{.State.Running}}' codex-review-test)" != "true" ]; then docker logs codex-review-test; exit 1; fi
@@ -91,7 +94,7 @@ jobs:
 
   javascript:
     name: JavaScript syntax and review store
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
