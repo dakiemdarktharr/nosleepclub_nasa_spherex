@@ -6,6 +6,12 @@ const ctx = canvas.getContext("2d");
 const state = { manifest: null, scene: null, images: {}, pixels: null, mode: "wipe", wipe: .5,
   zoom: 1, center: [32,32], selected: "target", blinkAfter: false, timer: null, loading: 0 };
 const number = (value, digits=2) => Number(value).toLocaleString("vi-VN", {maximumFractionDigits:digits, minimumFractionDigits:digits});
+$("load-retry").addEventListener("click",()=>location.reload());
+if(!window.ReviewStore){
+  $("load-state").textContent="Chưa tải được phần lưu nhận xét. Tải lại trang để mở bộ ảnh và nhận xét an toàn.";
+  $("workspace").removeAttribute("aria-busy");$("load-retry").hidden=false;
+  throw Error("review_store_unavailable");
+}
 let reviews = ReviewStore.read();
 let remoteStorage = false;
 let reviewScope = null;
@@ -373,12 +379,12 @@ async function loadScene(scene) {
     $("wavelength").textContent=isCoadd?"4,55–4,94 µm":`${number((scene.before.wavelength_um+scene.after.wavelength_um)/2,3)} µm`;
     $("alignment").textContent=isCoadd?`${number(scene.motion.holdout_rms_arcsec,2)}″ (${scene.motion.heldout_controls.length} sao)`:scene.alignment.rms_after_px===null?"Chỉ dùng WCS":`${number(scene.alignment.rms_after_px,3)} px`;
     $("date-before").textContent=`Trước · ${isCoadd?scene.before.date_start:scene.before.date}`;$("date-after").textContent=`Sau · ${isCoadd?scene.after.date_end:scene.after.date}`;
-    $("load-state").hidden=true;motionPanel(scene);candidateList();sceneList();evidenceContent();select("target");setMode(state.mode);
+    $("load-state").hidden=true;$("load-retry").hidden=true;motionPanel(scene);candidateList();sceneList();evidenceContent();select("target");setMode(state.mode);
     if(state.gaia)gaiaConfiguration(scene.motion?.spectral_configuration||"broad");
     ["download-manifest","save-review","export-reviews"].forEach(id=>$(id).disabled=false);
     document.dispatchEvent(new CustomEvent("scene:loaded"));
   } catch(error) {
-    $("load-state").hidden=false;$("load-state").textContent=`Không tải được dữ liệu: ${error.message}. Chạy web bằng scripts/serve_demo.py rồi tải lại trang.`;
+    $("load-state").hidden=false;$("load-state").textContent=`Không tải được dữ liệu: ${error.message}. Thử tải lại trang hoặc mở JSON bằng chứng.`;$("load-retry").hidden=false;
   }
   finally {if(generation===state.loading)$("workspace").removeAttribute("aria-busy");}
 }
@@ -480,7 +486,7 @@ getJson("data/manifest.json").then(async manifest=>{
   await setupAccuracy();
   await syncReviews();
 })
-  .catch(error=>{$("load-state").textContent=`Không tải được manifest: ${error.message}. Chạy scripts/serve_demo.py để mở bản demo.`;$("workspace").removeAttribute("aria-busy");});
+  .catch(error=>{$("load-state").textContent=`Không tải được manifest: ${error.message}. Thử tải lại trang.`;$("load-retry").hidden=false;$("workspace").removeAttribute("aria-busy");});
 
 window.addEventListener("resize",render);
 document.fonts.addEventListener("loadingdone",render);

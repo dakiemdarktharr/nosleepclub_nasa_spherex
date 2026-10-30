@@ -1,0 +1,60 @@
+{
+  "stage": "primary_source_convention_audit_not_calibration",
+  "checked_utc": "2026-10-30T18:24:12Z",
+  "scientific_status": "geometric conversion and published pipeline behavior established; absolute source coefficient, ePSF normalization and color mapping not validated for the WISE fit",
+  "verified": {
+    "image_unit": "MJy/sr",
+    "sapm_unit": "arcsec2",
+    "pixel_conversion": "F_pixel[Jy] = I_pixel[MJy/sr] * 1e6 * Omega_pixel[sr]",
+    "tractor_conversion": "Tractor flux amplitude in MJy/sr multiplied by nearest-source SAPM; oversample=1 in forced photometry; output uJy",
+    "gain_unit": "(MJy/sr)/(electron/s)",
+    "gain_application": "R6 calibration subtracts dark then multiplies by gain, and converts variance unit by gain squared; IMAGE is already calibrated.",
+    "tractor_native_patch": "R6 PSF path shifts and area-downsamples oversampled PSF then divides by native patch sum.",
+    "epsf_irsa_example": "IRSA ePSF tutorial code evaluates ImagePSF at native pixel centers and normalizes the rendered stamp. Its prose describes shift/downsample/integrate; the example does not explicitly integrate a second pixel window.",
+    "raw_local_epsf": "QR3 D6 ePSF, OVSMPX=5, image dimensions 33x33, DETCOORD=sky; local motion candidate applies over^2 / raw sum before interpolation and does not separately normalize each native stamp."
+  },
+  "conditional_formulae": {
+    "assumptions": "p_i is an already validated native-pixel source fraction, sum(p_i)=1 over declared full unmasked support, and F is the appropriate bandpass flux density; source position and response are fixed.",
+    "tractor_point_sapm_approximation": "I_i[MJy/sr] = F[Jy] * p_i / (1e6 * Omega_source[sr])",
+    "per_pixel_sapm_model": "I_i[MJy/sr] = F[Jy] * p_i / (1e6 * Omega_i[sr])",
+    "warning": "Different assumptions; neither constitutes a validated WISE physical model. Do not normalize only selected/masked pixels. Native ePSF support, PSF tails, spatially varying bandpass and source-color convention remain unverified."
+  },
+  "sapm_header_observation": {
+    "url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/solid_angle_pixel_map/cal-sapm-v2-2025-164/6/solid_angle_pixel_map_D6_spx_cal-sapm-v2-2025-164.fits",
+    "range": "bytes 0-65535 of 16652160, HTTP 206",
+    "range_sha256": "b153300308d25ec8ac1196a394f1fd5e7d316e812a3759db7e92a57b7785a705",
+    "hash_note": "Only downloaded byte range, not a full-file SHA-256.",
+    "image_header": {"ARRAY": 6, "DETCOORD": "sky", "BUNIT": "arcsec2", "NAXIS1": 2040, "NAXIS2": 2040, "VERSION": "6.1.3.post99+g0fafc9e.d20250606"},
+    "limitation": "IRSA tutorial example product only; no proof this SAPM version matches each of the 31 WISE exposures. Their HDU HISTORY contains no SAPM UUID. Validate each HDU and coordinate mapping; R7 channel map is sky-oriented whereas R7 BC/BW HDUs are DEVICE-oriented."
+  },
+  "spectral_convention": {
+    "supplement": "QR2 absolute calibration described using 11 CALSPEC stars, integrated source spectra and zodiacal color correction.",
+    "public_code": "Discrete sum(trans*spectrum)/sum(trans); zodi/star normalized bandpass ratio in update_photometric_calibration.",
+    "remaining_unknowns": ["Precise trans definition, sampling grid and photon versus energy weighting in external SPinst.Tabular_Bandpass", "Exact reference spectrum and calibrated color convention in the released QR2 gain", "Reconciliation of supplement zodi expression and code zodi/star ratio", "Whether public hardcoded gain construction reflects the private build that produced QR2"],
+    "flat_fnu_verified": false,
+    "flat_nufnu_verified": false,
+    "local_R_over_lambda_official_equivalence_verified": false
+  },
+  "references": {
+    "supplement": "https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp_QR.pdf",
+    "archive_products": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/",
+    "irsa_pixel_conversion": "https://caltech-ipac.github.io/irsa-tutorials/spherex-source-discovery-tool-demo/",
+    "irsa_epsf": "https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/"
+  },
+  "public_code": [
+    {"path":"py_src/spx_utils/photometry/tractor_utils.py","commit":"d31bc5a6666b4530c6e233c2484c586b4a598b24","git_blob_sha1":"804dc21b164d803721ea9ed154444c567bf3e79a","lines":"130-222, 363-389, 456-503"},
+    {"path":"py_src/spx_utils/photometry/tractor_utils.py","commit":"aa0ba446ee12971024fe13dc1c47387615bbe85e","git_blob_sha1":"c4595eca8fcf7280d1a6747ab7ecba4fbdee46d5","lines":"130-222, 363-389, 456-503"},
+    {"path":"py_src/spx_tasks/perform_forced_photometry.py","commit":"d31bc5a6666b4530c6e233c2484c586b4a598b24","git_blob_sha1":"f18844172da8f797306aeb4dab2a507ad52952a7","lines":"630-638, 681-690"},
+    {"path":"py_src/spx_tasks/perform_forced_photometry.py","commit":"aa0ba446ee12971024fe13dc1c47387615bbe85e","git_blob_sha1":"e44cf9f55f6393c72628982b6239d9e9963fac6d","lines":"649-657, 667-675"},
+    {"path":"py_src/spx_tasks/update_field_distortion.py","commit":"d31bc5a6666b4530c6e233c2484c586b4a598b24","git_blob_sha1":"7ae51fa0119af2e18b59667feb684c28fd96d727","lines":"448-454"},
+    {"path":"py_src/spx_utils/solid_angle_utils.py","commit":"d31bc5a6666b4530c6e233c2484c586b4a598b24","git_blob_sha1":"9f1291bc05f22cf3518bef264a9d940c8765607c","lines":"15-53"},
+    {"path":"py_src/spx_tasks/update_photometric_calibration.py","commit":"d31bc5a6666b4530c6e233c2484c586b4a598b24","git_blob_sha1":"9fd10295d99b139ba8217328af17743ca4c7c404","lines":"117-148, 358-498"},
+    {"path":"py_src/spx_tasks/estimate_abs_gain_matrix.py","commit":"d31bc5a6666b4530c6e233c2484c586b4a598b24","git_blob_sha1":"02e261e7c8d8382ad2184f562701cd601b0dc8e8","lines":"1179-1180, 1507-1516, 1542-1551"},
+    {"path":"py_src/spx_tasks/apply_dark_flat_field_and_photo_calib.py","commit":"d31bc5a6666b4530c6e233c2484c586b4a598b24","git_blob_sha1":"be6deb0e87ea6a031cf096b3ae777eda5d2a4e01","lines":"157-176"}
+  ],
+  "local_frozen_inputs": [
+    {"path":"scripts/motion_analysis.py","sha256":"50369300355b5b8af47bcfdb7d6a430731ade7a5c867912b3819b2680d6b4523","lines":"147-180"},
+    {"path":"scripts/continuous_epsf_model.py","sha256":"ee442d0c5a7fbc6211b4ec376e9209a4bf26654fd81304e78cebea40f91ba9af","lines":"12-20"},
+    {"path":"data/raw/wise0855/calibration/epsf_D6_spx_cal-epsf-v1-2026-191.fits","sha256":"52f85faeb93d67ed2020b68a628fc947c1f0b78cbf9282ca193ec6d588ac1a36","release":"qr3","primary_version":"7.0.0b6.post2+g6b3a1a7","epsf_shape":[33,33],"oversampling":5,"detcoord":"sky"}
+  ]
+}

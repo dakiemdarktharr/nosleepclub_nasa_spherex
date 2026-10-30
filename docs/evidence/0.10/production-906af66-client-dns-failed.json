@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-10-30T18:13:50.224834+00:00",
+  "base_url": "https://nosleepclub-nasa-spherex.vercel.app",
+  "local_commit": "906af662afab4bbc5c60cf2b9199ec38b04c98a9",
+  "verifier_sha256": "b8f2e771a7768a078b247d8a5895010229b6d7b9cc3f46e194a339255ee2a5fc",
+  "checks": [],
+  "retry_policy": "One retry only for GET upstream 502/504; every response is retained.",
+  "qualification": "Bounded software/data-access smoke, not scientific, recovery or load acceptance.",
+  "worktree_dirty": true,
+  "passed": false,
+  "failure_type": "ConnectionError",
+  "failure_label": "HTTPSConnectionPool(host='nosleepclub-nasa-spherex.vercel.app', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='nosleepclub-nasa-spherex.vercel.app', port=443): Failed to resolve 'nosleepclub-nasa-spherex.vercel.app' ([Errno 11001] getaddrinfo failed)\"))",
+  "completed_at_utc": "2026-10-30T18:13:50.339897+00:00"
+}

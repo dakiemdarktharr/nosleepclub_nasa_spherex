@@ -1,0 +1,1320 @@
+{
+  "audit_limitations": [
+    "GN position covariance cannot be recomputed from this report alone because its position Jacobian was not saved.",
+    "Per-frame chi-square, conditional flux covariance and H covariance are algebraically audited; PSF and sky truth are not.",
+    "Solver screening is an algorithmic flag, never scientific validation or a detection probability."
+  ],
+  "configurations": [
+    {
+      "available_pairs": 7,
+      "configuration": "broad",
+      "frames_per_epoch": {
+        "after": 10,
+        "before": 10
+      },
+      "max_pairwise_spread_arcsec": 0.555861489441917,
+      "max_pairwise_variants": [
+        "tilt_r7_68_a0",
+        "shared_qr2_68_a0"
+      ],
+      "maximum_change_from_independent_arcsec": 0.2904002870913542,
+      "spread_basis": "all completed pair vectors regardless of solver screening; exploratory model sensitivity"
+    },
+    {
+      "available_pairs": 7,
+      "configuration": "strict",
+      "frames_per_epoch": {
+        "after": 2,
+        "before": 2
+      },
+      "max_pairwise_spread_arcsec": 2.2806307392449066,
+      "max_pairwise_variants": [
+        "tilt_r7_68_a0",
+        "shared_r7_68_am4"
+      ],
+      "maximum_change_from_independent_arcsec": 2.2806307351014854,
+      "spread_basis": "all completed pair vectors regardless of solver screening; exploratory model sensitivity"
+    }
+  ],
+  "counts": {
+    "failures": 0,
+    "fit_completed": 28,
+    "planned_epoch_attempts": 28,
+    "recorded_epoch_attempts": 28,
+    "renderer_metadata_failures": 0
+  },
+  "exposure_sources": [
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_1A_0090_2",
+      "raw_sha256": "a06699c974d9783092ff7d1b75098ec551850940198056d0f485879b8ae333d3"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_1A_0090_3",
+      "raw_sha256": "f409eea02ba7a14bd0696c61826a493a6bb777ea1d44b98ab1eed0e564cb2b8b"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_1A_0238_1",
+      "raw_sha256": "a80f3f4af737cbd54d479f150956303dd0746a0756ac5a50093059b41f7e8348"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_1A_0238_2",
+      "raw_sha256": "a0c4c1789c071b0e895a889b4ce8e4b16d2dfe18dabcb247e5e4743b97eba1eb"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_2A_0214_2",
+      "raw_sha256": "2c8a39da068e62ce5d830446a91910b6982e0c9e29275f21a6ef16c82983770b"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_2A_0214_3",
+      "raw_sha256": "338553867c86356e6700f3ca397297819e3c3fa7dd7ea7d0405cf86f4933d4a4"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_2A_0214_4",
+      "raw_sha256": "2ecd5c1339c554da0f5a7b7c00bae5302148e1ba00d0e23551b69629a6721345"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_2A_0226_1",
+      "raw_sha256": "a3fd7c7e5759326ebcd1cf8bb3b9c5288aff7fc08335d474e74bb9f1b3eb8630"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_2A_0226_3",
+      "raw_sha256": "8ea7979eaed8331e7a1d80925caf80dfcbc33c6327360935faa4743a7ea8574f"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_2A/l2b-v20-2025-321/6/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2025W46_2A_0226_4",
+      "raw_sha256": "2c87bd5dbf17c87abdada7856b6e02bf94495c60312b306d142a9ee6bcc18a57"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_1B_0507_3",
+      "raw_sha256": "4469a791bd31ab5f904b011e211525eceaa94ec99e1f2a791a991acd597b5d39"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_1B_0634_1",
+      "raw_sha256": "d46e81c853576d19126661c32845acd2b830a0638e7c33530c672af8710f6ad3"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_1B_0634_2",
+      "raw_sha256": "8af9f225f987ace1bca0009a2cd2aed746d62172aa5c141d0d67fe018ca97983"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_1B_0634_3",
+      "raw_sha256": "15bc55d68daa40deeb268366086e1a25977ee24c93e72ac2d7bbb65001096331"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_1B/l2b-v24-2026-115/6/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_1B_0634_4",
+      "raw_sha256": "495cc393eb420e23fcdabe0ad65d7a200e433bcc2ee152789130bfb4f5491ce9"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_2A_0591_1",
+      "raw_sha256": "784fefd1a27e35eb2bf52f4ca0eb90005b73a3d2dffc1416ec470411c8aa975d"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_2A_0609_1",
+      "raw_sha256": "b20b2c4ea62b87d02d9fb1004c4b6ac33c4224901eab75793fc20e4e9d4e5748"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_2A_0609_2",
+      "raw_sha256": "3b4f35b30f6271488ec49ffc3900c6be3d2204422d1aff1d8969227625698d69"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_2A_0692_1",
+      "raw_sha256": "2aea402a25f4c1814af63eaea099fec697e421d8c9ad66d5c4e394a6d80b225f"
+    },
+    {
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W17_2A/l2b-v24-2026-118/6/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "obs_id": "2026W17_2A_0692_2",
+      "raw_sha256": "da688a28a2d51689eaa1be35973d41a6603676ae66cd6730c43b34aab5d8c9b9"
+    }
+  ],
+  "pairs": [
+    {
+      "change_from_independent_arcsec": 0.0,
+      "configuration": "broad",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.067278998562724,
+        0.08700929613600686
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          0.433853424727269,
+          -0.1113303189127754
+        ],
+        [
+          -0.1113303189127754,
+          0.40348493349585723
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          0.39177604595525717,
+          -0.055128756306806
+        ],
+        [
+          -0.055128756306806,
+          0.5177510190678247
+        ]
+      ],
+      "solver_screening_both": true,
+      "successful_epoch_fits": 2,
+      "variant": "independent"
+    },
+    {
+      "change_from_independent_arcsec": 0.1161385217721404,
+      "configuration": "broad",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.0293427082291746,
+        -0.02275861408891533
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          0.4889853952870065,
+          -0.1664634766918643
+        ],
+        [
+          -0.1664634766918643,
+          0.44439579458487594
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          0.9042070399059967,
+          -0.311859963808662
+        ],
+        [
+          -0.311859963808662,
+          0.4952840336737139
+        ]
+      ],
+      "solver_screening_both": true,
+      "successful_epoch_fits": 2,
+      "variant": "shared_r7_68_a0"
+    },
+    {
+      "change_from_independent_arcsec": 0.2904002870913542,
+      "configuration": "broad",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.322385213584405,
+        0.2257650016044769
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          0.4204027512569486,
+          -0.12237452426360212
+        ],
+        [
+          -0.12237452426360212,
+          0.43262316306126886
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          0.39354025361778805,
+          -0.0920515712289201
+        ],
+        [
+          -0.0920515712289201,
+          0.48638814536228664
+        ]
+      ],
+      "solver_screening_both": true,
+      "successful_epoch_fits": 2,
+      "variant": "tilt_r7_68_a0"
+    },
+    {
+      "change_from_independent_arcsec": 0.1163050855565759,
+      "configuration": "broad",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.028645934960385,
+        -0.022691931400516552
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          0.4890327431280436,
+          -0.16645261394193703
+        ],
+        [
+          -0.16645261394193703,
+          0.44442800517558356
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          0.9050145811640592,
+          -0.31215231151363465
+        ],
+        [
+          -0.3121523115136346,
+          0.49539724210602304
+        ]
+      ],
+      "solver_screening_both": true,
+      "successful_epoch_fits": 2,
+      "variant": "shared_r7_68_am4"
+    },
+    {
+      "change_from_independent_arcsec": 0.11591579021035814,
+      "configuration": "broad",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.030046040542452,
+        -0.022764003245730004
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          0.4889619376561668,
+          -0.16649184520652696
+        ],
+        [
+          -0.16649184520652696,
+          0.44439262446388406
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          0.9036916422070715,
+          -0.31169457259031724
+        ],
+        [
+          -0.31169457259031724,
+          0.4952467063847697
+        ]
+      ],
+      "solver_screening_both": true,
+      "successful_epoch_fits": 2,
+      "variant": "shared_r7_68_ap4"
+    },
+    {
+      "change_from_independent_arcsec": 0.26778020809334757,
+      "configuration": "broad",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -2.8591751225439124,
+        -0.08151078169587525
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          0.49366806829449494,
+          -0.17295763054528182
+        ],
+        [
+          -0.17295763054528182,
+          0.45016348544150353
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          0.8986521793143312,
+          -0.29321079317381477
+        ],
+        [
+          -0.29321079317381477,
+          0.48305925049527676
+        ]
+      ],
+      "solver_screening_both": true,
+      "successful_epoch_fits": 2,
+      "variant": "shared_qr2_68_a0"
+    },
+    {
+      "change_from_independent_arcsec": 0.11979479163260166,
+      "configuration": "broad",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.027771989235325,
+        -0.026083534389642615
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          0.4893144904622575,
+          -0.16654938898101185
+        ],
+        [
+          -0.16654938898101185,
+          0.4443132590278249
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          0.9065135190666623,
+          -0.3125366691279466
+        ],
+        [
+          -0.3125366691279466,
+          0.4950278477675508
+        ]
+      ],
+      "solver_screening_both": true,
+      "successful_epoch_fits": 2,
+      "variant": "shared_r7_17_a0"
+    },
+    {
+      "change_from_independent_arcsec": 0.0,
+      "configuration": "strict",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -2.5352753858362744,
+        0.5010919036952135
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 2,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [
+            "multiple_near_best_modes"
+          ],
+          "solver_screening_passed": false,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          1.628666279451838,
+          -0.7037718937884293
+        ],
+        [
+          -0.7037718937884293,
+          1.527839001854919
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          1.8623151454351514,
+          -0.8564488454879169
+        ],
+        [
+          -0.8564488454879169,
+          1.7482792055404548
+        ]
+      ],
+      "solver_screening_both": false,
+      "successful_epoch_fits": 2,
+      "variant": "independent"
+    },
+    {
+      "change_from_independent_arcsec": 2.2798947908355403,
+      "configuration": "strict",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.12196189097233,
+        2.704207697740155
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 2,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [
+            "multiple_near_best_modes"
+          ],
+          "solver_screening_passed": false,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1209670589752576,
+          -0.6061979322990549
+        ],
+        [
+          -0.6061979322990549,
+          1.1982511657508574
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1534283455165488,
+          -0.6382392896137256
+        ],
+        [
+          -0.6382392896137256,
+          1.1421344604968253
+        ]
+      ],
+      "solver_screening_both": false,
+      "successful_epoch_fits": 2,
+      "variant": "shared_r7_68_a0"
+    },
+    {
+      "change_from_independent_arcsec": 4.1827546294966416e-09,
+      "configuration": "strict",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -2.5352753842166815,
+        0.5010918998387442
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 2,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [
+            "multiple_near_best_modes"
+          ],
+          "solver_screening_passed": false,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          1.6286662619069419,
+          -0.7037718822279388
+        ],
+        [
+          -0.7037718822279388,
+          1.5278389972333564
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          1.862314454769455,
+          -0.8564483406875061
+        ],
+        [
+          -0.8564483406875059,
+          1.7482785945831116
+        ]
+      ],
+      "solver_screening_both": false,
+      "successful_epoch_fits": 2,
+      "variant": "tilt_r7_68_a0"
+    },
+    {
+      "change_from_independent_arcsec": 2.2806307351014854,
+      "configuration": "strict",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.122358271784844,
+        2.704863723760948
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 2,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [
+            "multiple_near_best_modes"
+          ],
+          "solver_screening_passed": false,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1212543402510415,
+          -0.6063928698172972
+        ],
+        [
+          -0.6063928698172972,
+          1.1981772033387421
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1541612450854462,
+          -0.6388241578587586
+        ],
+        [
+          -0.6388241578587586,
+          1.1424567884660164
+        ]
+      ],
+      "solver_screening_both": false,
+      "successful_epoch_fits": 2,
+      "variant": "shared_r7_68_am4"
+    },
+    {
+      "change_from_independent_arcsec": 2.279076309888619,
+      "configuration": "strict",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.121462847001167,
+        2.7034935670319857
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 2,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [
+            "multiple_near_best_modes"
+          ],
+          "solver_screening_passed": false,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1206414222746897,
+          -0.6059729828112325
+        ],
+        [
+          -0.6059729828112325,
+          1.1983468451549608
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1526735096055591,
+          -0.6376309986048923
+        ],
+        [
+          -0.6376309986048923,
+          1.1418080438248592
+        ]
+      ],
+      "solver_screening_both": false,
+      "successful_epoch_fits": 2,
+      "variant": "shared_r7_68_ap4"
+    },
+    {
+      "change_from_independent_arcsec": 2.271557033744757,
+      "configuration": "strict",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.133389343163802,
+        2.6924912401022687
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 2,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [
+            "multiple_near_best_modes"
+          ],
+          "solver_screening_passed": false,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1195610308979502,
+          -0.606132038472911
+        ],
+        [
+          -0.606132038472911,
+          1.195707523474993
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1303890328259847,
+          -0.6210416726161286
+        ],
+        [
+          -0.6210416726161286,
+          1.1306109204635428
+        ]
+      ],
+      "solver_screening_both": false,
+      "successful_epoch_fits": 2,
+      "variant": "shared_qr2_68_a0"
+    },
+    {
+      "change_from_independent_arcsec": 2.2791161818759735,
+      "configuration": "strict",
+      "covariance_assumption": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+      "east_north_arcsec": [
+        -3.1219535110564482,
+        2.703404176711249
+      ],
+      "epoch_attempts": 2,
+      "epoch_status_and_screening": {
+        "after": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 2,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [
+            "multiple_near_best_modes"
+          ],
+          "solver_screening_passed": false,
+          "status": "fit_completed"
+        },
+        "before": {
+          "at_boundary": false,
+          "failure": null,
+          "irls_converged": true,
+          "near_best_mode_count": 1,
+          "negative_frame_flux_count": 0,
+          "profile_hessian_reason": null,
+          "profile_hessian_supported": true,
+          "reasons": [],
+          "solver_screening_passed": true,
+          "status": "fit_completed"
+        }
+      },
+      "gn_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1207075241288007,
+          -0.6060487407478071
+        ],
+        [
+          -0.6060487407478071,
+          1.198236782181286
+        ]
+      ],
+      "profile_conditional_centroid_covariance_arcsec2": [
+        [
+          1.1522267240339392,
+          -0.6373183900645748
+        ],
+        [
+          -0.6373183900645748,
+          1.1415578982112078
+        ]
+      ],
+      "solver_screening_both": false,
+      "successful_epoch_fits": 2,
+      "variant": "shared_r7_17_a0"
+    }
+  ],
+  "posthoc_mode_diagnostic": {
+    "bytes": 213834,
+    "path": "web/data/linked-flux/mode-diagnostics.json",
+    "qualification": "post hoc fixed-weight replay, not source classification or validation",
+    "sha256": "3a402772c865e1c922a73c35d29248a73d7b5d33d87d70619abeb14429f75d92",
+    "stage": "posthoc_fixed_weight_saved_mode_replay",
+    "variants": [
+      {
+        "frame_deltas": [
+          {
+            "obs_id": "2026W17_1B_0507_3",
+            "raw_chi2_mode1_minus_mode0": 0.6635981718539767,
+            "weighted_chi2_mode1_minus_mode0": 0.5542468807265379
+          },
+          {
+            "obs_id": "2026W17_1B_0634_1",
+            "raw_chi2_mode1_minus_mode0": -0.4223295118502506,
+            "weighted_chi2_mode1_minus_mode0": -0.5167704865365863
+          }
+        ],
+        "modes": [
+          {
+            "position_sky_px": [
+              32.38167456021433,
+              31.4700747887011
+            ],
+            "weighted_chi2": 272.8238435365618
+          },
+          {
+            "position_sky_px": [
+              32.53265689160366,
+              31.883725684464682
+            ],
+            "weighted_chi2": 272.86131993075173
+          }
+        ],
+        "record_sha256": "ff2444847fa8f3994f7f6fa573cdef0aaa83a4c899a7c2f5dbd6ebec609a4708",
+        "replay_max_abs_diff": 0.0,
+        "variant": "independent"
+      },
+      {
+        "frame_deltas": [
+          {
+            "obs_id": "2026W17_1B_0507_3",
+            "raw_chi2_mode1_minus_mode0": -0.39047455341426485,
+            "weighted_chi2_mode1_minus_mode0": -0.2836092206638341
+          },
+          {
+            "obs_id": "2026W17_1B_0634_1",
+            "raw_chi2_mode1_minus_mode0": 0.7593385691632477,
+            "weighted_chi2_mode1_minus_mode0": 0.8516169058900402
+          }
+        ],
+        "modes": [
+          {
+            "position_sky_px": [
+              32.48164592475265,
+              31.844228697834488
+            ],
+            "weighted_chi2": 274.32865718766357
+          },
+          {
+            "position_sky_px": [
+              32.40576571242771,
+              31.531497526928156
+            ],
+            "weighted_chi2": 274.8966648728898
+          }
+        ],
+        "record_sha256": "0379335078738c6db2486e38def53315878dc34a2fe05f35371bf3fbba13bd79",
+        "replay_max_abs_diff": 0.0,
+        "variant": "shared_r7_68_a0"
+      }
+    ]
+  },
+  "provenance": {
+    "design_path": "web/data/linked-flux/design.json",
+    "design_sha256": "c5914ab5b3ef1e8fb0b0a41c0d35d0bab741cc562ea820b632ca902e4944b072",
+    "input_hashes": {
+      "data/raw/external/spherex-spectral-calibration/SPHERExSpectralFiles_202607.tar": {
+        "bytes": 436705280,
+        "sha256": "45ff6c57ca68da00a595a4e8a5c2f875cc98b094fde143d9ce109e69df252f09"
+      },
+      "data/raw/external/wise0855/jw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits": {
+        "bytes": 198720,
+        "sha256": "17164197d803117d02c0e1e89ce64d5521ba86b523d3ba0cc03679974df53e3f"
+      },
+      "data/raw/wise0855/calibration/epsf_D6_spx_cal-epsf-v1-2026-191.fits": {
+        "bytes": 7943040,
+        "sha256": "52f85faeb93d67ed2020b68a628fc947c1f0b78cbf9282ca193ec6d588ac1a36"
+      },
+      "data/raw/wise0855/calibration/spectral_wcs_D6_spx_cal-wcs-v4-2025-254.fits": {
+        "bytes": 33312960,
+        "sha256": "8872df333578ac80c308c7077bb86e4d3d2a639ee53c75f0f2fe94ee04ab6a96"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits": {
+        "bytes": 5613120,
+        "sha256": "a06699c974d9783092ff7d1b75098ec551850940198056d0f485879b8ae333d3"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_1A_0090_3D6_spx_l2b-v20-2025-318.fits": {
+        "bytes": 5613120,
+        "sha256": "f409eea02ba7a14bd0696c61826a493a6bb777ea1d44b98ab1eed0e564cb2b8b"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_1A_0238_1D6_spx_l2b-v20-2025-318.fits": {
+        "bytes": 5613120,
+        "sha256": "a80f3f4af737cbd54d479f150956303dd0746a0756ac5a50093059b41f7e8348"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_1A_0238_2D6_spx_l2b-v20-2025-318.fits": {
+        "bytes": 5613120,
+        "sha256": "a0c4c1789c071b0e895a889b4ce8e4b16d2dfe18dabcb247e5e4743b97eba1eb"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0214_2D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "2c8a39da068e62ce5d830446a91910b6982e0c9e29275f21a6ef16c82983770b"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0214_3D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "338553867c86356e6700f3ca397297819e3c3fa7dd7ea7d0405cf86f4933d4a4"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0214_4D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "2ecd5c1339c554da0f5a7b7c00bae5302148e1ba00d0e23551b69629a6721345"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0226_1D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "a3fd7c7e5759326ebcd1cf8bb3b9c5288aff7fc08335d474e74bb9f1b3eb8630"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0226_3D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "8ea7979eaed8331e7a1d80925caf80dfcbc33c6327360935faa4743a7ea8574f"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2025W46_2A_0226_4D6_spx_l2b-v20-2025-321.fits": {
+        "bytes": 5613120,
+        "sha256": "2c87bd5dbf17c87abdada7856b6e02bf94495c60312b306d142a9ee6bcc18a57"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0507_3D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "4469a791bd31ab5f904b011e211525eceaa94ec99e1f2a791a991acd597b5d39"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0634_1D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "d46e81c853576d19126661c32845acd2b830a0638e7c33530c672af8710f6ad3"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0634_2D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "8af9f225f987ace1bca0009a2cd2aed746d62172aa5c141d0d67fe018ca97983"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0634_3D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "15bc55d68daa40deeb268366086e1a25977ee24c93e72ac2d7bbb65001096331"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_1B_0634_4D6_spx_l2b-v24-2026-115.fits": {
+        "bytes": 5616000,
+        "sha256": "495cc393eb420e23fcdabe0ad65d7a200e433bcc2ee152789130bfb4f5491ce9"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0591_1D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5616000,
+        "sha256": "784fefd1a27e35eb2bf52f4ca0eb90005b73a3d2dffc1416ec470411c8aa975d"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0609_1D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5616000,
+        "sha256": "b20b2c4ea62b87d02d9fb1004c4b6ac33c4224901eab75793fc20e4e9d4e5748"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0609_2D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5616000,
+        "sha256": "3b4f35b30f6271488ec49ffc3900c6be3d2204422d1aff1d8969227625698d69"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0692_1D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5616000,
+        "sha256": "2aea402a25f4c1814af63eaea099fec697e421d8c9ad66d5c4e394a6d80b225f"
+      },
+      "data/raw/wise0855/gaia-wide/level2_2026W17_2A_0692_2D6_spx_l2b-v24-2026-118.fits": {
+        "bytes": 5613120,
+        "sha256": "da688a28a2d51689eaa1be35973d41a6603676ae66cd6730c43b34aab5d8c9b9"
+      },
+      "data/raw/wise0855/gaia-wide/manifest.json": {
+        "bytes": 21730,
+        "sha256": "1c31c51b73df908e78a1ab7c162fc0b70f9e7a576d0194f246f3f86380c51a07"
+      }
+    },
+    "opened_product_hashes": {
+      "web/data/external/photometric-convention.json": "3a1f719edd3a36d7c94777172752384265b43b5c41c4c2484abe2d09d530bbd5",
+      "web/data/external/wise0855-prism-reference.json": "f7d1fd41d22bb8de2a2e686eb9fa8c74c9a3502566e07c45503cf33b83099961",
+      "web/data/gaia/results.json": "2b2ea5996f01a96ba00cb2252841c0a9287b36dfe08b6cc64a13f66ecd4158aa",
+      "web/data/release/protocol.json": "79803094b4aeee039e589f8b3ceb3af5fcfbcc61bd929c89cc2ed26fbf51fac1"
+    },
+    "protocol_commit": "cfb9d6a17ee37ca2c5c061a2cd44209d1093f4b7",
+    "public_report_bytes": 4843661,
+    "public_report_path": "web/data/linked-flux/development.json",
+    "public_report_sha256": "bc90e44f4957d29d2814913f2a5b1fa2526af59442cab9f288542513a77b17b9",
+    "publisher_source_sha256": "46364c1b3951bbb1121031097d19fa062198ef9545dd6bebdfbe52651e7c11c8",
+    "raw_report_bytes": 4788083,
+    "raw_report_path": "data/raw/benchmark/linked-wise-development.json",
+    "raw_report_sha256": "a5bffe162ae8ccd88a6fc5311d1e8ddc279c56092b072a782652da5a7f1cfd0a",
+    "runtime": {
+      "packages": {
+        "Pillow": "13.0.0",
+        "astropy": "8.0.2",
+        "numpy": "2.4.6",
+        "requests": "2.34.2",
+        "scipy": "1.17.1",
+        "truststore": "0.10.5"
+      },
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python": "3.11.9"
+    },
+    "source_hashes": {
+      "docs/WISE_LINKED_PROTOCOL.md": "74c781518e813fd24eed8b4ad18e9753f92d60206426291b7d9df8d4fa2a5ba2",
+      "requirements.txt": "6a72e6a6e45a29266d807d680d1ba0dcb118c08ae1c25f8cc9850a1cb996e8e7",
+      "scripts/ablation_model.py": "e8bd406c75d15413a5b36e04b9a39ca804424cdeeb4435e38ca6a5ec40053b4e",
+      "scripts/benchmark_accuracy.py": "75a7c9b406d0508d7149ff70163a40c5c1eeb601cd30035e97d178c36b2977e7",
+      "scripts/build_demo.py": "8985b55ba6fd29fd02d1618f1d62d2a58a4ad235f692d1c650dacb1ce53b159e",
+      "scripts/conditional_covariance.py": "59792dba210de5ba127f4ac0e799beee1273f0239a03e5b7f04fe3176ea166bd",
+      "scripts/covariance_model.py": "8ac686fb374ac4e34b92ddd3ef91385ec967da3617cfe32b14a17cd4cac8965c",
+      "scripts/gaia_motion.py": "e8c29852acf4d1a147e58db7d8a44b4cd8578e8622c58b5c63d8bcbc36d06688",
+      "scripts/joint_motion.py": "1a2fa9bf673610effb24ae18c2f6b6637568d507b34498043cb1d9e2cb1eb59c",
+      "scripts/lab_pixel_binding.py": "f60807a0e44599ad59f798db226439395999f50ec5c4e413a31cf0b4286778ff",
+      "scripts/lab_spectral_response.py": "806307f66a4016ce16cb033aae5860a28552a06f2f4b4cb976c98f7d11fcd638",
+      "scripts/linked_epoch_model.py": "a89e04db5be4adaa067c3eeb4196f58ad7abec3cf5b915b9e9832ed5c5f2d805",
+      "scripts/motion_analysis.py": "50369300355b5b8af47bcfdb7d6a430731ade7a5c867912b3819b2680d6b4523",
+      "scripts/native_flux_template.py": "e8a600cbd4f491539515998791ec47573ff25f8fbc74ef796ccb5289f47b5653",
+      "scripts/native_gain_binding.py": "7f69bf86e3217a89e02674ff320575f3057c6a1d5c87d8b3f223fca601e5667a",
+      "scripts/parse_wise0855_prism.py": "f50d0378aa52c92d9d5576c9f01636c48dbabb91c5780594102be75ba41e8762",
+      "scripts/profile_uncertainty.py": "3c0ca10352365566ce0479843d748a3e6347e48fe36ad04f354b02d1e16db9c6",
+      "scripts/quality_model.py": "4ad2caf98be10c189f4f02108e286b348f945879640fb68a21a1a8e85d476940",
+      "scripts/release_analysis.py": "628ff978b72872166b9f66f28140e413a486eba5687cbb5b0838fe3095567eca",
+      "scripts/run_wise_linked_study.py": "24f82db89f686ed45d83ed03bbbb55dd6babca9865c87639f5a1617788e600c4",
+      "scripts/science_jobs.py": "71de8715954d36b97ba4b4ea046d4e057295287b4248fd7930f9133956b06877",
+      "scripts/science_mask_policy.py": "20e33d2aa3fb3c54c253647fa49bcd97f8f15aa24c594d12e54304a4fb9ffde3",
+      "scripts/sed_flux_coefficient.py": "a78700af3f266260a34e87682381daf9a94555a4aba329c33859b538f8a92390",
+      "scripts/spectral_bandpass_v2.py": "f22f07015bb05f736a040933fab4f950a73b1ea4d9e0541f2891b0b597882abf",
+      "scripts/wcs_pixel_area.py": "89b77fedeafc52b4e68765c56ec7cd130aaad4f32bf97549de03c5238d00edaa",
+      "scripts/wise_linked_inputs.py": "ce2a21d3c709d1ae89bc13dc4988fbf8fb9cd353e2f4bd7c61da0b8bf07df29e",
+      "tests/test_lab_pixel_binding.py": "4d61e877b27f55ade17fbcaa2c80a3c6dd77c21c73428cb3138e8c298b1a0751",
+      "tests/test_linked_epoch_model.py": "7e739f5ed34f11891476befa31539d758f47cffc33e1f327662b934dd818931d",
+      "tests/test_native_flux_template.py": "183a39d7576397b6ebf7d79803a4db31720ff49b7db7692e792fb8cd6822fc1f",
+      "tests/test_sed_flux_coefficient.py": "8b8ca7bcc1c6b91372f07d2a266322e2b9389566023cfda9f93bc98aebf9991d",
+      "tests/test_wcs_pixel_area.py": "b74bc4f49170af86f070a69aa5ff5dc57af494bf8a7a64117b741dda204f0b4d",
+      "tests/test_wise_linked_inputs.py": "10f999b6b2f6ef73300aa8bdf2ed22bd46892cdae74798d069a9b2c0c5301215",
+      "tests/test_wise_linked_study.py": "2792155349b825633ddf081cfd65ede6d65a9b92f971757fc9cd72e6f2dd9670"
+    }
+  },
+  "role": "opened-data conditional model comparison, not validation",
+  "rules": {
+    "anchor_sky_grid_px": [
+      31.5,
+      31.5
+    ],
+    "configurations": [
+      "broad",
+      "strict"
+    ],
+    "control": "independent",
+    "covariance_cross_epoch": "zero conditional cross-epoch centroid covariance assumed when summing; no shared calibration/reference/PSF terms",
+    "final_fixed_weight_mode_audit": true,
+    "max_irls_iterations": 20,
+    "position_tolerance_px": 0.0001,
+    "primary_candidate": "shared_r7_68_a0",
+    "promotion": false,
+    "qualifications": [
+      "Independent control uses the same new renderer, pixels and nuisance span as linked fits; it is not the exact published 0.3 or 0.10 estimator.",
+      "Raw/reference color, PRISM LSF, spectral variability, true per-pixel response, ePSF tails and shared systematics remain unvalidated.",
+      "Point shifts are model sensitivity, not accuracy improvement. No RMS/coverage claim is available from one known object.",
+      "GN/H covariance is conditional on final robust weights and diagonal native variance. No calibrated confidence or detection probability.",
+      "Final-mode delta-chi2 threshold is a numerical heuristic; no nominal likelihood coverage is assigned.",
+      "No prospective calibration/validation/holdout field is opened."
+    ],
+    "reference_spectrum": "Fnu(lambda)/Fnu(local)=(lambda/local)^alpha; explicitly hypothetical, not a verified SPHEREx convention",
+    "registration": "reuse frozen Gaia frame offsets, fixed during fits; covariance excluded from reported centroid-only matrices",
+    "response": "Cent channel curve shifted to nearest-source-pixel center; no width dilation or pixel-footprint response integration",
+    "scope": "20 already opened WISE QR2 wide cutouts; two overlapping frozen configurations, not 24 independent exposures or unseen fields",
+    "selection": "all 28 epoch attempts retained, including preparation/fit failures; no model selected from results",
+    "spectral_normalization_jy": 0.0005,
+    "spectrum": "MAST PRISM only; not merged, deconvolved, rescaled or made into astronomical truth",
+    "tilt_center_um": 4.75,
+    "tilt_scale_um": 0.2,
+    "time_model": "one position per epoch; within-season proper motion/parallax not modeled in this isolated comparison",
+    "variants": [
+      {
+        "id": "independent",
+        "mode": "independent"
+      },
+      {
+        "center_model": "r7",
+        "channels": 68,
+        "id": "shared_r7_68_a0",
+        "mode": "shared",
+        "reference_alpha": 0.0
+      },
+      {
+        "center_model": "r7",
+        "channels": 68,
+        "id": "tilt_r7_68_a0",
+        "mode": "shared_tilt",
+        "reference_alpha": 0.0
+      },
+      {
+        "center_model": "r7",
+        "channels": 68,
+        "id": "shared_r7_68_am4",
+        "mode": "shared",
+        "reference_alpha": -4.0
+      },
+      {
+        "center_model": "r7",
+        "channels": 68,
+        "id": "shared_r7_68_ap4",
+        "mode": "shared",
+        "reference_alpha": 4.0
+      },
+      {
+        "center_model": "qr2",
+        "channels": 68,
+        "id": "shared_qr2_68_a0",
+        "mode": "shared",
+        "reference_alpha": 0.0
+      },
+      {
+        "center_model": "r7",
+        "channels": 17,
+        "id": "shared_r7_17_a0",
+        "mode": "shared",
+        "reference_alpha": 0.0
+      }
+    ],
+    "version": "0.10.0-wise-linked-development.1",
+    "weight_tolerance": 0.001
+  },
+  "schema": "wise-linked-overview-1",
+  "schema_version": 1
+}
