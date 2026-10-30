@@ -1,0 +1,315 @@
+{
+  "artifacts": [
+    {
+      "bytes": 2787,
+      "path": "scripts/frozen_experiment.py",
+      "sha256": "1a34228245e5da482796fc0e2a399d7586246afb91e5d19a3aef84b05ea3f7d8"
+    },
+    {
+      "bytes": 11276,
+      "path": "scripts/experiment_journal.py",
+      "sha256": "4ed8c5a53e8dd19b6ec333f15b91f76fec61165b3280794b7e47aa4f24bf46c0"
+    },
+    {
+      "bytes": 12089,
+      "path": "scripts/reference_star_inputs.py",
+      "sha256": "dbadefa21fcd52435b1e36ceaa4819021adab185767838e37cf8720d74341530"
+    },
+    {
+      "bytes": 8396,
+      "path": "scripts/run_reference_star_study.py",
+      "sha256": "0f84d6b070f1320e2985d37218b35ff5c8e00d8503615f9ad172b69dd39bec18"
+    },
+    {
+      "bytes": 15325,
+      "path": "scripts/publish_reference_stars.py",
+      "sha256": "37cc2ff7a5eac324163140a7240a4fcd0e75dd952d2a3201c325984f57886113"
+    },
+    {
+      "bytes": 8916,
+      "path": "scripts/source_presence_score.py",
+      "sha256": "101b093069973de5cbb6a3de1dbfd50d1eb441ca829527f5f00fab511bc60f66"
+    },
+    {
+      "bytes": 13923,
+      "path": "scripts/presence_experiment_inputs.py",
+      "sha256": "b219bcc9bef10dd20c12cf6f7dc65fb9db8304a4abcd80100ab24bfd48cd2ff8"
+    },
+    {
+      "bytes": 10345,
+      "path": "scripts/run_presence_study.py",
+      "sha256": "17f2c5316255e2b22782371f148be9bf183d42981475569fdee5d389d5e061c8"
+    },
+    {
+      "bytes": 18432,
+      "path": "scripts/publish_presence_study.py",
+      "sha256": "7b4b71c6de08dbd31a5a794c8a1915f2100130d22f11c7499da2936fdf9d51ae"
+    },
+    {
+      "bytes": 3137,
+      "path": "tests/test_reference_star_publication.py",
+      "sha256": "7dd847bae3d684a6338d13553e60059bc383ccae0c0c3c46d815d9a462593d80"
+    },
+    {
+      "bytes": 13032,
+      "path": "tests/test_presence_publication.py",
+      "sha256": "823c66462ad368f4ec25c20ae43fbea65a94e022d7ddfd8edefd49b54b32ef49"
+    },
+    {
+      "bytes": 4884,
+      "path": "docs/REFERENCE_STAR_PROTOCOL.md",
+      "sha256": "005ad85e166722f2d4861479d621470f1396155bb34fa6ea64c355da144ae37b"
+    },
+    {
+      "bytes": 5838,
+      "path": "docs/SOURCE_PRESENCE_PROTOCOL.md",
+      "sha256": "7b02e40528b004a343907458dba3b805dad0ecf973c3dd2128556f0de2c7d330"
+    },
+    {
+      "bytes": 104559,
+      "path": "web/data/reference-stars/design.json",
+      "sha256": "ff81d4dc39336853e52d332ca8fbd3338c22ae818f267df226f3a58eaad72d17"
+    },
+    {
+      "bytes": 121810,
+      "path": "web/data/reference-stars/overview.json",
+      "sha256": "e3b7073b1b6f4dec985c0cc0f3ddc40efaa8b8acb0bc293018a0e12d85e89efa"
+    },
+    {
+      "bytes": 14164757,
+      "path": "web/data/reference-stars/records.json.gz",
+      "sha256": "6685f36be7332d22d2201922cb6a6c8b3264d516af6a59b23cb94cdbaf17de6e"
+    },
+    {
+      "bytes": 15929,
+      "path": "web/data/source-presence/design.json",
+      "sha256": "6296129a1946d4f120d77496c1e6d50d03e831ba6c05773b90e457f13552ac6c"
+    },
+    {
+      "bytes": 1434,
+      "path": "web/data/source-presence/threshold.json",
+      "sha256": "3f84cb1375b751b87e6b518ab96cdbfbc0d6272c7050f0648693d268f9b3a046"
+    },
+    {
+      "bytes": 5777,
+      "path": "web/data/source-presence/overview.json",
+      "sha256": "3af3c84d26947f64b30fde1b7607c76ab96d73d98cfffc05836a79d06d1dc69e"
+    },
+    {
+      "bytes": 71148124,
+      "path": "web/data/source-presence/records.json.gz",
+      "sha256": "71a59bb09c1ea7149bfcff2f5b6c0fa310121cb2590ea91fb3d611744d60cf68"
+    },
+    {
+      "bytes": 11547,
+      "path": "web/reference-evidence.js",
+      "sha256": "46fdedff96c6b8911385230ed62c571ac2b0d01fd5205db0509bb46e58b116f3"
+    },
+    {
+      "bytes": 76363,
+      "path": "web/index.html",
+      "sha256": "ef0ddc6bde0e307d47cd7921a71ec9b1ebb3049858ffdf64ca73ff6bd01faa68"
+    }
+  ],
+  "audited_utc": "2026-10-30T23:36:45.140074+00:00",
+  "commits": {
+    "presence_protocol": "627fe211bd144d0d0e9f9b5b2042316418c54788",
+    "publisher": "1cac567d705ce4312c25c85bf147418dd26e8304",
+    "reference_protocol": "71f63ca4bab85e9ee51c539cd46ae5bfd50c8bc2",
+    "threshold": "6fc5b7c7506333c0f320405718f08ca7d9cfa693"
+  },
+  "limitations": [
+    "No astronomical detection or calibrated motion uncertainty is established.",
+    "Gaia star sample was selected using earlier images and shares upstream WCS/calibration; nominal registration and cross-time Gaia covariance do not establish full covariance or coverage.",
+    "The 97.5% one-sided bounds give 95% simultaneous coverage for each declared pair of null cases or 600 µJy power cases via Bonferroni, not a joint 95% statement over all four bounds.",
+    "Original variance may contain source noise; added ideal Poisson noise is conditional, not a complete instrument model.",
+    "No new random draws, fits, prospective fields, or independent sky validation were performed in this audit."
+  ],
+  "presence": {
+    "calibration": {
+      "completed": 1998,
+      "failed": 0,
+      "missing": 0,
+      "planned": 1998,
+      "recorded": 1998
+    },
+    "calibration_journal_digest": "54d52e15e605d4f57b69204b0c246471794c744045c7d94cfe8821bcca1c26dd",
+    "cases": [
+      {
+        "accepted": 0,
+        "background": "plane",
+        "completed": 999,
+        "conservative_events": 0,
+        "failed": 0,
+        "false_accept_upper": 0.003685762865739383,
+        "flux_ujy": 0.0,
+        "gate_pass": true,
+        "one_sided_confidence": 0.975,
+        "planned": 999,
+        "power_lower": null,
+        "role": "null",
+        "scenario": "plane_null"
+      },
+      {
+        "accepted": 0,
+        "background": "quadratic",
+        "completed": 999,
+        "conservative_events": 0,
+        "failed": 0,
+        "false_accept_upper": 0.003685762865739383,
+        "flux_ujy": 0.0,
+        "gate_pass": true,
+        "one_sided_confidence": 0.975,
+        "planned": 999,
+        "power_lower": null,
+        "role": "null",
+        "scenario": "quadratic_null"
+      },
+      {
+        "accepted": 46,
+        "background": "plane",
+        "completed": 999,
+        "conservative_events": 46,
+        "failed": 0,
+        "false_accept_upper": null,
+        "flux_ujy": 300.0,
+        "gate_pass": null,
+        "one_sided_confidence": 0.975,
+        "planned": 999,
+        "power_lower": 0.033905601204850186,
+        "role": "positive",
+        "scenario": "plane_300uJy"
+      },
+      {
+        "accepted": 928,
+        "background": "plane",
+        "completed": 999,
+        "conservative_events": 928,
+        "failed": 0,
+        "false_accept_upper": null,
+        "flux_ujy": 600.0,
+        "gate_pass": true,
+        "one_sided_confidence": 0.975,
+        "planned": 999,
+        "power_lower": 0.9111956058213843,
+        "role": "positive",
+        "scenario": "plane_600uJy"
+      },
+      {
+        "accepted": 55,
+        "background": "quadratic",
+        "completed": 999,
+        "conservative_events": 55,
+        "failed": 0,
+        "false_accept_upper": null,
+        "flux_ujy": 300.0,
+        "gate_pass": null,
+        "one_sided_confidence": 0.975,
+        "planned": 999,
+        "power_lower": 0.041740806506430965,
+        "role": "positive",
+        "scenario": "quadratic_300uJy"
+      },
+      {
+        "accepted": 870,
+        "background": "quadratic",
+        "completed": 999,
+        "conservative_events": 870,
+        "failed": 0,
+        "false_accept_upper": null,
+        "flux_ujy": 600.0,
+        "gate_pass": true,
+        "one_sided_confidence": 0.975,
+        "planned": 999,
+        "power_lower": 0.8484790228616641,
+        "role": "positive",
+        "scenario": "quadratic_600uJy"
+      }
+    ],
+    "conditional_gates_passed": true,
+    "geometry_sha256": "935e9e88e7435bcd5fbe3db02a463de4c6e4e4be83048d5805628b3f29066380",
+    "minimum_validation_score_distance_to_threshold": {
+      "absolute_distance": 0.009188116701892568,
+      "accepted": true,
+      "key": [
+        "validation",
+        "quadratic_300uJy",
+        "100"
+      ],
+      "score": 17.713001162056912,
+      "threshold": 17.70381304535502
+    },
+    "published_replay_counts": {
+      "failures_without_realization": 0,
+      "records": 7992,
+      "saved_realizations_replayed": 7992
+    },
+    "qualification": "QR and saved-data score replay was published; noise draws were not regenerated; one opened geometry and simulated Gaussian sources; no sky false-alarm claim.",
+    "threshold": 17.70381304535502,
+    "validation": {
+      "completed": 5994,
+      "failed": 0,
+      "missing": 0,
+      "planned": 5994,
+      "recorded": 5994
+    },
+    "validation_journal_digest": "1a262301614d08d0007c408df5700517736086b6b03d5c36e15b828ed4e3e7cc",
+    "validation_record_checksums_verified": 5994
+  },
+  "reference": {
+    "common_completed": 359,
+    "common_numerical": 357,
+    "failed_final_starts_retained": 3,
+    "failure_reasons": {
+      "ValueError: insufficient fixed-anchor core mask coverage": 6,
+      "ValueError: insufficient native edge margin for full search/PSF support": 116
+    },
+    "journal_digest": "7094fd1ffb8fa1c5a04d17dc573279f38b05421c64218766d482f9b33e6c75ff",
+    "max_absolute_objective_replay_difference": 4.547473508864641e-13,
+    "max_scaled_kkt_violation": 8.46538106936278e-15,
+    "planned_pairs": 420,
+    "qualification": "Previously published saved-point/linear objective replay; no positional optimizer or position-rank recomputation in this audit.",
+    "record_checksums_verified": 840,
+    "saved_point_audits": 718,
+    "source_count": 21,
+    "sources_with_zero_completed_pairs": [
+      {
+        "common_completed": 0,
+        "per_arm_completed": [
+          0,
+          0
+        ],
+        "planned_pairs": 20,
+        "source_id": "5756959015209770112"
+      },
+      {
+        "common_completed": 0,
+        "per_arm_completed": [
+          0,
+          0
+        ],
+        "planned_pairs": 20,
+        "source_id": "5756962382464133248"
+      }
+    ],
+    "statuses": {
+      "fit_completed": 718,
+      "fit_failed": 0,
+      "preparation_failed": 122
+    },
+    "successful_final_starts_replayed": 6459
+  },
+  "schema_version": 1,
+  "science_promoted": false,
+  "ui_hash_update": {
+    "at_utc": "2026-10-30T23:39:09.042020+00:00",
+    "changes": [
+      {
+        "path": "web/index.html",
+        "previous_sha256": "b42802b79b87d69b813025764d211cc2a40f908f98bcb0c9515abfe419bf340a",
+        "sha256": "ef0ddc6bde0e307d47cd7921a71ec9b1ebb3049858ffdf64ca73ff6bd01faa68"
+      }
+    ],
+    "reason": "updated next milestone copy and normalized HTML to committed LF bytes; scientific models/results unchanged"
+  }
+}

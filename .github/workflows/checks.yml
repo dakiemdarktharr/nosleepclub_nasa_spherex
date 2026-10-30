@@ -72,6 +72,7 @@ jobs:
           REVIEW_TEST_MONGODB_URI: mongodb://127.0.0.1:27027/?directConnection=true
         run: |
           set -o pipefail
+          mkdir -p data/raw/benchmark
           python -m unittest discover -s tests -v 2>&1 | tee "$RUNNER_TEMP/unittest.log"
       - name: Create evidence report
         if: ${{ always() && steps.install.outcome == 'success' }}
@@ -114,3 +115,5 @@ jobs:
         run: node tests/linked-evidence.test.cjs
       - name: Test neighbor factorial and all control denominators
         run: node tests/neighbor-evidence.test.cjs
+      - name: Test reference stars and sealed presence evidence
+        run: node tests/reference-evidence.test.cjs
