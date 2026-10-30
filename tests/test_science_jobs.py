@@ -94,6 +94,7 @@ class SupervisorTest(unittest.TestCase):
         supervisor = subprocess.Popen([base, '-c', supervisor_code, str(root), base, worker_code, str(path),
                                        str(pidfile), str(ticks), self.job], cwd=jobs.ROOT,
                                       stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, close_fds=True)
+        thread = None
         try:
             deadline=time.monotonic()+10
             while not pidfile.exists() and supervisor.poll() is None and time.monotonic()<deadline: time.sleep(.02)
@@ -133,8 +134,8 @@ class SupervisorTest(unittest.TestCase):
                     try:
                         os.kill(pid,0)
                         stat=Path(f'/proc/{pid}/stat')
-                        if stat.exists() and stat.read_text().split()[2]=='Z': break
-                    except ProcessLookupError: break
+                        if stat.read_text().split()[2]=='Z': break
+                    except (ProcessLookupError, FileNotFoundError): break
                     time.sleep(.02)
                 else: self.fail('worker survived 2 seconds')
             thread.join(10); self.assertFalse(thread.is_alive())
@@ -144,6 +145,7 @@ class SupervisorTest(unittest.TestCase):
             time.sleep(.15); self.assertEqual(ticks.read_text(), before)
         finally:
             if supervisor.poll() is None: supervisor.kill(); supervisor.wait()
+            if thread is not None: thread.join(12)
             supervisor.stderr.close()
 
 
