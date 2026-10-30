@@ -4,7 +4,7 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Hiệu chuẩn sai số & kiểm định mới](https://nosleepclub-nasa-spherex.vercel.app/#covariance-validation) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo mới nhất](docs/COVARIANCE_VALIDATION.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Chọn mô hình & hiệu chuẩn theo nhóm](https://nosleepclub-nasa-spherex.vercel.app/#model-selection) · [Cách triển khai](docs/DEPLOYMENT.md) · [Báo cáo mới nhất](docs/ABLATION_VALIDATION.md).
 
 ## Bắt đầu trên web
 
@@ -13,6 +13,24 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 3. Chọn **Ghi nhận**, lưu điều bạn thấy; có thể chọn **Tôi chưa chắc**, xuất JSON hoặc xóa nhận xét.
 
 Nút **Hướng dẫn 60 giây** giải thích sao lùn nâu, pixel, ellipse sai số và cách đọc ảnh. Người có kinh nghiệm có thể mở bảng tọa độ, dữ liệu Gaia, FITS và cấu hình đầy đủ.
+
+## Tách thử nền/ePSF và covariance theo nhóm — 0.9.0
+
+So bốn tổ hợp trên **5 trường đã mở**, cùng pixel/căn chỉnh/gate. **Giữ nền phẳng + ePSF cố định**: nền bậc hai giảm pooled RMS 3,110→1,967″ nhưng chỉ đạt 8/25 nhóm, không đủ ổn định để thay baseline. Cả 5 lần bỏ một trường đều giữ lựa chọn đơn giản.
+
+Lựa chọn/ngưỡng nền khóa ở `1f1dae2`; covariance học từ **192** ca calibration riêng, tách vùng học floor và scale, gộp nhóm ít mẫu. Seal `8c7ad54` trước **135 cutout QR2** tại ba trường mới. S/N/nền dùng đặc trưng quan sát; không dùng truth để chọn nhóm. Ngoài miền thì không cấp covariance hiệu chuẩn.
+
+| Kiểm định 96 nguồn giả | Hiệu chuẩn chung | Theo S/N và nền |
+|---|---:|---:|
+| Qua quality gate, cùng miền hỗ trợ | 69/96 | 69/96 |
+| Phủ ellipse 68%, trên 69 mẫu | 54/69 (78,3%) | 57/69 (82,6%) |
+| Diện tích ellipse trung vị / raw | ×5,15 | ×2,23 |
+
+**Chưa qua gate tổng.** Ba trong bốn ô quá phủ; theo trường là 100%, 83,9%, 12,5%. Trường cuối chỉ còn một vùng nền với 8 ca tương quan, sai lệch vẫn 1,19–2,95″. Demo đánh dấu vùng cần người xem lại trên ảnh gốc, tách rõ nguồn giả khỏi thiên thể thật. Sao Gaia có 18/23 ca qua gate nằm ngoài miền covariance nên được báo từ chối ngoại suy.
+
+**95/95 kiểm thử offline đạt.** [Phương pháp, lựa chọn, kết quả và giới hạn](docs/ABLATION_VALIDATION.md). Số đo WISE 0855 vẫn giữ nguyên; chưa xác nhận chuyển động. Bước tiếp theo: chẩn đoán bias/nguồn chồng ở tập đã mở và bổ sung calibration theo trường trước khi khóa một tập ngoài mới.
+
+![Chọn mô hình và kiểm định covariance theo nhóm](docs/ablation-validation.jpg)
 
 ## Nền ảnh/ePSF và hiệu chuẩn covariance — 0.8.0
 
@@ -81,7 +99,8 @@ Barnard có một outlier Gaia **6,309″**. Chính mục tiêu Barnard lệch d
 
 | Thành phần | Phiên bản | Vai trò |
 |---|---|---|
-| Giao diện và hiệu chuẩn covariance | 0.8.0 | Tách calibration/validation, nền/ePSF thử nghiệm; chưa qua gate |
+| Giao diện và chọn mô hình | 0.9.0 | Ablation 2×2, covariance theo S/N/nền, miền hỗ trợ và ca cần review; chưa qua gate tổng |
+| Hiệu chuẩn covariance chung | 0.8.0 | Đối chứng lịch sử; không thay mặc định |
 | Quality gate và deblend | 0.7.0 | Baseline cho thí nghiệm 0.8; chưa thay mặc định |
 | Benchmark ngoài trường trước đó | 0.6.0 | Baseline để phân tích lỗi và phát triển gate |
 | Thí nghiệm catalog IR/ePSF | 0.5.0 | 30 vùng khóa trước; chưa thay số đo mặc định |

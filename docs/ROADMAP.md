@@ -15,7 +15,8 @@
 - [x] Tải 129 cutout ở ba trường mới và kiểm tra Gaia/nguồn giả theo protocol khóa trước; giữ cả trường không đủ sao căn chỉnh.
 - [x] Thêm quality gate, IR deblend/Huber và kiểm tra khóa trước trên 115 cutout ở ba trường khác; chưa qua gate thay mặc định.
 - [x] Tách calibration/validation, khóa error floor trước khi thử 122 cutout/3 trường mới; chưa đạt gate vị trí/covariance.
-- [ ] Ablation nền/ePSF trên tập đã mở; chọn point model ổn định rồi hiệu chuẩn theo S/N và nền trước một tập ngoài mới.
+- [x] Ablation 2×2 trên 5 trường đã mở; giữ baseline đơn giản, khóa covariance theo S/N/nền trước 135 cutout/3 trường mới; chưa qua gate tổng.
+- [ ] Chẩn đoán bias/nguồn chồng ở vùng w350, thêm đặc trưng quan sát và calibration đa dạng theo trường trước một tập ngoài mới.
 - [ ] Kiểm tra đáp ứng phổ đầy đủ, injection nhiều vị trí và thêm epoch thứ ba.
 - [ ] Xác minh chuyển động của WISE 0855 bằng dữ liệu này.
 

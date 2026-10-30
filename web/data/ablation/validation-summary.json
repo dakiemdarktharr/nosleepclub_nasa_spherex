@@ -1,0 +1,2368 @@
+{
+  "phase": "validation",
+  "version": "0.9.0",
+  "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+  "models": [
+    "plane_fixed"
+  ],
+  "fields": [
+    {
+      "field": {
+        "id": "w090p10",
+        "name": "RA 90\u00b0 / Dec +10\u00b0",
+        "ra": 90.0,
+        "dec": 10.0,
+        "coordinate_source": "predeclared geometric centers, not selected by fitted errors",
+        "sia": {
+          "url": "https://irsa.ipac.caltech.edu/SIA",
+          "params": {
+            "COLLECTION": "spherex_qr2",
+            "POS": "circle 90.0 10.0 0.05"
+          },
+          "sha256": "ff7476c9f0f27f1e35e8e39cc49faf578a2e4280603cb4f24b853f823b748a55",
+          "rows": 244,
+          "d6_rows": 38
+        }
+      },
+      "phase": "validation",
+      "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+      "kinds": [
+        "plane_fixed"
+      ],
+      "catalog_screening": {
+        "queried": 9494,
+        "selected": 4430,
+        "gaia_positions": 2002,
+        "rejections": {
+          "faint_ir": 4873,
+          "artifact_or_poor_fit": 189,
+          "large_motion": 2
+        }
+      },
+      "unavailable": null,
+      "injection_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 32,
+            "valid": 32,
+            "reasons": {
+              "model_disagreement": 2
+            },
+            "rms_arcsec": 1.53714953751743,
+            "p90_arcsec": 2.3449583656997373,
+            "bias_east_north_arcsec": [
+              -0.7147370069478896,
+              0.3334781373352839
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 15
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 30,
+            "reasons": {
+              "model_disagreement": 2
+            },
+            "rms_arcsec": 1.5254015128266678,
+            "p90_arcsec": 2.3754172086947154,
+            "bias_east_north_arcsec": [
+              -0.6664781561312104,
+              0.3464620763975748
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          }
+        }
+      },
+      "real_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 11,
+            "valid": 11,
+            "reasons": {
+              "poor_global_fit": 2
+            },
+            "rms_arcsec": 0.42414122445945573,
+            "p90_arcsec": 0.6840631113078417,
+            "bias_east_north_arcsec": [
+              -0.016197929822090094,
+              0.10428499228972839
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 6
+          },
+          "accepted": {
+            "attempted": 11,
+            "valid": 9,
+            "reasons": {
+              "poor_global_fit": 2
+            },
+            "rms_arcsec": 0.43614538679324727,
+            "p90_arcsec": 0.7064757824654528,
+            "bias_east_north_arcsec": [
+              -0.00014340741384077926,
+              0.08348687438883434
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 4
+          }
+        }
+      },
+      "validation_protocol_sha256": "f6545377be850ce1c5d7e015326747be6f7e47790da01bc816b8b62c9938d83f",
+      "lock_commit": "8c7ad542ca6dacd2ad00a17a6169a0ca195a60bb",
+      "uncertainty": {
+        "raw": {
+          "attempted": 32,
+          "valid": 30,
+          "reasons": {
+            "model_disagreement": 2
+          },
+          "rms_arcsec": 1.5254015128266678,
+          "p90_arcsec": 2.3754172086947154,
+          "bias_east_north_arcsec": [
+            -0.6664781561312104,
+            0.3464620763975748
+          ],
+          "width_boundary_epochs": 0,
+          "raw68_count": 14
+        },
+        "global": {
+          "attempted": 32,
+          "accepted": 30,
+          "supported": 30,
+          "unsupported": 0,
+          "covered68": 29,
+          "covered95": 30,
+          "fraction68": 0.9666666666666667,
+          "median_area_inflation": 5.108313370297944,
+          "pooled_count": 0,
+          "blocks": 4,
+          "fields": 1
+        },
+        "conditional": {
+          "attempted": 32,
+          "accepted": 30,
+          "supported": 30,
+          "unsupported": 0,
+          "covered68": 30,
+          "covered95": 30,
+          "fraction68": 1.0,
+          "median_area_inflation": 2.244529933536008,
+          "pooled_count": 16,
+          "blocks": 4,
+          "fields": 1
+        },
+        "common_supported": {
+          "global": {
+            "attempted": 32,
+            "accepted": 30,
+            "supported": 30,
+            "unsupported": 0,
+            "covered68": 29,
+            "covered95": 30,
+            "fraction68": 0.9666666666666667,
+            "median_area_inflation": 5.108313370297944,
+            "pooled_count": 0,
+            "blocks": 4,
+            "fields": 1
+          },
+          "conditional": {
+            "attempted": 32,
+            "accepted": 30,
+            "supported": 30,
+            "unsupported": 0,
+            "covered68": 30,
+            "covered95": 30,
+            "fraction68": 1.0,
+            "median_area_inflation": 2.244529933536008,
+            "pooled_count": 16,
+            "blocks": 4,
+            "fields": 1
+          }
+        },
+        "cells": {
+          "snr_low_bg_smooth": {
+            "global": {
+              "attempted": 8,
+              "accepted": 8,
+              "supported": 8,
+              "unsupported": 0,
+              "covered68": 8,
+              "covered95": 8,
+              "fraction68": 1.0,
+              "median_area_inflation": 3.6555397781064025,
+              "pooled_count": 0,
+              "blocks": 2,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 8,
+              "accepted": 8,
+              "supported": 8,
+              "unsupported": 0,
+              "covered68": 8,
+              "covered95": 8,
+              "fraction68": 1.0,
+              "median_area_inflation": 7.663765344176685,
+              "pooled_count": 8,
+              "blocks": 2,
+              "fields": 1
+            }
+          },
+          "snr_low_bg_structured": {
+            "global": {
+              "attempted": 8,
+              "accepted": 6,
+              "supported": 6,
+              "unsupported": 0,
+              "covered68": 5,
+              "covered95": 6,
+              "fraction68": 0.8333333333333334,
+              "median_area_inflation": 3.169431733577278,
+              "pooled_count": 0,
+              "blocks": 2,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 8,
+              "accepted": 6,
+              "supported": 6,
+              "unsupported": 0,
+              "covered68": 6,
+              "covered95": 6,
+              "fraction68": 1.0,
+              "median_area_inflation": 6.334188030332495,
+              "pooled_count": 0,
+              "blocks": 2,
+              "fields": 1
+            }
+          },
+          "snr_high_bg_smooth": {
+            "global": {
+              "attempted": 8,
+              "accepted": 8,
+              "supported": 8,
+              "unsupported": 0,
+              "covered68": 8,
+              "covered95": 8,
+              "fraction68": 1.0,
+              "median_area_inflation": 5.950349409029103,
+              "pooled_count": 0,
+              "blocks": 2,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 8,
+              "accepted": 8,
+              "supported": 8,
+              "unsupported": 0,
+              "covered68": 8,
+              "covered95": 8,
+              "fraction68": 1.0,
+              "median_area_inflation": 2.1652520601026435,
+              "pooled_count": 8,
+              "blocks": 2,
+              "fields": 1
+            }
+          },
+          "snr_high_bg_structured": {
+            "global": {
+              "attempted": 8,
+              "accepted": 8,
+              "supported": 8,
+              "unsupported": 0,
+              "covered68": 8,
+              "covered95": 8,
+              "fraction68": 1.0,
+              "median_area_inflation": 5.262047656074336,
+              "pooled_count": 0,
+              "blocks": 2,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 8,
+              "accepted": 8,
+              "supported": 8,
+              "unsupported": 0,
+              "covered68": 8,
+              "covered95": 8,
+              "fraction68": 1.0,
+              "median_area_inflation": 1.7276784504540932,
+              "pooled_count": 0,
+              "blocks": 2,
+              "fields": 1
+            }
+          }
+        }
+      },
+      "real_uncertainty": {
+        "raw": {
+          "attempted": 11,
+          "valid": 9,
+          "reasons": {
+            "poor_global_fit": 2
+          },
+          "rms_arcsec": 0.43614538679324727,
+          "p90_arcsec": 0.7064757824654528,
+          "bias_east_north_arcsec": [
+            -0.00014340741384077926,
+            0.08348687438883434
+          ],
+          "width_boundary_epochs": 0,
+          "raw68_count": 4
+        },
+        "global": {
+          "attempted": 11,
+          "accepted": 9,
+          "supported": 3,
+          "unsupported": 6,
+          "covered68": 3,
+          "covered95": 3,
+          "fraction68": 1.0,
+          "median_area_inflation": 7.20023779906911,
+          "pooled_count": 0,
+          "blocks": 3,
+          "fields": 1
+        },
+        "conditional": {
+          "attempted": 11,
+          "accepted": 9,
+          "supported": 3,
+          "unsupported": 6,
+          "covered68": 3,
+          "covered95": 3,
+          "fraction68": 1.0,
+          "median_area_inflation": 2.341427581403921,
+          "pooled_count": 1,
+          "blocks": 3,
+          "fields": 1
+        },
+        "common_supported": {
+          "global": {
+            "attempted": 3,
+            "accepted": 3,
+            "supported": 3,
+            "unsupported": 0,
+            "covered68": 3,
+            "covered95": 3,
+            "fraction68": 1.0,
+            "median_area_inflation": 7.20023779906911,
+            "pooled_count": 0,
+            "blocks": 3,
+            "fields": 1
+          },
+          "conditional": {
+            "attempted": 3,
+            "accepted": 3,
+            "supported": 3,
+            "unsupported": 0,
+            "covered68": 3,
+            "covered95": 3,
+            "fraction68": 1.0,
+            "median_area_inflation": 2.341427581403921,
+            "pooled_count": 1,
+            "blocks": 3,
+            "fields": 1
+          }
+        },
+        "cells": {
+          "snr_low_bg_smooth": {
+            "global": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          },
+          "snr_low_bg_structured": {
+            "global": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          },
+          "snr_high_bg_smooth": {
+            "global": {
+              "attempted": 4,
+              "accepted": 2,
+              "supported": 1,
+              "unsupported": 1,
+              "covered68": 1,
+              "covered95": 1,
+              "fraction68": 1.0,
+              "median_area_inflation": 7.20023779906911,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 4,
+              "accepted": 2,
+              "supported": 1,
+              "unsupported": 1,
+              "covered68": 1,
+              "covered95": 1,
+              "fraction68": 1.0,
+              "median_area_inflation": 2.4620624680432153,
+              "pooled_count": 1,
+              "blocks": 1,
+              "fields": 1
+            }
+          },
+          "snr_high_bg_structured": {
+            "global": {
+              "attempted": 5,
+              "accepted": 5,
+              "supported": 2,
+              "unsupported": 3,
+              "covered68": 2,
+              "covered95": 2,
+              "fraction68": 1.0,
+              "median_area_inflation": 6.984260131975741,
+              "pooled_count": 0,
+              "blocks": 2,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 5,
+              "accepted": 5,
+              "supported": 2,
+              "unsupported": 3,
+              "covered68": 2,
+              "covered95": 2,
+              "fraction68": 1.0,
+              "median_area_inflation": 2.0672083516343105,
+              "pooled_count": 0,
+              "blocks": 2,
+              "fields": 1
+            }
+          }
+        }
+      },
+      "point_check": {
+        "passed": true,
+        "paired_numeric": {
+          "common": 32,
+          "attempted": 32,
+          "baseline_rms_arcsec": 1.5371495375174298,
+          "baseline_p90_arcsec": 2.3449583656997373,
+          "candidate_rms_arcsec": 1.5371495375174298,
+          "candidate_p90_arcsec": 2.3449583656997373
+        },
+        "paired_accepted": {
+          "common": 30,
+          "attempted": 32,
+          "baseline_rms_arcsec": 1.5254015128266678,
+          "baseline_p90_arcsec": 2.3754172086947154,
+          "candidate_rms_arcsec": 1.5254015128266678,
+          "candidate_p90_arcsec": 2.3754172086947154
+        },
+        "baseline": {
+          "numeric": {
+            "attempted": 32,
+            "valid": 32,
+            "reasons": {
+              "model_disagreement": 2
+            },
+            "rms_arcsec": 1.53714953751743,
+            "p90_arcsec": 2.3449583656997373,
+            "bias_east_north_arcsec": [
+              -0.7147370069478896,
+              0.3334781373352839
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 15
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 30,
+            "reasons": {
+              "model_disagreement": 2
+            },
+            "rms_arcsec": 1.5254015128266678,
+            "p90_arcsec": 2.3754172086947154,
+            "bias_east_north_arcsec": [
+              -0.6664781561312104,
+              0.3464620763975748
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          }
+        },
+        "candidate": {
+          "numeric": {
+            "attempted": 32,
+            "valid": 32,
+            "reasons": {
+              "model_disagreement": 2
+            },
+            "rms_arcsec": 1.53714953751743,
+            "p90_arcsec": 2.3449583656997373,
+            "bias_east_north_arcsec": [
+              -0.7147370069478896,
+              0.3334781373352839
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 15
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 30,
+            "reasons": {
+              "model_disagreement": 2
+            },
+            "rms_arcsec": 1.5254015128266678,
+            "p90_arcsec": 2.3754172086947154,
+            "bias_east_north_arcsec": [
+              -0.6664781561312104,
+              0.3464620763975748
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          }
+        }
+      }
+    },
+    {
+      "field": {
+        "id": "w210m20",
+        "name": "RA 210\u00b0 / Dec -20\u00b0",
+        "ra": 210.0,
+        "dec": -20.0,
+        "coordinate_source": "predeclared geometric centers, not selected by fitted errors",
+        "sia": {
+          "url": "https://irsa.ipac.caltech.edu/SIA",
+          "params": {
+            "COLLECTION": "spherex_qr2",
+            "POS": "circle 210.0 -20.0 0.05"
+          },
+          "sha256": "623031b60825ccb0b72ec783d6b44026b4f7d0067aafc768f5625d7abbfbb922",
+          "rows": 389,
+          "d6_rows": 56
+        }
+      },
+      "phase": "validation",
+      "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+      "kinds": [
+        "plane_fixed"
+      ],
+      "catalog_screening": {
+        "queried": 4037,
+        "selected": 1298,
+        "gaia_positions": 357,
+        "rejections": {
+          "faint_ir": 2705,
+          "large_motion": 3,
+          "artifact_or_poor_fit": 31
+        }
+      },
+      "unavailable": null,
+      "injection_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 32,
+            "valid": 32,
+            "reasons": {
+              "model_disagreement": 1
+            },
+            "rms_arcsec": 1.5268541995937945,
+            "p90_arcsec": 2.303154582205227,
+            "bias_east_north_arcsec": [
+              0.34394987500323587,
+              0.29482476425238496
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 31,
+            "reasons": {
+              "model_disagreement": 1
+            },
+            "rms_arcsec": 1.4888264899682129,
+            "p90_arcsec": 2.29798543546366,
+            "bias_east_north_arcsec": [
+              0.42469324945477455,
+              0.2686371190392748
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          }
+        }
+      },
+      "real_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 11,
+            "valid": 11,
+            "reasons": {
+              "poor_global_fit": 1
+            },
+            "rms_arcsec": 0.41242318481654905,
+            "p90_arcsec": 0.6577976649433473,
+            "bias_east_north_arcsec": [
+              -0.15029639829622934,
+              0.13163190271363065
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 6
+          },
+          "accepted": {
+            "attempted": 11,
+            "valid": 10,
+            "reasons": {
+              "poor_global_fit": 1
+            },
+            "rms_arcsec": 0.432006132278801,
+            "p90_arcsec": 0.6766941564619027,
+            "bias_east_north_arcsec": [
+              -0.1714599246296441,
+              0.14790359340714304
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 5
+          }
+        }
+      },
+      "validation_protocol_sha256": "f6545377be850ce1c5d7e015326747be6f7e47790da01bc816b8b62c9938d83f",
+      "lock_commit": "8c7ad542ca6dacd2ad00a17a6169a0ca195a60bb",
+      "uncertainty": {
+        "raw": {
+          "attempted": 32,
+          "valid": 31,
+          "reasons": {
+            "model_disagreement": 1
+          },
+          "rms_arcsec": 1.4888264899682129,
+          "p90_arcsec": 2.29798543546366,
+          "bias_east_north_arcsec": [
+            0.42469324945477455,
+            0.2686371190392748
+          ],
+          "width_boundary_epochs": 0,
+          "raw68_count": 14
+        },
+        "global": {
+          "attempted": 32,
+          "accepted": 31,
+          "supported": 31,
+          "unsupported": 0,
+          "covered68": 24,
+          "covered95": 31,
+          "fraction68": 0.7741935483870968,
+          "median_area_inflation": 5.166769044685458,
+          "pooled_count": 0,
+          "blocks": 4,
+          "fields": 1
+        },
+        "conditional": {
+          "attempted": 32,
+          "accepted": 31,
+          "supported": 31,
+          "unsupported": 0,
+          "covered68": 26,
+          "covered95": 31,
+          "fraction68": 0.8387096774193549,
+          "median_area_inflation": 2.226017666474374,
+          "pooled_count": 7,
+          "blocks": 4,
+          "fields": 1
+        },
+        "common_supported": {
+          "global": {
+            "attempted": 32,
+            "accepted": 31,
+            "supported": 31,
+            "unsupported": 0,
+            "covered68": 24,
+            "covered95": 31,
+            "fraction68": 0.7741935483870968,
+            "median_area_inflation": 5.166769044685458,
+            "pooled_count": 0,
+            "blocks": 4,
+            "fields": 1
+          },
+          "conditional": {
+            "attempted": 32,
+            "accepted": 31,
+            "supported": 31,
+            "unsupported": 0,
+            "covered68": 26,
+            "covered95": 31,
+            "fraction68": 0.8387096774193549,
+            "median_area_inflation": 2.226017666474374,
+            "pooled_count": 7,
+            "blocks": 4,
+            "fields": 1
+          }
+        },
+        "cells": {
+          "snr_low_bg_smooth": {
+            "global": {
+              "attempted": 4,
+              "accepted": 3,
+              "supported": 3,
+              "unsupported": 0,
+              "covered68": 3,
+              "covered95": 3,
+              "fraction68": 1.0,
+              "median_area_inflation": 3.2069303188932934,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 4,
+              "accepted": 3,
+              "supported": 3,
+              "unsupported": 0,
+              "covered68": 3,
+              "covered95": 3,
+              "fraction68": 1.0,
+              "median_area_inflation": 6.643474694009386,
+              "pooled_count": 3,
+              "blocks": 1,
+              "fields": 1
+            }
+          },
+          "snr_low_bg_structured": {
+            "global": {
+              "attempted": 12,
+              "accepted": 12,
+              "supported": 12,
+              "unsupported": 0,
+              "covered68": 6,
+              "covered95": 12,
+              "fraction68": 0.5,
+              "median_area_inflation": 3.469046172921355,
+              "pooled_count": 0,
+              "blocks": 3,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 12,
+              "accepted": 12,
+              "supported": 12,
+              "unsupported": 0,
+              "covered68": 12,
+              "covered95": 12,
+              "fraction68": 1.0,
+              "median_area_inflation": 6.952259471583215,
+              "pooled_count": 0,
+              "blocks": 3,
+              "fields": 1
+            }
+          },
+          "snr_high_bg_smooth": {
+            "global": {
+              "attempted": 4,
+              "accepted": 4,
+              "supported": 4,
+              "unsupported": 0,
+              "covered68": 4,
+              "covered95": 4,
+              "fraction68": 1.0,
+              "median_area_inflation": 5.937398101608894,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 4,
+              "accepted": 4,
+              "supported": 4,
+              "unsupported": 0,
+              "covered68": 4,
+              "covered95": 4,
+              "fraction68": 1.0,
+              "median_area_inflation": 2.128757557056839,
+              "pooled_count": 4,
+              "blocks": 1,
+              "fields": 1
+            }
+          },
+          "snr_high_bg_structured": {
+            "global": {
+              "attempted": 12,
+              "accepted": 12,
+              "supported": 12,
+              "unsupported": 0,
+              "covered68": 11,
+              "covered95": 12,
+              "fraction68": 0.9166666666666666,
+              "median_area_inflation": 6.139903015552637,
+              "pooled_count": 0,
+              "blocks": 3,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 12,
+              "accepted": 12,
+              "supported": 12,
+              "unsupported": 0,
+              "covered68": 7,
+              "covered95": 12,
+              "fraction68": 0.5833333333333334,
+              "median_area_inflation": 1.8900117519693072,
+              "pooled_count": 0,
+              "blocks": 3,
+              "fields": 1
+            }
+          }
+        }
+      },
+      "real_uncertainty": {
+        "raw": {
+          "attempted": 11,
+          "valid": 10,
+          "reasons": {
+            "poor_global_fit": 1
+          },
+          "rms_arcsec": 0.432006132278801,
+          "p90_arcsec": 0.6766941564619027,
+          "bias_east_north_arcsec": [
+            -0.1714599246296441,
+            0.14790359340714304
+          ],
+          "width_boundary_epochs": 0,
+          "raw68_count": 5
+        },
+        "global": {
+          "attempted": 11,
+          "accepted": 10,
+          "supported": 2,
+          "unsupported": 8,
+          "covered68": 2,
+          "covered95": 2,
+          "fraction68": 1.0,
+          "median_area_inflation": 6.010379678484265,
+          "pooled_count": 0,
+          "blocks": 2,
+          "fields": 1
+        },
+        "conditional": {
+          "attempted": 11,
+          "accepted": 10,
+          "supported": 2,
+          "unsupported": 8,
+          "covered68": 2,
+          "covered95": 2,
+          "fraction68": 1.0,
+          "median_area_inflation": 6.198141496243256,
+          "pooled_count": 1,
+          "blocks": 2,
+          "fields": 1
+        },
+        "common_supported": {
+          "global": {
+            "attempted": 2,
+            "accepted": 2,
+            "supported": 2,
+            "unsupported": 0,
+            "covered68": 2,
+            "covered95": 2,
+            "fraction68": 1.0,
+            "median_area_inflation": 6.010379678484265,
+            "pooled_count": 0,
+            "blocks": 2,
+            "fields": 1
+          },
+          "conditional": {
+            "attempted": 2,
+            "accepted": 2,
+            "supported": 2,
+            "unsupported": 0,
+            "covered68": 2,
+            "covered95": 2,
+            "fraction68": 1.0,
+            "median_area_inflation": 6.198141496243256,
+            "pooled_count": 1,
+            "blocks": 2,
+            "fields": 1
+          }
+        },
+        "cells": {
+          "snr_low_bg_smooth": {
+            "global": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          },
+          "snr_low_bg_structured": {
+            "global": {
+              "attempted": 1,
+              "accepted": 1,
+              "supported": 1,
+              "unsupported": 0,
+              "covered68": 1,
+              "covered95": 1,
+              "fraction68": 1.0,
+              "median_area_inflation": 4.9258979090764194,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 1,
+              "accepted": 1,
+              "supported": 1,
+              "unsupported": 0,
+              "covered68": 1,
+              "covered95": 1,
+              "fraction68": 1.0,
+              "median_area_inflation": 9.968832145402114,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            }
+          },
+          "snr_high_bg_smooth": {
+            "global": {
+              "attempted": 4,
+              "accepted": 4,
+              "supported": 1,
+              "unsupported": 3,
+              "covered68": 1,
+              "covered95": 1,
+              "fraction68": 1.0,
+              "median_area_inflation": 7.094861447892111,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 4,
+              "accepted": 4,
+              "supported": 1,
+              "unsupported": 3,
+              "covered68": 1,
+              "covered95": 1,
+              "fraction68": 1.0,
+              "median_area_inflation": 2.4274508470843967,
+              "pooled_count": 1,
+              "blocks": 1,
+              "fields": 1
+            }
+          },
+          "snr_high_bg_structured": {
+            "global": {
+              "attempted": 6,
+              "accepted": 5,
+              "supported": 0,
+              "unsupported": 5,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 6,
+              "accepted": 5,
+              "supported": 0,
+              "unsupported": 5,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          }
+        }
+      },
+      "point_check": {
+        "passed": true,
+        "paired_numeric": {
+          "common": 32,
+          "attempted": 32,
+          "baseline_rms_arcsec": 1.5268541995937945,
+          "baseline_p90_arcsec": 2.303154582205227,
+          "candidate_rms_arcsec": 1.5268541995937945,
+          "candidate_p90_arcsec": 2.303154582205227
+        },
+        "paired_accepted": {
+          "common": 31,
+          "attempted": 32,
+          "baseline_rms_arcsec": 1.4888264899682129,
+          "baseline_p90_arcsec": 2.29798543546366,
+          "candidate_rms_arcsec": 1.4888264899682129,
+          "candidate_p90_arcsec": 2.29798543546366
+        },
+        "baseline": {
+          "numeric": {
+            "attempted": 32,
+            "valid": 32,
+            "reasons": {
+              "model_disagreement": 1
+            },
+            "rms_arcsec": 1.5268541995937945,
+            "p90_arcsec": 2.303154582205227,
+            "bias_east_north_arcsec": [
+              0.34394987500323587,
+              0.29482476425238496
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 31,
+            "reasons": {
+              "model_disagreement": 1
+            },
+            "rms_arcsec": 1.4888264899682129,
+            "p90_arcsec": 2.29798543546366,
+            "bias_east_north_arcsec": [
+              0.42469324945477455,
+              0.2686371190392748
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          }
+        },
+        "candidate": {
+          "numeric": {
+            "attempted": 32,
+            "valid": 32,
+            "reasons": {
+              "model_disagreement": 1
+            },
+            "rms_arcsec": 1.5268541995937945,
+            "p90_arcsec": 2.303154582205227,
+            "bias_east_north_arcsec": [
+              0.34394987500323587,
+              0.29482476425238496
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 31,
+            "reasons": {
+              "model_disagreement": 1
+            },
+            "rms_arcsec": 1.4888264899682129,
+            "p90_arcsec": 2.29798543546366,
+            "bias_east_north_arcsec": [
+              0.42469324945477455,
+              0.2686371190392748
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 14
+          }
+        }
+      }
+    },
+    {
+      "field": {
+        "id": "w350p35",
+        "name": "RA 350\u00b0 / Dec +35\u00b0",
+        "ra": 350.0,
+        "dec": 35.0,
+        "coordinate_source": "predeclared geometric centers, not selected by fitted errors",
+        "sia": {
+          "url": "https://irsa.ipac.caltech.edu/SIA",
+          "params": {
+            "COLLECTION": "spherex_qr2",
+            "POS": "circle 350.0 35.0 0.05"
+          },
+          "sha256": "7e5dbd75ce137b6afa5a58344dc163e5147483f57ee6be83c624d41d9b64e27d",
+          "rows": 471,
+          "d6_rows": 79
+        }
+      },
+      "phase": "validation",
+      "design_sha256": "403dcadf4e75dd32219960d44eed3524e8600267f9a15d4a126ffd92c4cfcea7",
+      "kinds": [
+        "plane_fixed"
+      ],
+      "catalog_screening": {
+        "queried": 4776,
+        "selected": 1745,
+        "gaia_positions": 553,
+        "rejections": {
+          "faint_ir": 2988,
+          "artifact_or_poor_fit": 43
+        }
+      },
+      "unavailable": null,
+      "injection_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 32,
+            "valid": 24,
+            "reasons": {
+              "model_disagreement": 8,
+              "poor_global_fit": 16,
+              "input_exception": 8,
+              "low_epoch_snr": 4
+            },
+            "rms_arcsec": 2.406316434766348,
+            "p90_arcsec": 3.5367965249642785,
+            "bias_east_north_arcsec": [
+              -1.0949368085991094,
+              -0.5078952135959366
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 11
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 8,
+            "reasons": {
+              "model_disagreement": 8,
+              "poor_global_fit": 16,
+              "input_exception": 8,
+              "low_epoch_snr": 4
+            },
+            "rms_arcsec": 2.0645425627894065,
+            "p90_arcsec": 2.748267773212229,
+            "bias_east_north_arcsec": [
+              -1.0982224168821042,
+              -1.5684981514148522
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 0
+          }
+        }
+      },
+      "real_summary": {
+        "plane_fixed": {
+          "numeric_valid": {
+            "attempted": 11,
+            "valid": 5,
+            "reasons": {
+              "fit_exception": 6,
+              "insufficient_core_pixels": 1
+            },
+            "rms_arcsec": 0.27738045029000574,
+            "p90_arcsec": 0.3952205891707271,
+            "bias_east_north_arcsec": [
+              0.05358176876994405,
+              -0.05284194028966403
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 2
+          },
+          "accepted": {
+            "attempted": 11,
+            "valid": 4,
+            "reasons": {
+              "fit_exception": 6,
+              "insufficient_core_pixels": 1
+            },
+            "rms_arcsec": 0.28822836964963955,
+            "p90_arcsec": 0.4175890469946391,
+            "bias_east_north_arcsec": [
+              0.09612871376712401,
+              -0.016807986031632888
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 1
+          }
+        }
+      },
+      "validation_protocol_sha256": "f6545377be850ce1c5d7e015326747be6f7e47790da01bc816b8b62c9938d83f",
+      "lock_commit": "8c7ad542ca6dacd2ad00a17a6169a0ca195a60bb",
+      "uncertainty": {
+        "raw": {
+          "attempted": 32,
+          "valid": 8,
+          "reasons": {
+            "model_disagreement": 8,
+            "poor_global_fit": 16,
+            "input_exception": 8,
+            "low_epoch_snr": 4
+          },
+          "rms_arcsec": 2.0645425627894065,
+          "p90_arcsec": 2.748267773212229,
+          "bias_east_north_arcsec": [
+            -1.0982224168821042,
+            -1.5684981514148522
+          ],
+          "width_boundary_epochs": 0,
+          "raw68_count": 0
+        },
+        "global": {
+          "attempted": 32,
+          "accepted": 8,
+          "supported": 8,
+          "unsupported": 0,
+          "covered68": 1,
+          "covered95": 8,
+          "fraction68": 0.125,
+          "median_area_inflation": 4.232424299181545,
+          "pooled_count": 0,
+          "blocks": 1,
+          "fields": 1
+        },
+        "conditional": {
+          "attempted": 32,
+          "accepted": 8,
+          "supported": 8,
+          "unsupported": 0,
+          "covered68": 1,
+          "covered95": 8,
+          "fraction68": 0.125,
+          "median_area_inflation": 3.813386358033664,
+          "pooled_count": 0,
+          "blocks": 1,
+          "fields": 1
+        },
+        "common_supported": {
+          "global": {
+            "attempted": 24,
+            "accepted": 8,
+            "supported": 8,
+            "unsupported": 0,
+            "covered68": 1,
+            "covered95": 8,
+            "fraction68": 0.125,
+            "median_area_inflation": 4.232424299181545,
+            "pooled_count": 0,
+            "blocks": 1,
+            "fields": 1
+          },
+          "conditional": {
+            "attempted": 24,
+            "accepted": 8,
+            "supported": 8,
+            "unsupported": 0,
+            "covered68": 1,
+            "covered95": 8,
+            "fraction68": 0.125,
+            "median_area_inflation": 3.813386358033664,
+            "pooled_count": 0,
+            "blocks": 1,
+            "fields": 1
+          }
+        },
+        "cells": {
+          "snr_low_bg_smooth": {
+            "global": {
+              "attempted": 8,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 8,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          },
+          "snr_low_bg_structured": {
+            "global": {
+              "attempted": 4,
+              "accepted": 4,
+              "supported": 4,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 4,
+              "fraction68": 0.0,
+              "median_area_inflation": 2.9998935074807545,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 4,
+              "accepted": 4,
+              "supported": 4,
+              "unsupported": 0,
+              "covered68": 1,
+              "covered95": 4,
+              "fraction68": 0.25,
+              "median_area_inflation": 5.95989128530446,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            }
+          },
+          "snr_high_bg_smooth": {
+            "global": {
+              "attempted": 8,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 8,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          },
+          "snr_high_bg_structured": {
+            "global": {
+              "attempted": 4,
+              "accepted": 4,
+              "supported": 4,
+              "unsupported": 0,
+              "covered68": 1,
+              "covered95": 4,
+              "fraction68": 0.25,
+              "median_area_inflation": 5.581793802497927,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            },
+            "conditional": {
+              "attempted": 4,
+              "accepted": 4,
+              "supported": 4,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 4,
+              "fraction68": 0.0,
+              "median_area_inflation": 1.763441946951199,
+              "pooled_count": 0,
+              "blocks": 1,
+              "fields": 1
+            }
+          }
+        }
+      },
+      "real_uncertainty": {
+        "raw": {
+          "attempted": 11,
+          "valid": 4,
+          "reasons": {
+            "fit_exception": 6,
+            "insufficient_core_pixels": 1
+          },
+          "rms_arcsec": 0.28822836964963955,
+          "p90_arcsec": 0.4175890469946391,
+          "bias_east_north_arcsec": [
+            0.09612871376712401,
+            -0.016807986031632888
+          ],
+          "width_boundary_epochs": 0,
+          "raw68_count": 1
+        },
+        "global": {
+          "attempted": 11,
+          "accepted": 4,
+          "supported": 0,
+          "unsupported": 4,
+          "covered68": 0,
+          "covered95": 0,
+          "fraction68": null,
+          "median_area_inflation": null,
+          "pooled_count": 0,
+          "blocks": 0,
+          "fields": 0
+        },
+        "conditional": {
+          "attempted": 11,
+          "accepted": 4,
+          "supported": 0,
+          "unsupported": 4,
+          "covered68": 0,
+          "covered95": 0,
+          "fraction68": null,
+          "median_area_inflation": null,
+          "pooled_count": 0,
+          "blocks": 0,
+          "fields": 0
+        },
+        "common_supported": {
+          "global": {
+            "attempted": 0,
+            "accepted": 0,
+            "supported": 0,
+            "unsupported": 0,
+            "covered68": 0,
+            "covered95": 0,
+            "fraction68": null,
+            "median_area_inflation": null,
+            "pooled_count": 0,
+            "blocks": 0,
+            "fields": 0
+          },
+          "conditional": {
+            "attempted": 0,
+            "accepted": 0,
+            "supported": 0,
+            "unsupported": 0,
+            "covered68": 0,
+            "covered95": 0,
+            "fraction68": null,
+            "median_area_inflation": null,
+            "pooled_count": 0,
+            "blocks": 0,
+            "fields": 0
+          }
+        },
+        "cells": {
+          "snr_low_bg_smooth": {
+            "global": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          },
+          "snr_low_bg_structured": {
+            "global": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 0,
+              "accepted": 0,
+              "supported": 0,
+              "unsupported": 0,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          },
+          "snr_high_bg_smooth": {
+            "global": {
+              "attempted": 2,
+              "accepted": 2,
+              "supported": 0,
+              "unsupported": 2,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 2,
+              "accepted": 2,
+              "supported": 0,
+              "unsupported": 2,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          },
+          "snr_high_bg_structured": {
+            "global": {
+              "attempted": 3,
+              "accepted": 2,
+              "supported": 0,
+              "unsupported": 2,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            },
+            "conditional": {
+              "attempted": 3,
+              "accepted": 2,
+              "supported": 0,
+              "unsupported": 2,
+              "covered68": 0,
+              "covered95": 0,
+              "fraction68": null,
+              "median_area_inflation": null,
+              "pooled_count": 0,
+              "blocks": 0,
+              "fields": 0
+            }
+          }
+        }
+      },
+      "point_check": {
+        "passed": true,
+        "paired_numeric": {
+          "common": 24,
+          "attempted": 32,
+          "baseline_rms_arcsec": 2.406316434766348,
+          "baseline_p90_arcsec": 3.5367965249642785,
+          "candidate_rms_arcsec": 2.406316434766348,
+          "candidate_p90_arcsec": 3.5367965249642785
+        },
+        "paired_accepted": {
+          "common": 8,
+          "attempted": 32,
+          "baseline_rms_arcsec": 2.064542562789406,
+          "baseline_p90_arcsec": 2.748267773212229,
+          "candidate_rms_arcsec": 2.064542562789406,
+          "candidate_p90_arcsec": 2.748267773212229
+        },
+        "baseline": {
+          "numeric": {
+            "attempted": 32,
+            "valid": 24,
+            "reasons": {
+              "model_disagreement": 8,
+              "poor_global_fit": 16,
+              "input_exception": 8,
+              "low_epoch_snr": 4
+            },
+            "rms_arcsec": 2.406316434766348,
+            "p90_arcsec": 3.5367965249642785,
+            "bias_east_north_arcsec": [
+              -1.0949368085991094,
+              -0.5078952135959366
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 11
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 8,
+            "reasons": {
+              "model_disagreement": 8,
+              "poor_global_fit": 16,
+              "input_exception": 8,
+              "low_epoch_snr": 4
+            },
+            "rms_arcsec": 2.0645425627894065,
+            "p90_arcsec": 2.748267773212229,
+            "bias_east_north_arcsec": [
+              -1.0982224168821042,
+              -1.5684981514148522
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 0
+          }
+        },
+        "candidate": {
+          "numeric": {
+            "attempted": 32,
+            "valid": 24,
+            "reasons": {
+              "model_disagreement": 8,
+              "poor_global_fit": 16,
+              "input_exception": 8,
+              "low_epoch_snr": 4
+            },
+            "rms_arcsec": 2.406316434766348,
+            "p90_arcsec": 3.5367965249642785,
+            "bias_east_north_arcsec": [
+              -1.0949368085991094,
+              -0.5078952135959366
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 11
+          },
+          "accepted": {
+            "attempted": 32,
+            "valid": 8,
+            "reasons": {
+              "model_disagreement": 8,
+              "poor_global_fit": 16,
+              "input_exception": 8,
+              "low_epoch_snr": 4
+            },
+            "rms_arcsec": 2.0645425627894065,
+            "p90_arcsec": 2.748267773212229,
+            "bias_east_north_arcsec": [
+              -1.0982224168821042,
+              -1.5684981514148522
+            ],
+            "width_boundary_epochs": 0,
+            "raw68_count": 0
+          }
+        }
+      }
+    }
+  ],
+  "injection_summary": {
+    "plane_fixed": {
+      "numeric_valid": {
+        "attempted": 96,
+        "valid": 88,
+        "reasons": {
+          "model_disagreement": 11,
+          "poor_global_fit": 16,
+          "input_exception": 8,
+          "low_epoch_snr": 4
+        },
+        "rms_arcsec": 1.8127710115307627,
+        "p90_arcsec": 2.8711249824014806,
+        "bias_east_north_arcsec": [
+          -0.4334508139614492,
+          0.0899569059602605
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 40
+      },
+      "accepted": {
+        "attempted": 96,
+        "valid": 69,
+        "reasons": {
+          "model_disagreement": 11,
+          "poor_global_fit": 16,
+          "input_exception": 8,
+          "low_epoch_snr": 4
+        },
+        "rms_arcsec": 1.5816837251538018,
+        "p90_arcsec": 2.603701406910124,
+        "bias_east_north_arcsec": [
+          -0.22629903312891497,
+          0.0894728662438542
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 28
+      }
+    }
+  },
+  "real_summary": {
+    "plane_fixed": {
+      "numeric_valid": {
+        "attempted": 33,
+        "valid": 27,
+        "reasons": {
+          "poor_global_fit": 3,
+          "fit_exception": 6,
+          "insufficient_core_pixels": 1
+        },
+        "rms_arcsec": 0.3960253849550529,
+        "p90_arcsec": 0.6683038434891452,
+        "bias_east_north_arcsec": [
+          -0.05790847279451086,
+          0.08632874605883807
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 14
+      },
+      "accepted": {
+        "attempted": 33,
+        "valid": 23,
+        "reasons": {
+          "poor_global_fit": 3,
+          "fit_exception": 6,
+          "insufficient_core_pixels": 1
+        },
+        "rms_arcsec": 0.41234222496967815,
+        "p90_arcsec": 0.6788100220349429,
+        "bias_east_north_arcsec": [
+          -0.05788587208489183,
+          0.09405155910627859
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 10
+      }
+    }
+  },
+  "current_measurement_changed": false,
+  "selected_model": "plane_fixed",
+  "injection_uncertainty": {
+    "raw": {
+      "attempted": 96,
+      "valid": 69,
+      "reasons": {
+        "model_disagreement": 11,
+        "poor_global_fit": 16,
+        "input_exception": 8,
+        "low_epoch_snr": 4
+      },
+      "rms_arcsec": 1.5816837251538018,
+      "p90_arcsec": 2.603701406910124,
+      "bias_east_north_arcsec": [
+        -0.22629903312891497,
+        0.0894728662438542
+      ],
+      "width_boundary_epochs": 0,
+      "raw68_count": 28
+    },
+    "global": {
+      "attempted": 96,
+      "accepted": 69,
+      "supported": 69,
+      "unsupported": 0,
+      "covered68": 54,
+      "covered95": 69,
+      "fraction68": 0.782608695652174,
+      "median_area_inflation": 5.150949306196573,
+      "pooled_count": 0,
+      "blocks": 9,
+      "fields": 3
+    },
+    "conditional": {
+      "attempted": 96,
+      "accepted": 69,
+      "supported": 69,
+      "unsupported": 0,
+      "covered68": 57,
+      "covered95": 69,
+      "fraction68": 0.8260869565217391,
+      "median_area_inflation": 2.226017666474374,
+      "pooled_count": 23,
+      "blocks": 9,
+      "fields": 3
+    },
+    "common_supported": {
+      "global": {
+        "attempted": 88,
+        "accepted": 69,
+        "supported": 69,
+        "unsupported": 0,
+        "covered68": 54,
+        "covered95": 69,
+        "fraction68": 0.782608695652174,
+        "median_area_inflation": 5.150949306196573,
+        "pooled_count": 0,
+        "blocks": 9,
+        "fields": 3
+      },
+      "conditional": {
+        "attempted": 88,
+        "accepted": 69,
+        "supported": 69,
+        "unsupported": 0,
+        "covered68": 57,
+        "covered95": 69,
+        "fraction68": 0.8260869565217391,
+        "median_area_inflation": 2.226017666474374,
+        "pooled_count": 23,
+        "blocks": 9,
+        "fields": 3
+      }
+    },
+    "cells": {
+      "snr_low_bg_smooth": {
+        "global": {
+          "attempted": 20,
+          "accepted": 11,
+          "supported": 11,
+          "unsupported": 0,
+          "covered68": 11,
+          "covered95": 11,
+          "fraction68": 1.0,
+          "median_area_inflation": 3.4342867508989845,
+          "pooled_count": 0,
+          "blocks": 3,
+          "fields": 2
+        },
+        "conditional": {
+          "attempted": 20,
+          "accepted": 11,
+          "supported": 11,
+          "unsupported": 0,
+          "covered68": 11,
+          "covered95": 11,
+          "fraction68": 1.0,
+          "median_area_inflation": 7.149778740259914,
+          "pooled_count": 11,
+          "blocks": 3,
+          "fields": 2
+        }
+      },
+      "snr_low_bg_structured": {
+        "global": {
+          "attempted": 24,
+          "accepted": 22,
+          "supported": 22,
+          "unsupported": 0,
+          "covered68": 11,
+          "covered95": 22,
+          "fraction68": 0.5,
+          "median_area_inflation": 3.278139542690033,
+          "pooled_count": 0,
+          "blocks": 6,
+          "fields": 3
+        },
+        "conditional": {
+          "attempted": 24,
+          "accepted": 22,
+          "supported": 22,
+          "unsupported": 0,
+          "covered68": 19,
+          "covered95": 22,
+          "fraction68": 0.8636363636363636,
+          "median_area_inflation": 6.574278148701595,
+          "pooled_count": 0,
+          "blocks": 6,
+          "fields": 3
+        }
+      },
+      "snr_high_bg_smooth": {
+        "global": {
+          "attempted": 20,
+          "accepted": 12,
+          "supported": 12,
+          "unsupported": 0,
+          "covered68": 12,
+          "covered95": 12,
+          "fraction68": 1.0,
+          "median_area_inflation": 5.950349409029103,
+          "pooled_count": 0,
+          "blocks": 3,
+          "fields": 2
+        },
+        "conditional": {
+          "attempted": 20,
+          "accepted": 12,
+          "supported": 12,
+          "unsupported": 0,
+          "covered68": 12,
+          "covered95": 12,
+          "fraction68": 1.0,
+          "median_area_inflation": 2.1500801708658424,
+          "pooled_count": 12,
+          "blocks": 3,
+          "fields": 2
+        }
+      },
+      "snr_high_bg_structured": {
+        "global": {
+          "attempted": 24,
+          "accepted": 24,
+          "supported": 24,
+          "unsupported": 0,
+          "covered68": 20,
+          "covered95": 24,
+          "fraction68": 0.8333333333333334,
+          "median_area_inflation": 5.674340432717697,
+          "pooled_count": 0,
+          "blocks": 6,
+          "fields": 3
+        },
+        "conditional": {
+          "attempted": 24,
+          "accepted": 24,
+          "supported": 24,
+          "unsupported": 0,
+          "covered68": 15,
+          "covered95": 24,
+          "fraction68": 0.625,
+          "median_area_inflation": 1.81290991818262,
+          "pooled_count": 0,
+          "blocks": 6,
+          "fields": 3
+        }
+      }
+    }
+  },
+  "real_uncertainty": {
+    "raw": {
+      "attempted": 33,
+      "valid": 23,
+      "reasons": {
+        "poor_global_fit": 3,
+        "fit_exception": 6,
+        "insufficient_core_pixels": 1
+      },
+      "rms_arcsec": 0.41234222496967815,
+      "p90_arcsec": 0.6788100220349429,
+      "bias_east_north_arcsec": [
+        -0.05788587208489183,
+        0.09405155910627859
+      ],
+      "width_boundary_epochs": 0,
+      "raw68_count": 10
+    },
+    "global": {
+      "attempted": 33,
+      "accepted": 23,
+      "supported": 5,
+      "unsupported": 18,
+      "covered68": 5,
+      "covered95": 5,
+      "fraction68": 1.0,
+      "median_area_inflation": 7.094861447892111,
+      "pooled_count": 0,
+      "blocks": 5,
+      "fields": 2
+    },
+    "conditional": {
+      "attempted": 33,
+      "accepted": 23,
+      "supported": 5,
+      "unsupported": 18,
+      "covered68": 5,
+      "covered95": 5,
+      "fraction68": 1.0,
+      "median_area_inflation": 2.4274508470843967,
+      "pooled_count": 2,
+      "blocks": 5,
+      "fields": 2
+    },
+    "common_supported": {
+      "global": {
+        "attempted": 5,
+        "accepted": 5,
+        "supported": 5,
+        "unsupported": 0,
+        "covered68": 5,
+        "covered95": 5,
+        "fraction68": 1.0,
+        "median_area_inflation": 7.094861447892111,
+        "pooled_count": 0,
+        "blocks": 5,
+        "fields": 2
+      },
+      "conditional": {
+        "attempted": 5,
+        "accepted": 5,
+        "supported": 5,
+        "unsupported": 0,
+        "covered68": 5,
+        "covered95": 5,
+        "fraction68": 1.0,
+        "median_area_inflation": 2.4274508470843967,
+        "pooled_count": 2,
+        "blocks": 5,
+        "fields": 2
+      }
+    },
+    "cells": {
+      "snr_low_bg_smooth": {
+        "global": {
+          "attempted": 0,
+          "accepted": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "covered68": 0,
+          "covered95": 0,
+          "fraction68": null,
+          "median_area_inflation": null,
+          "pooled_count": 0,
+          "blocks": 0,
+          "fields": 0
+        },
+        "conditional": {
+          "attempted": 0,
+          "accepted": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "covered68": 0,
+          "covered95": 0,
+          "fraction68": null,
+          "median_area_inflation": null,
+          "pooled_count": 0,
+          "blocks": 0,
+          "fields": 0
+        }
+      },
+      "snr_low_bg_structured": {
+        "global": {
+          "attempted": 1,
+          "accepted": 1,
+          "supported": 1,
+          "unsupported": 0,
+          "covered68": 1,
+          "covered95": 1,
+          "fraction68": 1.0,
+          "median_area_inflation": 4.9258979090764194,
+          "pooled_count": 0,
+          "blocks": 1,
+          "fields": 1
+        },
+        "conditional": {
+          "attempted": 1,
+          "accepted": 1,
+          "supported": 1,
+          "unsupported": 0,
+          "covered68": 1,
+          "covered95": 1,
+          "fraction68": 1.0,
+          "median_area_inflation": 9.968832145402114,
+          "pooled_count": 0,
+          "blocks": 1,
+          "fields": 1
+        }
+      },
+      "snr_high_bg_smooth": {
+        "global": {
+          "attempted": 10,
+          "accepted": 8,
+          "supported": 2,
+          "unsupported": 6,
+          "covered68": 2,
+          "covered95": 2,
+          "fraction68": 1.0,
+          "median_area_inflation": 7.147549623480611,
+          "pooled_count": 0,
+          "blocks": 2,
+          "fields": 2
+        },
+        "conditional": {
+          "attempted": 10,
+          "accepted": 8,
+          "supported": 2,
+          "unsupported": 6,
+          "covered68": 2,
+          "covered95": 2,
+          "fraction68": 1.0,
+          "median_area_inflation": 2.444756657563806,
+          "pooled_count": 2,
+          "blocks": 2,
+          "fields": 2
+        }
+      },
+      "snr_high_bg_structured": {
+        "global": {
+          "attempted": 14,
+          "accepted": 12,
+          "supported": 2,
+          "unsupported": 10,
+          "covered68": 2,
+          "covered95": 2,
+          "fraction68": 1.0,
+          "median_area_inflation": 6.984260131975741,
+          "pooled_count": 0,
+          "blocks": 2,
+          "fields": 1
+        },
+        "conditional": {
+          "attempted": 14,
+          "accepted": 12,
+          "supported": 2,
+          "unsupported": 10,
+          "covered68": 2,
+          "covered95": 2,
+          "fraction68": 1.0,
+          "median_area_inflation": 2.0672083516343105,
+          "pooled_count": 0,
+          "blocks": 2,
+          "fields": 1
+        }
+      }
+    }
+  },
+  "coverage_gate": {
+    "passed": false,
+    "summary": {
+      "raw": {
+        "attempted": 96,
+        "valid": 69,
+        "reasons": {
+          "model_disagreement": 11,
+          "poor_global_fit": 16,
+          "input_exception": 8,
+          "low_epoch_snr": 4
+        },
+        "rms_arcsec": 1.5816837251538018,
+        "p90_arcsec": 2.603701406910124,
+        "bias_east_north_arcsec": [
+          -0.22629903312891497,
+          0.0894728662438542
+        ],
+        "width_boundary_epochs": 0,
+        "raw68_count": 28
+      },
+      "global": {
+        "attempted": 96,
+        "accepted": 69,
+        "supported": 69,
+        "unsupported": 0,
+        "covered68": 54,
+        "covered95": 69,
+        "fraction68": 0.782608695652174,
+        "median_area_inflation": 5.150949306196573,
+        "pooled_count": 0,
+        "blocks": 9,
+        "fields": 3
+      },
+      "conditional": {
+        "attempted": 96,
+        "accepted": 69,
+        "supported": 69,
+        "unsupported": 0,
+        "covered68": 57,
+        "covered95": 69,
+        "fraction68": 0.8260869565217391,
+        "median_area_inflation": 2.226017666474374,
+        "pooled_count": 23,
+        "blocks": 9,
+        "fields": 3
+      },
+      "common_supported": {
+        "global": {
+          "attempted": 88,
+          "accepted": 69,
+          "supported": 69,
+          "unsupported": 0,
+          "covered68": 54,
+          "covered95": 69,
+          "fraction68": 0.782608695652174,
+          "median_area_inflation": 5.150949306196573,
+          "pooled_count": 0,
+          "blocks": 9,
+          "fields": 3
+        },
+        "conditional": {
+          "attempted": 88,
+          "accepted": 69,
+          "supported": 69,
+          "unsupported": 0,
+          "covered68": 57,
+          "covered95": 69,
+          "fraction68": 0.8260869565217391,
+          "median_area_inflation": 2.226017666474374,
+          "pooled_count": 23,
+          "blocks": 9,
+          "fields": 3
+        }
+      },
+      "cells": {
+        "snr_low_bg_smooth": {
+          "global": {
+            "attempted": 20,
+            "accepted": 11,
+            "supported": 11,
+            "unsupported": 0,
+            "covered68": 11,
+            "covered95": 11,
+            "fraction68": 1.0,
+            "median_area_inflation": 3.4342867508989845,
+            "pooled_count": 0,
+            "blocks": 3,
+            "fields": 2
+          },
+          "conditional": {
+            "attempted": 20,
+            "accepted": 11,
+            "supported": 11,
+            "unsupported": 0,
+            "covered68": 11,
+            "covered95": 11,
+            "fraction68": 1.0,
+            "median_area_inflation": 7.149778740259914,
+            "pooled_count": 11,
+            "blocks": 3,
+            "fields": 2
+          }
+        },
+        "snr_low_bg_structured": {
+          "global": {
+            "attempted": 24,
+            "accepted": 22,
+            "supported": 22,
+            "unsupported": 0,
+            "covered68": 11,
+            "covered95": 22,
+            "fraction68": 0.5,
+            "median_area_inflation": 3.278139542690033,
+            "pooled_count": 0,
+            "blocks": 6,
+            "fields": 3
+          },
+          "conditional": {
+            "attempted": 24,
+            "accepted": 22,
+            "supported": 22,
+            "unsupported": 0,
+            "covered68": 19,
+            "covered95": 22,
+            "fraction68": 0.8636363636363636,
+            "median_area_inflation": 6.574278148701595,
+            "pooled_count": 0,
+            "blocks": 6,
+            "fields": 3
+          }
+        },
+        "snr_high_bg_smooth": {
+          "global": {
+            "attempted": 20,
+            "accepted": 12,
+            "supported": 12,
+            "unsupported": 0,
+            "covered68": 12,
+            "covered95": 12,
+            "fraction68": 1.0,
+            "median_area_inflation": 5.950349409029103,
+            "pooled_count": 0,
+            "blocks": 3,
+            "fields": 2
+          },
+          "conditional": {
+            "attempted": 20,
+            "accepted": 12,
+            "supported": 12,
+            "unsupported": 0,
+            "covered68": 12,
+            "covered95": 12,
+            "fraction68": 1.0,
+            "median_area_inflation": 2.1500801708658424,
+            "pooled_count": 12,
+            "blocks": 3,
+            "fields": 2
+          }
+        },
+        "snr_high_bg_structured": {
+          "global": {
+            "attempted": 24,
+            "accepted": 24,
+            "supported": 24,
+            "unsupported": 0,
+            "covered68": 20,
+            "covered95": 24,
+            "fraction68": 0.8333333333333334,
+            "median_area_inflation": 5.674340432717697,
+            "pooled_count": 0,
+            "blocks": 6,
+            "fields": 3
+          },
+          "conditional": {
+            "attempted": 24,
+            "accepted": 24,
+            "supported": 24,
+            "unsupported": 0,
+            "covered68": 15,
+            "covered95": 24,
+            "fraction68": 0.625,
+            "median_area_inflation": 1.81290991818262,
+            "pooled_count": 0,
+            "blocks": 6,
+            "fields": 3
+          }
+        }
+      }
+    },
+    "cells_passed": {
+      "snr_low_bg_smooth": false,
+      "snr_low_bg_structured": false,
+      "snr_high_bg_smooth": false,
+      "snr_high_bg_structured": true
+    },
+    "hierarchical_bootstrap95": [
+      0.125,
+      1.0
+    ],
+    "qualification": "supported-only coverage with support fraction gate; three fields and shared exposures, not a coverage guarantee"
+  },
+  "point_passed": true,
+  "validation_protocol_sha256": "f6545377be850ce1c5d7e015326747be6f7e47790da01bc816b8b62c9938d83f",
+  "lock_commit": "8c7ad542ca6dacd2ad00a17a6169a0ca195a60bb",
+  "passed": false
+}

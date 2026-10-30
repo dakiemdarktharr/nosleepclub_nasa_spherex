@@ -20,3 +20,6 @@ Biến môi trường mẫu ở `web/.env.example`, tuyệt đối không thay b
 
 
 Bản 0.8 bổ sung các sản phẩm tĩnh `data/covariance/`, không đổi schema nhận xét hoặc secret. Smoke test đối chiếu hash design, calibrator, seal, overview và từng trường validation với repo, rồi thực hiện cùng chu trình MongoDB bằng review QA riêng. Bộ phân tích nền/ePSF/covariance vẫn chạy offline; Vercel không chạy fit khoa học khi người dùng mở trang.
+
+
+Bản 0.9 thêm `data/ablation/` và bảng chọn mô hình/hiệu chuẩn có miền hỗ trợ; runtime web và schema MongoDB không đổi. Script smoke đối chiếu hash design, selection, calibrator, seal, summary và ba kết quả trường mới trước chu trình review QA. Wrapper offline `python -m scripts.run_ablation <phase>` chặn ghi đè các phase hoàn tất; không chạy các fit qua API web.

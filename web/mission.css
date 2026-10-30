@@ -191,3 +191,10 @@ dialog .evidence-table table { font-size: 13px; }
 .validation-jumps{display:flex;gap:12px 28px;flex-wrap:wrap;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid #444}.validation-jumps a{font-size:14px;color:#fff;text-decoration:underline;text-underline-offset:5px}.validation-jumps a:first-child{font-weight:700}
 
 @media(max-width:760px){.covariance-validation .section-heading{flex-direction:column;align-items:flex-start;gap:20px}.covariance-validation .section-heading h2{max-width:100%}}
+
+/* The ablation is evidence on opened data; external validation stays distinct. */
+.ablation-choice{background:#121619;border-left:3px solid #ffb36a;padding:26px;margin:26px 0}.ablation-choice>span{color:#c6cdd3;font-size:14px}.ablation-choice h3{font-size:clamp(22px,3vw,34px);margin:14px 0}.ablation-choice p{color:#e5e8eb;font-size:15px}.ablation-filters{display:flex;gap:20px;flex-wrap:wrap}.ablation-filters label{min-width:220px}.ablation-validation .evidence-table table{min-width:1120px}.ablation-validation .evidence-table{margin:24px 0}.ablation-validation .release-status{margin-bottom:20px}.ablation-validation .benchmark-fields{margin-top:32px}@media(max-width:760px){.ablation-validation .section-heading{flex-direction:column;align-items:flex-start;gap:20px}.ablation-filters{width:100%;display:grid;grid-template-columns:1fr}.ablation-filters label{min-width:0}.ablation-choice{padding:22px}}
+
+.ablation-diagnostic{display:grid;grid-template-columns:minmax(180px,300px) 1fr;gap:30px;padding:24px 0}.ablation-diagnostic h3{font-size:22px;margin-bottom:16px}.ablation-diagnostic p{font-size:15px;margin-top:16px;line-height:1.65}@media(max-width:760px){.ablation-diagnostic{grid-template-columns:1fr}.ablation-diagnostic .reference-map{max-width:300px}}
+
+.ablation-validation .evidence-table table{min-width:1020px}.ablation-validation .evidence-table th,.ablation-validation .evidence-table td{vertical-align:top}

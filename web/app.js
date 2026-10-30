@@ -300,6 +300,7 @@ $("accuracy-evidence").addEventListener("click",()=>{
 });
 async function loadScene(scene) {
   const generation=++state.loading;
+  $("workspace").setAttribute("aria-busy","true");
   $("load-state").hidden=false;$("load-state").textContent="Đang tải cặp ảnh và bằng chứng…";
   try {
     const [before,after,difference,pixels]=await Promise.all([loadImage(scene.before.image),loadImage(scene.after.image),loadImage(scene.difference_image),getJson(scene.array_json)]);
@@ -321,6 +322,7 @@ async function loadScene(scene) {
   } catch(error) {
     $("load-state").hidden=false;$("load-state").textContent=`Không tải được dữ liệu: ${error.message}. Chạy web bằng scripts/serve_demo.py rồi tải lại trang.`;
   }
+  finally {if(generation===state.loading)$("workspace").removeAttribute("aria-busy");}
 }
 
 document.querySelectorAll("[data-mode]").forEach(button=>button.addEventListener("click",()=>setMode(button.dataset.mode)));
@@ -402,7 +404,7 @@ getJson("data/manifest.json").then(async manifest=>{
   await setupAccuracy();
   await syncReviews();
 })
-  .catch(error=>{$("load-state").textContent=`Không tải được manifest: ${error.message}. Chạy scripts/serve_demo.py để mở bản demo.`;});
+  .catch(error=>{$("load-state").textContent=`Không tải được manifest: ${error.message}. Chạy scripts/serve_demo.py để mở bản demo.`;$("workspace").removeAttribute("aria-busy");});
 
 window.addEventListener("resize",render);
 document.fonts.addEventListener("loadingdone",render);

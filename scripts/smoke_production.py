@@ -50,6 +50,11 @@ def main():
         deployed=session.get(URL+'/data/covariance/'+name+'.json',timeout=30);deployed.raise_for_status()
         assert sha256(deployed.content).hexdigest()==sha256((covariance/(name+'.json')).read_bytes()).hexdigest()
     results['covariance_validation_matches']=True
+    ablation=Path(__file__).resolve().parents[1]/'web/data/ablation'
+    for name in ['design','selection','calibrator','validation-protocol','overview','validation-summary','validation-w090p10','validation-w210m20','validation-w350p35']:
+        deployed=session.get(URL+'/data/ablation/'+name+'.json',timeout=30);deployed.raise_for_status()
+        assert sha256(deployed.content).hexdigest()==sha256((ablation/(name+'.json')).read_bytes()).hexdigest()
+    results['ablation_validation_matches']=True
     response=session.get(URL+'/api/reviews',timeout=30);results['storage_get']=response.status_code
     assert response.status_code==200, response.text
     assert response.json()['storage']=='mongodb'
