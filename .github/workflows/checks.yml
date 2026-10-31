@@ -121,3 +121,5 @@ jobs:
         run: node tests/calibration-evidence.test.cjs
       - name: Test fixed-weight profile diagnostic evidence
         run: node tests/profile-evidence.test.cjs
+      - name: Test synthetic signal controls and refusal semantics
+        run: node tests/signal-evidence.test.cjs

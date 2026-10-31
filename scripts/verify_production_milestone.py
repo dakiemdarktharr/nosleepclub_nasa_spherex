@@ -51,7 +51,10 @@ ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js
         'data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_2.png',
         'data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_3.png',
         'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_2.png',
-        'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_3.png')
+        'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_3.png',
+        'signal-evidence.js','data/signal-controls/design.json','data/signal-controls/overview.json',
+        'data/signal-controls/independent-audit.json','data/signal-controls/records.json.gz',
+        'data/signal-controls/scene-example.png')
 
 
 def require(condition, label):

@@ -4,9 +4,21 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Kiểm nghiệm mới](docs/PROFILE_LANDSCAPE_RESULTS.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Kiểm nghiệm mới](docs/SIGNAL_CONTROL_RESULTS.md).
 
-## Chẩn đoán nghiệm phụ — checkpoint mới
+## Đối chứng tín hiệu, nguồn chồng và pha pixel — checkpoint mới
+
+**[Xem demo](https://nosleepclub-nasa-spherex.vercel.app/#signal-controls)** · [Kết quả, giới hạn và bước tiếp theo](docs/SIGNAL_CONTROL_RESULTS.md).
+
+Thiết kế `9894074` đã khóa và đẩy lên GitHub trước **640 lượt fit**: 192 không nhiễu, 384 có nhiễu Gaussian và 64 không nguồn. Hai hình học sao, một exposure đã mở; không phải trường trời mới. Đối chiếu ePSF gốc/hiệu chỉnh, hai họ nguồn giả, bốn pha pixel và nguồn chồng đã khai báo/bị bỏ sót. Toàn bộ 640 lượt hoàn tất và được kiểm toán riêng; đủ hai journal trong **10,05 MB gzip** tải theo yêu cầu.
+
+- **Gate đo đúng không nhiễu trượt: 70/128.** Có 64 ca đạt từ đối chứng khớp template gốc, chỉ **6/64** từ Gaussian độc lập. Sàng lọc số vẫn đạt cả 128 ca: chạy ổn chưa có nghĩa đo đúng.
+- **Guard giữ tín hiệu đạt 64/64 cặp**, chỉ giới hạn mức suy giảm tương đối ≤0,02 pixel và ≤0,02 sai lệch tỷ lệ flux; chưa chứng minh độ đúng hay tăng độ chính xác. **8/16 nhóm có nhiễu** đạt ngưỡng mẫu ≥15/16; không gộp các điều kiện ghép noise thành trường độc lập.
+- Bỏ sót bạn đồng hành có thể kéo fit về phía nguồn chồng dù vẫn qua sàng lọc số. Demo giữ đủ bias, flux, phân loại gần nguồn giả/bạn/nơi khác và đối chứng null; null chưa có ngưỡng phát hiện nên không gọi là tỷ lệ báo nhầm.
+
+**252 ô dành riêng và 30 trường triển vọng chưa mở; phép đo WISE 0855 giữ nguyên.** Bước tiếp: khóa phép thử tách diện tích pixel, sai template và hấp thụ tín hiệu nguồn chồng; chỉ đề xuất mở dữ liệu sau khi ứng viên mới qua gate tuyệt đối, guard, calibration và bằng chứng PSF/sai số độc lập. Goal production còn các mục khoa học, recovery/load/SLO và accessibility.
+
+## Chẩn đoán nghiệm phụ — bước trước
 
 **Mã nguồn riêng đã áp dụng [MIT](LICENSE)** theo lựa chọn của chủ repo ngày 31/10/2026. Font, ảnh Canva, dataset và dependency giữ điều kiện riêng trong [NOTICE](NOTICE.md).
 
@@ -18,7 +30,7 @@ Kiểm toán độc lập bằng WLS kiểm lại **2.760 nút lưới**, stenci
 
 API thêm log lỗi upstream bằng enum, không ghi URL, thông điệp exception hoặc credential. Chưa xác định nguyên nhân hai lỗi 502 trước; không thêm retry tự động. [Schema và giới hạn](docs/UPSTREAM_DIAGNOSTICS.md).
 
-Bước tiếp theo: khóa đối chứng native về template, pha pixel và nguồn chồng với nguồn giả độc lập; đo giữ tín hiệu, sai lệch và mức từ chối trước khi dùng tập dành riêng. Đồng thời cần kiểm định recovery, tải đại diện và SLO; **toàn bộ goal production chưa hoàn tất**.
+Đối chứng native tiếp nối được báo cáo ở checkpoint phía trên. Đồng thời cần kiểm định recovery, tải đại diện và SLO; **toàn bộ goal production chưa hoàn tất**.
 
 ## Hiệu chỉnh PSF và sai số chung — bước trước
 
