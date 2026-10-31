@@ -1,6 +1,6 @@
-# Dự thảo giấy phép mã nguồn
+# Quyết định giấy phép mã nguồn
 
-Chưa áp dụng. Đề xuất MIT cho mã nguồn riêng do project tạo, chỉ sau khi chủ repo chọn. Font, FITS/catalog, minh họa Canva, dữ liệu bên ngoài và dependency giữ quyền/license riêng; không nằm trong grant này. README và NOTICE sẽ ghi phạm vi đó. Dự thảo root LICENSE dự kiến:
+Chủ repo đã chấp thuận MIT cho mã nguồn riêng ngày 31/10/2026. Quyết định được áp dụng trong [LICENSE](../LICENSE), [README](../README.md) và [NOTICE](../NOTICE.md). Font, FITS/catalog, minh họa Canva, dữ liệu bên ngoài và dependency giữ quyền/license riêng; không nằm trong grant này. Không thêm header vào các script khoa học đã khóa để giữ nguyên hash và khả năng tái lập. Nội dung đã được đề xuất và chấp thuận:
 
 ```text
 MIT License

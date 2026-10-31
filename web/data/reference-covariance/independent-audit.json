@@ -1,0 +1,146 @@
+{
+  "at_utc": "2026-10-31T01:36:55.895551+00:00",
+  "audit_source_sha256": {
+    "scripts/audit_reference_covariance.py": "714d028b8d269138916c93f66ad83c0a071ac3930bcbb60e782c3e6c2a64a95d",
+    "tests/test_reference_covariance_audit.py": "10bd26be03c5008eaba9d3fe540f936d3ed04a0684aab9d8ab84d1a9626d4092"
+  },
+  "baseline_journal_digest": "7094fd1ffb8fa1c5a04d17dc573279f38b05421c64218766d482f9b33e6c75ff",
+  "cell_digest": "7f2ad21a202e340101e0708d04d2110a2ca59062ea374468c2da6086553cd352",
+  "counts": {
+    "baseline_numerical_refusal": 2,
+    "baseline_unavailable": 61,
+    "influence_available": 357
+  },
+  "elapsed_seconds": 44.42199999999866,
+  "frozen_protocol_commit": "b42515e3a4ac95df5e786d47f5ff18ad706b937b",
+  "heldout_chi2": 407.43098914081713,
+  "heldout_dof": 238,
+  "max_absolute_differences": {
+    "catalogue_covariance": 8.271806125530277e-25,
+    "corrected_offsets": 1.1102230246251565e-16,
+    "frame_covariance": 2.168404344971009e-19,
+    "heldout_chi2": 5.684341886080802e-14,
+    "heldout_covariance": 1.0408340855860843e-17,
+    "heldout_marginal": 3.730349362740526e-14,
+    "heldout_source_chi2": 5.684341886080802e-14,
+    "pixel_covariance": 2.0816681711721685e-17,
+    "raw_offsets": 0.0,
+    "total_covariance": 2.0816681711721685e-17,
+    "training_chi2": 2.2737367544323206e-13,
+    "translation": 9.71445146547012e-17
+  },
+  "native_audited": 357,
+  "native_available": 357,
+  "native_max_absolute_differences": {
+    "background": 0.0,
+    "frame_error": 0.0,
+    "model_residual": 1.7763568394002505e-15,
+    "native_data": 0.0,
+    "native_error": 0.0,
+    "neighbor_design": 0.0,
+    "position_influence": 5.575401251789458e-15,
+    "saved_error": 0.0
+  },
+  "new_point_fits": 0,
+  "per_source_counts": {
+    "5756849094111431424": {
+      "influence_available": 20
+    },
+    "5756861674071053312": {
+      "influence_available": 20
+    },
+    "5756861914589220736": {
+      "influence_available": 20
+    },
+    "5756864938246197376": {
+      "influence_available": 20
+    },
+    "5756941835340702080": {
+      "influence_available": 20
+    },
+    "5756942110218608640": {
+      "influence_available": 20
+    },
+    "5756942655678337920": {
+      "baseline_unavailable": 18,
+      "influence_available": 2
+    },
+    "5756945443113219072": {
+      "baseline_numerical_refusal": 1,
+      "baseline_unavailable": 1,
+      "influence_available": 18
+    },
+    "5756956163351495040": {
+      "influence_available": 20
+    },
+    "5756957675180073600": {
+      "influence_available": 20
+    },
+    "5756958431094222592": {
+      "baseline_numerical_refusal": 1,
+      "baseline_unavailable": 1,
+      "influence_available": 18
+    },
+    "5756958671612389632": {
+      "influence_available": 20
+    },
+    "5756959015209770112": {
+      "baseline_unavailable": 20
+    },
+    "5756960355239574528": {
+      "influence_available": 20
+    },
+    "5756960454022809088": {
+      "influence_available": 20
+    },
+    "5756960522742285696": {
+      "influence_available": 20
+    },
+    "5756961003778621824": {
+      "influence_available": 20
+    },
+    "5756961076794790528": {
+      "baseline_unavailable": 1,
+      "influence_available": 19
+    },
+    "5756962107586225536": {
+      "influence_available": 20
+    },
+    "5756962382464133248": {
+      "baseline_unavailable": 20
+    },
+    "5756963035299165312": {
+      "influence_available": 20
+    }
+  },
+  "planned": 420,
+  "qualification": "independent numerical reconstruction conditional on fixed saved geometry, weights, ePSF and catalogue; not a covariance-coverage or scientific accuracy validation",
+  "random_draws": 0,
+  "receipt_sha256": "68e684352700e92705da4946f085ca2ecce98cb6c0c1c451c2922756df4cfe29",
+  "result_file_sha256": "333f656957a691981d8dda2e0fc85950800a71a6b1e60b8e6844682caaa2bb43",
+  "result_sha256": "15735a21031c6a479485ea454809022459370c091c1c8b1e16e986dcf7375d08",
+  "runtime": {
+    "packages": {
+      "Pillow": "13.0.0",
+      "astropy": "8.0.2",
+      "numpy": "2.4.6",
+      "requests": "2.34.2",
+      "scipy": "1.17.1",
+      "truststore": "0.10.5"
+    },
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "thread_environment_request": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "thread_qualification": "environment requests only; backend thread count not independently measured"
+  },
+  "schema": "reference-covariance-independent-audit-1",
+  "training_chi2": 833.8641133151868,
+  "training_dof": 436,
+  "unique_original_pixels": 49294
+}
