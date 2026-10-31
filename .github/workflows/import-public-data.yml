@@ -41,7 +41,7 @@ jobs:
       - name: Recreate public chunks and refuse transport drift
         run: |
           python -m scripts.build_data_manifest --write
-          git diff --exit-code -- web/api/_data_manifest.json
+          git diff --exit-code -- web/api/_data_manifest.json web/vercel.json
       - name: Import pinned public chunks
         if: inputs.mode != 'canonical'
         env:

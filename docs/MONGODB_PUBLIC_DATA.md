@@ -49,6 +49,15 @@ tải. Đây là thay đổi vận chuyển, không tái chạy hoặc cải thi
    tái lập và rollback. Source checkout/build vẫn tải repo, không gọi đó là
    giảm toàn bộ source storage hoặc băng thông function.
 
+Cutover `7efcf6b` build thành công (static shell Linux: 615.668 byte), nhưng
+wildcard rewrite trả 400 cho canonical `/data/manifest.json`. Smoke bắt lỗi
+trước khi tạo review QA; đã rollback về deployment static ngay trước đó,
+`2f1442a`, và xác minh manifest HTTP 200. Không xác định chính xác tập query
+nội bộ từ rewrite. Bản sửa dùng **213 redirect cụ thể** từ danh mục đã ghim
+sang `/api/data?path=...&v=...`, không truyền wildcard qua lớp rewrite.
+Generator/check và canonical verifier kiểm đủ từng ánh xạ. Query validation
+của reader không được nới lỏng; chưa coi lần cutover đầu là đã giao thành công.
+
 ## Nhập và khôi phục
 
 `build_data_manifest --write` chỉ đọc Git blob đã commit, nén deterministic,

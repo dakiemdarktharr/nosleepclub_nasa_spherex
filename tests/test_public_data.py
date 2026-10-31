@@ -154,7 +154,8 @@ class PublicDataTest(unittest.TestCase):
         config = json.loads((ROOT / 'web/vercel.json').read_bytes())
         self.assertEqual(config['buildCommand'], 'python build_public.py')
         self.assertEqual(config['outputDirectory'], 'public')
-        self.assertIn({'source': '/data/:asset*', 'destination': '/api/data?path=data/:asset*'}, config['rewrites'])
+        self.assertNotIn('rewrites', config)
+        self.assertEqual(config['redirects'], package.redirects(json.loads(package.MANIFEST.read_bytes())))
         self.assertIn('name="data-origin" content="mongodb"', (ROOT / 'web/index.html').read_text(encoding='utf-8'))
 
     def test_committed_manifest_retains_all_public_product_hashes(self):

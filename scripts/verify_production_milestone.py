@@ -10,6 +10,7 @@ import subprocess
 import time
 import uuid
 from urllib.parse import urlencode
+from scripts.verify_public_data import versioned_location
 
 import requests
 import truststore
@@ -102,7 +103,7 @@ def verify(write_smoke=False, report=None):
             entry=transport['assets'][asset]
             require(entry['sha256']==expected,'Mongo manifest differs from Git: '+asset)
             versioned='/api/data?'+urlencode({'path':asset,'v':entry['stored_sha256']})
-            require(response.status_code==307 and response.headers.get('Location')==versioned,'canonical Mongo route missing: '+asset)
+            require(response.status_code==307 and versioned_location(response.headers.get('Location',''),asset,entry['stored_sha256']),'canonical Mongo route missing: '+asset)
             if entry['stored_bytes']>transport['direct_bytes']:
                 response=request(versioned)
                 require(response.status_code==307 and response.headers.get('Location','').startswith('/download.html?'),'multipart download route missing')

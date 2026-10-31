@@ -3,7 +3,7 @@ import unittest
 
 import requests
 from urllib3.exceptions import ReadTimeoutError
-from scripts.verify_public_data import check_headers, get
+from scripts.verify_public_data import check_headers, get, versioned_location
 
 
 class Raw:
@@ -17,6 +17,12 @@ class Raw:
 
 
 class PublicTransferTest(unittest.TestCase):
+    def test_exact_redirect_semantics_do_not_depend_on_slash_escaping(self):
+        digest='a'*64
+        self.assertTrue(versioned_location('/api/data?path=data/control.json&v='+digest,'data/control.json',digest))
+        self.assertTrue(versioned_location('/api/data?v='+digest+'&path=data%2Fcontrol.json','data/control.json',digest))
+        self.assertFalse(versioned_location('https://other.example/api/data?path=data/control.json&v='+digest,'data/control.json',digest))
+        self.assertFalse(versioned_location('/api/data?path=data/control.json&path=data/control.json&v='+digest,'data/control.json',digest))
     def test_connection_and_partial_body_timeouts_retained_then_retried(self):
         for mode in ('connect', 'read'):
             records = []; closed = []; calls = []
