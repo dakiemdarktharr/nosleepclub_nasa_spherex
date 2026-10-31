@@ -1,0 +1,6 @@
+{
+  "verifier_sha256": "d30d2c9418f5bcdd94d6e8789094532e440a0135027943793d7d32e8e3b5a295",
+  "local_commit": "2f1442a2c79612efea5e77f03eed5f8423764d7c",
+  "worktree_dirty": true,
+  "qualification": "External source binding for reader-reconciliation-identity-fixed.json; verifier source unchanged during that run; source committed in subsequent cutover PR."
+}

@@ -282,6 +282,7 @@ async function noviceFailureRecoveryAndReload(){
   const search="?sky_ra=350&sky_dec=35&sky_fov=0.06&sky_det=6&sky_release=qr2&sky_from=2025-06-01&sky_to=2025-06-30";
   let h=harness({drafts,search});
   assert.equal(h.element("explorer-from").value,"2025-06-01");
+  assert.equal(h.element("explorer-date-summary").textContent,"Khoảng ngày · 01/06/2025–30/06/2025");
   const {submit}=await begin(h,["A","B"]);
   assert.equal(h.api.context().listed,true,"the frame list is available before the first image arrives");
   assert.equal(h.events.some(e=>e.detail.kind==="results"),true);

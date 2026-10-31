@@ -21,15 +21,18 @@ from scripts.build_data_manifest import MANIFEST, ROOT
 from scripts.migrate_public_data import BASE
 
 
-def get(session, path, records):
+def get(session, path, records, accept_encoding='identity'):
     for attempt in range(2):
         start = time.monotonic()
         response = None
         try:
-            response = session.get(BASE + path, timeout=(10, 35), allow_redirects=False, stream=True)
+            response = session.get(BASE + path, timeout=(10, 35), allow_redirects=False, stream=True,
+                                   headers={'Accept-Encoding': accept_encoding})
             payload = response.raw.read(4 * 1024 * 1024 + 1, decode_content=False)
             records.append({'path': path, 'status': response.status_code, 'attempt': attempt + 1,
                 'bytes': len(payload), 'elapsed_seconds': round(time.monotonic() - start, 3),
+                'accept_encoding': accept_encoding, 'content_type': response.headers.get('Content-Type'),
+                'content_encoding': response.headers.get('Content-Encoding'),
                 'cache': response.headers.get('X-Vercel-Cache'), 'request_id': response.headers.get('X-Vercel-Id')})
             if len(payload) > 4 * 1024 * 1024:
                 raise RuntimeError('Public response exceeded bounded transport size')
@@ -66,8 +69,8 @@ def verify(output, canonical=False):
               'qualification': 'Exact public-byte transport reconciliation; no science/load/uptime claim.'}
     session = requests.Session()
 
-    def request(path):
-        return get(session, path, report['requests'])
+    def request(path, encoding='identity'):
+        return get(session, path, report['requests'], encoding)
 
     try:
         for i, (path, entry) in enumerate(sorted(value['assets'].items())):
@@ -80,7 +83,7 @@ def verify(output, canonical=False):
                 if redirect.status_code != 307 or redirect.headers.get('Location') != base:
                     raise RuntimeError('Canonical route did not resolve to pinned Mongo version: ' + path)
             if entry['stored_bytes'] <= value['direct_bytes']:
-                response, stored = request(base)
+                response, stored = request(base, 'gzip' if entry['encoding'] == 'gzip' else 'identity')
                 if response.status_code != 200 or response.headers.get('X-Data-Source') != 'mongodb':
                     raise RuntimeError('Mongo reader failed for ' + path)
                 check_headers(response, entry)

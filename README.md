@@ -276,10 +276,18 @@ Dữ liệu gốc: SPHEREx QR2 tại NASA/IPAC IRSA, DOI [10.26131/IRSA652](http
 Không commit token hoặc bộ FITS thô lớn. Mã nguồn riêng và tài liệu gốc đi kèm được cấp phép theo [MIT](LICENSE), theo lựa chọn của chủ repo ngày 31/10/2026. Dữ liệu, font, minh họa Canva và dependency giữ điều kiện sử dụng riêng trong [NOTICE](NOTICE.md).
 
 Font Be Vietnam Pro được phân phối theo SIL Open Font License 1.1, kèm giấy phép và SHA-256 trong `web/assets/fonts/`. Script `python scripts/fetch_web_fonts.py` chỉ dùng khi cần lấy lại font từ nguồn chính thức; clone repo để chạy web không cần bước này.
-# Lưu trữ dữ liệu và quy trình web
+## Lưu trữ dữ liệu và quy trình web
 
-Đợt cập nhật này chuẩn bị chuyển 213 sản phẩm demo công khai sang MongoDB theo
-[kế hoạch hai pha](docs/MONGODB_PUBLIC_DATA.md), giữ hash gốc và đường rollback.
-Pha đầu vẫn phục vụ `/data/` trên CDN cho đến khi nhập và kiểm chứng đủ.
+213 sản phẩm demo công khai (212,2 MB gốc) được phục vụ từ MongoDB qua
+[reader có hash](docs/MONGODB_PUBLIC_DATA.md). Static output mới chỉ giữ UI,
+font và ảnh thiết kế; không đóng gói `web/data/`. Một cluster hiện dùng khoảng
+170 MB logical data; chưa cần cluster thứ hai. Repo vẫn giữ dữ liệu để tái lập.
+
 UI đã bổ sung chọn A/B rõ ràng, phục hồi lỗi ảnh IRSA, nháp trong cùng tab và
-xuất JSON gồm cả nháp WISE; nhận xét riêng không tự được công khai.
+xuất JSON gồm cả nháp WISE; nhận xét riêng không tự được công khai. Tệp audit
+lớn tải theo phần và chỉ cho lưu sau khi SHA-256 khớp. Local server vẫn dùng
+file trực tiếp, không cần Mongo credential.
+
+Các deployment cũ vẫn được giữ để rollback. Việc giảm output mới không xóa
+source checkout Git hoặc giảm mọi chi phí băng thông Vercel; M0 chưa qua kiểm
+thử tải/failover dài hạn. [Quy trình và giới hạn](docs/MONGODB_PUBLIC_DATA.md).

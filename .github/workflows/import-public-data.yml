@@ -2,6 +2,13 @@ name: Import pinned public data
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Import public chunks or verify canonical routes after cutover
+        type: choice
+        required: true
+        default: import
+        options: [import, canonical]
 
 permissions:
   contents: read
@@ -36,11 +43,19 @@ jobs:
           python -m scripts.build_data_manifest --write
           git diff --exit-code -- web/api/_data_manifest.json
       - name: Import pinned public chunks
+        if: inputs.mode != 'canonical'
         env:
           SPHEREX_PUBLIC_DATA_IMPORT: ${{ secrets.SPHEREX_PUBLIC_DATA_IMPORT }}
         run: python -m scripts.migrate_public_data --upload
       - name: Reconcile every public asset through Mongo reader
-        run: python -m scripts.verify_public_data --output data/raw/asset-migration/reader-reconciliation.json
+        env:
+          TRANSFER_MODE: ${{ inputs.mode }}
+        run: |
+          if [ "$TRANSFER_MODE" = "canonical" ]; then
+            python -m scripts.verify_public_data --canonical --output data/raw/asset-migration/reader-reconciliation.json
+          else
+            python -m scripts.verify_public_data --output data/raw/asset-migration/reader-reconciliation.json
+          fi
       - name: Archive sanitized import evidence
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f

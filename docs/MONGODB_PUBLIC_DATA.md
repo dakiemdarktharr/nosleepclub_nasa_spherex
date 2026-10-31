@@ -71,6 +71,19 @@ có thể hoàn tất trước khi thu hồi; không thể dùng nó để viế
 Không có permit hợp lệ thì endpoint không nhận import. Không tự GC chunk;
 trước khi xóa version cũ phải đối chiếu mọi deployment cần rollback.
 
+Đường truyền local đã mất 41,312 giây cho một phần 512 KiB. Chủ repo đã cho
+phép khóa public-asset tạm `SPHEREX_PUBLIC_DATA_IMPORT` trong GitHub Actions;
+workflow chỉ chạy thủ công trên main và kiểm cả người khởi chạy/người bấm
+rerun đều là owner. Secret chỉ vào bước import, không vào artifact; Mongo URI
+không vào GitHub. Artifact chỉ giữ receipt import/reconciliation. Xóa Secret
+cùng permit sau khi hoàn tất; mode canonical chỉ đối soát, không dùng secret.
+
+Lượt import `41208174465` nhập đủ 426 phần; lượt đối soát đầu dừng ở NPZ vì
+CDN gzip thêm cho client đã quảng cáo gzip. Tệp vẫn được browser giải mã đúng;
+verifier cũ đã nhầm byte lưu với byte nén HTTP. Lượt đó được giữ nguyên. Verifier
+mới thương lượng identity cho sản phẩm identity và chunk, gzip cho sản phẩm
+gzip, đồng thời kiểm media type, encoding và byte thực nhận; không bỏ kiểm hash.
+
 Nếu import/reader chưa đạt, giữ static release. Nếu cutover có lỗi, rollback
 về release pha 1: dữ liệu vẫn có trong Git/CDN và review cũ vẫn dùng database
 ban đầu. Khi logical size vượt 70% hạn mức hoặc tải đo được gây nghẽn, đánh giá

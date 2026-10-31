@@ -116,10 +116,13 @@ class PublicDataTest(unittest.TestCase):
         self.assertEqual(r['headers']['Content-Encoding'], 'gzip')
         self.assertEqual(gzip.decompress(r['body']), self.raw)
         self.assertEqual(r['headers']['X-Data-Source'], 'mongodb')
+        self.assertEqual(r['headers']['Content-Disposition'], "inline; filename*=UTF-8''control.json")
         r = self.response('/api/data?path=data/control.json&chunk=0')
         self.assertNotIn('Content-Encoding', r['headers'])
         self.assertEqual(r['body'], self.payload)
-        self.assertEqual(self.response('/api/data?path=data/control.json', headers={'If-None-Match': '"' + self.digest + '"'})['status'], 304)
+        cached = self.response('/api/data?path=data/control.json', headers={'If-None-Match': '"' + self.digest + '"'})
+        self.assertEqual(cached['status'], 304)
+        self.assertNotIn('Content-Length', cached['headers'])
         self.assertEqual(self.response('/api/data?path=reviews')['status'], 404)
         self.assertEqual(self.response('/api/data?path=data/control.json', method='POST')['status'], 405)
         self.db.public_asset_chunks.rows.clear()
@@ -146,6 +149,13 @@ class PublicDataTest(unittest.TestCase):
             self.assertFalse((Path(temp) / 'api').exists())
             for name in ('index.html', 'download.html', 'data-download.js', 'draft-store.js'):
                 self.assertTrue((Path(temp) / name).is_file())
+
+    def test_production_cutover_routes_and_static_output_are_explicit(self):
+        config = json.loads((ROOT / 'web/vercel.json').read_bytes())
+        self.assertEqual(config['buildCommand'], 'python build_public.py')
+        self.assertEqual(config['outputDirectory'], 'public')
+        self.assertIn({'source': '/data/:asset*', 'destination': '/api/data?path=data/:asset*'}, config['rewrites'])
+        self.assertIn('name="data-origin" content="mongodb"', (ROOT / 'web/index.html').read_text(encoding='utf-8'))
 
     def test_committed_manifest_retains_all_public_product_hashes(self):
         value = json.loads(package.MANIFEST.read_bytes())

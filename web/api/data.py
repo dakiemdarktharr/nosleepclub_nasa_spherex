@@ -11,7 +11,7 @@ import json
 import os
 from pathlib import Path
 import re
-from urllib.parse import parse_qs, urlencode, urlsplit
+from urllib.parse import parse_qs, quote, urlencode, urlsplit
 
 try:
     from api._access_control import database
@@ -72,7 +72,8 @@ class handler(BaseHTTPRequestHandler):
     def reply(self, status, body, content_type='application/json; charset=utf-8', extra=None, cache=False):
         self.send_response(status)
         self.send_header('Content-Type', content_type)
-        self.send_header('Content-Length', str(len(body)))
+        if status != 304:
+            self.send_header('Content-Length', str(len(body)))
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('X-App-Commit', os.environ.get('VERCEL_GIT_COMMIT_SHA', 'local'))
         self.send_header('Cache-Control', 'public, max-age=31536000, immutable' if cache else 'no-store')
@@ -124,6 +125,7 @@ class handler(BaseHTTPRequestHandler):
                 content_type = 'application/octet-stream'
             else:
                 content_type = entry['content_type']
+                headers['Content-Disposition'] = "inline; filename*=UTF-8''" + quote(path.rsplit('/', 1)[-1], safe='')
                 if entry['encoding'] != 'identity':
                     headers['Content-Encoding'] = entry['encoding']
             if self.headers.get('If-None-Match') == headers['ETag']:

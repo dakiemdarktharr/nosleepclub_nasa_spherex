@@ -51,7 +51,8 @@
       el("workflow-selection-check").open=source==="wise"&&c?.selection!=="target";
       const motionContext=source==="wise"&&c?.kind==="coadd"&&c?.selection==="target";
       el("workflow-motion-summary").hidden=!motionContext;el("workflow-measurement-context").hidden=!motionContext;
-      el("workflow-frame-a").textContent=c?.reference?.obs_id||"Chưa giữ ảnh A";el("workflow-frame-b").textContent=c?.current?.obs_id||"Chưa chọn ảnh B";
+      const obsLabel=(row,empty)=>row?`${Number.isFinite(row.t_min_mjd)?new Date((row.t_min_mjd-40587)*86400000).toISOString().slice(0,16).replace("T"," ")+" UTC · ":""}${row.obs_id}`:empty;
+      el("workflow-frame-a").textContent=obsLabel(c?.reference,"Chưa giữ ảnh A");el("workflow-frame-b").textContent=obsLabel(c?.current,"Chưa chọn ảnh B");
       stepLinks.forEach(a=>{const active=a.dataset.stepLink===step;a.classList.toggle("active",active);if(active)a.setAttribute("aria-current","step");else a.removeAttribute("aria-current");a.setAttribute("data-complete",String(a.dataset.stepLink==="data"&&Boolean(c?.ready)||a.dataset.stepLink==="check"&&checked===key&&Boolean(key)));});
       d.querySelectorAll("#main-nav a").forEach(a=>{const active=a.getAttribute("href")==="#"+stepIds[step];a.classList.toggle("active",active);if(active)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
       d.querySelectorAll(".workflow-library-link").forEach(a=>{if(step==="research")a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});

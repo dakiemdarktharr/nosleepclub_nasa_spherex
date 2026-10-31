@@ -9,6 +9,7 @@ import re
 import subprocess
 import time
 import uuid
+from urllib.parse import urlencode
 
 import requests
 import truststore
@@ -52,7 +53,7 @@ ASSETS=('index.html','explorer.js','app.js','mission.js','quality.js','review-st
         'data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_3.png',
         'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_2.png',
         'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_3.png',
-        'signal-evidence.js','workflow.css','data/signal-controls/design.json','data/signal-controls/overview.json',
+        'signal-evidence.js','workflow.css','draft-store.js','data-links.js','data-download.js','download.html','data/signal-controls/design.json','data/signal-controls/overview.json',
         'data/signal-controls/independent-audit.json','data/signal-controls/records.json.gz',
         'data/signal-controls/scene-example.png')
 
@@ -92,15 +93,36 @@ def verify(write_smoke=False, report=None):
                     report['checks'][-1]['error_code']=error_code
             if response.status_code not in (502,504) or attempt==attempts-1:return response
 
+    transport=json.loads(committed('api/_data_manifest.json'))
     for asset in ASSETS:
         path='/' if asset=='index.html' else '/'+asset
-        response=request(path);require(response.status_code==200,'static asset unavailable: '+asset)
         expected=sha256(committed(asset)).hexdigest()
+        response=request(path)
+        if asset.startswith('data/'):
+            entry=transport['assets'][asset]
+            require(entry['sha256']==expected,'Mongo manifest differs from Git: '+asset)
+            versioned='/api/data?'+urlencode({'path':asset,'v':entry['stored_sha256']})
+            require(response.status_code==307 and response.headers.get('Location')==versioned,'canonical Mongo route missing: '+asset)
+            if entry['stored_bytes']>transport['direct_bytes']:
+                response=request(versioned)
+                require(response.status_code==307 and response.headers.get('Location','').startswith('/download.html?'),'multipart download route missing')
+                response=request('/api/data',params={'path':asset,'v':entry['stored_sha256'],'meta':'1'})
+                require(response.status_code==200,'multipart metadata unavailable')
+                require(response.json()=={'path':asset,**entry},'multipart metadata differs from Git manifest')
+                report['checks'][-1]['qualification']='Metadata/redirect only here; full exact bytes require separate all-213 public-data reconciliation.'
+                continue
+            response=request(versioned)
+            require(response.headers.get('X-Data-Source')=='mongodb','Mongo source header missing')
+        require(response.status_code==200,'public asset unavailable: '+asset)
         require(sha256(response.content).hexdigest()==expected,'static hash mismatch: '+asset)
         report['checks'][-1]['sha256']=expected
         report['checks'][-1]['worktree_bytes_match_commit']=sha256((ROOT/'web'/asset).read_bytes()).hexdigest()==expected
     manifest=json.loads(committed('data/manifest.json'))
     require("script-src 'self'" in response.headers.get('Content-Security-Policy',''),'CSP missing')
+    response=request('/api/data',params={'path':'data/manifest.json','meta':'1'})
+    require(response.status_code==200 and response.headers.get('X-App-Commit')==report['local_commit'],'Mongo reader API commit mismatch')
+    response=request('/api/data_import',method='POST',data=b'')
+    require(response.status_code==403,'public importer is not disabled without a capability')
 
     params={'ra':350,'dec':35,'radius':.03,'release':'qr2','detector':6,'maxrec':5,
             'band_min_um':4.42,'band_max_um':5.0}
