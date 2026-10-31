@@ -31,9 +31,6 @@
       "excludeFiles": "{data/**,assets/**,*.html,*.css,*.js,*.svg}"
     }
   },
-  "rewrites": [
-    {"source": "/data/:asset*", "destination": "/api/data?path=data/:asset*"}
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -55,6 +52,1073 @@
           "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/data/ablation/calibration-q030m10.json",
+      "destination": "/api/data?path=data%2Fablation%2Fcalibration-q030m10.json&v=b0293cd55c09e93017b8802fe93253eff6f510aa43cd4c656859d5b754680f8e",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/calibration-q180p20.json",
+      "destination": "/api/data?path=data%2Fablation%2Fcalibration-q180p20.json&v=a3517706cc850d870003e4123ec446cda40f500e5f1994fe1526a6a3faf01bec",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/calibration-q300m30.json",
+      "destination": "/api/data?path=data%2Fablation%2Fcalibration-q300m30.json&v=c3d5e8d26a878d8343295dd340a25243fb4e7c1c3da2642235be6b1e8e53d4b4",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/calibration-summary.json",
+      "destination": "/api/data?path=data%2Fablation%2Fcalibration-summary.json&v=eeb3bb4effa1bb952cbcc52398c02fd8c9880bfadd6ecac3e24cb057f4117f0f",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/calibrator.json",
+      "destination": "/api/data?path=data%2Fablation%2Fcalibrator.json&v=03972c3ada76cc10abc23830a6312947381772f2d61034f08eb22ada5df1b6f5",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/design.json",
+      "destination": "/api/data?path=data%2Fablation%2Fdesign.json&v=b7618f285f39b1580d36698e7cf3ccafcf13ba6a3b141e0f76939eaab9942fb5",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/development-barnard.json",
+      "destination": "/api/data?path=data%2Fablation%2Fdevelopment-barnard.json&v=d679e5d42199a860ce0001ca22bd921f679b5f6e55bc922238c7db6e87e45498",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/development-rw-aur.json",
+      "destination": "/api/data?path=data%2Fablation%2Fdevelopment-rw-aur.json&v=4fca9db56c7b1418acebe13f24eaaced4fefe7c5bc42a2eea534c46a5b58e686",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/development-summary.json",
+      "destination": "/api/data?path=data%2Fablation%2Fdevelopment-summary.json&v=f9fe971112139b53befdfe4a6e6394c6510660830f5901bc3661ff10e5534006",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/development-v060m30.json",
+      "destination": "/api/data?path=data%2Fablation%2Fdevelopment-v060m30.json&v=f27477363e73e90c8472ae69f3a83751cf4d2bb2fa483209b698723bc9ba6917",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/development-v150p45.json",
+      "destination": "/api/data?path=data%2Fablation%2Fdevelopment-v150p45.json&v=2648dc3058ab1d70555886f932bc923acbd8ca39d2f0b112403350462ae43e6c",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/development-v330p10.json",
+      "destination": "/api/data?path=data%2Fablation%2Fdevelopment-v330p10.json&v=f4a5d0ad5575eb732196c64974fe5cf496aad07df0000bd3b167eac2bc641755",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/overview.json",
+      "destination": "/api/data?path=data%2Fablation%2Foverview.json&v=82b85447e7aadc5256f5c397c2b3fe7035761a8cff1265fede4452648b38aa82",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/selection.json",
+      "destination": "/api/data?path=data%2Fablation%2Fselection.json&v=53fcea27eb00e02337d1f537ee0f22f51a8fe28ed713b9bb05f71b34ae5af083",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/validation-protocol.json",
+      "destination": "/api/data?path=data%2Fablation%2Fvalidation-protocol.json&v=18decae6049af8580ab913abf8a92ca79eb6cefb5c266c3e42660581ab2ba540",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/validation-summary.json",
+      "destination": "/api/data?path=data%2Fablation%2Fvalidation-summary.json&v=a63f8ff716d857460860e556420a8ba90960c383f8c74681ffa01860fced8f60",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/validation-w090p10.json",
+      "destination": "/api/data?path=data%2Fablation%2Fvalidation-w090p10.json&v=dda2c2160e21961295bcf94f629e12bf703d18940c784277debf611b43852e93",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/validation-w210m20.json",
+      "destination": "/api/data?path=data%2Fablation%2Fvalidation-w210m20.json&v=eb4278b94536d05cfff61634bc0b60c610c18e411ff7ba1daf9f35ae5e904e86",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/validation-w350p35.json",
+      "destination": "/api/data?path=data%2Fablation%2Fvalidation-w350p35.json&v=c67a8a85665b64ef9552a6b8640e9d49c62a307b36d6429bf2de2decc2686f55",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/w090p10.png",
+      "destination": "/api/data?path=data%2Fablation%2Fw090p10.png&v=13efbf3a9f2d4f930ce3dccd7129de5cb3e734b043c7eb9b7249a75ee5a3d260",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/w210m20.png",
+      "destination": "/api/data?path=data%2Fablation%2Fw210m20.png&v=45add3afe10a777d237bdf9750ded1f840f5a1065727d71e96042a6adfcd7bc9",
+      "permanent": false
+    },
+    {
+      "source": "/data/ablation/w350p35.png",
+      "destination": "/api/data?path=data%2Fablation%2Fw350p35.png&v=3071aa325e6eeb23799fc9f89b3299c008bfb5ac333251b678add49fde3aff48",
+      "permanent": false
+    },
+    {
+      "source": "/data/benchmark/barnard.json",
+      "destination": "/api/data?path=data%2Fbenchmark%2Fbarnard.json&v=6707c7ea991d2af5205612641e9d6417c1954de1404e26491af20e2ccc82d0a7",
+      "permanent": false
+    },
+    {
+      "source": "/data/benchmark/barnard.png",
+      "destination": "/api/data?path=data%2Fbenchmark%2Fbarnard.png&v=366eca68208a0c725c29a65cb9735c49ceaa10ec3e1966c968075d174d237ad4",
+      "permanent": false
+    },
+    {
+      "source": "/data/benchmark/protocol.json",
+      "destination": "/api/data?path=data%2Fbenchmark%2Fprotocol.json&v=20c0584fd4e5860ee518ac4396090a43beb85994ad16675b67562b18d5d56676",
+      "permanent": false
+    },
+    {
+      "source": "/data/benchmark/r-dra.json",
+      "destination": "/api/data?path=data%2Fbenchmark%2Fr-dra.json&v=8a9ee20cb473dfdf291a0b4350093d7e42773541db37e9112f470eae99c63fce",
+      "permanent": false
+    },
+    {
+      "source": "/data/benchmark/r-dra.png",
+      "destination": "/api/data?path=data%2Fbenchmark%2Fr-dra.png&v=0755722bd257a8745a040634858ee7c9781d970c60776b486c65e9898481cdab",
+      "permanent": false
+    },
+    {
+      "source": "/data/benchmark/rw-aur.json",
+      "destination": "/api/data?path=data%2Fbenchmark%2Frw-aur.json&v=7e6da5a93ac84184cde960696192245c389d81ed2c83b7c1daeb49d10a62f798",
+      "permanent": false
+    },
+    {
+      "source": "/data/benchmark/rw-aur.png",
+      "destination": "/api/data?path=data%2Fbenchmark%2Frw-aur.png&v=a8c8a76b2424db4ff100cbecd9232d95dd552864cd20a37b041d816538263a2c",
+      "permanent": false
+    },
+    {
+      "source": "/data/benchmark/summary.json",
+      "destination": "/api/data?path=data%2Fbenchmark%2Fsummary.json&v=c10d2c0c6fbb3b68cd155ede1f80675a7a346ad511a5f64efee7c5c0fb581000",
+      "permanent": false
+    },
+    {
+      "source": "/data/challenge-targets.json",
+      "destination": "/api/data?path=data%2Fchallenge-targets.json&v=8c14b866ad611fff44d2b6f9a1245103ec89f65dfdc3d0441cb042728e94c019",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-broad/after.png",
+      "destination": "/api/data?path=data%2Fcoadd-broad%2Fafter.png&v=9a991fdaed92bbc044d43692276f17809c1f35a33eae5934e1f50488e4d72c5f",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-broad/arrays.npz",
+      "destination": "/api/data?path=data%2Fcoadd-broad%2Farrays.npz&v=ef4311b3bd6e0faabc52490daa469819c0f6da23691c5e9eff50fa53b14fd9ea",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-broad/before.png",
+      "destination": "/api/data?path=data%2Fcoadd-broad%2Fbefore.png&v=20f95fdd877be32a63cf8a2f6b090649bff8a6d448cb4e484cd975c0e1a7a703",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-broad/comparison.fits",
+      "destination": "/api/data?path=data%2Fcoadd-broad%2Fcomparison.fits&v=932c35bf32002b15f9d4f3b7218a30ef144c6271c89ac9256c57a00480abf600",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-broad/difference.png",
+      "destination": "/api/data?path=data%2Fcoadd-broad%2Fdifference.png&v=cb83fa8e751f84a31c77c8f4d95c08a0f8c14e8efb9777ad82c125a0ed9f089c",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-broad/evidence.json",
+      "destination": "/api/data?path=data%2Fcoadd-broad%2Fevidence.json&v=d9ac2a7b473e66547055c31f80da8cd3c238899dd265600e3d3c2936579357b8",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-broad/pixels.json",
+      "destination": "/api/data?path=data%2Fcoadd-broad%2Fpixels.json&v=0a9e950f279ad7b449b69eca962288fc9a7bbc9a399f9ada183eeaaa7a4b317c",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-broad/valid.png",
+      "destination": "/api/data?path=data%2Fcoadd-broad%2Fvalid.png&v=d53a539ddeede8d006dd6ae429ffc23e9146a6f53b1b472ac40b4b5f8bfaf408",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-broad/after.png",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-broad%2Fafter.png&v=b9a585cb2ea40b6da2433869c4a7b12abd8ccd960ce5d2bbdeabdb63f9f2e9e2",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-broad/arrays.npz",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-broad%2Farrays.npz&v=20769c0ab3dc39ab23b8b67f0ff70f7af4b47bebae4db5ff886e2f0aecaaab35",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-broad/before.png",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-broad%2Fbefore.png&v=f59aac72f8edc661dc4ae741bcc42822a57ebfe598972c46a01f667a0758b811",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-broad/comparison.fits",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-broad%2Fcomparison.fits&v=e805c6f6a73e986a4292188a67df9c65850f6dae1acb3ee1db263ac955f4783c",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-broad/difference.png",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-broad%2Fdifference.png&v=1556304048c5b6bb501a9985f5f4b666f42ecb77074cc36259edfe9b1577c45b",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-broad/evidence.json",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-broad%2Fevidence.json&v=71301ef992f89a27af701cc3fe91f71e4671d4e6fda96b938dbf9eb2c7c312c5",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-broad/pixels.json",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-broad%2Fpixels.json&v=ff2ad2f5ce54fd4cb3479d3d6c8a7dfd0122206ff98a565fedfca329f1bff817",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-broad/valid.png",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-broad%2Fvalid.png&v=fad951457bc86e8ca200623925b9469f81b1bc3874d890da8b584a6008061315",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-strict/after.png",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-strict%2Fafter.png&v=29398e604b1ff5ed35451254a156028e52ea99a3e1dda231848697fdd13f7fb7",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-strict/arrays.npz",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-strict%2Farrays.npz&v=b62c2e86470121fcbd6b1c6a57111ea5e83cb2faaa9ae57ab6f5c8c5f708643f",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-strict/before.png",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-strict%2Fbefore.png&v=97f4952ba5bda6ae32dddedb360cba933d2b609d883277e41c20b1a1a7fd73c4",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-strict/comparison.fits",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-strict%2Fcomparison.fits&v=4c03491c51336d75d4df702922feaddb5f1511ea4bfcb0fd4eea57e8f62b2979",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-strict/difference.png",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-strict%2Fdifference.png&v=6b230dd03035fdabde034739e38397105494831e4c28dce36397651bae7ca9d3",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-strict/evidence.json",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-strict%2Fevidence.json&v=fb8c8a1c90e0a2368e97f95ff1e0a747009f07134ee3dbdc4bbdd4b91843c0de",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-strict/pixels.json",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-strict%2Fpixels.json&v=ed4245a2b811ed40dcebc963252c797bedc35bab21599de3df4950505616fef4",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-gaia-strict/valid.png",
+      "destination": "/api/data?path=data%2Fcoadd-gaia-strict%2Fvalid.png&v=03fbce572804795ff70a2a7cdbbdf6a633a3ce1cf826d2d02ece144e3771316a",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-strict/after.png",
+      "destination": "/api/data?path=data%2Fcoadd-strict%2Fafter.png&v=e929b23b60d80d46e7abac5af892251c9da8270b4efb70734346428467170840",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-strict/arrays.npz",
+      "destination": "/api/data?path=data%2Fcoadd-strict%2Farrays.npz&v=82ba3e638e33d76aea9913db07b0e440958d7c18aca8b4513b9c97515f493889",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-strict/before.png",
+      "destination": "/api/data?path=data%2Fcoadd-strict%2Fbefore.png&v=9a2c956e2695b5cc7ba8265511d8f7b90c518c8f4837be4076c1873ec5a7554a",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-strict/comparison.fits",
+      "destination": "/api/data?path=data%2Fcoadd-strict%2Fcomparison.fits&v=f680e288ad2f198d43b2ec012c887bdf93df2488e39198b86496d4191376a818",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-strict/difference.png",
+      "destination": "/api/data?path=data%2Fcoadd-strict%2Fdifference.png&v=aa8edfa76c6758cbfedec0e1835e4b98fd4edc0e49cca204efbe8b8f0f965abd",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-strict/evidence.json",
+      "destination": "/api/data?path=data%2Fcoadd-strict%2Fevidence.json&v=a786524df7c9f211ece812d14ac50c4657c6cb761d37d5846a6d6e9ce6122f76",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-strict/pixels.json",
+      "destination": "/api/data?path=data%2Fcoadd-strict%2Fpixels.json&v=94050d2230a464dac8a9127f193da971b31e4010110781b878f02f4f83256f7f",
+      "permanent": false
+    },
+    {
+      "source": "/data/coadd-strict/valid.png",
+      "destination": "/api/data?path=data%2Fcoadd-strict%2Fvalid.png&v=df1e12b873d7f40656a460b7f0d67b031809bb10aa5584e0cba1087d011d3d19",
+      "permanent": false
+    },
+    {
+      "source": "/data/continuous-epsf/design.json",
+      "destination": "/api/data?path=data%2Fcontinuous-epsf%2Fdesign.json&v=456086a387cfc0d9edef5afcdf6bbde4b70928187de61516be881fce2bd78f5b",
+      "permanent": false
+    },
+    {
+      "source": "/data/continuous-epsf/development-summary.json",
+      "destination": "/api/data?path=data%2Fcontinuous-epsf%2Fdevelopment-summary.json&v=4f37c6cf1b94eba8a76f52081fda3598fda918d26e1b8e60a7793db2d2318333",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/calibration-q030m10.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fcalibration-q030m10.json&v=f195e7f55c148b8c69a04c2ecf66da2c0be0f4ef444e21666b15adc3168c50af",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/calibration-q180p20.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fcalibration-q180p20.json&v=e6fd6160d8d27d40ac1abc8872b5272827e45abf327e24f4162da4fc3b8fcb68",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/calibration-q300m30.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fcalibration-q300m30.json&v=52ead32e5f5c639d285b21dab50b1d27000de12ef796d8132eded60cc659056b",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/calibration-summary.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fcalibration-summary.json&v=61438e5fd95c403375e22e0a1870cc2e4a5c93290f8a6316f16c7e93321723dc",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/calibrator.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fcalibrator.json&v=faf1a45d07971d2493cb09cc0f11f2679f5ba28a5cf22eb9e2b7ace272aab7c8",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/design.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fdesign.json&v=4a068841d5c8d2d65f2b80c80378449696f75cd0f122e5df65829b2a6b9f59b1",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/development-barnard.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fdevelopment-barnard.json&v=6724830fd675a1a810fdc2366737a3e2f55e3238c254b44e8edc50971d9c8863",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/development-rw-aur.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fdevelopment-rw-aur.json&v=22ce81b42308ce9279c85f2fb83467273244b54571077bf417108e848b9df478",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/development-summary.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fdevelopment-summary.json&v=06c8540a2e5f44433a1c3507e5c241301108a411d3063a5db6493f728c56889c",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/failure-audit.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Ffailure-audit.json&v=3dae653055579c9a433b23afa464715f97184039eedefa9e139c60bb447e601c",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/overview.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Foverview.json&v=8f2d88b4a072e804ae6ff97d782bc140ce73c1b056974c685614346e88a0dd51",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/v060m30.png",
+      "destination": "/api/data?path=data%2Fcovariance%2Fv060m30.png&v=b6d9c58e160cb8a29401041433942cb9738c1fa5f9515dab1da6ad450f9a52e4",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/v150p45.png",
+      "destination": "/api/data?path=data%2Fcovariance%2Fv150p45.png&v=865e688c7ca73cf8f0d9c62cff8d7215a921a198428b6b93788afd2ccda1fdc1",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/v330p10.png",
+      "destination": "/api/data?path=data%2Fcovariance%2Fv330p10.png&v=4906db68d96f724bc1a3bc3440e9e9b4e31bf42f378d73f65bc6066662865027",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/validation-protocol.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fvalidation-protocol.json&v=eea42fd83f4d641f45059643fc9ec9ede81ae1653481386365738ec227d11a22",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/validation-summary.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fvalidation-summary.json&v=5c1088f1138dde47d44bd361af5cd3c46d216c33c30281727b0fce1641e4a61e",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/validation-v060m30.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fvalidation-v060m30.json&v=78d061a1d38817eac28462a1443c98e7b198bce4b8449f0d4c989c0d266bc17e",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/validation-v150p45.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fvalidation-v150p45.json&v=72778d7ff94839c22ce551df79a329d50055147e7f31f41f27505e5ae6f5b9b3",
+      "permanent": false
+    },
+    {
+      "source": "/data/covariance/validation-v330p10.json",
+      "destination": "/api/data?path=data%2Fcovariance%2Fvalidation-v330p10.json&v=8752a71b84e2192bb941b46723a59d3f9fc6c8d8316c82a4f8352caa2b010344",
+      "permanent": false
+    },
+    {
+      "source": "/data/diagnostics/bias-overview.json",
+      "destination": "/api/data?path=data%2Fdiagnostics%2Fbias-overview.json&v=883a03a636bc8ceae2f8249fc56ac46ad7102ada983f40a9462a43f7651fc489",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/barnard-first.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Fbarnard-first.png&v=fbd0d8b4e74f95e2dd262daa09cf502a5e24b82007ae929affce0e0cbddc9bca",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/barnard-last.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Fbarnard-last.png&v=e1091d2569254f2e9a951ebd53ac38bbbe5edb81e36126eecb884612603f9c29",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/coverage.json",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Fcoverage.json&v=d0adb7cbd81f77fa4bb7ace374eb102dd90825e453b9bacf679fbf7c56521a46",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/epsilon-first.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Fepsilon-first.png&v=2bbdcc06ebf30c281f3a0ebadedf4f51ff306dbd481130582ba588f9482afbf6",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/epsilon-last.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Fepsilon-last.png&v=02c4d209cbe72e10a2cb3d99a5e73b6ed8350a27c124b547eaa3007c10c21eeb",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/rdra-first.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Frdra-first.png&v=0cf59821d43cef935a40783f65dbcae5c397449766fd3ba3bc5a8b657ae998ad",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/rdra-last.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Frdra-last.png&v=c4ad010aacb60d1708de16e03d24470acaf88eeb7e33fcaedfbeb06ca7108771",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/rwaur-first.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Frwaur-first.png&v=1abc7b642d7d5819ac889e99ed743e68bebf03d4bc58495ccc40fafea28cc3f0",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/rwaur-last.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Frwaur-last.png&v=f44082a985623fa23a6cf9dfbef9773f6d3e259a714eb9508c2ae21345c62d77",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/wise0855-first.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Fwise0855-first.png&v=d4501b6df08eeb07f945acea30da5b0f21504728216e98a219a7eb43c0809c46",
+      "permanent": false
+    },
+    {
+      "source": "/data/explorer-check/wise0855-last.png",
+      "destination": "/api/data?path=data%2Fexplorer-check%2Fwise0855-last.png&v=586f2382b9a05f3cecd238c7e09745a65f3c946a4553dc675e26dbe0edd57088",
+      "permanent": false
+    },
+    {
+      "source": "/data/external/photometric-convention.json",
+      "destination": "/api/data?path=data%2Fexternal%2Fphotometric-convention.json&v=79b2825ef7ac0d29efc6ff38e591766fa9b38f0a61dad36d4529b5f3861d3b8f",
+      "permanent": false
+    },
+    {
+      "source": "/data/external/spiff-reference.json",
+      "destination": "/api/data?path=data%2Fexternal%2Fspiff-reference.json&v=16d11066eb9a74665303cb362d3ca897cae340c19f2fa8105538e12835472503",
+      "permanent": false
+    },
+    {
+      "source": "/data/external/wise0855-prism-reference.json",
+      "destination": "/api/data?path=data%2Fexternal%2Fwise0855-prism-reference.json&v=1baa86551f918cb3f5628e8905d8387ef4147e9eafb4bbec6b1f30fcf26ef02a",
+      "permanent": false
+    },
+    {
+      "source": "/data/external/wise0855-sed-reference.json",
+      "destination": "/api/data?path=data%2Fexternal%2Fwise0855-sed-reference.json&v=0cb5216de527bda7b72fa701c26935c7648d239c8453f66b89fc5fd457540ad7",
+      "permanent": false
+    },
+    {
+      "source": "/data/flux-information/design.json",
+      "destination": "/api/data?path=data%2Fflux-information%2Fdesign.json&v=a7a41ea7a91247eb77860cd9cb25341596248a711a1ce1fe37769dd68b01a510",
+      "permanent": false
+    },
+    {
+      "source": "/data/flux-information/development-summary.json",
+      "destination": "/api/data?path=data%2Fflux-information%2Fdevelopment-summary.json&v=9edab84b472c3587f2ff847a2ba2c5f992f6ab1f782093a41b3694e2b7435183",
+      "permanent": false
+    },
+    {
+      "source": "/data/gaia/map.json",
+      "destination": "/api/data?path=data%2Fgaia%2Fmap.json&v=1edde17bce6c44b0111e5c30d0e52fc9ac01a3e2f2927ed68aef2c1654a46656",
+      "permanent": false
+    },
+    {
+      "source": "/data/gaia/reference-field.png",
+      "destination": "/api/data?path=data%2Fgaia%2Freference-field.png&v=674bd54ddd015885ee38a4a5443ee167ab60449080c9091f140ba37a5bfd99f2",
+      "permanent": false
+    },
+    {
+      "source": "/data/gaia/results.json",
+      "destination": "/api/data?path=data%2Fgaia%2Fresults.json&v=1f3bb263e95fc446da61efcf83c885a02327d09c0a377b3e4c3e82fa117df173",
+      "permanent": false
+    },
+    {
+      "source": "/data/independent-fields/selection.json",
+      "destination": "/api/data?path=data%2Findependent-fields%2Fselection.json&v=916f70f72d1bf2207aa7f82e1503704cf02824d0e5e76ac695b6725e984204e5",
+      "permanent": false
+    },
+    {
+      "source": "/data/joint/broad.json",
+      "destination": "/api/data?path=data%2Fjoint%2Fbroad.json&v=e92aac82e73cb1f044f8eab3848f97b7e2955b07f0a23f4c13b6c23c64a599c0",
+      "permanent": false
+    },
+    {
+      "source": "/data/joint/protocol.json",
+      "destination": "/api/data?path=data%2Fjoint%2Fprotocol.json&v=378d84931b1047a08cd8c980231bc8d996e0c0bf9bd2200518bcc759038980e9",
+      "permanent": false
+    },
+    {
+      "source": "/data/joint/strict.json",
+      "destination": "/api/data?path=data%2Fjoint%2Fstrict.json&v=d3eebb690a4315ebf45112c2d739b86d47813720c1363b5336683dffd66bc87e",
+      "permanent": false
+    },
+    {
+      "source": "/data/joint/summary.json",
+      "destination": "/api/data?path=data%2Fjoint%2Fsummary.json&v=4dcc35cbf1942b2da7afcfe08ef69a78f6ffefdb72bc50aa1ed9cff079ab5e88",
+      "permanent": false
+    },
+    {
+      "source": "/data/linked-flux/design.json",
+      "destination": "/api/data?path=data%2Flinked-flux%2Fdesign.json&v=02f963cab5887845fce3eff2b4be586c6e573a92bbe9ce678532469a229774b9",
+      "permanent": false
+    },
+    {
+      "source": "/data/linked-flux/development.json",
+      "destination": "/api/data?path=data%2Flinked-flux%2Fdevelopment.json&v=05e796bf3b94ffef385107820588bc0c0c758b40191085371e2d2e0eb6dd851a",
+      "permanent": false
+    },
+    {
+      "source": "/data/linked-flux/figures.json",
+      "destination": "/api/data?path=data%2Flinked-flux%2Ffigures.json&v=bc100b3d6dc31b82195275e89a2cbbfd3fdb10443176ae37891bea09f396622d",
+      "permanent": false
+    },
+    {
+      "source": "/data/linked-flux/mode-diagnostics.json",
+      "destination": "/api/data?path=data%2Flinked-flux%2Fmode-diagnostics.json&v=8af75db8d2fb594924be6def133d57d13a26aeb37875ef97845e8ed5fed3e33e",
+      "permanent": false
+    },
+    {
+      "source": "/data/linked-flux/overview.json",
+      "destination": "/api/data?path=data%2Flinked-flux%2Foverview.json&v=5681515b5eaeb92f6df5bede6ee33c904d3a5035263cd095ef5730147c15aaef",
+      "permanent": false
+    },
+    {
+      "source": "/data/linked-flux/sensitivity-broad.svg",
+      "destination": "/api/data?path=data%2Flinked-flux%2Fsensitivity-broad.svg&v=ff1c125485c4ecc3783deb02d0ad858158ef892c38f3f5f5746c70bcd4b5415f",
+      "permanent": false
+    },
+    {
+      "source": "/data/linked-flux/sensitivity-strict.svg",
+      "destination": "/api/data?path=data%2Flinked-flux%2Fsensitivity-strict.svg&v=382e9bb289dd831fe5a0bda57631fafa609e0437c14ace378574625b16c08e32",
+      "permanent": false
+    },
+    {
+      "source": "/data/manifest.json",
+      "destination": "/api/data?path=data%2Fmanifest.json&v=ecc7e4f44638fbf45dbd49a93e92b5239bcab37e84fbea5983a6f55273a2d33a",
+      "permanent": false
+    },
+    {
+      "source": "/data/mask-audit/development-audit.json",
+      "destination": "/api/data?path=data%2Fmask-audit%2Fdevelopment-audit.json&v=791be5f24851769c9caaed2ac6f33ad87747e584d278a0c4b9ad851cc190d119",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4609/after.png",
+      "destination": "/api/data?path=data%2Fmatched-4609%2Fafter.png&v=6b0e6eb09e3f6ad22e08efc516404806f901e0cdb9463be692d45e5153c79378",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4609/arrays.npz",
+      "destination": "/api/data?path=data%2Fmatched-4609%2Farrays.npz&v=7ff6f22a7a6851f4d62982915e4d9a57e359944f54cac480f829021e993b6f60",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4609/before.png",
+      "destination": "/api/data?path=data%2Fmatched-4609%2Fbefore.png&v=3923fd5ed16020a1b9db4ae945046ebe1ae6961498992d66fcb3553afed5e2d7",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4609/comparison.fits",
+      "destination": "/api/data?path=data%2Fmatched-4609%2Fcomparison.fits&v=2eba66cea5ce50d0180640a091f4dcac134792af5630763131f63ac9aae52416",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4609/difference.png",
+      "destination": "/api/data?path=data%2Fmatched-4609%2Fdifference.png&v=e40a58e45f71085f2866ccd674a764837952d99d47f43e166a7676eddb257efe",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4609/pixels.json",
+      "destination": "/api/data?path=data%2Fmatched-4609%2Fpixels.json&v=068aef850da4758f15da18c1602323fcd9499edd277af0e1ec7c101450925b6f",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4609/valid.png",
+      "destination": "/api/data?path=data%2Fmatched-4609%2Fvalid.png&v=223f0a5966640af252068a1f4bb513d92a6a00abad8ba31c54e98c4b9e127d38",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4853/after.png",
+      "destination": "/api/data?path=data%2Fmatched-4853%2Fafter.png&v=86570692f23253d6fe01a3a84d07e04b4781584153653817f81aed92a3e1779c",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4853/arrays.npz",
+      "destination": "/api/data?path=data%2Fmatched-4853%2Farrays.npz&v=4cee59d1155838fbc55bf2c75b1130ffbbcbd4864d0ee8b4d93e15dfe9c340f1",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4853/before.png",
+      "destination": "/api/data?path=data%2Fmatched-4853%2Fbefore.png&v=8205f5500c71cd8b2bb5c9f59a2542bb79d5f08cd61cbde4afad678b09365e5e",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4853/comparison.fits",
+      "destination": "/api/data?path=data%2Fmatched-4853%2Fcomparison.fits&v=af07afffb495388f82d27e43bd6f9878752bd1bd766e1a38f07b86f95e312a3d",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4853/difference.png",
+      "destination": "/api/data?path=data%2Fmatched-4853%2Fdifference.png&v=a241ac1b17ee9168d78adb5098dbc8cbdce9795eb21cc997c413f7c7115758b0",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4853/pixels.json",
+      "destination": "/api/data?path=data%2Fmatched-4853%2Fpixels.json&v=c0e64f3019934b2ccc585610a185e15c2cc780efb22d06481ea9a310d6c39355",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4853/valid.png",
+      "destination": "/api/data?path=data%2Fmatched-4853%2Fvalid.png&v=ad89c471db7438b6f6d5403b680519a4b920f47313ca7382f2972086d02e965b",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4961/after.png",
+      "destination": "/api/data?path=data%2Fmatched-4961%2Fafter.png&v=ba557d4733399f03f0206ea02586121f7eba1e06ae29d0f6c1c46f84557c771c",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4961/arrays.npz",
+      "destination": "/api/data?path=data%2Fmatched-4961%2Farrays.npz&v=19500ead3f36f062afc71f139fe688dbf56d6086ed8c20b947428f6dad6cc274",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4961/before.png",
+      "destination": "/api/data?path=data%2Fmatched-4961%2Fbefore.png&v=6d1ce8dfa39c58fc077d3eced2265b5f50e0e5b43bff297cfee6d75b9b3b4619",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4961/comparison.fits",
+      "destination": "/api/data?path=data%2Fmatched-4961%2Fcomparison.fits&v=75a434c1ada4826b1c7297811a94a955cf4acf152c5194ead3cc3acd34f7350f",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4961/difference.png",
+      "destination": "/api/data?path=data%2Fmatched-4961%2Fdifference.png&v=eab71bda84bb66b139c6157a5f76c0b5c5ac347980c56fbdeacae37dd9b0b5c6",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4961/pixels.json",
+      "destination": "/api/data?path=data%2Fmatched-4961%2Fpixels.json&v=679f0907df019abca6724ffe158fc71e07d08b9ea4ab43ac76c739bd80ba3ba0",
+      "permanent": false
+    },
+    {
+      "source": "/data/matched-4961/valid.png",
+      "destination": "/api/data?path=data%2Fmatched-4961%2Fvalid.png&v=f270cc0acee36935d667475744844af57fa30ea9f8d6f30246d8ff81e5f7196c",
+      "permanent": false
+    },
+    {
+      "source": "/data/motion/broad-coadds.npz",
+      "destination": "/api/data?path=data%2Fmotion%2Fbroad-coadds.npz&v=8fbfeeb2aa4cf13cb992598fdf81ff7efc34b943fef38f83d1bacc4f81cf9a38",
+      "permanent": false
+    },
+    {
+      "source": "/data/motion/results.json",
+      "destination": "/api/data?path=data%2Fmotion%2Fresults.json&v=b876a4d0cc7f49c2e385d3e466834857922b912f4db40b799feac8fcb114c8d9",
+      "permanent": false
+    },
+    {
+      "source": "/data/motion/strict-coadds.npz",
+      "destination": "/api/data?path=data%2Fmotion%2Fstrict-coadds.npz&v=478b130fe21ffb910fb269020ef5ac8dc7864a786e91c3c3493d0bd4ad326231",
+      "permanent": false
+    },
+    {
+      "source": "/data/native-gain/development-audit.json",
+      "destination": "/api/data?path=data%2Fnative-gain%2Fdevelopment-audit.json&v=75a5764c60b6ce1ea6358073de72fb1e06b1aebc2293214449905b4dab511721",
+      "permanent": false
+    },
+    {
+      "source": "/data/neighbor-intervention/control-error-pairs.svg",
+      "destination": "/api/data?path=data%2Fneighbor-intervention%2Fcontrol-error-pairs.svg&v=54de95ae97db2ece0c09aa31794bad94114abc383216b4bc30a63158b2f5399b",
+      "permanent": false
+    },
+    {
+      "source": "/data/neighbor-intervention/controls.json",
+      "destination": "/api/data?path=data%2Fneighbor-intervention%2Fcontrols.json&v=dd6ee6c7830454b56371df6f0e40780ccda07cb28da6f5253a7fd4c3abf0093f",
+      "permanent": false
+    },
+    {
+      "source": "/data/neighbor-intervention/design.json",
+      "destination": "/api/data?path=data%2Fneighbor-intervention%2Fdesign.json&v=5f27608fc3216cec9ce303cd81cdcafd2d59e92460501a518f5fea96d58e131c",
+      "permanent": false
+    },
+    {
+      "source": "/data/neighbor-intervention/development.json",
+      "destination": "/api/data?path=data%2Fneighbor-intervention%2Fdevelopment.json&v=0f9b11c13d50a6f980c26075ac74c45fbee2318cf2984a22bdacfdd0e790975d",
+      "permanent": false
+    },
+    {
+      "source": "/data/neighbor-intervention/figures.json",
+      "destination": "/api/data?path=data%2Fneighbor-intervention%2Ffigures.json&v=e8d467811a6495cf4a93f846f29a2e1a0e5f173fa1a0ced34fd4c96725e746a8",
+      "permanent": false
+    },
+    {
+      "source": "/data/neighbor-intervention/overview.json",
+      "destination": "/api/data?path=data%2Fneighbor-intervention%2Foverview.json&v=442c8a90fe131c7df0594d87870a5b127837cf24e03d95e21f5a1b67e54bf39c",
+      "permanent": false
+    },
+    {
+      "source": "/data/neighbor-intervention/real-sensitivity-broad.svg",
+      "destination": "/api/data?path=data%2Fneighbor-intervention%2Freal-sensitivity-broad.svg&v=43e10465a877877b96f43d1dc1ba5f7601e445adae67eac8f2221af1f23a57f9",
+      "permanent": false
+    },
+    {
+      "source": "/data/neighbor-intervention/real-sensitivity-strict.svg",
+      "destination": "/api/data?path=data%2Fneighbor-intervention%2Freal-sensitivity-strict.svg&v=0c63d4e4ce7a8011970ca5c2cad6722919992e06949f4be70fadd36f9e082c51",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/design.json",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Fdesign.json&v=9c7d9abfc5db69f8c941e02eafc56a21c364362292e75e9daa00abbfc12cdcf0",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/figure-environment.json",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Ffigure-environment.json&v=60d2553c8dd2cedc7d108ce9eecf41016a97f8a1a5533c103aac1fd75220032a",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/independent-audit.json",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Findependent-audit.json&v=eb52065e3df49e46cfab4b92020c68fdf417fd15545e1fc0f0b711255b4d0961",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/overview.json",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Foverview.json&v=16919a2fc24e71dfc0e768c0bb0d28e831741565cccda77b1a98e9732111491f",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_2.png",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Fprofile-5756942110218608640-2025W46_2A_0214_2.png&v=0a10c73249fe5f328d68163af12c584fcbdfabdf53d39c39312d584b59b7c22c",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_3.png",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Fprofile-5756942110218608640-2025W46_2A_0214_3.png&v=a6973073ca512c6e5717774c9e8631dae0bff0d1fbbe41f0e353097c332cb758",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_2.png",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Fprofile-5756958431094222592-2025W46_2A_0214_2.png&v=8bcf98be01a6dd04ec4323fb056c4e990e2c3145f4533bf891082be846de06de",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_3.png",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Fprofile-5756958431094222592-2025W46_2A_0214_3.png&v=ad88a046edaa882651f89888c0c920bcc4a54e1f51aaee0189fc3a944de73fdd",
+      "permanent": false
+    },
+    {
+      "source": "/data/profile-landscape/records.json.gz",
+      "destination": "/api/data?path=data%2Fprofile-landscape%2Frecords.json.gz&v=5e0c5798333a0533dd495d73131e2830ecf45b2a502b55c95ac87859877b91c4",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/development-barnard.json",
+      "destination": "/api/data?path=data%2Fquality%2Fdevelopment-barnard.json&v=100ac57912d8c2bdacad45ad93b4b344a9c443886aa12a261e644ab71b9c758e",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/development-protocol.json",
+      "destination": "/api/data?path=data%2Fquality%2Fdevelopment-protocol.json&v=274829f319e7dd0a7ea274d0ed8ec924628926f323a52aac5b3de755628b0b1c",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/development-r-dra.json",
+      "destination": "/api/data?path=data%2Fquality%2Fdevelopment-r-dra.json&v=da1992b7fd606ca96660078c7de189ac238042582014d284887ac5bd43a2f82e",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/development-rw-aur.json",
+      "destination": "/api/data?path=data%2Fquality%2Fdevelopment-rw-aur.json&v=04cf883628ca97cd017e0a76442d210ef3c51f5d7f6523ed65c906032d48e69c",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/development-summary.json",
+      "destination": "/api/data?path=data%2Fquality%2Fdevelopment-summary.json&v=1b22505979a61f72056ba9ace86b031a423e6df1cb72870d59df2e19c3dfe0f7",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/evaluation-q030m10.json",
+      "destination": "/api/data?path=data%2Fquality%2Fevaluation-q030m10.json&v=4cb5366f17a5fc31b18e98b1ad73e6a95d7eb3d428dfbf26922e4fd30dc76119",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/evaluation-q180p20.json",
+      "destination": "/api/data?path=data%2Fquality%2Fevaluation-q180p20.json&v=20afaadce7b66396d593479390365e61f7736633cc4f0b4fbf728d9974817ebd",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/evaluation-q300m30.json",
+      "destination": "/api/data?path=data%2Fquality%2Fevaluation-q300m30.json&v=3a8d589d860cd6af50879e649fdcdd038e2459c13ad48aba85d974fa58bb25d3",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/evaluation-summary.json",
+      "destination": "/api/data?path=data%2Fquality%2Fevaluation-summary.json&v=edb2ed4c59c5fe347f6475b8fe904badc9ac4294e72057aed15b8cd1ec3ae51a",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/overview.json",
+      "destination": "/api/data?path=data%2Fquality%2Foverview.json&v=58aea6133861917c6ab986ee31f904b02d61af86a195eed889ed4a662e3e1307",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/protocol.json",
+      "destination": "/api/data?path=data%2Fquality%2Fprotocol.json&v=f805710dc4951020229346deed27af58a95341d415c19999c89025267b016fc6",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/q030m10.png",
+      "destination": "/api/data?path=data%2Fquality%2Fq030m10.png&v=bb72ea319e1412f7f39a14fd0b21c1e170a8ab1543e6fe5cf18e08eed8f2d5c6",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/q180p20.png",
+      "destination": "/api/data?path=data%2Fquality%2Fq180p20.png&v=7d4c02dba96c39b10705a53e7af456c9fdbd816f64a1f58311f2a31555e2e96b",
+      "permanent": false
+    },
+    {
+      "source": "/data/quality/q300m30.png",
+      "destination": "/api/data?path=data%2Fquality%2Fq300m30.png&v=b82a37e9453b15fe6015569be7eb8b44dc96897074359ee66ddc763e8ce869e7",
+      "permanent": false
+    },
+    {
+      "source": "/data/reference-covariance/design.json",
+      "destination": "/api/data?path=data%2Freference-covariance%2Fdesign.json&v=ed34ba7ffbe7f7bcc6f154061e3bf4b810784a3633637248d7a886a33fb0bf63",
+      "permanent": false
+    },
+    {
+      "source": "/data/reference-covariance/independent-audit.json",
+      "destination": "/api/data?path=data%2Freference-covariance%2Findependent-audit.json&v=d09ad103f952b32cc7cec6b400246e8df3705cb223a0dd6a3ef106cb70383e9b",
+      "permanent": false
+    },
+    {
+      "source": "/data/reference-covariance/overview.json",
+      "destination": "/api/data?path=data%2Freference-covariance%2Foverview.json&v=702963eca4b74e2e36dd1e289704693e959e0590fae3dd215069812cc566c0c9",
+      "permanent": false
+    },
+    {
+      "source": "/data/reference-covariance/records.json.gz",
+      "destination": "/api/data?path=data%2Freference-covariance%2Frecords.json.gz&v=3b3c35db91c7c14c8239c86071d389d8e684717a5b0bf6ebe71f74c5c2b47c2f",
+      "permanent": false
+    },
+    {
+      "source": "/data/reference-stars/design.json",
+      "destination": "/api/data?path=data%2Freference-stars%2Fdesign.json&v=1b226e75bf722d5935fb3308768c401361c9d8fea55c8718fd67cafc2d73391c",
+      "permanent": false
+    },
+    {
+      "source": "/data/reference-stars/overview.json",
+      "destination": "/api/data?path=data%2Freference-stars%2Foverview.json&v=5d34dbec76e5dec036d557fd31b714a09387816963819ae2909b656beef3d826",
+      "permanent": false
+    },
+    {
+      "source": "/data/reference-stars/records.json.gz",
+      "destination": "/api/data?path=data%2Freference-stars%2Frecords.json.gz&v=6685f36be7332d22d2201922cb6a6c8b3264d516af6a59b23cb94cdbaf17de6e",
+      "permanent": false
+    },
+    {
+      "source": "/data/release/broad.json",
+      "destination": "/api/data?path=data%2Frelease%2Fbroad.json&v=e5d619f38b81ddcdf00fafe38af1e5f5bf4d5fc7dd666cda00693ac7e25806e3",
+      "permanent": false
+    },
+    {
+      "source": "/data/release/overview.json",
+      "destination": "/api/data?path=data%2Frelease%2Foverview.json&v=2e3617bed73800f0de13b3767080083bd18aac4e36c04cb5deba2eaa9576eed1",
+      "permanent": false
+    },
+    {
+      "source": "/data/release/protocol.json",
+      "destination": "/api/data?path=data%2Frelease%2Fprotocol.json&v=55176e10794e9582ed08fe77dc724c7d087ab40597c5d57240e6f763ad0f4972",
+      "permanent": false
+    },
+    {
+      "source": "/data/release/strict.json",
+      "destination": "/api/data?path=data%2Frelease%2Fstrict.json&v=15e563513f0771463057fc7c1b15c5626594471394c08dabbaf5a27a933be8f7",
+      "permanent": false
+    },
+    {
+      "source": "/data/release/summary.json",
+      "destination": "/api/data?path=data%2Frelease%2Fsummary.json&v=dcd5c48a9baeb22469511cd6451455fb338183aa7bf5635f9310025d6ed9255a",
+      "permanent": false
+    },
+    {
+      "source": "/data/sandwich/design.json",
+      "destination": "/api/data?path=data%2Fsandwich%2Fdesign.json&v=5fff4ffe32f73a1635418ac2ab0c15767c81a48e07842656e3716c4b4bb6d325",
+      "permanent": false
+    },
+    {
+      "source": "/data/sandwich/development-summary.json",
+      "destination": "/api/data?path=data%2Fsandwich%2Fdevelopment-summary.json&v=0545592fe73c77f8b9fac905fd20f322de117bedc48ee22d3bc64b929b6b9272",
+      "permanent": false
+    },
+    {
+      "source": "/data/sandwich/overview.json",
+      "destination": "/api/data?path=data%2Fsandwich%2Foverview.json&v=453a3fa7c58cde6ff181278d3b6fcbf068f67d18dc7e5daf02c79ce850903ff8",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-correction/calibration-records.json.gz",
+      "destination": "/api/data?path=data%2Fshape-correction%2Fcalibration-records.json.gz&v=ce97e857f958c9b6aed29a3154fc7743783caf4db51ece3c2e4cc30af297cafe",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-correction/coefficient-seal.json",
+      "destination": "/api/data?path=data%2Fshape-correction%2Fcoefficient-seal.json&v=cacd3d0151597f61aa271f51b47e12630c01168e8570612ed9556ade547c1a75",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-correction/design.json",
+      "destination": "/api/data?path=data%2Fshape-correction%2Fdesign.json&v=a1cf04f761c23658ae6dbd61ed5d8f914293113bc992b6a0e56fe7ef63f879fc",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-correction/feasibility-unweighted.json",
+      "destination": "/api/data?path=data%2Fshape-correction%2Ffeasibility-unweighted.json&v=399c259fd5f1b762597c5612b4b7c84cddee01531b722ef3dc790a9a8bc9f8ee",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-correction/overview.json",
+      "destination": "/api/data?path=data%2Fshape-correction%2Foverview.json&v=a75d8179f436dc3cf0705b2a3d0e1421cc35e00534c0d795822c18d110f44da5",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-point-check/calibration-gate.json",
+      "destination": "/api/data?path=data%2Fshape-point-check%2Fcalibration-gate.json&v=f2b10e2a38e804523ba651a7426e67aed5643528164555d7b10f1e9d8cd15f47",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-point-check/design.json",
+      "destination": "/api/data?path=data%2Fshape-point-check%2Fdesign.json&v=4d24f41433fe0a97f951a32e1810481a98be970db2d8251325af733433516a6d",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-point-check/independent-audit.json",
+      "destination": "/api/data?path=data%2Fshape-point-check%2Findependent-audit.json&v=0350b82c0606f31f32087f105b4536d4334b23fa8664fe536d2fe58769427b60",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-point-check/overview.json",
+      "destination": "/api/data?path=data%2Fshape-point-check%2Foverview.json&v=c4aeb88b4894bd4cd573e2e58a6ac9344bf668e7c74e5fdee2826981b7a0bf9e",
+      "permanent": false
+    },
+    {
+      "source": "/data/shape-point-check/records.json.gz",
+      "destination": "/api/data?path=data%2Fshape-point-check%2Frecords.json.gz&v=de7aa52c8f96fd836753ef673929db77a3c18b6e02f5f6d51ae9670e601e098c",
+      "permanent": false
+    },
+    {
+      "source": "/data/signal-controls/design.json",
+      "destination": "/api/data?path=data%2Fsignal-controls%2Fdesign.json&v=83d24dbbb05302ae729b53ff1a402eb129bdf0415c2f80e5be596f8dca704783",
+      "permanent": false
+    },
+    {
+      "source": "/data/signal-controls/independent-audit.json",
+      "destination": "/api/data?path=data%2Fsignal-controls%2Findependent-audit.json&v=080b2b080e7e895f49926ec030d3b50b95e16652939b2a8ca743a128423cde98",
+      "permanent": false
+    },
+    {
+      "source": "/data/signal-controls/overview.json",
+      "destination": "/api/data?path=data%2Fsignal-controls%2Foverview.json&v=375be052080f4cf12fd062c1815e2a1a35c0f63d8b0fb8cf31f805bb5020dd54",
+      "permanent": false
+    },
+    {
+      "source": "/data/signal-controls/records.json.gz",
+      "destination": "/api/data?path=data%2Fsignal-controls%2Frecords.json.gz&v=ef757d6c605f623ecfae35c0c4ebdc43b8ab3e1308adb741bc9be7d8d2d555a0",
+      "permanent": false
+    },
+    {
+      "source": "/data/signal-controls/scene-example.png",
+      "destination": "/api/data?path=data%2Fsignal-controls%2Fscene-example.png&v=eaf08963ebdbe99d704cfecf56d3f7fa3f668cd47ab599f80bb77dd766197958",
+      "permanent": false
+    },
+    {
+      "source": "/data/source-presence/design.json",
+      "destination": "/api/data?path=data%2Fsource-presence%2Fdesign.json&v=9557f36709efeb292423117ec7e3a8db965e4316b0db5e7bbd6d77cd8e8b690f",
+      "permanent": false
+    },
+    {
+      "source": "/data/source-presence/overview.json",
+      "destination": "/api/data?path=data%2Fsource-presence%2Foverview.json&v=3790857e567cf930824d1949f7ec12a415274533f85b33e0044078ba14777f46",
+      "permanent": false
+    },
+    {
+      "source": "/data/source-presence/records.json.gz",
+      "destination": "/api/data?path=data%2Fsource-presence%2Frecords.json.gz&v=71a59bb09c1ea7149bfcff2f5b6c0fa310121cb2590ea91fb3d611744d60cf68",
+      "permanent": false
+    },
+    {
+      "source": "/data/source-presence/threshold.json",
+      "destination": "/api/data?path=data%2Fsource-presence%2Fthreshold.json&v=5890ec23d37965778bd297092295165217be04044ab362d137ef859ec35df4ee",
+      "permanent": false
+    },
+    {
+      "source": "/data/spectral-response/design.json",
+      "destination": "/api/data?path=data%2Fspectral-response%2Fdesign.json&v=8a3af2345474dd552e78a59d17b5f93060fd8360f44ed585539c1ad25a09ea1c",
+      "permanent": false
+    },
+    {
+      "source": "/data/spectral-response/v2-design.json",
+      "destination": "/api/data?path=data%2Fspectral-response%2Fv2-design.json&v=e57208af8ec7a71b2d33e16e3c9b4d7f1ca68b9db8792c76967e6be7367aa40b",
+      "permanent": false
+    },
+    {
+      "source": "/data/spectral-response/v2-development-audit.json",
+      "destination": "/api/data?path=data%2Fspectral-response%2Fv2-development-audit.json&v=bbb90a2289ec8d6fb7f974b505f61fbda80abae46536f1792bf75384999042f4",
+      "permanent": false
+    },
+    {
+      "source": "/data/time-model/development-audit.json",
+      "destination": "/api/data?path=data%2Ftime-model%2Fdevelopment-audit.json&v=64a96fdce6963753f2aa1f85300081cb4348a2eae568ee49afabd6f428a8a247",
+      "permanent": false
     }
   ]
 }

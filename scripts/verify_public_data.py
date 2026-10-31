@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 import subprocess
 import time
-from urllib.parse import urlencode
+from urllib.parse import parse_qs, urlencode, urlsplit
 
 import requests
 import truststore
@@ -57,6 +57,14 @@ def check_headers(response, entry, chunk=False):
         raise RuntimeError('Public content type/encoding differs from browser contract')
 
 
+def versioned_location(location, path, digest):
+    target = urlsplit(location)
+    base = urlsplit(BASE)
+    return (target.scheme in ('', base.scheme) and target.netloc in ('', base.netloc) and
+            target.path == '/api/data' and not target.fragment and
+            parse_qs(target.query) == {'path': [path], 'v': [digest]})
+
+
 def verify(output, canonical=False):
     truststore.inject_into_ssl()
     if Path(output).exists():
@@ -80,7 +88,7 @@ def verify(output, canonical=False):
             base = '/api/data?' + urlencode({'path': path, 'v': entry['stored_sha256']})
             if canonical:
                 redirect, _ = request('/' + path)
-                if redirect.status_code != 307 or redirect.headers.get('Location') != base:
+                if redirect.status_code != 307 or not versioned_location(redirect.headers.get('Location', ''), path, entry['stored_sha256']):
                     raise RuntimeError('Canonical route did not resolve to pinned Mongo version: ' + path)
             if entry['stored_bytes'] <= value['direct_bytes']:
                 response, stored = request(base, 'gzip' if entry['encoding'] == 'gzip' else 'identity')

@@ -11,6 +11,7 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import subprocess
+from urllib.parse import urlencode
 
 ROOT = Path(__file__).resolve().parents[1]
 CHUNK_BYTES = 512 * 1024
@@ -70,6 +71,19 @@ def serialize(value):
     return (json.dumps(value, ensure_ascii=True, sort_keys=True, separators=(',', ':')) + '\n').encode()
 
 
+def redirects(value):
+    return [{'source': '/' + path, 'destination': '/api/data?' + urlencode({'path': path, 'v': entry['stored_sha256']}),
+             'permanent': False} for path, entry in sorted(value['assets'].items())]
+
+
+def write_routes(value):
+    path = ROOT / 'web/vercel.json'
+    config = json.loads(path.read_bytes())
+    config.pop('rewrites', None)
+    config['redirects'] = redirects(value)
+    path.write_text(json.dumps(config, indent=2) + '\n', encoding='utf-8', newline='\n')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     group = parser.add_mutually_exclusive_group(required=True)
@@ -77,17 +91,25 @@ def main():
     group.add_argument('--check', action='store_true')
     group.add_argument('--batch', type=int, help='Emit a single public chunk document as JSON, never a URI')
     group.add_argument('--summary', action='store_true')
+    group.add_argument('--routes', action='store_true', help='Write exact versioned redirects from existing manifest')
     args = parser.parse_args()
     if args.write or args.check:
         value = build(cache=CACHE if args.write else None)
         encoded = serialize(value)
         if args.write:
             MANIFEST.write_bytes(encoded)
+            write_routes(value)
         elif not MANIFEST.exists() or MANIFEST.read_bytes() != encoded:
             raise SystemExit('Public data manifest missing or stale')
+        elif json.loads((ROOT / 'web/vercel.json').read_bytes()).get('redirects') != redirects(value):
+            raise SystemExit('Public data redirects missing or stale')
         print(json.dumps({k: v for k, v in value.items() if k != 'assets'}))
         return
     value = json.loads(MANIFEST.read_bytes())
+    if args.routes:
+        write_routes(value)
+        print('Wrote exact versioned redirects: ' + str(value['asset_count']))
+        return
     if args.summary:
         print(json.dumps({k: v for k, v in value.items() if k != 'assets'}))
         return
