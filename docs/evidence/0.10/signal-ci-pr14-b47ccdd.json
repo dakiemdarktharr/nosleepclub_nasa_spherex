@@ -1,0 +1,247 @@
+{
+  "schema": "milestone-ci-receipt-1",
+  "repository": "dakiemdarktharr/nosleepclub_nasa_spherex",
+  "pull_request": 14,
+  "head_sha": "b47ccdd8570b9cfe17c421c5caa684be9fc8891f",
+  "merge_sha": "73ea9a2f2012b30dea5e0b43dd88feccf6d622be",
+  "run_id": 41169034237,
+  "url": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41169034237",
+  "jobs": [
+    {
+      "id": 124442775678,
+      "name": "Python tests and repository evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install pinned science and web dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile Python source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Check source whitespace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Start disposable MongoDB replica set",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Run all Python unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Create evidence report",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Upload evidence and test output",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Remove disposable MongoDB container",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        },
+        {
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        }
+      ]
+    },
+    {
+      "id": 124442775965,
+      "name": "JavaScript syntax and review store",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Check browser JavaScript syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Test ReviewStore pure cases",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test explorer request and display races",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Test linked evidence refusals and report loading",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Test neighbor factorial and all control denominators",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Test reference stars and sealed presence evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Test staged shape and shared covariance evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Test fixed-weight profile diagnostic evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Test synthetic signal controls and refusal semantics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        },
+        {
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25
+        }
+      ]
+    }
+  ],
+  "python": {
+    "cases": 607,
+    "passed": 594,
+    "skipped": 13,
+    "actual_mongodb_fixture_checks": 6,
+    "seconds": 26.634,
+    "selected_log_lines": [
+      "2026-10-31T04:33:57.9341688Z test_public_rows_match_raw_cache_when_present (test_continuous_epsf_products.ContinuousEpsfProductTests.test_public_rows_match_raw_cache_when_present) ... skipped 'Raw cache not available'",
+      "2026-10-31T04:33:59.0954177Z test_all_public_trials_match_immutable_raw_if_available (test_flux_information_products.FluxInformationProductTests.test_all_public_trials_match_immutable_raw_if_available) ... skipped 'Raw cache not present'",
+      "2026-10-31T04:33:59.5094318Z test_existing_irsa_cutout_when_available (test_frame_api.FrameTest.test_existing_irsa_cutout_when_available) ... skipped 'optional local IRSA cutout is not present'",
+      "2026-10-31T04:33:59.9769897Z test_actual_mixed_orientation_and_map_identity (test_lab_pixel_binding.PixelBindingTests.test_actual_mixed_orientation_and_map_identity) ... skipped 'ignored R7 laboratory archive not cached'",
+      "2026-10-31T04:33:59.9800857Z test_pinned_real_archive_and_selected_files (test_lab_spectral_response.LabSpectralResponseTests.test_pinned_real_archive_and_selected_files) ... skipped 'ignored laboratory tar not cached'",
+      "2026-10-31T04:34:01.4995741Z test_independent_imagepsf (test_native_flux_template.NativeFluxTemplateTests.test_independent_imagepsf) ... skipped 'optional photutils comparison'",
+      "2026-10-31T04:34:13.4696080Z test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+      "2026-10-31T04:34:13.7078429Z test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+      "2026-10-31T04:34:13.8741111Z test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+      "2026-10-31T04:34:13.8850546Z test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+      "2026-10-31T04:34:13.9095776Z test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+      "2026-10-31T04:34:13.9274046Z test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok",
+      "2026-10-31T04:34:14.5100464Z test_every_public_row_matches_optional_raw (test_sandwich_product.SandwichProductTests.test_every_public_row_matches_optional_raw) ... skipped 'Raw cache unavailable'",
+      "2026-10-31T04:34:14.7330383Z test_real_workers_concurrent_match_serial (test_science_jobs.RealIsolationTest.test_real_workers_concurrent_match_serial) ... skipped 'two opened cached fields unavailable'",
+      "2026-10-31T04:34:22.9962712Z test_real_archive_failure_case_if_cached (test_spectral_bandpass_v2.SpectralBandpassTests.test_real_archive_failure_case_if_cached) ... skipped 'ignored research inputs not cached'",
+      "2026-10-31T04:34:22.9997061Z test_real_inputs_reproduce_recorded_diagnostic (test_spectral_reference_product.SpectralReferenceProductTests.test_real_inputs_reproduce_recorded_diagnostic) ... skipped 'ignored laboratory and MAST inputs not cached'",
+      "2026-10-31T04:34:23.3298186Z test_fetch_pinned_checks_and_refuses_replacement_if_cached (test_wise0855_prism.PrismTests.test_fetch_pinned_checks_and_refuses_replacement_if_cached) ... skipped 'ignored MAST inputs not cached'",
+      "2026-10-31T04:34:23.3593715Z test_public_metadata_and_cached_replay (test_wise0855_prism.PrismTests.test_public_metadata_and_cached_replay) ... skipped 'ignored public FITS not cached'",
+      "2026-10-31T04:34:23.3671407Z test_actual_product_and_public_provenance_if_cached (test_wise0855_x1d.WiseSpectrumTests.test_actual_product_and_public_provenance_if_cached) ... skipped 'ignored MAST FITS not cached'",
+      "2026-10-31T04:34:23.5206306Z Ran 607 tests in 26.634s",
+      "2026-10-31T04:34:23.5206446Z OK (skipped=13)"
+    ]
+  },
+  "javascript": {
+    "node_major": 24,
+    "suites": 8,
+    "selected_log_lines": [
+      "2026-10-31T04:33:27.7207545Z ReviewStore lifecycle cases passed",
+      "2026-10-31T04:33:28.1965217Z Review UI race cases passed",
+      "2026-10-31T04:33:28.2698619Z Explorer DOM and HTTP race cases passed",
+      "2026-10-31T04:33:28.3579071Z Linked evidence: all denominators, refusals, model switches, failures and retries passed",
+      "2026-10-31T04:33:28.4505769Z Neighbor evidence: lazy loading, all refusals, paired denominators, worse outcomes and retries passed",
+      "2026-10-31T04:33:28.5613376Z Reference/presence UI: lazy loading, fixed denominators, failed cases, tab keyboard, corruption refusals and retry passed",
+      "2026-10-31T04:33:28.6527705Z Calibration UI: lazy reports, complete denominators, declared gates, deferred outcomes, corruption refusal and retry passed",
+      "2026-10-31T04:33:28.7568623Z Profile UI: lazy load, all denominators, source/frame switching, corruption refusal, no large auto-load and retry passed",
+      "2026-10-31T04:33:29.0401185Z Signal UI: lazy load, all640 denominators, separate bias/support, selectors, null/stress semantics, corruption refusal and retry passed"
+    ]
+  },
+  "qualification": "CI numerical/software and actual disposable Mongo checks; 13 declared optional raw-cache/photutils checks are skipped. No scientific promotion, recovery/SLO certificate or reserved-data access."
+}
