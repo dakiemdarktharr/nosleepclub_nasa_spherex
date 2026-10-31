@@ -8,6 +8,7 @@ from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 import argparse
 import json
+import os
 from pathlib import Path
 import secrets
 import time
@@ -43,7 +44,7 @@ def main():
     import requests
     import truststore
     truststore.inject_into_ssl()
-    token = TOKEN_PATH.read_text(encoding='ascii')
+    token = os.environ.get('SPHEREX_PUBLIC_DATA_IMPORT') or TOKEN_PATH.read_text(encoding='ascii')
     value = json.loads(MANIFEST.read_bytes())
     chunks = {c['sha256']: c['bytes'] for entry in value['assets'].values() for c in entry['chunks']}
     report = {'schema_version': 1, 'base_url': BASE, 'manifest_sha256': sha256(MANIFEST.read_bytes()).hexdigest(),
@@ -57,9 +58,17 @@ def main():
                 raise RuntimeError('Local public chunk integrity failure')
             for attempt in range(2):
                 started = time.monotonic()
-                response = session.post(BASE + '/api/data_import', data=payload, allow_redirects=False, timeout=(10, 35),
-                    headers={'Authorization': 'Bearer ' + token, 'X-Data-Chunk-SHA256': digest,
-                             'Content-Type': 'application/octet-stream'})
+                try:
+                    response = session.post(BASE + '/api/data_import', data=payload, allow_redirects=False, timeout=(60, 35),
+                        headers={'Authorization': 'Bearer ' + token, 'X-Data-Chunk-SHA256': digest,
+                                 'Content-Type': 'application/octet-stream'})
+                except requests.RequestException as error:
+                    report['requests'].append({'index': i, 'sha256': digest, 'bytes': size, 'attempt': attempt + 1,
+                        'status': None, 'transport_error': type(error).__name__,
+                        'elapsed_seconds': round(time.monotonic() - started, 3)})
+                    if attempt == 1:
+                        raise RuntimeError('Import transport failed; see retained receipt') from None
+                    continue
                 report['requests'].append({'index': i, 'sha256': digest, 'bytes': size, 'attempt': attempt + 1,
                     'status': response.status_code, 'elapsed_seconds': round(time.monotonic() - started, 3),
                     'request_id': response.headers.get('X-Vercel-Id')})
