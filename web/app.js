@@ -17,6 +17,7 @@ let remoteStorage = false;
 let reviewScope = null;
 let reviewVersion = 0, reviewPending = 0, reviewDraftRevision = 0;
 const reviewMutations = new Set(), reviewDrafts = new Map();
+function clearDraft(key){reviewDrafts.delete(key);window.SkyDrafts?.remove("wise",key);}
 
 function beginReviewMutation(key) {
   if(reviewMutations.has(key))return false;
@@ -49,7 +50,7 @@ async function syncReviews() {
     try {ReviewStore.write(reviews);} catch {}
     if(state.scene)loadReview();
   } catch { if(ReviewStore.snapshotAllowed(version,reviewVersion,reviewPending))remoteStorage=false; }
-  $("storage-status").textContent=remoteStorage?"MongoDB":"Trình duyệt";
+  $("storage-status").textContent=remoteStorage?"Lưu riêng trong phiên máy chủ":"Chỉ lưu trên trình duyệt";
   reviewHistory();
 }
 
@@ -64,7 +65,7 @@ function reviewHistory() {
     title.textContent=`${item.scene_id} · ${item.selection}`;
     note.textContent=item.note||"Không có ghi chú.";
     meta.className="review-history-meta";
-    const where=item.sync_state==="cloud"?"MongoDB":item.sync_state==="detached"?"Bản cục bộ · mất phiên máy chủ cũ":item.cloud_pending?"Bản nháp cục bộ · có thể còn bản máy chủ":"Bản cục bộ";
+    const where=item.sync_state==="cloud"?"Máy chủ · phiên khách này":item.sync_state==="detached"?"Bản cục bộ · mất phiên máy chủ cũ":item.cloud_pending?"Bản nháp cục bộ · có thể còn bản máy chủ":"Bản cục bộ";
     meta.textContent=`${item.analysis_sha256===state.manifest?.analysis_sha256?"Phân tích hiện tại":"Phân tích cũ"} ${item.analysis_sha256.slice(0,10)} · ${where} · hết hạn cục bộ ${new Date(item.expires_at).toLocaleDateString("vi-VN")}${item.cloud_expires_at?` · bản máy chủ hết hạn ${new Date(item.cloud_expires_at).toLocaleDateString("vi-VN")}`:""}`;
     button.type="button";button.className="text-button";button.textContent="Xóa nhận xét";
     button.addEventListener("click",async()=>{button.disabled=true;await removeReview(key,$("review-history-feedback"));});
@@ -87,7 +88,7 @@ async function removeReview(key,feedback) {
     let localCleared=true;
     try{ReviewStore.write(next);}catch{localCleared=false;}
     reviews=next;
-    if(reviewDrafts.get(key)?.revision===revision)reviewDrafts.delete(key);
+    if(reviewDrafts.get(key)?.revision===revision)clearDraft(key);
     if(state.scene)loadReview();reviewHistory();
     feedback.textContent=localCleared?(plan==="detached"?"Đã xóa bản cục bộ. Phiên máy chủ cũ không còn quyền truy cập; bản đó hết hạn theo thời hạn máy chủ.":"Đã xóa nhận xét."):"Trình duyệt đang chặn cập nhật bản cục bộ. Hãy xóa dữ liệu trang hoặc thử lại.";
   } catch {feedback.textContent="Chưa xác minh hoặc xóa được bản máy chủ. Hãy thử lại; bản nhận xét vẫn được giữ.";reviewHistory();}
@@ -221,9 +222,12 @@ function keyForSelection() {
   return `${state.manifest.analysis_sha256}:${state.scene.id}:${state.selected}`;
 }
 function loadReview() {
+  const restored=window.SkyDrafts?.get("wise",keyForSelection());
+  if(restored&&!reviewDrafts.has(keyForSelection()))reviewDrafts.set(keyForSelection(),{...restored,revision:++reviewDraftRevision});
   const key=keyForSelection(),saved=reviews[key],draft=reviewDrafts.get(key);
   $("review-status").value=draft?.status||saved?.status||"uncertain";$("review-note").value=draft?.note??saved?.note??"";
   $("review-feedback").textContent="";
+  $("review-draft-state").textContent=draft?"Nháp trong tab · chưa lưu máy chủ":saved?"Đang xem nhận xét đã lưu":"Chưa có nhận xét";
   $("clear-review").hidden=!saved;
 }
 function select(id) {
@@ -259,7 +263,7 @@ function candidateList() {
   for(const c of state.scene.candidates) {
     const button=document.createElement("button");button.className="candidate-button";button.dataset.id=c.id;
     button.setAttribute("aria-pressed","false");
-    button.innerHTML=`<span class="candidate-sign ${c.score<0?"negative":""}">${c.score>0?"+":"−"}</span><span><strong>${c.id}</strong><small>Residual ${c.score>0?"dương":"âm"}</small></span><span class="candidate-score">${number(c.score,2)}</span>`;
+    button.innerHTML=`<span class="candidate-sign ${c.score<0?"negative":""}">${c.score>0?"+":"−"}</span><span><strong>Vùng ${c.id}</strong><small>Sai khác ${c.score>0?"dương":"âm"}</small></span><span aria-hidden="true">→</span>`;
     button.addEventListener("click",()=>select(c.id));list.append(button);
   }
 }
@@ -422,6 +426,8 @@ $("download-manifest").addEventListener("click",()=>download("wise0855-evidence.
 ["review-note","review-status"].forEach(id=>$(id).addEventListener(id==="review-note"?"input":"change",()=>{
   if(!state.scene)return;
   reviewDrafts.set(keyForSelection(),{status:$("review-status").value,note:$("review-note").value,revision:++reviewDraftRevision});
+  const kept=window.SkyDrafts?.set("wise",keyForSelection(),{status:$("review-status").value,note:$("review-note").value});
+  $("review-draft-state").textContent=kept?"Nháp trong tab · chưa lưu máy chủ":"Nháp chưa lưu · xuất JSON trước khi tải lại";
 }));
 $("save-review").addEventListener("click",async()=>{
   const s=state.scene;
@@ -452,17 +458,22 @@ $("save-review").addEventListener("click",async()=>{
     reviews={...reviews,[key]:stored};
     if(detached)reviews=ReviewStore.detach(reviews,key);
     try{ReviewStore.write(reviews);local=true;}catch{}
-    if(reviewDrafts.get(key)?.revision===revision)reviewDrafts.delete(key);
-    $("storage-status").textContent=cloud?"MongoDB":"Trình duyệt";
+    if((cloud||local)&&reviewDrafts.get(key)?.revision===revision)clearDraft(key);
+    $("storage-status").textContent=cloud?"Lưu riêng trong phiên máy chủ":"Chỉ lưu trên trình duyệt";
     if(key===keyForSelection()) {
       const editedAgain=reviewDrafts.has(key);
-      $("review-feedback").textContent=(cloud?"Đã lưu MongoDB.":local?(detached?"Phiên máy chủ đã đổi; bản nháp được giữ trong lịch sử cục bộ, chưa gửi lên phiên mới.":"Đã lưu trên trình duyệt. Chưa đồng bộ."):"Chưa lưu được. Hãy xuất JSON.")+(editedAgain?" Phần vừa sửa chưa được lưu.":"");
+      $("review-feedback").textContent=(cloud?"Đã lưu riêng trên máy chủ cho phiên khách này.":local?(detached?"Phiên máy chủ đã đổi; giữ bản cục bộ, chưa gửi lên phiên mới.":postAttempted?"Đã giữ bản cục bộ; chưa xác minh máy chủ đã nhận. Bấm Lưu lại khi dịch vụ sẵn sàng.":"Đã lưu trên trình duyệt; không tự gửi lên máy chủ. Bấm Lưu lại khi dịch vụ sẵn sàng."):"Chưa lưu được. Hãy xuất JSON.")+(editedAgain?" Phần vừa sửa chưa được lưu.":"");
+      $("review-draft-state").textContent=editedAgain?"Nháp trong tab · còn phần chưa lưu":cloud?"Đã lưu trên máy chủ":local?"Đã lưu trên trình duyệt":"Nháp chưa lưu";
       $("clear-review").hidden=detached;
     }
     reviewHistory();
   } finally {$("save-review").disabled=false;endReviewMutation(key);}
 });
-$("export-reviews").addEventListener("click",()=>download("wise0855-reviews.json",{schema_version:2,exported_at:new Date().toISOString(),scope:"private guest opinions; not astronomical confirmations",reviews:Object.values(ReviewStore.clean(reviews))}));
+$("export-reviews").addEventListener("click",()=>{
+  const saved=Object.values(ReviewStore.clean(reviews)),drafts=[...reviewDrafts].map(([key,item])=>{const[analysis_sha256,scene_id,selection]=key.split(":");return {analysis_sha256,scene_id,selection,status:item.status,note:item.note,sync_state:"unsaved_draft"};});
+  download("wise0855-reviews.json",{schema_version:3,exported_at:new Date().toISOString(),scope:"private guest opinions; not astronomical confirmations",reviews:saved,unsaved_drafts:drafts});
+  $("review-feedback").textContent=`Đã tạo JSON: ${saved.length} nhận xét đã lưu, ${drafts.length} nháp. Lưu tệp để giữ bản xuất.`;
+});
 $("clear-review").addEventListener("click",async()=>{
   await removeReview(keyForSelection(),$("review-feedback"));
 });

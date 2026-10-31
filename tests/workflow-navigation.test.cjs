@@ -9,6 +9,8 @@ for(const source of["wise","irsa"]){
   assert.equal(decide("research",source,null,null).step,"research");assert.equal(decide("data",source,null,null).step,"data");
 }
 assert.equal(decide("compare","irsa",{...irsa,paired:false},null).step,"compare");
+assert.equal(decide("compare","irsa",{ready:false,listed:true},null).step,"compare","metadata list remains reachable when first frame fails");
+assert.equal(decide("check","irsa",{ready:false,listed:true},null).step,"data","metadata alone does not permit analysis/review");
 assert.equal(decide("check","irsa",{...irsa,paired:false},null).step,"compare");
 assert.equal(decide("review","irsa",{...irsa,paired:false},null).step,"compare");
 for(const[source,context]of[["wise",wise],["irsa",irsa]]){

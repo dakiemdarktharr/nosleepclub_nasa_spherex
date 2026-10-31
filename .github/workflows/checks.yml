@@ -127,3 +127,5 @@ jobs:
         run: node tests/workflow-navigation.test.cjs
       - name: Test selected-region and asynchronous scene context
         run: node tests/app-workflow.test.cjs
+      - name: Test tab draft restoration and expiry
+        run: node tests/draft-store.test.cjs

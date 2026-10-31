@@ -1,0 +1,17 @@
+"use strict";
+const assert=require("node:assert/strict"),factory=require("../web/draft-store.js");
+const values=new Map(),storage={getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v)};
+let time=100000;const a=factory(()=>storage,()=>time);
+assert.equal(a.set("wise","analysis:scene:target",{note:"WISE nháp",status:"uncertain"}),true);
+assert.equal(a.set("irsa","query|A|B",{note:"IRSA nháp"}),true);
+const reloaded=factory(()=>storage,()=>time);
+assert.equal(reloaded.get("wise","analysis:scene:target").note,"WISE nháp");
+assert.equal(reloaded.get("irsa","query|A|B").note,"IRSA nháp");
+assert.equal(reloaded.get("irsa","new-query|A|B"),null);
+assert.equal(reloaded.get("wise","query|A|B"),null);
+reloaded.remove("wise","analysis:scene:target");assert.equal(a.get("wise","analysis:scene:target"),null);
+for(let i=0;i<55;i++)a.set("irsa",String(i),{note:"same tab"});
+assert.equal(a.get("irsa","0"),null);assert.equal(a.get("irsa","54").note,"same tab");
+time+=86400001;assert.equal(a.get("irsa","54"),null);
+assert.equal(factory(()=>{throw Error("blocked");}).set("wise","x",{note:"safe"}),false);
+console.log("Tab drafts: reload restoration, source/pair isolation, removal, capacity/TTL and blocked storage passed");

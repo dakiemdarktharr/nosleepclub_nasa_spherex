@@ -1,0 +1,71 @@
+{
+  "schema": "workflow-public-browser-1",
+  "checked_at_utc": "2026-10-31T07:28:08.739Z",
+  "main_commit": "ccde9faf914f04e5c9c2b8c9b5f23307787a7966",
+  "tested_head": "35c7015dd7ecc5aec13d32511c1cde396f7157e2",
+  "data": {
+    "bodyWidth": 1265,
+    "processing": "Cộng ảnh theo epoch",
+    "thumbnails": [
+      {
+        "complete": true,
+        "width": 64
+      },
+      {
+        "complete": true,
+        "width": 64
+      }
+    ],
+    "url": "https://nosleepclub-nasa-spherex.vercel.app/#home",
+    "view": [
+      "home"
+    ],
+    "width": 1265
+  },
+  "residual": {
+    "context": "WISE 0855 · Gaia · Cộng 2 ảnh / epoch · R01",
+    "methodHidden": true,
+    "motionHidden": true,
+    "overlayDisabled": true,
+    "warning": "Vùng sai khác chưa gán danh tính · chưa có phép đo chuyển động cho vùng này."
+  },
+  "review": {
+    "context": "WISE 0855 · Gaia · Cộng 2 ảnh / epoch · R01",
+    "irsa": false,
+    "previewWidth": 1024,
+    "storage": "MongoDB",
+    "wise": true
+  },
+  "library": {
+    "focus": "workflow-report-title",
+    "hash": "#profile-landscape",
+    "profileCount": "96/112",
+    "profileOpen": true,
+    "sourceLabel": "Báo cáo đã công bố",
+    "visibleReports": [
+      "shape-validation"
+    ]
+  },
+  "mobile": {
+    "bodyWidth": 375,
+    "canvas": {
+      "bottom": 764.796875,
+      "height": 244,
+      "left": 48.546875,
+      "right": 292.546875,
+      "top": 520.796875,
+      "width": 244,
+      "x": 48.546875,
+      "y": 520.796875
+    },
+    "footerTop": 765,
+    "source": "Bộ mẫu WISE",
+    "width": 375
+  },
+  "viewport_reset": true,
+  "qualification": "Observed workflow/context/figure and reflow checks; not a full accessibility audit, novice usability study, scientific promotion or reliability/SLO certificate.",
+  "screenshot_sha256": {
+    "workflow-production-ccde9fa.png": "e092258b8c18360fdd4d87f2cf06b8e6f733d8d743d78b3f3be35ec133d9547e",
+    "workflow-production-mobile-ccde9fa.png": "5e2cb021e142c9ae0921faff4caf26dcb93d5cdccd94e896388da17431ce70f4"
+  }
+}
