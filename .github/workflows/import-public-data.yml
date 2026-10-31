@@ -1,0 +1,53 @@
+name: Import pinned public data
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-data-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    if: github.ref == 'refs/heads/main' && github.actor == github.repository_owner && github.triggering_actor == github.repository_owner
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11.9'
+      - name: Install pinned transfer dependencies
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          lines=Path('requirements.txt').read_text().splitlines()
+          names=('requests==','truststore==','certifi==','charset-normalizer==','idna==','urllib3==')
+          Path('/tmp/spherex-transfer-requirements.txt').write_text('\n'.join(x for x in lines if x.startswith(names))+'\n')
+          PY
+          python -m pip install -r /tmp/spherex-transfer-requirements.txt
+      - name: Recreate public chunks and refuse transport drift
+        run: |
+          python -m scripts.build_data_manifest --write
+          git diff --exit-code -- web/api/_data_manifest.json
+      - name: Import pinned public chunks
+        env:
+          SPHEREX_PUBLIC_DATA_IMPORT: ${{ secrets.SPHEREX_PUBLIC_DATA_IMPORT }}
+        run: python -m scripts.migrate_public_data --upload
+      - name: Reconcile every public asset through Mongo reader
+        run: python -m scripts.verify_public_data --output data/raw/asset-migration/reader-reconciliation.json
+      - name: Archive sanitized import evidence
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        with:
+          name: public-data-import-${{ github.run_id }}
+          path: |
+            data/raw/asset-migration/import-receipt-*.json
+            data/raw/asset-migration/reader-reconciliation.json
+          if-no-files-found: warn
+          retention-days: 7
