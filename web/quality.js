@@ -5,7 +5,7 @@
   const reasons={solver_failed:"solver không hội tụ",centroid_at_boundary:"vị trí chạm biên",nonpositive_flux:"biên độ không dương",low_epoch_snr:"tín hiệu yếu",poor_global_fit:"mô hình khớp ảnh kém",insufficient_core_pixels:"thiếu pixel lõi hợp lệ",structured_core_residual:"residual lõi lớn",core_outliers:"outlier trong lõi",unresolved_blend:"chưa tách được nguồn chồng",model_disagreement:"hai mô hình bất đồng vị trí",registration_unavailable:"không đủ sao căn chỉnh",fit_exception:"không fit được",input_exception:"không đủ dữ liệu đầu vào"};
   function basicGate(){
     const node=el("measurement-quality"),m=state.scene?.motion;
-    if(!m?.target_before||!m?.target_after){node.hidden=true;return;}
+    if(state.selected!=="target"||!m?.target_before||!m?.target_after){node.hidden=true;return;}
     const warnings=[];
     for(const fit of [m.target_before,m.target_after]){
       if(!fit.success||fit.at_boundary)warnings.push("nghiệm fit chưa hợp lệ");
@@ -13,10 +13,10 @@
       const snr=Math.sqrt((fit.per_frame||[]).reduce((sum,p)=>sum+Math.max(p.snr||0,0)**2,0));
       if(snr<5)warnings.push("tín hiệu yếu");
     }
-    node.hidden=false;node.dataset.blocked=String(warnings.length>0);
+    node.hidden=warnings.length===0;node.dataset.blocked=String(warnings.length>0);
     node.textContent=warnings.length?`Cần kiểm tra chất lượng: ${[...new Set(warnings)].join("; ")}.`:"Các kiểm tra cơ bản đạt; gate đầy đủ chưa chạy cho bộ ảnh WISE 0855 này.";
   }
-  document.addEventListener("scene:loaded",basicGate);basicGate();
+  document.addEventListener("scene:loaded",basicGate);document.addEventListener("selection:changed",basicGate);basicGate();
   try {
     const response=await fetch("data/quality/overview.json");if(!response.ok)throw new Error(`HTTP ${response.status}`);
     const data=await response.json();

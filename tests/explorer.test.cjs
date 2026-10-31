@@ -37,7 +37,7 @@ class AbortFake {
 class DOMError extends Error {constructor(message,name){super(message);this.name=name;}}
 
 function harness() {
-  const elements=new Map(),calls=[],timers=new Map(); let nextTimer=0;
+  const elements=new Map(),calls=[],timers=new Map(),blobs=[],events=[]; let nextTimer=0;
   const element=id=>{
     if(!elements.has(id))elements.set(id,{
       id,value:"",textContent:"",hidden:false,disabled:false,href:"",src:"",children:[],handlers:{},
@@ -49,19 +49,20 @@ function harness() {
     return elements.get(id);
   };
   const document={getElementById:element,createElement:()=>({children:[],handlers:{},setAttribute(){},
-    append(...items){this.children.push(...items);},addEventListener(type,fn){this.handlers[type]=fn;}}),
-    addEventListener(){},hidden:false};
+    append(...items){this.children.push(...items);},addEventListener(type,fn){this.handlers[type]=fn;},click(){}}),
+    addEventListener(){},dispatchEvent(event){events.push(event);},hidden:false};
   const fetch=(url,options)=>new Promise((resolve,reject)=>{
     calls.push({url,options,params:new Params(url.split("?")[1]||""),resolve,reject});
   });
-  const context={document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
+  const context={window:{},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
     location:{href:"https://demo.example/#explore",search:""},history:{replaceState(){}},
     setInterval:fn=>{const id=++nextTimer;timers.set(id,fn);return id;},clearInterval:id=>timers.delete(id),
-    setTimeout:fn=>{fn();return 1;},Blob:class {constructor(){this.id="export";}}};
+    setTimeout:fn=>{fn();return 1;},Blob:class {constructor(parts){this.id="export";blobs.push(parts);}},
+    CustomEvent:class {constructor(type,options={}){this.type=type;this.detail=options.detail;}}};
   for(const [id,value] of Object.entries({"explorer-ra":"350","explorer-dec":"35","explorer-fov":"0.06",
     "explorer-detector":"6","explorer-release":"qr2","explorer-from":"","explorer-to":""}))element(id).value=value;
   vm.runInNewContext(fs.readFileSync("web/explorer.js","utf8"),context);
-  return {element,calls,timers};
+  return {element,calls,timers,blobs,events,api:context.window.SkyExplorer};
 }
 const flush=async()=>{for(let i=0;i<16;i++)await Promise.resolve();};
 const find=(h,kind)=>h.calls.filter(call=>call.url.startsWith(`/api/${kind}?`));
@@ -141,7 +142,39 @@ async function serializedContrastAndBlink() {
   h.element("explorer-play").fire("click");
   assert.equal(h.timers.size,0);
   h.element("explorer-pin").fire("click");
-  assert.equal(h.element("explorer-reference").textContent.includes("Ảnh đối chiếu: 2"),true);
+  assert.equal(h.element("explorer-reference").textContent.includes("Ảnh A: 1"),true);
+}
+
+async function workflowPairSurvivesBlinkAndInvalidatesOnEdit(){
+  const h=harness(),{submit}=await begin(h,["A","B"]);frame(find(h,"frame")[0],"A");await submit;
+  assert.equal(h.api.context().ready,true);assert.equal(h.api.context().paired,false);
+  h.element("explorer-pin").fire("click");h.element("explorer-current").value="1";
+  const b=h.element("explorer-current").fire("change");await flush();
+  assert.equal(h.api.context().ready,false);assert.equal(h.element("explorer-pin").disabled,true);assert.equal(h.element("explorer-export").disabled,true);
+  frame(find(h,"frame")[1],"B");await b;assert.equal(h.api.context().paired,true);
+  h.element("explorer-play").fire("click");assert.equal(h.element("explorer-image").src,"blob:A");
+  assert.equal(h.api.context().paired,true);assert.equal(h.api.context().current.obs_id,"B");
+  h.api.pause();assert.equal(h.timers.size,0);assert.equal(h.element("explorer-image").src,"blob:B");assert.equal(h.api.context().paired,true);
+  h.element("explorer-note").value="Chỉ là quan sát ảnh.";h.element("explorer-export").fire("click");
+  const bundle=JSON.parse(h.blobs.at(-1)[0]);assert.equal(bundle.selected_pair.reference.obs_id,"A");assert.equal(bundle.selected_pair.current.obs_id,"B");assert.equal(bundle.review_note,"Chỉ là quan sát ảnh.");
+  const count=h.blobs.length;h.element("explorer-form").fire("input");assert.equal(h.api.context().dirty,true);assert.equal(h.api.context().ready,false);
+  h.element("explorer-export").fire("click");assert.equal(h.blobs.length,count);
+  assert(h.events.some(e=>e.type==="explorer:state"&&e.detail.kind==="frame"));assert(h.calls.every(c=>!c.url.startsWith("/api/reviews")));
+}
+
+async function notesStayWithTheirQueryAndPair(){
+  const h=harness();
+  async function query(ra){
+    h.element("explorer-ra").value=String(ra);const task=h.element("explorer-form").fire("submit");await flush();
+    observations(find(h,"observations").at(-1),["A","B","C"]);await flush();frame(find(h,"frame").at(-1),"A");await task;
+    h.element("explorer-pin").fire("click");
+  }
+  async function choose(index,id){const before=find(h,"frame").length;h.element("explorer-current").value=String(index);const task=h.element("explorer-current").fire("change");await flush();if(find(h,"frame").length>before)frame(find(h,"frame").at(-1),id);await task;}
+  await query(350);await choose(1,"B");h.element("explorer-note").value="note for 350/A-B";h.element("explorer-note").fire("input");
+  await choose(2,"C");assert.equal(h.element("explorer-note").value,"");await choose(1,"B");assert.equal(h.element("explorer-note").value,"note for 350/A-B");
+  await query(120);await choose(1,"B");assert.equal(h.element("explorer-note").value,"");h.element("explorer-note").value="note for 120/A-B";h.element("explorer-note").fire("input");
+  await query(350);await choose(1,"B");assert.equal(h.element("explorer-note").value,"note for 350/A-B");
+  h.element("explorer-export").fire("click");const bundle=JSON.parse(h.blobs.at(-1)[0]);assert.equal(bundle.query.ra,350);assert.equal(bundle.review_note,"note for 350/A-B");
 }
 
 async function staleFailureCannotHideCachedFrame() {
@@ -239,6 +272,8 @@ async function main() {
   await emptySearchClearsPreviousProvenance();
   await incompatibleMaskPoliciesCannotBeCompared();
   await boundedUpstreamRetry();
+  await workflowPairSurvivesBlinkAndInvalidatesOnEdit();
+  await notesStayWithTheirQueryAndPair();
   console.log("Explorer DOM and HTTP race cases passed");
 }
 let timeout;

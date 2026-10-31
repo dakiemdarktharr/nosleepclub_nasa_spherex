@@ -123,3 +123,7 @@ jobs:
         run: node tests/profile-evidence.test.cjs
       - name: Test synthetic signal controls and refusal semantics
         run: node tests/signal-evidence.test.cjs
+      - name: Test data workflow context and step prerequisites
+        run: node tests/workflow-navigation.test.cjs
+      - name: Test selected-region and asynchronous scene context
+        run: node tests/app-workflow.test.cjs

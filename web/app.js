@@ -4,7 +4,7 @@ const $ = (id) => document.getElementById(id);
 const canvas = $("sky");
 const ctx = canvas.getContext("2d");
 const state = { manifest: null, scene: null, images: {}, pixels: null, mode: "wipe", wipe: .5,
-  zoom: 1, center: [32,32], selected: "target", blinkAfter: false, timer: null, loading: 0 };
+  zoom: 1, center: [32,32], selected: "target", blinkAfter: false, timer: null, loading: 0, ready: false };
 const number = (value, digits=2) => Number(value).toLocaleString("vi-VN", {maximumFractionDigits:digits, minimumFractionDigits:digits});
 $("load-retry").addEventListener("click",()=>location.reload());
 if(!window.ReviewStore){
@@ -123,8 +123,13 @@ function ellipse(covariance, factor=2.30) {
   const root=Math.hypot(a-d,2*b), major=Math.max(0,(a+d+root)/2),minor=Math.max(0,(a+d-root)/2);
   return {rx:Math.sqrt(factor*major),ry:Math.sqrt(factor*minor),angle:.5*Math.atan2(2*b,a-d)};
 }
+function canvasDisplayScale(){
+  const width=canvas.getBoundingClientRect().width;
+  if(width>0)state.canvasDisplayWidth=width;
+  return canvas.width/(state.canvasDisplayWidth||430);
+}
 function canvasLabel(text,x,y,width,height,offset,color) {
-  const scale=canvas.width/Math.max(canvas.getBoundingClientRect().width,1);
+  const scale=canvasDisplayScale();
   const fontSize=13*scale,padding=6*scale,margin=5*scale;
   ctx.save();ctx.font=`600 ${fontSize}px "Be Vietnam Pro", Arial, sans-serif`;
   ctx.textAlign="left";ctx.textBaseline="middle";ctx.setLineDash([]);
@@ -139,7 +144,7 @@ function canvasLabel(text,x,y,width,height,offset,color) {
 function overlays(width,height,offset=0) {
   const scene=state.scene;
   ctx.save();ctx.beginPath();ctx.rect(offset,0,width,height);ctx.clip();
-  if (scene.measured_positions && $("show-motion").checked) {
+  if (state.selected==="target" && scene.measured_positions && $("show-motion").checked) {
     const points=scene.measured_positions.map(p=>xy(p.x,p.y,width,height,offset));
     ctx.strokeStyle="#a4e4d9";ctx.lineWidth=2;ctx.setLineDash([]);
     ctx.beginPath();ctx.moveTo(...points[0]);ctx.lineTo(...points[1]);ctx.stroke();
@@ -151,12 +156,12 @@ function overlays(width,height,offset=0) {
       ctx.beginPath();ctx.ellipse(x,y,e.rx*scale,e.ry*scale,e.angle,0,2*Math.PI);ctx.stroke();
       ctx.beginPath();ctx.arc(x,y,3,0,2*Math.PI);ctx.fill();
       if(state.selected==="target") {
-        const scale=canvas.width/Math.max(canvas.getBoundingClientRect().width,1);
+        const scale=canvasDisplayScale();
         canvasLabel(i?"Sau · đo":"Trước · đo",x+14*scale,y+(i?25:-25)*scale,width,height,offset,i?"#ffd99b":"#d6fff6");
       }
     });
   }
-  if ($("show-prior").checked) {
+  if (state.selected==="target" && $("show-prior").checked) {
     const a=scene.target_prior[0], b=scene.target_prior[1];
     const [ax,ay]=xy(a.x,a.y,width,height,offset),[bx,by]=xy(b.x,b.y,width,height,offset);
     const radius=3.4/crop().width*width;
@@ -239,7 +244,13 @@ function select(id) {
     const c=scene.candidates.find(c=>c.id===id);
     detail.innerHTML=`<div class="selection-title">${c.id} · Residual ${c.score>0?"dương":"âm"}</div><dl><dt>Điểm thực nghiệm</dt><dd>${number(c.score,2)}</dd><dt>RA</dt><dd>${number(c.ra_deg,6)}°</dd><dt>Dec</dt><dd>${number(c.dec_deg,6)}°</dd><dt>Pixel trên lưới chung</dt><dd>${c.x}, ${c.y}</dd></dl><p>Vùng ảnh sai khác đáng kiểm tra. Có thể do thiên thể, PSF, màu phổ hoặc noise. Chưa gán danh tính thiên thể.</p>`;
   }
+  $("motion-panel").hidden=scene.kind!=="coadd"||id!=="target";
+  $("motion-overlay-label").hidden=scene.kind!=="coadd"||id!=="target";
+  $("prior-overlay-label").hidden=id!=="target";
+  $("show-motion").disabled=id!=="target";$("show-prior").disabled=id!=="target";
+  if(id!=="target"){$("show-motion").checked=false;$("show-prior").checked=false;}
   loadReview();render();
+  if(typeof CustomEvent==="function")document.dispatchEvent(new CustomEvent("selection:changed"));
 }
 function candidateList() {
   const list=$("candidate-list");list.replaceChildren();
@@ -364,6 +375,8 @@ $("accuracy-evidence").addEventListener("click",()=>{
 });
 async function loadScene(scene) {
   const generation=++state.loading;
+  state.ready=false;
+  document.dispatchEvent(new CustomEvent("scene:loading"));
   $("workspace").setAttribute("aria-busy","true");
   $("load-state").hidden=false;$("load-state").textContent="Đang tải cặp ảnh và bằng chứng…";
   try {
@@ -382,9 +395,12 @@ async function loadScene(scene) {
     $("load-state").hidden=true;$("load-retry").hidden=true;motionPanel(scene);candidateList();sceneList();evidenceContent();select("target");setMode(state.mode);
     if(state.gaia)gaiaConfiguration(scene.motion?.spectral_configuration||"broad");
     ["download-manifest","save-review","export-reviews"].forEach(id=>$(id).disabled=false);
+    state.ready=true;
     document.dispatchEvent(new CustomEvent("scene:loaded"));
   } catch(error) {
+    if(generation!==state.loading)return;
     $("load-state").hidden=false;$("load-state").textContent=`Không tải được dữ liệu: ${error.message}. Thử tải lại trang hoặc mở JSON bằng chứng.`;$("load-retry").hidden=false;
+    document.dispatchEvent(new CustomEvent("scene:failed"));
   }
   finally {if(generation===state.loading)$("workspace").removeAttribute("aria-busy");}
 }
@@ -476,6 +492,15 @@ canvas.addEventListener("keydown",event=>{
   $("wipe").value=String(state.wipe*100);render();
 });
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&state.mode==="blink")setMode("wipe");});
+window.SkyApp={
+  context:()=>({ready:state.ready,scene_id:state.scene?.id||null,label:state.scene?.label||"WISE 0855",selection:state.selected,
+    analysis_sha256:state.manifest?.analysis_sha256||null,kind:state.scene?.kind||null,
+    before_image:state.scene?.before.image,after_image:state.scene?.after.image,
+    before_date:state.scene?.before.date_start||state.scene?.before.date,after_date:state.scene?.after.date_end||state.scene?.after.date}),
+  pause:()=>{if(state.mode==="blink")setMode("wipe");},
+  redraw:()=>render(),
+  preview:()=>{if(!state.ready)return null;try{return canvas.toDataURL("image/png");}catch{return null;}}
+};
 getJson("data/manifest.json").then(async manifest=>{
   state.manifest=manifest;
   if(manifest.gaia_results) {
@@ -486,7 +511,7 @@ getJson("data/manifest.json").then(async manifest=>{
   await setupAccuracy();
   await syncReviews();
 })
-  .catch(error=>{$("load-state").textContent=`Không tải được manifest: ${error.message}. Thử tải lại trang.`;$("load-retry").hidden=false;$("workspace").removeAttribute("aria-busy");});
+  .catch(error=>{state.ready=false;$("load-state").textContent=`Không tải được manifest: ${error.message}. Thử tải lại trang.`;$("load-retry").hidden=false;$("workspace").removeAttribute("aria-busy");document.dispatchEvent(new CustomEvent("scene:failed"));});
 
 window.addEventListener("resize",render);
 document.fonts.addEventListener("loadingdone",render);

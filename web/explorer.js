@@ -6,9 +6,12 @@
     wise0855:[133.7601213914074,-7.242127941212259], barnard:[269.44626688537255,4.768222216475269],
     epsilon:[331.04583333,-56.78333333], rwaur:[76.95652603458332,30.401438173888888], rdra:[248.16761083294998,66.75497941722]
   };
-  let rows=[], query=null, provenance=null, current=-1, displayed=-1, reference=-1, generation=0, request=null, timer=null, range=null, maskPolicy=null;
+  let rows=[], query=null, provenance=null, current=-1, displayed=-1, reference=-1, generation=0, request=null, timer=null, range=null, maskPolicy=null, dirty=true;
   let frameQueue=Promise.resolve(), pendingFrames=new Map();
   const images=new Map();
+  const noteDrafts=new Map();let noteKey=null;
+  function saveNote(){if(noteKey)noteDrafts.set(noteKey,el("explorer-note").value);}
+  function restoreNote(){const c=context();noteKey=c.paired?JSON.stringify([query.p.toString(),rows[reference].access_url,rows[current].access_url]):null;el("explorer-note").value=noteKey?noteDrafts.get(noteKey)||"":"";}
   function coordinate(raw, ra) {
     const text=raw.trim().replace(/−/g,"-");if(!text)throw new Error("Nhập cả RA và Dec.");
     if(/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(text)) {
@@ -21,8 +24,16 @@
     return value;
   }
   const displayMjd=v=>Number.isFinite(v)?`MJD ${v.toFixed(5)}`:"Không có MJD";
-  function stop() {if(timer){clearInterval(timer);current=displayed;renderList();el("explorer-previous").disabled=current===0;el("explorer-next").disabled=current===rows.length-1;}timer=null;el("explorer-play").textContent="Phát 2 ảnh đã tải";}
-  function setStatus(text,error=false) {el("explorer-status").textContent=text;el("explorer-status").classList.toggle("is-error",error);}
+  function stop() {if(timer){clearInterval(timer);if(images.has(current))draw(images.get(current),current);renderList();el("explorer-previous").disabled=current===0;el("explorer-next").disabled=current===rows.length-1;}timer=null;el("explorer-play").textContent="Nhấp nháy A / B";}
+  function context(){
+    const ready=Boolean(!dirty&&current>=0&&images.has(current)&&(timer||displayed===current&&!el("explorer-image").hidden));
+    return {ready,dirty,paired:ready&&reference>=0&&reference!==current&&images.has(reference),query:query?{ra:query.ra,dec:query.dec,release:query.release,det:query.det,fov:query.fov}:null,
+      count:rows.length,current:ready?rows[current]:null,reference:reference>=0?rows[reference]:null,
+      current_index:current,reference_index:reference,preview:ready?images.get(current).src:null,status:el("explorer-status").textContent};
+  }
+  function notify(kind){if(typeof CustomEvent==="function")document.dispatchEvent(new CustomEvent("explorer:state",{detail:{kind,context:context()}}));}
+  function setStatus(text,error=false) {el("explorer-status").textContent=text;el("explorer-status").classList.toggle("is-error",error);notify("status");}
+  function markDirty(){saveNote();dirty=true;stop();noteKey=null;el("explorer-note").value="";for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;notify("dirty");}
   function apiError(response,code) {
     if(response.status===429){const retry=response.headers?.get("Retry-After");return `Đã đạt giới hạn tạm thời${retry&&/^\d{1,5}$/.test(retry)?`. Thử lại sau ${retry} giây`:". Hãy thử lại sau"}`;}
     if(code==="upstream_timeout")return "IRSA phản hồi quá chậm";
@@ -119,18 +130,20 @@
     el("explorer-current").value=String(index);el("explorer-pin").disabled=false;el("explorer-export").disabled=false;
   }
   async function show(index) {
-    if(!rows[index]||!query)return;stop();const seq=generation;current=index;renderList();
+    if(!rows[index]||!query)return;if(dirty){setStatus("Cấu hình đã đổi. Tìm lại ảnh để tiếp tục.",true);return;}saveNote();stop();noteKey=null;el("explorer-note").value="";const seq=generation;current=index;renderList();
+    el("explorer-image").hidden=true;for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;
     el("explorer-previous").disabled=index===0;el("explorer-next").disabled=index===rows.length-1;
     setStatus(`Đang tải cutout thật ${index+1}/${rows.length} từ IRSA…`);
     try {
-      const info=await load(index,seq);if(seq!==generation||current!==index)return;draw(info,index);
+      const info=await load(index,seq);if(seq!==generation||current!==index)return;draw(info,index);restoreNote();
       setStatus("Đã tải ảnh. So vị trí với các sao xung quanh; các exposure có thể khác bước sóng tại từng pixel.");
       el("explorer-play").disabled=reference<0||reference===index||!images.has(reference);
+      notify("frame");
     }catch(error){if(error.name!=="AbortError"&&seq===generation&&current===index){setStatus(`Không tải được cutout: ${error.message}. Có thể chọn ảnh khác hoặc thử lại.`,true);el("explorer-image").hidden=true;}}
   }
   el("explorer-form").addEventListener("submit",async event=>{
     event.preventDefault();let next;try{next=inputQuery();}catch(error){setStatus(error.message,true);return;}
-    request?.abort();stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
+    saveNote();noteKey=null;el("explorer-note").value="";request?.abort();stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;dirty=false;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
     resetDisplay();el("explorer-results").hidden=true;el("explorer-search").disabled=true;
     setStatus("Đang truy vấn độ phủ SPHEREx tại IRSA…");
     try {
@@ -146,22 +159,27 @@
     }catch(error){if(error.name!=="AbortError"&&seq===generation)setStatus(`Truy vấn chưa thành công: ${error.message}. Bản demo WISE phía dưới vẫn mở được.`,true);}
     finally{if(seq===generation)el("explorer-search").disabled=false;}
   });
-  el("explorer-preset").addEventListener("change",()=>{const id=el("explorer-preset").value,p=presets[id];if(p){el("explorer-ra").value=p[0].toString();el("explorer-dec").value=p[1].toString();if(id==="epsilon")el("explorer-fov").value="0.12";}});
+  el("explorer-preset").addEventListener("change",()=>{const id=el("explorer-preset").value,p=presets[id];if(p){el("explorer-ra").value=p[0].toString();el("explorer-dec").value=p[1].toString();if(id==="epsilon")el("explorer-fov").value="0.12";}markDirty();});
   el("explorer-previous").addEventListener("click",()=>show(current-1));el("explorer-next").addEventListener("click",()=>show(current+1));
   el("explorer-current").addEventListener("change",()=>show(Number(el("explorer-current").value)));
-  el("explorer-pin").addEventListener("click",()=>{stop();reference=displayed;el("explorer-reference").textContent=`Ảnh đối chiếu: ${reference+1}. Chọn một ảnh khác rồi bấm Phát.`;el("explorer-play").disabled=true;});
+  el("explorer-pin").addEventListener("click",()=>{saveNote();stop();if(!context().ready)return;reference=displayed;restoreNote();el("explorer-reference").textContent=`Ảnh A: ${reference+1}. Chọn ảnh B trong danh sách.`;el("explorer-play").disabled=true;notify("pin");});
   el("explorer-play").addEventListener("click",()=>{
     if(timer){stop();return;}if(reference<0||reference===current||!images.has(reference)||!images.has(current))return;
     const a=reference,b=current;let index=a;draw(images.get(index),index);el("explorer-play").textContent="Dừng phát";
     timer=setInterval(()=>{index=index===a?b:a;draw(images.get(index),index);},800);
   });
   el("explorer-export").addEventListener("click",()=>{
+    const selected=context();if(!selected.ready||!selected.paired)return;
     const bundle={schema_version:1,kind:"observation-display-evidence",exported_at:new Date().toISOString(),query:{...query,p:query.p.toString()},provenance,
+      selected_pair:{reference:rows[reference],current:rows[current],reference_index:reference,current_index:current},
       observations:rows,display_range_mjy_sr:range,mask_policy:maskPolicy,loaded_frames:[...images].map(([index,info])=>({index,...info.row,headers:info.headers})),
       review_note:el("explorer-note").value,qualification:"User visual inspection; no registered astrometry, spectral matching, calibrated detection probability or fitted motion. Pixel wavelengths require science calibration."};
     const url=URL.createObjectURL(new Blob([JSON.stringify(bundle,null,2)],{type:"application/json"})),a=document.createElement("a");a.href=url;a.download="spherex-observation-review.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   });
   document.addEventListener("visibilitychange",()=>{if(document.hidden)stop();});
+  el("explorer-form").addEventListener("input",markDirty);el("explorer-form").addEventListener("change",markDirty);
+  el("explorer-note").addEventListener("input",saveNote);
+  if(typeof window!=="undefined")window.SkyExplorer={context,pause:stop};
   const incoming=new URLSearchParams(location.search);
   for(const [name,id] of [["ra","explorer-ra"],["dec","explorer-dec"],["fov","explorer-fov"],["det","explorer-detector"],["release","explorer-release"]])if(incoming.has(`sky_${name}`))el(id).value=incoming.get(`sky_${name}`);
   function syncPreset() {
