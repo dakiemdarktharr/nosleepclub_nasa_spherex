@@ -23,11 +23,13 @@ from PIL import Image
 try:
     from api._access_control import AccessDenied, guard
     from api._telemetry import emit_request, request_logger
+    from api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control', 'api._telemetry'):
+    if exc.name not in ('api', 'api._access_control', 'api._telemetry', 'api._upstream_diagnostics'):
         raise
     from web.api._access_control import AccessDenied, guard
     from web.api._telemetry import emit_request, request_logger
+    from web.api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 
 HOST = 'irsa.ipac.caltech.edu'
 SCALE_ARCSEC = 6.15
@@ -43,9 +45,10 @@ PATH = re.compile(r'^/ibe/data/spherex/(?P<release>qr[23])/level2/(?P<period>\d{
 
 
 class FrameError(Exception):
-    def __init__(self, code, status=502, upstream_http_status=None):
+    def __init__(self, code, status=502, upstream_http_status=None, diagnostic=None):
         self.code, self.status = code, status
         self.upstream_http_status = upstream_http_status
+        self.diagnostic = diagnostic
         super().__init__(code)
 
 
@@ -113,9 +116,10 @@ def fetch(url):
     p = urlsplit(url)
     if p.scheme != 'https' or p.netloc != HOST or not PATH.fullmatch(p.path):
         raise FrameError('invalid_upstream')
-    started = time.monotonic()
+    started = time.monotonic();stage = 'open'
     try:
         with build_opener(NoRedirect()).open(Request(url, headers={'User-Agent': 'SPHEREx-frame-demo/1.0', 'Accept': 'application/fits'}), timeout=SOCKET_TIMEOUT) as response:
+            stage = 'headers'
             declared = getattr(response, 'headers', {}).get('Content-Length')
             if declared is not None:
                 if not re.fullmatch(r'[0-9]+', declared):
@@ -123,6 +127,7 @@ def fetch(url):
                 declared = int(declared)
                 if declared > MAX_BYTES:
                     raise FrameError('upstream_too_large')
+            stage = 'read'
             chunks, size = [], 0
             while True:
                 if time.monotonic() - started > DEADLINE:
@@ -142,16 +147,20 @@ def fetch(url):
             if not content.startswith(b'SIMPLE  ='):
                 raise FrameError('upstream_not_fits')
             return content
-    except (TimeoutError, socket.timeout):
-        raise FrameError('upstream_timeout', 504)
+    except FrameError as exc:
+        exc.diagnostic = describe_upstream(None, stage)
+        raise
+    except (TimeoutError, socket.timeout) as exc:
+        raise FrameError('upstream_timeout', 504, diagnostic=describe_upstream(exc, stage))
     except HTTPError as exc:
         upstream_status = exc.code
+        diagnostic = describe_upstream(exc, stage)
         exc.close()
-        raise FrameError('upstream_http_error', upstream_http_status=upstream_status) from None
+        raise FrameError('upstream_http_error', upstream_http_status=upstream_status, diagnostic=diagnostic) from None
     except URLError as exc:
-        raise FrameError('upstream_timeout', 504) if isinstance(exc.reason, (TimeoutError, socket.timeout)) else FrameError('upstream_unavailable')
-    except (OSError, HTTPException):
-        raise FrameError('upstream_unavailable')
+        raise FrameError('upstream_timeout', 504, diagnostic=describe_upstream(exc, stage)) if isinstance(exc.reason, (TimeoutError, socket.timeout)) else FrameError('upstream_unavailable', diagnostic=describe_upstream(exc, stage))
+    except (OSError, HTTPException) as exc:
+        raise FrameError('upstream_unavailable', diagnostic=describe_upstream(exc, stage))
 
 
 def render(content, p):
@@ -262,12 +271,14 @@ class handler(BaseHTTPRequestHandler):
         self.request_id, self.started = secrets.token_hex(16), time.monotonic()
         if method != 'GET':
             return self.respond(405, b'{"error":"method_not_allowed"}', 'application/json', 'method')
+        stage = 'open'
         try:
             p = parse_params(urlsplit(self.path).query)
             guard('frame', self.headers, self.client_address)
             url = cutout_url(p)
             content = fetch(url)
             retrieved = datetime.now(timezone.utc).isoformat()
+            stage = 'parse'
             png, meta = render(content, p)
             h = {'X-Frame-Contract': FRAME_CONTRACT, 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
                  'X-Frame-Cutout-SHA256': sha256(content).hexdigest(), 'X-Frame-Retrieved-At': retrieved,
@@ -288,6 +299,7 @@ class handler(BaseHTTPRequestHandler):
         except ValueError:
             return self.respond(400, b'{"error":"invalid_parameters"}', 'application/json', 'validation')
         except FrameError as exc:
+            emit_upstream(logger, 'frame', self.request_id, exc.diagnostic or describe_upstream(None, stage))
             return self.respond(exc.status, json.dumps({'error': exc.code}).encode(), 'application/json', 'upstream_or_fits',
                                 error_code=exc.code, upstream_http_status=exc.upstream_http_status)
         except Exception:
