@@ -4,7 +4,8 @@
   const el=id=>document.getElementById(id),path=new URLSearchParams(location.search).get("path");
   let controller=null,url=null;
   const hash=async buffer=>[...new Uint8Array(await crypto.subtle.digest("SHA-256",buffer))].map(x=>x.toString(16).padStart(2,"0")).join("");
-  el("download-name").textContent=path||"Chưa chọn tệp";
+  const names={"data/source-presence/records.json.gz":"Nhận nguồn · 7.992 lượt", "data/reference-stars/records.json.gz":"Sao tham chiếu · 840 bản ghi", "data/signal-controls/records.json.gz":"Đối chứng tín hiệu · 640 lượt"};
+  el("download-name").textContent=names[path]||path||"Chưa chọn tệp";
   el("download-start").disabled=!path;
   el("download-cancel").addEventListener("click",()=>controller?.abort());
   el("download-start").addEventListener("click",async()=>{
@@ -26,7 +27,7 @@
       const blob=new Blob(parts,{type:meta.content_type});
       if(size!==meta.bytes||await hash(await blob.arrayBuffer())!==meta.sha256)throw new Error("Hash toàn tệp không khớp; chưa tạo tệp.");
       url=URL.createObjectURL(blob);const link=el("download-save");link.href=url;link.download=path.split("/").pop();link.hidden=false;
-      el("download-status").textContent="Đã tải đủ và xác minh SHA-256. Bấm Lưu tệp đã kiểm tra.";el("download-hash").textContent=`SHA-256: ${meta.sha256}`;
+      el("download-status").textContent="Đã xác minh SHA-256. Bấm Tải tệp đã xác minh để lưu trên máy.";el("download-hash").textContent=`SHA-256: ${meta.sha256}`;
     }catch(error){el("download-status").textContent=error.name==="AbortError"?"Đã hủy. Chưa tạo tệp.":error.message;}
     finally{el("download-start").disabled=false;el("download-cancel").disabled=true;}
   });

@@ -22,6 +22,7 @@ class PublicTransferTest(unittest.TestCase):
             records = []; closed = []; calls = []
             def request(*args, **kwargs):
                 calls.append(1)
+                self.assertEqual(kwargs['headers']['Accept-Encoding'], 'identity')
                 if len(calls) == 1 and mode == 'connect':
                     raise requests.ConnectionError('test-only failure')
                 return SimpleNamespace(status_code=200, headers={}, raw=Raw(len(calls) == 1),

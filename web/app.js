@@ -462,7 +462,7 @@ $("save-review").addEventListener("click",async()=>{
     $("storage-status").textContent=cloud?"Lưu riêng trong phiên máy chủ":"Chỉ lưu trên trình duyệt";
     if(key===keyForSelection()) {
       const editedAgain=reviewDrafts.has(key);
-      $("review-feedback").textContent=(cloud?"Đã lưu riêng trên máy chủ cho phiên khách này.":local?(detached?"Phiên máy chủ đã đổi; giữ bản cục bộ, chưa gửi lên phiên mới.":postAttempted?"Đã giữ bản cục bộ; chưa xác minh máy chủ đã nhận. Bấm Lưu lại khi dịch vụ sẵn sàng.":"Đã lưu trên trình duyệt; không tự gửi lên máy chủ. Bấm Lưu lại khi dịch vụ sẵn sàng."):"Chưa lưu được. Hãy xuất JSON.")+(editedAgain?" Phần vừa sửa chưa được lưu.":"");
+      $("review-feedback").textContent=(cloud?"Đã lưu riêng trên máy chủ cho phiên khách này.":local?(location.protocol!=="https:"?"Đã lưu tại trình duyệt này. Xuất JSON để giữ bản sao.":detached?"Phiên máy chủ đã đổi; giữ bản cục bộ, chưa gửi lên phiên mới.":postAttempted?"Đã giữ bản cục bộ; chưa xác minh máy chủ đã nhận. Bấm Lưu lại khi dịch vụ sẵn sàng.":"Đã lưu trên trình duyệt; không tự gửi lên máy chủ. Bấm Lưu lại khi dịch vụ sẵn sàng."):"Chưa lưu được. Hãy xuất JSON.")+(editedAgain?" Phần vừa sửa chưa được lưu.":"");
       $("review-draft-state").textContent=editedAgain?"Nháp trong tab · còn phần chưa lưu":cloud?"Đã lưu trên máy chủ":local?"Đã lưu trên trình duyệt":"Nháp chưa lưu";
       $("clear-review").hidden=detached;
     }

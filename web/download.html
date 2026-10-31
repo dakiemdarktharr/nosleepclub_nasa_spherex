@@ -1,1 +1,21 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tải dữ liệu · NoSleepClub</title><link rel="stylesheet" href="mission.css"><script src="data-download.js" defer></script></head><body><main class="workflow-shell" style="max-width:48rem;margin:4rem auto;padding:1.5rem"><a href="/#research">← Kho kiểm chứng</a><h1>Tải dữ liệu</h1><p id="download-name"></p><p id="download-status" role="status" aria-live="polite">Sẵn sàng tải và kiểm tra SHA-256.</p><progress id="download-progress" max="1" value="0" style="width:100%"></progress><p><button id="download-start" type="button">Tải tệp</button> <button id="download-cancel" type="button" disabled>Hủy</button> <a id="download-save" hidden>Lưu tệp đã kiểm tra</a></p><p id="download-hash" style="overflow-wrap:anywhere"></p></main></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tải dữ liệu · NoSleepClub</title>
+  <link rel="stylesheet" href="assets/fonts/be-vietnam-pro.css">
+  <link rel="stylesheet" href="mission.css">
+  <script src="data-download.js?v=0.11.1-r19" defer></script>
+</head>
+<body>
+<main style="max-width:48rem;margin:4rem auto;padding:1.5rem">
+  <a href="/#research">← Kho kiểm chứng</a>
+  <h1>Tải dữ liệu</h1><p id="download-name"></p>
+  <p id="download-status" role="status" aria-live="polite">Chuẩn bị tệp và xác minh trước khi tải xuống.</p>
+  <progress id="download-progress" aria-label="Tiến độ tải dữ liệu" max="1" value="0" style="width:100%"></progress>
+  <p><button id="download-start" type="button">Chuẩn bị tệp</button>
+    <button id="download-cancel" type="button" disabled>Hủy</button>
+    <a id="download-save" hidden>Tải tệp đã xác minh ↓</a></p>
+  <details><summary>Kiểm tra SHA-256</summary><p id="download-hash" style="overflow-wrap:anywhere"></p></details>
+</main>
+</body></html>

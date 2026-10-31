@@ -23,7 +23,7 @@
     if(b>=60||c>=60||!Number.isFinite(value)||(ra?(negative||value>=360):Math.abs(value)>90))throw new Error("Tọa độ ngoài phạm vi hoặc phút/giây không hợp lệ.");
     return value;
   }
-  const displayMjd=v=>Number.isFinite(v)?new Date((v-40587)*86400000).toISOString().slice(0,10)+" UTC":"Không có ngày quan sát";
+  const displayMjd=v=>Number.isFinite(v)?new Date((v-40587)*86400000).toISOString().slice(0,16).replace("T"," ")+" UTC":"Không có ngày quan sát";
   function stop() {if(timer){clearInterval(timer);if(images.has(current))draw(images.get(current),current);renderList();el("explorer-previous").disabled=current===0;el("explorer-next").disabled=current===rows.length-1;}timer=null;el("explorer-play").textContent="Nhấp nháy A / B";}
   function context(){
     const ready=Boolean(!dirty&&current>=0&&images.has(current)&&(timer||displayed===current&&!el("explorer-image").hidden));
@@ -32,8 +32,9 @@
       current_index:current,reference_index:reference,preview:ready?images.get(current).src:null,status:el("explorer-status").textContent};
   }
   function notify(kind){if(typeof CustomEvent==="function")document.dispatchEvent(new CustomEvent("explorer:state",{detail:{kind,context:context()}}));}
+  function dateSummary(){const a=el("explorer-from").value,b=el("explorer-to").value,fmt=v=>v.split("-").reverse().join("/");el("explorer-date-summary").textContent=a&&b?`Khoảng ngày · ${fmt(a)}–${fmt(b)}`:a||b?"Khoảng ngày · chưa đủ hai ngày":"Khoảng ngày · tùy chọn";}
   function setStatus(text,error=false) {el("explorer-status").textContent=text;el("explorer-status").classList.toggle("is-error",error);notify("status");}
-  function markDirty(){saveNote();dirty=true;stop();noteKey=null;el("explorer-note").value="";for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;notify("dirty");}
+  function markDirty(){saveNote();dateSummary();dirty=true;stop();noteKey=null;el("explorer-note").value="";for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;notify("dirty");}
   function apiError(response,code) {
     if(response.status===429){const retry=response.headers?.get("Retry-After");return `Đã đạt giới hạn tạm thời${retry&&/^\d{1,5}$/.test(retry)?`. Thử lại sau ${retry} giây`:". Hãy thử lại sau"}`;}
     if(code==="upstream_timeout")return "IRSA phản hồi quá chậm";
@@ -197,5 +198,5 @@
     el("explorer-preset").value=selected;
   }
   for(const id of ["explorer-ra","explorer-dec"])el(id).addEventListener("input",syncPreset);
-  syncPreset();
+  syncPreset();dateSummary();
 })();

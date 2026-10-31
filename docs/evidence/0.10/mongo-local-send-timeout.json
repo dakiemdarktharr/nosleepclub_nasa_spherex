@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "base_url": "https://nosleepclub-nasa-spherex.vercel.app",
+  "manifest_sha256": "995117aa25dcf5f5afa20b62cb693ef64845ba00d95718dae89263165d31b776",
+  "started_at": "2026-10-31T13:47:45.528655+00:00",
+  "requests": [],
+  "completed": false,
+  "finished_at": "2026-10-31T13:47:57.001598+00:00"
+}
