@@ -1,0 +1,91 @@
+{
+  "schema": "signal-browser-receipt-1",
+  "checked_at_utc": "2026-10-31T04:38:12.069Z",
+  "main_commit": "73ea9a2f2012b30dea5e0b43dd88feccf6d622be",
+  "tested_head": "b47ccdd8570b9cfe17c421c5caa684be9fc8891f",
+  "desktop": {
+    "body_width": 1265,
+    "counts": [
+      "640/640",
+      "70/128",
+      "8/16",
+      "64/64"
+    ],
+    "figure": {
+      "complete": true,
+      "height": 1014,
+      "width": 1560
+    },
+    "fonts": "loaded",
+    "rows": [
+      {
+        "id": "signal-noiseless-rows",
+        "n": 32
+      },
+      {
+        "id": "signal-noisy-rows",
+        "n": 8
+      },
+      {
+        "id": "signal-component-rows",
+        "n": 8
+      },
+      {
+        "id": "signal-null-rows",
+        "n": 8
+      }
+    ],
+    "section_open": true,
+    "url": "https://nosleepclub-nasa-spherex.vercel.app/#signal-controls",
+    "width": 1265
+  },
+  "mobile": {
+    "body_width": 375,
+    "counts": [
+      "640/640",
+      "70/128",
+      "8/16",
+      "64/64"
+    ],
+    "table_scroll_width": 940,
+    "table_width": 298,
+    "width": 375
+  },
+  "omitted_first_row": "Sao A · (¼, ¼)\tGốc\t16/16\t15/16\t0,917; 0,002\t1,036\t32,1%\tStress · không có gate\t5 / 10 / 1 / 0",
+  "matched_qualification": "Đối chứng khớp mẫu: nguồn giả được tạo bằng ePSF gốc. Giúp kiểm tra phần mềm; thuận lợi sẵn cho nhánh gốc, chưa kiểm chứng hình nguồn vật lý.",
+  "local": {
+    "checked_at_utc": "2026-10-31T04:36:47.768Z",
+    "url": "http://127.0.0.1:8770/#signal-controls",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "mobile": {
+      "body_width": 375,
+      "figure_client_width": 298,
+      "figure_scroll_width": 900,
+      "keyboard_scroll_left": 40,
+      "viewport_width": 375
+    },
+    "keyboard_summary_enter_closed": true,
+    "keyboard_tab_to_scene": true,
+    "filters_verified": [
+      "gaussian",
+      "matched",
+      "modeled",
+      "omitted"
+    ],
+    "qualification": "Task-based browser checks; not a full accessibility audit."
+  },
+  "screenshots": [
+    "signal-production-73ea9a2.png",
+    "signal-production-mobile-73ea9a2.png"
+  ],
+  "viewport_reset": true,
+  "qualification": "Interactive report/filter/figure checks and reflow; not a full accessibility, scientific-accuracy, uptime or detection certificate.",
+  "screenshot_sha256": {
+    "signal-production-73ea9a2.png": "6441c3bfa6bef7002c6c34649c7b32e4da48803c15661ca34f64955f7ee94936",
+    "signal-production-mobile-73ea9a2.png": "b435641f23d1bf8a7c8a089f8ac2dd41ace3ad3e8c67b6f1834aaefeb3c36b1f"
+  },
+  "desktop_screenshot_selection": "Report top, synthetic label and all four counters after header navigation; original viewport."
+}

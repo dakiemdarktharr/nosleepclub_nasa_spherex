@@ -17,7 +17,7 @@ ROOT=Path(__file__).resolve().parents[1]
 BASE='https://nosleepclub-nasa-spherex.vercel.app'
 PINNED_FRAME='https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_2A/l2b-v20-2025-258/6/level2_2025W26_2A_0314_1D6_spx_l2b-v20-2025-258.fits'
 PINNED_CUTOUT_SHA='514ac17f7c8d2b7de1f723e4464dfc85a1caacf666f868e70fd844c9d80de8a6'
-ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js','mission.css','linked-evidence.js','neighbor-evidence.js',
+ASSETS=('index.html','explorer.js','app.js','mission.js','quality.js','review-store.js','goal-dashboard.js','mission.css','linked-evidence.js','neighbor-evidence.js',
         'data/manifest.json','data/continuous-epsf/design.json',
         'data/continuous-epsf/development-summary.json','data/explorer-check/coverage.json',
         'data/sandwich/design.json','data/sandwich/overview.json','data/sandwich/development-summary.json',
@@ -52,7 +52,7 @@ ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js
         'data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_3.png',
         'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_2.png',
         'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_3.png',
-        'signal-evidence.js','data/signal-controls/design.json','data/signal-controls/overview.json',
+        'signal-evidence.js','workflow.css','data/signal-controls/design.json','data/signal-controls/overview.json',
         'data/signal-controls/independent-audit.json','data/signal-controls/records.json.gz',
         'data/signal-controls/scene-example.png')
 

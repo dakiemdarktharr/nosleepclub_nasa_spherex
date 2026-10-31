@@ -20,9 +20,9 @@ for(const dialog of [guide,$("evidence-dialog")])dialog.addEventListener("keydow
   else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
 });
 document.addEventListener("keydown",event=>{if(event.key==="Escape"&&menuButton.getAttribute("aria-expanded")==="true"){navigation.classList.remove("open");menuButton.setAttribute("aria-expanded","false");menuButton.focus();}});
-[$("guide-open"),$("workspace-help")].forEach(button=>button.addEventListener("click",()=>guide.showModal()));
+[$("guide-open"),$("workspace-help")].forEach(button=>button.addEventListener("click",()=>{window.SkyApp?.pause();window.SkyExplorer?.pause();guide.showModal();}));
 $("guide-close").addEventListener("click",()=>guide.close());
-$("guide-start").addEventListener("click",()=>{guide.close();location.hash="workspace";canvas.focus({preventScroll:true});});
+$("guide-start").addEventListener("click",()=>{guide.close();if(window.SkyWorkflow)window.SkyWorkflow.openCompare();else{location.hash="workspace";canvas.focus({preventScroll:true});}});
 $("scene-select").addEventListener("change",()=>{
   const scene=state.manifest?.scenes.find(s=>s.id===$("scene-select").value);
   if(scene)loadScene(scene);

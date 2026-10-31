@@ -6,7 +6,15 @@ Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác 
 
 **[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Kiểm nghiệm mới](docs/SIGNAL_CONTROL_RESULTS.md).
 
-## Đối chứng tín hiệu, nguồn chồng và pha pixel — checkpoint mới
+## Giao diện theo quy trình
+
+**[Bắt đầu từ dữ liệu](https://nosleepclub-nasa-spherex.vercel.app/#home)** · [Luồng thao tác và giới hạn](docs/WORKFLOW_UI.md).
+
+Ứng dụng tách thành **Dữ liệu → So ảnh → Kiểm tra → Ghi nhận**, mỗi màn có một hành động chính và đường quay lại. Bỏ các đoạn chữ phụ lặp, giữ nhãn/đơn vị/cảnh báo cần cho quyết định; chi tiết nằm trong mục mở khi cần. Kho kiểm chứng có danh sách báo cáo riêng, không chen vào quy trình xử lý.
+
+Bộ mẫu WISE và truy vấn IRSA giữ ngữ cảnh riêng. Residual không hiển thị vector/SNR của WISE. IRSA cần giữ A và tải B; ghi chú được khôi phục theo đúng truy vấn/cặp ảnh và xuất trong JSON, không gửi vào API nhận xét WISE. Hướng dẫn, Back/Forward và skip link giữ đúng nguồn đang dùng. Các sản phẩm khoa học và số đo WISE không đổi.
+
+## Đối chứng tín hiệu, nguồn chồng và pha pixel
 
 **[Xem demo](https://nosleepclub-nasa-spherex.vercel.app/#signal-controls)** · [Kết quả, giới hạn và bước tiếp theo](docs/SIGNAL_CONTROL_RESULTS.md).
 
