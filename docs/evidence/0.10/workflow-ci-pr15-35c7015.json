@@ -1,0 +1,265 @@
+{
+  "schema": "workflow-ci-receipt-1",
+  "repository": "dakiemdarktharr/nosleepclub_nasa_spherex",
+  "pull_request": 15,
+  "head_sha": "35c7015dd7ecc5aec13d32511c1cde396f7157e2",
+  "merge_sha": "ccde9faf914f04e5c9c2b8c9b5f23307787a7966",
+  "run_id": 41180088430,
+  "url": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41180088430",
+  "jobs": [
+    {
+      "id": 124475537519,
+      "name": "JavaScript syntax and review store",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41180088430,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Check browser JavaScript syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Test ReviewStore pure cases",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test explorer request and display races",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Test linked evidence refusals and report loading",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Test neighbor factorial and all control denominators",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Test reference stars and sealed presence evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Test staged shape and shared covariance evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Test fixed-weight profile diagnostic evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Test synthetic signal controls and refusal semantics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Test data workflow context and step prerequisites",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Test selected-region and asynchronous scene context",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27
+        },
+        {
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29
+        }
+      ]
+    },
+    {
+      "id": 124475537618,
+      "name": "Python tests and repository evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41180088430,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install pinned science and web dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Compile Python source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Check source whitespace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Start disposable MongoDB replica set",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Run all Python unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Create evidence report",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Upload evidence and test output",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Remove disposable MongoDB container",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        },
+        {
+          "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        }
+      ]
+    }
+  ],
+  "python": {
+    "cases": 609,
+    "passed": 596,
+    "skipped": 13,
+    "actual_mongodb_fixture_checks": 6,
+    "seconds": 49.937,
+    "selected_log_lines": [
+      "2026-10-31T07:19:45.3654979Z test_public_rows_match_raw_cache_when_present (test_continuous_epsf_products.ContinuousEpsfProductTests.test_public_rows_match_raw_cache_when_present) ... skipped 'Raw cache not available'",
+      "2026-10-31T07:19:47.3780173Z test_all_public_trials_match_immutable_raw_if_available (test_flux_information_products.FluxInformationProductTests.test_all_public_trials_match_immutable_raw_if_available) ... skipped 'Raw cache not present'",
+      "2026-10-31T07:19:48.2375983Z test_existing_irsa_cutout_when_available (test_frame_api.FrameTest.test_existing_irsa_cutout_when_available) ... skipped 'optional local IRSA cutout is not present'",
+      "2026-10-31T07:19:49.0304051Z test_actual_mixed_orientation_and_map_identity (test_lab_pixel_binding.PixelBindingTests.test_actual_mixed_orientation_and_map_identity) ... skipped 'ignored R7 laboratory archive not cached'",
+      "2026-10-31T07:19:49.0424040Z test_pinned_real_archive_and_selected_files (test_lab_spectral_response.LabSpectralResponseTests.test_pinned_real_archive_and_selected_files) ... skipped 'ignored laboratory tar not cached'",
+      "2026-10-31T07:19:52.5854116Z test_independent_imagepsf (test_native_flux_template.NativeFluxTemplateTests.test_independent_imagepsf) ... skipped 'optional photutils comparison'",
+      "2026-10-31T07:20:17.8746387Z test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+      "2026-10-31T07:20:18.1144083Z test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+      "2026-10-31T07:20:18.4449320Z test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+      "2026-10-31T07:20:18.4582012Z test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+      "2026-10-31T07:20:18.5020979Z test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+      "2026-10-31T07:20:18.5425958Z test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok",
+      "2026-10-31T07:20:19.3225725Z test_every_public_row_matches_optional_raw (test_sandwich_product.SandwichProductTests.test_every_public_row_matches_optional_raw) ... skipped 'Raw cache unavailable'",
+      "2026-10-31T07:20:19.8635360Z test_real_workers_concurrent_match_serial (test_science_jobs.RealIsolationTest.test_real_workers_concurrent_match_serial) ... skipped 'two opened cached fields unavailable'",
+      "2026-10-31T07:20:32.0747177Z test_real_archive_failure_case_if_cached (test_spectral_bandpass_v2.SpectralBandpassTests.test_real_archive_failure_case_if_cached) ... skipped 'ignored research inputs not cached'",
+      "2026-10-31T07:20:32.0829242Z test_real_inputs_reproduce_recorded_diagnostic (test_spectral_reference_product.SpectralReferenceProductTests.test_real_inputs_reproduce_recorded_diagnostic) ... skipped 'ignored laboratory and MAST inputs not cached'",
+      "2026-10-31T07:20:32.6507886Z test_fetch_pinned_checks_and_refuses_replacement_if_cached (test_wise0855_prism.PrismTests.test_fetch_pinned_checks_and_refuses_replacement_if_cached) ... skipped 'ignored MAST inputs not cached'",
+      "2026-10-31T07:20:32.7074008Z test_public_metadata_and_cached_replay (test_wise0855_prism.PrismTests.test_public_metadata_and_cached_replay) ... skipped 'ignored public FITS not cached'",
+      "2026-10-31T07:20:32.7223707Z test_actual_product_and_public_provenance_if_cached (test_wise0855_x1d.WiseSpectrumTests.test_actual_product_and_public_provenance_if_cached) ... skipped 'ignored MAST FITS not cached'",
+      "2026-10-31T07:20:32.9974792Z Ran 609 tests in 49.937s",
+      "2026-10-31T07:20:32.9975054Z OK (skipped=13)"
+    ]
+  },
+  "javascript": {
+    "node_major": 24,
+    "programs": 10,
+    "selected_log_lines": [
+      "2026-10-31T07:18:49.7045325Z ReviewStore lifecycle cases passed",
+      "2026-10-31T07:18:49.7166049Z Review UI race cases passed",
+      "2026-10-31T07:18:49.7513329Z Explorer DOM and HTTP race cases passed",
+      "2026-10-31T07:18:49.7912500Z Linked evidence: all denominators, refusals, model switches, failures and retries passed",
+      "2026-10-31T07:18:49.8314937Z Neighbor evidence: lazy loading, all refusals, paired denominators, worse outcomes and retries passed",
+      "2026-10-31T07:18:49.8919335Z Reference/presence UI: lazy loading, fixed denominators, failed cases, tab keyboard, corruption refusals and retry passed",
+      "2026-10-31T07:18:49.9420480Z Calibration UI: lazy reports, complete denominators, declared gates, deferred outcomes, corruption refusal and retry passed",
+      "2026-10-31T07:18:49.9920844Z Profile UI: lazy load, all denominators, source/frame switching, corruption refusal, no large auto-load and retry passed",
+      "2026-10-31T07:18:50.1253765Z Signal UI: lazy load, all640 denominators, separate bias/support, selectors, null/stress semantics, corruption refusal and retry passed",
+      "2026-10-31T07:18:50.1514193Z Workflow policy: data readiness, distinct source contexts, pair prerequisite, check before review and invalidation on data/selection changes passed",
+      "2026-10-31T07:18:50.1867117Z App workflow: target/residual scientific context, motion visibility and stale scene failure isolation passed"
+    ]
+  },
+  "qualification": "Exact PR head software checks and disposable loopback Mongo fixtures; no scientific promotion, full accessibility/usability or uptime/SLO certificate."
+}

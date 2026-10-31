@@ -1,0 +1,29 @@
+{
+  "schema": "workflow-deployment-receipt-1",
+  "main_commit": "ccde9faf914f04e5c9c2b8c9b5f23307787a7966",
+  "tested_head": "35c7015dd7ecc5aec13d32511c1cde396f7157e2",
+  "tested_and_merged_trees_equal": true,
+  "canonical_url": "https://nosleepclub-nasa-spherex.vercel.app/#home",
+  "deployment": {
+    "id": "dpl_9yCNGvu4VbFcNRrA8j9ZkSzMvYJg",
+    "url": "nosleepclub-nasa-spherex-ph4uty620-acne-a6cd.vercel.app",
+    "readyState": "READY",
+    "target": "production",
+    "createdAt": 1793431315913,
+    "buildingAt": 1793431316865,
+    "ready": 1793431371653,
+    "alias": [
+      "nosleepclub-nasa-spherex.vercel.app",
+      "nosleepclub-nasa-spherex-acne-a6cd.vercel.app",
+      "nosleepclub-nasa-spherex-git-main-acne-a6cd.vercel.app"
+    ],
+    "meta": {
+      "githubCommitRef": "main",
+      "githubCommitSha": "ccde9faf914f04e5c9c2b8c9b5f23307787a7966",
+      "githubCommitMessage": "Merge PR #15: guided data review workflow\n\nGuide data review through four clear workflow screens",
+      "githubRepo": "nosleepclub_nasa_spherex",
+      "githubOrg": "dakiemdarktharr"
+    }
+  },
+  "qualification": "Provider READY metadata; canonical HTTP and interactive browser verification are retained separately. No protected-preview share link or scientific/uptime certification."
+}
