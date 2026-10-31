@@ -36,7 +36,15 @@ ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js
         'data/neighbor-intervention/real-sensitivity-strict.svg','data/neighbor-intervention/control-error-pairs.svg',
         'reference-evidence.js','data/reference-stars/design.json','data/reference-stars/overview.json',
         'data/reference-stars/records.json.gz','data/source-presence/design.json',
-        'data/source-presence/threshold.json','data/source-presence/overview.json','data/source-presence/records.json.gz')
+        'data/source-presence/threshold.json','data/source-presence/overview.json','data/source-presence/records.json.gz',
+        'calibration-evidence.js','data/shape-correction/design.json',
+        'data/shape-correction/feasibility-unweighted.json','data/shape-correction/overview.json',
+        'data/shape-correction/coefficient-seal.json','data/shape-correction/calibration-records.json.gz',
+        'data/shape-point-check/design.json','data/shape-point-check/calibration-gate.json',
+        'data/shape-point-check/overview.json','data/shape-point-check/independent-audit.json',
+        'data/shape-point-check/records.json.gz','data/reference-covariance/design.json',
+        'data/reference-covariance/overview.json','data/reference-covariance/independent-audit.json',
+        'data/reference-covariance/records.json.gz')
 
 
 def require(condition, label):

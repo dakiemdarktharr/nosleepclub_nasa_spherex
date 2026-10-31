@@ -1,0 +1,1558 @@
+{
+  "assessment_digest": null,
+  "baseline_paired_rms_arcsec": null,
+  "calibration_gate": {
+    "assessment_allowed": false,
+    "calibration_point_digest": "5e6c1e3f07eb57cb0035183d12f9fee59c83a68701a94a4c8789f02cf6d09ebb",
+    "coefficient_seal_sha256": "36d586ac01fd3842c2ae67700b408ffe2553f1a405ce310ef7b5279dc32f7bef",
+    "comparison_count": 143,
+    "counts": {
+      "fit_completed": 146,
+      "preparation_failed": 22
+    },
+    "failure_cases": [
+      {
+        "baseline_modes": [
+          {
+            "chi2": 127.31509947144382,
+            "delta_chi2": 0.0,
+            "member_count": 9,
+            "origin": "point",
+            "position": [
+              -15.950852759662224,
+              -35.77249874131918
+            ]
+          }
+        ],
+        "baseline_near_best_count": 1,
+        "corrected_mode_maximum_separation_arcsec": 1.8899206603965162,
+        "corrected_modes": [
+          {
+            "chi2": 127.64770580044903,
+            "delta_chi2": 0.0,
+            "member_count": 6,
+            "origin": "point",
+            "position": [
+              -15.94831516098425,
+              -35.771074638899776
+            ]
+          },
+          {
+            "chi2": 128.0055720806582,
+            "delta_chi2": 0.35786628020916567,
+            "member_count": 2,
+            "origin": "start",
+            "position": [
+              -15.828367120256164,
+              -36.054004049406295
+            ]
+          }
+        ],
+        "corrected_near_best_count": 2,
+        "key": [
+          "5756942110218608640",
+          "2025W46_2A_0214_3"
+        ],
+        "qualification": "nine-start, fixed-weight heuristic; not an exhaustive physical-mode posterior",
+        "reason": [
+          "multiple_near_best_modes"
+        ]
+      },
+      {
+        "baseline_modes": [
+          {
+            "chi2": 145.84429691229562,
+            "delta_chi2": 0.0,
+            "member_count": 7,
+            "origin": "point",
+            "position": [
+              -6.151224701349468,
+              62.762636677877516
+            ]
+          }
+        ],
+        "baseline_near_best_count": 1,
+        "corrected_mode_maximum_separation_arcsec": 3.378413881134536,
+        "corrected_modes": [
+          {
+            "chi2": 145.893245489576,
+            "delta_chi2": 0.0,
+            "member_count": 5,
+            "origin": "point",
+            "position": [
+              -6.144931905401081,
+              62.75444406927947
+            ]
+          },
+          {
+            "chi2": 148.1864751752423,
+            "delta_chi2": 2.29322968566629,
+            "member_count": 2,
+            "origin": "start",
+            "position": [
+              -6.485699530429162,
+              63.18531329270348
+            ]
+          }
+        ],
+        "corrected_near_best_count": 2,
+        "key": [
+          "5756958431094222592",
+          "2025W46_2A_0214_3"
+        ],
+        "qualification": "nine-start, fixed-weight heuristic; not an exhaustive physical-mode posterior",
+        "reason": [
+          "multiple_near_best_modes"
+        ]
+      }
+    ],
+    "failure_count": 2,
+    "linearization_error_max_common_px": 0.025339439960533495,
+    "linearization_error_p90_common_px": 0.0045925142674028445,
+    "planned": 168,
+    "point_protocol_commit": "31d07ab777628aecc90af3b244e882e2e6d95b93",
+    "promotion": false,
+    "qualification": "conditional numerical adequacy only; no evidence yet of heldout position accuracy",
+    "reasons": [
+      "old_numerical_cell_no_longer_supported"
+    ],
+    "schema": "shape-position-calibration-gate-1",
+    "shape_calibration_cell_digest": "88979f3dac516dee78543b2a26b5a8f9e89f00790b89f75a69b5afe07bcbc136"
+  },
+  "calibration_gate_sha256": "603800116be353dad58d802a22d6466b18129b8cbd702deca4b4da88f543171d",
+  "calibration_point_digest": "5e6c1e3f07eb57cb0035183d12f9fee59c83a68701a94a4c8789f02cf6d09ebb",
+  "coefficient_seal_sha256": "36d586ac01fd3842c2ae67700b408ffe2553f1a405ce310ef7b5279dc32f7bef",
+  "counts": {
+    "fit_completed": 146,
+    "preparation_failed": 22
+  },
+  "deferred": 252,
+  "design_sha256": "5dab9bdcf744a3f4f999da4c143518bd7349dbf27d6ce51a818f626509e84f68",
+  "download": {
+    "bytes": 3057067,
+    "path": "data/shape-point-check/records.json.gz",
+    "sha256": "de7aa52c8f96fd836753ef673929db77a3c18b6e02f5f6d51ae9670e601e098c",
+    "uncompressed_bytes": 18171179,
+    "uncompressed_sha256": "70f89bd31ba04f919ddebeece502e72a9f43c14f04e7cbda3ad6a6626e47096f"
+  },
+  "heldout_outcomes": 0,
+  "independent_audit": {
+    "failed_final_starts_not_replayed": 0,
+    "maximum_bvls_objective_delta": 2.2737367544323206e-13,
+    "maximum_model_delta_mjysr": 1.7763568394002505e-15,
+    "maximum_scaled_kkt_violation": 5.692299421807077e-15,
+    "native_saved_points_audited": 146,
+    "qualification": "Saved native inputs/model/IRLS/mode clusters and fixed-position BVLS replay only; position Jacobian and rank were not independently derived. No independent physical PSF truth, source validity, coverage, scientific improvement or detection is established.",
+    "receipt_sha256": "478d696e0e9e1b0f001cfceefdfc9b5de63291ec33f2fd762ff90a3284e6a05d",
+    "successful_final_start_objectives_audited": 1314
+  },
+  "new_point_fits": 146,
+  "planned": 420,
+  "primary": {
+    "baseline_status_counts": {
+      "fit_completed": 48,
+      "preparation_failed": 8
+    },
+    "common_completed_pairs": 0,
+    "developmental_gates_passed": false,
+    "equal_source_baseline_mean_radial_arcsec": null,
+    "equal_source_mean_radial_improvement_arcsec": null,
+    "equal_source_point_mean_radial_arcsec": null,
+    "gates": {
+      "all_planned_records_available": false,
+      "equal_source_improvement": false,
+      "no_new_numerical_refusals": false,
+      "paired_new_p90": false,
+      "paired_new_rms": false,
+      "pooled_p90_increase": false,
+      "source_season_support": false
+    },
+    "new_numerical_refusals": 48,
+    "paired_point_rms_radial_arcsec": null,
+    "paired_source_count": 0,
+    "planned": 56,
+    "point_status_counts": {
+      "missing": 56
+    },
+    "pooled_baseline_p90_radial_arcsec": null,
+    "pooled_p90_increase_arcsec": null,
+    "pooled_point_p90_radial_arcsec": null,
+    "promotion": false,
+    "qualification": "Developmental descriptive budgets on an already opened, image-selected cohort; not independent validation, calibrated uncertainty, scientific improvement, or a detection. All common-completed pairs are retained, including partial sources; no cell-independence confidence interval or numerical-support selection is applied.",
+    "rows": [
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756861674071053312",
+          "2025W46_2A_0214_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756861674071053312",
+          "2025W46_2A_0226_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756861674071053312",
+          "2025W46_2A_0226_3"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756861674071053312",
+          "2025W46_2A_0226_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756861674071053312",
+          "2026W17_2A_0609_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756861674071053312",
+          "2026W17_2A_0609_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756861674071053312",
+          "2026W17_2A_0692_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756861674071053312",
+          "2026W17_2A_0692_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756957675180073600",
+          "2025W46_2A_0214_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756957675180073600",
+          "2025W46_2A_0226_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756957675180073600",
+          "2025W46_2A_0226_3"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756957675180073600",
+          "2025W46_2A_0226_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756957675180073600",
+          "2026W17_2A_0609_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756957675180073600",
+          "2026W17_2A_0609_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756957675180073600",
+          "2026W17_2A_0692_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756957675180073600",
+          "2026W17_2A_0692_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756958671612389632",
+          "2025W46_2A_0214_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756958671612389632",
+          "2025W46_2A_0226_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756958671612389632",
+          "2025W46_2A_0226_3"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756958671612389632",
+          "2025W46_2A_0226_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756958671612389632",
+          "2026W17_2A_0609_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756958671612389632",
+          "2026W17_2A_0609_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756958671612389632",
+          "2026W17_2A_0692_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756958671612389632",
+          "2026W17_2A_0692_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": "ValueError: insufficient native edge margin for full search/PSF support",
+        "baseline_numerical_support": null,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "preparation_failed",
+        "common_completed": false,
+        "key": [
+          "5756959015209770112",
+          "2025W46_2A_0214_4"
+        ],
+        "new_numerical_refusal": false,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": "ValueError: insufficient native edge margin for full search/PSF support",
+        "baseline_numerical_support": null,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "preparation_failed",
+        "common_completed": false,
+        "key": [
+          "5756959015209770112",
+          "2025W46_2A_0226_1"
+        ],
+        "new_numerical_refusal": false,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": "ValueError: insufficient native edge margin for full search/PSF support",
+        "baseline_numerical_support": null,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "preparation_failed",
+        "common_completed": false,
+        "key": [
+          "5756959015209770112",
+          "2025W46_2A_0226_3"
+        ],
+        "new_numerical_refusal": false,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": "ValueError: insufficient native edge margin for full search/PSF support",
+        "baseline_numerical_support": null,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "preparation_failed",
+        "common_completed": false,
+        "key": [
+          "5756959015209770112",
+          "2025W46_2A_0226_4"
+        ],
+        "new_numerical_refusal": false,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": "ValueError: insufficient native edge margin for full search/PSF support",
+        "baseline_numerical_support": null,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "preparation_failed",
+        "common_completed": false,
+        "key": [
+          "5756959015209770112",
+          "2026W17_2A_0609_1"
+        ],
+        "new_numerical_refusal": false,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": "ValueError: insufficient native edge margin for full search/PSF support",
+        "baseline_numerical_support": null,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "preparation_failed",
+        "common_completed": false,
+        "key": [
+          "5756959015209770112",
+          "2026W17_2A_0609_2"
+        ],
+        "new_numerical_refusal": false,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": "ValueError: insufficient native edge margin for full search/PSF support",
+        "baseline_numerical_support": null,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "preparation_failed",
+        "common_completed": false,
+        "key": [
+          "5756959015209770112",
+          "2026W17_2A_0692_1"
+        ],
+        "new_numerical_refusal": false,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": "ValueError: insufficient native edge margin for full search/PSF support",
+        "baseline_numerical_support": null,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "preparation_failed",
+        "common_completed": false,
+        "key": [
+          "5756959015209770112",
+          "2026W17_2A_0692_2"
+        ],
+        "new_numerical_refusal": false,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960355239574528",
+          "2025W46_2A_0214_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960355239574528",
+          "2025W46_2A_0226_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960355239574528",
+          "2025W46_2A_0226_3"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960355239574528",
+          "2025W46_2A_0226_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960355239574528",
+          "2026W17_2A_0609_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960355239574528",
+          "2026W17_2A_0609_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960355239574528",
+          "2026W17_2A_0692_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960355239574528",
+          "2026W17_2A_0692_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960522742285696",
+          "2025W46_2A_0214_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960522742285696",
+          "2025W46_2A_0226_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960522742285696",
+          "2025W46_2A_0226_3"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960522742285696",
+          "2025W46_2A_0226_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960522742285696",
+          "2026W17_2A_0609_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960522742285696",
+          "2026W17_2A_0609_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960522742285696",
+          "2026W17_2A_0692_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756960522742285696",
+          "2026W17_2A_0692_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756961076794790528",
+          "2025W46_2A_0214_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756961076794790528",
+          "2025W46_2A_0226_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756961076794790528",
+          "2025W46_2A_0226_3"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756961076794790528",
+          "2025W46_2A_0226_4"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2025-11"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756961076794790528",
+          "2026W17_2A_0609_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756961076794790528",
+          "2026W17_2A_0609_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756961076794790528",
+          "2026W17_2A_0692_1"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      },
+      {
+        "baseline_error": null,
+        "baseline_numerical_support": true,
+        "baseline_radial_arcsec": null,
+        "baseline_residual_arcsec": null,
+        "baseline_status": "fit_completed",
+        "common_completed": false,
+        "key": [
+          "5756961076794790528",
+          "2026W17_2A_0692_2"
+        ],
+        "new_numerical_refusal": true,
+        "point_error": null,
+        "point_numerical_support": null,
+        "point_radial_arcsec": null,
+        "point_residual_arcsec": null,
+        "point_status": "missing",
+        "season": "2026-04"
+      }
+    ],
+    "source_count": 7,
+    "source_rows": [
+      {
+        "baseline_mean_radial_arcsec": null,
+        "baseline_residual_vectors_arcsec": [],
+        "mean_improvement_arcsec": null,
+        "pair_count": 0,
+        "pair_count_by_season": {
+          "2025-11": 0,
+          "2026-04": 0
+        },
+        "paired_keys": [],
+        "planned": 8,
+        "point_mean_radial_arcsec": null,
+        "point_residual_vectors_arcsec": [],
+        "source_id": "5756861674071053312",
+        "support_gate_met": false
+      },
+      {
+        "baseline_mean_radial_arcsec": null,
+        "baseline_residual_vectors_arcsec": [],
+        "mean_improvement_arcsec": null,
+        "pair_count": 0,
+        "pair_count_by_season": {
+          "2025-11": 0,
+          "2026-04": 0
+        },
+        "paired_keys": [],
+        "planned": 8,
+        "point_mean_radial_arcsec": null,
+        "point_residual_vectors_arcsec": [],
+        "source_id": "5756957675180073600",
+        "support_gate_met": false
+      },
+      {
+        "baseline_mean_radial_arcsec": null,
+        "baseline_residual_vectors_arcsec": [],
+        "mean_improvement_arcsec": null,
+        "pair_count": 0,
+        "pair_count_by_season": {
+          "2025-11": 0,
+          "2026-04": 0
+        },
+        "paired_keys": [],
+        "planned": 8,
+        "point_mean_radial_arcsec": null,
+        "point_residual_vectors_arcsec": [],
+        "source_id": "5756958671612389632",
+        "support_gate_met": false
+      },
+      {
+        "baseline_mean_radial_arcsec": null,
+        "baseline_residual_vectors_arcsec": [],
+        "mean_improvement_arcsec": null,
+        "pair_count": 0,
+        "pair_count_by_season": {
+          "2025-11": 0,
+          "2026-04": 0
+        },
+        "paired_keys": [],
+        "planned": 8,
+        "point_mean_radial_arcsec": null,
+        "point_residual_vectors_arcsec": [],
+        "source_id": "5756959015209770112",
+        "support_gate_met": false
+      },
+      {
+        "baseline_mean_radial_arcsec": null,
+        "baseline_residual_vectors_arcsec": [],
+        "mean_improvement_arcsec": null,
+        "pair_count": 0,
+        "pair_count_by_season": {
+          "2025-11": 0,
+          "2026-04": 0
+        },
+        "paired_keys": [],
+        "planned": 8,
+        "point_mean_radial_arcsec": null,
+        "point_residual_vectors_arcsec": [],
+        "source_id": "5756960355239574528",
+        "support_gate_met": false
+      },
+      {
+        "baseline_mean_radial_arcsec": null,
+        "baseline_residual_vectors_arcsec": [],
+        "mean_improvement_arcsec": null,
+        "pair_count": 0,
+        "pair_count_by_season": {
+          "2025-11": 0,
+          "2026-04": 0
+        },
+        "paired_keys": [],
+        "planned": 8,
+        "point_mean_radial_arcsec": null,
+        "point_residual_vectors_arcsec": [],
+        "source_id": "5756960522742285696",
+        "support_gate_met": false
+      },
+      {
+        "baseline_mean_radial_arcsec": null,
+        "baseline_residual_vectors_arcsec": [],
+        "mean_improvement_arcsec": null,
+        "pair_count": 0,
+        "pair_count_by_season": {
+          "2025-11": 0,
+          "2026-04": 0
+        },
+        "paired_keys": [],
+        "planned": 8,
+        "point_mean_radial_arcsec": null,
+        "point_residual_vectors_arcsec": [],
+        "source_id": "5756961076794790528",
+        "support_gate_met": false
+      }
+    ],
+    "supported_source_count": 0
+  },
+  "promotion": false,
+  "prospective_fields": 0,
+  "protocol_commit": "31d07ab777628aecc90af3b244e882e2e6d95b93",
+  "publisher_sha256": "f2ee8570404a02c27d4a800dffdb4af455b8279a34d5a33c31572e192005ec1a",
+  "qualification": "all opened development data; a passing developmental gate does not certify scientific accuracy, calibrated covariance or detection",
+  "random_draws": 0,
+  "recorded": 168,
+  "schema": "shape-point-overview-1",
+  "source_rows": [
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756849094111431424"
+    },
+    {
+      "counts": {
+        "not_evaluated": 20
+      },
+      "legacy_split": "heldout",
+      "planned": 20,
+      "source_id": "5756861674071053312"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756861914589220736"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756864938246197376"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756941835340702080"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756942110218608640"
+    },
+    {
+      "counts": {
+        "fit_completed": 2,
+        "not_evaluated": 8,
+        "preparation_failed": 10
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756942655678337920"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756945443113219072"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756956163351495040"
+    },
+    {
+      "counts": {
+        "not_evaluated": 20
+      },
+      "legacy_split": "heldout",
+      "planned": 20,
+      "source_id": "5756957675180073600"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756958431094222592"
+    },
+    {
+      "counts": {
+        "not_evaluated": 20
+      },
+      "legacy_split": "heldout",
+      "planned": 20,
+      "source_id": "5756958671612389632"
+    },
+    {
+      "counts": {
+        "not_evaluated": 20
+      },
+      "legacy_split": "heldout",
+      "planned": 20,
+      "source_id": "5756959015209770112"
+    },
+    {
+      "counts": {
+        "not_evaluated": 20
+      },
+      "legacy_split": "heldout",
+      "planned": 20,
+      "source_id": "5756960355239574528"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756960454022809088"
+    },
+    {
+      "counts": {
+        "not_evaluated": 20
+      },
+      "legacy_split": "heldout",
+      "planned": 20,
+      "source_id": "5756960522742285696"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756961003778621824"
+    },
+    {
+      "counts": {
+        "not_evaluated": 20
+      },
+      "legacy_split": "heldout",
+      "planned": 20,
+      "source_id": "5756961076794790528"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756962107586225536"
+    },
+    {
+      "counts": {
+        "not_evaluated": 8,
+        "preparation_failed": 12
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756962382464133248"
+    },
+    {
+      "counts": {
+        "fit_completed": 12,
+        "not_evaluated": 8
+      },
+      "legacy_split": "training",
+      "planned": 20,
+      "source_id": "5756963035299165312"
+    }
+  ]
+}

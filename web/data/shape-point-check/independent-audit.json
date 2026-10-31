@@ -1,0 +1,257 @@
+{
+  "assessment_allowed": false,
+  "assessment_records_opened": 0,
+  "at_utc": "2026-10-31T01:46:29.148040+00:00",
+  "audit_source_sha256": {
+    "scripts/audit_shape_points.py": "5319e4d2edb19346d66bc431a433cb50f1ca4948ccfb9e05f641928f2d74a8de",
+    "scripts/publish_neighbor_intervention.py": "279842419f1a9a4f8762f9f5be63be4cb3cacd34b1cb2eadeb91dcf555154d8f",
+    "scripts/publish_reference_stars.py": "37cc2ff7a5eac324163140a7240a4fcd0e75dd952d2a3201c325984f57886113",
+    "tests/test_shape_point_audit.py": "3a191f17a8d71600bbea56d2ca2a37b793c4b8abfbfdebc8f397c9ecba9d2ed9"
+  },
+  "baseline_journal_digest": "7094fd1ffb8fa1c5a04d17dc573279f38b05421c64218766d482f9b33e6c75ff",
+  "coefficient_seal_sha256": "36d586ac01fd3842c2ae67700b408ffe2553f1a405ce310ef7b5279dc32f7bef",
+  "counts": {
+    "fit_completed": 146,
+    "preparation_failed": 22
+  },
+  "failed_final_starts_not_replayed": 0,
+  "gate_failures": [
+    {
+      "key": [
+        "5756942110218608640",
+        "2025W46_2A_0214_3"
+      ],
+      "reason": [
+        "multiple_near_best_modes"
+      ]
+    },
+    {
+      "key": [
+        "5756958431094222592",
+        "2025W46_2A_0214_3"
+      ],
+      "reason": [
+        "multiple_near_best_modes"
+      ]
+    }
+  ],
+  "gate_file_sha256": "603800116be353dad58d802a22d6466b18129b8cbd702deca4b4da88f543171d",
+  "linearization_comparisons": 143,
+  "linearization_error_max_common_px": 0.025339439960533495,
+  "linearization_error_p90_common_px": 0.0045925142674028445,
+  "maximum_bvls_objective_delta": 2.2737367544323206e-13,
+  "maximum_model_delta_mjysr": 1.7763568394002505e-15,
+  "maximum_scaled_kkt_violation": 5.692299421807077e-15,
+  "native_saved_points_audited": 146,
+  "new_position_fits": 0,
+  "planned": 168,
+  "point_design_sha256": "5dab9bdcf744a3f4f999da4c143518bd7349dbf27d6ce51a818f626509e84f68",
+  "point_journal_digest": "5e6c1e3f07eb57cb0035183d12f9fee59c83a68701a94a4c8789f02cf6d09ebb",
+  "point_protocol_commit": "31d07ab777628aecc90af3b244e882e2e6d95b93",
+  "promotion": false,
+  "qualification": "Saved native inputs/model/IRLS/mode clusters and fixed-position BVLS replay only; position Jacobian and rank were not independently derived. No independent physical PSF truth, source validity, coverage, scientific improvement or detection is established.",
+  "random_draws": 0,
+  "receipt_sha256": "478d696e0e9e1b0f001cfceefdfc9b5de63291ec33f2fd762ff90a3284e6a05d",
+  "runtime": {
+    "packages": {
+      "Pillow": "13.0.0",
+      "astropy": "8.0.2",
+      "numpy": "2.4.6",
+      "requests": "2.34.2",
+      "scipy": "1.17.1",
+      "truststore": "0.10.5"
+    },
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "thread_environment_request": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "thread_qualification": "environment requests only; backend thread count not independently measured"
+  },
+  "schema": "shape-point-independent-audit-1",
+  "shape_calibration_cell_digest": "88979f3dac516dee78543b2a26b5a8f9e89f00790b89f75a69b5afe07bcbc136",
+  "shape_calibration_commit": "972c8b8723326bc60e99ebd8611e1beb6efd34b3",
+  "successful_final_start_objectives_audited": 1314,
+  "terminal_failures": [
+    {
+      "key": [
+        "5756942655678337920",
+        "2025W46_1A_0090_2"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2025W46_1A_0090_3"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2025W46_1A_0238_1"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2025W46_1A_0238_2"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_2"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_3"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2026W17_1B_0507_3"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2026W17_1B_0634_2"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2026W17_1B_0634_3"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756942655678337920",
+        "2026W17_2A_0591_1"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2025W46_1A_0090_2"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2025W46_1A_0090_3"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2025W46_1A_0238_1"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2025W46_1A_0238_2"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_2"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_3"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2026W17_1B_0507_3"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2026W17_1B_0634_1"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2026W17_1B_0634_2"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2026W17_1B_0634_3"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2026W17_1B_0634_4"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    },
+    {
+      "key": [
+        "5756962382464133248",
+        "2026W17_2A_0591_1"
+      ],
+      "reason": "ValueError: insufficient native edge margin for full search/PSF support",
+      "status": "preparation_failed"
+    }
+  ]
+}

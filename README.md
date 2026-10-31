@@ -4,7 +4,21 @@ NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://
 
 Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Kiểm nghiệm mới](docs/REFERENCE_PRESENCE_RESULTS.md).
+**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Kiểm nghiệm mới](docs/SHAPE_REFERENCE_RESULTS.md).
+
+## Hiệu chỉnh PSF và sai số chung — checkpoint mới
+
+**Mã nguồn riêng đã áp dụng [MIT](LICENSE)** theo lựa chọn của chủ repo ngày 31/10/2026. Font, ảnh Canva, dataset và dependency giữ điều kiện riêng trong [NOTICE](NOTICE.md).
+
+**[Xem demo](https://nosleepclub-nasa-spherex.vercel.app/#shape-validation)** · [Kết quả, giới hạn và bước tiếp theo](docs/SHAPE_REFERENCE_RESULTS.md).
+
+- Học ePSF từ **145/168** ô calibration, giữ 22 ô thiếu hỗ trợ và một ô từ chối số học. Cân bằng nguồn giảm đóng góp lớn nhất **50,70% → 12,87%**; hệ số được seal trước khi fit vị trí.
+- Fit vị trí hoàn tất **146/168** ô, nhưng **hai sao có nghiệm cạnh tranh cách nhau 1,89″ và 3,38″**. Gate chặn mô hình: **252 ô dành riêng chưa đánh giá**, gồm 56 ô primary. Chưa áp dụng hiệu chỉnh hoặc chuyển ngưỡng nhận nguồn cũ sang PSF mới.
+- Covariance baseline giữ **49.294 pixel** và sai số Gaia dùng chung: **357/420** ô có đáp ứng, 61 ô thiếu hỗ trợ và hai ô từ chối vẫn hiện. Heldout χ²/bậc tự do **407,431/238 ≈ 1,71**; sai số chưa được hiệu chuẩn đầy đủ.
+
+Audit độc lập kiểm **357/357** đáp ứng native bằng QR và **1.314/1.314** hàm mục tiêu cuối của 146 fit mới bằng BVLS tại vị trí đã lưu. Đây là kiểm chứng số học, chưa phải độ chính xác thiên văn. Đăng ký cũ, tọa độ nguồn chồng, trọng số và một số sai số mô hình vẫn được giữ cố định; **30 trường triển vọng chưa mở**.
+
+Web tách ba bước học → gate calibration → đánh giá dành riêng; báo rõ phần bị hoãn và giữ ca không có kết quả. Ba overview chỉ tải khi mở mục; các audit **2,48 / 3,06 / 2,72 MB gzip** là tải riêng. Bước tiếp theo là chẩn đoán hai nghiệm trong cùng exposure, kiểm giữ tín hiệu và lan truyền các phụ thuộc sai số còn thiếu trước kiểm định mới.
 
 ## Goal production đang thực hiện — 0.10
 
@@ -37,9 +51,9 @@ Ngưỡng nhận nguồn **17,7038** được khóa trong Git sau 1.998 null cal
 
 **API review đạt baseline tải nhỏ:** [60/60 request](docs/REVIEW_LOAD_RESULTS.md), 12/12 phiên QA xác minh sạch; p95 GET **1,937 s**, POST **0,203 s**, DELETE **0,141 s**. Protocol `d7fd8f9` khóa trước đo trên production `8032493`, tối đa ba request đồng thời, cách đợt ít nhất sáu giây. Chưa chứng minh SLO, saturation, failover hoặc recovery production. [Runbook](docs/OPERATIONS.md) giữ cả lịch sử lỗi 502/504.
 
-**Lịch sử phát hành trước phép thử mới: [PR #8](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/8) và [PR #9](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/9) tại `f2e2aa4`.** [CI](docs/evidence/0.10/ci-pr9-f88b340.json) hoàn tất 387 test Python (13 optional raw-cache/photutils skip), sáu ca Mongo replica set thật và bốn suite Node 24. [54 phản hồi public](docs/evidence/0.10/production-f2e2aa4.json) xác minh 40 artifact theo Git, commit cả ba API và cleanup QA; lượt này không cần retry upstream. [Browser public](docs/evidence/0.10/neighbor-production-browser.json) xác minh bảng/bộ lọc và ca 0/16. Hai [build lỗi trước đó](docs/OPERATIONS.md#sự-cố-đóng-gói-sau-pr-8) vẫn được giữ; API nay dùng contract 3 KB, tách báo cáo khỏi function bundle. Đây là nghiệm thu phần mềm trong phạm vi đã thử, chưa phải accuracy, recovery hay SLO production.
+**Bản public đã xác minh trước checkpoint này: [PR #11](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/11), main `1149210`.** [CI](docs/evidence/0.10/ci-pr11-8c124d1.json) chạy 453 ca Python (13 optional raw-cache/photutils skip), sáu ca Mongo replica set thật và năm suite Node. [62 phản hồi public](docs/evidence/0.10/production-1149210.json) xác minh 48 artifact theo Git, commit cả ba API và cleanup QA, không cần retry upstream. [Biên nhận phát hành](docs/REFERENCE_PRESENCE_RELEASE.md) tách rõ software verification và các gate khoa học chưa đạt. Lịch sử lỗi đóng gói/upstream vẫn nằm trong [runbook](docs/OPERATIONS.md).
 
-Bước khoa học tiếp theo: khóa phép học hiệu chỉnh ePSF trên tập development riêng, kiểm sai lệch và giữ tín hiệu trên sao ngoài bước học, rồi lượng hóa covariance căn chỉnh chung. Chưa áp dụng gate mô phỏng này để xác nhận nguồn trong workspace. [30 tâm trường dành trước](docs/INDEPENDENT_FIELD_SELECTION.md) vẫn chưa query/đo: **12 calibration / 12 validation / 6 final holdout**. Khóa evaluator, power, miền hỗ trợ, gate và overlap trước khi mở.
+Bước học ePSF và covariance baseline đã có kết quả ở checkpoint mới phía trên. Tiếp theo cần giải thích các nghiệm cạnh tranh, kiểm giữ tín hiệu và hoàn thiện covariance trước đánh giá ngoài. Khả năng giảm bias vẫn chưa được chứng minh. Chưa áp dụng gate mô phỏng này để xác nhận nguồn trong workspace. [30 tâm trường dành trước](docs/INDEPENDENT_FIELD_SELECTION.md) vẫn chưa query/đo: **12 calibration / 12 validation / 6 final holdout**. Khóa evaluator, power, miền hỗ trợ, gate và overlap trước khi mở.
 
 [Mã nguồn riêng theo MIT](LICENSE). [Nguồn và quyền sử dụng](NOTICE.md) ghi điều kiện riêng của font, dữ liệu, minh họa Canva và dependency; các tài sản này không được cấp lại theo MIT.
 

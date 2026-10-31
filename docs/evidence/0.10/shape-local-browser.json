@@ -1,0 +1,49 @@
+{
+  "checks": {
+    "all_252_assessment_cells_shown_as_deferred": true,
+    "details_open_with_enter": true,
+    "gate_refusal_visible": true,
+    "seven_unevaluated_sources_retained": true,
+    "table_scrolls_with_arrow_key": true,
+    "two_competing_mode_rows_present": true,
+    "viewport_reset_to_default": true
+  },
+  "desktop": {
+    "document_width": 1265,
+    "header_bottom_px": 84,
+    "screenshot": "shape-local-desktop.png",
+    "settled_target_top_px": 206.484375,
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "limits": [
+    "AX/DOM/keyboard and responsive spot check; not a full screen-reader or WCAG-conformance audit",
+    "screenshots show local software, not a new astronomical detection"
+  ],
+  "mobile": {
+    "document_width": 375,
+    "keyboard_scroll_left_after": 14,
+    "keyboard_scroll_left_before": 0,
+    "screenshot": "shape-local-mobile.png",
+    "table_client_width": 298,
+    "table_scroll_width": 790,
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  "recorded_at_utc": "2026-10-31T02:07:51.167722+00:00",
+  "role": "working local UI, before release commit; all science products already frozen",
+  "schema": "shape-reference-local-browser-1",
+  "source_sha256": {
+    "web/calibration-evidence.js": "978fc8f9f30e3cf40448622fbfdb997bdd30f0e93a0f716b9661675cfe70fffe",
+    "web/data/reference-covariance/overview.json": "1bc8e038f8b550cc283cca0d5700ba4497c0e8e28608b88b6d7e266274d0730a",
+    "web/data/shape-correction/overview.json": "dfb958a146fc1cf88eb42a27cd49da01f996f547656d0a667c0c5a3ad020087d",
+    "web/data/shape-point-check/overview.json": "143a3fd097a61b3b52cb9b59b2af9fd045e505b979031097d2fde9f59ea66ec5",
+    "web/index.html": "b8f5c320bd089d09811952ea7bda23df6340d711adb86ad448ab292f47fe1b9e",
+    "web/mission.css": "a04147189d0005baf8098359d9b4e121f2a4b183aa4509ae44b40da52dd4659a"
+  },
+  "url": "http://127.0.0.1:8770/#shape-validation"
+}
