@@ -1,0 +1,44 @@
+{
+  "schema": "profile-ci-pr13-1",
+  "pr": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/13",
+  "run_id": 41164187761,
+  "run_url": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41164187761",
+  "tested_head": "57ba06c9a01812625f869d09307ca39c27285d72",
+  "merged_main": "da79c6b9b3cb06dfea0126bd88b153d7ce73e89b",
+  "tested_and_merged_trees_identical": true,
+  "python": {
+    "job_id": 124428069632,
+    "status": "success",
+    "cases": 564,
+    "passed": 551,
+    "skipped": 13,
+    "seconds": 43.52,
+    "real_mongo_fixture_tests_passed": 6,
+    "skip_scope": "optional raw-cache/photutils cases; actual disposable Mongo concurrency/restore fixtures passed",
+    "selected_log_lines": [
+      "2026-10-31T03:25:04.1701112Z test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+      "2026-10-31T03:25:04.4143812Z test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+      "2026-10-31T03:25:04.7445851Z test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+      "2026-10-31T03:25:04.7583924Z test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+      "2026-10-31T03:25:04.8071899Z test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+      "2026-10-31T03:25:04.8465861Z test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok",
+      "2026-10-31T03:25:12.4391823Z Ran 564 tests in 43.520s",
+      "2026-10-31T03:25:12.4392351Z OK (skipped=13)"
+    ]
+  },
+  "javascript": {
+    "job_id": 124428069415,
+    "status": "success",
+    "node_major": 24,
+    "passed_suites": [
+      "review-store",
+      "explorer",
+      "linked-evidence",
+      "neighbor-evidence",
+      "reference-evidence",
+      "calibration-evidence",
+      "profile-evidence"
+    ]
+  },
+  "qualification": "Exact-head CI software/packaging checks. Scientific accuracy, coverage, production recovery/load/SLO and full accessibility remain unvalidated."
+}

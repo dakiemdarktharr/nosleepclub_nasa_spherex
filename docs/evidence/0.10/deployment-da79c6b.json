@@ -1,0 +1,33 @@
+{
+  "schema": "profile-production-deployment-1",
+  "deployment": {
+    "id": "dpl_7549bc8xMUnG2yV2ukQBQYUirgAp",
+    "url": "nosleepclub-nasa-spherex-gxbcgxjdh-acne-a6cd.vercel.app",
+    "readyState": "READY",
+    "state": "READY",
+    "target": "production",
+    "createdAt": 1793417166889,
+    "buildingAt": 1793417167802,
+    "ready": 1793417222072,
+    "alias": [
+      "nosleepclub-nasa-spherex.vercel.app",
+      "nosleepclub-nasa-spherex-acne-a6cd.vercel.app",
+      "nosleepclub-nasa-spherex-git-main-acne-a6cd.vercel.app"
+    ],
+    "meta": {
+      "githubCommitSha": "da79c6b9b3cb06dfea0126bd88b153d7ce73e89b",
+      "githubCommitRef": "main"
+    }
+  },
+  "public_url": "https://nosleepclub-nasa-spherex.vercel.app/#profile-landscape",
+  "production_commit": "da79c6b9b3cb06dfea0126bd88b153d7ce73e89b",
+  "tested_pr_head": "57ba06c9a01812625f869d09307ca39c27285d72",
+  "tested_and_production_trees_identical": true,
+  "ci_run": 41164187761,
+  "protected_preview": {
+    "id": "dpl_8wSmKmm3oFqTK4HFZvjfaJkvWvSv",
+    "state": "READY",
+    "verification": "metadata only; not fetched or shared"
+  },
+  "qualification": "Provider READY metadata supplemented by separate public HTTP and browser receipts; not scientific, recovery or SLO acceptance."
+}
