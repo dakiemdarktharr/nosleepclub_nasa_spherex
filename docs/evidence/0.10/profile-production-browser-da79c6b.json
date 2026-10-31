@@ -1,0 +1,23 @@
+{
+  "assessment": "Chưa mở",
+  "at_utc": "2026-10-31T03:31:39.419470+00:00",
+  "document_width": 1265,
+  "header_bottom": 84,
+  "image_loaded": true,
+  "image_natural_width": 1404,
+  "image_path": "data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_3.png",
+  "production_commit": "da79c6b9b3cb06dfea0126bd88b153d7ce73e89b",
+  "qualification": "Public render check plus local interaction/reflow evidence; not a complete accessibility, accuracy, coverage, recovery or reliability certification.",
+  "schema": "profile-production-browser-1",
+  "screenshot": "profile-production-da79c6b.png",
+  "screenshot_sha256": "255664d8e8c472cc12f349d9a429f4beda7c2a6642bee6101de59dc7a97684a7",
+  "section_top": 197.515625,
+  "status": "Kiểm toán số học đạt. Chẩn đoán chưa loại trừ nghiệm phụ; gate hiệu chỉnh vẫn dừng.",
+  "unavailable_count": "16",
+  "url": "https://nosleepclub-nasa-spherex.vercel.app/#profile-landscape",
+  "viewport": [
+    1280,
+    720
+  ],
+  "visible_count": "96/112"
+}

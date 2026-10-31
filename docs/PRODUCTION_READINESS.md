@@ -33,6 +33,7 @@ The user authorized implementation, verification, repository updates and deploym
 
 ## Fixed-profile diagnostic checkpoint — 2026-10-31
 
+- Delivered as main `da79c6b` through PR #13 after CI 41164187761: 564 cases, 13 optional skips, all six actual Mongo fixtures and seven Node suites passed. Production `dpl_7549bc8xMUnG2yV2ukQBQYUirgAp` passed 88 HTTP responses/74 exact Git-blob assets, all API commits and disposable QA cleanup, with no upstream retry. Public browser confirms the new panel/PNG. See PROFILE_LANDSCAPE_RELEASE.md; this does not close scientific or operational acceptance.
 - Owner-approved MIT is applied to original code and documentation; NOTICE now also identifies the derived profile products and DejaVu figure glyphs. External data and Canva rights remain separate.
 - Protocol `704e3ef` was committed and pushed before 112 new profile arms on the old training cohort. All 14 sources and two already opened frames remain: 96 numerical products and 16 unavailable-input records. No position optimization, new weight estimate, noise realization or new field was used.
 - Independent normalized WLS, full sampled topology checks and fixed derivative stencils verify 96 arms plus all 16 unavailable records. Both complete journals are public in one gzip, with source/input and figure hashes. PROFILE_LANDSCAPE_RESULTS.md preserves the positive curvatures and nonzero gradients without inventing a stationarity pass. The old gate remains failed; 252 assessment cells and 30 reserved fields remain unopened.
