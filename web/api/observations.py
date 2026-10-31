@@ -1,6 +1,7 @@
 """Bounded, read-only SPHEREx SIA2 metadata discovery via the fixed IRSA endpoint."""
 from datetime import datetime, timezone
 from hashlib import sha256
+from http.client import HTTPException
 from http.server import BaseHTTPRequestHandler
 import json
 import math
@@ -17,11 +18,13 @@ import xml.etree.ElementTree as ET
 try:
     from api._access_control import AccessDenied, guard
     from api._telemetry import emit_request, request_logger
+    from api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control', 'api._telemetry'):
+    if exc.name not in ('api', 'api._access_control', 'api._telemetry', 'api._upstream_diagnostics'):
         raise
     from web.api._access_control import AccessDenied, guard
     from web.api._telemetry import emit_request, request_logger
+    from web.api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 
 ENDPOINT = 'https://irsa.ipac.caltech.edu/SIA'
 MAX_BYTES = 2_000_000
@@ -32,8 +35,9 @@ logger = request_logger('observations_api')
 
 
 class UpstreamError(Exception):
-    def __init__(self, code):
+    def __init__(self, code, diagnostic=None):
         self.code = code
+        self.diagnostic = diagnostic
         super().__init__(code)
 
 
@@ -103,9 +107,10 @@ def fetch(url):
     parsed = urlsplit(url)
     if parsed.scheme != 'https' or parsed.netloc != 'irsa.ipac.caltech.edu' or parsed.path != '/SIA':
         raise UpstreamError('invalid_upstream')
-    start = time.monotonic()
+    start = time.monotonic();stage = 'open'
     try:
         with build_opener(NoRedirect()).open(Request(url, headers={'Accept': 'application/x-votable+xml, application/xml, text/xml', 'User-Agent': 'SPHEREx-metadata-demo/1.0'}), timeout=TIMEOUT) as response:
+            stage = 'read'
             chunks, size = [], 0
             while True:
                 if time.monotonic() - start > DEADLINE:
@@ -122,14 +127,24 @@ def fetch(url):
             if time.monotonic() - start > DEADLINE:
                 raise UpstreamError('upstream_timeout')
             return b''.join(chunks)
-    except (TimeoutError, socket.timeout):
-        raise UpstreamError('upstream_timeout')
-    except HTTPError:
-        raise UpstreamError('upstream_http_error')
+    except UpstreamError as exc:
+        exc.diagnostic = describe_upstream(None, stage)
+        raise
+    except (TimeoutError, socket.timeout) as exc:
+        raise UpstreamError('upstream_timeout', describe_upstream(exc, stage))
+    except HTTPError as exc:
+        raise UpstreamError('upstream_http_error', describe_upstream(exc, stage))
     except URLError as exc:
-        raise UpstreamError('upstream_timeout' if isinstance(exc.reason, (TimeoutError, socket.timeout)) else 'upstream_unavailable')
-    except OSError:
-        raise UpstreamError('upstream_unavailable')
+        raise UpstreamError('upstream_timeout' if isinstance(exc.reason, (TimeoutError, socket.timeout)) else 'upstream_unavailable', describe_upstream(exc, stage))
+    except OSError as exc:
+        raise UpstreamError('upstream_unavailable', describe_upstream(exc, stage))
+    except HTTPException as exc:
+        # Preserve the existing internal-error response for these exceptions.
+        try:
+            exc._upstream_diagnostic = describe_upstream(exc, stage)
+        except Exception:
+            pass
+        raise
 
 
 def local(tag):
@@ -225,7 +240,7 @@ class handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def reply(self, status, body, category):
+    def reply(self, status, body, category, error_code=None):
         raw = json.dumps(body, ensure_ascii=False, allow_nan=False).encode()
         self.send_response(status)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
@@ -244,18 +259,21 @@ class handler(BaseHTTPRequestHandler):
             self.wfile.write(raw)
         emit_request(logger, {'event': 'observations_request', 'request_id': self.request_id,
                               'status': status, 'category': category,
-                              'latency_ms': round((time.monotonic() - self.started) * 1000, 2)})
+                              'latency_ms': round((time.monotonic() - self.started) * 1000, 2),
+                              'error_code': error_code})
 
     def dispatch(self, method):
         self.request_id, self.started = secrets.token_hex(16), time.monotonic()
         if method != 'GET':
             return self.reply(405, {'error': 'method_not_allowed'}, 'method')
+        stage = 'open'
         try:
             params = parse_params(urlsplit(self.path).query)
             guard('observations', self.headers, self.client_address)
             url = upstream_url(params)
             content = fetch(url)
             retrieved = datetime.now(timezone.utc).isoformat()
+            stage = 'parse'
             rows, truncated, scanned = parse_votable(content, params)
             state = 'truncated' if truncated else ('ok' if rows else 'no_data')
             return self.reply(200, {'contract_version': '1.0', 'status': state, 'query': params,
@@ -269,7 +287,15 @@ class handler(BaseHTTPRequestHandler):
         except ValueError as exc:
             return self.reply(400, {'error': str(exc)}, 'validation')
         except UpstreamError as exc:
-            return self.reply(504 if exc.code == 'upstream_timeout' else 502, {'error': exc.code}, 'upstream')
+            emit_upstream(logger, 'observations', self.request_id, exc.diagnostic or describe_upstream(None, stage))
+            return self.reply(504 if exc.code == 'upstream_timeout' else 502, {'error': exc.code}, 'upstream', error_code=exc.code)
+        except HTTPException as exc:
+            try:
+                diagnostic = getattr(exc, '_upstream_diagnostic', None)
+            except Exception:
+                diagnostic = None
+            emit_upstream(logger, 'observations', self.request_id, diagnostic)
+            return self.reply(500, {'error': 'internal_error'}, 'internal')
         except Exception:
             return self.reply(500, {'error': 'internal_error'}, 'internal')
 

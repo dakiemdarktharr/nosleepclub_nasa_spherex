@@ -1,0 +1,25 @@
+{
+  "at_utc": "2026-10-31T02:26:14.024444+00:00",
+  "deployed_commit": "57e7bb1fe34c21685bb3b84e1bde466aeeddde5d",
+  "deployment": "dpl_ECAECDR8B766cSq1nTkGeQueaXwH",
+  "document_width": 1265,
+  "header_bottom_px": 84,
+  "observed": {
+    "assessment_deferred": "252 ô dành riêng chưa đánh giá",
+    "mode_failure_rows": 2,
+    "recorded": "168/420",
+    "reference_ratio": "1,71",
+    "remaining_busy_panels": 0,
+    "retry_visible": false,
+    "source_rows": 7
+  },
+  "qualification": "Public UI state and provider deployment identity, with exact static/API checks in production-57e7bb1.json; not science, SLO, recovery or a full accessibility certificate.",
+  "schema": "shape-reference-public-browser-1",
+  "screenshot": "shape-production-57e7bb1.png",
+  "settled_section_top_px": 200.484375,
+  "url": "https://nosleepclub-nasa-spherex.vercel.app/#shape-validation",
+  "viewport": [
+    1280,
+    720
+  ]
+}

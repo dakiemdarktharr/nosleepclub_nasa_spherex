@@ -1,0 +1,63 @@
+{
+  "figures": {
+    "profile-5756942110218608640-2025W46_2A_0214_2.png": {
+      "sha256": "0a10c73249fe5f328d68163af12c584fcbdfabdf53d39c39312d584b59b7c22c",
+      "size": [
+        1404,
+        1170
+      ],
+      "software_tag": "NoSleepClub profile diagnostic"
+    },
+    "profile-5756942110218608640-2025W46_2A_0214_3.png": {
+      "sha256": "a6973073ca512c6e5717774c9e8631dae0bff0d1fbbe41f0e353097c332cb758",
+      "size": [
+        1404,
+        1170
+      ],
+      "software_tag": "NoSleepClub profile diagnostic"
+    },
+    "profile-5756958431094222592-2025W46_2A_0214_2.png": {
+      "sha256": "8bcf98be01a6dd04ec4323fb056c4e990e2c3145f4533bf891082be846de06de",
+      "size": [
+        1404,
+        1170
+      ],
+      "software_tag": "NoSleepClub profile diagnostic"
+    },
+    "profile-5756958431094222592-2025W46_2A_0214_3.png": {
+      "sha256": "ad88a046edaa882651f89888c0c920bcc4a54e1f51aaee0189fc3a944de73fdd",
+      "size": [
+        1404,
+        1170
+      ],
+      "software_tag": "NoSleepClub profile diagnostic"
+    }
+  },
+  "font": {
+    "distribution_relative_path": "mpl-data/fonts/ttf/DejaVuSans.ttf",
+    "family": "DejaVu Sans",
+    "notice": "docs/licenses/DEJAVU-LICENSE.txt",
+    "sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22"
+  },
+  "inspected_at_utc": "2026-10-31T03:13:48.517721+00:00",
+  "packages": {
+    "contourpy": "1.3.3",
+    "cycler": "0.12.1",
+    "fonttools": "4.68.0",
+    "kiwisolver": "1.5.1",
+    "matplotlib": "3.11.2",
+    "numpy": "2.4.6",
+    "packaging": "26.3",
+    "pillow": "13.0.0",
+    "pyparsing": "3.3.3",
+    "python-dateutil": "3.0.0",
+    "six": "1.17.0",
+    "tzdata": "2026.6"
+  },
+  "publisher_sha256": "d3fb8ef80ed49ccb7af6d0dd68fd10f5e9c1d60571748f00b811f9265c4a77ac",
+  "qualification": "Post-render inspection of the current environment and unchanged PNG files; not a render-time attestation or cross-platform byte-reproduction claim.",
+  "requirements_path": "requirements-figures.txt",
+  "requirements_qualification": "Preserves the preexisting pinned requirements-figures.txt unchanged from bbd9727; an interim edit and its inspection hash in be34675 were reverted before release.",
+  "requirements_sha256": "6e73d507401a635ca162ca32987d949faf197fec2c6d23e849f46cea8b15c7d3",
+  "schema": "profile-figure-environment-inspection-1"
+}
