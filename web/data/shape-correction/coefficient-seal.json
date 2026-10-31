@@ -1,0 +1,47 @@
+{
+  "bounds": [
+    0.04,
+    0.003,
+    0.003
+  ],
+  "cell_digest": "88979f3dac516dee78543b2a26b5a8f9e89f00790b89f75a69b5afe07bcbc136",
+  "coefficients": [
+    -0.008307902698995737,
+    0.0006955850072342148,
+    0.000807192113922115
+  ],
+  "conditional_covariance": [
+    [
+      3.2342289100920405e-05,
+      5.226309935129577e-07,
+      -2.5252201381081587e-07
+    ],
+    [
+      5.226309935129577e-07,
+      6.862287589781202e-07,
+      3.176627786529325e-09
+    ],
+    [
+      -2.5252201381081587e-07,
+      3.1766277865293217e-09,
+      6.527058316679855e-07
+    ]
+  ],
+  "design_sha256": "00350fac21e9bea811e13c35612de0a1fd71fc969a9be6dc7e69dcb49e1c5763",
+  "point_fit_evaluated": false,
+  "promotion": false,
+  "protocol_commit": "972c8b8723326bc60e99ebd8611e1beb6efd34b3",
+  "qualification": "one calibration-only fixed-tangent update on opened data; model/robust-weight/source-balance/systematic uncertainty and scientific improvement remain unverified",
+  "result_sha256": "3a9ae731de56da113d3de3c17b7fbc6ff443649f3a71187cb93bc8dd393e5646",
+  "schema": "shape-coefficient-seal-1",
+  "shape_checks": {
+    "passed": 145,
+    "planned": 145
+  },
+  "status": "conditional_candidate",
+  "units": [
+    "pix2",
+    "pix3",
+    "pix3"
+  ]
+}

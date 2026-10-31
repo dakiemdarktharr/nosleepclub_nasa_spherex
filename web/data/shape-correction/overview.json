@@ -1,0 +1,155 @@
+{
+  "audit": {
+    "maximum_projected_data_score_gap": 4.796163466380676e-14,
+    "saved_cells": 145,
+    "scope": "independent algebra on saved responses; raw optical truth, noise draws and positions not refitted",
+    "unique_original_pixels": 20327
+  },
+  "audit_source_sha256": "bad4832c67825743cee1c0f72264bd816f4b6faad6d056364113c981942f933d",
+  "baseline_journal_digest": "7094fd1ffb8fa1c5a04d17dc573279f38b05421c64218766d482f9b33e6c75ff",
+  "baseline_protocol_commit": "71f63ca4bab85e9ee51c539cd46ae5bfd50c8bc2",
+  "bounds": [
+    0.04,
+    0.003,
+    0.003
+  ],
+  "cell_digest": "88979f3dac516dee78543b2a26b5a8f9e89f00790b89f75a69b5afe07bcbc136",
+  "coefficients": [
+    -0.008307902698995737,
+    0.0006955850072342148,
+    0.000807192113922115
+  ],
+  "condition": 1.051982491308965,
+  "conditional_standard_errors": [
+    0.005687028143144748,
+    0.0008283892557114198,
+    0.0008079021176281107
+  ],
+  "counts": {
+    "baseline_numerical_refusal": 1,
+    "baseline_unavailable": 22,
+    "information_available": 145
+  },
+  "design_sha256": "00350fac21e9bea811e13c35612de0a1fd71fc969a9be6dc7e69dcb49e1c5763",
+  "download": {
+    "bytes": 2481087,
+    "path": "data/shape-correction/calibration-records.json.gz",
+    "sha256": "ce97e857f958c9b6aed29a3154fc7743783caf4db51ece3c2e4cc30af297cafe",
+    "uncompressed_bytes": 10433049,
+    "uncompressed_sha256": "9a79839f6fcd64cc85c659ae02451dc34996142fec32b2dbb3ee056c6f099ff9"
+  },
+  "heldout_outcomes": 0,
+  "maximum_source_fraction": 0.128688669777575,
+  "new_point_fits": 0,
+  "parameter_names": [
+    "width",
+    "skew_x",
+    "skew_y"
+  ],
+  "planned": 168,
+  "promotion": false,
+  "prospective_fields": 0,
+  "protocol_commit": "972c8b8723326bc60e99ebd8611e1beb6efd34b3",
+  "qualification": "one calibration-only fixed-tangent update on opened data; model/robust-weight/source-balance/systematic uncertainty and scientific improvement remain unverified",
+  "random_draws": 0,
+  "reasons": [],
+  "result_file_sha256": "1d76490f6fb7ab5665ae51cbda6e6b6a79476a4832d6c807c6eeed9dac32535e",
+  "result_sha256": "3a9ae731de56da113d3de3c17b7fbc6ff443649f3a71187cb93bc8dd393e5646",
+  "schema": "shape-calibration-overview-1",
+  "shape_checks": {
+    "passed": 145,
+    "planned": 145
+  },
+  "sources": [
+    {
+      "information_available": 11,
+      "planned": 12,
+      "source_id": "5756958431094222592",
+      "weight": 5.282134249366688
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756849094111431424",
+      "weight": 0.060434550661837186
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756941835340702080",
+      "weight": 1.9296492973028287
+    },
+    {
+      "information_available": 0,
+      "planned": 12,
+      "source_id": "5756962382464133248",
+      "weight": null
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756945443113219072",
+      "weight": 0.4136333377711322
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756861914589220736",
+      "weight": 1.0
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756961003778621824",
+      "weight": 0.2115189272796667
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756963035299165312",
+      "weight": 1.4870503982598657
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756864938246197376",
+      "weight": 0.11895756328932784
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756942110218608640",
+      "weight": 4.335073351867369
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756956163351495040",
+      "weight": 0.791469757919163
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756960454022809088",
+      "weight": 1.5638412027081938
+    },
+    {
+      "information_available": 12,
+      "planned": 12,
+      "source_id": "5756962107586225536",
+      "weight": 0.2796208920647276
+    },
+    {
+      "information_available": 2,
+      "planned": 12,
+      "source_id": "5756942655678337920",
+      "weight": 3.0594515718197894
+    }
+  ],
+  "status": "conditional_candidate",
+  "units": [
+    "pix2",
+    "pix3",
+    "pix3"
+  ]
+}
