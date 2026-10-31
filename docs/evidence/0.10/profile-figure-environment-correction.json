@@ -1,0 +1,12 @@
+{
+  "at_utc": "2026-10-31T03:22:18.470272+00:00",
+  "corrected_inspection_sha256": "6c5262ab935afbdd1e260a220cdf029cece637a9471ccfa54b79e332f950fcfc",
+  "old_inspection_sha256": "bb7c7e0cf254ce726a5c308582e0554b784ebc96262ada8475331a034a03627d",
+  "previous_commit": "be34675660bbe1de27d1427db298664510fb7a57",
+  "previous_requirements_sha256": "5f637fef6dea037254817da7f08d7b5464a39ddea8692a88a54902a2393e29d6",
+  "qualification": "Dependency file restored byte-for-byte; only post-render environment metadata corrected. No scientific journal, design, gate, publisher, cost or PNG changed. Earlier local receipt remains historical; exact final CI checks the restored tree.",
+  "restored_dependency_commit": "bbd9727272c7d0c8951296cce49e9e799cddf33e",
+  "restored_requirements_sha256": "6e73d507401a635ca162ca32987d949faf197fec2c6d23e849f46cea8b15c7d3",
+  "schema": "profile-figure-environment-correction-1",
+  "tzdata": "2026.6"
+}

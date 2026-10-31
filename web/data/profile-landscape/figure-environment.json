@@ -51,11 +51,13 @@
     "pillow": "13.0.0",
     "pyparsing": "3.3.3",
     "python-dateutil": "3.0.0",
-    "six": "1.17.0"
+    "six": "1.17.0",
+    "tzdata": "2026.6"
   },
   "publisher_sha256": "d3fb8ef80ed49ccb7af6d0dd68fd10f5e9c1d60571748f00b811f9265c4a77ac",
   "qualification": "Post-render inspection of the current environment and unchanged PNG files; not a render-time attestation or cross-platform byte-reproduction claim.",
   "requirements_path": "requirements-figures.txt",
-  "requirements_sha256": "5f637fef6dea037254817da7f08d7b5464a39ddea8692a88a54902a2393e29d6",
+  "requirements_qualification": "Preserves the preexisting pinned requirements-figures.txt unchanged from bbd9727; an interim edit and its inspection hash in be34675 were reverted before release.",
+  "requirements_sha256": "6e73d507401a635ca162ca32987d949faf197fec2c6d23e849f46cea8b15c7d3",
   "schema": "profile-figure-environment-inspection-1"
 }

@@ -1,11 +1,12 @@
-# Optional offline figure publication; install with requirements.txt.
-# Kept separate from the Vercel web runtime.
+# Optional offline figures only. Install after requirements.txt; never in web/.
+# Resolved from official PyPI on 2026-10-30; does not replace science pins.
 matplotlib==3.11.2
 contourpy==1.3.3
 cycler==0.12.1
 fonttools==4.68.0
 kiwisolver==1.5.1
-pyparsing==3.3.3
 packaging==26.3
+pyparsing==3.3.3
 python-dateutil==3.0.0
 six==1.17.0
+tzdata==2026.6
