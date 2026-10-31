@@ -41,7 +41,7 @@ Ngưỡng nhận nguồn **17,7038** được khóa trong Git sau 1.998 null cal
 
 Bước khoa học tiếp theo: khóa phép học hiệu chỉnh ePSF trên tập development riêng, kiểm sai lệch và giữ tín hiệu trên sao ngoài bước học, rồi lượng hóa covariance căn chỉnh chung. Chưa áp dụng gate mô phỏng này để xác nhận nguồn trong workspace. [30 tâm trường dành trước](docs/INDEPENDENT_FIELD_SELECTION.md) vẫn chưa query/đo: **12 calibration / 12 validation / 6 final holdout**. Khóa evaluator, power, miền hỗ trợ, gate và overlap trước khi mở.
 
-[Nguồn và quyền sử dụng](NOTICE.md): font, dữ liệu và minh họa có điều kiện riêng; giấy phép mã nguồn đang chờ chủ repo. Repo public không tự tạo giấy phép chung cho mọi asset.
+[Mã nguồn riêng theo MIT](LICENSE). [Nguồn và quyền sử dụng](NOTICE.md) ghi điều kiện riêng của font, dữ liệu, minh họa Canva và dependency; các tài sản này không được cấp lại theo MIT.
 
 ## Bắt đầu trên web
 
@@ -225,6 +225,6 @@ Quality study 0.7.0: `python -m scripts.prepare_quality_data`, `python -m script
 
 Dữ liệu gốc: SPHEREx QR2 tại NASA/IPAC IRSA, DOI [10.26131/IRSA652](https://doi.org/10.26131/IRSA652). Các PNG/FITS trong `web/data/` là sản phẩm xử lý phục vụ demo, không phải sản phẩm khoa học chính thức của IRSA. Manifest giữ URL cutout, SHA-256, observation ID và pipeline version.
 
-Không commit token hoặc bộ FITS thô lớn. Repo hiện chưa cấp giấy phép mã nguồn; cần thống nhất giấy phép của nhóm. Dữ liệu và tài sản bên thứ ba giữ điều kiện sử dụng riêng.
+Không commit token hoặc bộ FITS thô lớn. Mã nguồn riêng và tài liệu gốc đi kèm được cấp phép theo [MIT](LICENSE), theo lựa chọn của chủ repo ngày 31/10/2026. Dữ liệu, font, minh họa Canva và dependency giữ điều kiện sử dụng riêng trong [NOTICE](NOTICE.md).
 
 Font Be Vietnam Pro được phân phối theo SIL Open Font License 1.1, kèm giấy phép và SHA-256 trong `web/assets/fonts/`. Script `python scripts/fetch_web_fonts.py` chỉ dùng khi cần lấy lại font từ nguồn chính thức; clone repo để chạy web không cần bước này.

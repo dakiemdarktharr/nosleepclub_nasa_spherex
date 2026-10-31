@@ -1,16 +1,17 @@
 # Sources and rights
 
 This repository combines original project code, third-party dependencies and
-scientific products. Public GitHub visibility alone is not a blanket license for
-every file. The proposed code license is under owner review in
-[CODE_LICENSE_PROPOSAL.md](docs/CODE_LICENSE_PROPOSAL.md); no new source-code
-license has been applied by that draft.
+scientific products. Original project code and its original accompanying
+documentation are licensed under the [MIT License](LICENSE), as approved by
+the repository owner on 2026-10-31. External data, fonts, illustrations and
+dependencies retain their separate rights below. The decision and original
+proposal are recorded in [CODE_LICENSE_PROPOSAL.md](docs/CODE_LICENSE_PROPOSAL.md).
 
 | Material | Source and current record | Reuse boundary |
 |---|---|---|
-| Original project code | Git history and scientific source hashes | Owner code-license decision pending; do not infer an open-source grant from visibility |
+| Original project code and its original accompanying documentation | Git history, scientific source hashes and [LICENSE](LICENSE) | MIT; retain its copyright and permission notice. This grant does not relicense external material listed below |
 | Be Vietnam Pro fonts | `web/assets/fonts/provenance.json`, local `OFL.txt` | SIL Open Font License, retained with the font files |
-| DejaVu glyphs in linked-study SVG figures | Matplotlib 3.11.2 bundled DejaVu Sans; font hash in `web/data/linked-flux/figures.json` | Upstream Bitstream/DejaVu/Arev notices retained in [DEJAVU-LICENSE.txt](docs/licenses/DEJAVU-LICENSE.txt); no new license for the project code |
+| DejaVu glyphs in linked-study SVG figures | Matplotlib 3.11.2 bundled DejaVu Sans; font hash in `web/data/linked-flux/figures.json` | Upstream Bitstream/DejaVu/Arev notices retained in [DEJAVU-LICENSE.txt](docs/licenses/DEJAVU-LICENSE.txt); the code's MIT grant does not replace these font terms |
 | Canva illustrations | `web/assets/provenance.json`, media IDs and URLs | Artistic illustrations only. Account/content-specific rights are not established by the provenance JSON; no MIT or public-domain grant is asserted |
 | SPHEREx cutouts and calibration products | NASA / Caltech / IPAC IRSA; source URLs, versions and hashes in each manifest | Preserve mission/archive credit and processing qualifications; project code licensing does not replace upstream terms |
 | Gaia DR3 | ESA Gaia / DPAC via IRSA; query and release in manifests | Preserve release, source IDs, query and provenance; catalog predictions are not new measurements |
