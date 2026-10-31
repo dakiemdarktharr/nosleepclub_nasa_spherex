@@ -1,0 +1,51 @@
+{
+  "at_utc": "2026-10-31T03:19:17.742192+00:00",
+  "desktop": {
+    "assessment": "Chưa mở",
+    "count": "96/112",
+    "header_bottom": 84,
+    "image_natural_width": 1404,
+    "top_after_reload": 205.515625,
+    "unavailable": 16,
+    "viewport": [
+      1280,
+      720
+    ],
+    "wide_overflow": false
+  },
+  "interactions": {
+    "Tab_from_frame_focused": "profile-open-plot",
+    "Tab_from_source_focused": "profile-frame",
+    "frame_switch_to": "2025W46_2A_0214_2",
+    "numeric_rows": 4,
+    "saved_near_best_counts": [
+      1,
+      1
+    ],
+    "source_switch_to": "5756958431094222592",
+    "summary_Enter_opened": true
+  },
+  "limitations": [
+    "Partial interaction/reflow check; not a full screen-reader or accessibility audit.",
+    "Native summary is represented as generic in DOM snapshot; tested via its actual summary element.",
+    "Preview is local; public deployment and API verification are separate."
+  ],
+  "mobile": {
+    "ArrowRight_scroll_left_after_initial_frame": 1,
+    "ArrowRight_scroll_left_before": 0,
+    "document_width": 375,
+    "table_client_width": 298,
+    "table_scroll_width": 790,
+    "viewport": [
+      390,
+      844
+    ],
+    "viewport_reset": true
+  },
+  "schema": "profile-local-browser-1",
+  "screenshots": {
+    "profile-local-desktop.png": "7a2abf5f47154fa94454346df175556bb2b0719ba2e20db46c1a7f23d2f3f90c",
+    "profile-local-mobile.png": "4dd6f00b7bab8319743312c99840e1dd80e20acc3d2bea4a8baba9184ff63d03"
+  },
+  "url": "http://127.0.0.1:8770/#profile-landscape"
+}

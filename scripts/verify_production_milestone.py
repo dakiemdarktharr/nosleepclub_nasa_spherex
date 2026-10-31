@@ -44,7 +44,14 @@ ASSETS=('index.html','explorer.js','app.js','review-store.js','goal-dashboard.js
         'data/shape-point-check/overview.json','data/shape-point-check/independent-audit.json',
         'data/shape-point-check/records.json.gz','data/reference-covariance/design.json',
         'data/reference-covariance/overview.json','data/reference-covariance/independent-audit.json',
-        'data/reference-covariance/records.json.gz')
+        'data/reference-covariance/records.json.gz',
+        'navigation.js','profile-evidence.js','data/profile-landscape/design.json',
+        'data/profile-landscape/overview.json','data/profile-landscape/independent-audit.json',
+        'data/profile-landscape/figure-environment.json','data/profile-landscape/records.json.gz',
+        'data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_2.png',
+        'data/profile-landscape/profile-5756942110218608640-2025W46_2A_0214_3.png',
+        'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_2.png',
+        'data/profile-landscape/profile-5756958431094222592-2025W46_2A_0214_3.png')
 
 
 def require(condition, label):

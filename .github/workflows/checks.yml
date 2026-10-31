@@ -119,3 +119,5 @@ jobs:
         run: node tests/reference-evidence.test.cjs
       - name: Test staged shape and shared covariance evidence
         run: node tests/calibration-evidence.test.cjs
+      - name: Test fixed-weight profile diagnostic evidence
+        run: node tests/profile-evidence.test.cjs

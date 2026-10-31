@@ -1,0 +1,339 @@
+{
+  "assessment_opened": false,
+  "at_utc": "2026-10-31T02:56:56.858063+00:00",
+  "audit_cell_digest": "b42dc9ccd13594087ba2a10fe30850ba613eeb96faa891b6439fbbb23ba55e5f",
+  "counts": {
+    "verified": 96,
+    "verified_unavailable": 16
+  },
+  "failures": [],
+  "identity": {
+    "baseline_journal_digest": "7094fd1ffb8fa1c5a04d17dc573279f38b05421c64218766d482f9b33e6c75ff",
+    "point_journal_digest": "5e6c1e3f07eb57cb0035183d12f9fee59c83a68701a94a4c8789f02cf6d09ebb",
+    "profile_commit": "704e3efc806dddef7906b032ba917745f80442a1",
+    "profile_design_sha256": "6896060318db83a09d9b917f2ced0d4b5f930116d2cbdef2b046c22440b4ef56",
+    "profile_journal_digest": "fe1105b90c176412e22b837e13c6b7573ea1d9f3ace4e3dc7723648a4a2bb270",
+    "runtime": {
+      "packages": {
+        "Pillow": "13.0.0",
+        "astropy": "8.0.2",
+        "numpy": "2.4.6",
+        "requests": "2.34.2",
+        "scipy": "1.17.1",
+        "truststore": "0.10.5"
+      },
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python": "3.11.9",
+      "thread_environment_request": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "thread_qualification": "environment requests only; backend thread count not independently measured"
+    },
+    "source_sha256": {
+      "docs/PROFILE_LANDSCAPE_AUDIT.md": "db4f8e9d4657a5f7943d344d1e459b368d17d5287df74da8e479002c8bb793d3",
+      "scripts/audit_profile_landscape.py": "90eaa6f825a91526bfe3ed049349e40d4d813f1b778d6b4e80b42f85d037e24e",
+      "tests/test_profile_landscape_audit.py": "1888d7c8defdb7e12f03822fcd12cf686395c60189309af045b282c28258bb43"
+    }
+  },
+  "max_absolute_differences": {
+    "anchor": 0.0,
+    "grid_axis": 0.0,
+    "grid_cost": 1.3642420526593924e-12,
+    "native_background_design": 0.0,
+    "native_data": 0.0,
+    "native_error": 0.0,
+    "native_neighbor_design": 0.0,
+    "own_replay_delta": 0.0,
+    "own_replayed_cost": 1.1368683772161603e-13,
+    "own_saved_cost": 0.0,
+    "own_study_replay": 0.0,
+    "probe_cost": 8.526512829121202e-14,
+    "probe_gauss_newton": 1.8444552551954985e-09,
+    "probe_gauss_newton_eigenvalues": 1.8808350432664156e-09,
+    "probe_gradient_cost": 8.526512829121202e-11,
+    "probe_gradient_disagreement_infinity": 5.1871840156536564e-11,
+    "probe_gradient_infinity": 5.6843418860808015e-11,
+    "probe_gradient_residual": 3.200817388915311e-11,
+    "probe_hessian_cost": 2.2737367544323206e-07,
+    "probe_hessian_cost_eigenvalues": 2.113670234393794e-07,
+    "probe_residual_jacobian_column_norms": 4.973799150320701e-12,
+    "probe_residual_jacobian_scaled_condition": 1.7497114868092467e-13
+  },
+  "new_noise_draws": 0,
+  "new_position_fits": 0,
+  "planned": 112,
+  "promotion": false,
+  "qualification": "Independent fixed-position WLS and sampled-grid arithmetic only; finite grids, conditional weights, physical PSF truth, scientific accuracy and covariance coverage remain unvalidated.",
+  "receipt_sha256": "35156d08b0f8198e28eb6e01aff14e73a7749f7f9d07bf47eab3712818964ec3",
+  "schema": "profile-landscape-independent-audit-1",
+  "status": "passed",
+  "unavailable_cells": [
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_2",
+        "baseline",
+        "baseline"
+      ],
+      "profile_checksum": "454df5d8f5c78adbbdd2f2249644b680eebdafb1e05b63dc954be89f8f907e99",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_2",
+        "baseline",
+        "corrected"
+      ],
+      "profile_checksum": "4bb939b08c0416b91bf0356a6f920a6db98d1fce54e664afedd199ffc6e3dab7",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_2",
+        "corrected",
+        "baseline"
+      ],
+      "profile_checksum": "6d4e102ca87edd91a0fa4fcc03f263b7777eab537d4f081cd8564bdba6f77fca",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_2",
+        "corrected",
+        "corrected"
+      ],
+      "profile_checksum": "e12f73fd54569eff0320584f4303a95a0e06df2b1a02f0c83328e7f8ba575ef4",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_3",
+        "baseline",
+        "baseline"
+      ],
+      "profile_checksum": "d08439cc78413c13927fe131f56e93693e030abdecb118c1c0d3dcb2bded5820",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_3",
+        "baseline",
+        "corrected"
+      ],
+      "profile_checksum": "e53264cd4acef248a1bfdab114d8ef313ee3c75a66c5fba871487bd686d688c5",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_3",
+        "corrected",
+        "baseline"
+      ],
+      "profile_checksum": "302c7dcec5c104d6925ec24a0c3296459823d5ce556eef189641c6cd832a2822",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756942655678337920",
+        "2025W46_2A_0214_3",
+        "corrected",
+        "corrected"
+      ],
+      "profile_checksum": "31a06e2d0f4445b3fcbfb722b6ec22024355dfd4de67964bc0f33c0ef58ff3c4",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_2",
+        "baseline",
+        "baseline"
+      ],
+      "profile_checksum": "a4b713f1d27df8326d3c90190a169321a9737596af4078446daef3656532e97c",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_2",
+        "baseline",
+        "corrected"
+      ],
+      "profile_checksum": "b7db7429bce7dfc5ebe8229d15f0b283ec625d08fe75999bfb9d3e8a177bd8e8",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_2",
+        "corrected",
+        "baseline"
+      ],
+      "profile_checksum": "3ee9705b98e96b1167a0fd593244ec9bec8b62494722c67f683efd4cf7a2d72d",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_2",
+        "corrected",
+        "corrected"
+      ],
+      "profile_checksum": "73658b936e23780906e96381a0d3d82f8415393301bdd954c14eee36cabe4fe6",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_3",
+        "baseline",
+        "baseline"
+      ],
+      "profile_checksum": "5c268111288905f0418fd6eb0bd21912f0de9ce98ac64ba9365dd05d37788fbf",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_3",
+        "baseline",
+        "corrected"
+      ],
+      "profile_checksum": "17e994395d9a9f726aa36b8818610e8f17db20f3b2b5619c460a7ea94bc5551a",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_3",
+        "corrected",
+        "baseline"
+      ],
+      "profile_checksum": "d30c152b48e1d6aacf8bdad0bd1907a2137d302d7349bd1ec4a4bb99d61163f8",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    },
+    {
+      "input_statuses": {
+        "baseline": "preparation_failed",
+        "corrected": "preparation_failed"
+      },
+      "key": [
+        "5756962382464133248",
+        "2025W46_2A_0214_3",
+        "corrected",
+        "corrected"
+      ],
+      "profile_checksum": "e8fddee506302bbf42027f8f2a64f0046140694a080a99cc3c82dd77555a3b55",
+      "profile_status": "preparation_failed",
+      "status": "verified_unavailable",
+      "study_error": "saved fit unavailable"
+    }
+  ],
+  "verification_counts": {
+    "local_grids": 40,
+    "objective_replays": 480,
+    "probe_points": 1916,
+    "sampled_grid_nodes": 2760,
+    "saved_point_probes": 192
+  }
+}
