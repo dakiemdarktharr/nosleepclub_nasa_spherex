@@ -276,3 +276,10 @@ Dữ liệu gốc: SPHEREx QR2 tại NASA/IPAC IRSA, DOI [10.26131/IRSA652](http
 Không commit token hoặc bộ FITS thô lớn. Mã nguồn riêng và tài liệu gốc đi kèm được cấp phép theo [MIT](LICENSE), theo lựa chọn của chủ repo ngày 31/10/2026. Dữ liệu, font, minh họa Canva và dependency giữ điều kiện sử dụng riêng trong [NOTICE](NOTICE.md).
 
 Font Be Vietnam Pro được phân phối theo SIL Open Font License 1.1, kèm giấy phép và SHA-256 trong `web/assets/fonts/`. Script `python scripts/fetch_web_fonts.py` chỉ dùng khi cần lấy lại font từ nguồn chính thức; clone repo để chạy web không cần bước này.
+# Lưu trữ dữ liệu và quy trình web
+
+Đợt cập nhật này chuẩn bị chuyển 213 sản phẩm demo công khai sang MongoDB theo
+[kế hoạch hai pha](docs/MONGODB_PUBLIC_DATA.md), giữ hash gốc và đường rollback.
+Pha đầu vẫn phục vụ `/data/` trên CDN cho đến khi nhập và kiểm chứng đủ.
+UI đã bổ sung chọn A/B rõ ràng, phục hồi lỗi ảnh IRSA, nháp trong cùng tab và
+xuất JSON gồm cả nháp WISE; nhận xét riêng không tự được công khai.

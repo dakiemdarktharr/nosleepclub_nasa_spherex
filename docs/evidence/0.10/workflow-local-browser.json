@@ -1,0 +1,73 @@
+{
+  "schema": "workflow-ui-browser-1",
+  "checked_at_utc": "2026-10-31T07:16:32.146Z",
+  "base": "http://127.0.0.1:8770",
+  "wise": {
+    "four_steps": true,
+    "residual_motion_hidden": {
+      "context": "WISE 0855 · Gaia · Cộng 2 ảnh / epoch · R01",
+      "methodsHidden": true,
+      "motionHidden": true,
+      "overlayDisabled": true,
+      "priorDisabled": true,
+      "summaryHidden": true
+    },
+    "qa_saved_deleted": true,
+    "qa_history_after_cleanup": 0,
+    "skip_kept_review": true
+  },
+  "irsa": {
+    "ra": 350,
+    "dec": 35,
+    "observations": 77,
+    "reference": "2025W26_2A_0314_1",
+    "current": "2025W26_2A_0314_2",
+    "four_steps": true,
+    "blink_kept_pair": true,
+    "guide_kept_source": true,
+    "real_json_download_verified": true,
+    "download_sha256": "41e8ee7e884246b1a5d8a25c37b10d53804d7cde85f65b2f056b51a473bc9c8c"
+  },
+  "research": {
+    "one_selected_report": true,
+    "keyboard_focus": "workflow-report-title",
+    "synthetic_count": "640/640",
+    "separate_scope": true
+  },
+  "mobile_compare": {
+    "bodyWidth": 375,
+    "canvas": {
+      "bottom": 764.796875,
+      "height": 244,
+      "left": 48.546875,
+      "right": 292.546875,
+      "top": 520.796875,
+      "width": 244,
+      "x": 48.546875,
+      "y": 520.796875
+    },
+    "footerTop": 765,
+    "width": 375,
+    "wrap": "nowrap"
+  },
+  "mobile_review": {
+    "bodyWidth": 375,
+    "context": "WISE 0855 · Gaia · Cộng 2 ảnh / epoch · R01",
+    "width": 375
+  },
+  "back": {
+    "source": "Bộ mẫu WISE",
+    "view": [
+      "compare-step"
+    ]
+  },
+  "forward": {
+    "source": "Bộ mẫu WISE",
+    "view": [
+      "home"
+    ]
+  },
+  "viewport_reset": true,
+  "qualification": "Task-based software/browser verification on opened data; no novice-user study, full WCAG/screen-reader audit or scientific promotion.",
+  "phase": "local worktree before release; exact deployed checks are retained in the production browser receipt"
+}
