@@ -1,0 +1,47 @@
+{
+  "schema": "shape-reference-ci-1",
+  "repository": "dakiemdarktharr/nosleepclub_nasa_spherex",
+  "pull_request": 12,
+  "head_sha": "595f9a80b1d6299b0383824fb10f15340d633a6d",
+  "merged_sha": "57e7bb1fe34c21685bb3b84e1bde466aeeddde5d",
+  "workflow_run": 41158995062,
+  "workflow_url": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41158995062",
+  "conclusion": "success",
+  "python": {
+    "job_id": 124412082396,
+    "cases": 528,
+    "passed": 515,
+    "skipped": 13,
+    "seconds": 21.259,
+    "skip_scope": "optional raw-cache/photutils cases; the six actual Mongo fixture tests passed",
+    "real_mongo_pass_lines": [
+      "2026-10-31T02:14:21.5064259Z test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+      "2026-10-31T02:14:21.7345173Z test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+      "2026-10-31T02:14:21.9033404Z test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+      "2026-10-31T02:14:21.9158524Z test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+      "2026-10-31T02:14:21.9445283Z test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+      "2026-10-31T02:14:21.9662505Z test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok"
+    ]
+  },
+  "javascript": {
+    "job_id": 124412082523,
+    "passed_suites": 6,
+    "pass_lines": [
+      "2026-10-31T02:13:33.1581030Z ReviewStore lifecycle cases passed",
+      "2026-10-31T02:13:33.5921383Z Review UI race cases passed",
+      "2026-10-31T02:13:33.6638808Z Explorer DOM and HTTP race cases passed",
+      "2026-10-31T02:13:33.7515082Z Linked evidence: all denominators, refusals, model switches, failures and retries passed",
+      "2026-10-31T02:13:33.8411410Z Neighbor evidence: lazy loading, all refusals, paired denominators, worse outcomes and retries passed",
+      "2026-10-31T02:13:33.9549186Z Reference/presence UI: lazy loading, fixed denominators, failed cases, tab keyboard, corruption refusals and retry passed",
+      "2026-10-31T02:13:34.0519038Z Calibration UI: lazy reports, complete denominators, declared gates, deferred outcomes, corruption refusal and retry passed"
+    ]
+  },
+  "preview": {
+    "deployment_id": "dpl_4svrEBgtHJZJh7gKmTj3qH25oW3x",
+    "state": "READY",
+    "protected_content_accessed": false,
+    "share_link_created": false
+  },
+  "maintainer_write_delegation": false,
+  "qualification": "Required software CI, not scientific, load, recovery or SLO acceptance."
+}

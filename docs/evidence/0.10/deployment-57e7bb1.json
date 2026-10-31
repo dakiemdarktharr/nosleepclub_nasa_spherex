@@ -1,0 +1,23 @@
+{
+  "schema": "shape-reference-deployment-1",
+  "id": "dpl_ECAECDR8B766cSq1nTkGeQueaXwH",
+  "url": "nosleepclub-nasa-spherex-30maydhwr-acne-a6cd.vercel.app",
+  "state": "READY",
+  "target": "production",
+  "createdAt": 1793412954555,
+  "buildingAt": 1793412955574,
+  "ready": 1793413012008,
+  "alias": [
+    "nosleepclub-nasa-spherex.vercel.app",
+    "nosleepclub-nasa-spherex-acne-a6cd.vercel.app",
+    "nosleepclub-nasa-spherex-git-main-acne-a6cd.vercel.app"
+  ],
+  "meta": {
+    "githubCommitRef": "main",
+    "githubCommitSha": "57e7bb1fe34c21685bb3b84e1bde466aeeddde5d",
+    "githubCommitMessage": "Merge PR #12: MIT and gated ePSF/reference covariance evidence\n\nApply MIT and publish gated ePSF/reference-covariance checkpoint",
+    "githubRepo": "nosleepclub_nasa_spherex",
+    "githubOrg": "dakiemdarktharr"
+  },
+  "qualification": "Provider metadata only; public HTTP and browser evidence stored separately."
+}
