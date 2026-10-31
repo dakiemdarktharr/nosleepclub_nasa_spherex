@@ -36,7 +36,7 @@ class AbortFake {
 }
 class DOMError extends Error {constructor(message,name){super(message);this.name=name;}}
 
-function harness() {
+function harness(options={}) {
   const elements=new Map(),calls=[],timers=new Map(),blobs=[],events=[]; let nextTimer=0;
   const element=id=>{
     if(!elements.has(id))elements.set(id,{
@@ -54,15 +54,15 @@ function harness() {
   const fetch=(url,options)=>new Promise((resolve,reject)=>{
     calls.push({url,options,params:new Params(url.split("?")[1]||""),resolve,reject});
   });
-  const context={window:{},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
-    location:{href:"https://demo.example/#explore",search:""},history:{replaceState(){}},
+  const context={window:{SkyDrafts:options.drafts},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
+    location:{href:"https://demo.example/"+(options.search||"")+"#explore",search:options.search||""},history:{replaceState(a,b,url){context.shared=String(url.href||url);}},
     setInterval:fn=>{const id=++nextTimer;timers.set(id,fn);return id;},clearInterval:id=>timers.delete(id),
     setTimeout:fn=>{fn();return 1;},Blob:class {constructor(parts){this.id="export";blobs.push(parts);}},
     CustomEvent:class {constructor(type,options={}){this.type=type;this.detail=options.detail;}}};
   for(const [id,value] of Object.entries({"explorer-ra":"350","explorer-dec":"35","explorer-fov":"0.06",
     "explorer-detector":"6","explorer-release":"qr2","explorer-from":"","explorer-to":""}))element(id).value=value;
   vm.runInNewContext(fs.readFileSync("web/explorer.js","utf8"),context);
-  return {element,calls,timers,blobs,events,api:context.window.SkyExplorer};
+  return {element,calls,timers,blobs,events,context,api:context.window.SkyExplorer};
 }
 const flush=async()=>{for(let i=0;i<16;i++)await Promise.resolve();};
 const find=(h,kind)=>h.calls.filter(call=>call.url.startsWith(`/api/${kind}?`));
@@ -264,6 +264,7 @@ async function boundedUpstreamRetry() {
 }
 
 async function main() {
+  await noviceFailureRecoveryAndReload();
   await coordinateCases();
   await serializedContrastAndBlink();
   await staleFailureCannotHideCachedFrame();
@@ -275,6 +276,32 @@ async function main() {
   await workflowPairSurvivesBlinkAndInvalidatesOnEdit();
   await notesStayWithTheirQueryAndPair();
   console.log("Explorer DOM and HTTP race cases passed");
+}
+async function noviceFailureRecoveryAndReload(){
+  const memory=new Map(),drafts=require("../web/draft-store.js")(()=>({getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)}));
+  const search="?sky_ra=350&sky_dec=35&sky_fov=0.06&sky_det=6&sky_release=qr2&sky_from=2025-06-01&sky_to=2025-06-30";
+  let h=harness({drafts,search});
+  assert.equal(h.element("explorer-from").value,"2025-06-01");
+  const {submit}=await begin(h,["A","B"]);
+  assert.equal(h.api.context().listed,true,"the frame list is available before the first image arrives");
+  assert.equal(h.events.some(e=>e.detail.kind==="results"),true);
+  find(h,"frame")[0].resolve({ok:false,status:502,json:async()=>({error:"upstream_unavailable"})});await submit;
+  assert.equal(h.element("explorer-retry").hidden,false);
+  assert.equal(h.api.context().listed,true);assert.equal(h.api.context().ready,false);
+  const retry=h.element("explorer-retry").fire("click");await flush();frame(find(h,"frame")[1],"A");await retry;
+  h.element("explorer-pin").fire("click");h.element("explorer-current").value="1";
+  const b=h.element("explorer-current").fire("change");await flush();frame(find(h,"frame")[2],"B");await b;
+  assert.equal(h.element("explorer-reference").textContent.includes("ảnh B: 2"),true);
+  assert.equal(h.context.shared.includes("sky_from=2025-06-01"),true);
+  h.element("explorer-note").value="Đúng cặp A/B sau reload";h.element("explorer-note").fire("input");
+  h=harness({drafts,search});const restored=await begin(h,["A","B"]);frame(find(h,"frame")[0],"A");await restored.submit;
+  h.element("explorer-pin").fire("click");h.element("explorer-current").value="1";
+  const second=h.element("explorer-current").fire("change");await flush();frame(find(h,"frame")[1],"B");await second;
+  assert.equal(h.element("explorer-note").value,"Đúng cặp A/B sau reload");
+  const missing=harness(),pending=missing.element("explorer-form").fire("submit");await flush();
+  find(missing,"observations")[0].resolve({ok:true,json:async()=>({observations:[{obs_id:"missing",t_min_mjd:60000,access_url:null},{obs_id:"B",t_min_mjd:60001,access_url:"https://irsa.ipac.caltech.edu/B.fits"}],provenance:{query_url:"https://irsa.ipac.caltech.edu/SIA"}})});
+  await flush();assert.equal(find(missing,"frame")[0].params.get("url"),"https://irsa.ipac.caltech.edu/B.fits");
+  frame(find(missing,"frame")[0],"B");await pending;
 }
 let timeout;
 const done=Promise.race([main(),new Promise((_,reject)=>{

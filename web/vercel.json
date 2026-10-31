@@ -5,6 +5,16 @@
     "sin1"
   ],
   "functions": {
+    "api/data_import.py": {
+      "maxDuration": 30,
+      "includeFiles": "api/_data_manifest.json",
+      "excludeFiles": "{data/**,public/**,assets/**,*.html,*.css,*.js,*.svg}"
+    },
+    "api/data.py": {
+      "maxDuration": 30,
+      "includeFiles": "api/_data_manifest.json",
+      "excludeFiles": "{data/**,public/**,assets/**,*.html,*.css,*.js,*.svg}"
+    },
     "api/reviews.py": {
       "maxDuration": 15,
       "includeFiles": "api/_review_manifest.json",

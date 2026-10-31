@@ -11,6 +11,7 @@
   function sourceFromSearch(search){const p=new URLSearchParams(search),chosen=p.get("flow_source");return ["wise","irsa"].includes(chosen)?chosen:p.has("sky_ra")?"irsa":"wise";}
   function decide(request,source,context,checked){
     if(request==="data"||request==="research")return {step:request,reason:""};
+    if(source==="irsa"&&request==="compare"&&context?.listed)return {step:request,reason:""};
     if(!context?.ready)return {step:"data",reason:source==="wise"?"Chờ bộ ảnh tải xong hoặc chọn lại dữ liệu.":"Tìm và tải ảnh IRSA trước khi tiếp tục."};
     if(source==="irsa"&&request!=="compare"&&!context.paired)return {step:"compare",reason:"Giữ ảnh A, rồi chọn một ảnh B khác để so sánh."};
     if(request==="review"&&checked!==signature(source,context))return {step:"check",reason:"Xem kết quả và giới hạn trước khi ghi nhận."};
@@ -40,9 +41,9 @@
       el("workflow-context").textContent=step==="research"?"Báo cáo đã công bố":label(c);el("workflow-compare-context").textContent=label(c);
       el("workflow-context-kind").textContent=step==="research"?"Kho kiểm chứng":source==="wise"?"Bộ mẫu WISE":"IRSA · tự chọn";
       for(const id of["workflow-check-context","workflow-review-context"])el(id).textContent=`${label(c)} · ${target}`;
-      el("workflow-data-next").disabled=!c?.ready;el("workflow-compare-next").disabled=!c?.ready||source==="irsa"&&!c.paired;
+      el("workflow-data-next").disabled=!(c?.ready||source==="irsa"&&c?.listed);el("workflow-compare-next").disabled=!c?.ready||source==="irsa"&&!c.paired;
       el("workflow-check-next").disabled=!c?.ready||source==="irsa"&&!c.paired;
-      el("workflow-data-processing").textContent=c?.kind==="coadd"?"Cộng ảnh theo epoch":"Ảnh đơn";
+      el("workflow-data-processing").textContent=!c?.ready?"—":c?.kind==="coadd"?"Cộng ảnh theo epoch":"Ảnh đơn";
       if(source==="wise"){for(const part of["before","after"]){const image=el("workflow-dataset-"+part);image.hidden=!c?.ready;if(c?.ready)image.src=c[part+"_image"];el("workflow-dataset-"+part+"-date").textContent=c?.ready?`${part==="before"?"Trước":"Sau"} · ${c[part+"_date"]||""}`:"Đang tải ảnh…";}}
       el("workflow-data-state").textContent=source==="wise"?(c?.ready?"Bộ ảnh đã sẵn sàng":"Chưa tải xong bộ ảnh"):(c?.dirty?"Cấu hình chưa truy vấn":c?.ready?`${c.count} quan sát · đã tải ảnh ${c.current_index+1}`:c?.status||"Nhập tọa độ và tìm ảnh");
       el("workflow-frame-status").textContent=source==="irsa"?(c?.status||""):"";
@@ -96,7 +97,7 @@
     }
     function changed(kind){
       const c=update();if(pending&&c?.ready){const next=pending;pending=null;go(next);return;}
-      if(source==="irsa"&&kind==="frame"&&step==="data"&&c?.ready){go("compare-step");return;}
+      if(source==="irsa"&&["results","frame"].includes(kind)&&step==="data"&&c?.listed){go("compare-step");return;}
       if((step==="check"||step==="review")&&(!c?.ready||source==="irsa"&&!c.paired))go("home");
     }
     el("workflow-source-wise").addEventListener("click",()=>{choose("wise");go("home");});
