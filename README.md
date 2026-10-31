@@ -291,3 +291,6 @@ file trực tiếp, không cần Mongo credential.
 Các deployment cũ vẫn được giữ để rollback. Việc giảm output mới không xóa
 source checkout Git hoặc giảm mọi chi phí băng thông Vercel; M0 chưa qua kiểm
 thử tải/failover dài hạn. [Quy trình và giới hạn](docs/MONGODB_PUBLIC_DATA.md).
+
+Biên nhận cutover, lỗi/rollback được giữ nguyên và kiểm thử public:
+[MONGODB_PUBLIC_DATA_RELEASE.md](docs/MONGODB_PUBLIC_DATA_RELEASE.md).

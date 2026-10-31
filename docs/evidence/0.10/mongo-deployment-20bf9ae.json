@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "project_id": "prj_8kXBz8dZqwBeDhmfRUMDwhN8VKQi",
+  "deployment_id": "dpl_6uuZugMniSWj2of6AE59DX5ZTfSM",
+  "commit": "20bf9ae79c9cc50898d71afbf6778f3f8af26078",
+  "target": "production",
+  "state": "READY",
+  "promotion_requested": true,
+  "canonical_http_commit_verified": true,
+  "events": [
+    {
+      "timestamp": 1793457786915,
+      "text": "Static shell: 41 files; 615668 bytes; no data/"
+    },
+    {
+      "timestamp": 1793457787958,
+      "text": "Bundle size (261.61 MB) exceeds the standard size; optimizing dependencies."
+    },
+    {
+      "timestamp": 1793457794719,
+      "text": "Bundle size (297.46 MB) exceeds the standard size; optimizing dependencies."
+    },
+    {
+      "timestamp": 1793457802436,
+      "text": "Bundle size (297.46 MB) exceeds the standard size; optimizing dependencies."
+    },
+    {
+      "timestamp": 1793457809327,
+      "text": "Bundle size (297.46 MB) exceeds the standard size; optimizing dependencies."
+    },
+    {
+      "timestamp": 1793457815253,
+      "text": "Bundle size (297.46 MB) exceeds the standard size; optimizing dependencies."
+    },
+    {
+      "timestamp": 1793457821187,
+      "text": "Build Completed in /vercel/output [35s]"
+    },
+    {
+      "timestamp": 1793457821229,
+      "text": "Deploying outputs..."
+    }
+  ],
+  "qualification": "Static-shell bytes are measured by remote build; Python bundle warnings are pre-optimization, not final deployed sizes."
+}

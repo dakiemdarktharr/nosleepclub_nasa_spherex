@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-10-31T15:00:44.523Z",
+  "database": "nosleepclub_nasa_spherex",
+  "cluster": "nosleepclub-spherex",
+  "tier": "M0",
+  "stats": {
+    "db": "nosleepclub_nasa_spherex",
+    "collections": 6,
+    "views": 0,
+    "objects": {
+      "$numberLong": "427"
+    },
+    "avgObjSize": 398174.2107728337,
+    "dataSize": {
+      "$numberLong": "170020388"
+    },
+    "storageSize": {
+      "$numberLong": "338685952"
+    },
+    "totalFreeStorageSize": {
+      "$numberLong": "0"
+    },
+    "numExtents": {
+      "$numberLong": "0"
+    },
+    "indexes": 10,
+    "indexSize": {
+      "$numberLong": "405504"
+    },
+    "indexFreeStorageSize": {
+      "$numberLong": "0"
+    },
+    "fileSize": {
+      "$numberLong": "0"
+    },
+    "nsSizeMB": 0,
+    "ok": 1
+  },
+  "public_chunks": 426,
+  "stored_public_bytes": 127478741,
+  "additional_clusters_created": 0,
+  "qualification": "Point-in-time database sizes, not load/failover/uptime validation."
+}

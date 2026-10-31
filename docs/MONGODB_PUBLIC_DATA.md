@@ -44,7 +44,7 @@ tải. Đây là thay đổi vận chuyển, không tái chạy hoặc cải thi
 1. Thêm reader/importer và cải thiện UX; giữ nguyên `/data/` trên CDN. Không
    kích hoạt `buildCommand`/`outputDirectory` hoặc rewrite trước reconciliation.
 2. Nhập đủ, kiểm hash qua reader, thu hồi capability. Sau đó mới dùng
-   `python build_public.py`, static output `public/` và rewrite `/data/` sang
+   `python build_public.py`, static output `public/` và redirect `/data/` theo hash sang
    reader. Static output chỉ gồm UI/font/ảnh thiết kế; repo vẫn giữ dataset để
    tái lập và rollback. Source checkout/build vẫn tải repo, không gọi đó là
    giảm toàn bộ source storage hoặc băng thông function.
