@@ -1,0 +1,13 @@
+:root { color-scheme: dark light; }
+body { margin: 0; background: #091225; color: #f3f6ff; font-family: system-ui, sans-serif; line-height: 1.6; }
+main { max-width: 48rem; margin: 0 auto; padding: 2rem 1.25rem; }
+nav { display: flex; gap: 1rem; justify-content: space-between; align-items: center; }
+a { color: #8ce4ff; }
+button { font: inherit; color: inherit; border: 1px solid #8ce4ff; border-radius: .4rem; background: transparent; padding: .65rem 1rem; cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 3px solid #ccff00; outline-offset: 4px; }
+button:disabled { opacity: .6; }
+section { border: 1px solid #5c7090; border-radius: 1rem; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+h1 { font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.15; }
+h2 { font-size: 1.2rem; }
+#data-state { font-size: 1.2rem; font-weight: 700; }
+@media (prefers-color-scheme: light) { body { background: #f5f7ff; color: #14244c; } a { color: #164c90; } button { border-color: #164c90; } }

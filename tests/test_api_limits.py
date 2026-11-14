@@ -22,15 +22,25 @@ class AtomicCollection:
         self.indexes = []
     def create_index(self, *args, **kwargs):
         self.indexes.append((args, kwargs))
+    def update_one(self, query, update, **kwargs):
+        with self.lock:
+            self.rows.setdefault(query['_id'], {**update['$setOnInsert'], 'ips': {}})
     def find_one_and_update(self, query, update, **kwargs):
         with self.lock:
-            row = self.rows.setdefault(query['_id'], {'count': 0, **update['$setOnInsert']})
+            row = self.rows[query['_id']]
+            field, rule = next(iter(query['$or'][1].items()))
+            ip = field.split('.')[1]
+            if row['count'] >= query['count']['$lt'] or row['ips'].get(ip, 0) >= rule['$lt']:
+                return None
             row['count'] += 1
+            row['ips'][ip] = row['ips'].get(ip, 0) + 1
             return dict(row)
 
 
 class ApiLimitTest(unittest.TestCase):
     def setUp(self):
+        observations_tests.api.response_cache.clear()
+        frame_tests.api.response_cache.clear()
         with control._lock:
             control._bursts.clear()
             control._counts.clear()
@@ -65,12 +75,13 @@ class ApiLimitTest(unittest.TestCase):
             statuses = list(pool.map(lambda _: self.attempt('observations'), range(30)))
         self.assertEqual(statuses.count(200), 12)
         self.assertEqual(statuses.count(429), 18)
-        self.assertEqual(len(self.db.api_limits.rows), 2)
+        self.assertEqual(len(self.db.api_limits.rows), 1)
         with ThreadPoolExecutor(max_workers=20) as pool:
             statuses = list(pool.map(lambda n: self.attempt('frame', f'198.51.100.{n}'), range(1, 41)))
         self.assertEqual(statuses.count(200), 24)
         self.assertEqual(statuses.count(429), 16)
-        self.assertEqual(len(self.db.api_limits.rows), 2 + 1 + 24)
+        self.assertEqual(len(self.db.api_limits.rows), 2)
+        self.assertEqual(sorted(len(row['ips']) for row in self.db.api_limits.rows.values()), [1, 24])
         self.assertNotIn('198.51.100.', repr(self.db.api_limits.rows))
         self.assertNotIn('203.0.113.1', repr(self.db.api_limits.rows))
         for row in self.db.api_limits.rows.values():
@@ -101,7 +112,7 @@ class ApiLimitTest(unittest.TestCase):
             self.assertEqual(self.attempt('frame'), 200)
             self.assertEqual(self.attempt('frame'), 200)
             self.assertEqual(self.attempt('frame'), 429)
-            self.assertEqual(sum(row['count'] for row in self.db.api_limits.rows.values()), 4)
+            self.assertEqual(sum(row['count'] for row in self.db.api_limits.rows.values()), 2)
             for n in range(2, 6):
                 self.attempt('frame', f'198.51.100.{n}')
             self.assertLessEqual(len(control._bursts), 3)
@@ -126,9 +137,9 @@ class ApiLimitTest(unittest.TestCase):
                 self.assertEqual(observations_tests.request('/api/observations?ra=bad&dec=35')[0], 400)
                 self.assertEqual(ofetch.call_count, 0)
                 with self.assertLogs('observations_api', level='WARNING') as logs:
-                    for _ in range(12):
-                        self.assertEqual(observations_tests.request('/api/observations?ra=350&dec=35')[0], 200)
-                    status, headers, body = observations_tests.request('/api/observations?ra=350&dec=35')
+                    for i in range(12):
+                        self.assertEqual(observations_tests.request(f'/api/observations?ra={i}&dec=35')[0], 200)
+                    status, headers, body = observations_tests.request('/api/observations?ra=12&dec=35')
                 self.assertEqual((status, body['error']), (429, 'rate_limited'))
                 self.assertIn('Retry-After', headers)
                 self.assertEqual(headers['Cache-Control'], 'no-store')
@@ -137,9 +148,9 @@ class ApiLimitTest(unittest.TestCase):
                 self.assertNotIn('127.0.0.1', str(logs.output))
             path = '/api/frame?' + urlencode({'url': frame_tests.URL, 'ra': 350, 'dec': 35, 'fov_deg': .005})
             with patch.object(frame, 'fetch', return_value=frame_tests.synthetic()) as ffetch:
-                for _ in range(8):
-                    self.assertEqual(frame_tests.request(path)[0], 200)
-                status, headers, body = frame_tests.request(path)
+                for i in range(8):
+                    self.assertEqual(frame_tests.request(path + f'&low={i}&high=100')[0], 200)
+                status, headers, body = frame_tests.request(path + '&low=8&high=100')
                 self.assertEqual(status, 429)
                 self.assertIn('Retry-After', headers)
                 self.assertEqual(headers['Cache-Control'], 'no-store')
@@ -180,6 +191,26 @@ class ApiLimitTest(unittest.TestCase):
                 self.assertEqual(self.attempt('frame', now=6000), 200)
             self.assertEqual(self.attempt('frame', now=6000), 429)
             self.assertEqual(self.attempt('frame', now=6060), 200)
+
+    def test_rejected_ip_does_not_consume_global_capacity(self):
+        for local in (False, True):
+            self.clear_state()
+            self.db.api_limits.rows.clear()
+            env = {'VERCEL_ENV': 'preview'} if local else {'VERCEL_ENV': 'production', 'MONGODB_URI': 'private-secret-uri'}
+            with patch.dict(os.environ, env, clear=True):
+                # Production identities are distinct; exercise local admission directly.
+                def admit(ip):
+                    try:
+                        if local:
+                            control._local('frame', 'preview', 100, ip, 8, 24, 60)
+                        else:
+                            control.guard('frame', {'X-Forwarded-For': ip}, ('127.0.0.1', 1), now=6000)
+                        return 200
+                    except control.AccessDenied as exc:
+                        return exc.status
+                statuses = [admit('203.0.113.1') for _ in range(30)]
+                self.assertEqual(statuses.count(200), 8)
+                self.assertEqual(admit('203.0.113.2'), 200)
 
     def test_unknown_deployment_fails_closed_and_local_requires_opt_in(self):
         for env in ({}, {'VERCEL':'1'}, {'VERCEL':'1','SPHEREX_LOCAL_API':'1'}, {'VERCEL_ENV':'unknown'}):

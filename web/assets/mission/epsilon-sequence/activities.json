@@ -20,15 +20,41 @@
       "id": "epsilon-quality-mask",
       "observations": ["2025W18_1B_0081_3", "2025W18_2B_0011_3"],
       "highlight": { "x": 37, "y": 32 },
+      "tutorial": [
+        {
+          "side": "B", "x": 37, "y": 32, "display_rgb": [255, 140, 0],
+          "title": { "vi": "Màu cam: pixel bị loại", "en": "Orange: an excluded pixel" },
+          "explanation": {
+            "vi": "Nhìn ô được khoanh ở ảnh B. Màu cam là lớp đánh dấu mặt nạ chất lượng của công cụ, không phải màu thật của một ngôi sao. Không dùng pixel này để so độ sáng.",
+            "en": "Look inside the outline in image B. Orange is this tool's quality-mask overlay, not the true color of a star. Do not use this pixel to compare brightness."
+          }
+        },
+        {
+          "side": "A", "x": 19, "y": 45, "display_rgb": [255, 255, 255],
+          "title": { "vi": "Vùng sáng: mức hiển thị cao", "en": "Bright: a high display level" },
+          "explanation": {
+            "vi": "Ô khoanh ở ảnh A có màu trắng theo thang tương phản đang dùng. Màu trắng có thể gộp nhiều giá trị đo ở đầu trên của thang. Chỉ nhìn ảnh này chưa đủ để xác định thiên thể hay đo độ sáng.",
+            "en": "The outlined pixel in image A is white on the current contrast scale. White can combine several values at the top of that scale. This preview alone cannot identify an object or measure its brightness."
+          }
+        },
+        {
+          "side": "A", "x": 25, "y": 29, "display_rgb": [0, 0, 0],
+          "title": { "vi": "Vùng tối: mức hiển thị thấp", "en": "Dark: a low display level" },
+          "explanation": {
+            "vi": "Ô khoanh có màu đen vì giá trị nằm ở đầu thấp của thang tương phản. Đen không có nghĩa là không có thiên thể hay thiếu dữ liệu. Trong công cụ này, pixel thiếu dữ liệu được đánh dấu màu tím.",
+            "en": "The outlined pixel is black because its value is at the low end of the contrast scale. Black does not mean there is no object or no data. This tool marks missing data in purple."
+          }
+        }
+      ],
       "title": { "vi": "Nhận ra pixel bị loại", "en": "Spot an excluded pixel" },
       "prompt": {
         "vi": "Một điểm xám ở ảnh bên trái có màu cam ở cùng vị trí trong ảnh bên phải. Màu cam cho biết gì?",
         "en": "A gray pixel on the left is orange at the same position on the right. What does the orange color mean?"
       },
       "options": [
-        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã sáng lên", "en": "The source grew brighter" } },
+        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã sáng lên", "en": "The source grew brighter" }, "feedback": { "vi": "Màu cam là lớp đánh dấu, không phải phép đo độ sáng tăng.", "en": "Orange is an overlay, not a measurement of increasing brightness." } },
         { "id": "masked", "label": { "vi": "Pixel bị loại bởi mặt nạ chất lượng", "en": "The quality mask excludes the pixel" } },
-        { "id": "missing", "label": { "vi": "Ảnh thiếu dữ liệu tại pixel này", "en": "The image has missing data at this pixel" } }
+        { "id": "missing", "label": { "vi": "Ảnh thiếu dữ liệu tại pixel này", "en": "The image has missing data at this pixel" }, "feedback": { "vi": "Màu tím mới đánh dấu thiếu dữ liệu. Pixel màu cam đã bị mặt nạ chất lượng loại.", "en": "Purple marks missing data. The orange pixel was excluded by the quality mask." } }
       ],
       "answer": "masked",
       "explanation": {
@@ -46,8 +72,8 @@
         "en": "The same position is gray on the left and purple on the right. What can you say about its brightness?"
       },
       "options": [
-        { "id": "masked", "label": { "vi": "Pixel bên phải bị loại bởi mặt nạ chất lượng", "en": "The quality mask excludes the pixel on the right" } },
-        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã mờ đi", "en": "The source grew fainter" } },
+        { "id": "masked", "label": { "vi": "Pixel bên phải bị loại bởi mặt nạ chất lượng", "en": "The quality mask excludes the pixel on the right" }, "feedback": { "vi": "Pixel được khoanh màu tím, không phải màu cam của mặt nạ chất lượng.", "en": "The outlined pixel is purple, not the orange used for the quality mask." } },
+        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã mờ đi", "en": "The source grew fainter" }, "feedback": { "vi": "Không có giá trị đo ở ảnh bên phải để kết luận nguồn sáng đã mờ đi.", "en": "There is no measured value on the right to establish that the source grew fainter." } },
         { "id": "missing", "label": { "vi": "Chưa đủ dữ liệu để so độ sáng", "en": "There is too little data to compare brightness" } }
       ],
       "answer": "missing",
@@ -67,8 +93,8 @@
         "en": "Inside the blue square, image A has an orange pixel and image B has a gray pixel. What would you record about this position?"
       },
       "options": [
-        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã mờ đi", "en": "The source grew fainter" } },
-        { "id": "missing", "label": { "vi": "Cả hai lần quan sát đều thiếu dữ liệu tại đây", "en": "Both observations lack data here" } },
+        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã mờ đi", "en": "The source grew fainter" }, "feedback": { "vi": "Pixel ở ảnh A đã bị loại nên không thể dùng cặp này để kết luận độ sáng giảm.", "en": "The pixel in image A is excluded, so this pair cannot establish a decrease in brightness." } },
+        { "id": "missing", "label": { "vi": "Cả hai lần quan sát đều thiếu dữ liệu tại đây", "en": "Both observations lack data here" }, "feedback": { "vi": "Ảnh B vẫn có giá trị màu xám ở vị trí này; ảnh A có mặt nạ màu cam.", "en": "Image B still has a gray value at this position; image A has an orange mask." } },
         { "id": "masked", "label": { "vi": "Ảnh A có pixel bị loại. Cần thêm ảnh đủ dữ liệu để so độ sáng", "en": "The pixel is masked in image A. Another usable observation is needed to compare brightness" } }
       ],
       "answer": "masked",

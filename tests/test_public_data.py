@@ -37,6 +37,9 @@ class Database:
 
 class PublicDataTest(unittest.TestCase):
     def setUp(self):
+        with data._lock:
+            data._cache.clear()
+            data._cache_size = 0
         self.raw = b'{"qualification":"synthetic control, no detection"}\n' * 10
         self.payload, self.encoding = package.encode(self.raw, '.json')
         self.digest = sha256(self.payload).hexdigest()
@@ -126,6 +129,9 @@ class PublicDataTest(unittest.TestCase):
         self.assertEqual(self.response('/api/data?path=reviews')['status'], 404)
         self.assertEqual(self.response('/api/data?path=data/control.json', method='POST')['status'], 405)
         self.db.public_asset_chunks.rows.clear()
+        with data._lock:
+            data._cache.clear()
+            data._cache_size = 0
         failed = self.response('/api/data?path=data/control.json')
         self.assertEqual(failed['status'], 503)
         self.assertEqual(failed['headers']['Cache-Control'], 'no-store')

@@ -386,7 +386,7 @@ async function explicitAutoloadIsValidatedAndPreservesLanguage(){
   observations(find(h,"observations")[0],["A"]);await flush();
   frame(find(h,"frame")[0],"A");await flush();
   assert.match(h.context.shared,/lang=en/);
-  assert.doesNotMatch(h.context.shared,/sky_autoload/);
+  assert.match(h.context.shared,/sky_autoload=1/);
   assert.match(h.context.shared,/sky_view=timeline/);
   assert.match(h.element("explorer-status").textContent,/Image loaded/);
   const invalid=harness({search:search.replace("350","360"),lang:"en"});
@@ -398,7 +398,7 @@ async function explicitAutoloadIsValidatedAndPreservesLanguage(){
   assert.match(unknownView.context.shared,/sky_view=compare/);
 }
 async function curatedSequenceLoadsExactFramesOnly(){
-  const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
+  const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
   const h=harness({search:url,lang:"en"});
   const ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
   observations(find(h,"observations")[0],["others",ids[2],ids[0],ids[1]]);await flush();
@@ -427,7 +427,7 @@ async function abandonedSearchDoesNotChangePublicRoute(){
   assert.equal(h.context.location.hash,"#night-sky");
 }
 async function curatedSequenceResumesMissingFrames(){
-  const search="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
+  const search="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
   const h=harness({search,lang:"en"}),ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
   observations(find(h,"observations")[0],ids);await flush();
   const spectral=mjd=>({spectral:{mjd,center:4.73,width:.036}});

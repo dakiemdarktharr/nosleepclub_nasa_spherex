@@ -9,13 +9,14 @@
 </head>
 <body>
 <main style="max-width:48rem;margin:4rem auto;padding:1.5rem">
-  <a href="/#research">← Kho kiểm chứng</a>
-  <h1>Tải dữ liệu</h1><p id="download-name"></p>
-  <p id="download-status" role="status" aria-live="polite">Chuẩn bị tệp và xác minh trước khi tải xuống.</p>
+  <a id="download-back" href="/#research" data-en="← Research archive">← Kho kiểm chứng</a>
+  <button id="download-language" type="button">English</button>
+  <h1 data-en="Download data">Tải dữ liệu</h1><p id="download-name"></p>
+  <p id="download-status" role="status" aria-live="polite" data-en="Prepare and verify the file before saving it.">Chuẩn bị tệp và xác minh trước khi tải xuống.</p>
   <progress id="download-progress" aria-label="Tiến độ tải dữ liệu" max="1" value="0" style="width:100%"></progress>
-  <p><button id="download-start" type="button">Chuẩn bị tệp</button>
-    <button id="download-cancel" type="button" disabled>Hủy</button>
-    <a id="download-save" hidden>Tải tệp đã xác minh ↓</a></p>
-  <details><summary>Kiểm tra SHA-256</summary><p id="download-hash" style="overflow-wrap:anywhere"></p></details>
+  <p><button id="download-start" type="button" data-en="Prepare file">Chuẩn bị tệp</button>
+    <button id="download-cancel" type="button" disabled data-en="Cancel">Hủy</button>
+    <a id="download-save" hidden data-en="Download verified file ↓">Tải tệp đã xác minh ↓</a></p>
+  <details><summary data-en="Check SHA-256">Kiểm tra SHA-256</summary><p id="download-hash" style="overflow-wrap:anywhere"></p></details>
 </main>
 </body></html>

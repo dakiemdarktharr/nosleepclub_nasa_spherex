@@ -3,6 +3,16 @@
   "use strict";
 
   const copy = [
+    [".skip-link.legacy-surface", "Skip to content"],
+    ["#main-nav a[href='#home'], [data-step-link='data']", "Data"],
+    ["#main-nav a[href='#compare-step'], [data-step-link='compare']", "Compare"],
+    ["#main-nav a[href='#check-step'], [data-step-link='check']", "Inspect"],
+    ["#main-nav a[href='#review-step'], [data-step-link='review']", "Record"],
+    ["#main-nav a[href='#research']", "Research"],
+    [".workflow-library-link", "Research archive ↗"],
+    ["#guide-open", "Guide"],
+    ["#privacy-open", "Review storage"],
+    ["#storage-status", "Stored only in this browser"],
     ["#step-data-title", "Choose data"],
     ["#home > header .workflow-step-label", "01 / Data"],
     ["#workflow-source-wise", "WISE 0855 sample"],
@@ -39,6 +49,7 @@
     ["#step-compare-title", "Compare images"],
     ["#compare-step > header .workflow-step-label", "02 / Compare"],
     ["#workspace-help", "How to read the images"],
+    ["#pixel-readout", "Move over the image to inspect pixel values"],
     ["#compare-step > .workflow-compact-context a", "Change data"],
     ["#evidence-open", "Source data"],
     ["#workspace .observation-head h3", "Observed images"],
@@ -72,12 +83,14 @@
     ["#check-step > .workflow-compact-context a", "Change the region"],
     ["#workflow-motion-summary > summary", "Motion estimate and signal strength"],
     ["#motion-heading", "Displacement · model uncertainty"],
+    ["#motion-panel .motion-chart p", "Exploratory estimate · uncalibrated ellipse", 0],
+    ["#motion-panel .motion-chart p", "External prediction", 1],
     ["#motion-panel .snr-summary h3", "S/N · signal to noise"],
     ["#motion-panel .snr-summary th:nth-child(2)", "Best single exposure"],
     ["#motion-panel .snr-summary th:nth-child(3)", "Coadd"],
     ["#workflow-measurement-context > summary", "Method and quality"],
     ["#workflow-measurement-context .motion-qualification:nth-child(2)", "Conditional 1σ model uncertainty. Some systematic errors are outside this estimate."],
-    ["#workflow-measurement-context .motion-qualification:nth-child(3)", "Aperture S/N at the fitted position, with interpolation covariance propagated. This is conditional on the fit."],
+    ["#workflow-measurement-context .motion-qualification:nth-child(3)", "Aperture S/N at the fitted position, with interpolation covariance propagated. This is conditional on the fit, not blind-detection confidence."],
     ["#workflow-selection-check > summary", "Selected region coordinates and uncertainty"],
     ["#workflow-check-irsa .workflow-check-grid div:nth-child(1) dt", "Image A"],
     ["#workflow-check-irsa .workflow-check-grid div:nth-child(2) dt", "Image B"],
@@ -138,6 +151,8 @@
   ];
 
   const attributes = [
+    ["#main-nav", "aria-label", "Main navigation"],
+    [".workflow-steps", "aria-label", "Observation workflow"],
     [".workflow-source-switch", "aria-label", "Data source"],
     ["#workflow-dataset-before", "alt", "Earlier SPHEREx coadd"],
     ["#workflow-dataset-after", "alt", "Later SPHEREx coadd"],
@@ -163,7 +178,7 @@
     ["#evidence-content", "lang", "vi"],
   ];
 
-  const workspaceContent = "#workflow-main, #guide-dialog, #evidence-dialog";
+  const workspaceContent = "#workflow-main, .workflow-header, .workflow-sidebar, .skip-link.legacy-surface, #guide-dialog, #evidence-dialog";
   let bindings;
 
   function scopedElements(selector) {
@@ -172,9 +187,9 @@
 
   function capture() {
     const translated = [];
-    for (const [selector, english] of copy) {
+    for (const [selector, english, textIndex=0] of copy) {
       for (const element of scopedElements(selector)) {
-        const text = [...element.childNodes].find((node) => node.nodeType === 3 && node.nodeValue.trim());
+        const text = [...element.childNodes].filter((node) => node.nodeType === 3 && node.nodeValue.trim())[textIndex];
         if (!text) continue;
         const original = text.nodeValue;
         const spacing = {before: original.match(/^\s*/)[0], after: original.match(/\s*$/)[0]};

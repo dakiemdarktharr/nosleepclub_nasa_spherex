@@ -20,4 +20,6 @@ def build(root=None, output=None):
 
 
 if __name__ == '__main__':
+    from release_gate import production_gate
+    production_gate()
     build()

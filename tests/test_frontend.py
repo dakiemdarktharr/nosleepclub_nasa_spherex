@@ -50,6 +50,10 @@ class FrontendContract(unittest.TestCase):
                              (target['ra_deg'],target['dec_deg'],target['fov_deg']))
             image=ROOT/'web'/row['image'].lstrip('/')
             self.assertEqual(sha256(image.read_bytes()).hexdigest(),row['preview_sha256'])
+            self.assertNotIn('source_file_sha256',row)
+            self.assertNotIn('source_file_bytes',row)
+            self.assertEqual(row['source_byte_range'][1]-row['source_byte_range'][0]+1,row['source_bytes_used'])
+            self.assertRegex(row['source_byte_sha256'],r'^[a-f0-9]{64}$')
 
         archive=assets/'epsilon-sequence'
         saved=json.loads((archive/'provenance.json').read_text(encoding='utf-8'))

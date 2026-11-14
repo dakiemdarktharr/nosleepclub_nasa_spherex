@@ -30,7 +30,7 @@ def emit_request(logger, event):
     if not isinstance(event, dict):
         return
     name = event.get('event')
-    if not isinstance(name, str) or name not in {'review_request', 'observations_request', 'frame_request'}:
+    if not isinstance(name, str) or name not in {'review_request', 'observations_request', 'frame_request', 'data_request'}:
         return
     status, latency = event.get('status'), event.get('latency_ms')
     if (type(status) is not int or not 100 <= status <= 599
@@ -53,3 +53,8 @@ def emit_request(logger, event):
     if type(upstream) is int and 100 <= upstream <= 599:
         result['upstream_http_status'] = upstream
     logger.log(level, json.dumps(result, allow_nan=False))
+    try:
+        from api._health import record
+    except ModuleNotFoundError:
+        from web.api._health import record
+    record(result)

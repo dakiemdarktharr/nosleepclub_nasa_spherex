@@ -13,6 +13,13 @@
 .workflow-header { color-scheme: dark; color: #f2f5fa; background: #07173f; }
 .workflow-header .theme-toggle { flex: 0 0 auto; }
 
+/* Dialogs live in both the public site and workspace, so use shared theme colors. */
+dialog, .workflow-app dialog { background: var(--public-panel); color: var(--public-text); border-color: var(--public-border); }
+dialog p, dialog li, dialog .guide-layout figcaption, dialog .dialog-heading button { color: var(--public-muted); }
+dialog a { color: var(--public-accent); }
+dialog .guide-layout strong { color: var(--public-text); }
+dialog :focus-visible { outline-color: var(--public-accent); }
+
 [data-theme="light"] .workflow-app {
   --paper: #f4f6ff;
   --surface: #fff;

@@ -21,14 +21,16 @@ from astropy.wcs import WCS
 from PIL import Image
 
 try:
-    from api._access_control import AccessDenied, guard
+    from api._access_control import AccessDenied, guard, identity
+    from api._response_cache import ResponseCache, cache_key
     from api._spherex_products import HOST, PATH, image_identity
     from api._telemetry import emit_request, request_logger
     from api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control', 'api._spherex_products', 'api._telemetry', 'api._upstream_diagnostics'):
+    if exc.name not in ('api', 'api._access_control', 'api._response_cache', 'api._spherex_products', 'api._telemetry', 'api._upstream_diagnostics'):
         raise
-    from web.api._access_control import AccessDenied, guard
+    from web.api._access_control import AccessDenied, guard, identity
+    from web.api._response_cache import ResponseCache, cache_key
     from web.api._spherex_products import HOST, PATH, image_identity
     from web.api._telemetry import emit_request, request_logger
     from web.api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
@@ -42,6 +44,7 @@ FULLSAMPLE = 1 << 12
 FRAME_CONTRACT = '1.1'
 MASK_POLICY = 'source-only-allowlist-v2'
 logger = request_logger('frame_api')
+response_cache = ResponseCache(ttl=300)
 
 
 class FrameError(Exception):
@@ -289,7 +292,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'public, max-age=300, s-maxage=300' if status == 200 else 'no-store')
         if status == 405:
             self.send_header('Allow', 'GET')
-        if status == 429:
+        if status in (429, 503) and getattr(self, 'retry_after', None):
             self.send_header('Retry-After', str(self.retry_after))
         for k, v in (headers or {}).items():
             self.send_header(k, str(v))
@@ -307,32 +310,38 @@ class handler(BaseHTTPRequestHandler):
         stage = 'open'
         try:
             p = parse_params(urlsplit(self.path).query)
-            guard('frame', self.headers, self.client_address)
-            url = cutout_url(p)
-            content = fetch(url)
-            retrieved = datetime.now(timezone.utc).isoformat()
-            stage = 'parse'
-            png, meta = render(content, p)
-            h = {'X-Frame-Contract': FRAME_CONTRACT, 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
-                 'X-Frame-Cutout-SHA256': sha256(content).hexdigest(), 'X-Frame-Retrieved-At': retrieved,
-                 'X-Frame-Release': p['release'], 'X-Frame-Obs-ID': p['obs_id'], 'X-Frame-Detector': p['detector'],
-                 'X-Frame-Grid-RA-Deg': p['ra'], 'X-Frame-Grid-Dec-Deg': p['dec'],
-                 'X-Frame-Grid-Scale-Arcsec': SCALE_ARCSEC, 'X-Frame-Grid-Size-Px': p['size_px'],
-                 'X-Frame-Grid-FOV-Deg': meta['fov_deg'], 'X-Frame-Unit': 'MJy/sr', 'X-Frame-Zodi': p['zodi'],
-                 'X-Frame-Contrast-Mode': meta['mode'], 'X-Frame-Contrast-Low': meta['low'],
-                 'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels'],
-                 'X-Frame-Mask-Policy': MASK_POLICY, 'X-Frame-Masked-Pixels': meta['masked_pixels'],
-                 'X-Frame-Missing-Pixels': meta['missing_pixels']}
-            if meta['mjd'] is not None:
-                h['X-Frame-MJD-Obs'] = meta['mjd']
-            if meta['mjd'] is not None and meta['time_system']:
-                h['X-Frame-Time-System'] = meta['time_system']
-            if meta['center_spectrum']:
-                wavelength, bandwidth = meta['center_spectrum']
-                h.update({'X-Frame-Center-Wavelength-Um': wavelength,
-                          'X-Frame-Center-Bandwidth-Um': bandwidth,
-                          'X-Frame-Center-Spectral-Source': 'WCS-WAVE'})
-            return self.respond(200, png, 'image/png', 'ok', h)
+            namespace, _ = identity(self.headers, self.client_address)
+            key = cache_key(namespace, FRAME_CONTRACT + '/' + MASK_POLICY, p)
+            def produce():
+                nonlocal stage
+                guard('frame', self.headers, self.client_address)
+                url = cutout_url(p)
+                content = fetch(url)
+                retrieved = datetime.now(timezone.utc).isoformat()
+                stage = 'parse'
+                png, meta = render(content, p)
+                h = {'X-Frame-Contract': FRAME_CONTRACT, 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
+                     'X-Frame-Cutout-SHA256': sha256(content).hexdigest(), 'X-Frame-Retrieved-At': retrieved,
+                     'X-Frame-Release': p['release'], 'X-Frame-Obs-ID': p['obs_id'], 'X-Frame-Detector': p['detector'],
+                     'X-Frame-Grid-RA-Deg': p['ra'], 'X-Frame-Grid-Dec-Deg': p['dec'],
+                     'X-Frame-Grid-Scale-Arcsec': SCALE_ARCSEC, 'X-Frame-Grid-Size-Px': p['size_px'],
+                     'X-Frame-Grid-FOV-Deg': meta['fov_deg'], 'X-Frame-Unit': 'MJy/sr', 'X-Frame-Zodi': p['zodi'],
+                     'X-Frame-Contrast-Mode': meta['mode'], 'X-Frame-Contrast-Low': meta['low'],
+                     'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels'],
+                     'X-Frame-Mask-Policy': MASK_POLICY, 'X-Frame-Masked-Pixels': meta['masked_pixels'],
+                     'X-Frame-Missing-Pixels': meta['missing_pixels']}
+                if meta['mjd'] is not None:
+                    h['X-Frame-MJD-Obs'] = meta['mjd']
+                if meta['mjd'] is not None and meta['time_system']:
+                    h['X-Frame-Time-System'] = meta['time_system']
+                if meta['center_spectrum']:
+                    wavelength, bandwidth = meta['center_spectrum']
+                    h.update({'X-Frame-Center-Wavelength-Um': wavelength,
+                              'X-Frame-Center-Bandwidth-Um': bandwidth,
+                              'X-Frame-Center-Spectral-Source': 'WCS-WAVE'})
+                return png, h
+            (png, headers), cached = response_cache.run(key, produce)
+            return self.respond(200, png, 'image/png', 'ok', {**headers, 'X-Response-Cache': cached})
         except AccessDenied as exc:
             self.retry_after = exc.retry_after
             return self.respond(exc.status, json.dumps({'error': exc.code}).encode(), 'application/json', 'rate_limit' if exc.status == 429 else 'rate_unavailable')

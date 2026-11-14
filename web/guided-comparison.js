@@ -21,6 +21,8 @@ export function mountGuidedComparison(translate, language) {
   let index = 0;
   let answer = "";
   let evaluated = false;
+  let tourIndex = 0;
+  let touring = false;
   let status;
   let noteStatus;
   const drafts = new Map();
@@ -29,6 +31,8 @@ export function mountGuidedComparison(translate, language) {
   const current = () => activity.cases[index];
   const lookup = (id) => archive.observations.find((observation) => observation.obs_id === id);
   const noteKey = () => notePrefix + current().observations.join(".");
+  const tour = () => current().tutorial ?? [];
+  const text = (vi, en) => language() === "en" ? en : vi;
 
   function setStatus(next) {
     status = next;
@@ -85,14 +89,16 @@ export function mountGuidedComparison(translate, language) {
       caption.textContent = `${side} · ${date} UTC · ${observation.center_wavelength_um.toFixed(4)} µm`;
       picture.className = "guided-picture";
       picture.append(image);
-      if (item.highlight) {
+      const point = touring ? tour()[tourIndex] : item.highlight;
+      if (point && (!touring || point.side === side)) {
         const marker = document.createElement("span");
-        marker.className = "guided-pixel";
+        marker.className = "guided-pixel" + (touring ? " guided-tour-pixel" : "");
         marker.setAttribute("aria-hidden", "true");
-        marker.style.left = `${(item.highlight.x + .5) / archive.settings.grid_size_px * 100}%`;
-        marker.style.top = `${(item.highlight.y + .5) / archive.settings.grid_size_px * 100}%`;
+        marker.style.left = `${(point.x + .5) / archive.settings.grid_size_px * 100}%`;
+        marker.style.top = `${(point.y + .5) / archive.settings.grid_size_px * 100}%`;
         picture.append(marker);
       }
+      if (touring) picture.dataset.tourActive = String(tour()[tourIndex].side === side);
       frame.append(picture, caption);
       grid.append(frame);
     }
@@ -108,8 +114,27 @@ export function mountGuidedComparison(translate, language) {
       el("guided-options").children[position].lastElementChild.textContent = local(option.label);
     }
     if (evaluated) {
-      el("guided-result").textContent = translate(answer === item.answer ? "guidedCorrect" : "guidedExplain");
-      el("guided-explanation").textContent = local(item.explanation);
+      const correct = answer === item.answer;
+      const choice = item.options.find(option => option.id === answer);
+      const expected = item.options.find(option => option.id === item.answer);
+      el("guided-result").textContent = correct ? text("Đúng rồi", "Correct") : text("Chưa đúng", "Not quite");
+      el("guided-explanation").textContent = [
+        !correct && choice.feedback ? local(choice.feedback) : "",
+        !correct ? text("Đáp án đúng: ", "Correct answer: ") + local(expected.label) + "." : "",
+        local(item.explanation)
+      ].filter(Boolean).join(" ");
+      el("guided-feedback").dataset.correct = String(correct);
+    }
+    el("guided-try-again").textContent = text("Thử trả lời lại", "Try again");
+    el("guided-tour-replay").textContent = text("Xem lại cách đọc màu", "Review the colors");
+    if (touring) {
+      const step = tour()[tourIndex];
+      el("guided-tour-step").textContent = text("Đọc ảnh · ", "Read the image · ") + `${tourIndex + 1}/${tour().length} · ${text("Ảnh", "Image")} ${step.side}`;
+      el("guided-tour-title").textContent = local(step.title);
+      el("guided-tour-copy").textContent = local(step.explanation);
+      el("guided-tour-prev").textContent = text("← Trước", "← Back");
+      el("guided-tour-next").textContent = tourIndex < tour().length - 1 ? text("Tiếp →", "Next →") : text("Bắt đầu câu hỏi →", "Start the question →");
+      el("guided-tour-prev").disabled = tourIndex === 0;
     }
     setNoteStatus(noteStatus);
   }
@@ -120,7 +145,11 @@ export function mountGuidedComparison(translate, language) {
     note.value = restoreNote();
     setNoteStatus("");
     el("guided-feedback").hidden = true;
-    form.hidden = false;
+    tourIndex = 0;
+    touring = tour().length > 0;
+    form.hidden = touring;
+    el("guided-tour").hidden = !touring;
+    el("guided-tour-replay").hidden = touring || !tour().length;
     const options = el("guided-options");
     options.replaceChildren();
     for (const option of current().options) {
@@ -170,15 +199,49 @@ export function mountGuidedComparison(translate, language) {
     return loading;
   }
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
+  function evaluateAnswer() {
     answer = new FormData(form).get("guided-answer");
     if (!answer) return;
     evaluated = true;
-    form.hidden = true;
     el("guided-feedback").hidden = false;
     renderCopy();
-    el("guided-feedback").focus();
+    el("guided-verdict").scrollIntoView({block: "nearest", behavior: "instant"});
+  }
+  form.addEventListener("change", evaluateAnswer);
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    evaluateAnswer();
+  });
+  el("guided-try-again").addEventListener("click", () => {
+    form.reset();
+    answer = "";
+    evaluated = false;
+    el("guided-feedback").hidden = true;
+    form.querySelector("input").focus();
+  });
+  function updateTour() {
+    form.hidden = touring;
+    el("guided-tour").hidden = !touring;
+    el("guided-tour-replay").hidden = touring;
+    renderEvidence();
+    renderCopy();
+  }
+  el("guided-tour-next").addEventListener("click", () => {
+    if (tourIndex < tour().length - 1) tourIndex++;
+    else touring = false;
+    updateTour();
+    if (!touring) form.querySelector("input").focus();
+  });
+  el("guided-tour-prev").addEventListener("click", () => { tourIndex--; updateTour(); });
+  el("guided-tour-replay").addEventListener("click", () => {
+    tourIndex = 0;
+    touring = true;
+    el("guided-feedback").hidden = true;
+    form.reset();
+    evaluated = false;
+    answer = "";
+    updateTour();
+    el("guided-tour-next").focus({preventScroll: true});
   });
   el("guided-save").addEventListener("click", () => {
     const record = evidence();

@@ -18,7 +18,7 @@
   let playback=null, truncated=false, sequenceRun=null, retrySequence=null;
   let automaticTimelineAttempted=false;
   const publicRoutes = new Set(["#orbit", "#about", "#night-sky"]);
-  const searchRoutes = new Set(["#home", "#explore", "#compare-step", "#data-step"]);
+  const searchRoutes = new Set(["#home", "#explore", "#compare-step", "#data-step", "#check-step", "#review-step"]);
   const workspaceActive = () => !publicRoutes.has(location.hash) &&
     (Boolean(location.hash) || /[?&](?:sky_ra|flow_source)=/.test(location.search));
   const searchActive = () => searchRoutes.has(location.hash)||(!location.hash&&workspaceActive());
@@ -33,7 +33,31 @@
   const incoming = new URLSearchParams(location.search);
   let requestedView = incoming.get("sky_view") === "timeline" ? "timeline" : "compare";
   const images=new Map();
-  let comparison, linkedPair=null;
+  let comparison, linkedPair=null, linkedFrames=[];
+  let restoreView=true;
+  function initialViewState() {
+    const state={};
+    for(const letter of ["a","b"]){
+      const obs=incoming.get(`sky_${letter}_obs`),det=Number(incoming.get(`sky_${letter}_det`));
+      if(obs&&/^[A-Za-z0-9_-]{1,100}$/.test(obs)&&Number.isInteger(det)&&det>=1&&det<=6)state[letter]={obs,det};
+    }
+    const zoom=Number(incoming.get("sky_zoom")),x=Number(incoming.get("sky_x")),y=Number(incoming.get("sky_y"));
+    if(zoom>=1&&zoom<=8&&Number.isFinite(x+y)&&Math.abs(x)<=4&&Math.abs(y)<=4)state.camera={zoom,x,y};
+    return state;
+  }
+  function shareView(state) {
+    if(!query||dirty)return;
+    query.viewState=state;
+    const share=new URL(location.href);
+    for(const letter of ["a","b"]){
+      for(const key of ["obs","det"]){
+        const name=`sky_${letter}_${key}`;
+        if(state[letter])share.searchParams.set(name,String(state[letter][key]));else share.searchParams.delete(name);
+      }
+    }
+    for(const key of ["zoom","x","y"])share.searchParams.set(`sky_${key}`,String(Number(state.camera[key].toFixed(4))));
+    history.replaceState(history.state,"",share);
+  }
   const noteDrafts=new Map();let noteKey=null;
   const draftMessage = () => t("Nháp trong tab · chưa gửi lên máy chủ","Draft stored in this tab only");
   function saveNote(){if(noteKey){const note=el("explorer-note").value;noteDrafts.set(noteKey,note);const kept=window.SkyDrafts?.set("irsa",noteKey,{note});el("explorer-note-state").textContent=kept?draftMessage():t("Nháp chưa lưu · xuất JSON trước khi tải lại","Unsaved draft · export JSON before reloading");}}
@@ -69,20 +93,24 @@
     const ready=Boolean(!dirty&&current>=0&&images.has(current)&&(timer||displayed===current&&!el("explorer-image").hidden));
     const common={dirty,listed:!dirty&&rows.length>0,query:query?{ra:query.ra,dec:query.dec,release:query.release,det:query.det,fov:query.fov,from:query.from,to:query.to}:null,
       count:rows.length,status:el("explorer-status").textContent};
-    if(linkedPair&&!dirty)return {...common,ready:true,paired:true,linked:true,
-      current:linkedPair[1].row,reference:linkedPair[0].row,
-      reference_index:-1,current_index:-1,preview:linkedPair[1].src};
+    if(comparison&&requestedView==="compare"&&!dirty)return {...common,ready:Boolean(linkedPair),paired:Boolean(linkedPair),linked:true,
+      current:linkedFrames[1]?.row,reference:linkedFrames[0]?.row,
+      current_metadata:linkedFrames[1]?.headers,reference_metadata:linkedFrames[0]?.headers,
+      reference_index:-1,current_index:-1,preview:linkedFrames[1]?.src};
     return {...common,ready,paired:ready&&reference>=0&&reference!==current&&images.has(reference),
       current:ready?rows[current]:null,reference:reference>=0?rows[reference]:null,
-      current_index:current,reference_index:reference,preview:ready?images.get(current).src:null};
+      current_index:current,reference_index:reference,preview:ready?images.get(current).src:null,
+      current_metadata:images.get(current)?.headers,reference_metadata:images.get(reference)?.headers};
   }
-  function selectLinkedPair(pair){
-    if(pair?.[0]===linkedPair?.[0]&&pair?.[1]===linkedPair?.[1])return;
+  function selectLinkedPair(pair,frames=[]){
+    if(pair?.[0]===linkedPair?.[0]&&pair?.[1]===linkedPair?.[1]&&frames[0]===linkedFrames[0]&&frames[1]===linkedFrames[1])return;
     saveNote();
     linkedPair=pair;
+    linkedFrames=frames;
     restoreNote();
     if(pair)fillFrameMetadata(pair[1]);
     else if(images.has(current))fillFrameMetadata(images.get(current));
+    if(pair)el("explorer-status").textContent=frameStatus();
     el("explorer-export").disabled=!context().paired;
     notify("pair");
   }
@@ -204,7 +232,7 @@
     const sequence=incoming.get("sky_sequence")===epsilonTimeline.id
       && Math.abs(ra-presets.epsilon[0])<1e-8 && Math.abs(dec-presets.epsilon[1])<1e-8
       && fov===.12 && det===6 && release==="dr1" ? epsilonTimeline.id : "";
-    return {p,ra,dec,fov,det,release,from:start,to:end,sequence,view:requestedView};
+    return {p,ra,dec,fov,det,release,from:start,to:end,sequence,view:requestedView,viewState:restoreView?initialViewState():null};
   }
   function renderList() {
     const root=el("explorer-frames");root.replaceChildren();
@@ -297,7 +325,7 @@
     params.set("detector",String(detector));
     params.set("band_min_um",String(band[0]));
     params.set("band_max_um",String(band[1]));
-    const response=await fetch("/api/observations?"+params,{signal});
+    const response=await fetchObservations("/api/observations?"+params,signal);
     const data=await response.json();
     if(!response.ok)throw new Error(apiError(response,data.error));
     return {rows:data.observations, truncated:Boolean(data.truncated), provenance:data.provenance};
@@ -469,9 +497,13 @@
       el("explorer-upstream").href=provenance.query_url;el("explorer-current").max=String(Math.max(0,rows.length-1));renderResults();
       const share=new URL(location.href);for(const key of [...share.searchParams.keys()])if(key.startsWith("sky_"))share.searchParams.delete(key);
       for(const key of ["ra","dec","fov","det","release","from","to","sequence","view"])if(query[key]!=="")share.searchParams.set(`sky_${key}`,String(query[key]));
+      share.searchParams.set("sky_autoload","1");
       history.replaceState(null,"",share);
+      restoreView=false;
+      if(query.view==="compare"&&comparison)el("explorer-status").textContent=t("Chọn thời điểm và dải cho từng ảnh A / B.","Choose an observation and band for each image, A / B.");
       notify("results");const first=rows.findIndex(row=>row.access_url);
-      if(query.sequence&&timeline){
+      if(query.view==="compare"&&comparison)return;
+      if(query.sequence&&query.view==="timeline"&&timeline){
         const indices=epsilonTimeline.observations.map(id=>rows.findIndex(row=>row.obs_id===id&&row.detector===6&&row.access_url));
         if(indices.every(index=>index>=0)){await loadEpsilonTimeline(indices);return;}
         toggleFallback(true);
@@ -557,7 +589,7 @@
   if(typeof window!=="undefined")window.SkyExplorer={context,pause:stop};
   comparison=window.SkyLinkedComparison?.mount({root:el("explorer-results"), bands:BANDS, timeLabel:displayMjd,
     loadFrame:loadComparisonFrame, loadObservations:comparisonObservations, stopTimeline:stop, onPairChange:selectLinkedPair,
-    initialMode:requestedView, onModeChange(view){
+    initialMode:requestedView, onViewStateChange:shareView, onModeChange(view){
       requestedView=view;
       if(query)query.view=view;
       if(view==="compare"&&sequenceRun?.automatic){
@@ -568,7 +600,14 @@
       const share=new URL(location.href);
       share.searchParams.set("sky_view",view);
       history.replaceState(history.state,"",share);
-      if(view==="timeline")void prepareTimeline();
+      if(view==="timeline"){
+        if(query?.sequence){
+          const indices=epsilonTimeline.observations.map(id=>rows.findIndex(row=>row.obs_id===id&&row.detector===6&&row.access_url));
+          if(indices.every(index=>index>=0)){void loadEpsilonTimeline(indices);return;}
+        }
+        if(current<0){const first=rows.findIndex(row=>row.access_url);if(first>=0)void show(first);}
+        else void prepareTimeline();
+      }
     }});
   const legacyRelease=incoming.get("sky_release")==="qr2";
   for(const [name,id] of [["ra","explorer-ra"],["dec","explorer-dec"],["fov","explorer-fov"],["det","explorer-detector"],["release","explorer-release"],["from","explorer-from"],["to","explorer-to"]]){
@@ -586,15 +625,16 @@
   for(const id of ["explorer-ra","explorer-dec"])el(id).addEventListener("input",syncPreset);
   syncPreset();dateSummary();timelineControls();localizeFallback();
   if(legacyRelease)setStatus(t("Liên kết QR2 cũ. Chọn Tìm ảnh để tra DR1 đã xử lý lại.","This is a legacy QR2 link. Search to use the reprocessed DR1 release."));
-  if(!legacyRelease&&(incoming.get("sky_autoload")==="1"||incoming.get("sky_sequence")===epsilonTimeline.id)
-      &&["#explore","#compare-step"].includes(location.hash)&&incoming.has("sky_ra")&&incoming.has("sky_dec")){
+  const resumeLink=["#compare-step","#check-step","#review-step"].includes(location.hash)&&incoming.get("flow_source")!=="wise";
+  if(!legacyRelease&&(resumeLink||incoming.get("sky_autoload")==="1"||incoming.get("sky_sequence")===epsilonTimeline.id)
+      &&searchRoutes.has(location.hash)&&incoming.has("sky_ra")&&incoming.has("sky_dec")){
     let attempted=false;
     const autoload=()=>{
-      if(attempted||!window.SkyWorkflow||!["#explore","#compare-step"].includes(location.hash))return;
+      if(attempted||!window.SkyWorkflow||!searchRoutes.has(location.hash))return;
       attempted=true;
       try {
         const next=inputQuery();
-        if(incoming.get("sky_autoload")!=="1"&&!next.sequence)return;
+        if(!resumeLink&&incoming.get("sky_autoload")!=="1"&&!next.sequence)return;
       }
       catch(error){setStatus(error.message,true);return;}
       el("explorer-form").requestSubmit();

@@ -9,7 +9,16 @@
   const reportTitles={"signal-controls":["Tín hiệu và pha pixel","Nguồn giả"],"shape-validation":["Mẫu điểm sáng và sai số","Calibration"],"reference-presence":["Sao tham chiếu và nhận nguồn","Đối chứng"],"neighbor-intervention":["Nguồn chồng","Đối chứng"],"linked-flux":["Độ nhạy vector WISE","Ảnh thật"],validation:["Mask, phổ và diagnostics","Đã mở"],"research-history":["Thí nghiệm 0.5–0.9","Lịch sử"],"next-steps":["Kế hoạch tiếp theo","Chưa mở"]};
   function signature(source,c){
     if(!c?.ready)return null;
-    return source==="wise"?JSON.stringify([source,c.analysis_sha256,c.scene_id,c.selection]):JSON.stringify([source,c.query,c.reference?.obs_id,c.current?.obs_id,c.reference_index,c.current_index]);
+    return source==="wise"?JSON.stringify([source,c.analysis_sha256,c.scene_id,c.selection]):JSON.stringify([source,c.query,c.reference?.obs_id,c.current?.obs_id,c.reference?.detector,c.current?.detector,c.reference?.access_url,c.current?.access_url,c.reference_index,c.current_index]);
+  }
+  function frameLabel(row,headers={},release=""){
+    if(!row)return "";
+    const mjd=Number(headers["x-frame-mjd-obs"]),date=new Date((mjd-40587)*86400000);
+    const time=headers["x-frame-time-system"]==="UTC"&&Number.isFinite(mjd)&&Number.isFinite(date.getTime())?
+      date.toISOString().slice(0,19).replace("T"," ")+" UTC":Number.isFinite(row.t_min_mjd)?`MJD ${row.t_min_mjd.toFixed(5)}`:"";
+    const wave=Number(headers["x-frame-center-wavelength-um"]);
+    const spectral=headers["x-frame-center-spectral-source"]==="WCS-WAVE"&&Number.isFinite(wave)&&wave>0?`λ ${wave.toFixed(4)} µm · WCS-WAVE`:"";
+    return [(headers["x-frame-release"]||row.release||release).toUpperCase(),`D${row.detector??"?"}`,time,spectral,row.obs_id].filter(Boolean).join(" · ");
   }
   function sourceFromSearch(search){const p=new URLSearchParams(search),chosen=p.get("flow_source");return ["wise","irsa"].includes(chosen)?chosen:p.has("sky_ra")?"irsa":"wise";}
   function decide(request,source,context,checked){
@@ -37,7 +46,8 @@
     function label(c){
       if(source==="wise")return c?.ready?`WISE 0855 · ${c.label}`:t("WISE 0855 · đang tải","WISE 0855 · loading");
       if(!c?.query)return t("IRSA · chưa chọn ảnh","IRSA · no image selected");
-      return `IRSA ${c.query.release.toUpperCase()} · D${c.query.det} · RA ${Number(c.query.ra).toFixed(5)}° / Dec ${Number(c.query.dec).toFixed(5)}°`;
+      const detectors=c.reference||c.current?`A ${c.reference?"D"+c.reference.detector:"—"} / B ${c.current?"D"+c.current.detector:"—"}`:t(`Truy vấn D${c.query.det}`,`Search D${c.query.det}`);
+      return `SPHEREx ${c.query.release.toUpperCase()} · ${detectors} · RA ${Number(c.query.ra).toFixed(5)}° / Dec ${Number(c.query.dec).toFixed(5)}°`;
     }
     function update(){
       const c=context(),key=signature(source,c);if(key!==lastSignature){checked=null;lastSignature=key;}
@@ -51,12 +61,12 @@
       if(source==="wise"){for(const part of["before","after"]){const image=el("workflow-dataset-"+part);image.hidden=!c?.ready;if(c?.ready)image.src=c[part+"_image"];el("workflow-dataset-"+part+"-date").textContent=c?.ready?`${part==="before"?t("Trước","Before"):t("Sau","After")} · ${c[part+"_date"]||""}`:t("Đang tải ảnh…","Loading image…");}}
       el("workflow-data-state").textContent=source==="wise"?(c?.ready?t("Bộ ảnh đã sẵn sàng","Image set ready"):t("Chưa tải xong bộ ảnh","Image set still loading")):(c?.dirty?t("Cấu hình chưa truy vấn","Search settings changed"):c?.ready?`${c.count} ${t("quan sát · đã tải ảnh","observations · loaded image")} ${c.current_index+1}`:c?.status||t("Nhập tọa độ và tìm ảnh","Enter coordinates to find images"));
       el("workflow-frame-status").textContent=source==="irsa"?(c?.status||""):"";
-      el("workflow-check-warning").textContent=source==="irsa"?t("Ảnh cùng WCS hiển thị · chưa căn chỉnh theo sao hoặc fit chuyển động.","Images share a display WCS. Stellar registration and motion fitting have not been applied."):c?.selection!=="target"?"Vùng sai khác chưa gán danh tính · chưa có phép đo chuyển động cho vùng này.":c?.kind!=="coadd"?"Ảnh đơn · fit biên độ ở vị trí dự kiến; chưa đo chuyển động độc lập.":"Phép đo thử nghiệm · sai số chưa hiệu chuẩn · chưa xác nhận chuyển động.";
+      el("workflow-check-warning").textContent=source==="irsa"?t("Ảnh cùng WCS hiển thị · chưa căn chỉnh theo sao hoặc fit chuyển động.","Images share a display WCS. Stellar registration and motion fitting have not been applied."):c?.selection!=="target"?t("Vùng sai khác chưa gán danh tính · chưa có phép đo chuyển động cho vùng này.","This difference region has no assigned identity or motion measurement."):c?.kind!=="coadd"?t("Ảnh đơn · fit biên độ ở vị trí dự kiến; chưa đo chuyển động độc lập.","Single exposure: amplitude fitted at an expected position; motion has not been independently measured."):t("Phép đo thử nghiệm · sai số chưa hiệu chuẩn · chưa xác nhận chuyển động.","Exploratory measurement: uncertainties are uncalibrated and motion is unconfirmed.");
       el("workflow-selection-check").open=source==="wise"&&c?.selection!=="target";
       const motionContext=source==="wise"&&c?.kind==="coadd"&&c?.selection==="target";
       el("workflow-motion-summary").hidden=!motionContext;el("workflow-measurement-context").hidden=!motionContext;
-      const obsLabel=(row,empty)=>row?`${Number.isFinite(row.t_min_mjd)?`MJD ${row.t_min_mjd.toFixed(5)} · `:""}${row.obs_id}`:empty;
-      el("workflow-frame-a").textContent=obsLabel(c?.reference,t("Chưa giữ ảnh A","No image pinned as A"));el("workflow-frame-b").textContent=obsLabel(c?.current,t("Chưa chọn ảnh B","No image selected as B"));
+      el("workflow-frame-a").textContent=frameLabel(c?.reference,c?.reference_metadata,c?.query?.release)||t("Chưa giữ ảnh A","No image pinned as A");
+      el("workflow-frame-b").textContent=frameLabel(c?.current,c?.current_metadata,c?.query?.release)||t("Chưa chọn ảnh B","No image selected as B");
       stepLinks.forEach(a=>{const active=a.dataset.stepLink===step;a.classList.toggle("active",active);if(active)a.setAttribute("aria-current","step");else a.removeAttribute("aria-current");a.setAttribute("data-complete",String(a.dataset.stepLink==="data"&&Boolean(c?.ready)||a.dataset.stepLink==="check"&&checked===key&&Boolean(key)));});
       d.querySelectorAll("#main-nav a").forEach(a=>{const active=a.getAttribute("href")==="#"+stepIds[step];a.classList.toggle("active",active);if(active)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
       d.querySelectorAll(".workflow-library-link").forEach(a=>{if(step==="research")a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
@@ -127,5 +137,5 @@
     displaySource();navigate();
     w.SkyWorkflow={source:()=>source,step:()=>step,openCompare:()=>go("compare-step")};
   }
-  return {signature,decide,sourceFromSearch,mount};
+  return {signature,decide,sourceFromSearch,frameLabel,mount};
 });

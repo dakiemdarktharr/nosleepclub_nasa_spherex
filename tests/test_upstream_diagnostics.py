@@ -27,6 +27,12 @@ REQUEST_ID = 'a'*32
 
 
 class UpstreamDiagnosticTests(unittest.TestCase):
+    def setUp(self):
+        # Each injected upstream failure must exercise a cold origin request,
+        # independent of successful responses cached by earlier test modules.
+        frame_tests.api.response_cache.clear()
+        observation_tests.api.response_cache.clear()
+
     def test_helper_imports_in_isolated_serverless_api_directory(self):
         root = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory() as temp:

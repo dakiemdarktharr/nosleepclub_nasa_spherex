@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Service status · What Did SPHEREx See?</title>
+  <link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="status.css">
+  <script src="status.js" defer></script>
+</head>
+<body>
+  <main>
+    <nav><a id="home" href="/">← What Did SPHEREx See?</a><button id="language" type="button">English</button></nav>
+    <h1 id="title">Trạng thái dịch vụ</h1>
+    <p id="scope"></p>
+    <section aria-live="polite" aria-busy="true" id="checks">
+      <h2 id="data-label">Dữ liệu công khai</h2><p id="data-state">Đang kiểm tra…</p>
+      <p id="checked"></p><p id="limits"></p>
+      <h2>NASA/IPAC IRSA</h2><p id="irsa-state"></p>
+      <h2 id="reviews-label"></h2><p id="reviews-state"></p>
+      <h2 id="recent-label"></h2><ul id="recent"></ul>
+    </section>
+    <button id="refresh" type="button">Kiểm tra lại</button>
+    <p id="privacy"></p>
+  </main>
+</body>
+</html>

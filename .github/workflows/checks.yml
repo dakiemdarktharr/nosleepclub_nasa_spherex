@@ -21,7 +21,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.11.9'
+          python-version: '3.12'
       - id: install
         name: Install pinned science and web dependencies
         run: python -m pip install -r requirements.txt -r web/requirements.txt -r requirements-ops.txt
@@ -107,25 +107,31 @@ jobs:
           package-manager-cache: false
       - name: Check browser JavaScript syntax
         run: for source in web/*.js; do node --check "$source"; done
-      - name: Test ReviewStore pure cases
-        run: node tests/review-store.test.cjs
-      - name: Test explorer request and display races
-        run: node tests/explorer.test.cjs
-      - name: Test linked evidence refusals and report loading
-        run: node tests/linked-evidence.test.cjs
-      - name: Test neighbor factorial and all control denominators
-        run: node tests/neighbor-evidence.test.cjs
-      - name: Test reference stars and sealed presence evidence
-        run: node tests/reference-evidence.test.cjs
-      - name: Test staged shape and shared covariance evidence
-        run: node tests/calibration-evidence.test.cjs
-      - name: Test fixed-weight profile diagnostic evidence
-        run: node tests/profile-evidence.test.cjs
-      - name: Test synthetic signal controls and refusal semantics
-        run: node tests/signal-evidence.test.cjs
-      - name: Test data workflow context and step prerequisites
-        run: node tests/workflow-navigation.test.cjs
-      - name: Test selected-region and asynchronous scene context
-        run: node tests/app-workflow.test.cjs
-      - name: Test tab draft restoration and expiry
-        run: node tests/draft-store.test.cjs
+      - name: Run every JavaScript test suite
+        run: for test in tests/*.test.cjs; do node "$test" || exit 1; done
+
+  browser:
+    name: Desktop and mobile browser smoke
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Install development-only browser dependencies
+        run: python -m pip install -r requirements-browser.txt
+      - name: Install Chromium and system dependencies
+        run: python -m playwright install --with-deps chromium
+      - name: Exercise desktop and mobile flows in both languages
+        run: python -m scripts.browser_smoke --output "$RUNNER_TEMP/browser-smoke"
+      - name: Upload screenshots and browser traces
+        if: always()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: browser-smoke-${{ github.sha }}
+          path: ${{ runner.temp }}/browser-smoke
+          if-no-files-found: warn
+          retention-days: 7

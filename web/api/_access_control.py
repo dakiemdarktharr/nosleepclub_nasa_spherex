@@ -83,47 +83,54 @@ def _local(endpoint, namespace, minute, ip_hash, ip_limit, global_limit, retry):
         for key in list(_counts):
             if key[2] < minute - 1:
                 del _counts[key]
-        if global_key not in _counts and len(_counts) >= MAX_LOCAL_KEYS:
+        if _counts.get(global_key, 0) >= global_limit or _counts.get(ip_key, 0) >= ip_limit:
+            raise AccessDenied('rate_limited', 429, retry)
+        needed = int(global_key not in _counts) + int(ip_key not in _counts)
+        if len(_counts) + needed > MAX_LOCAL_KEYS:
             raise AccessDenied('rate_storage_unavailable', 503)
         _counts[global_key] = _counts.get(global_key, 0) + 1
-        if _counts[global_key] > global_limit:
-            raise AccessDenied('rate_limited', 429, retry)
-        if ip_key not in _counts and len(_counts) >= MAX_LOCAL_KEYS:
-            raise AccessDenied('rate_storage_unavailable', 503)
         _counts[ip_key] = _counts.get(ip_key, 0) + 1
-        if _counts[ip_key] > ip_limit:
-            raise AccessDenied('rate_limited', 429, retry)
 
 
 def _mongo(endpoint, namespace, minute, ip_hash, ip_limit, global_limit, retry):
     from pymongo import ReturnDocument
+    from pymongo.errors import DuplicateKeyError
     db = database()
     expires = datetime.fromtimestamp((minute + 2) * 60, timezone.utc)
-    def increment(scope):
-        key = hashed(f'{namespace}|{endpoint}|{minute}|{scope}')
-        row = db.api_limits.find_one_and_update({'_id': key},
-            {'$inc': {'count': 1}, '$setOnInsert': {'expires_at': expires}},
-            upsert=True, return_document=ReturnDocument.AFTER)
-        return row['count']
-    # Count globally first: once full, new IP documents cannot be created in this bucket.
-    if increment('global') > global_limit:
+    key = hashed(f'v2|{namespace}|{endpoint}|{minute}')
+    # One bucket permits an atomic admission across both limits. Only admitted
+    # IP hashes enter the map, so its cardinality cannot exceed global_limit.
+    try:
+        db.api_limits.update_one({'_id': key}, {'$setOnInsert': {
+            'count': 0, 'ips': {}, 'expires_at': expires}}, upsert=True)
+    except DuplicateKeyError:
+        pass  # Another worker initialized this same minute's bucket.
+    ip_field = 'ips.' + ip_hash
+    row = db.api_limits.find_one_and_update(
+        {'_id': key, 'count': {'$lt': global_limit},
+         '$or': [{ip_field: {'$exists': False}}, {ip_field: {'$lt': ip_limit}}]},
+        {'$inc': {'count': 1, ip_field: 1}}, return_document=ReturnDocument.AFTER)
+    if row is None:
         raise AccessDenied('rate_limited', 429, retry)
-    if increment('ip|' + ip_hash) > ip_limit:
-        raise AccessDenied('rate_limited', 429, retry)
+
+
+def identity(headers, client_address):
+    """Validate deployment and caller even when public bytes come from cache."""
+    namespace = environment()
+    ip = address(headers, client_address, namespace == 'production')
+    if namespace == 'production' and not os.environ.get('MONGODB_URI'):
+        raise AccessDenied('rate_storage_unavailable', 503)
+    return namespace, ip
 
 
 def guard(endpoint, headers, client_address, now=None):
     if endpoint not in BUDGETS:
         raise AccessDenied('rate_storage_unavailable', 503)
-    namespace = environment()
-    is_production = namespace == 'production'
-    ip = address(headers, client_address, is_production)
+    namespace, ip = identity(headers, client_address)
     timestamp = time.time() if now is None else now
     minute = int(timestamp // 60)
     retry = max(1, int((minute + 1) * 60 - timestamp + 0.999))
     uri_configured = bool(os.environ.get('MONGODB_URI'))
-    if is_production and not uri_configured:
-        raise AccessDenied('rate_storage_unavailable', 503)
     # Include minute in the digest, so stored identifiers do not link minutes.
     ip_hash = hashed(f'{namespace}|{endpoint}|{minute}|{ip}')
     _burst(endpoint, ip_hash, timestamp)
