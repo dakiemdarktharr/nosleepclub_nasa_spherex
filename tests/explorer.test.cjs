@@ -397,7 +397,7 @@ async function userSequenceDeduplicatesAndReportsTruncation(){
   ];
   find(h,"observations")[0].resolve({ok:true,json:async()=>({observations:rows,truncated:true,provenance:{query_url:"https://irsa.ipac.caltech.edu/SIA"}})});await flush();
   frame(find(h,"frame")[0],"FIRST",{spectral:{mjd:60000,center:4.73,width:.036}});await pending;
-  assert.match(h.element("explorer-sequence-summary").textContent,/4 viewable images/);
+  assert.match(h.element("explorer-sequence-summary").textContent,/only 4 have viewable images/);
   assert.equal(h.element("explorer-timeline").disabled,true,"the app does not pretend three unique observations can make a five-frame sequence");
   assert.equal(find(h,"sequence").length,0);
 }
