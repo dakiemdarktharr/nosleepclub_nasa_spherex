@@ -30,6 +30,10 @@
       "maxDuration": 120,
       "excludeFiles": "{data/**,assets/**,*.html,*.css,*.js,*.svg}"
     },
+    "api/sequence.py": {
+      "maxDuration": 120,
+      "excludeFiles": "{data/**,assets/**,*.html,*.css,*.js,*.svg}"
+    },
     "api/status.py": {
       "maxDuration": 15,
       "includeFiles": "api/_data_manifest.json",

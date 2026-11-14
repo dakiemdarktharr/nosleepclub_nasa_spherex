@@ -2,7 +2,7 @@
 (() => {
   const copy = {
     comparison: ["So sánh A/B", "Compare A/B"],
-    timeline: ["Chuỗi thời gian", "Observation timeline"],
+    timeline: ["Chuỗi thời gian", "Timeline"],
     actions: ["Chế độ xem", "View mode"],
     reset: ["Đặt lại", "Reset"],
     overview: ["Toàn khung", "Overview"],
@@ -90,7 +90,7 @@
     const panes = ["A","B"].map(createPane);
     comparison.append(grid, spectral);
     for (const pane of panes) grid.append(pane.element);
-    modes.append(compareButton, timelineButton);
+    modes.append(timelineButton, compareButton);
     modes.classList.add("linked-switch-host");
     root.insertBefore(modes, timelineView);
     root.insertBefore(toolbar, timelineView);
@@ -228,7 +228,7 @@
         overviewBox.style[endEdge] = (1 - clamp(center + halfView, 0, 1)) * 100 + "%";
       }
       scale.textContent = new Intl.NumberFormat(document.documentElement.lang, {maximumFractionDigits:1}).format(camera.zoom)+"×";
-      plus.disabled = camera.zoom >= 8;
+      plus.disabled = camera.zoom >= 2;
       minus.disabled = camera.zoom <= 1;
       rememberView();
     }
@@ -242,7 +242,7 @@
     }
 
     function zoom(ratio, originX=0, originY=0) {
-      const next = clamp(camera.zoom*ratio,1,8), change=next/camera.zoom;
+      const next = clamp(camera.zoom*ratio,1,2), change=next/camera.zoom;
       camera.x=originX+(camera.x-originX)*change;
       camera.y=originY+(camera.y-originY)*change;
       camera.zoom=next;
@@ -427,6 +427,8 @@
       const utc=h["x-frame-time-system"]==="UTC"&&h["x-frame-mjd-obs"];
       const time=utc?timeLabel(Number(h["x-frame-mjd-obs"]),"UTC"):timeLabel(info.row.t_min_mjd);
       const {center,bandwidth,spectral:actual}=frameReadout(info);
+      const gridSize=Number(h["x-frame-grid-size-px"]);
+      pane.viewport.style.setProperty("--linked-grid-width",Number.isInteger(gridSize)&&gridSize>0?Math.min(560,gridSize*8)+"px":"560px");
       pane.timestamp.textContent = time;
       pane.wavelength.textContent = actual ? center.toFixed(4)+" µm · WCS-WAVE" : choose("missingWave");
       pane.image.alt=choose("visual")+" "+pane.letter+" · "+time+" · D"+info.row.detector;

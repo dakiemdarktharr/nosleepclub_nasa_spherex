@@ -48,10 +48,11 @@ response_cache = ResponseCache(ttl=300)
 
 
 class FrameError(Exception):
-    def __init__(self, code, status=502, upstream_http_status=None, diagnostic=None):
+    def __init__(self, code, status=502, upstream_http_status=None, diagnostic=None, retry_after=None):
         self.code, self.status = code, status
         self.upstream_http_status = upstream_http_status
         self.diagnostic = diagnostic
+        self.retry_after = retry_after
         super().__init__(code)
 
 
@@ -153,9 +154,14 @@ def fetch(url):
         raise FrameError('upstream_timeout', 504, diagnostic=describe_upstream(exc, stage))
     except HTTPError as exc:
         upstream_status = exc.code
+        raw_retry_after = exc.headers.get('Retry-After') if exc.headers else None
+        retry_after = (raw_retry_after.strip() if isinstance(raw_retry_after, str)
+                       and re.fullmatch(r'[0-9]{1,3}', raw_retry_after.strip())
+                       and 0 < int(raw_retry_after.strip()) <= 120 else None)
         diagnostic = describe_upstream(exc, stage)
         exc.close()
-        raise FrameError('upstream_http_error', upstream_http_status=upstream_status, diagnostic=diagnostic) from None
+        raise FrameError('upstream_http_error', upstream_http_status=upstream_status,
+                         diagnostic=diagnostic, retry_after=retry_after) from None
     except URLError as exc:
         raise FrameError('upstream_timeout', 504, diagnostic=describe_upstream(exc, stage)) if isinstance(exc.reason, (TimeoutError, socket.timeout)) else FrameError('upstream_unavailable', diagnostic=describe_upstream(exc, stage))
     except (OSError, HTTPException) as exc:
@@ -280,11 +286,41 @@ def render(content, p):
         raise FrameError('invalid_fits')
 
 
+def produce_frame(p):
+    """Fetch, validate and render one public IRSA cutout."""
+    url = cutout_url(p)
+    content = fetch(url)
+    retrieved = datetime.now(timezone.utc).isoformat()
+    png, meta = render(content, p)
+    headers = {'X-Frame-Contract': FRAME_CONTRACT, 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
+               'X-Frame-Cutout-SHA256': sha256(content).hexdigest(), 'X-Frame-Retrieved-At': retrieved,
+               'X-Frame-Release': p['release'], 'X-Frame-Obs-ID': p['obs_id'], 'X-Frame-Detector': p['detector'],
+               'X-Frame-Grid-RA-Deg': p['ra'], 'X-Frame-Grid-Dec-Deg': p['dec'],
+               'X-Frame-Grid-Scale-Arcsec': SCALE_ARCSEC, 'X-Frame-Grid-Size-Px': p['size_px'],
+               'X-Frame-Grid-FOV-Deg': meta['fov_deg'], 'X-Frame-Unit': 'MJy/sr', 'X-Frame-Zodi': p['zodi'],
+               'X-Frame-Contrast-Mode': meta['mode'], 'X-Frame-Contrast-Low': meta['low'],
+               'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels'],
+               'X-Frame-Mask-Policy': MASK_POLICY, 'X-Frame-Masked-Pixels': meta['masked_pixels'],
+               'X-Frame-Missing-Pixels': meta['missing_pixels'],
+               'X-Frame-Center-Pixel-Status': meta['center_pixel_status']}
+    if meta['mjd'] is not None:
+        headers['X-Frame-MJD-Obs'] = meta['mjd']
+    if meta['mjd'] is not None and meta['time_system']:
+        headers['X-Frame-Time-System'] = meta['time_system']
+    if meta['center_spectrum']:
+        wavelength, bandwidth = meta['center_spectrum']
+        headers.update({'X-Frame-Center-Wavelength-Um': wavelength,
+                        'X-Frame-Center-Bandwidth-Um': bandwidth,
+                        'X-Frame-Center-Spectral-Source': 'WCS-WAVE'})
+    return png, headers
+
+
 class handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def respond(self, status, content, content_type, category, headers=None, error_code=None, upstream_http_status=None):
+    def respond(self, status, content, content_type, category, headers=None, error_code=None,
+                upstream_http_status=None, retry_after=None):
         self.send_response(status)
         self.send_header('Content-Type', content_type)
         self.send_header('Content-Length', str(len(content)))
@@ -297,6 +333,8 @@ class handler(BaseHTTPRequestHandler):
             self.send_header('Allow', 'GET')
         if status in (429, 503) and getattr(self, 'retry_after', None):
             self.send_header('Retry-After', str(self.retry_after))
+        elif retry_after is not None:
+            self.send_header('Retry-After', str(retry_after))
         for k, v in (headers or {}).items():
             self.send_header(k, str(v))
         self.end_headers()
@@ -318,32 +356,8 @@ class handler(BaseHTTPRequestHandler):
             def produce():
                 nonlocal stage
                 guard('frame', self.headers, self.client_address)
-                url = cutout_url(p)
-                content = fetch(url)
-                retrieved = datetime.now(timezone.utc).isoformat()
                 stage = 'parse'
-                png, meta = render(content, p)
-                h = {'X-Frame-Contract': FRAME_CONTRACT, 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
-                     'X-Frame-Cutout-SHA256': sha256(content).hexdigest(), 'X-Frame-Retrieved-At': retrieved,
-                     'X-Frame-Release': p['release'], 'X-Frame-Obs-ID': p['obs_id'], 'X-Frame-Detector': p['detector'],
-                     'X-Frame-Grid-RA-Deg': p['ra'], 'X-Frame-Grid-Dec-Deg': p['dec'],
-                     'X-Frame-Grid-Scale-Arcsec': SCALE_ARCSEC, 'X-Frame-Grid-Size-Px': p['size_px'],
-                     'X-Frame-Grid-FOV-Deg': meta['fov_deg'], 'X-Frame-Unit': 'MJy/sr', 'X-Frame-Zodi': p['zodi'],
-                     'X-Frame-Contrast-Mode': meta['mode'], 'X-Frame-Contrast-Low': meta['low'],
-                     'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels'],
-                     'X-Frame-Mask-Policy': MASK_POLICY, 'X-Frame-Masked-Pixels': meta['masked_pixels'],
-                     'X-Frame-Missing-Pixels': meta['missing_pixels'],
-                     'X-Frame-Center-Pixel-Status': meta['center_pixel_status']}
-                if meta['mjd'] is not None:
-                    h['X-Frame-MJD-Obs'] = meta['mjd']
-                if meta['mjd'] is not None and meta['time_system']:
-                    h['X-Frame-Time-System'] = meta['time_system']
-                if meta['center_spectrum']:
-                    wavelength, bandwidth = meta['center_spectrum']
-                    h.update({'X-Frame-Center-Wavelength-Um': wavelength,
-                              'X-Frame-Center-Bandwidth-Um': bandwidth,
-                              'X-Frame-Center-Spectral-Source': 'WCS-WAVE'})
-                return png, h
+                return produce_frame(p)
             (png, headers), cached = response_cache.run(key, produce)
             return self.respond(200, png, 'image/png', 'ok', {**headers, 'X-Response-Cache': cached})
         except AccessDenied as exc:
@@ -354,7 +368,8 @@ class handler(BaseHTTPRequestHandler):
         except FrameError as exc:
             emit_upstream(logger, 'frame', self.request_id, exc.diagnostic or describe_upstream(None, stage))
             return self.respond(exc.status, json.dumps({'error': exc.code}).encode(), 'application/json', 'upstream_or_fits',
-                                error_code=exc.code, upstream_http_status=exc.upstream_http_status)
+                                error_code=exc.code, upstream_http_status=exc.upstream_http_status,
+                                retry_after=exc.retry_after)
         except Exception:
             return self.respond(500, b'{"error":"internal_error"}', 'application/json', 'internal')
 

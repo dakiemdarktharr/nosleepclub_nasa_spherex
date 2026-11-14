@@ -8,6 +8,7 @@ from contextlib import contextmanager
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
+import mimetypes
 from pathlib import Path
 import re
 import threading
@@ -15,6 +16,7 @@ import threading
 from playwright.sync_api import sync_playwright, expect
 
 ROOT = Path(__file__).resolve().parents[1]
+mimetypes.add_type('image/webp', '.webp')
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -96,9 +98,13 @@ def run_case(browser, base, output, mobile, language):
         expect(page.locator('#guided-activity')).not_to_be_visible()
         expect(page.locator('#guided-open')).to_be_focused()
 
-        # A shipped SPHEREx sample must work without a request to the live archive.
-        page.goto(f'{base}/?lang={language}&flow_source=wise#compare-step')
+        # Follow the public two-step workflow after the bundled image set is ready.
+        page.goto(f'{base}/?lang={language}&flow_source=wise#home')
         page.wait_for_function('window.SkyApp?.context().ready === true')
+        expect(page.locator('#workflow-data-next')).to_be_enabled()
+        page.locator('#workflow-data-next').focus()
+        page.keyboard.press('Enter')
+        expect(page).to_have_url(re.compile(r'#compare-step$'))
         expect(page.locator('#step-compare-title')).to_be_visible()
         page.locator('[data-mode="side"]').click()
         canvas = page.locator('#sky')
@@ -109,21 +115,14 @@ def run_case(browser, base, output, mobile, language):
             heading = page.locator('#step-compare-title').bounding_box()
             nav = page.locator('.workflow-sidebar').bounding_box()
             assert heading['y'] >= nav['y'] + nav['height'] - 2, 'Mobile navigation covers the title'
-        page.locator('#workflow-compare-next').click()
-        warning = page.locator('#workflow-check-warning')
-        expect(warning).to_contain_text('unconfirmed' if language == 'en' else 'chưa xác nhận')
-        page.locator('#workflow-check-next').click()
-        note = 'Browser smoke draft · giữ nguyên văn bản'
-        page.locator('#review-note').fill(note)
+        expect(page.locator('.workflow-sidebar [data-step-link]')).to_have_count(2)
+        page.screenshot(path=str(output / f'{name}-images.png'))
         page.locator('.workflow-header [data-language]').click()
-        expect(page.locator('#review-note')).to_have_value(note)
+        expect(page.locator('html')).to_have_attribute('lang', 'vi' if language == 'en' else 'en')
+        expect(page.locator('#step-compare-title')).to_be_visible()
         page.locator('.workflow-header [data-language]').click()
-        expect(page.locator('#review-note')).to_have_value(note)
-        expect(page.locator('#review-draft-state')).to_contain_text('Draft' if language == 'en' else 'Nháp')
-        if language == 'en':
-            expect(page.locator('.workflow-sidebar')).to_contain_text('Compare')
-            expect(page.locator('#storage-status')).to_have_text('Stored only in this browser')
-        page.screenshot(path=str(output / f'{name}-review.png'))
+        expect(page.locator('html')).to_have_attribute('lang', language)
+        expect(page.locator('.workflow-sidebar [data-step-link]')).to_have_count(2)
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), 'Horizontal overflow'
         assert not errors, f'Browser errors: {errors}'
         assert not live_calls, f'Unexpected live API requests: {live_calls}'
@@ -133,6 +132,71 @@ def run_case(browser, base, output, mobile, language):
         raise
     finally:
         context.tracing.stop(path=str(output / f'{name}-trace.zip'))
+        context.close()
+
+
+def timeline_case(browser, base, output):
+    context = browser.new_context(viewport={'width': 1366, 'height': 920}, reduced_motion='reduce')
+    page = context.new_page()
+    page.set_default_timeout(15000)
+    errors, live_calls, full_frames, failed_requests = [], [], {}, []
+    page.on('pageerror', lambda error: errors.append(str(error)))
+    page.on('requestfailed', lambda request: failed_requests.append(request.url))
+
+    def refuse_live(route):
+        live_calls.append(route.request.url.split('?')[0])
+        route.abort()
+
+    context.route('**/api/observations*', refuse_live)
+    context.route('**/api/frame*', refuse_live)
+
+    def record_full_frame(response):
+        marker = '/assets/mission/full-sequence/wise0855/'
+        if marker in response.url:
+            full_frames[response.url.split(marker, 1)[1]] = {
+                'status': response.status,
+                'content_type': response.headers.get('content-type', ''),
+            }
+
+    page.on('response', record_full_frame)
+    try:
+        page.goto(f'{base}/?lang=en&flow_source=irsa#home')
+        expect(page.locator('#explorer-form')).to_be_visible()
+        page.locator('#explorer-preset').select_option('wise0855')
+        page.locator('#explorer-fov').select_option('0.10')
+        page.locator('#explorer-release').select_option('dr1')
+        page.locator('#explorer-detector').select_option('6')
+        page.locator('#explorer-search').click()
+        expect(page.locator('#explorer-image')).to_be_visible()
+        expect(page.locator('#explorer-image')).to_have_js_property('naturalWidth', 2040)
+        expect(page.locator('#explorer-image')).to_have_js_property('naturalHeight', 2040)
+        expect(page.locator('#explorer-timeline')).to_be_enabled()
+        page.locator('#explorer-timeline').focus()
+        page.keyboard.press('Enter')
+        expect(page.locator('#explorer-sequence-summary')).to_contain_text('All 5 frames are loaded', timeout=30000)
+        expect(page.locator('#explorer-timeline')).to_have_text('Pause sequence')
+        assert len(full_frames) == 5, f'Expected five full-resolution local images, got {len(full_frames)}'
+        assert all(frame['status'] == 200 and frame['content_type'].startswith('image/webp')
+                   for frame in full_frames.values()), f'Full-resolution image requests failed: {full_frames}'
+        first_src = page.locator('#explorer-image').get_attribute('src')
+        page.wait_for_function("first => document.querySelector('#explorer-image').src !== first", arg=first_src, timeout=5000)
+        page.locator('#explorer-timeline').click()
+        expect(page.locator('#explorer-timeline')).to_have_text('Resume sequence (5)')
+        assert not errors, f'Browser errors: {errors}'
+        assert not live_calls, f'Unexpected live API requests: {live_calls}'
+        page.screenshot(path=str(output / 'desktop-en-timeline.png'))
+        return {'case': 'desktop-en-timeline', 'passed': True, 'full_resolution_frames': len(full_frames), 'page_errors': 0}
+    except Exception as error:
+        print(json.dumps({
+            'case': 'desktop-en-timeline',
+            'error': str(error),
+            'full_frame_responses': full_frames,
+            'status': page.locator('#explorer-status').inner_text(),
+            'failed_requests': failed_requests,
+        }), flush=True)
+        page.screenshot(path=str(output / 'desktop-en-timeline-failure.png'), full_page=True)
+        raise
+    finally:
         context.close()
 
 
@@ -199,6 +263,8 @@ def main():
                 for language in ('en', 'vi'):
                     results.append(run_case(browser, base, args.output, mobile, language))
                     print(json.dumps(results[-1]), flush=True)
+            results.append(timeline_case(browser, base, args.output))
+            print(json.dumps(results[-1]), flush=True)
             results.append(recovery_case(browser, base))
             results.append(script_recovery_case(browser, base))
         finally:
