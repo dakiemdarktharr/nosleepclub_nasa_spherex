@@ -160,7 +160,10 @@ class PublicDataTest(unittest.TestCase):
 
     def test_committed_manifest_retains_all_public_product_hashes(self):
         value = json.loads(package.MANIFEST.read_bytes())
-        self.assertEqual(value['asset_count'], 213)
+        paths = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', 'HEAD', '--', 'web/data'],
+                                        cwd=ROOT, text=True).splitlines()
+        self.assertEqual(value['asset_count'], len(paths))
+        self.assertEqual(set(value['assets']), {path.removeprefix('web/') for path in paths})
         for name, entry in value['assets'].items():
             # No private/raw products and all transport parts are below 4.5 MB.
             self.assertTrue(name.startswith('data/'))

@@ -110,7 +110,7 @@
 .workflow-app .view-switch button { min-height:40px; padding:10px; font-size:11px; }
 #compare-step .view-switch button { min-height:34px; padding:8px 10px; }
 #compare-step .toolbar { padding-top:6px; padding-bottom:6px; }
-.workflow-app .viewer-shell { margin:0 auto; width:calc(100% - 28px); max-width:clamp(200px,calc(100svh - 500px),430px); }
+.workflow-app .viewer-shell { margin:0 auto; width:calc(100% - 28px); max-width:clamp(380px,68svh,680px); }
 .workflow-app .viewer-shell:has(canvas.side) { max-width:100%; }
 .workflow-app #sky { display:block; width:100%; height:auto; }
 .workflow-app .viewer-top,.workflow-app .viewer-bottom { padding:6px 8px; font-size:9px; line-height:1.7; }
@@ -123,7 +123,7 @@
 .workflow-app .observation>.workflow-details p { padding-bottom:12px; font-size:12px; line-height:1.9; }
 .workflow-app .explorer-grid { grid-template-columns:minmax(0,1fr) 230px; gap:24px; }
 .workflow-app .explorer-image-wrap { background:#0d1521; }
-.workflow-app #explorer-image { display:block; max-width:100%; max-height:560px; width:auto; height:auto; margin:auto; image-rendering:pixelated; }
+.workflow-app #explorer-image { display:block; width:100%; height:100%; margin:0; image-rendering:pixelated; }
 .workflow-app .explorer-controls { gap:10px; flex-wrap:wrap; }
 .workflow-app .explorer-controls button { min-height:44px; padding:12px; font-size:12px; border:1px solid #617895; border-radius:4px; }
 .workflow-app .explorer-frame-list { max-height:680px; }
@@ -207,6 +207,6 @@
   #compare-step #reset-view span { display:none; }
   #compare-step .workflow-view-tools .unconfirmed { font-size:9px; white-space:nowrap; }
   #compare-step .workflow-view-tools .text-button { white-space:nowrap; }
-  .workflow-app .viewer-shell { max-width:clamp(180px,calc(100svh - 600px),300px); }
+  .workflow-app .viewer-shell { max-width:min(100%,680px); }
 }
 @media(prefers-reduced-motion:reduce) { .workflow-app * { scroll-behavior:auto!important; transition:none!important; } }

@@ -581,6 +581,21 @@
       "permanent": false
     },
     {
+      "source": "/data/guided-transfer/2025W19_1B_0116_1-D6.png",
+      "destination": "/api/data?path=data%2Fguided-transfer%2F2025W19_1B_0116_1-D6.png&v=5605746d6a9bbd854d68c5b471ebdae6f5d777921208835194f7688e8e40a7fc",
+      "permanent": false
+    },
+    {
+      "source": "/data/guided-transfer/2026W20_1A_0033_1-D6.png",
+      "destination": "/api/data?path=data%2Fguided-transfer%2F2026W20_1A_0033_1-D6.png&v=adab98c23957b853497ee4ca37be5ba19fbdead2a33dbdce5b54e32dc770aaf3",
+      "permanent": false
+    },
+    {
+      "source": "/data/guided-transfer/provenance.json",
+      "destination": "/api/data?path=data%2Fguided-transfer%2Fprovenance.json&v=701f14a772cfca026c8e8f5f0cbef6a11b14dcbb0909927427e974a4d64f8f99",
+      "permanent": false
+    },
+    {
       "source": "/data/independent-fields/selection.json",
       "destination": "/api/data?path=data%2Findependent-fields%2Fselection.json&v=916f70f72d1bf2207aa7f82e1503704cf02824d0e5e76ac695b6725e984204e5",
       "permanent": false

@@ -93,8 +93,31 @@ class FrontendContract(unittest.TestCase):
 
     def test_art_and_observation_sources_are_distinct(self):
         html=(ROOT/'web/index.html').read_text(encoding='utf-8')
-        self.assertIn('Minh họa nghệ thuật · Canva',html)
+        self.assertIn('assets/mission/spherex-bauhaus.svg',html)
+        self.assertIn('Ảnh SPHEREx DR1, dải D6 · NASA/IPAC IRSA',html)
         self.assertIn('Ảnh quan sát thật',html)
         self.assertIn('Đọc kết quả & giới hạn',html)
-        for file in ['brown-dwarf-canva.webp','compare-guide-canva.webp']:
-            self.assertTrue((ROOT/'web/assets'/file).exists())
+        for file in ['orbit.webp','sky.webp','field.webp','timeline.webp','compare.webp']:
+            self.assertTrue((ROOT/'web/assets/guide'/file).is_file())
+
+    def test_guided_cases_reference_two_provenanced_observations(self):
+        archive=ROOT/'web/assets/mission/epsilon-sequence'
+        cases=json.loads((archive/'activities.json').read_text(encoding='utf-8'))['cases']
+        self.assertGreaterEqual(len(cases),3)
+        examples=set()
+        for case in cases:
+            path=(archive/case.get('archive','provenance.json')).resolve()
+            manifest=json.loads(path.read_text(encoding='utf-8'))
+            reference={entry['obs_id']: entry for entry in manifest['observations']}
+            first,second=[reference[obs_id] for obs_id in case['observations']]
+            self.assertLess(first['mjd_obs_utc'],second['mjd_obs_utc'])
+            self.assertIn(case['answer'],[option['id'] for option in case['options']])
+            self.assertEqual(set(case['explanation']),{'en','vi'})
+            if 'archive' in case:
+                self.assertTrue(examples.isdisjoint(case['observations']))
+                self.assertGreaterEqual(manifest['common_center_band_fraction_of_widest'],.75)
+                self.assertEqual(first['contrast_low'],second['contrast_low'])
+                self.assertEqual(first['contrast_high'],second['contrast_high'])
+                for item in (first,second):
+                    self.assertEqual(sha256((path.parent/item['image']).read_bytes()).hexdigest(),item['png_sha256'])
+            examples.update(case['observations'])

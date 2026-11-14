@@ -3,6 +3,7 @@
   const el = (id) => document.getElementById(id);
   const t = (key) => window.SpherexSite.text(key);
   const pageSet = new Set(["orbit", "about", "night-sky"]);
+  const workbenchPages = new Set(["home", "explore", "compare-step", "check-step", "review-step", "research"]);
   const pages = [...document.querySelectorAll("[data-public-page]")];
   const site = el("public-site");
   const orbit = el("orbit");
@@ -14,22 +15,29 @@
   const search = el("sky-target-search");
   const dialog = el("sky-image-dialog");
   const workspaceScripts = [
-    "review-store.js?v=0.10.0-r11", "draft-store.js?v=0.11.1-r18", "app.js?v=0.11.1-r19",
+    "review-store.js?v=0.10.0-r11", "draft-store.js?v=0.11.1-r18", "app.js?v=0.11.1-r20",
     "mission.js?v=0.11.0-r17", "benchmark.js?v=0.10.0-r11", "quality.js?v=0.11.0-r17",
-    "covariance.js?v=0.10.0-r11", "ablation.js?v=0.10.0-r11", "linked-comparison.js?v=1", "explorer.js?v=0.13.0",
+    "covariance.js?v=0.10.0-r11", "ablation.js?v=0.10.0-r11", "linked-comparison.js?v=2", "explorer.js?v=0.14.0",
     "goal-dashboard.js?v=0.10.0-r11", "linked-evidence.js?v=0.10.0-r11",
     "neighbor-evidence.js?v=0.10.0-r11", "reference-evidence.js?v=0.10.0-r11",
     "calibration-evidence.js?v=0.10.0-r12", "profile-evidence.js?v=0.10.0-r13",
-    "signal-evidence.js?v=0.10.0-r14", "data-links.js?v=0.11.1-r19", "navigation.js?v=0.12.0-r2"
+    "signal-evidence.js?v=0.10.0-r14", "data-links.js?v=0.11.1-r19", "navigation.js?v=0.12.0-r3"
   ];
   let motionPaused = false;
   let orbitLoading;
   let aboutLoading;
   let titleAnimation = 0;
   let titleShown = false;
-  let irising = false;
+  const arrivalKey = "spherex.curtain";
+  const wipeCovered = "polygon(0 0, 130% 0, 100% 100%, -30% 100%)";
+  const wipeStart = "polygon(0 0, 0 0, -30% 100%, -30% 100%)";
+  const wipeEnd = "polygon(130% 0, 130% 0, 100% 100%, 100% 100%)";
+  let transitioning = false;
+  let arrival;
+  let historyTraversal = 0;
   let posterFrame = 0;
   let archivedPlayer;
+  let guidedComparison;
   let orbitRefresh;
   let skyLoading;
   let dome;
@@ -107,44 +115,83 @@
     if (!posterFrame && currentPage === "orbit") posterFrame = requestAnimationFrame(updatePoster);
   }
 
-  async function irisHome(event) {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-    event.preventDefault();
-    if (irising) return;
-    if (media.matches || typeof el("public-iris").animate !== "function") {
-      if (location.hash === "#orbit") step(true);
-      else location.hash = "orbit";
-      return;
-    }
-    irising = true;
+  function animateCurtain(from, to, duration) {
     const curtain = el("public-iris");
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const x = event.detail ? event.clientX : bounds.left + bounds.width / 2;
-    const y = event.detail ? event.clientY : bounds.top + bounds.height / 2;
-    const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 8;
-    const closed = `circle(0px at ${x}px ${y}px)`;
-    const open = `circle(${r}px at ${x}px ${y}px)`;
     curtain.hidden = false;
-    try {
-      await curtain.animate([{clipPath: closed}, {clipPath: open}], {duration: 280, easing: "ease-in", fill: "forwards"}).finished;
-      titleShown = false;
-      if (location.hash !== "#orbit") {
-        const url = new URL(location.href);
-        url.hash = "orbit";
+    curtain.style.clipPath = to;
+    const animation = curtain.animate([{clipPath: from}, {clipPath: to}], {
+      duration, easing: "cubic-bezier(.45,.05,.27,1)", fill: "both"
+    });
+    return animation.finished.finally(() => animation.cancel());
+  }
+
+  function closeCurtain() {
+    const curtain = el("public-iris");
+    curtain.hidden = true;
+    curtain.style.removeProperty("clip-path");
+    transitioning = false;
+  }
+
+  async function transitionTo(url, irisOrigin) {
+    if (arrival) await arrival;
+    if (transitioning) return;
+    const traversal = historyTraversal;
+    const reload = Boolean(publicPage()) !== (pageSet.has(url.hash.slice(1)) || url.hash === "#field-guide")
+      && !irisOrigin && url.search !== location.search;
+    const go = () => {
+      if (reload) { location.assign(url); return; }
+      if (irisOrigin) titleShown = false;
+      const oldURL = location.href;
+      if (url.href !== oldURL) {
         history.pushState(null, "", url);
-      }
-      step(true);
-      await curtain.animate([{clipPath: open}, {clipPath: closed}], {duration: 490, easing: "cubic-bezier(.25,.7,.3,1)", fill: "forwards"}).finished;
-    } finally {
-      for (const animation of curtain.getAnimations()) animation.cancel();
-      curtain.hidden = true;
-      irising = false;
+        window.dispatchEvent(new HashChangeEvent("hashchange", {oldURL, newURL: url.href}));
+      } else if (irisOrigin) step(true);
+    };
+    if (media.matches || typeof el("public-iris").animate !== "function") { go(); return; }
+    let start = wipeStart, covered = wipeCovered, end = wipeEnd;
+    if (irisOrigin) {
+      const {x, y} = irisOrigin;
+      const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 8;
+      start = end = `circle(0px at ${x}px ${y}px)`;
+      covered = `circle(${r}px at ${x}px ${y}px)`;
     }
+    transitioning = true;
+    let leaving = false;
+    try {
+      await animateCurtain(start, covered, 420);
+      if (historyTraversal !== traversal) return;
+      if (reload) {
+        try { sessionStorage.setItem(arrivalKey, url.href); } catch { /* Arrival can render directly. */ }
+        leaving = true;
+      }
+      go();
+      if (!leaving) await animateCurtain(covered, end, 580);
+    } finally {
+      if (!leaving) closeCurtain();
+    }
+  }
+
+  window.SpherexTransition = (id) => {
+    const url = new URL(location.href);
+    url.hash = id;
+    return transitionTo(url, null);
+  };
+
+  function revealArrival() {
+    try {
+      if (sessionStorage.getItem(arrivalKey) !== location.href) return;
+      sessionStorage.removeItem(arrivalKey);
+    } catch { return; }
+    if (media.matches || typeof el("public-iris").animate !== "function") return;
+    arrival = animateCurtain(wipeCovered, wipeEnd, 580).finally(() => {
+      arrival = undefined;
+      closeCurtain();
+    });
   }
 
   function startOrbit() {
     if (!orbitLoading) {
-      orbitLoading = import("./orbit-scene.js").then(({mountOrbit}) => mountOrbit({
+      orbitLoading = import("./orbit-scene.js?v=2").then(({mountOrbit}) => mountOrbit({
         canvas: el("spacecraft-canvas"),
         target: orbit.querySelector(".spacecraft-target"),
         orbit,
@@ -185,8 +232,9 @@
     return response.json();
   }
 
-  function searchLink(target) {
-    const url = new URL(location.pathname, location.href);
+  function searchLink(target, mode) {
+    const url = new URL(location.href);
+    url.search = "";
     url.hash = "explore";
     url.searchParams.set("lang", window.SpherexSite.language());
     if (target) {
@@ -197,6 +245,7 @@
       url.searchParams.set("sky_det", "6");
       url.searchParams.set("sky_release", "dr1");
       url.searchParams.set("sky_autoload", "1");
+      if (mode) url.searchParams.set("sky_view", mode);
       if (target.id) url.searchParams.set("from_field", target.id);
       else url.searchParams.set("from_sky", "1");
       if (target.id === "epsilon") {
@@ -231,7 +280,8 @@
     el("sky-field-status").textContent = previewState === "loading" ? t("loadingPreview") : previewState === "error" ? t("previewUnavailable") : "";
     el("sky-field-note").textContent = t("fullFieldLimit");
     el("sky-field-original").href = display.original;
-    el("sky-field-compare").href = searchLink(selected);
+    el("sky-field-compare").href = searchLink(selected, "compare");
+    el("sky-field-timeline").href = searchLink(selected, "timeline");
     el("sky-field-example").hidden = selected.id !== "epsilon";
     const inFrame = Number.isFinite(display.x) && Number.isFinite(display.y) && display.x >= 0 && display.x <= 1 && display.y >= 0 && display.y <= 1;
     for (const id of ["sky-field-marker", "sky-image-marker"]) {
@@ -273,6 +323,15 @@
   function setSkySidebar(open) {
     el("night-sky").dataset.sidebar = open ? "open" : "closed";
     el("sky-sidebar-toggle").setAttribute("aria-expanded", String(open));
+  }
+
+  function restoreSkyField() {
+    const query = new URL(location.href).searchParams;
+    const fieldId = query.get("field");
+    if (fieldId && fields.length && currentPage === "night-sky") {
+      showField(fieldId, false);
+      if (fieldId === "epsilon" && query.get("view") === "saved") openSavedSequence();
+    }
   }
 
   function previewReady() {
@@ -335,13 +394,12 @@
         },
         start: {ra: 109, dec: 4}
       });
-      const fieldId = new URL(location.href).searchParams.get("field");
-      if (fieldId && currentPage === "night-sky") showField(fieldId, false);
     } catch {
       el("sky-guide").dataset.copy = "skyFallback";
       el("sky-guide").textContent = t("skyFallback");
       for (const id of ["sky-in", "sky-out", "sky-reset"]) el(id).disabled = true;
     }
+    restoreSkyField();
   }
 
   function step(focus = false) {
@@ -354,10 +412,6 @@
     el("orbit-extras").hidden = next !== "orbit";
     if (next !== "orbit") showTitle();
     for (const page of pages) page.hidden = page.id !== next;
-    for (const anchor of site.querySelectorAll("[data-nav]")) {
-      if (anchor.dataset.nav === next) anchor.setAttribute("aria-current", "page");
-      else anchor.removeAttribute("aria-current");
-    }
     if (!isPublic) {
       startWorkspace();
       return;
@@ -367,15 +421,13 @@
     refreshText();
     if (next === "orbit") { startOrbit(); typeTitle(); schedulePoster(); }
     if (next === "about") {
-      const aboutImage = el("about").querySelector("img[data-src]");
-      aboutImage.alt = t("orbitImage");
-      if (!aboutImage.getAttribute("src")) aboutImage.src = aboutImage.dataset.src;
-      if (!aboutLoading) aboutLoading = import("./about-story.js")
+      if (!aboutLoading) aboutLoading = import("./about-story.js?v=2")
         .then(({mountAboutStory}) => mountAboutStory(el("about")))
         .catch(() => { aboutLoading = null; });
     }
     if (next === "night-sky") {
       if (!skyLoading) skyLoading = loadSky();
+      else restoreSkyField();
       dome?.refresh();
     }
     if (location.hash === "#field-guide") {
@@ -393,7 +445,6 @@
     const center = dome?.coordinates();
     if (center) el("sky-center-search").href = searchLink({...center, fov: .06});
     updateFieldText();
-    el("about").querySelector("img").alt = t("orbitImage");
     if (!currentPage) return;
     const title = currentPage === "orbit" ? t("brand") : `${t(currentPage === "about" ? "aboutTitle" : "skyTitle")} · ${t("brand")}`;
     document.title = title;
@@ -415,12 +466,50 @@
       el("sky-sidebar-toggle").focus();
     }
   });
-  for (const anchor of document.querySelectorAll("[data-iris-home]")) anchor.addEventListener("click", irisHome);
+  document.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    const anchor = event.target.closest?.("a[href]");
+    const object = anchor?.matches(".spacecraft-target, .earth-target") ? anchor : null;
+    const touch = event.pointerType === "touch" || event.sourceCapabilities?.firesTouchEvents;
+    if (touch && object && !object.hasAttribute("data-tap-preview")) {
+      event.preventDefault();
+      orbit.querySelector("[data-tap-preview]")?.removeAttribute("data-tap-preview");
+      object.setAttribute("data-tap-preview", "");
+      return;
+    }
+    orbit.querySelector("[data-tap-preview]")?.removeAttribute("data-tap-preview");
+    if (!anchor || anchor.target || anchor.hasAttribute("download")) return;
+    const url = new URL(anchor.href);
+    if (url.origin !== location.origin || url.pathname !== location.pathname) return;
+    const iris = anchor.hasAttribute("data-iris-home");
+    const destination = url.hash.slice(1);
+    if (!iris && !pageSet.has(destination) && !workbenchPages.has(destination)) return;
+    if (!iris && url.hash === location.hash && url.search === location.search) return;
+    if (!currentPage && url.hash === "#night-sky" && !url.searchParams.has("view")) {
+      const fieldId = url.searchParams.get("from_field");
+      url.search = "";
+      url.searchParams.set("lang", window.SpherexSite.language());
+      if (fieldId) url.searchParams.set("field", fieldId);
+    }
+    if (iris) {
+      url.search = "";
+      url.searchParams.set("lang", window.SpherexSite.language());
+    }
+    const bounds = anchor.getBoundingClientRect();
+    const origin = iris ? {
+      x: event.detail ? event.clientX : bounds.left + bounds.width / 2,
+      y: event.detail ? event.clientY : bounds.top + bounds.height / 2
+    } : null;
+    event.preventDefault();
+    transitionTo(url, origin);
+  });
   media.addEventListener("change", updateMotion);
+  window.addEventListener("popstate", () => { historyTraversal++; });
   window.addEventListener("scroll", schedulePoster, {passive: true});
   window.addEventListener("resize", schedulePoster);
   window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
+      closeCurtain();
       const urlLanguage = new URL(location.href).searchParams.get("lang");
       if (urlLanguage) window.SpherexSite.apply(urlLanguage);
       step();
@@ -448,8 +537,24 @@
     dialog.showModal();
   });
   el("sky-image-close").addEventListener("click", () => dialog.close());
-  el("sky-field-example").addEventListener("click", async () => {
+  el("guided-open").addEventListener("click", async (event) => {
+    const button = event.currentTarget;
+    const output = el("guided-open-status");
+    button.disabled = true;
+    output.textContent = "";
+    try {
+      if (!guidedComparison) {
+        const {mountGuidedComparison} = await import("./guided-comparison.js");
+        guidedComparison = mountGuidedComparison(t, window.SpherexSite.language);
+      }
+      if (currentPage === "orbit") guidedComparison();
+    } catch {
+      output.textContent = t("guidedError");
+    } finally { button.disabled = false; }
+  });
+  async function openSavedSequence() {
     const button = el("sky-field-example");
+    if (button.disabled) return;
     button.disabled = true;
     try {
       if (!archivedPlayer) {
@@ -462,19 +567,8 @@
     } finally {
       button.disabled = false;
     }
-  });
-  for (const anchor of document.querySelectorAll(".legacy-surface a[href='#night-sky']")) {
-    anchor.addEventListener("click", (event) => {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      const url = new URL(location.pathname, location.href);
-      url.hash = "night-sky";
-      url.searchParams.set("lang", window.SpherexSite.language());
-      const fieldId = new URL(location.href).searchParams.get("from_field");
-      if (fieldId) url.searchParams.set("field", fieldId);
-      location.assign(url);
-    });
   }
+  el("sky-field-example").addEventListener("click", openSavedSequence);
   site.querySelector(".skip-link").addEventListener("click", (event) => {
     event.preventDefault();
     el("public-main").focus();
@@ -483,7 +577,9 @@
   window.addEventListener("hashchange", () => {
     if (dialog.open) dialog.close();
     if (el("archived-sequence").open) el("archived-sequence").close();
+    if (el("guided-activity").open) el("guided-activity").close();
     step(true);
   });
   step();
+  revealArrival();
 })();

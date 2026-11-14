@@ -3,6 +3,7 @@
 const $ = (id) => document.getElementById(id);
 const canvas = $("sky");
 const ctx = canvas.getContext("2d");
+const viewCopy = (vi,en) => document.documentElement?.lang?.startsWith("en") ? en : vi;
 const state = { manifest: null, scene: null, images: {}, pixels: null, mode: "wipe", wipe: .5,
   zoom: 1, center: [32,32], selected: "target", blinkAfter: false, timer: null, loading: 0, ready: false };
 const number = (value, digits=2) => Number(value).toLocaleString("vi-VN", {maximumFractionDigits:digits, minimumFractionDigits:digits});
@@ -110,8 +111,9 @@ function download(name, value) {
 }
 function crop() {
   const width=64/state.zoom;
-  return {x:Math.max(0,Math.min(64-width,state.center[0]-width/2)),
-    y:Math.max(0,Math.min(64-width,state.center[1]-width/2)), width};
+  const overscan=state.mode==="side" ? Math.max(0, width * .25 - (64-width)/2) : 0;
+  const bound=value=>Math.max(-overscan,Math.min(64-width+overscan,value-width/2));
+  return {x:bound(state.center[0]),y:bound(state.center[1]),width};
 }
 function xy(x,y,width,height,offset=0) {
   const c=crop(); return [offset+(x+.5-c.x)/c.width*width, (63-y+.5-c.y)/c.width*height];
@@ -208,7 +210,7 @@ function render() {
 function setMode(mode) {
   if (state.timer) clearInterval(state.timer);state.timer=null;
   state.mode=mode;state.blinkAfter=false;
-  $("mode-instruction").textContent={wipe:"Kéo vạch qua chấm được đánh dấu để so vị trí trước và sau.",side:"Hai ảnh đặt cạnh nhau: nhìn vị trí chấm so với các sao xung quanh.",difference:"Vùng sáng/tối cho biết ảnh sau khác ảnh trước; nhiễu cũng có thể tạo dấu như vậy.",blink:"Ảnh trước và sau đổi phiên. Tìm chấm nhảy chỗ trong khi các sao xung quanh đứng yên."}[mode];
+  setModeInstruction();
   document.querySelectorAll("[data-mode]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===mode)));
   $("wipe-control").hidden=mode!=="wipe";
   $("view-note").textContent=mode==="difference"
@@ -217,6 +219,15 @@ function setMode(mode) {
     :"Hai ảnh dùng cùng mức kéo sáng. Vòng nét đứt là dự báo từ astrometry cũ, không phải phát hiện của model.";
   if (mode==="blink") state.timer=setInterval(()=>{state.blinkAfter=!state.blinkAfter;render();},850);
   render();
+}
+function setModeInstruction(){
+  const instructions={
+    wipe:["Kéo vạch qua chấm được đánh dấu để so vị trí trước và sau.","Drag the divider across the marked point to compare its position."],
+    side:["Kéo một ảnh hoặc dùng phím mũi tên để di chuyển cả hai. Chọn một điểm để xem chi tiết.","Drag either image or use arrow keys to pan both together. Select a point to inspect it."],
+    difference:["Vùng sáng hoặc tối cho biết ảnh sau khác ảnh trước. Nhiễu cũng có thể tạo dấu như vậy.","Bright or dark areas may indicate a change between images. Noise can leave similar marks."],
+    blink:["Ảnh trước và sau đổi phiên. Tìm chấm nhảy chỗ trong khi các sao xung quanh đứng yên.","The two images alternate. Look for a point that shifts while nearby stars stay still."]
+  };
+  $("mode-instruction").textContent=viewCopy(...instructions[state.mode]);
 }
 function keyForSelection() {
   return `${state.manifest.analysis_sha256}:${state.scene.id}:${state.selected}`;
@@ -477,7 +488,7 @@ $("export-reviews").addEventListener("click",()=>{
 $("clear-review").addEventListener("click",async()=>{
   await removeReview(keyForSelection(),$("review-feedback"));
 });
-let dragging=false;
+let dragging=false, sideDrag=null;
 function pointerPixel(event) {
   const rect=canvas.getBoundingClientRect(), c=crop();
   let fraction=(event.clientX-rect.left)/rect.width;
@@ -486,23 +497,60 @@ function pointerPixel(event) {
     y:Math.max(0,Math.min(63,63-Math.floor(c.y+(event.clientY-rect.top)/rect.height*c.width)))};
 }
 canvas.addEventListener("pointerdown",event=>{
-  if(!state.scene)return;
+  if(!state.scene||!event.isPrimary||event.button!==0)return;
   if(state.mode==="wipe"){dragging=true;canvas.setPointerCapture(event.pointerId);}
+  else if(state.mode==="side"){
+    const rect=canvas.getBoundingClientRect(), c=crop();
+    if(!rect.width||!rect.height)return;
+    sideDrag={id:event.pointerId,x:event.clientX,y:event.clientY,center:[c.x+c.width/2,c.y+c.width/2],pixelScale:c.width/rect.height,moved:false};
+    canvas.setPointerCapture(event.pointerId);
+  }
   else {const p=pointerPixel(event),near=state.scene.candidates.find(c=>Math.hypot(c.x-p.x,c.y-p.y)<3);if(near)select(near.id);}
 });
 canvas.addEventListener("pointermove",event=>{
   if(!state.scene)return;
   if(dragging){const rect=canvas.getBoundingClientRect();state.wipe=Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width));$("wipe").value=String(Math.round(state.wipe*100));render();}
+  if(sideDrag?.id===event.pointerId&&state.mode==="side"){
+    const dx=event.clientX-sideDrag.x,dy=event.clientY-sideDrag.y;
+    if(sideDrag.moved||Math.hypot(dx,dy)>=5){
+      sideDrag.moved=true;
+      canvas.classList.add("is-grabbing");
+      state.center=[sideDrag.center[0]-dx*sideDrag.pixelScale,sideDrag.center[1]-dy*sideDrag.pixelScale];
+      const next=crop();
+      state.center=[next.x+next.width/2,next.y+next.width/2];
+      render();
+    }
+  }
   const {x,y}=pointerPixel(event),a=state.pixels.before[y][x],b=state.pixels.after[y][x];
   $("pixel-readout").textContent=`Pixel ${x},${y} · ${a===null?"thiếu":number(a,3)} / ${b===null?"thiếu":number(b,3)} MJy/sr`;
 });
-["pointerup","pointercancel","lostpointercapture"].forEach(name=>canvas.addEventListener(name,()=>dragging=false));
+canvas.addEventListener("pointerup",event=>{
+  if(sideDrag?.id!==event.pointerId||sideDrag.moved||state.mode!=="side")return;
+  const p=pointerPixel(event),near=state.scene.candidates.find(c=>Math.hypot(c.x-p.x,c.y-p.y)<3);
+  if(near)select(near.id);
+});
+["pointerup","pointercancel","lostpointercapture"].forEach(name=>canvas.addEventListener(name,()=>{
+  dragging=false;
+  sideDrag=null;
+  canvas.classList.remove("is-grabbing");
+}));
 canvas.addEventListener("keydown",event=>{
+  if(state.mode==="side"){
+    const offsets={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};
+    if(event.key==="Home")state.center=[32,32];
+    else if(offsets[event.key])state.center=state.center.map((axis,index)=>axis+offsets[event.key][index]*3);
+    else return;
+    const next=crop();
+    state.center=[next.x+next.width/2,next.y+next.width/2];
+    event.preventDefault();render();
+    return;
+  }
   if(state.mode!=="wipe"||!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;
   event.preventDefault();state.wipe=event.key==="Home"?0:event.key==="End"?1:Math.max(0,Math.min(1,state.wipe+(event.key==="ArrowLeft"?-.05:.05)));
   $("wipe").value=String(state.wipe*100);render();
 });
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&state.mode==="blink")setMode("wipe");});
+document.addEventListener("spherex:language",setModeInstruction);
 window.SkyApp={
   context:()=>({ready:state.ready,scene_id:state.scene?.id||null,label:state.scene?.label||"WISE 0855",selection:state.selected,
     analysis_sha256:state.manifest?.analysis_sha256||null,kind:state.scene?.kind||null,

@@ -6,12 +6,29 @@
     guideTitle: ["Cách sử dụng ↓", "How to use ↓"],
     guideHeading: ["Cách sử dụng", "How to use"],
     openSky: ["Mở bầu trời ↗", "Open the sky ↗"],
-    guideOne: ["Chọn vùng trời", "Choose a sky field"],
-    guideOneDetail: ["Chọn Trái Đất, rồi bấm dấu sao hoặc nhập RA/Dec.", "Select Earth, then choose a star marker or enter RA/Dec."],
-    guideTwo: ["Mở ảnh toàn khung", "Open a full detector image"],
-    guideTwoDetail: ["Xem vùng quan sát, ngày chụp và dải bước sóng.", "Inspect the observed field, date and wavelength band."],
-    guideThree: ["So ảnh qua thời gian", "Compare across time"],
-    guideThreeDetail: ["So sánh hai khung hoặc phát chuỗi quan sát đã lưu.", "Compare two frames or play a saved observation sequence."],
+    guideOne: ["Mở bầu trời từ Trái Đất", "Open the sky from Earth"],
+    guideOneDetail: ["Bấm Trái Đất. Trên màn hình cảm ứng, chạm một lần để hiện nhãn, chạm lại để mở.", "Click Earth. On touchscreens, tap once to reveal the label and again to open."],
+    guideTwo: ["Chọn vùng trời", "Choose a sky field"],
+    guideTwoDetail: ["Kéo để đổi góc nhìn. Chọn một ngôi sao lấp lánh hoặc tên mục tiêu trong danh sách.", "Drag to look around. Select a shimmering star or a target name in the list."],
+    guideThree: ["Xem ảnh toàn khung", "Inspect the full detector image"],
+    guideThreeDetail: ["Mở ảnh lớn và xem thời điểm chụp. Chọn Chuỗi thời gian hoặc So ảnh A/B ngay trên thẻ.", "Enlarge the image and check the observation time. Choose Observation timeline or Compare A/B on the card."],
+    guideFour: ["Phát lại các lần quan sát", "Play the observations"],
+    guideFourDetail: ["Bấm Phát, hoặc chọn từng mốc để dừng ở lần quan sát bạn muốn xem.", "Press Play or select an observation to pause on that frame."],
+    guideFive: ["So ảnh A/B", "Compare A/B"],
+    guideFiveDetail: ["Chọn một lần chụp cho mỗi bên. Phóng to hoặc kéo một bên để cả hai cùng dịch chuyển.", "Choose an observation for each side. Zoom or drag one image to move both together."],
+    guidedOpen: ["Thử so ảnh có hướng dẫn", "Try a guided comparison"],
+    guidedAnswer: ["Xem lời giải", "See the explanation"],
+    guidedNote: ["Ghi chú riêng trên thiết bị", "Private note on this device"],
+    guidedSave: ["Lưu ghi chú", "Save note"],
+    guidedExport: ["Xuất JSON", "Export JSON"],
+    guidedNext: ["Thử ca khác", "Try another case"],
+    guidedRetry: ["Thử tải lại", "Retry loading"],
+    guidedLoading: ["Đang mở ảnh SPHEREx đã lưu…", "Opening saved SPHEREx images…"],
+    guidedError: ["Chưa mở được bài tập. Hãy thử tải lại.", "The activity could not open. Try loading again."],
+    guidedCorrect: ["Bạn đã nhận ra dấu hiệu", "You identified the clue"],
+    guidedExplain: ["Cùng xem dấu hiệu", "Review the clue"],
+    guidedSaved: ["Đã lưu ghi chú cùng hai ảnh trên thiết bị này.", "Note saved with both observations on this device."],
+    guidedSaveError: ["Thiết bị chưa lưu được ghi chú. Bạn có thể xuất JSON.", "The note could not be saved here. You can export it as JSON."],
     datasets: ["Bộ dữ liệu", "Datasets"],
     navigation: ["Điều hướng", "Navigation"],
     language: ["Chuyển sang tiếng Anh", "Switch to Vietnamese"],
@@ -56,6 +73,10 @@
     searchCenter: ["Tìm ảnh tại tâm ngắm", "Find images at the crosshair"],
     observedField: ["Ảnh quan sát SPHEREx", "SPHEREx observation"],
     compareImages: ["So sánh ảnh", "Compare images"],
+    compareAB: ["So ảnh A/B", "Compare A/B"],
+    observationTimeline: ["Chuỗi thời gian", "Observation timeline"],
+    darkTheme: ["Chuyển sang chế độ tối", "Switch to dark mode"],
+    lightTheme: ["Chuyển sang chế độ sáng", "Switch to light mode"],
     archivedSequence: ["Mở chuỗi ảnh đã lưu", "Open saved sequence"],
     archivedTitle: ["Epsilon Indi B · chuỗi DR1 đã lưu", "Epsilon Indi B · saved DR1 sequence"],
     archivedDescription: ["Ba ảnh SPHEREx DR1 D6 đã lưu dùng cùng lưới WCS và thang hiển thị. Chuỗi này dùng để xem vùng trời, chưa xác nhận chuyển động hay biến quang.", "Three saved SPHEREx DR1 D6 images share a WCS grid and display scale. Use them to view the field. Motion and variability remain unconfirmed."],
@@ -68,7 +89,7 @@
     archivedLoading: ["Đang mở ba ảnh đã lưu…", "Opening three saved images…"],
     archivedError: ["Chưa mở được chuỗi đã lưu. Hãy đóng hộp thoại và thử lại.", "The saved sequence could not open. Close this dialog and try again."],
     fullFrame: ["FITS gốc cả detector ↗", "Full detector FITS ↗"],
-    fullFieldLimit: ["Ảnh toàn detector đã giảm độ phân giải và kéo sáng riêng. Vòng xanh đánh dấu tâm truy vấn. Nút So sánh ảnh tìm ảnh DR1 quanh tâm này.", "Downsampled, individually stretched full detector image. The blue circle marks the query center. Compare images searches DR1 around that point."],
+    fullFieldLimit: ["Ảnh toàn detector đã giảm độ phân giải và kéo sáng riêng. Vòng xanh đánh dấu tâm dùng để tìm các ảnh DR1 cho cả hai chế độ.", "Downsampled, individually stretched full detector image. The blue circle marks the center of the DR1 search for both viewing modes."],
     enlargeImage: ["Mở ảnh lớn", "Open larger image"],
     close: ["Đóng", "Close"],
     team: ["Dự án độc lập của NoSleepClub", "An independent NoSleepClub project"],
@@ -92,6 +113,10 @@
   const saved = storedLanguage();
   let language = supported(requested) ? requested : supported(saved) ? saved : "vi";
   document.documentElement.lang = language;
+  const themeKey = "spherex.theme";
+  let theme = "dark";
+  try { if (localStorage.getItem(themeKey) === "light") theme = "light"; } catch { /* Default to dark. */ }
+  document.documentElement.dataset.theme = theme;
 
   function text(id) {
     return copy[id]?.[language === "en" ? 1 : 0] || id;
@@ -107,13 +132,31 @@
       el.textContent = language === "en" ? "Tiếng Việt" : "English";
       el.lang = language === "en" ? "vi" : "en";
     }
+    applyTheme();
     window.SpherexWorkspaceLanguage?.apply(language);
     document.dispatchEvent(new CustomEvent("spherex:language", {detail: {language}}));
+  }
+
+  function applyTheme() {
+    document.documentElement.dataset.theme = theme;
+    const label = text(theme === "light" ? "darkTheme" : "lightTheme");
+    for (const button of document.querySelectorAll("[data-theme-toggle]")) {
+      button.setAttribute("aria-label", label);
+      button.title = label;
+      button.firstElementChild.textContent = theme === "light" ? "☾" : "☀";
+    }
   }
 
   window.SpherexSite = {text, apply, language: () => language};
   document.addEventListener("DOMContentLoaded", () => {
     apply(language);
+    for (const button of document.querySelectorAll("[data-theme-toggle]")) {
+      button.addEventListener("click", () => {
+        theme = theme === "dark" ? "light" : "dark";
+        try { localStorage.setItem(themeKey, theme); } catch { /* The current page retains the setting. */ }
+        applyTheme();
+      });
+    }
     for (const button of document.querySelectorAll("[data-language]")) {
       button.addEventListener("click", () => {
         const next = language === "en" ? "vi" : "en";

@@ -43,12 +43,13 @@ function harness(options={}) {
       id,value:"",textContent:"",hidden:false,disabled:false,href:"",src:"",children:[],handlers:{},
       classList:{toggle(){}}, setAttribute(){}, removeAttribute(name){if(name==="href")this.href="";}, replaceChildren(){this.children=[];},
       append(...nodes){this.children.push(...nodes);},
+      after(...nodes){this.siblings=nodes;},
       addEventListener(type,fn){this.handlers[type]=fn;},
       fire(type){return this.handlers[type]?.({preventDefault(){}});}
     });
     return elements.get(id);
   };
-  const document={documentElement:{lang:options.lang||"vi"},getElementById:element,createElement:()=>({children:[],handlers:{},setAttribute(){},
+  const document={documentElement:{lang:options.lang||"vi"},getElementById:element,createElement:()=>({children:[],handlers:{},dataset:{},setAttribute(){},removeAttribute(){},
     append(...items){this.children.push(...items);},addEventListener(type,fn){this.handlers[type]=fn;},click(){}}),
     addEventListener(){},dispatchEvent(event){events.push(event);},hidden:false};
   const fetch=(url,options)=>new Promise((resolve,reject)=>{
@@ -283,12 +284,44 @@ async function main() {
   await workflowPairSurvivesBlinkAndInvalidatesOnEdit();
   await notesStayWithTheirQueryAndPair();
   await autoplayUsesDistinctCompatibleLoadedFrames();
+  await timelineEntryChecksSpacedCompatibleFrames();
   await explicitAutoloadIsValidatedAndPreservesLanguage();
   await curatedSequenceLoadsExactFramesOnly();
   await curatedSequenceResumesMissingFrames();
   await abandonedSearchDoesNotChangePublicRoute();
   await transientFrameIsRetriedOnce();
   console.log("Explorer DOM and HTTP race cases passed");
+}
+async function timelineEntryChecksSpacedCompatibleFrames(){
+  const search="?lang=en&sky_view=timeline";
+  const h=harness({search,lang:"en"}), ids=Array.from({length:10},(_,index)=>"VIS"+index);
+  const spectral=(mjd,center)=>({spectral:{mjd,center,width:.034}});
+  const {submit}=await begin(h,ids);
+  const at=index=>find(h,"frame")[index];
+  const nextIs=(index,id)=>assert.match(at(index).params.get("url"),new RegExp(id+"[.]fits$"));
+  nextIs(0,"VIS0");frame(at(0),"VIS0",spectral(60000,4.73));await submit;await flush();
+  assert.equal(h.element("explorer-image").src,"blob:VIS0","the first image is visible while the rest load");
+  assert.match(h.element("explorer-timeline-hint").textContent,/2\/6|1\/6/);
+  nextIs(1,"VIS9");frame(at(1),"VIS9",spectral(60009,4.95));await flush();
+  nextIs(2,"VIS2");frame(at(2),"VIS2",spectral(60002,4.731));await flush();
+  assert.equal(h.element("explorer-timeline").disabled,true,"the structurally valid out-of-band image cannot be played");
+  nextIs(3,"VIS4");frame(at(3),"VIS4",spectral(60004,4.734));await flush();
+  assert.equal(find(h,"frame").length,4,"prefetch stops at three compatible observations");
+  assert.equal(h.element("explorer-timeline").disabled,false);
+  h.element("explorer-timeline").fire("click");
+  assert.equal(h.element("explorer-image").src,"blob:VIS0");
+  const tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,"blob:VIS2");
+  tick();assert.equal(h.element("explorer-image").src,"blob:VIS4");
+  const limited=harness({search,lang:"en"});
+  const pending=await begin(limited,ids);
+  const fetched=()=>find(limited,"frame");
+  frame(fetched()[0],"VIS0",spectral(60000,4.73));await pending.submit;await flush();
+  for(let index=1;index<6;index++){
+    frame(fetched()[index],"unmatched",spectral(60000+index,4.91+index*.01));await flush();
+  }
+  assert.equal(fetched().length,6,"the number of candidate cutouts is bounded");
+  assert.equal(limited.element("explorer-timeline").disabled,true);
+  assert.match(limited.element("explorer-status").textContent,/Fewer than three compatible images/);
 }
 async function noviceFailureRecoveryAndReload(){
   const memory=new Map(),drafts=require("../web/draft-store.js")(()=>({getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)}));
@@ -337,22 +370,32 @@ async function autoplayUsesDistinctCompatibleLoadedFrames() {
   h.element("explorer-current").value="2";await h.element("explorer-current").fire("change");
   h.element("explorer-timeline").fire("click");
   assert.equal(h.element("explorer-image").src,"blob:A");
+  assert.match(h.element("explorer-frame-label").textContent,/^1\/3.+λ 4\.730 µm/);
   const tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,"blob:B");
-  tick();assert.equal(h.element("explorer-image").src,"blob:C");
+  h.element("explorer-timeline").fire("click");await flush();
+  assert.equal(h.element("explorer-image").src,"blob:B","pause keeps the displayed frame");
+  h.element("explorer-timeline").fire("click");
+  const replay=[...h.timers.values()][0];replay();assert.equal(h.element("explorer-image").src,"blob:B");
+  replay();assert.equal(h.element("explorer-image").src,"blob:C");
   h.api.pause();assert.equal(h.timers.size,0);
 }
 async function explicitAutoloadIsValidatedAndPreservesLanguage(){
-  const search="?lang=en&sky_autoload=1&sky_ra=350&sky_dec=35&sky_release=dr1";
+  const search="?lang=en&sky_autoload=1&sky_ra=350&sky_dec=35&sky_release=dr1&sky_view=timeline";
   const h=harness({search,lang:"en"});
   assert.equal(find(h,"observations").length,1);
   observations(find(h,"observations")[0],["A"]);await flush();
   frame(find(h,"frame")[0],"A");await flush();
   assert.match(h.context.shared,/lang=en/);
   assert.doesNotMatch(h.context.shared,/sky_autoload/);
+  assert.match(h.context.shared,/sky_view=timeline/);
   assert.match(h.element("explorer-status").textContent,/Image loaded/);
   const invalid=harness({search:search.replace("350","360"),lang:"en"});
   assert.equal(find(invalid,"observations").length,0);
   assert.match(invalid.element("explorer-status").textContent,/below 360/);
+  const unknownView=harness({search:search.replace("timeline","unknown"),lang:"en"});
+  observations(find(unknownView,"observations")[0],["A"]);await flush();
+  frame(find(unknownView,"frame")[0],"A");await flush();
+  assert.match(unknownView.context.shared,/sky_view=compare/);
 }
 async function curatedSequenceLoadsExactFramesOnly(){
   const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
@@ -392,12 +435,16 @@ async function curatedSequenceResumesMissingFrames(){
   find(h,"frame")[1].resolve({ok:false,status:502,json:async()=>({error:"invalid_fits"})});await flush();
   assert.equal(h.element("explorer-retry").hidden,false);
   assert.equal(h.element("explorer-image").src,"blob:A");
+  const saved=h.element("workflow-frame-status").siblings[0];
+  assert.equal(saved.hidden,false);
+  assert.match(saved.href,/lang=en&field=epsilon&view=saved#night-sky$/);
   const retried=h.element("explorer-retry").fire("click");await flush();
   assert.equal(find(h,"frame").length,3,"reuse the first downloaded frame");
   frame(find(h,"frame")[2],"B",spectral(60101));await flush();
   frame(find(h,"frame")[3],"C",spectral(60102));await retried;
   assert.equal(h.element("explorer-timeline").disabled,false);
   assert.match(h.element("explorer-status").textContent,/Three Epsilon/);
+  assert.equal(saved.hidden,true);
 }
 async function transientFrameIsRetriedOnce(){
   const h=harness(), {submit}=await begin(h,["A"]);

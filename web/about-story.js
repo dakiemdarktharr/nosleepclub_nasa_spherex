@@ -6,7 +6,7 @@ const sources = {
   launch: "https://www.nasa.gov/news-release/nasa-launches-missions-to-study-sun-universes-beginning/",
   scanning: "https://www.jpl.nasa.gov/news/nasas-spherex-space-telescope-begins-capturing-entire-sky/",
   map: "https://www.jpl.nasa.gov/images/pia26600-spherexs-first-all-sky-map/",
-  archive: "https://irsa.ipac.caltech.edu/spherex-archive-documentation/",
+  archive: "https://irsa.ipac.caltech.edu/spherex-archive-documentation/spherex-data-releases/",
   future: "https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/"
 };
 
@@ -15,6 +15,15 @@ const layerFiles = {
   adapter: "adapter.webp", shell: "fairing-shell.webp", packed: "packed-stack.webp",
   payload: "payload.webp", spacecraft: "in-orbit.webp", map: "first-map.webp"
 };
+
+const archiveImages = [
+  {key: "spacecraft", credit: "NASA/JPL-Caltech", date: ["03/06/2022", "3 Jun 2022"], iso: "2022-06-03", href: "https://spherex.caltech.edu/image/spherex03062022b-sectional-view-of-the-spherex-with-cosmic-structures", caption: ["Minh họa thiết kế SPHEREx bay phía trên Trái Đất.", "Artist’s concept of the SPHEREx design above Earth."]},
+  {key: "instrument", credit: "NASA/JPL-Caltech", date: ["09/2023", "Sep 2023"], iso: "2023-09", href: sources.telescope, caption: ["Kính hồng ngoại và khung đỡ thử nghiệm trong phòng sạch JPL.", "The infrared telescope and its test support in a JPL cleanroom."]},
+  {key: "shield", credit: "BAE Systems", date: ["11/2024 · công bố", "Nov 2024 · published"], iso: "2024-11", href: sources.shields, caption: ["Ba nón chắn photon như trong ảnh phòng sạch được JPL công bố.", "Three concentric photon shields in the cleanroom photograph published by JPL."]},
+  {key: "payload", credit: "BAE Systems / Benjamin Fry", date: ["27/02/2025", "27 Feb 2025"], iso: "2025-02-27", href: sources.integration, caption: ["SPHEREx trên bộ gá tải trọng bên trong một nửa vỏ Falcon 9. Ba lớp cắt từ ảnh này được dùng cho đoạn lắp ráp.", "SPHEREx on its payload adapter inside one half of the Falcon 9 fairing. Three cutouts from this photograph appear in the assembly sequence."]},
+  {key: "packed", credit: "SpaceX", date: ["03/2025 · ảnh chiến dịch phóng", "Mar 2025 · launch campaign"], iso: "2025-03", href: "https://www.spacex.com/launches/spherex", caption: ["Vỏ tải trọng Falcon 9 đã đóng. SpaceX công bố ảnh trong hồ sơ phóng; ngày chụp cụ thể chưa được ghi trong hồ sơ.", "The closed Falcon 9 fairing in SpaceX’s launch gallery. The gallery has no specific capture date."]},
+  {key: "map", credit: "NASA/JPL-Caltech", date: ["18/12/2025 · công bố", "18 Dec 2025 · published"], iso: "2025-12-18", href: sources.map, caption: ["Ảnh ghép hồng ngoại toàn trời từ các quan sát tháng 5–12/2025. Màu hiển thị đại diện cho một số bước sóng hồng ngoại.", "An all-sky infrared mosaic from May–December 2025 observations. Display colors represent selected infrared wavelengths."]}
+];
 
 // Position, keyframed width and opacity are normalized to the sticky stage.
 const milestones = [
@@ -83,7 +92,7 @@ const milestones = [
     layers: {spacecraft: [52, 38, 46, .45], map: [50, 51, 91, 1]}
   },
   {
-    date: ["12 / 11 / 2026", "12 Nov 2026"], iso: "2026-11-12", link: sources.archive, credit: "NASA / IPAC",
+    date: ["11 / 2026", "Nov 2026"], iso: "2026-11", link: sources.archive, credit: "NASA / IPAC",
     title: ["Mở dữ liệu DR1", "The first data release"],
     body: ["IRSA công bố bản DR1. Kho lưu trữ cho phép tải ảnh phổ theo từng lần quan sát và truy cập các sản phẩm khảo sát.",
       "IRSA published DR1. The public archive provides spectral images by observation and survey data products."],
@@ -112,6 +121,47 @@ function make(tag, className) {
   const element = document.createElement(tag);
   if (className) element.className = className;
   return element;
+}
+
+function buildArchive() {
+  const archive = make("details", "story-archive");
+  const summary = make("summary");
+  const list = make("ul", "story-archive-grid");
+  const captions = archiveImages.map((item) => {
+    const row = make("li");
+    const source = make("a");
+    source.href = item.href;
+    source.target = "_blank";
+    source.rel = "noopener noreferrer";
+    const image = make("img", "story-archive-image");
+    image.src = new URL("./assets/mission/story/" + layerFiles[item.key], import.meta.url);
+    image.alt = "";
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.width = 126;
+    image.height = 102;
+    const date = make("time", "story-archive-date");
+    date.dateTime = item.iso;
+    const caption = make("p");
+    const credit = make("p", "story-archive-credit");
+    credit.textContent = item.credit;
+    row.append(image, date, caption, credit, source);
+    list.append(row);
+    return (lang) => {
+      date.textContent = item.date[lang];
+      caption.textContent = item.caption[lang];
+      source.textContent = lang ? "Original ↗" : "Mở tư liệu gốc ↗";
+      source.setAttribute("aria-label", source.textContent + " · " + item.caption[lang]);
+    };
+  });
+  archive.append(summary, list);
+  return {
+    archive,
+    localize(lang) {
+      summary.textContent = lang ? "Image archive and credits" : "Kho hình ảnh và nguồn tư liệu";
+      for (const translate of captions) translate(lang);
+    }
+  };
 }
 
 function words(element, sentence) {
@@ -171,6 +221,10 @@ export function mountAboutStory(container) {
   art.setAttribute("role", "img");
   const caption = make("figcaption", "story-credit");
   const chapters = make("div", "story-chapters");
+  const archive = buildArchive();
+  const translations = Array.from(container.querySelectorAll("[data-about-en]"), (node) => [node, node.textContent]);
+  const figureImage = container.querySelector("[data-about-alt-en]");
+  const originalAlt = figureImage?.alt;
   const media = matchMedia("(prefers-reduced-motion: reduce)");
   const compact = matchMedia("(max-width: 740px)");
   const images = [];
@@ -212,19 +266,23 @@ export function mountAboutStory(container) {
   guide.append(track, dates);
   visual.append(art, caption);
   layout.append(guide, visual, chapters);
-  story.append(heading, layout);
+  story.append(heading, layout, archive.archive);
   container.append(story);
 
   function localize() {
     const lang = chooseLanguage();
+    for (const [node, vietnamese] of translations) node.textContent = lang ? node.dataset.aboutEn : vietnamese;
+    if (figureImage) figureImage.alt = lang ? figureImage.dataset.aboutAltEn : originalAlt;
     heading.textContent = lang ? "From cleanroom to sky" : "Từ phòng sạch đến bầu trời";
     guide.setAttribute("aria-label", lang ? "Mission milestones" : "Các mốc sứ mệnh");
+    archive.localize(lang);
     timeline.forEach((entry, index) => {
       const item = milestones[index];
       entry.date.textContent = entry.button.textContent = item.date[lang];
       entry.button.setAttribute("aria-label", item.date[lang] + " · " + item.title[lang]);
       entry.words = [...words(entry.title, item.title[lang]), ...words(entry.body, item.body[lang])];
       entry.source.textContent = lang ? "Source ↗" : "Nguồn ↗";
+      entry.source.setAttribute("aria-label", entry.source.textContent + " · " + item.title[lang]);
     });
     current = -1;
     refresh();
@@ -286,11 +344,12 @@ export function mountAboutStory(container) {
       const center = centers[index];
       const progress = reduce ? 1 : clamp((viewport * 1.14 - center) / (viewport * (compact.matches ? .45 : .68)));
       const exit = reduce ? 0 : smooth((viewport * (compact.matches ? .55 : .31) - center) / (viewport * .28));
-      entry.chapter.style.opacity = 1 - exit * .84;
+      const isCurrent = index === active;
+      entry.chapter.style.opacity = isCurrent ? 1 : 1 - exit * .77;
       entry.chapter.style.setProperty("--story-shift", (18 * (1 - smooth(progress)) - 24 * exit) + "px");
       entry.words.forEach((word, position) => {
         const start = position / Math.max(1, entry.words.length - 1) * .68;
-        word.style.opacity = reduce ? 1 : .27 + .73 * smooth((progress - start) / .32);
+        word.style.opacity = reduce || isCurrent ? 1 : .68 + .32 * smooth((progress - start) / .32);
       });
     });
   }

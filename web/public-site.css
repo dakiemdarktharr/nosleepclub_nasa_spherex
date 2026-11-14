@@ -17,22 +17,13 @@ body.public-mode .legacy-surface { display: none; }
   padding: 0 max(5vw,1rem); border-bottom: 1px solid #ffffff22; background: #080c15;
 }
 .public-brand { display: inline-flex; align-items: center; gap: .7rem; font-weight: 800; font-size: 15px; }
-.public-orbit-icon {
-  display: inline-block; width: 35px; height: 35px; flex-shrink: 0; position: relative; border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%, #d9fbff 0 2px, #438eaf 3px, #173248 4px 6px, transparent 7px), #111e32;
-  border: 1px solid #6f8ca5;
-}
-.public-orbit-icon::before {
-  content: ""; position: absolute; inset: 12px 4px; border: 1px solid #a7ddf0; border-radius: 50%; transform: rotate(-31deg);
-}
-.public-header nav { display: flex; margin-left: auto; gap: clamp(.65rem,2.3vw,2rem); color: var(--public-muted); font-size: 12px; font-weight: 600; }
-.public-header nav a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; }
-.public-header nav a[aria-current="page"], .public-header nav a:hover { color: white; text-decoration: underline; text-underline-offset: .4rem; }
-.language-toggle {
+.language-toggle, .theme-toggle {
   border: 1px solid #6e819d; padding: .42rem .7rem; min-height: 40px; border-radius: 4px;
   color: #edf6ff; font-size: 12px; font-weight: 650; white-space: nowrap;
 }
-.language-toggle:hover { background: #223650; }
+.language-toggle:hover, .theme-toggle:hover { background: #223650; }
+.theme-toggle { min-width: 44px; min-height: 44px; display: grid; place-items: center; }
+.theme-toggle span { font: 1.27rem/1 system-ui,sans-serif; }
 .public-footer {
   padding: 1.2rem 5vw; display: flex; flex-wrap: wrap; gap: .55rem 1.5rem; font-size: .75rem; color: var(--public-muted);
   border-top: 1px solid var(--public-border); background: #080c15;
@@ -116,7 +107,10 @@ body.public-mode .legacy-surface { display: none; }
   position: absolute; display: flex; gap: .62rem; align-items: center;
   padding: .38rem .63rem; color: #e9f4ff; font: 600 .78rem/1.4 "Be Vietnam Pro",system-ui,sans-serif;
   border-radius: 4px; background: #0a1424dc; border: 1px solid #6d90acaa; white-space: nowrap;
+  opacity: 0; pointer-events: none;
 }
+.orbit-spacecraft a:is(:focus-visible,[data-tap-preview]) .scene-label, .earth-target:is(:focus-visible,[data-tap-preview]) .scene-label { opacity: 1; }
+@media (hover: hover) { :is(.spacecraft-target,.earth-target):hover .scene-label { opacity: 1; } }
 .scene-label > span:first-child { width: 6px; height: 6px; border-radius: 50%; background: #a3e2ff; box-shadow: 0 0 9px #7fc8ff; }
 .scene-label b { font-size: 1.05rem; color: var(--public-accent); }
 .spacecraft-label { bottom: 8%; right: 0; }
@@ -181,6 +175,18 @@ body.public-mode .legacy-surface { display: none; }
 }
 .sky-marker:hover, .sky-marker[aria-pressed="true"] { background: #549ac051; box-shadow: inset 0 0 0 1px #adddfe9e; color: white; }
 .sky-marker b { font-size: 25px; font-weight: 400; line-height: 1; text-shadow: 0 0 9px #7ccaef, 0 1px 3px #031020; }
+.sky-marker b::after {
+  content: "✧"; position: absolute; inset: 50% auto auto 50%; translate: -50% -50%; pointer-events: none;
+  color: #d6fcff; text-shadow: 0 0 7px #8ef1ff, 0 0 20px #2fbcff;
+  animation: star-glister 4.8s ease-in-out infinite;
+}
+.sky-marker:nth-child(3n + 2) b::after { animation-delay: -1.6s; }
+.sky-marker:nth-child(3n + 3) b::after { animation-delay: -3.2s; }
+@keyframes star-glister {
+  0%, 53%, 100% { scale: .7; opacity: .35; }
+  70% { scale: 1.38; opacity: 1; }
+  85% { scale: .9; opacity: .65; }
+}
 .sky-marker span {
   position: absolute; top: calc(100% - .1rem); left: 50%; translate: -50% 0; background: #0a1328ef; border-radius: 3px; white-space: nowrap;
   padding: .15rem .4rem; color: #fff; font-size: .72rem; opacity: 0; pointer-events: none;
@@ -293,8 +299,8 @@ body.public-mode .legacy-surface { display: none; }
   backdrop-filter: blur(14px);
   border-color: #8ba6ee48;
 }
-.public-logomark { border: 1px solid #b3beed90; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
-.public-brand { font-family: var(--headline); font-size: 16px; }
+.public-logomark { width: 56px; height: 50px; object-fit: contain; flex-shrink: 0; }
+.public-brand { margin-right: auto; font-family: var(--headline); font-size: 16px; }
 #public-site h1, #public-site h2, #public-site h3 { font-family: var(--headline); }
 .public-action.primary { background: var(--app-yellow); border-color: var(--app-yellow); color: #07173f; }
 .public-action.primary:hover { background: #f7ff7a; border-color: #f7ff7a; }
@@ -309,12 +315,12 @@ body.public-mode .legacy-surface { display: none; }
 .orbit-scroll:hover { color: var(--app-yellow); }
 .orbital-sun { top: 22%; left: auto; right: -3%; width: 28%; opacity: .66; }
 .orbit-caption { max-width: 45%; }
-.spacecraft-target:is(:hover,:focus-visible) img, .spacecraft-target:is(:hover,:focus-visible) canvas {
+.spacecraft-target:is(:hover,:focus-visible,[data-tap-preview]) img, .spacecraft-target:is(:hover,:focus-visible,[data-tap-preview]) canvas {
   filter: drop-shadow(3px 0 0 var(--app-cyan)) drop-shadow(-3px 0 0 var(--app-cyan))
     drop-shadow(0 3px 0 var(--app-cyan)) drop-shadow(0 -3px 0 var(--app-cyan))
     drop-shadow(0 0 9px #05c5f7a8);
 }
-#orbit:has(.earth-target:is(:hover,:focus-visible)) .earth-plane {
+#orbit:has(.earth-target:is(:hover,:focus-visible,[data-tap-preview])) .earth-plane {
   box-shadow: 0 -7px 0 var(--app-cyan), 0 -10px 22px #04daff9d, inset 0 14px 32px #8bcffd48;
 }
 #public-iris {
@@ -327,26 +333,52 @@ body.public-mode .legacy-surface { display: none; }
 }
 .guide-heading { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 1rem; }
 .guide-heading h2 { font-size: clamp(2rem,5vw,4.4rem); letter-spacing: -.05em; }
-.guide-steps { margin: 2rem auto 0; padding: 0; width: min(100%,780px); list-style: none; display: grid; gap: .6rem; }
-.guide-steps li {
-  width: min(86%,440px); position: relative; padding: 1rem 1.2rem; border: 1px solid #8ba6ee84;
-  background: #263d7869; backdrop-filter: blur(16px);
+.guide-steps {
+  margin: 2rem auto 0; padding: 0; width: min(100%,1000px); list-style: none;
+  display: grid; gap: 2.6rem; counter-reset: guide;
 }
-.guide-steps li:not(:last-child) { margin-bottom: 2.3rem; }
+.guide-steps li {
+  width: min(94%,900px); position: relative; border: 1px solid #8ba6ee84;
+  display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr); align-items: center;
+  background: #263d7869; backdrop-filter: blur(16px); counter-increment: guide;
+}
 .guide-steps li:nth-child(odd) { justify-self: end; }
 .guide-steps li:nth-child(even) { justify-self: start; }
 .guide-steps li:not(:last-child)::after {
-  content: "↙"; position: absolute; bottom: -2.7rem; left: 0; font: 700 2.3rem/1 var(--headline);
+  content: ""; position: absolute; bottom: -2rem; left: 1.2rem; width: .65rem; height: .65rem;
+  rotate: 45deg; border: solid currentColor; border-width: 0 2px 2px 0;
   color: var(--app-yellow);
 }
-.guide-steps li:nth-child(even)::after { content: "↘"; left: auto; right: 0; }
-.guide-steps li > div { display: flex; gap: .8rem; align-items: center; }
-.guide-shape { display: grid; place-items: center; width: 2.35rem; height: 2.35rem; flex: 0 0 auto; font: 700 .88rem/1 var(--headline); }
-.guide-circle { background: var(--app-yellow); color: #07173f; border-radius: 50%; }
-.guide-square { background: var(--app-red); color: #fff; }
-.guide-offset { border: 1px solid #8ba6ee; box-shadow: 4px 4px 0 var(--app-yellow); border-radius: 50% 0 50% 50%; }
-.guide-steps h3 { font-size: 1.35rem; }
+.guide-steps li:nth-child(even)::after { left: auto; right: 1.2rem; }
+.guide-steps li > div { padding: clamp(1rem,3vw,2rem); }
+.guide-steps img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: #09162e; }
+.guide-steps h3 { font-size: clamp(1.15rem,2.5vw,1.65rem); line-height: 1.2; }
+.guide-steps h3::before { content: counter(guide, decimal-leading-zero); display: block; color: var(--app-yellow); font-size: .75rem; margin-bottom: .4rem; }
 .guide-steps p { margin-top: .65rem; color: #e1e9ff; font-size: .9rem; }
+#guided-open { display: flex; width: fit-content; margin: 2rem auto 0; }
+#guided-open-status { text-align: center; }
+#guided-activity {
+  width: min(92vw,820px); max-height: 92svh; background: var(--public-panel); color: var(--public-text);
+  border: 1px solid var(--public-border); border-radius: .85rem;
+}
+#guided-activity :focus-visible { outline: 2px solid var(--public-accent); outline-offset: 3px; }
+#guided-status:empty, #guided-note-status:empty { display: none; }
+#guided-activity #guided-context { color: var(--public-text); font-weight: 650; }
+#guided-limit { color: var(--public-muted); }
+.guided-panes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(.5rem,2vw,1.2rem); width: min(100%,630px); margin: 1rem auto; }
+.guided-panes figure { margin: 0; min-width: 0; }
+.guided-panes figcaption { color: var(--public-muted); font: 500 .76rem/1.5 "Be Vietnam Pro", system-ui, sans-serif; }
+.guided-picture { position: relative; background: #0d1426; aspect-ratio: 1; }
+.guided-picture img { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+.guided-pixel { position: absolute; width: max(12px,6%); aspect-ratio: 1; translate: -50% -50%; outline: 2px solid #8cf6ff; box-shadow: 0 0 0 3px #0a213e; pointer-events: none; }
+#guided-form fieldset { margin: .9rem 0; min-width: 0; border: 1px solid var(--public-border); border-radius: 6px; padding: .4rem .8rem; }
+#guided-form legend { padding: 0 .24rem; font-weight: 650; }
+#guided-options label { display: flex; align-items: center; gap: .6rem; min-height: 44px; font-size: .89rem; cursor: pointer; }
+#guided-activity #guided-options input { flex: 0 0 auto; width: 1.1rem; min-height: 1.1rem; padding: 0; margin: 0; accent-color: var(--public-accent); }
+#guided-feedback { margin-top: 1rem; border-top: 1px solid var(--public-border); padding-top: 1rem; }
+#guided-feedback label { display: block; margin: .75rem 0 .35rem; }
+.guided-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .65rem; }
+[data-theme="light"] #guided-feedback p, [data-theme="light"] #guided-status { color: var(--public-muted); }
 .poster-window { position: relative; height: min(68vw,630px); min-height: 340px; overflow: clip; isolation: isolate; background: var(--app-blue); }
 .poster-sticky {
   position: absolute; inset: 0; display: grid; align-content: center; padding: max(5vw,1.2rem);
@@ -385,6 +417,8 @@ body[data-public-page="night-sky"] .public-footer { display: none; }
 .sky-field-text h2 { font-size: 1.43rem; margin-bottom: .3rem; }
 .sky-field-text #sky-field-note { margin-bottom: 0; font-size: .73rem; }
 .sky-field-actions { margin: .5rem 0; }
+.sky-field-actions .public-action { margin-top: 0; }
+.sky-field-actions .primary { flex: 1 1 9.25rem; }
 .sky-field-preview button { width: min(100%,230px); }
 .sky-finder .public-action { min-height: 38px; }
 .sky-field .public-action { font-size: .77rem; margin-top: 0; }
@@ -393,8 +427,8 @@ body[data-public-page="night-sky"] .public-footer { display: none; }
 
 @media (max-width: 620px) {
   .public-header { min-height: 58px; }
-  .public-logomark { width: 29px; height: 29px; }
-  .public-brand { font-size: 11px; }
+  .public-logomark { width: 43px; height: 40px; }
+  .public-brand { font-size: 13px; }
   #orbit { min-height: calc(100svh - 58px); padding-bottom: 4rem; }
   .orbit-copy { margin-top: 1.2rem; margin-bottom: 0; }
   .orbit-copy h1 { font-size: clamp(43px,12vw,73px); }
@@ -406,8 +440,9 @@ body[data-public-page="night-sky"] .public-footer { display: none; }
   .orbital-sun { top: 35%; width: 47%; }
   .earth-label { bottom: auto; top: 12%; }
   .guide-sheet { scroll-margin-top: 57px; }
-  .guide-steps { gap: .2rem; }
-  .guide-steps h3 { font-size: 1.15rem; }
+  .guide-steps { gap: 1rem; }
+  .guide-steps li { width: 100%; grid-template-columns: minmax(0,1fr); }
+  .guide-steps li::after { display: none; }
   .poster-sticky { background-position: center, 56% center; }
   #night-sky, .sky-workspace { min-height: calc(100svh - 58px); }
   .sky-workspace { grid-template-columns: minmax(0,1fr); }
@@ -422,4 +457,7 @@ body[data-public-page="night-sky"] .public-footer { display: none; }
   #sky-sidebar-close { font-size: 1.35rem; min-width: 38px; min-height: 38px; border: 1px solid #8ba6ee69; border-radius: 4px; }
   .sky-map-toolbar { inset: .5rem .5rem auto; }
 }
-@media (prefers-reduced-motion: reduce) { .poster-sticky { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .poster-sticky { transform: none; opacity: 1; }
+  .sky-marker b::after { animation: none; }
+}

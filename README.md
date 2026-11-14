@@ -28,6 +28,8 @@ The orbit scene uses the NASA’s Eyes visualization model and a local still fal
 
 [Câu hỏi sản phẩm và tiêu chí nghiệm thu](docs/OVERHAUL_DISCOVERY.md) · [Danh mục nguồn dữ liệu](docs/DATASET_CATALOG.md) · [Bản đồ vùng trời 3D](docs/sky-atlas.html).
 
+[Quy trình so ảnh và nghiên cứu WiseView / Comparison workflow and WiseView research](docs/IMAGE_COMPARISON_WORKFLOW.md) · [Nghiên cứu thu hút người mới / Citizen science engagement](docs/CITIZEN_SCIENCE_ENGAGEMENT.md).
+
 Mở `docs/sky-atlas.html` trực tiếp trong trình duyệt để xoay thiên cầu và chọn dữ liệu. Bản đồ có sẵn danh mục để dùng ngoại tuyến. Sau khi sửa JSON ở `docs/data/`, chạy `python scripts/embed_sky_atlas.py` để cập nhật dữ liệu nhúng.
 
 ## Giao diện theo quy trình
