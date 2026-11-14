@@ -572,7 +572,7 @@
   }
   el("explorer-form").addEventListener("submit",async event=>{
     event.preventDefault();let next;try{next=inputQuery();}catch(error){setStatus(error.message,true);return;}
-    saveNote();noteKey=null;el("explorer-note").value="";request?.abort();sequenceRun=retrySequence=null;preparedSequence=timelineState=selectedSequence=null;stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;dirty=false;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
+    saveNote();noteKey=null;el("explorer-note").value="";request?.abort();sequenceRun=retrySequence=null;stop();preparedSequence=timelineState=selectedSequence=null;generation++;const seq=generation;request=new AbortController();clearImages();query=next;dirty=false;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
     resetDisplay();el("explorer-results").hidden=true;el("explorer-search").disabled=true;
     setStatus(t("Đang truy vấn danh sách quan sát SPHEREx từ IRSA…","Searching the IRSA catalog for SPHEREx observations…"));
     try {
