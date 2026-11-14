@@ -69,7 +69,7 @@ def parse_params(query):
             raise ValueError('invalid_number')
         return x
     ra, dec, radius = number('ra'), number('dec'), number('radius', 0.05)
-    if not 0 <= ra < 360 or not -90 <= dec <= 90 or not 0 < radius <= 0.16:
+    if not 0 <= ra < 360 or not -90 <= dec <= 90 or not 0 < radius <= 0.20:
         raise ValueError('out_of_range')
     release, deep = p.get('release', 'dr1'), p.get('deep', '0')
     if release == 'qr2':
