@@ -106,12 +106,12 @@ class FrameTest(unittest.TestCase):
         self.assertEqual(parameters(url=retry_url)['release'], 'dr1')
         with self.assertRaises(ValueError):
             parameters(url=retry_url.replace('/l2b_retry-v27', '/l2b-v27'))
-        self.assertLessEqual(parameters(fov_deg=.12)['size_px'], 192)
+        self.assertLessEqual(parameters(fov_deg=.40)['size_px'], 256)
         for extra in ({'url': URL.replace('irsa.ipac.caltech.edu', 'evil.example')},
                       {'url': URL + '?x=1'}, {'url': URL.replace('/qr2/', '/qr1/')},
                       {'url': URL.replace('/4/', '/5/')}, {'url': URL.replace('https:', 'http:')},
                       {'url': URL.replace('/level2/', '/level2/../')}, {'ra': 'nan'}, {'dec': 91},
-                      {'fov_deg': .121}, {'zodi': 'other'}, {'low': 0}, {'low': 1, 'high': 1}):
+                      {'fov_deg': .401}, {'zodi': 'other'}, {'low': 0}, {'low': 1, 'high': 1}):
             with self.subTest(extra=extra), self.assertRaises(ValueError):
                 parameters(**extra)
         with self.assertRaises(ValueError):
