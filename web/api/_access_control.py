@@ -8,7 +8,7 @@ import os
 import threading
 import time
 
-BUDGETS = {'observations': (12, 60), 'frame': (8, 24)}
+BUDGETS = {'observations': (12, 60), 'frame': (8, 24), 'sequence': (2, 4)}
 BURST_LIMIT = 8
 BURST_SECONDS = 1
 MAX_BURST_KEYS = 4096

@@ -286,6 +286,35 @@ def render(content, p):
         raise FrameError('invalid_fits')
 
 
+def produce_frame(p):
+    """Fetch, validate and render one public IRSA cutout."""
+    url = cutout_url(p)
+    content = fetch(url)
+    retrieved = datetime.now(timezone.utc).isoformat()
+    png, meta = render(content, p)
+    headers = {'X-Frame-Contract': FRAME_CONTRACT, 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
+               'X-Frame-Cutout-SHA256': sha256(content).hexdigest(), 'X-Frame-Retrieved-At': retrieved,
+               'X-Frame-Release': p['release'], 'X-Frame-Obs-ID': p['obs_id'], 'X-Frame-Detector': p['detector'],
+               'X-Frame-Grid-RA-Deg': p['ra'], 'X-Frame-Grid-Dec-Deg': p['dec'],
+               'X-Frame-Grid-Scale-Arcsec': SCALE_ARCSEC, 'X-Frame-Grid-Size-Px': p['size_px'],
+               'X-Frame-Grid-FOV-Deg': meta['fov_deg'], 'X-Frame-Unit': 'MJy/sr', 'X-Frame-Zodi': p['zodi'],
+               'X-Frame-Contrast-Mode': meta['mode'], 'X-Frame-Contrast-Low': meta['low'],
+               'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels'],
+               'X-Frame-Mask-Policy': MASK_POLICY, 'X-Frame-Masked-Pixels': meta['masked_pixels'],
+               'X-Frame-Missing-Pixels': meta['missing_pixels'],
+               'X-Frame-Center-Pixel-Status': meta['center_pixel_status']}
+    if meta['mjd'] is not None:
+        headers['X-Frame-MJD-Obs'] = meta['mjd']
+    if meta['mjd'] is not None and meta['time_system']:
+        headers['X-Frame-Time-System'] = meta['time_system']
+    if meta['center_spectrum']:
+        wavelength, bandwidth = meta['center_spectrum']
+        headers.update({'X-Frame-Center-Wavelength-Um': wavelength,
+                        'X-Frame-Center-Bandwidth-Um': bandwidth,
+                        'X-Frame-Center-Spectral-Source': 'WCS-WAVE'})
+    return png, headers
+
+
 class handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
@@ -327,32 +356,8 @@ class handler(BaseHTTPRequestHandler):
             def produce():
                 nonlocal stage
                 guard('frame', self.headers, self.client_address)
-                url = cutout_url(p)
-                content = fetch(url)
-                retrieved = datetime.now(timezone.utc).isoformat()
                 stage = 'parse'
-                png, meta = render(content, p)
-                h = {'X-Frame-Contract': FRAME_CONTRACT, 'X-Frame-Source-URL': p['url'], 'X-Frame-Cutout-URL': url,
-                     'X-Frame-Cutout-SHA256': sha256(content).hexdigest(), 'X-Frame-Retrieved-At': retrieved,
-                     'X-Frame-Release': p['release'], 'X-Frame-Obs-ID': p['obs_id'], 'X-Frame-Detector': p['detector'],
-                     'X-Frame-Grid-RA-Deg': p['ra'], 'X-Frame-Grid-Dec-Deg': p['dec'],
-                     'X-Frame-Grid-Scale-Arcsec': SCALE_ARCSEC, 'X-Frame-Grid-Size-Px': p['size_px'],
-                     'X-Frame-Grid-FOV-Deg': meta['fov_deg'], 'X-Frame-Unit': 'MJy/sr', 'X-Frame-Zodi': p['zodi'],
-                     'X-Frame-Contrast-Mode': meta['mode'], 'X-Frame-Contrast-Low': meta['low'],
-                     'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels'],
-                     'X-Frame-Mask-Policy': MASK_POLICY, 'X-Frame-Masked-Pixels': meta['masked_pixels'],
-                     'X-Frame-Missing-Pixels': meta['missing_pixels'],
-                     'X-Frame-Center-Pixel-Status': meta['center_pixel_status']}
-                if meta['mjd'] is not None:
-                    h['X-Frame-MJD-Obs'] = meta['mjd']
-                if meta['mjd'] is not None and meta['time_system']:
-                    h['X-Frame-Time-System'] = meta['time_system']
-                if meta['center_spectrum']:
-                    wavelength, bandwidth = meta['center_spectrum']
-                    h.update({'X-Frame-Center-Wavelength-Um': wavelength,
-                              'X-Frame-Center-Bandwidth-Um': bandwidth,
-                              'X-Frame-Center-Spectral-Source': 'WCS-WAVE'})
-                return png, h
+                return produce_frame(p)
             (png, headers), cached = response_cache.run(key, produce)
             return self.respond(200, png, 'image/png', 'ok', {**headers, 'X-Response-Cache': cached})
         except AccessDenied as exc:

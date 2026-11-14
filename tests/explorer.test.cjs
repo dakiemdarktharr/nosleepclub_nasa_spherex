@@ -44,10 +44,11 @@ class DOMError extends Error {constructor(message,name){super(message);this.name
 
 function harness(options={}) {
   const elements=new Map(),calls=[],timers=new Map(),timeouts=new Map(),blobs=[],events=[]; let nextTimer=0;
+  const makeClassList=()=>{const names=new Set();return {toggle(name,force){if(force===undefined? !names.has(name):force)names.add(name);else names.delete(name);return names.has(name);},add(...items){items.forEach(item=>names.add(item));},remove(...items){items.forEach(item=>names.delete(item));},contains(name){return names.has(name);}};};
   const element=id=>{
     if(!elements.has(id))elements.set(id,{
       id,value:"",textContent:"",hidden:false,disabled:false,href:"",src:"",children:[],handlers:{},style:{values:{},setProperty(key,value){this.values[key]=value;}},
-      classList:{toggle(){}}, setAttribute(){}, removeAttribute(name){if(name==="href")this.href="";}, replaceChildren(){this.children=[];},
+      classList:makeClassList(), setAttribute(){}, removeAttribute(name){if(name==="href")this.href="";}, replaceChildren(){this.children=[];},
       append(...nodes){this.children.push(...nodes);},
       after(...nodes){this.siblings=nodes;},
       addEventListener(type,fn){this.handlers[type]=fn;},
@@ -58,31 +59,47 @@ function harness(options={}) {
   const document={documentElement:{lang:options.lang||"vi"},getElementById:element,createElement:()=>({children:[],handlers:{},dataset:{},setAttribute(){},removeAttribute(){},
     append(...items){this.children.push(...items);},addEventListener(type,fn){this.handlers[type]=fn;},click(){}}),
     addEventListener(){},dispatchEvent(event){events.push(event);},hidden:false};
-  const fetch=(url,options)=>new Promise((resolve,reject)=>{
-    calls.push({url,options,params:new Params(url.split("?")[1]||""),resolve,reject});
-  });
+  const localManifest=options.localManifest;
+  const fetch=(url,requestOptions)=>{
+    const call={url,options:requestOptions,params:new Params(url.split("?")[1]||""),body:requestOptions?.body};calls.push(call);
+    if(url==="/assets/mission/full-sequence/manifest.json")return Promise.resolve(localManifest
+      ?{ok:true,json:async()=>localManifest}
+      :{ok:false,status:404,json:async()=>({})});
+    if(url.startsWith("/assets/mission/full-sequence/")&&url.endsWith(".webp")){
+      const id=url.split("/").at(-1).replace(/\.webp$/,"");
+      return Promise.resolve({ok:true,headers:{get:key=>key.toLowerCase()==="content-type"?"image/webp":null},blob:async()=>({id})});
+    }
+    return new Promise((resolve,reject)=>{
+      call.resolve=resolve;call.reject=reject;
+      requestOptions?.signal?.addEventListener?.("abort",()=>reject(new DOMError("aborted","AbortError")),{once:true});
+    });
+  };
   const context={window:{SkyDrafts:options.drafts,SkyWorkflow:{}},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
+    Image:class {constructor(){this.naturalWidth=2040;this.naturalHeight=2040;}decode(){return Promise.resolve();}},
     location:{href:"https://demo.example/"+(options.search===undefined?"?sky_view=compare":options.search)+"#explore",search:options.search===undefined?"?sky_view=compare":options.search, hash:"#explore"},history:{replaceState(a,b,url){context.shared=String(url.href||url);}},
     requestAnimationFrame(fn){fn();},
     setInterval:fn=>{const id=++nextTimer;timers.set(id,fn);return id;},clearInterval:id=>timers.delete(id),
-    setTimeout:(fn,delay)=>{const id=++nextTimer;if(options.deferTimeouts)timeouts.set(id,{fn,delay});else fn();return id;},clearTimeout:id=>timeouts.delete(id),Blob:class {constructor(parts){this.id="export";blobs.push(parts);}},
+    setTimeout:(fn,delay)=>{const id=++nextTimer;if(options.deferTimeouts)timeouts.set(id,{fn,delay});else fn();return id;},clearTimeout:id=>timeouts.delete(id),
+    Blob:class {constructor(parts,meta={}){this.id=meta.type==="image/png"&&parts[0]?.length?String.fromCharCode(...parts[0]):"export";blobs.push(parts);}},
+    atob:value=>Buffer.from(value,"base64").toString("binary"),
     CustomEvent:class {constructor(type,options={}){this.type=type;this.detail=options.detail;}}};
   for(const [id,value] of Object.entries({"explorer-ra":"350","explorer-dec":"35","explorer-fov":"0.06",
     "explorer-detector":"6","explorer-release":"dr1","explorer-from":"","explorer-to":""}))element(id).value=value;
-  element("explorer-sequence-count").value="3";
+  element("explorer-sequence-count").value="5";
   element("explorer-form").requestSubmit=()=>element("explorer-form").fire("submit");
   if(options.linked)context.window.SkyLinkedComparison={mount(args){context.linked=args;return {update(){}};}};
   vm.runInNewContext(fs.readFileSync("web/explorer.js","utf8"),context);
   return {element,calls,timers,timeouts,blobs,events,context,api:context.window.SkyExplorer};
 }
 const flush=async()=>{for(let i=0;i<16;i++)await Promise.resolve();};
-const find=(h,kind)=>h.calls.filter(call=>call.url.startsWith(`/api/${kind}?`));
+const find=(h,kind)=>h.calls.filter(call=>call.url.split("?")[0]===`/api/${kind}`);
 function observations(call, ids) {
   const rows=ids.map((id,i)=>({access_url:`https://irsa.ipac.caltech.edu/${id}.fits`,
     t_min_mjd:60000+i,detector:6,obs_id:id}));
   call.resolve({ok:true,json:async()=>({observations:rows,provenance:{query_url:"https://irsa.ipac.caltech.edu/SIA"},truncated:false})});
+  return rows;
 }
-function frame(call, id, options={}) {
+function frameHeaders(id, options={}) {
   const values={"content-type":"image/png","x-frame-grid-ra-deg":String(options.grid?.ra??350),
     "x-frame-grid-dec-deg":String(options.grid?.dec??35),"x-frame-grid-scale-arcsec":String(options.grid?.scale??6.15),
     "x-frame-grid-size-px":String(options.grid?.size??37),"x-frame-grid-fov-deg":String(options.grid?.fov??37*6.15/3600),
@@ -97,8 +114,30 @@ function frame(call, id, options={}) {
   if(options.spectral||Number.isFinite(options.mjd))Object.assign(values,{"x-frame-time-system":"UTC","x-frame-mjd-obs":String(options.spectral?.mjd??options.mjd)});
   if(options.spectral)Object.assign(values,{"x-frame-center-spectral-source":"WCS-WAVE",
     "x-frame-center-wavelength-um":String(options.spectral.center),"x-frame-center-bandwidth-um":String(options.spectral.width)});
+  return values;
+}
+function localFullManifest(ids=["FULL0","FULL1","FULL2","FULL3","FULL4"]) {
+  return {targets:{barnard:{frames:ids.map((id,index)=>{
+    const accessUrl=`https://irsa.ipac.caltech.edu/${id}.fits`;
+    return {row:{access_url:accessUrl,detector:6,release:"dr1",obs_id:id,t_min_mjd:61000+index},
+      asset_url:`/assets/mission/full-sequence/barnard/${id}.webp`,headers:{
+        "x-frame-full-detector":"true","x-frame-source-url":accessUrl,"x-frame-source-sha256":"f".repeat(64),
+        "x-frame-release":"dr1","x-frame-obs-id":id,"x-frame-detector":"6",
+        "x-frame-grid-scale-arcsec":index===1?"6.237057":"6.160000","x-frame-grid-size-px":"2040",
+        "x-frame-grid-fov-deg":"3.49065","x-frame-target-x-px":"1020","x-frame-target-y-px":"1020",
+        "x-frame-unit":"MJy/sr","x-frame-zodi":"subtract","x-frame-contrast-mode":"shared-target-stretch",
+        "x-frame-contrast-low":"0.5","x-frame-contrast-high":"2.5","x-frame-valid-pixels":"4000000",
+        "x-frame-mask-policy":"source-only-allowlist-v2","x-frame-masked-pixels":"0","x-frame-missing-pixels":"0",
+        "x-frame-center-pixel-status":"valid","x-frame-mjd-obs":String(61000+index),"x-frame-time-system":"UTC"}};
+  })}}};
+}
+function frame(call, id, options={}) {
+  const values=frameHeaders(id,options);
   const headers={get:key=>values[key.toLowerCase()]??null,*[Symbol.iterator](){yield* Object.entries(values);}};
   call.resolve({ok:true,headers,blob:async()=>({id})});
+}
+function sequence(call, frames, errors=[]) {
+  call.resolve({ok:true,status:200,json:async()=>({frames:frames.map(({index,id,options={}})=>({index,png:Buffer.from(id).toString("base64"),headers:frameHeaders(id,options)})),errors})});
 }
 function rateLimited(retryAfter="1") {
   return {ok:false,status:429,headers:{get:key=>key.toLowerCase()==="retry-after"?retryAfter:null},json:async()=>({error:"rate_limited"})};
@@ -286,6 +325,24 @@ async function boundedUpstreamRetry() {
   find(h,"observations")[0].resolve({ok:false,status:429,json:async()=>({error:"rate_limited"})});await submit;
   assert.equal(find(h,"observations").length,1);
 }
+async function localFullSequencePreloadsBeforePlayback(){
+  const h=harness({lang:"en",localManifest:localFullManifest()});
+  h.element("explorer-ra").value="269.44626688537255";
+  h.element("explorer-dec").value="4.768222216475269";
+  const submit=h.element("explorer-form").fire("submit");await flush();await submit;await flush();
+  assert.equal(find(h,"observations").length,0,"a bundled target does not query the observations API");
+  assert.equal(find(h,"frame").length,0,"a bundled full image does not call the cutout API");
+  assert.equal(find(h,"sequence").length,0);
+  assert.equal(h.calls.filter(call=>call.url.endsWith(".webp")).length,1,"the selected full detector image is shown first");
+  assert.match(h.element("explorer-frame-meta").textContent,/2040 × 2040/);
+  assert.equal(h.element("explorer-image-wrap").classList.contains("full-detector-view"),true);
+  h.element("explorer-timeline").fire("click");await flush();
+  assert.equal(h.calls.filter(call=>call.url.endsWith(".webp")).length,5,"one click downloads and decodes every frame before playback");
+  assert.equal(find(h,"observations").length+find(h,"frame").length+find(h,"sequence").length,0,"the local sequence uses no image API");
+  assert.equal(h.timers.size,1,"playback begins only after all five full images are decoded");
+  assert.match(h.element("explorer-frame-label").textContent,/^1\/5/);
+  h.api.pause();
+}
 
 async function main() {
   await noviceFailureRecoveryAndReload();
@@ -304,11 +361,10 @@ async function main() {
   await userSequenceDeduplicatesAndReportsTruncation();
   await userSequenceRetriesPartialFrames();
   await detectorOnlySequenceAllowsMaskedCenterAndWarnsAboutWavelengths();
-  await userSequenceWaitsForRateLimitAndRetriesOnce();
-  await changingQueryCancelsRateLimitWait();
   await changingQueryCancelsUserSequenceLoad();
   await switchingToComparisonStopsSelectedSequence();
   await timelineEntryChecksSpacedCompatibleFrames();
+  await localFullSequencePreloadsBeforePlayback();
   await explicitAutoloadIsValidatedAndPreservesLanguage();
   await curatedSequenceLoadsExactFramesOnly();
   await curatedSequenceResumesMissingFrames();
@@ -317,66 +373,41 @@ async function main() {
   console.log("Explorer DOM and HTTP race cases passed");
 }
 async function switchingToComparisonStopsSelectedSequence(){
-  const h=harness({lang:"en",search:"?sky_view=timeline",linked:true});
-  const ids=["A","B","C","D","E"];
+  const h=harness({lang:"en",search:"?sky_view=timeline",linked:true}),ids=["A","B","C","D","E"];
   const {submit}=await begin(h,ids);
-  h.element("explorer-sequence-count").value="5";
-  const prepare=h.element("explorer-sequence-load").fire("click");await flush();
-  frame(find(h,"frame")[0],"A",{spectral:{mjd:60000,center:4.73,width:.036}});await flush();
-  assert.equal(find(h,"frame").length,2);
+  frame(find(h,"frame")[0],"A",{spectral:{mjd:60000,center:4.73,width:.036}});await submit;
+  h.element("explorer-timeline").fire("click");await flush();
+  const pending=find(h,"sequence")[0],body=JSON.parse(pending.body);
+  assert.equal(body.frames.length,4);
   h.context.linked.onModeChange("compare");
-  frame(find(h,"frame")[1],"B",{spectral:{mjd:60001,center:4.73,width:.036}});
-  await submit;await prepare;await flush();
-  assert.equal(find(h,"frame").length,2,"changing to A/B does not continue a hidden five-image download");
-  assert.equal(h.element("explorer-sequence-count").disabled,false);
+  sequence(pending,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:60000+index,center:4.73,width:.036}}})));
+  await flush();
+  assert.equal(h.timers.size,0,"switching to A/B prevents a pending timeline from starting playback");
   assert.match(h.context.shared,/sky_view=compare/);
 }
 async function userSequencesPlayExactlyTwoAndTenFrames(){
-  const h=harness({lang:"en"}),ids=Array.from({length:12},(_,i)=>`OBS${String(i).padStart(2,"0")}`);
+  const h=harness({lang:"en"}),ids=Array.from({length:12},(_,i)=>"OBS"+String(i).padStart(2,"0"));
   const {submit}=await begin(h,ids);
   frame(find(h,"frame")[0],ids[0],{spectral:{mjd:70000,center:4.73,width:.036}});await submit;
-
-  h.element("explorer-sequence-count").value="2";h.element("explorer-sequence-count").fire("change");
-  const prepareTwo=h.element("explorer-sequence-load").fire("click");await flush();
-  let calls=find(h,"frame");assert.equal(calls.length,2);assert.match(calls[1].params.get("url"),/OBS11/);
-  frame(calls[1],ids[11],{spectral:{mjd:70011,center:4.73,width:.036}});await prepareTwo;
-  assert.equal(h.element("explorer-timeline").disabled,false);
-  assert.match(h.element("explorer-sequence-summary").textContent,/Prepared 2 images/);
-  assert.equal(h.element("explorer-timeline").textContent,"Play sequence (2)");
-  h.element("explorer-timeline").fire("click");
-  assert.equal(h.element("explorer-image").src,`blob:${ids[0]}`);
-  let tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,`blob:${ids[11]}`);
-  h.element("explorer-timeline").fire("click");
-  assert.equal(h.timers.size,0);assert.equal(h.element("explorer-image").src,`blob:${ids[11]}`);
-  assert.match(h.element("explorer-timeline").textContent,/Resume sequence \(2\)/);
-  h.element("explorer-timeline").fire("click");assert.equal(h.element("explorer-image").src,`blob:${ids[11]}`);
-  h.api.pause();
-
-  h.element("explorer-sequence-count").value="10";h.element("explorer-sequence-count").fire("change");
-  const prepareTen=h.element("explorer-sequence-load").fire("click");
-  const selected=[0,1,2,4,5,6,7,9,10,11];let consumed=2;
-  for(const index of selected){
-    await flush();
-    if(index===0||index===11)continue;
-    calls=find(h,"frame");
-    const request=calls[consumed];assert.ok(request,`serial request exists for ${ids[index]}`);
-    assert.match(request.params.get("url"),new RegExp(ids[index]));
-    frame(request,ids[index],{spectral:{mjd:70000+index,center:4.73,width:.036}});consumed++;
-  }
-  await flush();await prepareTen;
-  assert.equal(consumed,10);
-  assert.equal(h.element("explorer-timeline").disabled,false);
-  assert.match(h.element("explorer-timeline").textContent,/Play sequence \(10\)/);
-  h.element("explorer-timeline").fire("click");
-  const played=[h.element("explorer-image").src];tick=[...h.timers.values()][0];
-  for(let i=1;i<selected.length;i++){tick();played.push(h.element("explorer-image").src);}
-  assert.deepEqual(played,selected.map(index=>`blob:${ids[index]}`));
-  assert.equal(new Set(played).size,10);
+  h.element("explorer-timeline").fire("click");await flush();
+  let call=find(h,"sequence")[0],body=JSON.parse(call.body);
+  assert.deepEqual(body.frames.map(frame=>frame.index),[3,6,8,11],"one click batches the four images missing from the five-frame selection");
+  assert.equal(find(h,"frame").length,1,"sequence loading does not issue serial per-image API calls");
+  sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:70000+index,center:4.73,width:.036}}})));
+  await flush();
+  assert.equal(h.timers.size,1,"playback starts after every selected image is ready");
+  assert.equal(h.element("explorer-image").src,"blob:"+ids[0]);
+  let tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,"blob:"+ids[3]);
   h.element("explorer-timeline").fire("click");assert.equal(h.timers.size,0);
-  await h.element("explorer-previous").fire("click");assert.equal(h.element("explorer-image").src,`blob:${ids[10]}`);
-  await h.element("explorer-next").fire("click");assert.equal(h.element("explorer-image").src,`blob:${ids[11]}`);
-  h.element("explorer-current").value="1";await h.element("explorer-current").fire("change");
-  assert.equal(h.element("explorer-image").src,`blob:${ids[1]}`,"the slider seeks to a loaded observation");
+  h.element("explorer-sequence-count").value="10";h.element("explorer-sequence-count").fire("change");
+  h.element("explorer-timeline").fire("click");await flush();
+  call=find(h,"sequence")[1];body=JSON.parse(call.body);
+  assert.deepEqual(body.frames.map(frame=>frame.index),[1,2,4,5,7,9,10],"the ten-frame option only fetches frames not already held in memory");
+  sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:70000+index,center:4.73,width:.036}}})));
+  await flush();
+  assert.equal(h.timers.size,1);
+  assert.equal(h.element("explorer-timeline").textContent,"Pause sequence");
+  h.api.pause();
 }
 async function userSequenceDeduplicatesAndReportsTruncation(){
   const h=harness({lang:"en"}),pending=h.element("explorer-form").fire("submit");await flush();
@@ -388,133 +419,75 @@ async function userSequenceDeduplicatesAndReportsTruncation(){
     {obs_id:"SAME_EPOCH_A",t_min_mjd:60002,detector:6,access_url:"https://irsa.ipac.caltech.edu/SAME_EPOCH_A.fits"},
     {obs_id:"SAME_EPOCH_B",t_min_mjd:60002,detector:6,access_url:"https://irsa.ipac.caltech.edu/SAME_EPOCH_B.fits"},
     {obs_id:"LAST",t_min_mjd:60003,detector:6,access_url:"https://irsa.ipac.caltech.edu/LAST.fits"},
-    {obs_id:"OTHER_DETECTOR",t_min_mjd:60004,detector:5,access_url:"https://irsa.ipac.caltech.edu/OTHER_DETECTOR.fits"},
-    {obs_id:"UNKNOWN_DETECTOR",t_min_mjd:60004.5,detector:null,access_url:"https://irsa.ipac.caltech.edu/UNKNOWN_DETECTOR.fits"}
+    {obs_id:"OTHER_DETECTOR",t_min_mjd:60004,detector:5,access_url:"https://irsa.ipac.caltech.edu/OTHER_DETECTOR.fits"}
   ];
   find(h,"observations")[0].resolve({ok:true,json:async()=>({observations:rows,truncated:true,provenance:{query_url:"https://irsa.ipac.caltech.edu/SIA"}})});await flush();
   frame(find(h,"frame")[0],"FIRST",{spectral:{mjd:60000,center:4.73,width:.036}});await pending;
-  h.element("explorer-sequence-count").value="2";h.element("explorer-sequence-count").fire("change");
-  const prepare=h.element("explorer-sequence-load").fire("click");await flush();
-  const last=find(h,"frame")[1];assert.match(last.params.get("url"),/LAST\.fits/);
-  frame(last,"LAST",{spectral:{mjd:60003,center:4.73,width:.036}});await prepare;
-  assert.match(h.element("explorer-sequence-summary").textContent,/evenly selected from 3/);
-  assert.match(h.element("explorer-sequence-summary").textContent,/1 not loaded/);
-  assert.match(h.element("explorer-sequence-summary").textContent,/truncated/);
-  assert.equal(h.element("explorer-timeline").textContent,"Play sequence (2)");
+  assert.match(h.element("explorer-sequence-summary").textContent,/3 distinct times/);
+  assert.equal(h.element("explorer-timeline").disabled,true,"the app does not pretend three unique observations can make a five-frame sequence");
+  assert.equal(find(h,"sequence").length,0);
 }
 async function userSequenceRetriesPartialFrames(){
-  const h=harness({lang:"en"}),{submit}=await begin(h,["A","B"]);
+  const h=harness({lang:"en"}),ids=["A","B","C","D","E"],{submit}=await begin(h,ids);
   frame(find(h,"frame")[0],"A",{spectral:{mjd:61000,center:4.73,width:.036}});await submit;
-  h.element("explorer-sequence-count").value="2";h.element("explorer-sequence-count").fire("change");
-  const prepare=h.element("explorer-sequence-load").fire("click");await flush();
-  find(h,"frame")[1].resolve({ok:false,status:502,json:async()=>({error:"invalid_fits"})});await prepare;
-  assert.equal(h.element("explorer-timeline").disabled,true);
+  h.element("explorer-timeline").fire("click");await flush();
+  let call=find(h,"sequence")[0],body=JSON.parse(call.body);
+  assert.deepEqual(body.frames.map(frame=>frame.index),[1,2,3,4]);
+  sequence(call,[1,2].map(index=>({index,id:ids[index],options:{spectral:{mjd:61000+index,center:4.73,width:.036}}})),
+    [{index:3,error:"upstream_unavailable",status:502},{index:4,error:"upstream_unavailable",status:502}]);
+  await flush();
+  assert.equal(h.timers.size,0,"incomplete sequences never start");
   assert.equal(h.element("explorer-retry").hidden,false);
-  assert.match(h.element("explorer-sequence-summary").textContent,/1\/2 frames/);
+  assert.match(h.element("explorer-status").textContent,/Loaded 3\/5 frames/);
   const retry=h.element("explorer-retry").fire("click");await flush();
-  assert.equal(find(h,"frame").length,3,"the first successful frame is reused");
-  frame(find(h,"frame")[2],"B",{spectral:{mjd:61001,center:4.73,width:.036}});await retry;
-  assert.equal(h.element("explorer-timeline").disabled,false);
-  assert.equal(h.element("explorer-timeline").textContent,"Play sequence (2)");
+  call=find(h,"sequence")[1];body=JSON.parse(call.body);
+  assert.deepEqual(body.frames.map(frame=>frame.index),[3,4],"retry fetches only missing frames");
+  sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:61000+index,center:4.73,width:.036}}})));
+  await flush();await retry;
+  assert.equal(h.timers.size,1,"playback starts automatically after retry completes the full sequence");
 }
 async function detectorOnlySequenceAllowsMaskedCenterAndWarnsAboutWavelengths(){
-  const h=harness({lang:"en"}),{submit}=await begin(h,["A","B"]);
+  const h=harness({lang:"en"}),ids=["A","B","C","D","E"],{submit}=await begin(h,ids);
   frame(find(h,"frame")[0],"A",{mjd:61000});await submit;
-  h.element("explorer-sequence-count").value="2";h.element("explorer-sequence-count").fire("change");
-  const prepare=h.element("explorer-sequence-load").fire("click");await flush();
-  frame(find(h,"frame")[1],"B",{mjd:61005});await prepare;
-  assert.equal(h.element("explorer-timeline").disabled,false);
-  assert.match(h.element("explorer-sequence-summary").textContent,/WCS-WAVE is missing from some frames/);
-  h.element("explorer-timeline").fire("click");
-  assert.equal(h.element("explorer-image").src,"blob:A");
-  assert.match(h.element("explorer-status").textContent,/nominal detector/);
+  h.element("explorer-timeline").fire("click");await flush();
+  const call=find(h,"sequence")[0],body=JSON.parse(call.body);
+  sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{mjd:61000+index,centerStatus:index===1?"masked":"valid"}})));
+  await flush();
+  assert.equal(h.timers.size,1,"missing WCS-WAVE metadata is disclosed but does not block visual playback");
+  assert.match(h.element("explorer-status").textContent,/WCS-WAVE is missing from some frames/);
+  const tick=[...h.timers.values()][0];tick();
+  assert.match(h.element("explorer-center-status").textContent,/center pixel was excluded/);
   h.api.pause();
-
-  const mixed=harness({lang:"en"}),mixedQuery=await begin(mixed,["WCS","NO_WCS"]);
-  frame(find(mixed,"frame")[0],"WCS",{spectral:{mjd:62000,center:4.73,width:.036}});await mixedQuery.submit;
-  mixed.element("explorer-sequence-count").value="2";mixed.element("explorer-sequence-count").fire("change");
-  const mixedPrepare=mixed.element("explorer-sequence-load").fire("click");await flush();
-  frame(find(mixed,"frame")[1],"NO_WCS",{mjd:62001});await mixedPrepare;
-  assert.equal(mixed.element("explorer-timeline").disabled,false,"missing WCS-WAVE metadata is disclosed and does not block visual playback");
-  assert.match(mixed.element("explorer-sequence-summary").textContent,/missing from some frames/);
-
-  const masked=harness({lang:"en"}),maskedQuery=await begin(masked,["VALID","MASKED"]);
-  frame(find(masked,"frame")[0],"VALID",{mjd:63000});await maskedQuery.submit;
-  masked.element("explorer-sequence-count").value="2";masked.element("explorer-sequence-count").fire("change");
-  const maskedPrepare=masked.element("explorer-sequence-load").fire("click");await flush();
-  frame(find(masked,"frame")[1],"MASKED",{mjd:63001,centerStatus:"masked"});await maskedPrepare;
-  assert.equal(masked.element("explorer-timeline").disabled,false,"a masked query-center pixel does not hide valid pixels elsewhere in the cutout");
-  assert.match(masked.element("explorer-center-status").textContent,/center pixel was excluded/);
-}
-async function userSequenceWaitsForRateLimitAndRetriesOnce(){
-  const h=harness({deferTimeouts:true,lang:"en"}),{submit}=await begin(h,["A","B"]);
-  frame(find(h,"frame")[0],"A",{spectral:{mjd:61100,center:4.73,width:.036}});await submit;
-  h.element("explorer-sequence-count").value="2";h.element("explorer-sequence-count").fire("change");
-  const prepare=h.element("explorer-sequence-load").fire("click");await flush();
-  const first=find(h,"frame")[1];first.resolve(rateLimited());await flush();
-  const [waitId,wait]=h.timeouts.entries().next().value;assert.equal(wait.delay,1000,"honor Retry-After in seconds");
-  h.timeouts.delete(waitId);wait.fn();await flush();
-  const retry=find(h,"frame")[2];assert.ok(retry,"the selected frame is retried after Retry-After");
-  assert.equal(retry.params.get("url"),first.params.get("url"));
-  frame(retry,"B",{spectral:{mjd:61101,center:4.73,width:.036}});await prepare;
-  assert.equal(h.element("explorer-timeline").disabled,false);
-}
-async function changingQueryCancelsRateLimitWait(){
-  const h=harness({deferTimeouts:true,lang:"en"}),{submit}=await begin(h,["A","B"]);
-  frame(find(h,"frame")[0],"A",{spectral:{mjd:61200,center:4.73,width:.036}});await submit;
-  h.element("explorer-sequence-count").value="2";h.element("explorer-sequence-count").fire("change");
-  const prepare=h.element("explorer-sequence-load").fire("click");await flush();
-  const pending=find(h,"frame")[1];pending.resolve(rateLimited("60"));await flush();
-  assert.equal(h.timeouts.size,1,"the wait is cancellable while Retry-After is pending");
-  h.element("explorer-ra").value="351";const fresh=h.element("explorer-form").fire("submit");await flush();
-  await prepare;
-  assert.equal(h.timeouts.size,0);assert.equal(pending.options.signal.aborted,true);
-  assert.equal(find(h,"frame").length,2,"no stale retry is sent after the query changes");
-  observations(find(h,"observations")[1],["NEW"]);await flush();
-  frame(find(h,"frame")[2],"NEW",{spectral:{mjd:61300,center:4.73,width:.036}});await fresh;
-  assert.equal(h.element("explorer-image").src,"blob:NEW");
 }
 async function changingQueryCancelsUserSequenceLoad(){
-  const h=harness(),ids=Array.from({length:12},(_,i)=>`OLD${i}`),{submit:oldQuery}=await begin(h,ids);
+  const h=harness(),ids=Array.from({length:12},(_,i)=>"OLD"+i),{submit:oldQuery}=await begin(h,ids);
   frame(find(h,"frame")[0],ids[0],{spectral:{mjd:62000,center:4.73,width:.036}});await oldQuery;
   h.element("explorer-sequence-count").value="10";h.element("explorer-sequence-count").fire("change");
-  const preparing=h.element("explorer-sequence-load").fire("click");await flush();
-  const stale=find(h,"frame")[1];assert.match(stale.params.get("url"),/OLD1\.fits/);
+  h.element("explorer-timeline").fire("click");await flush();
+  const stale=find(h,"sequence")[0];assert.ok(stale);
   h.element("explorer-ra").value="120";const fresh=h.element("explorer-form").fire("submit");await flush();
   observations(find(h,"observations")[1],["NEW"]);await flush();
-  const latest=find(h,"frame")[2];frame(latest,"NEW",{spectral:{mjd:62050,center:4.73,width:.036}});await fresh;
-  frame(stale,"STALE",{spectral:{mjd:62001,center:4.73,width:.036}});await preparing;
+  frame(find(h,"frame")[1],"NEW",{spectral:{mjd:62050,center:4.73,width:.036}});await fresh;
   assert.equal(stale.options.signal.aborted,true);
+  sequence(stale,JSON.parse(stale.body).frames.map(({index})=>({index,id:"OLD"+index,options:{spectral:{mjd:62000+index,center:4.73,width:.036}}})));
+  await flush();
   assert.equal(h.element("explorer-image").src,"blob:NEW");
   assert.match(h.element("explorer-frame-label").textContent,/NEW/);
 }
 async function timelineEntryChecksSpacedCompatibleFrames(){
-  const search="?lang=en&sky_view=timeline";
-  const h=harness({search,lang:"en"}), ids=Array.from({length:10},(_,index)=>"VIS"+index);
-  const spectral=(mjd,center)=>({spectral:{mjd,center,width:.034}});
+  const search="?lang=en&sky_view=timeline",h=harness({search,lang:"en"}),ids=Array.from({length:10},(_,index)=>"VIS"+index);
+  const spectral=index=>({spectral:{mjd:60000+index,center:4.73,width:.034}});
   const {submit}=await begin(h,ids);
-  const at=index=>find(h,"frame")[index];
-  const nextIs=(index,id)=>assert.match(at(index).params.get("url"),new RegExp(id+"[.]fits$"));
-  nextIs(0,"VIS0");frame(at(0),"VIS0",spectral(60000,4.73));await submit;await flush();
-  assert.equal(h.element("explorer-image").src,"blob:VIS0","the first image is visible while the rest load");
-  assert.match(h.element("explorer-timeline-hint").textContent,/2\/6|1\/6/);
-  nextIs(1,"VIS9");frame(at(1),"VIS9",spectral(60009,4.95));await flush();
-  nextIs(2,"VIS2");frame(at(2),"VIS2",spectral(60002,4.731));await flush();
-  assert.equal(h.element("explorer-timeline").disabled,false,"two images with overlapping WCS-WAVE are enough to play");
-  assert.equal(find(h,"frame").length,3,"prefetch stops after two compatible observations");
-  h.element("explorer-timeline").fire("click");
-  assert.equal(h.element("explorer-image").src,"blob:VIS0");
-  const tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,"blob:VIS2");
-  const limited=harness({search,lang:"en"});
-  const pending=await begin(limited,ids);
-  const fetched=()=>find(limited,"frame");
-  frame(fetched()[0],"VIS0",spectral(60000,4.73));await pending.submit;await flush();
-  for(let index=1;index<6;index++){
-    frame(fetched()[index],"unmatched",spectral(60000+index,4.91+index*.01));await flush();
-  }
-  assert.equal(fetched().length,6,"the number of candidate cutouts is bounded");
-  assert.equal(limited.element("explorer-timeline").disabled,true);
-  assert.match(limited.element("explorer-status").textContent,/No second compatible observation/);
+  frame(find(h,"frame")[0],"VIS0",spectral(0));await submit;await flush();
+  assert.equal(find(h,"frame").length,1,"searching only downloads the first displayed frame");
+  h.element("explorer-timeline").fire("click");await flush();
+  const call=find(h,"sequence")[0],body=JSON.parse(call.body);
+  assert.deepEqual(body.frames.map(frame=>frame.index),[2,5,7,9],"the timeline samples five distinct times across the full observation span");
+  sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:spectral(index)})));
+  await flush();
+  assert.equal(h.timers.size,1);
+  assert.match(h.element("explorer-frame-label").textContent,/^1\/5/);
+  h.api.pause();
 }
 async function noviceFailureRecoveryAndReload(){
   const memory=new Map(),drafts=require("../web/draft-store.js")(()=>({getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)}));
@@ -546,31 +519,16 @@ async function noviceFailureRecoveryAndReload(){
   frame(find(missing,"frame")[0],"B");await pending;
 }
 async function autoplayUsesDistinctCompatibleLoadedFrames() {
-  const h=harness({lang:"en"}), spectral=(mjd,center)=>({spectral:{mjd,center,width:.034}});
-  const {submit}=await begin(h,["A","B","C","different"]);
-  frame(find(h,"frame")[0],"A",spectral(60100,4.73));await submit;
-  async function open(index,id,meta){
-    h.element("explorer-current").value=String(index);
-    const task=h.element("explorer-current").fire("change");await flush();
-    frame(find(h,"frame").at(-1),id,meta);await task;
-  }
-  await open(1,"B",spectral(60101,4.731));
-  assert.equal(h.element("explorer-timeline").disabled,false,"two observations can form a time sequence");
-  await open(2,"C",spectral(60102,4.734));
-  assert.equal(h.element("explorer-timeline").disabled,false);
-  await open(3,"different",spectral(60103,4.95));
-  assert.equal(h.element("explorer-timeline").disabled,true);
-  h.element("explorer-current").value="2";await h.element("explorer-current").fire("change");
-  h.element("explorer-timeline").fire("click");
-  assert.equal(h.element("explorer-image").src,"blob:A");
-  assert.match(h.element("explorer-frame-label").textContent,/^1\/3.+λ 4\.730 µm/);
-  const tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,"blob:B");
+  const h=harness({lang:"en"}),ids=["A","B","C","D","E"],{submit}=await begin(h,ids);
+  frame(find(h,"frame")[0],"A",{spectral:{mjd:60100,center:4.73,width:.034}});await submit;
   h.element("explorer-timeline").fire("click");await flush();
-  assert.equal(h.element("explorer-image").src,"blob:B","pause keeps the displayed frame");
-  h.element("explorer-timeline").fire("click");
-  const replay=[...h.timers.values()][0];assert.equal(h.element("explorer-image").src,"blob:B","resume keeps the paused frame");
-  replay();assert.equal(h.element("explorer-image").src,"blob:C","resume advances to the next observation");
-  h.api.pause();assert.equal(h.timers.size,0);
+  const call=find(h,"sequence")[0],body=JSON.parse(call.body);
+  sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:60100+index,
+    center:index===2?4.95:4.73,width:.034}}})));
+  await flush();
+  assert.equal(h.timers.size,0,"one frame with a disjoint wavelength interval prevents playback of the entire selection");
+  assert.equal(h.element("explorer-timeline").disabled,true,"the player never silently skips an incompatible observation");
+  assert.match(h.element("explorer-status").textContent,/did not pass validation/);
 }
 async function explicitAutoloadIsValidatedAndPreservesLanguage(){
   const search="?lang=en&sky_autoload=1&sky_ra=350&sky_dec=35&sky_release=dr1&sky_view=timeline";
@@ -594,6 +552,7 @@ async function curatedSequenceLoadsExactFramesOnly(){
   const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
   const h=harness({search:url,lang:"en"});
   const ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
+  await flush();
   observations(find(h,"observations")[0],["others",ids[2],ids[0],ids[1]]);await flush();
   for(const [index,id] of ids.entries()){
     const calls=find(h,"frame");
@@ -622,6 +581,7 @@ async function abandonedSearchDoesNotChangePublicRoute(){
 async function curatedSequenceResumesMissingFrames(){
   const search="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
   const h=harness({search,lang:"en"}),ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
+  await flush();
   observations(find(h,"observations")[0],ids);await flush();
   const spectral=mjd=>({spectral:{mjd,center:4.73,width:.036}});
   frame(find(h,"frame")[0],ids[0],spectral(60100));await flush();
