@@ -66,7 +66,7 @@ class ObservationsTest(unittest.TestCase):
         self.assertEqual(q['BAND'], ['1e-06 2e-06'])
         self.assertEqual(q['TIME'], ['60000 61000'])
         self.assertEqual(q['MAXREC'], ['500'])
-        for query in ('ra=nan&dec=0', 'ra=360&dec=0', 'ra=0&dec=91', 'ra=0&dec=0&radius=0.161',
+        for query in ('ra=nan&dec=0', 'ra=360&dec=0', 'ra=0&dec=91', 'ra=0&dec=0&radius=0.201',
                       'ra=0&dec=0&detector=7', 'ra=0&dec=0&maxrec=501', 'ra=0&dec=0&ra=1',
                       'ra=0&dec=0&band_min_um=1', 'ra=0&dec=0&url=https://evil.test', 'ra=12:34:56&dec=0'):
             with self.subTest(query=query), self.assertRaises(ValueError):

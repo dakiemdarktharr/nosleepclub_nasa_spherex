@@ -59,23 +59,16 @@ function harness(options={}) {
   const document={documentElement:{lang:options.lang||"vi"},getElementById:element,createElement:()=>({children:[],handlers:{},dataset:{},setAttribute(){},removeAttribute(){},
     append(...items){this.children.push(...items);},addEventListener(type,fn){this.handlers[type]=fn;},click(){}}),
     addEventListener(){},dispatchEvent(event){events.push(event);},hidden:false};
-  const localManifest=options.localManifest;
   const fetch=(url,requestOptions)=>{
     const call={url,options:requestOptions,params:new Params(url.split("?")[1]||""),body:requestOptions?.body};calls.push(call);
-    if(url==="/assets/mission/full-sequence/manifest.json")return Promise.resolve(localManifest
-      ?{ok:true,json:async()=>localManifest}
-      :{ok:false,status:404,json:async()=>({})});
-    if(url.startsWith("/assets/mission/full-sequence/")&&url.endsWith(".webp")){
-      const id=url.split("/").at(-1).replace(/\.webp$/,"");
-      return Promise.resolve({ok:true,headers:{get:key=>key.toLowerCase()==="content-type"?"image/webp":null},blob:async()=>({id})});
-    }
     return new Promise((resolve,reject)=>{
       call.resolve=resolve;call.reject=reject;
       requestOptions?.signal?.addEventListener?.("abort",()=>reject(new DOMError("aborted","AbortError")),{once:true});
     });
   };
-  const context={window:{SkyDrafts:options.drafts,SkyWorkflow:{}},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
-    Image:class {constructor(){this.naturalWidth=2040;this.naturalHeight=2040;}decode(){return Promise.resolve();}},
+  const testMath=Object.create(Math);testMath.random=()=>options.random??0;
+  const context={window:{SkyDrafts:options.drafts,SkyWorkflow:{}},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,Math:testMath,
+    Image:class {constructor(){this.naturalWidth=options.imageSize??37;this.naturalHeight=options.imageSize??37;}decode(){return Promise.resolve();}},
     location:{href:"https://demo.example/"+(options.search===undefined?"?sky_view=compare":options.search)+"#explore",search:options.search===undefined?"?sky_view=compare":options.search, hash:"#explore"},history:{replaceState(a,b,url){context.shared=String(url.href||url);}},
     requestAnimationFrame(fn){fn();},
     setInterval:fn=>{const id=++nextTimer;timers.set(id,fn);return id;},clearInterval:id=>timers.delete(id),
@@ -85,7 +78,6 @@ function harness(options={}) {
     CustomEvent:class {constructor(type,options={}){this.type=type;this.detail=options.detail;}}};
   for(const [id,value] of Object.entries({"explorer-ra":"350","explorer-dec":"35","explorer-fov":"0.06",
     "explorer-detector":"6","explorer-release":"dr1","explorer-from":"","explorer-to":""}))element(id).value=value;
-  element("explorer-sequence-count").value="5";
   element("explorer-form").requestSubmit=()=>element("explorer-form").fire("submit");
   if(options.linked)context.window.SkyLinkedComparison={mount(args){context.linked=args;return {update(){}};}};
   vm.runInNewContext(fs.readFileSync("web/explorer.js","utf8"),context);
@@ -115,21 +107,6 @@ function frameHeaders(id, options={}) {
   if(options.spectral)Object.assign(values,{"x-frame-center-spectral-source":"WCS-WAVE",
     "x-frame-center-wavelength-um":String(options.spectral.center),"x-frame-center-bandwidth-um":String(options.spectral.width)});
   return values;
-}
-function localFullManifest(ids=["FULL0","FULL1","FULL2","FULL3","FULL4"]) {
-  return {targets:{barnard:{frames:ids.map((id,index)=>{
-    const accessUrl=`https://irsa.ipac.caltech.edu/${id}.fits`;
-    return {row:{access_url:accessUrl,detector:6,release:"dr1",obs_id:id,t_min_mjd:61000+index},
-      asset_url:`/assets/mission/full-sequence/barnard/${id}.webp`,headers:{
-        "x-frame-full-detector":"true","x-frame-source-url":accessUrl,"x-frame-source-sha256":"f".repeat(64),
-        "x-frame-release":"dr1","x-frame-obs-id":id,"x-frame-detector":"6",
-        "x-frame-grid-scale-arcsec":index===1?"6.237057":"6.160000","x-frame-grid-size-px":"2040",
-        "x-frame-grid-fov-deg":"3.49065","x-frame-target-x-px":"1020","x-frame-target-y-px":"1020",
-        "x-frame-unit":"MJy/sr","x-frame-zodi":"subtract","x-frame-contrast-mode":"shared-target-stretch",
-        "x-frame-contrast-low":"0.5","x-frame-contrast-high":"2.5","x-frame-valid-pixels":"4000000",
-        "x-frame-mask-policy":"source-only-allowlist-v2","x-frame-masked-pixels":"0","x-frame-missing-pixels":"0",
-        "x-frame-center-pixel-status":"valid","x-frame-mjd-obs":String(61000+index),"x-frame-time-system":"UTC"}};
-  })}}};
 }
 function frame(call, id, options={}) {
   const values=frameHeaders(id,options);
@@ -325,21 +302,23 @@ async function boundedUpstreamRetry() {
   find(h,"observations")[0].resolve({ok:false,status:429,json:async()=>({error:"rate_limited"})});await submit;
   assert.equal(find(h,"observations").length,1);
 }
-async function localFullSequencePreloadsBeforePlayback(){
-  const h=harness({lang:"en",localManifest:localFullManifest()});
-  h.element("explorer-ra").value="269.44626688537255";
-  h.element("explorer-dec").value="4.768222216475269";
-  const submit=h.element("explorer-form").fire("submit");await flush();await submit;await flush();
-  assert.equal(find(h,"observations").length,0,"a bundled target does not query the observations API");
-  assert.equal(find(h,"frame").length,0,"a bundled full image does not call the cutout API");
-  assert.equal(find(h,"sequence").length,0);
-  assert.equal(h.calls.filter(call=>call.url.endsWith(".webp")).length,1,"the selected full detector image is shown first");
-  assert.match(h.element("explorer-frame-meta").textContent,/2040 × 2040/);
-  assert.equal(h.element("explorer-image-wrap").classList.contains("full-detector-view"),true);
+async function consecutiveSequencePreloadsThenPlays(){
+  const h=harness({lang:"en"}),ids=Array.from({length:12},(_,index)=>`OBS${index}`);
+  const {submit}=await begin(h,ids),query=find(h,"observations")[0];
+  assert.equal(query.params.get("maxrec"),"500","the complete query asks IRSA for the supported row limit");
+  const first=find(h,"frame")[0],firstId=first.params.get("url").split("/").at(-1).replace(/\.fits$/,"");
+  const start=ids.indexOf(firstId);assert.ok(start>=0&&start<=ids.length-5);
+  frame(first,firstId,{spectral:{mjd:60000+start,center:4.73,width:.036}});await submit;
   h.element("explorer-timeline").fire("click");await flush();
-  assert.equal(h.calls.filter(call=>call.url.endsWith(".webp")).length,5,"one click downloads and decodes every frame before playback");
-  assert.equal(find(h,"observations").length+find(h,"frame").length+find(h,"sequence").length,0,"the local sequence uses no image API");
-  assert.equal(h.timers.size,1,"playback begins only after all five full images are decoded");
+  const call=find(h,"sequence")[0],body=JSON.parse(call.body),selected=body.frames.map(item=>item.index);
+  assert.deepEqual(selected,[start,start+1,start+2,start+3,start+4],"the player chooses five consecutive MJD-sorted observations");
+  assert.equal(find(h,"frame").length,1,"the remaining sequence is fetched as one batch, not serial frame requests");
+  sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:60000+index,center:4.73,width:.036}}})));
+  await flush();
+  assert.equal(h.timers.size,0,"preloading does not start playback");
+  assert.equal(h.element("explorer-timeline-play").disabled,false,"Play becomes available after all five frames decode");
+  h.element("explorer-timeline-play").fire("click");
+  assert.equal(h.timers.size,1,"a separate Play action starts the decoded sequence");
   assert.match(h.element("explorer-frame-label").textContent,/^1\/5/);
   h.api.pause();
 }
@@ -356,18 +335,17 @@ async function main() {
   await boundedUpstreamRetry();
   await workflowPairSurvivesBlinkAndInvalidatesOnEdit();
   await notesStayWithTheirQueryAndPair();
-  await autoplayUsesDistinctCompatibleLoadedFrames();
-  await userSequencesPlayExactlyTwoAndTenFrames();
+  await sequenceWarnsAboutWavelengthDifferences();
+  await userSequencesLoadFiveAndRequirePlay();
   await userSequenceDeduplicatesAndReportsTruncation();
   await userSequenceRetriesPartialFrames();
   await detectorOnlySequenceAllowsMaskedCenterAndWarnsAboutWavelengths();
   await changingQueryCancelsUserSequenceLoad();
   await switchingToComparisonStopsSelectedSequence();
   await timelineEntryChecksSpacedCompatibleFrames();
-  await localFullSequencePreloadsBeforePlayback();
+  await consecutiveSequencePreloadsThenPlays();
   await explicitAutoloadIsValidatedAndPreservesLanguage();
-  await curatedSequenceLoadsExactFramesOnly();
-  await curatedSequenceResumesMissingFrames();
+  await randomVisitsChooseDifferentContiguousWindows();
   await abandonedSearchDoesNotChangePublicRoute();
   await transientFrameIsRetriedOnce();
   console.log("Explorer DOM and HTTP race cases passed");
@@ -378,35 +356,31 @@ async function switchingToComparisonStopsSelectedSequence(){
   frame(find(h,"frame")[0],"A",{spectral:{mjd:60000,center:4.73,width:.036}});await submit;
   h.element("explorer-timeline").fire("click");await flush();
   const pending=find(h,"sequence")[0],body=JSON.parse(pending.body);
-  assert.equal(body.frames.length,4);
+  assert.equal(body.frames.length,5);
   h.context.linked.onModeChange("compare");
   sequence(pending,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:60000+index,center:4.73,width:.036}}})));
   await flush();
   assert.equal(h.timers.size,0,"switching to A/B prevents a pending timeline from starting playback");
   assert.match(h.context.shared,/sky_view=compare/);
 }
-async function userSequencesPlayExactlyTwoAndTenFrames(){
+async function userSequencesLoadFiveAndRequirePlay(){
   const h=harness({lang:"en"}),ids=Array.from({length:12},(_,i)=>"OBS"+String(i).padStart(2,"0"));
   const {submit}=await begin(h,ids);
-  frame(find(h,"frame")[0],ids[0],{spectral:{mjd:70000,center:4.73,width:.036}});await submit;
+  const first=find(h,"frame")[0],firstId=first.params.get("url").split("/").at(-1).replace(/\.fits$/,"");
+  const start=ids.indexOf(firstId);
+  frame(first,ids[start],{spectral:{mjd:70000+start,center:4.73,width:.036}});await submit;
   h.element("explorer-timeline").fire("click");await flush();
-  let call=find(h,"sequence")[0],body=JSON.parse(call.body);
-  assert.deepEqual(body.frames.map(frame=>frame.index),[3,6,8,11],"one click batches the four images missing from the five-frame selection");
+  const call=find(h,"sequence")[0],body=JSON.parse(call.body);
+  assert.deepEqual(body.frames.map(frame=>frame.index),[start,start+1,start+2,start+3,start+4],"preload requests all five consecutive frames together");
   assert.equal(find(h,"frame").length,1,"sequence loading does not issue serial per-image API calls");
   sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:70000+index,center:4.73,width:.036}}})));
   await flush();
-  assert.equal(h.timers.size,1,"playback starts after every selected image is ready");
-  assert.equal(h.element("explorer-image").src,"blob:"+ids[0]);
-  let tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,"blob:"+ids[3]);
-  h.element("explorer-timeline").fire("click");assert.equal(h.timers.size,0);
-  h.element("explorer-sequence-count").value="10";h.element("explorer-sequence-count").fire("change");
-  h.element("explorer-timeline").fire("click");await flush();
-  call=find(h,"sequence")[1];body=JSON.parse(call.body);
-  assert.deepEqual(body.frames.map(frame=>frame.index),[1,2,4,5,7,9,10],"the ten-frame option only fetches frames not already held in memory");
-  sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:70000+index,center:4.73,width:.036}}})));
-  await flush();
-  assert.equal(h.timers.size,1);
-  assert.equal(h.element("explorer-timeline").textContent,"Pause sequence");
+  assert.equal(h.timers.size,0,"preloading is separate from playback");
+  h.element("explorer-timeline-play").fire("click");assert.equal(h.timers.size,1);
+  assert.equal(h.element("explorer-image").src,"blob:"+ids[start]);
+  [...h.timers.values()][0]();assert.equal(h.element("explorer-image").src,"blob:"+ids[start+1]);
+  h.element("explorer-timeline-play").fire("click");assert.equal(h.timers.size,0,"Play also pauses without fetching");
+  h.element("explorer-timeline-play").fire("click");assert.equal(h.timers.size,1,"the same button resumes at the next frame");
   h.api.pause();
 }
 async function userSequenceDeduplicatesAndReportsTruncation(){
@@ -423,7 +397,7 @@ async function userSequenceDeduplicatesAndReportsTruncation(){
   ];
   find(h,"observations")[0].resolve({ok:true,json:async()=>({observations:rows,truncated:true,provenance:{query_url:"https://irsa.ipac.caltech.edu/SIA"}})});await flush();
   frame(find(h,"frame")[0],"FIRST",{spectral:{mjd:60000,center:4.73,width:.036}});await pending;
-  assert.match(h.element("explorer-sequence-summary").textContent,/3 distinct times/);
+  assert.match(h.element("explorer-sequence-summary").textContent,/only 4 have viewable images/);
   assert.equal(h.element("explorer-timeline").disabled,true,"the app does not pretend three unique observations can make a five-frame sequence");
   assert.equal(find(h,"sequence").length,0);
 }
@@ -432,19 +406,20 @@ async function userSequenceRetriesPartialFrames(){
   frame(find(h,"frame")[0],"A",{spectral:{mjd:61000,center:4.73,width:.036}});await submit;
   h.element("explorer-timeline").fire("click");await flush();
   let call=find(h,"sequence")[0],body=JSON.parse(call.body);
-  assert.deepEqual(body.frames.map(frame=>frame.index),[1,2,3,4]);
-  sequence(call,[1,2].map(index=>({index,id:ids[index],options:{spectral:{mjd:61000+index,center:4.73,width:.036}}})),
+  assert.deepEqual(body.frames.map(frame=>frame.index),[0,1,2,3,4]);
+  sequence(call,[0,1,2].map(index=>({index,id:ids[index],options:{spectral:{mjd:61000+index,center:4.73,width:.036}}})),
     [{index:3,error:"upstream_unavailable",status:502},{index:4,error:"upstream_unavailable",status:502}]);
   await flush();
   assert.equal(h.timers.size,0,"incomplete sequences never start");
   assert.equal(h.element("explorer-retry").hidden,false);
-  assert.match(h.element("explorer-status").textContent,/Loaded 3\/5 frames/);
+  assert.match(h.element("explorer-status").textContent,/Loaded and decoded 3\/5 frames/);
   const retry=h.element("explorer-retry").fire("click");await flush();
   call=find(h,"sequence")[1];body=JSON.parse(call.body);
-  assert.deepEqual(body.frames.map(frame=>frame.index),[3,4],"retry fetches only missing frames");
+  assert.deepEqual(body.frames.map(frame=>frame.index),[0,1,2,3,4],"retry fetches the selected sequence as one batch");
   sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:61000+index,center:4.73,width:.036}}})));
   await flush();await retry;
-  assert.equal(h.timers.size,1,"playback starts automatically after retry completes the full sequence");
+  assert.equal(h.timers.size,0,"successful retry leaves playback under user control");
+  h.element("explorer-timeline-play").fire("click");assert.equal(h.timers.size,1);
 }
 async function detectorOnlySequenceAllowsMaskedCenterAndWarnsAboutWavelengths(){
   const h=harness({lang:"en"}),ids=["A","B","C","D","E"],{submit}=await begin(h,ids);
@@ -453,16 +428,16 @@ async function detectorOnlySequenceAllowsMaskedCenterAndWarnsAboutWavelengths(){
   const call=find(h,"sequence")[0],body=JSON.parse(call.body);
   sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{mjd:61000+index,centerStatus:index===1?"masked":"valid"}})));
   await flush();
-  assert.equal(h.timers.size,1,"missing WCS-WAVE metadata is disclosed but does not block visual playback");
-  assert.match(h.element("explorer-status").textContent,/WCS-WAVE is missing from some frames/);
+  assert.equal(h.timers.size,0,"preloading never starts playback on its own");
+  assert.match(h.element("explorer-status").textContent,/wavelength at this coordinate is not available/);
+  h.element("explorer-timeline-play").fire("click");assert.equal(h.timers.size,1);
   const tick=[...h.timers.values()][0];tick();
-  assert.match(h.element("explorer-center-status").textContent,/center pixel was excluded/);
+  assert.match(h.element("explorer-center-status").textContent,/exact center pixel is excluded/);
   h.api.pause();
 }
 async function changingQueryCancelsUserSequenceLoad(){
   const h=harness(),ids=Array.from({length:12},(_,i)=>"OLD"+i),{submit:oldQuery}=await begin(h,ids);
   frame(find(h,"frame")[0],ids[0],{spectral:{mjd:62000,center:4.73,width:.036}});await oldQuery;
-  h.element("explorer-sequence-count").value="10";h.element("explorer-sequence-count").fire("change");
   h.element("explorer-timeline").fire("click");await flush();
   const stale=find(h,"sequence")[0];assert.ok(stale);
   h.element("explorer-ra").value="120";const fresh=h.element("explorer-form").fire("submit");await flush();
@@ -482,10 +457,12 @@ async function timelineEntryChecksSpacedCompatibleFrames(){
   assert.equal(find(h,"frame").length,1,"searching only downloads the first displayed frame");
   h.element("explorer-timeline").fire("click");await flush();
   const call=find(h,"sequence")[0],body=JSON.parse(call.body);
-  assert.deepEqual(body.frames.map(frame=>frame.index),[2,5,7,9],"the timeline samples five distinct times across the full observation span");
+  const selected=body.frames.map(frame=>frame.index),start=selected[0];
+  assert.equal(selected.length,5);assert.deepEqual(selected,[start,start+1,start+2,start+3,start+4],"the timeline selects five adjacent observations by MJD");
   sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:spectral(index)})));
   await flush();
-  assert.equal(h.timers.size,1);
+  assert.equal(h.timers.size,0,"preloading waits for an explicit Play action");
+  h.element("explorer-timeline-play").fire("click");assert.equal(h.timers.size,1);
   assert.match(h.element("explorer-frame-label").textContent,/^1\/5/);
   h.api.pause();
 }
@@ -518,7 +495,7 @@ async function noviceFailureRecoveryAndReload(){
   await flush();assert.equal(find(missing,"frame")[0].params.get("url"),"https://irsa.ipac.caltech.edu/B.fits");
   frame(find(missing,"frame")[0],"B");await pending;
 }
-async function autoplayUsesDistinctCompatibleLoadedFrames() {
+async function sequenceWarnsAboutWavelengthDifferences() {
   const h=harness({lang:"en"}),ids=["A","B","C","D","E"],{submit}=await begin(h,ids);
   frame(find(h,"frame")[0],"A",{spectral:{mjd:60100,center:4.73,width:.034}});await submit;
   h.element("explorer-timeline").fire("click");await flush();
@@ -526,9 +503,11 @@ async function autoplayUsesDistinctCompatibleLoadedFrames() {
   sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:60100+index,
     center:index===2?4.95:4.73,width:.034}}})));
   await flush();
-  assert.equal(h.timers.size,0,"one frame with a disjoint wavelength interval prevents playback of the entire selection");
-  assert.equal(h.element("explorer-timeline").disabled,true,"the player never silently skips an incompatible observation");
-  assert.match(h.element("explorer-status").textContent,/did not pass validation/);
+  assert.equal(h.timers.size,0,"preloading does not start the animation");
+  assert.equal(h.element("explorer-timeline-play").disabled,false,"the five contiguous frames stay available");
+  assert.match(h.element("explorer-status").textContent,/sampled wavelength changes at this sky position/);
+  h.element("explorer-timeline-play").fire("click");assert.equal(h.timers.size,1);
+  h.api.pause();
 }
 async function explicitAutoloadIsValidatedAndPreservesLanguage(){
   const search="?lang=en&sky_autoload=1&sky_ra=350&sky_dec=35&sky_release=dr1&sky_view=timeline";
@@ -548,27 +527,22 @@ async function explicitAutoloadIsValidatedAndPreservesLanguage(){
   frame(find(unknownView,"frame")[0],"A");await flush();
   assert.match(unknownView.context.shared,/sky_view=timeline/);
 }
-async function curatedSequenceLoadsExactFramesOnly(){
-  const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
-  const h=harness({search:url,lang:"en"});
-  const ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
-  await flush();
-  observations(find(h,"observations")[0],["others",ids[2],ids[0],ids[1]]);await flush();
-  for(const [index,id] of ids.entries()){
-    const calls=find(h,"frame");
-    assert.equal(calls.length,index+1,"curated frames use serial requests");
-    assert.match(calls[index].params.get("url"),new RegExp(id));
-    assert.equal(h.element("explorer-timeline").disabled,true);
-    frame(calls[index],id,{spectral:{mjd:60100+index,center:4.73+index*.001,width:.036}});await flush();
+async function randomVisitsChooseDifferentContiguousWindows(){
+  const ids=Array.from({length:10},(_,index)=>`VIS${index}`);
+  async function visit(random){
+    const h=harness({lang:"en",random}),{submit}=await begin(h,ids),first=find(h,"frame")[0];
+    const firstId=first.params.get("url").split("/").at(-1).replace(/\.fits$/,"");
+    const start=ids.indexOf(firstId);
+    assert.ok(start>=0&&start<=ids.length-5);
+    frame(first,ids[start],{spectral:{mjd:60000+start,center:4.73,width:.036}});await submit;
+    h.element("explorer-timeline").fire("click");await flush();
+    const call=find(h,"sequence")[0],body=JSON.parse(call.body),selected=body.frames.map(frame=>frame.index);
+    assert.deepEqual(selected,[start,start+1,start+2,start+3,start+4]);
+    sequence(call,body.frames.map(({index})=>({index,id:ids[index],options:{spectral:{mjd:60000+index,center:4.73,width:.036}}})));
+    await flush();assert.equal(h.timers.size,0,"the selected random window is preloaded before Play");
+    return start;
   }
-  assert.equal(h.element("explorer-timeline").disabled,false);
-  assert.match(h.element("explorer-status").textContent,/Three Epsilon/);
-  assert.match(h.context.shared,/sky_sequence=epsilon-dr1/);
-  const other=harness({search:url.replace("331.04583333","350"),lang:"en"});
-  observations(find(other,"observations")[0],["generic",...ids]);await flush();
-  assert.match(find(other,"frame")[0].params.get("url"),/generic/);
-  assert.doesNotMatch(other.context.shared,/sky_sequence/);
-  frame(find(other,"frame")[0],"generic");await flush();
+  assert.notEqual(await visit(0),await visit(.8),"a later visit can choose a different five-observation window");
 }
 async function abandonedSearchDoesNotChangePublicRoute(){
   const h=harness(),pending=h.element("explorer-form").fire("submit");await flush();
@@ -577,27 +551,6 @@ async function abandonedSearchDoesNotChangePublicRoute(){
   assert.equal(h.context.shared,undefined);
   assert.equal(find(h,"frame").length,0);
   assert.equal(h.context.location.hash,"#night-sky");
-}
-async function curatedSequenceResumesMissingFrames(){
-  const search="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
-  const h=harness({search,lang:"en"}),ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
-  await flush();
-  observations(find(h,"observations")[0],ids);await flush();
-  const spectral=mjd=>({spectral:{mjd,center:4.73,width:.036}});
-  frame(find(h,"frame")[0],ids[0],spectral(60100));await flush();
-  find(h,"frame")[1].resolve({ok:false,status:502,json:async()=>({error:"invalid_fits"})});await flush();
-  assert.equal(h.element("explorer-retry").hidden,false);
-  assert.equal(h.element("explorer-image").src,`blob:${ids[0]}`);
-  const saved=h.element("workflow-frame-status").siblings[0];
-  assert.equal(saved.hidden,false);
-  assert.match(saved.href,/lang=en&field=epsilon&view=saved#night-sky$/);
-  const retried=h.element("explorer-retry").fire("click");await flush();
-  assert.equal(find(h,"frame").length,3,"reuse the first downloaded frame");
-  frame(find(h,"frame")[2],ids[1],spectral(60101));await flush();
-  frame(find(h,"frame")[3],ids[2],spectral(60102));await retried;
-  assert.equal(h.element("explorer-timeline").disabled,false);
-  assert.match(h.element("explorer-status").textContent,/Three Epsilon/);
-  assert.equal(saved.hidden,true);
 }
 async function transientFrameIsRetriedOnce(){
   const h=harness(), {submit}=await begin(h,["A"]);

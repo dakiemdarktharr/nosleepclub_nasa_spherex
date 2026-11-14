@@ -81,7 +81,7 @@ def parse_params(query):
             raise ValueError('invalid_number')
         return x
     ra, dec, fov = num('ra'), num('dec'), num('fov_deg', 0.05)
-    if not (0 <= ra < 360 and -90 <= dec <= 90 and 0 < fov <= 0.12):
+    if not (0 <= ra < 360 and -90 <= dec <= 90 and 0 < fov <= 0.40):
         raise ValueError('out_of_range')
     zodi = p.get('zodi', 'raw')
     if zodi not in ('raw', 'subtract'):
@@ -94,7 +94,7 @@ def parse_params(query):
     n = max(3, math.ceil(fov * 3600 / SCALE_ARCSEC))
     if n % 2 == 0:
         n += 1
-    if n > 192:
+    if n > 256:
         raise ValueError('out_of_range')
     return {'url': url, 'ra': ra, 'dec': dec, 'fov_deg': fov, 'size_px': n, 'zodi': zodi,
             'low': low, 'high': high, 'release': match['release'], 'detector': int(match['detector']),
