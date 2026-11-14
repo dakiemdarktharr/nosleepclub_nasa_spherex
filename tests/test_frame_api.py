@@ -83,14 +83,15 @@ class FrameTest(unittest.TestCase):
 
     def test_upstream_http_failure_logs_only_code_and_status(self):
         with patch.object(api, 'build_opener') as opener:
-            opener.return_value.open.side_effect = HTTPError(URL, 503, 'private upstream body', {}, BytesIO())
+            opener.return_value.open.side_effect = HTTPError(URL, 503, 'private upstream body', {'Retry-After': '5'}, BytesIO())
             with self.assertRaises(api.FrameError) as caught:
                 api.fetch(URL)
         self.assertEqual(caught.exception.upstream_http_status, 503)
         path = '/api/frame?' + urlencode({'url': URL, 'ra': 350, 'dec': 35, 'fov_deg': .005})
         with patch.object(api, 'fetch', side_effect=caught.exception), self.assertLogs(api.logger, level='INFO') as logs:
-            status, _, body = request(path)
+            status, headers, body = request(path)
         self.assertEqual(status, 502)
+        self.assertEqual(headers['Retry-After'], '5')
         self.assertEqual(json.loads(body), {'error': 'upstream_http_error'})
         event = json.loads(logs.records[-1].getMessage())
         self.assertEqual(event['error_code'], 'upstream_http_error')

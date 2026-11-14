@@ -54,6 +54,8 @@ dialog :focus-visible { outline-color: var(--public-accent); }
 [data-theme="light"] .workflow-app :is(.workflow-steps a[aria-current="step"],.workflow-source-switch button[aria-pressed="true"],.view-switch button[aria-pressed="true"]) { background: #dfe9ff; color: #142f57; border-color: #416099; }
 [data-theme="light"] .workflow-app .workflow-steps a[data-complete="true"] span { color: #186257; border-color: #409383; }
 [data-theme="light"] .workflow-app .workflow-library-link[aria-current] { color: #163e80; }
+[data-theme="light"] .workflow-app .explorer-resolution-note { color: #243952; }
+[data-theme="light"] .workflow-app .explorer-source-links a { color: #163e80; }
 [data-theme="light"] .workflow-app .outline-button, [data-theme="light"] .workflow-app .outline-button:hover { color: #213e70; background: #eaf0ff; border-color: #7185ac; }
 [data-theme="light"] .workflow-app .primary-button { color: #101e30; background: #eafe07; border-color: #899600; }
 [data-theme="light"] .workflow-route-status { background: #fff1da; color: #62420a; }

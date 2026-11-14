@@ -35,11 +35,6 @@ document.addEventListener("scene:loaded",()=>{
   }
   select.value=s.id;$("hero-baseline").textContent=`${number(s.baseline_days,1)} ${viewCopy("ngày","days")}`;
 });
-$("privacy-open").addEventListener("click",()=>{
-  $("evidence-content").lang=document.documentElement.lang;
-  $("evidence-content").innerHTML=viewCopy(`<h3>Nhận xét của phiên trình duyệt này</h3><p>Nút Lưu nhận xét ghi vào MongoDB khi máy chủ sẵn sàng. Cookie HttpOnly xác định phiên; không có tài khoản hoặc đồng bộ giữa thiết bị. Phiên khác không xem được nhận xét của bạn.</p><p>Nhận xét hết hạn sau 180 ngày. Bạn có thể xóa từng nhận xét hoặc xuất JSON. Nếu API lỗi, bản cục bộ vẫn được giữ và giao diện báo “Chưa đồng bộ”. Dữ liệu cũ trong trình duyệt không tự được gửi lên máy chủ.</p>`, `<h3>Reviews in this browser session</h3><p>Save review writes to MongoDB when the server is available. An HttpOnly cookie identifies your session; there are no accounts or cross-device synchronization. Other sessions cannot access your reviews.</p><p>Reviews expire after 180 days. You can delete individual reviews or export JSON. If the API fails, the local copy is retained and the interface reports that synchronization is unconfirmed. Existing browser data is never uploaded automatically.</p>`);
-  $("download-fits").href=state.scene?.fits||"data/manifest.json";$("evidence-dialog").showModal();
-});
 
 let releasePayloads=[];
 function releaseTable() {

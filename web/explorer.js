@@ -31,7 +31,7 @@
     return link;
   });
   const incoming = new URLSearchParams(location.search);
-  let requestedView = incoming.get("sky_view") === "timeline" ? "timeline" : "compare";
+  let requestedView = incoming.get("sky_view") === "compare" ? "compare" : "timeline";
   const images=new Map();
   let comparison, linkedPair=null, linkedFrames=[];
   let restoreView=true;
@@ -42,7 +42,7 @@
       if(obs&&/^[A-Za-z0-9_-]{1,100}$/.test(obs)&&Number.isInteger(det)&&det>=1&&det<=6)state[letter]={obs,det};
     }
     const zoom=Number(incoming.get("sky_zoom")),x=Number(incoming.get("sky_x")),y=Number(incoming.get("sky_y"));
-    if(zoom>=1&&zoom<=8&&Number.isFinite(x+y)&&Math.abs(x)<=4&&Math.abs(y)<=4)state.camera={zoom,x,y};
+    if(zoom>=1&&zoom<=2&&Number.isFinite(x+y)&&Math.abs(x)<=4&&Math.abs(y)<=4)state.camera={zoom,x,y};
     return state;
   }
   function shareView(state) {
@@ -163,28 +163,33 @@
     return measured.every(Boolean)?"wcs":measured.every(value=>!value)?"nominal":"mixed";
   }
   function timelineBandCaveat(indices=null) {
-    return timelineBandMode(indices)==="nominal"
-      ?t(" WCS-WAVE tại tâm không có trong các FITS này; ảnh chỉ được ghép theo detector danh định, chưa xác nhận đáp ứng phổ chi tiết hay phép đo độ sáng."," WCS-WAVE is unavailable at the center in these FITS files; frames are grouped by nominal detector only, without verified detailed spectral response or photometry.")
+    return ["nominal","mixed"].includes(timelineBandMode(indices))
+      ?t(" WCS-WAVE không có đầy đủ trong mọi ảnh; chuỗi ghép theo detector danh định, không dùng để so độ sáng chính xác.","WCS-WAVE is missing from some frames; the sequence is grouped by nominal detector and should not be used for precise brightness comparisons.")
       :"";
+  }
+  function gridSignature(info) {
+    const headers=info?.headers||{};
+    const fields=["x-frame-grid-ra-deg","x-frame-grid-dec-deg","x-frame-grid-scale-arcsec","x-frame-grid-size-px","x-frame-grid-fov-deg"];
+    const values=fields.map(key=>Number(headers[key]));
+    return values.every(Number.isFinite)?values.join("/"):null;
   }
   function timelineUnavailableReason(indices) {
     const loaded=indices.map(index=>images.get(index)).filter(Boolean);
-    if(loaded.some(info=>info.headers?.["x-frame-center-pixel-status"]!=="valid"))
-      return t("Ít nhất một ảnh không có pixel hợp lệ tại tâm truy vấn; không thể so cùng điểm trời qua các epoch.","At least one image has no valid pixel at the query center, so the same sky point cannot be compared across epochs.");
+    if(loaded.some(info=>Number(info.headers?.["x-frame-valid-pixels"])<=0))
+      return t("Ít nhất một cutout không có pixel dữ liệu dùng được.","At least one cutout has no usable image pixels.");
     if(loaded.some(info=>!observationTime(info)))
       return t("Ít nhất một FITS không cung cấp MJD UTC hợp lệ.","At least one FITS file lacks a valid UTC MJD.");
-    if(timelineBandMode(indices)==="mixed")
-      return t("Chuỗi trộn FITS có và không có WCS-WAVE tại tâm; hãy chọn chuỗi khác để tránh ghép dải phổ chưa xác minh.","This sequence mixes FITS files with and without center WCS-WAVE; choose another sequence to avoid unverified spectral mixing.");
-    return t("Có khung không cùng release/detector, mask hoặc thang hiển thị.","A frame differs in release, detector, mask policy or display scale.");
+    return t("Các ảnh không cùng release, detector, lưới tọa độ, mask, thời điểm hoặc thang sáng.","The frames do not share a release, detector, sky grid, mask, observation time or display scale.");
   }
   function timelineFrames(indices=null) {
     const requested=indices||preparedSequence?.indices||null,explicit=Boolean(indices||preparedSequence?.indices);
     if(dirty||!range||maskPolicy==="undeclared"||!query)return [];
     const source=requested?requested.map(index=>[index,images.get(index)]):[...images];
-    const entries=source.map(([index,info])=>({index,info,time:observationTime(info),band:spectralSample(info)}))
-      .filter(({index,info,time})=>{
+    const entries=source.map(([index,info])=>({index,info,time:observationTime(info),band:spectralSample(info),grid:gridSignature(info)}))
+      .filter(({index,info,time,grid})=>{
         const h=info?.headers||{}, low=Number(h["x-frame-contrast-low"]), high=Number(h["x-frame-contrast-high"]);
-        return Boolean(info&&time&&h["x-frame-center-pixel-status"]==="valid"&&h["x-frame-release"]===query.release
+        return Boolean(info&&time&&grid&&Number(h["x-frame-valid-pixels"])>0
+          &&(h["x-frame-release"]||info.row.release||query.release).toLowerCase()===query.release
           &&Number(h["x-frame-detector"])===query.det&&h["x-frame-obs-id"]===info.row.obs_id
           &&info.row.detector===query.det&&info.row.obs_id&&h["x-frame-mask-policy"]===maskPolicy
           &&Number.isFinite(low)&&Number.isFinite(high)&&Math.abs(low-range[0])<1e-7&&Math.abs(high-range[1])<1e-7);
@@ -196,8 +201,10 @@
       if(seenTimes.has(timeKey)||seenIds.has(id))continue;
       seenTimes.add(timeKey);seenIds.add(id);unique.push(entry);
     }
+    const referenceGrid=unique.find(entry=>entry.index===current)?.grid||unique[0]?.grid;
+    const sameGrid=unique.filter(entry=>entry.grid===referenceGrid);
+    if(sameGrid.length!==unique.length)return sameGrid.map(entry=>entry.index);
     const mode=timelineBandMode(unique.map(entry=>entry.index));
-    if(mode==="mixed")return [];
     if(mode==="wcs"){
       if(explicit&&unique.length!==requested.length)return unique.map(entry=>entry.index);
       if(explicit){
@@ -226,7 +233,7 @@
     const requested=preparedSequence?.indices||null;
     const frames=timelineState?.generation===generation?timelineState.frames:timelineFrames(requested), playing=playback==="timeline";
     const loading=Boolean(sequenceRun);
-    const complete=requested?frames.length===requested.length:frames.length>=3;
+    const complete=requested?frames.length===requested.length:frames.length>=2;
     timeline.disabled=loading||!complete||playback==="pair";
     timeline.setAttribute("aria-busy",String(loading));
     const paused=Boolean(timelineState&&!playing&&timelineState.generation===generation);
@@ -235,14 +242,14 @@
       requested?t(`Phát chuỗi (${frames.length})`,`Play sequence (${frames.length})`):
       t(`Phát ${frames.length} ảnh đã mở`,`Play ${frames.length} loaded images`);
     timeline.title=requested?t(`Chuỗi đã chọn gồm ${requested.length} lần quan sát riêng biệt.`,`${requested.length} distinct observations are selected for this sequence.`):
-      t("Phát ảnh đã mở cùng detector, pixel tâm hợp lệ, MJD UTC và dải WCS-WAVE tương thích nếu có.","Play loaded images from the same detector with valid center pixels, UTC MJD, and compatible WCS-WAVE ranges when available.");
+      t("Phát ảnh cùng detector, lưới tọa độ, thang sáng và MJD UTC. Pixel tâm bị loại không ẩn các pixel hợp lệ xung quanh.","Play images with the same detector, sky grid, display scale and UTC MJD. An excluded center pixel does not hide usable pixels around it.");
     const hint=el("explorer-timeline-hint");
     if(hint){
       hint.textContent=loading?t(`Đang tải ảnh ${sequenceRun.position}/${sequenceRun.indices.length} lần lượt từ IRSA.`,`Loading frame ${sequenceRun.position}/${sequenceRun.indices.length} from IRSA, one at a time.`):
-        requested&&!complete?t(`${frames.length}/${requested.length} ảnh đạt điều kiện MJD UTC, pixel tâm, mask và thang hiển thị; nếu có WCS-WAVE thì phải tương thích. Không tự bỏ ảnh.`,`${frames.length}/${requested.length} frames pass UTC MJD, center-pixel, mask and display-scale checks; available WCS-WAVE must be compatible. Frames are not silently dropped.`):
-        requested&&complete?t(`Chuỗi ${frames.length} ảnh đã qua kiểm tra, phát theo thứ tự MJD trong FITS.${timelineBandCaveat(requested)}`,`The ${frames.length}-image sequence passed checks and plays in FITS MJD order.${timelineBandCaveat(requested)}`):
-        frames.length<3?t("Chọn số khung bên dưới rồi chuẩn bị chuỗi; hoặc mở thêm ảnh để phát mọi khung tương thích đã tải.","Choose a frame count below and prepare a sequence, or open more images to play all compatible frames already loaded."):"";
-      hint.hidden=!loading&&((requested&&complete)||(!requested&&frames.length>=3));
+        requested&&!complete?t(`${frames.length}/${requested.length} ảnh đủ MJD UTC, pixel dữ liệu, mask và thang sáng; không tự bỏ khung.`,`${frames.length}/${requested.length} frames have UTC MJD, usable pixels, the same mask and display scale. Frames are not silently dropped.`):
+        requested&&complete?t(`Chuỗi ${frames.length} ảnh phát theo thứ tự MJD trong FITS.${timelineBandCaveat(requested)}`,`The ${frames.length}-image sequence plays in FITS MJD order.${timelineBandCaveat(requested)}`):
+        frames.length<2?t("Đang tìm thêm một ảnh ở thời điểm khác để tạo chuỗi.","Looking for another observation at a different time."):"";
+      hint.hidden=!loading&&((requested&&complete)||(!requested&&frames.length>=2));
     }
     sequenceControls();
   }
@@ -289,11 +296,11 @@
   }
   function resetDisplay() {
     el("explorer-image").hidden=true;el("explorer-image").removeAttribute("src");
-    for(const id of ["explorer-frame-label","explorer-frame-meta","explorer-frame-hash"])el(id).textContent="";
+    for(const id of ["explorer-frame-label","explorer-center-status","explorer-frame-meta","explorer-frame-hash"])el(id).textContent="";
     for(const id of ["explorer-pin","explorer-play","explorer-export","explorer-previous","explorer-next","explorer-current"])el(id).disabled=true;
     el("explorer-current").value="0";el("explorer-current").max="0";
-    el("explorer-reference").textContent=t("Giữ một ảnh đối chiếu rồi chọn ảnh ở thời điểm khác.","Pin a reference image and select another observation.");
-    el("explorer-download-fits").removeAttribute("href");el("explorer-download-fits").hidden=true;
+    el("explorer-reference").textContent=t("Chọn một lần quan sát hoặc phát chuỗi theo thời gian.","Choose an observation or play the timeline.");
+    for(const id of ["explorer-download-fits","explorer-source-fits"]){el(id).removeAttribute("href");el(id).hidden=true;}
     el("explorer-display").hidden=true;
     toggleFallback(false);
     timelineControls();
@@ -362,7 +369,7 @@
     return new Promise((resolve,reject)=>{
       let id,done=false;
       const abort=()=>{if(done)return;done=true;clearTimeout(id);reject(new DOMException(t("Đã đổi vùng trời","Sky region changed"),"AbortError"));};
-      id=setTimeout(()=>{if(done)return;done=true;signal?.removeEventListener?.("abort",abort);resolve();},Math.min(300,Math.max(1,seconds))*1000);
+      id=setTimeout(()=>{if(done)return;done=true;signal?.removeEventListener?.("abort",abort);resolve();},Math.min(300,Math.max(.9,seconds))*1000);
       if(done)return;
       if(signal?.aborted){abort();return;}
       signal?.addEventListener?.("abort",abort,{once:true});
@@ -384,7 +391,10 @@
       if([502,504].includes(response.status)){
         const failure=await response.json().catch(()=>null);
         if(["upstream_http_error","upstream_timeout","upstream_unavailable","upstream_incomplete"].includes(failure?.error)){
-          await new Promise(resolve=>setTimeout(resolve,900));
+          const retryAfterHeader=response.headers?.get?.("Retry-After");
+          const retryAfter=retryAfterHeader&&/^\d{1,3}$/.test(retryAfterHeader)?Number(retryAfterHeader):NaN;
+          const delay=Number.isInteger(retryAfter)&&retryAfter>0&&retryAfter<=120?retryAfter:.9;
+          await waitForRetry(delay,signal);
           assertActive();
           retry();
           response=await fetch(endpoint,{signal});
@@ -447,13 +457,19 @@
   }
   function draw(info,index,sequencePosition="") {
     const img=el("explorer-image");img.src=info.src;img.hidden=false;
+    const gridSize=Number(info.headers["x-frame-grid-size-px"]);
+    if(Number.isInteger(gridSize)&&gridSize>0)el("explorer-image-wrap").style.setProperty("--linked-grid-width",Math.min(560,gridSize*8)+"px");
+    const centerStatus=info.headers["x-frame-center-pixel-status"];
+    el("explorer-center-status").textContent=centerStatus==="valid"?t("Pixel ở tâm tọa độ tìm kiếm có dữ liệu.","The pixel at the searched coordinate has data."):
+      centerStatus==="masked"?t("Pixel ở tâm tọa độ bị loại; các pixel có dữ liệu xung quanh vẫn hiển thị.","The center pixel was excluded; surrounding pixels with data are still shown."):
+      centerStatus==="missing"?t("Pixel ở tâm tọa độ không có dữ liệu; cutout vẫn có thể có pixel hợp lệ xung quanh.","The center pixel has no data; the cutout may still contain usable surrounding pixels."):"";
     const list=el("explorer-frames");
     list.children[displayed]?.removeAttribute("aria-current");
     displayed=index;
     list.children[index]?.setAttribute("aria-current","true");
     const time=info.headers["x-frame-time-system"]==="UTC"&&info.headers["x-frame-mjd-obs"]?displayMjd(Number(info.headers["x-frame-mjd-obs"]),"UTC"):displayMjd(info.row.t_min_mjd);
     const release=(info.row.release||query.release).toUpperCase();
-    img.alt=t(`Ảnh SPHEREx ${release}, detector ${info.row.detector}, ${time}, ${info.row.obs_id}. Bắc ở trên, Đông bên trái. Cam là pixel bị mask, tím là thiếu dữ liệu.`,`SPHEREx ${release} image, detector ${info.row.detector}, ${time}, ${info.row.obs_id}. North is up and east is left. Orange pixels are masked and purple pixels are missing.`);
+    img.alt=t(`Ảnh SPHEREx ${release}, detector ${info.row.detector}, ${time}, ${info.row.obs_id}. Bắc ở trên, Đông bên trái. Cam là pixel bị loại, tím là thiếu dữ liệu.`,`SPHEREx ${release} image, detector ${info.row.detector}, ${time}, ${info.row.obs_id}. North is up and east is left. Orange pixels were excluded and purple pixels are missing.`);
     const band=spectralSample(info);
     const wavelength=band?` · λ ${((band.low+band.high)/2).toFixed(3)} µm`:"";
     el("explorer-frame-label").textContent=`${sequencePosition || `${index+1}/${rows.length}`} · ${time}${wavelength} · ${info.row.obs_id}`;
@@ -463,23 +479,26 @@
   function fillFrameMetadata(info) {
     const release=(info.row.release||query.release).toUpperCase();
     const counts=["x-frame-valid-pixels","x-frame-masked-pixels","x-frame-missing-pixels"].map(key=>info.headers[key]===undefined?null:Number(info.headers[key]));
-    const quality=counts.every(v=>Number.isInteger(v)&&v>=0)?t(` ${counts[0]} pixel khả dụng; ${counts[1]} bị loại; ${counts[2]} thiếu.`,` ${counts[0]} valid pixels, ${counts[1]} masked, ${counts[2]} missing.`):"";
+    const quality=counts.every(v=>Number.isInteger(v)&&v>=0)?t(` ${counts[0]} pixel có dữ liệu; ${counts[1]} pixel bị loại; ${counts[2]} pixel thiếu dữ liệu.`,` ${counts[0]} pixels with data, ${counts[1]} excluded, ${counts[2]} missing.`):"";
     const contrast=range?range.map(x=>x.toFixed(4)).join("–"):t("theo ảnh","per frame");
     const band=spectralSample(info), spectrum=band?` · WCS-WAVE ${((band.low+band.high)/2).toFixed(3)} µm, Δ${band.width.toFixed(3)} µm`:"";
-    const center=info.headers["x-frame-center-pixel-status"]||t("chưa rõ pixel tâm","center pixel unknown");
-    el("explorer-frame-meta").textContent=t(`${release} · D${info.row.detector} · 6,15″/pixel · ZODI đã trừ · mức xám ${contrast} MJy/sr. Pixel tâm: ${center}. Cam là mask, tím là thiếu dữ liệu.`,`${release} · D${info.row.detector} · 6.15″/pixel · ZODI subtracted · grayscale ${contrast} MJy/sr. Query-center pixel: ${center}. Orange marks masked pixels and purple marks missing data.`)+quality+spectrum;
+    const size=Number(info.headers["x-frame-grid-size-px"]),scale=Number(info.headers["x-frame-grid-scale-arcsec"]),fov=Number(info.headers["x-frame-grid-fov-deg"]);
+    const grid=Number.isInteger(size)&&size>0?`${size} × ${size} ${t("pixel","pixels")}${Number.isFinite(scale)?` · ${scale.toFixed(2)}″/${t("pixel","pixel")}`:""}${Number.isFinite(fov)?` · ${t("trường nhìn","field of view")} ${(fov*60).toFixed(2)}′`:""}`:"";
+    el("explorer-frame-meta").textContent=t(`${release} · D${info.row.detector} · ${grid} · đã trừ ánh sáng hoàng đạo (ZODI) · thang xám ${contrast} MJy/sr. Cam là pixel bị loại, tím là pixel thiếu dữ liệu.`,`${release} · D${info.row.detector} · ${grid} · zodiacal light subtracted (ZODI) · grayscale ${contrast} MJy/sr. Orange marks excluded pixels; purple marks missing data.`)+quality+spectrum;
     const sha=info.headers["x-frame-cutout-sha256"]||"";
     el("explorer-frame-hash").textContent=sha?`SHA-256 cutout: ${sha}`:t("Hash cutout xem trong gói bằng chứng.","See the cutout hash in the evidence bundle.");
     el("explorer-download-fits").href=info.headers["x-frame-cutout-url"];
     el("explorer-download-fits").hidden=false;
+    el("explorer-source-fits").href=info.headers["x-frame-source-url"]||"";
+    el("explorer-source-fits").hidden=!info.headers["x-frame-source-url"];
   }
   function referenceText() {
-    if(context().paired)return t(`Đã chọn ảnh A: ${reference+1} · ảnh B: ${current+1}. Có thể nhấp nháy hoặc sang Kiểm tra.`,`Image A: ${reference+1} · image B: ${current+1}. Blink the pair or inspect it.`);
+    if(context().paired)return t(`Đã chọn ảnh A: ${reference+1} · ảnh B: ${current+1}.`,`Image A: ${reference+1} · image B: ${current+1}.`);
     if(reference>=0)return t(`Ảnh A: ${reference+1}. Chọn một ảnh khác làm B.`,`Image A: ${reference+1}. Select another frame as B.`);
-    return t("Bước 1: Giữ ảnh hiện tại làm A. Bước 2: Chọn ảnh khác làm B.","Pin this frame as A, then select another frame as B.");
+    return t("Chọn một lần quan sát hoặc phát chuỗi để xem ảnh theo thời gian.","Choose an observation or play the timeline to view images over time.");
   }
   function frameStatus() {
-    return context().paired?t("Cặp A/B đã sẵn sàng. Bước sóng tại từng pixel có thể khác nhau.","A/B pair ready. The wavelength sampled at each pixel can differ."):t("Đã tải ảnh. Chọn cặp A/B để so sánh.","Image loaded. Select an A/B pair to compare.");
+    return context().paired?t("Cặp A/B đã sẵn sàng. Bước sóng tại từng pixel có thể khác nhau.","A/B pair ready. The wavelength sampled at each pixel can differ."):query?.view==="timeline"?t("Ảnh đã tải. Phát chuỗi để xem các lần quan sát theo thời gian.","Image loaded. Play the timeline to view observations over time."):t("Ảnh đã tải. Chọn ảnh khác nếu muốn so sánh A/B.","Image loaded. Select another observation for A/B comparison.");
   }
   function renderResults() {
     el("explorer-count").textContent=t(`${rows.length} quan sát D${query.det} · ${query.release.toUpperCase()}`,`${rows.length} D${query.det} observations · ${query.release.toUpperCase()}`);
@@ -540,7 +559,7 @@
         el("explorer-retry").hidden=false;
         setStatus(t("Chưa tải đủ ba ảnh. Bấm Tải lại ảnh để thử các khung còn thiếu hoặc chọn ảnh khác trong danh sách.","The sequence is incomplete. Choose Retry image to load the remaining frames or select another frame from the list."),true);
       } else {
-        setStatus(t("Ba ảnh đã tải nhưng chưa đủ điều kiện phổ và pixel tâm để phát chuỗi. Hãy chọn ảnh khác trong danh sách.","All three images loaded, but their spectral bands or center pixels do not meet the timeline criteria. Select another image from the list."),true);
+        setStatus(t("Ba ảnh đã tải nhưng không đủ điều kiện cùng lưới, mask, thang sáng và thời gian để phát chuỗi. Hãy chọn ảnh khác.","The three images do not share a grid, mask, display scale and valid time for playback. Choose different observations."),true);
       }
     }
   }
@@ -560,7 +579,7 @@
   }
 
   async function prepareTimeline() {
-    if(automaticTimelineAttempted||sequenceRun||preparedSequence||query?.sequence||query?.view!=="timeline"||!images.has(current)||timelineFrames().length>=3)return;
+    if(automaticTimelineAttempted||sequenceRun||preparedSequence||query?.sequence||query?.view!=="timeline"||!images.has(current)||timelineFrames().length>=2)return;
     automaticTimelineAttempted=true;
     const candidates=spacedCandidates();
     const pending=candidates.filter(index=>!images.has(index)).slice(0,maxTimelineCandidates-1);
@@ -571,7 +590,7 @@
     sequenceRun=run;
     timelineControls();
     for(const index of pending){
-      if(!active()||timelineFrames().length>=3)break;
+      if(!active()||timelineFrames().length>=2)break;
       const stillNeeded=()=>active()||seq===generation&&current===index;
       try{await load(index,seq,stillNeeded,true);}catch(error){if(error.name==="AbortError")break;}
       if(!active())break;
@@ -582,15 +601,15 @@
     if(sequenceRun!==run)return;
     sequenceRun=null;
     if(!workspaceActive()||dirty||query?.view!=="timeline")return;
-    if(timelineFrames().length<3){
+    if(timelineFrames().length<2){
       const compatible=[...images.keys()].find(index=>images.has(index));
       if(compatible!==undefined&&current!==compatible)await show(compatible);
     }
     timelineControls();
-    if(timelineFrames().length>=3){
+    if(timelineFrames().length>=2){
       setStatus(t("Chuỗi đã sẵn sàng. Nhấn Phát để xem các lần quan sát theo thời gian.","Timeline is ready. Select Play to view the observations in chronological order."));
     } else {
-      setStatus(t("Chưa đủ ba ảnh tương thích. Chọn thêm lần quan sát trong danh sách để thử.","Fewer than three compatible images are open. Select more observations from the list to try again."));
+      setStatus(t("Chưa tìm được ảnh thứ hai tương thích ở thời điểm khác. Chọn thêm lần quan sát trong danh sách để thử.","No second compatible observation at a different time was found. Select another observation and try again."));
     }
   }
   async function loadUserSequence(retry=null) {
@@ -690,12 +709,12 @@
       return;
     }
     const requested=preparedSequence?.indices||null;
-    const frames=timelineFrames(requested), complete=requested?frames.length===requested.length:frames.length>=3;
+    const frames=timelineFrames(requested), complete=requested?frames.length===requested.length:frames.length>=2;
     if(!complete)return;
     const resume=timelineState?.generation===generation&&timelineState.frames.length===frames.length;
     const state=resume?timelineState:{generation,frames,index:0};
     timelineState=state;playback="timeline";let index=state.index;
-    const showPlayingFrame=()=>draw(images.get(frames[index]),frames[index],`${index+1}/${frames.length}`);
+    const showPlayingFrame=()=>{current=frames[index];renderList();draw(images.get(frames[index]),frames[index],`${index+1}/${frames.length}`);};
     showPlayingFrame();
     timer=setInterval(()=>{
       index=(index+1)%frames.length;

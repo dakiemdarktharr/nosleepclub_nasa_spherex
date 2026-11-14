@@ -48,10 +48,11 @@ response_cache = ResponseCache(ttl=300)
 
 
 class FrameError(Exception):
-    def __init__(self, code, status=502, upstream_http_status=None, diagnostic=None):
+    def __init__(self, code, status=502, upstream_http_status=None, diagnostic=None, retry_after=None):
         self.code, self.status = code, status
         self.upstream_http_status = upstream_http_status
         self.diagnostic = diagnostic
+        self.retry_after = retry_after
         super().__init__(code)
 
 
@@ -153,9 +154,14 @@ def fetch(url):
         raise FrameError('upstream_timeout', 504, diagnostic=describe_upstream(exc, stage))
     except HTTPError as exc:
         upstream_status = exc.code
+        raw_retry_after = exc.headers.get('Retry-After') if exc.headers else None
+        retry_after = (raw_retry_after.strip() if isinstance(raw_retry_after, str)
+                       and re.fullmatch(r'[0-9]{1,3}', raw_retry_after.strip())
+                       and 0 < int(raw_retry_after.strip()) <= 120 else None)
         diagnostic = describe_upstream(exc, stage)
         exc.close()
-        raise FrameError('upstream_http_error', upstream_http_status=upstream_status, diagnostic=diagnostic) from None
+        raise FrameError('upstream_http_error', upstream_http_status=upstream_status,
+                         diagnostic=diagnostic, retry_after=retry_after) from None
     except URLError as exc:
         raise FrameError('upstream_timeout', 504, diagnostic=describe_upstream(exc, stage)) if isinstance(exc.reason, (TimeoutError, socket.timeout)) else FrameError('upstream_unavailable', diagnostic=describe_upstream(exc, stage))
     except (OSError, HTTPException) as exc:
@@ -284,7 +290,8 @@ class handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def respond(self, status, content, content_type, category, headers=None, error_code=None, upstream_http_status=None):
+    def respond(self, status, content, content_type, category, headers=None, error_code=None,
+                upstream_http_status=None, retry_after=None):
         self.send_response(status)
         self.send_header('Content-Type', content_type)
         self.send_header('Content-Length', str(len(content)))
@@ -297,6 +304,8 @@ class handler(BaseHTTPRequestHandler):
             self.send_header('Allow', 'GET')
         if status in (429, 503) and getattr(self, 'retry_after', None):
             self.send_header('Retry-After', str(self.retry_after))
+        elif retry_after is not None:
+            self.send_header('Retry-After', str(retry_after))
         for k, v in (headers or {}).items():
             self.send_header(k, str(v))
         self.end_headers()
@@ -354,7 +363,8 @@ class handler(BaseHTTPRequestHandler):
         except FrameError as exc:
             emit_upstream(logger, 'frame', self.request_id, exc.diagnostic or describe_upstream(None, stage))
             return self.respond(exc.status, json.dumps({'error': exc.code}).encode(), 'application/json', 'upstream_or_fits',
-                                error_code=exc.code, upstream_http_status=exc.upstream_http_status)
+                                error_code=exc.code, upstream_http_status=exc.upstream_http_status,
+                                retry_after=exc.retry_after)
         except Exception:
             return self.respond(500, b'{"error":"internal_error"}', 'application/json', 'internal')
 

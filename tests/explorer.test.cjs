@@ -46,7 +46,7 @@ function harness(options={}) {
   const elements=new Map(),calls=[],timers=new Map(),timeouts=new Map(),blobs=[],events=[]; let nextTimer=0;
   const element=id=>{
     if(!elements.has(id))elements.set(id,{
-      id,value:"",textContent:"",hidden:false,disabled:false,href:"",src:"",children:[],handlers:{},
+      id,value:"",textContent:"",hidden:false,disabled:false,href:"",src:"",children:[],handlers:{},style:{values:{},setProperty(key,value){this.values[key]=value;}},
       classList:{toggle(){}}, setAttribute(){}, removeAttribute(name){if(name==="href")this.href="";}, replaceChildren(){this.children=[];},
       append(...nodes){this.children.push(...nodes);},
       after(...nodes){this.siblings=nodes;},
@@ -62,7 +62,7 @@ function harness(options={}) {
     calls.push({url,options,params:new Params(url.split("?")[1]||""),resolve,reject});
   });
   const context={window:{SkyDrafts:options.drafts,SkyWorkflow:{}},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
-    location:{href:"https://demo.example/"+(options.search||"")+"#explore",search:options.search||"", hash:"#explore"},history:{replaceState(a,b,url){context.shared=String(url.href||url);}},
+    location:{href:"https://demo.example/"+(options.search===undefined?"?sky_view=compare":options.search)+"#explore",search:options.search===undefined?"?sky_view=compare":options.search, hash:"#explore"},history:{replaceState(a,b,url){context.shared=String(url.href||url);}},
     requestAnimationFrame(fn){fn();},
     setInterval:fn=>{const id=++nextTimer;timers.set(id,fn);return id;},clearInterval:id=>timers.delete(id),
     setTimeout:(fn,delay)=>{const id=++nextTimer;if(options.deferTimeouts)timeouts.set(id,{fn,delay});else fn();return id;},clearTimeout:id=>timeouts.delete(id),Blob:class {constructor(parts){this.id="export";blobs.push(parts);}},
@@ -83,8 +83,11 @@ function observations(call, ids) {
   call.resolve({ok:true,json:async()=>({observations:rows,provenance:{query_url:"https://irsa.ipac.caltech.edu/SIA"},truncated:false})});
 }
 function frame(call, id, options={}) {
-  const values={"content-type":"image/png","x-frame-contrast-low":String(options.low??0.5),
-    "x-frame-contrast-high":String(options.high??2.5),"x-frame-valid-pixels":"20",
+  const values={"content-type":"image/png","x-frame-grid-ra-deg":String(options.grid?.ra??350),
+    "x-frame-grid-dec-deg":String(options.grid?.dec??35),"x-frame-grid-scale-arcsec":String(options.grid?.scale??6.15),
+    "x-frame-grid-size-px":String(options.grid?.size??37),"x-frame-grid-fov-deg":String(options.grid?.fov??37*6.15/3600),
+    "x-frame-source-url":options.source??`https://irsa.ipac.caltech.edu/${id}.fits`,
+    "x-frame-contrast-low":String(options.low??0.5),"x-frame-contrast-high":String(options.high??2.5),"x-frame-valid-pixels":"20",
     "x-frame-masked-pixels":"3","x-frame-missing-pixels":"2",
     "x-frame-mask-policy":options.policy??"source-only-allowlist-v2",
     "x-frame-center-pixel-status":options.centerStatus??options.centerPixel??"valid","x-frame-release":options.release??"dr1",
@@ -238,7 +241,9 @@ async function changedSearchRejectsOldResult() {
 async function incompatibleMaskPoliciesCannotBeCompared() {
   const h=harness();const {submit}=await begin(h,["A","B"]);
   frame(find(h,"frame")[0],"A",{policy:"legacy-mask"});await submit;
-  assert.equal(h.element("explorer-frame-meta").textContent.includes("20 pixel khả dụng; 3 bị loại; 2 thiếu"),true);
+  assert.equal(h.element("explorer-frame-meta").textContent.includes("37 × 37 pixel"),true,h.element("explorer-frame-meta").textContent);
+  assert.equal(h.element("explorer-source-fits").href,"https://irsa.ipac.caltech.edu/A.fits");
+  assert.equal(h.element("explorer-image-wrap").style.values["--linked-grid-width"],"296px");
   h.element("explorer-pin").fire("click");h.element("explorer-current").value="1";
   const b=h.element("explorer-current").fire("change");await flush();
   frame(find(h,"frame")[1],"B");await b;
@@ -298,7 +303,7 @@ async function main() {
   await userSequencesPlayExactlyTwoAndTenFrames();
   await userSequenceDeduplicatesAndReportsTruncation();
   await userSequenceRetriesPartialFrames();
-  await detectorOnlySequenceRequiresValidCentersAndWarnsAboutWavelengths();
+  await detectorOnlySequenceAllowsMaskedCenterAndWarnsAboutWavelengths();
   await userSequenceWaitsForRateLimitAndRetriesOnce();
   await changingQueryCancelsRateLimitWait();
   await changingQueryCancelsUserSequenceLoad();
@@ -412,17 +417,17 @@ async function userSequenceRetriesPartialFrames(){
   assert.equal(h.element("explorer-timeline").disabled,false);
   assert.equal(h.element("explorer-timeline").textContent,"Play sequence (2)");
 }
-async function detectorOnlySequenceRequiresValidCentersAndWarnsAboutWavelengths(){
+async function detectorOnlySequenceAllowsMaskedCenterAndWarnsAboutWavelengths(){
   const h=harness({lang:"en"}),{submit}=await begin(h,["A","B"]);
   frame(find(h,"frame")[0],"A",{mjd:61000});await submit;
   h.element("explorer-sequence-count").value="2";h.element("explorer-sequence-count").fire("change");
   const prepare=h.element("explorer-sequence-load").fire("click");await flush();
   frame(find(h,"frame")[1],"B",{mjd:61005});await prepare;
   assert.equal(h.element("explorer-timeline").disabled,false);
-  assert.match(h.element("explorer-sequence-summary").textContent,/WCS-WAVE is unavailable/);
+  assert.match(h.element("explorer-sequence-summary").textContent,/WCS-WAVE is missing from some frames/);
   h.element("explorer-timeline").fire("click");
   assert.equal(h.element("explorer-image").src,"blob:A");
-  assert.match(h.element("explorer-status").textContent,/nominal detector only/);
+  assert.match(h.element("explorer-status").textContent,/nominal detector/);
   h.api.pause();
 
   const mixed=harness({lang:"en"}),mixedQuery=await begin(mixed,["WCS","NO_WCS"]);
@@ -430,15 +435,16 @@ async function detectorOnlySequenceRequiresValidCentersAndWarnsAboutWavelengths(
   mixed.element("explorer-sequence-count").value="2";mixed.element("explorer-sequence-count").fire("change");
   const mixedPrepare=mixed.element("explorer-sequence-load").fire("click");await flush();
   frame(find(mixed,"frame")[1],"NO_WCS",{mjd:62001});await mixedPrepare;
-  assert.equal(mixed.element("explorer-timeline").disabled,true,"mixed known and unknown spectral metadata is not combined");
+  assert.equal(mixed.element("explorer-timeline").disabled,false,"missing WCS-WAVE metadata is disclosed and does not block visual playback");
+  assert.match(mixed.element("explorer-sequence-summary").textContent,/missing from some frames/);
 
   const masked=harness({lang:"en"}),maskedQuery=await begin(masked,["VALID","MASKED"]);
   frame(find(masked,"frame")[0],"VALID",{mjd:63000});await maskedQuery.submit;
   masked.element("explorer-sequence-count").value="2";masked.element("explorer-sequence-count").fire("change");
   const maskedPrepare=masked.element("explorer-sequence-load").fire("click");await flush();
   frame(find(masked,"frame")[1],"MASKED",{mjd:63001,centerStatus:"masked"});await maskedPrepare;
-  assert.equal(masked.element("explorer-timeline").disabled,true,"a frame with a masked query-center pixel is not playable");
-  assert.match(masked.element("explorer-status").textContent,/no valid pixel at the query center/);
+  assert.equal(masked.element("explorer-timeline").disabled,false,"a masked query-center pixel does not hide valid pixels elsewhere in the cutout");
+  assert.match(masked.element("explorer-center-status").textContent,/center pixel was excluded/);
 }
 async function userSequenceWaitsForRateLimitAndRetriesOnce(){
   const h=harness({deferTimeouts:true,lang:"en"}),{submit}=await begin(h,["A","B"]);
@@ -494,14 +500,11 @@ async function timelineEntryChecksSpacedCompatibleFrames(){
   assert.match(h.element("explorer-timeline-hint").textContent,/2\/6|1\/6/);
   nextIs(1,"VIS9");frame(at(1),"VIS9",spectral(60009,4.95));await flush();
   nextIs(2,"VIS2");frame(at(2),"VIS2",spectral(60002,4.731));await flush();
-  assert.equal(h.element("explorer-timeline").disabled,true,"the structurally valid out-of-band image cannot be played");
-  nextIs(3,"VIS4");frame(at(3),"VIS4",spectral(60004,4.734));await flush();
-  assert.equal(find(h,"frame").length,4,"prefetch stops at three compatible observations");
-  assert.equal(h.element("explorer-timeline").disabled,false);
+  assert.equal(h.element("explorer-timeline").disabled,false,"two images with overlapping WCS-WAVE are enough to play");
+  assert.equal(find(h,"frame").length,3,"prefetch stops after two compatible observations");
   h.element("explorer-timeline").fire("click");
   assert.equal(h.element("explorer-image").src,"blob:VIS0");
   const tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,"blob:VIS2");
-  tick();assert.equal(h.element("explorer-image").src,"blob:VIS4");
   const limited=harness({search,lang:"en"});
   const pending=await begin(limited,ids);
   const fetched=()=>find(limited,"frame");
@@ -511,7 +514,7 @@ async function timelineEntryChecksSpacedCompatibleFrames(){
   }
   assert.equal(fetched().length,6,"the number of candidate cutouts is bounded");
   assert.equal(limited.element("explorer-timeline").disabled,true);
-  assert.match(limited.element("explorer-status").textContent,/Fewer than three compatible images/);
+  assert.match(limited.element("explorer-status").textContent,/No second compatible observation/);
 }
 async function noviceFailureRecoveryAndReload(){
   const memory=new Map(),drafts=require("../web/draft-store.js")(()=>({getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)}));
@@ -552,7 +555,7 @@ async function autoplayUsesDistinctCompatibleLoadedFrames() {
     frame(find(h,"frame").at(-1),id,meta);await task;
   }
   await open(1,"B",spectral(60101,4.731));
-  assert.equal(h.element("explorer-timeline").disabled,true);
+  assert.equal(h.element("explorer-timeline").disabled,false,"two observations can form a time sequence");
   await open(2,"C",spectral(60102,4.734));
   assert.equal(h.element("explorer-timeline").disabled,false);
   await open(3,"different",spectral(60103,4.95));
@@ -585,7 +588,7 @@ async function explicitAutoloadIsValidatedAndPreservesLanguage(){
   const unknownView=harness({search:search.replace("timeline","unknown"),lang:"en"});
   observations(find(unknownView,"observations")[0],["A"]);await flush();
   frame(find(unknownView,"frame")[0],"A");await flush();
-  assert.match(unknownView.context.shared,/sky_view=compare/);
+  assert.match(unknownView.context.shared,/sky_view=timeline/);
 }
 async function curatedSequenceLoadsExactFramesOnly(){
   const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";

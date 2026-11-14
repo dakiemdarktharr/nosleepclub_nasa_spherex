@@ -67,12 +67,22 @@ class FrontendContract(unittest.TestCase):
     def test_workflow_controls_belong_to_their_processing_step(self):
         doc=WorkflowNodes();doc.feed((ROOT/'web/index.html').read_text(encoding='utf-8'))
         expected={'scene-select':'data','explorer-form':'data','sky':'compare','explorer-image':'compare',
+                  'explorer-image-wrap':'compare','explorer-center-status':'compare','explorer-frame-meta':'compare',
+                  'explorer-frame-hash':'compare','explorer-source-fits':'compare','explorer-download-fits':'compare',
                   'motion-panel':'check','selection-detail':'check','review-note':'review',
                   'save-review':'review','explorer-note':'review','explorer-export':'review',
                   'signal-controls':'research','profile-landscape':'research','model-selection':'research'}
         for control,owner in expected.items():self.assertEqual(doc.owner[control],owner,control)
         self.assertEqual(set(doc.views),{'data','compare','check','review','research'})
         self.assertEqual([k for k,v in doc.views.items() if 'hidden' not in v],['data'])
+        html=(ROOT/'web/index.html').read_text(encoding='utf-8')
+        primary=html.split('<nav id="main-nav"',1)[1].split('</nav>',1)[0]
+        sidebar=html.split('<nav aria-label="Quy trình xử lý"',1)[1].split('</nav>',1)[0]
+        for removed in ('#check-step','#review-step','data-step-link="check"','data-step-link="review"'):
+            self.assertNotIn(removed,primary+sidebar)
+        self.assertNotIn('id="workflow-compare-next"',html)
+        self.assertNotIn('id="privacy-open"',html)
+        self.assertIn('<option value="0.06" selected>',html)
 
     def test_workflow_has_visible_labels_focus_targets_and_no_inline_execution(self):
         html=(ROOT/'web/index.html').read_text(encoding='utf-8');doc=WorkflowNodes();doc.feed(html)
