@@ -8,6 +8,7 @@ from contextlib import contextmanager
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
+import mimetypes
 from pathlib import Path
 import re
 import threading
@@ -15,6 +16,7 @@ import threading
 from playwright.sync_api import sync_playwright, expect
 
 ROOT = Path(__file__).resolve().parents[1]
+mimetypes.add_type('image/webp', '.webp')
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -137,8 +139,9 @@ def timeline_case(browser, base, output):
     context = browser.new_context(viewport={'width': 1366, 'height': 920}, reduced_motion='reduce')
     page = context.new_page()
     page.set_default_timeout(15000)
-    errors, live_calls, full_frames = [], [], {}
+    errors, live_calls, full_frames, failed_requests = [], [], {}, []
     page.on('pageerror', lambda error: errors.append(str(error)))
+    page.on('requestfailed', lambda request: failed_requests.append(request.url))
 
     def refuse_live(route):
         live_calls.append(route.request.url.split('?')[0])
@@ -150,7 +153,10 @@ def timeline_case(browser, base, output):
     def record_full_frame(response):
         marker = '/assets/mission/full-sequence/wise0855/'
         if marker in response.url:
-            full_frames[response.url.split(marker, 1)[1]] = response.status
+            full_frames[response.url.split(marker, 1)[1]] = {
+                'status': response.status,
+                'content_type': response.headers.get('content-type', ''),
+            }
 
     page.on('response', record_full_frame)
     try:
@@ -170,7 +176,8 @@ def timeline_case(browser, base, output):
         expect(page.locator('#explorer-sequence-summary')).to_contain_text('All 5 frames are loaded', timeout=30000)
         expect(page.locator('#explorer-timeline')).to_have_text('Pause sequence')
         assert len(full_frames) == 5, f'Expected five full-resolution local images, got {len(full_frames)}'
-        assert set(full_frames.values()) == {200}, f'Full-resolution image requests failed: {full_frames}'
+        assert all(frame['status'] == 200 and frame['content_type'].startswith('image/webp')
+                   for frame in full_frames.values()), f'Full-resolution image requests failed: {full_frames}'
         first_src = page.locator('#explorer-image').get_attribute('src')
         page.wait_for_function("first => document.querySelector('#explorer-image').src !== first", arg=first_src, timeout=5000)
         page.locator('#explorer-timeline').click()
@@ -179,7 +186,14 @@ def timeline_case(browser, base, output):
         assert not live_calls, f'Unexpected live API requests: {live_calls}'
         page.screenshot(path=str(output / 'desktop-en-timeline.png'))
         return {'case': 'desktop-en-timeline', 'passed': True, 'full_resolution_frames': len(full_frames), 'page_errors': 0}
-    except Exception:
+    except Exception as error:
+        print(json.dumps({
+            'case': 'desktop-en-timeline',
+            'error': str(error),
+            'full_frame_responses': full_frames,
+            'status': page.locator('#explorer-status').inner_text(),
+            'failed_requests': failed_requests,
+        }), flush=True)
         page.screenshot(path=str(output / 'desktop-en-timeline-failure.png'), full_page=True)
         raise
     finally:
