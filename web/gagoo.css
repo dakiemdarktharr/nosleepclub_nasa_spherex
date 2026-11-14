@@ -1,0 +1,46 @@
+/* The mascot is a separate hit target; empty canvas never blocks Earth. */
+.gagoo-target {
+  position: absolute; left: 0; top: 0; z-index: 4;
+  width: clamp(175px,19vw,270px); aspect-ratio: .76;
+  transform: translate(15vw,36vh); border: 0; padding: 0;
+  background: transparent; border-radius: 43%; cursor: grab;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.gagoo-target:active { cursor: grabbing; }
+.gagoo-target :is(canvas,img) {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%;
+  object-fit: contain; pointer-events: none;
+  filter: drop-shadow(0 8px 15px #02081770);
+}
+.gagoo-target canvas[hidden] { display: none; }
+.gagoo-target[data-model="3d"] #gagoo-fallback { visibility: hidden; }
+.gagoo-target:is(:hover,:focus-visible,[data-tap-preview]) :is(canvas,img) {
+  filter: drop-shadow(3px 0 0 #36efff) drop-shadow(-3px 0 0 #36efff) drop-shadow(0 3px 0 #36efff) drop-shadow(0 -3px 0 #36efff);
+}
+.gagoo-target .gagoo-label {
+  bottom: -3px; left: 50%; transform: translateX(-50%);
+  display: grid; gap: .1rem; text-align: left; font-size: .78rem;
+  padding: .5rem .75rem; white-space: nowrap;
+}
+.gagoo-label strong { color: #fff; font-size: 1rem; }
+.gagoo-target .gagoo-label > span { width: auto; height: auto; border-radius: 0; background: none; box-shadow: none; color: #8feeff; }
+.gagoo-label small { color: #cfdaef; font-size: .64rem; font-weight: 400; }
+.gagoo-target:is(:focus-visible,[data-tap-preview]) .gagoo-label { opacity: 1; }
+@media (hover: hover) { .gagoo-target:hover .gagoo-label { opacity: 1; } }
+#orbit .orbit-copy { align-self: start; margin-top: clamp(2rem,8vh,6rem); }
+#orbit .orbit-copy h1 { font-size: clamp(42px,5.5vw,89px); }
+#orbit .orbit-copy .public-action { display: none; }
+#learn { min-height: calc(100svh - 70px); background: var(--public-sky); }
+body[data-public-page="learn"] .public-footer { display: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (max-width: 620px) {
+  .gagoo-target { width: 155px; height: 210px; transform: translate(0,260px); }
+  #orbit .orbit-copy { margin-top: 1.4rem; }
+  #orbit .orbit-copy h1 { font-size: clamp(34px,9vw,50px); max-width: 13ch; }
+  #orbit .orbit-spacecraft { position: absolute; width: 70%; top: 26%; right: -3%; }
+  #orbit .spacecraft-target { width: 100%; margin: 0; }
+  .gagoo-target .gagoo-label { left: 42%; font-size: .69rem; }
+  .gagoo-label small { font-size: .6rem; }
+  #learn { min-height: calc(100svh - 58px); }
+}

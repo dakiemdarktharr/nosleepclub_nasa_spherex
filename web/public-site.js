@@ -2,7 +2,7 @@
   "use strict";
   const el = (id) => document.getElementById(id);
   const t = (key) => window.SpherexSite.text(key);
-  const pageSet = new Set(["orbit", "about", "night-sky"]);
+  const pageSet = new Set(["orbit", "about", "night-sky", "learn"]);
   const workbenchPages = new Set(["home", "explore", "compare-step", "check-step", "review-step", "research"]);
   const pages = [...document.querySelectorAll("[data-public-page]")];
   const site = el("public-site");
@@ -21,11 +21,15 @@
     "goal-dashboard.js?v=0.10.0-r11", "linked-evidence.js?v=0.10.0-r11",
     "neighbor-evidence.js?v=0.10.0-r11", "reference-evidence.js?v=0.10.0-r11",
     "calibration-evidence.js?v=0.10.0-r12", "profile-evidence.js?v=0.10.0-r13",
-    "signal-evidence.js?v=0.10.0-r14", "data-links.js?v=0.11.1-r19", "navigation.js?v=0.12.0-r3"
+    "signal-evidence.js?v=0.10.0-r14", "data-links.js?v=0.11.1-r19", "navigation.js?v=0.12.0-r4"
   ];
   let motionPaused = false;
   let orbitLoading;
   let aboutLoading;
+  let scienceLoading;
+  let gagooLoading;
+  let gagoo;
+  let gagooEntering = false;
   let titleAnimation = 0;
   let titleShown = false;
   const arrivalKey = "spherex.curtain";
@@ -58,6 +62,9 @@
   function publicPage() {
     const hash = location.hash.slice(1);
     if (hash === "field-guide") return "orbit";
+    if (hash === "about-story-title" || /^ss-\d+-[a-z-]+$/.test(hash)) return "about";
+    const owner = el(hash)?.closest("section[data-public-page]");
+    if (owner) return owner.id;
     const query = new URL(location.href).searchParams;
     return pageSet.has(hash) ? hash : !hash && !query.has("sky_ra") && !query.has("flow_source") ? "orbit" : null;
   }
@@ -69,6 +76,7 @@
     el("orbit-motion").setAttribute("aria-pressed", String(paused));
     el("orbit-motion").textContent = t(paused ? "resumeMotion" : "pauseMotion");
     orbitRefresh?.();
+    gagoo?.refresh();
     if (paused) showTitle();
   }
 
@@ -201,6 +209,61 @@
       })).then((refresh) => { orbitRefresh = refresh; }).catch(() => { orbit.dataset.model = "poster"; });
     }
     orbitRefresh?.();
+    startGagoo();
+  }
+
+  function openLearn() {
+    const url = new URL(location.href);
+    url.hash = "learn";
+    const oldURL = location.href;
+    history.pushState(null, "", url);
+    window.dispatchEvent(new HashChangeEvent("hashchange", {oldURL, newURL: url.href}));
+  }
+
+  async function enterLearn() {
+    if (gagooEntering || transitioning || currentPage !== "orbit") return;
+    gagooEntering = true;
+    gagoo?.refresh();
+    try {
+      const {playGagooEntrance} = await import("./gagoo-entrance.js?v=1");
+      if (currentPage !== "orbit") return;
+      await playGagooEntrance({
+        reduced: media,
+        language: window.SpherexSite.language(),
+        onCovered: () => { if (currentPage === "orbit") openLearn(); }
+      });
+    } catch {
+      // An optional visual effect must never block the learning entrance.
+      if (currentPage === "orbit") openLearn();
+    } finally {
+      gagooEntering = false;
+      gagoo?.refresh();
+      if (currentPage === "learn") el("learn-title").focus({preventScroll: true});
+    }
+  }
+
+  function startGagoo() {
+    if (!gagooLoading) {
+      gagooLoading = import("./gagoo-scene.js?v=1").then(({mountGagoo}) => mountGagoo({
+        canvas: el("gagoo-canvas"), target: el("gagoo-target"), stage: orbit,
+        reduced: media,
+        isActive: () => currentPage === "orbit" && !gagooEntering,
+        isPaused: () => motionPaused,
+        onActivate: enterLearn
+      })).then((controller) => { gagoo = controller; gagoo.refresh(); }).catch(() => {
+        const target = el("gagoo-target");
+        target.dataset.model = "fallback";
+        target.addEventListener("click", (event) => {
+          event.preventDefault();
+          const touch = event.pointerType === "touch" || event.sourceCapabilities?.firesTouchEvents;
+          if (touch && !target.hasAttribute("data-tap-preview")) {
+            orbit.querySelector("[data-tap-preview]")?.removeAttribute("data-tap-preview");
+            target.setAttribute("data-tap-preview", "true");
+          } else enterLearn();
+        });
+      });
+    }
+    gagoo?.refresh();
   }
 
   function startWorkspace() {
@@ -422,7 +485,10 @@
 
   function step(focus = false) {
     const next = publicPage();
+    const sectionHash = location.hash.slice(1);
+    const aboutSection = next === "about" && sectionHash !== "about";
     currentPage = next;
+    gagoo?.refresh();
     const isPublic = Boolean(next);
     document.body.classList.toggle("public-mode", isPublic);
     document.body.dataset.publicPage = next || "";
@@ -439,9 +505,19 @@
     refreshText();
     if (next === "orbit") { startOrbit(); typeTitle(); schedulePoster(); }
     if (next === "about") {
-      if (!aboutLoading) aboutLoading = import("./about-story.js?v=2")
+      if (!aboutLoading) aboutLoading = import("./about-story.js?v=3")
         .then(({mountAboutStory}) => mountAboutStory(el("about")))
         .catch(() => { aboutLoading = null; });
+      if (!scienceLoading) scienceLoading = import("./spherex-science.js?v=1")
+        .then(() => window.SpherexScience?.mount(el("spherex-science")))
+        .catch(() => { scienceLoading = null; });
+      if (aboutSection) Promise.all([aboutLoading, scienceLoading]).then(() => {
+        if (currentPage !== "about" || location.hash.slice(1) !== sectionHash) return;
+        const section = el(sectionHash);
+        if (!section) return;
+        section.scrollIntoView({block: "start", behavior: "instant"});
+        if (focus) { section.setAttribute("tabindex", "-1"); section.focus({preventScroll: true}); }
+      });
     }
     if (next === "night-sky") {
       if (!skyLoading) skyLoading = loadSky();
@@ -451,7 +527,7 @@
     if (location.hash === "#field-guide") {
       el("field-guide").scrollIntoView({block: "start"});
       if (focus) el("field-guide").focus({preventScroll: true});
-    } else if (focus) {
+    } else if (focus && !aboutSection) {
       el(next).querySelector("h1").focus({preventScroll: true});
       window.scrollTo({top: 0, behavior: "instant"});
     }
@@ -464,7 +540,11 @@
     if (center) el("sky-center-search").href = searchLink({...center, fov: .06});
     updateFieldText();
     if (!currentPage) return;
-    const title = currentPage === "orbit" ? t("brand") : `${t(currentPage === "about" ? "aboutTitle" : "skyTitle")} · ${t("brand")}`;
+    const titleKey = currentPage === "about" ? "aboutTitle" : currentPage === "learn" ? "learnTitle" : "skyTitle";
+    const title = currentPage === "orbit" ? t("brand") : `${t(titleKey)} · ${t("brand")}`;
+    const headerBrand = site.querySelector(".public-brand [data-copy]");
+    headerBrand.dataset.copy = currentPage === "learn" ? "learnTitle" : "brand";
+    headerBrand.textContent = t(headerBrand.dataset.copy);
     document.title = title;
   }
 

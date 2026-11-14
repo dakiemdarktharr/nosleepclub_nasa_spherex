@@ -1,0 +1,46 @@
+# Gagoo — character direction
+
+Approved direction supplied by the project owner on 14 November 2026. The mascot is a bushbaby astronaut and opens **sphere x learn** from the orbital home screen.
+
+## Identity and surfaces
+
+- Cool gray face, large rounded ears with one dusty pink inset each, amber eyes, clear helmet, warm off-white suit and dark teal chest panel.
+- Oversized head and compact body, with separate short legs and flat-soled boots.
+- A few broad polygonal volumes. Broad forehead, two clean cheek planes, lightly chamfered jaw. Angular breaks belong mainly at the silhouette, temples and jaw.
+- Eye width reduced approximately 15–20% from the preceding Gagoo model. One amber shape, one dark pupil and one highlight per eye. No stacked rings or dark goggle-like sockets.
+- One compact pale muzzle, charcoal nose, subtle mouth; a small tuft and no separate cheek spikes.
+- Each ear is a chunky beveled polygon. Both ears and the face must fit inside the helmet, including at side and rear views.
+- One transparent polygonal dome, one short soft reflection, one chunky collar.
+- Tapered sleeves and mitten gloves. Shoulder plates, elbow bands, kneepads and boot rings merge into the main suit forms. Flat colors suggest cuffs and seams; one small mustard patch.
+- One flush teal chest panel, pale cyan display and two status dots.
+
+## References and concept
+
+The owner supplied the earlier Gagoo front view for identity, two low-poly chibi character references for proportion and broad surfaces, and a painted low-poly character reference for detail treatment. Their species, costume and props are not copied.
+
+[gagoo-concept-v3.png](gagoo-concept-v3.png) is the **Imagegen concept**, created with the built-in image tool from those references and the owner's detailed prompt. It is an art-direction image, not a render or photograph of the shipped geometry.
+
+The runtime model is authored as named polygonal parts in `web/gagoo-scene.js`. The export scripts convert that same geometry into an editable Blender scene and GLB. The studio PNG is rendered from the actual geometry in Blender. Keep these outputs distinct from the concept when showing progress.
+
+## Presentation and interaction
+
+- Studio review: straight-on front view, full body and both boots visible, plain light-gray background, diffuse lighting, gentle contact shadow, no UI counter.
+- Website: transparent background, shared home-scene lighting, slow idle rotation, draggable position and a simulated zero-gravity tether.
+- Touch: first tap reveals the label, second tap opens Learn. A drag must not activate navigation. Enter/Space provide keyboard activation; motion can be paused or reduced.
+- Opening Learn: camera pulls back behind a spacecraft window, Gagoo approaches the glass, contacts it, slides out of view, then blinds cover and reveal the destination in one second. Skip and cancel remain available.
+- Learn is intentionally blank for this milestone. Its header, language/theme controls and home link remain usable.
+
+## Reproduce the Blender handoff
+
+From the repository root:
+
+```powershell
+node scripts/export_gagoo_geometry.mjs
+& 'C:/Program Files/Blender Foundation/Blender 5.2/blender.exe' --background --factory-startup --python scripts/export_gagoo_blender.py -- --render --resolution 1200
+```
+
+Generated `.blend`, `.glb`, renders and geometry receipts live under ignored `data/raw/gagoo-assets/`. This conversion runs in a separate Blender process and does not modify a user's open scene. Named parts remain editable; it does not create an armature or claim a fully rigged character.
+
+## Verification
+
+Use `tests/gagoo-physics.test.cjs`, the geometry checks, `scripts/browser_gagoo.py`, `scripts/check_gagoo_entrance.py`, the GLB round-trip check, and the existing desktop/mobile smoke suite. Inspect front, side, back and three-quarter renders. Verify ear/helmet clearance, simple eye layers, reduced eye width, mobile drag-to-tap behavior, cancellation and a clean route transition before release.

@@ -267,7 +267,7 @@ export function mountAboutStory(container) {
   visual.append(art, caption);
   layout.append(guide, visual, chapters);
   story.append(heading, layout, archive.archive);
-  container.append(story);
+  container.insertBefore(story, container.querySelector("#spherex-science"));
 
   function localize() {
     const lang = chooseLanguage();
