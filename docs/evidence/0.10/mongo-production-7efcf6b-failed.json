@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-10-31T14:33:15.841708+00:00",
+  "base_url": "https://nosleepclub-nasa-spherex.vercel.app",
+  "local_commit": "7efcf6b4cfd92f236ae891f4d63597aeb3c4814e",
+  "verifier_sha256": "2d293c199d8249eda42c20bad1c00d8f26ba8864525b8f21904991d783a34955",
+  "checks": [
+    {
+      "path": "/",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 2.875,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "951c5eb9040a33a2f0b35cc8fc69811ded4906205a8ef2952d7dff336c98fd14",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/explorer.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.531,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "b5dfe8d2211db672f9bcc5ca9e2ba01c547a3ff9f6899c9c227ed7537f50a025",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/app.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.891,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "ae52a4d41ff7582468cb4abfbcfe91d33fe8b8bd7f02d88e3fef506b07405bac",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/mission.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "e61632fe5017bd4d116a176439ce0a1b1c79a1ba257c62da10e6f8dfccdea6f9",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/quality.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "107b7607d39ad1a09fb2a9a68db2d4ec4bd6b4449a97e310f1e1ef32b7fa612b",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/review-store.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.547,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "17b2827973832d927dbc26f888a4a426352a35de18e25b34ec2b26577678bbc2",
+      "worktree_bytes_match_commit": false
+    },
+    {
+      "path": "/goal-dashboard.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2f70e0a1f16f40767491d944567bc584e86552cb1427b2cb126f49acf004173a",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/mission.css",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.313,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "02fc567d10865aaf0f280564c8a37721060ca4e7e7bd88537a96a944ea710069",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/linked-evidence.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.282,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "fdae9697cad29cf2c2c5c6f932521fe4c7ce00356fa2baf56da6f46b348b7efe",
+      "worktree_bytes_match_commit": false
+    },
+    {
+      "path": "/neighbor-evidence.js",
+      "method": "GET",
+      "attempt": 1,
+      "status": 200,
+      "elapsed_seconds": 0.297,
+      "request_id": null,
+      "cache": "MISS",
+      "sha256": "2f373e6db8b39c6feae111fbf1a8615531340310afed660845a1d8a55ca02bd4",
+      "worktree_bytes_match_commit": true
+    },
+    {
+      "path": "/data/manifest.json",
+      "method": "GET",
+      "attempt": 1,
+      "status": 400,
+      "elapsed_seconds": 0.141,
+      "request_id": null,
+      "cache": "MISS",
+      "error_code": "invalid_parameters"
+    }
+  ],
+  "retry_policy": "One retry only for GET upstream 502/504; every response is retained.",
+  "qualification": "Bounded software/data-access smoke, not scientific, recovery or load acceptance.",
+  "worktree_dirty": false,
+  "passed": false,
+  "failure_type": "RuntimeError",
+  "failure_label": "canonical Mongo route missing: data/manifest.json",
+  "completed_at_utc": "2026-10-31T14:33:23.234477+00:00"
+}

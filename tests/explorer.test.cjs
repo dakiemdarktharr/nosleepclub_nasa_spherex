@@ -48,19 +48,21 @@ function harness(options={}) {
     });
     return elements.get(id);
   };
-  const document={getElementById:element,createElement:()=>({children:[],handlers:{},setAttribute(){},
+  const document={documentElement:{lang:options.lang||"vi"},getElementById:element,createElement:()=>({children:[],handlers:{},setAttribute(){},
     append(...items){this.children.push(...items);},addEventListener(type,fn){this.handlers[type]=fn;},click(){}}),
     addEventListener(){},dispatchEvent(event){events.push(event);},hidden:false};
   const fetch=(url,options)=>new Promise((resolve,reject)=>{
     calls.push({url,options,params:new Params(url.split("?")[1]||""),resolve,reject});
   });
-  const context={window:{SkyDrafts:options.drafts},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
-    location:{href:"https://demo.example/"+(options.search||"")+"#explore",search:options.search||""},history:{replaceState(a,b,url){context.shared=String(url.href||url);}},
+  const context={window:{SkyDrafts:options.drafts,SkyWorkflow:{}},document,fetch,URL:URLFake,URLSearchParams:Params,AbortController:AbortFake,DOMException:DOMError,
+    location:{href:"https://demo.example/"+(options.search||"")+"#explore",search:options.search||"", hash:"#explore"},history:{replaceState(a,b,url){context.shared=String(url.href||url);}},
+    requestAnimationFrame(fn){fn();},
     setInterval:fn=>{const id=++nextTimer;timers.set(id,fn);return id;},clearInterval:id=>timers.delete(id),
     setTimeout:fn=>{fn();return 1;},Blob:class {constructor(parts){this.id="export";blobs.push(parts);}},
     CustomEvent:class {constructor(type,options={}){this.type=type;this.detail=options.detail;}}};
   for(const [id,value] of Object.entries({"explorer-ra":"350","explorer-dec":"35","explorer-fov":"0.06",
-    "explorer-detector":"6","explorer-release":"qr2","explorer-from":"","explorer-to":""}))element(id).value=value;
+    "explorer-detector":"6","explorer-release":"dr1","explorer-from":"","explorer-to":""}))element(id).value=value;
+  element("explorer-form").requestSubmit=()=>element("explorer-form").fire("submit");
   vm.runInNewContext(fs.readFileSync("web/explorer.js","utf8"),context);
   return {element,calls,timers,blobs,events,context,api:context.window.SkyExplorer};
 }
@@ -78,6 +80,11 @@ function frame(call, id, options={}) {
     "x-frame-mask-policy":options.policy??"source-only-allowlist-v2",
     "x-frame-cutout-url":options.cutout??`https://irsa.ipac.caltech.edu/${id}.fits?center=350,35&size=0.1`,
     "x-frame-cutout-sha256":"a".repeat(64)};
+  if(options.spectral)Object.assign(values,{
+    "x-frame-center-spectral-source":"WCS-WAVE","x-frame-time-system":"UTC",
+    "x-frame-mjd-obs":String(options.spectral.mjd),"x-frame-center-wavelength-um":String(options.spectral.center),
+    "x-frame-center-bandwidth-um":String(options.spectral.width)
+  });
   const headers={get:key=>values[key.toLowerCase()]??null,*[Symbol.iterator](){yield* Object.entries(values);}};
   call.resolve({ok:true,headers,blob:async()=>({id})});
 }
@@ -275,18 +282,26 @@ async function main() {
   await boundedUpstreamRetry();
   await workflowPairSurvivesBlinkAndInvalidatesOnEdit();
   await notesStayWithTheirQueryAndPair();
+  await autoplayUsesDistinctCompatibleLoadedFrames();
+  await explicitAutoloadIsValidatedAndPreservesLanguage();
+  await curatedSequenceLoadsExactFramesOnly();
+  await curatedSequenceResumesMissingFrames();
+  await abandonedSearchDoesNotChangePublicRoute();
+  await transientFrameIsRetriedOnce();
   console.log("Explorer DOM and HTTP race cases passed");
 }
 async function noviceFailureRecoveryAndReload(){
   const memory=new Map(),drafts=require("../web/draft-store.js")(()=>({getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)}));
   const search="?sky_ra=350&sky_dec=35&sky_fov=0.06&sky_det=6&sky_release=qr2&sky_from=2025-06-01&sky_to=2025-06-30";
   let h=harness({drafts,search});
+  assert.equal(h.element("explorer-release").value,"dr1");
+  assert.match(h.element("explorer-status").textContent,/QR2/);
   assert.equal(h.element("explorer-from").value,"2025-06-01");
   assert.equal(h.element("explorer-date-summary").textContent,"Khoảng ngày · 01/06/2025–30/06/2025");
   const {submit}=await begin(h,["A","B"]);
   assert.equal(h.api.context().listed,true,"the frame list is available before the first image arrives");
   assert.equal(h.events.some(e=>e.detail.kind==="results"),true);
-  find(h,"frame")[0].resolve({ok:false,status:502,json:async()=>({error:"upstream_unavailable"})});await submit;
+  find(h,"frame")[0].resolve({ok:false,status:502,json:async()=>({error:"invalid_fits"})});await submit;
   assert.equal(h.element("explorer-retry").hidden,false);
   assert.equal(h.api.context().listed,true);assert.equal(h.api.context().ready,false);
   const retry=h.element("explorer-retry").fire("click");await flush();frame(find(h,"frame")[1],"A");await retry;
@@ -303,6 +318,96 @@ async function noviceFailureRecoveryAndReload(){
   find(missing,"observations")[0].resolve({ok:true,json:async()=>({observations:[{obs_id:"missing",t_min_mjd:60000,access_url:null},{obs_id:"B",t_min_mjd:60001,access_url:"https://irsa.ipac.caltech.edu/B.fits"}],provenance:{query_url:"https://irsa.ipac.caltech.edu/SIA"}})});
   await flush();assert.equal(find(missing,"frame")[0].params.get("url"),"https://irsa.ipac.caltech.edu/B.fits");
   frame(find(missing,"frame")[0],"B");await pending;
+}
+async function autoplayUsesDistinctCompatibleLoadedFrames() {
+  const h=harness({lang:"en"}), spectral=(mjd,center)=>({spectral:{mjd,center,width:.034}});
+  const {submit}=await begin(h,["A","B","C","different"]);
+  frame(find(h,"frame")[0],"A",spectral(60100,4.73));await submit;
+  async function open(index,id,meta){
+    h.element("explorer-current").value=String(index);
+    const task=h.element("explorer-current").fire("change");await flush();
+    frame(find(h,"frame").at(-1),id,meta);await task;
+  }
+  await open(1,"B",spectral(60101,4.731));
+  assert.equal(h.element("explorer-timeline").disabled,true);
+  await open(2,"C",spectral(60102,4.734));
+  assert.equal(h.element("explorer-timeline").disabled,false);
+  await open(3,"different",spectral(60103,4.95));
+  assert.equal(h.element("explorer-timeline").disabled,true);
+  h.element("explorer-current").value="2";await h.element("explorer-current").fire("change");
+  h.element("explorer-timeline").fire("click");
+  assert.equal(h.element("explorer-image").src,"blob:A");
+  const tick=[...h.timers.values()][0];tick();assert.equal(h.element("explorer-image").src,"blob:B");
+  tick();assert.equal(h.element("explorer-image").src,"blob:C");
+  h.api.pause();assert.equal(h.timers.size,0);
+}
+async function explicitAutoloadIsValidatedAndPreservesLanguage(){
+  const search="?lang=en&sky_autoload=1&sky_ra=350&sky_dec=35&sky_release=dr1";
+  const h=harness({search,lang:"en"});
+  assert.equal(find(h,"observations").length,1);
+  observations(find(h,"observations")[0],["A"]);await flush();
+  frame(find(h,"frame")[0],"A");await flush();
+  assert.match(h.context.shared,/lang=en/);
+  assert.doesNotMatch(h.context.shared,/sky_autoload/);
+  assert.match(h.element("explorer-status").textContent,/Image loaded/);
+  const invalid=harness({search:search.replace("350","360"),lang:"en"});
+  assert.equal(find(invalid,"observations").length,0);
+  assert.match(invalid.element("explorer-status").textContent,/below 360/);
+}
+async function curatedSequenceLoadsExactFramesOnly(){
+  const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
+  const h=harness({search:url,lang:"en"});
+  const ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
+  observations(find(h,"observations")[0],["others",ids[2],ids[0],ids[1]]);await flush();
+  for(const [index,id] of ids.entries()){
+    const calls=find(h,"frame");
+    assert.equal(calls.length,index+1,"curated frames use serial requests");
+    assert.match(calls[index].params.get("url"),new RegExp(id));
+    assert.equal(h.element("explorer-timeline").disabled,true);
+    frame(calls[index],id,{spectral:{mjd:60100+index,center:4.73+index*.001,width:.036}});await flush();
+  }
+  assert.equal(h.element("explorer-timeline").disabled,false);
+  assert.match(h.element("explorer-status").textContent,/Three Epsilon/);
+  assert.match(h.context.shared,/sky_sequence=epsilon-dr1/);
+  const other=harness({search:url.replace("331.04583333","350"),lang:"en"});
+  observations(find(other,"observations")[0],["generic",...ids]);await flush();
+  assert.match(find(other,"frame")[0].params.get("url"),/generic/);
+  assert.doesNotMatch(other.context.shared,/sky_sequence/);
+  frame(find(other,"frame")[0],"generic");await flush();
+}
+async function abandonedSearchDoesNotChangePublicRoute(){
+  const h=harness(),pending=h.element("explorer-form").fire("submit");await flush();
+  h.context.location.hash="#night-sky";
+  observations(find(h,"observations")[0],["somewhere"]);await pending;
+  assert.equal(h.context.shared,undefined);
+  assert.equal(find(h,"frame").length,0);
+  assert.equal(h.context.location.hash,"#night-sky");
+}
+async function curatedSequenceResumesMissingFrames(){
+  const search="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
+  const h=harness({search,lang:"en"}),ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
+  observations(find(h,"observations")[0],ids);await flush();
+  const spectral=mjd=>({spectral:{mjd,center:4.73,width:.036}});
+  frame(find(h,"frame")[0],"A",spectral(60100));await flush();
+  find(h,"frame")[1].resolve({ok:false,status:502,json:async()=>({error:"invalid_fits"})});await flush();
+  assert.equal(h.element("explorer-retry").hidden,false);
+  assert.equal(h.element("explorer-image").src,"blob:A");
+  const retried=h.element("explorer-retry").fire("click");await flush();
+  assert.equal(find(h,"frame").length,3,"reuse the first downloaded frame");
+  frame(find(h,"frame")[2],"B",spectral(60101));await flush();
+  frame(find(h,"frame")[3],"C",spectral(60102));await retried;
+  assert.equal(h.element("explorer-timeline").disabled,false);
+  assert.match(h.element("explorer-status").textContent,/Three Epsilon/);
+}
+async function transientFrameIsRetriedOnce(){
+  const h=harness(), {submit}=await begin(h,["A"]);
+  const failed={ok:false,status:502,json:async()=>({error:"upstream_http_error"})};
+  find(h,"frame")[0].resolve(failed);await flush();
+  assert.equal(find(h,"frame").length,2);
+  assert.equal(find(h,"frame")[0].url,find(h,"frame")[1].url);
+  find(h,"frame")[1].resolve(failed);await submit;
+  assert.equal(find(h,"frame").length,2);
+  assert.equal(h.element("explorer-retry").hidden,false);
 }
 let timeout;
 const done=Promise.race([main(),new Promise((_,reject)=>{

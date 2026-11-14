@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "role": "Measured detector-image previews for visual inspection. Per-image stretch and downsampling for display.",
+  "date": "2026-11-14",
+  "source_coverage_receipt": "web/data/explorer-check/coverage.json",
+  "source_coverage_sha256": "b6c15b5db135751e6dce2a59b367d663347c3822416cd2e0485f48ca2637efc5",
+  "native_pixel_policy": "Finite calibrated IMAGE values. Suppress FLAGS with any bit other than SOURCE (bit 21).",
+  "bin_policy": "Median of each 4 by 4 native neighborhood, requiring at least 4/16 valid values.",
+  "display_policy": "Native detector axes vertically flipped for browser rows. Per-image 1st to 99th percentile, normalized asinh stretch with factor 4. Masked preview bins RGB 26,44,65.",
+  "stretch": "percentile_1_99 + asinh4",
+  "fields": {
+    "wise0855": {
+      "image": "/assets/mission/full-fields/wise0855.webp",
+      "preview_sha256": "333dc6d0e526030ccc1aad0320e54f32788eb39463731cea111133d098cf583d",
+      "preview_bytes": 109308,
+      "target": "WISE 0855",
+      "target_x": 0.17651581293247118,
+      "target_y": 0.9267383507372134,
+      "center_ra_deg": 133.7601213914074,
+      "center_dec_deg": -7.242127941212259,
+      "obs_id": "2025W19_1B_0116_1",
+      "detector": 6,
+      "date_obs": "2025-05-05T16:48:02.459",
+      "mjd": 60800.700028461,
+      "timesys": "UTC",
+      "release": "QR2",
+      "original_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W19_1B/l2b-v20-2025-241/6/level2_2025W19_1B_0116_1D6_spx_l2b-v20-2025-241.fits",
+      "footprint_icrs": "POLYGON ICRS 133.24794850558743 -6.807190737769642 136.57324739632523 -7.916194479118611 135.60160625044074 -11.276278805666877 132.22056868731252 -10.14353053061383 133.24794850558743 -6.807190737769642",
+      "spectral_bounds_m": [
+        4.4115e-06,
+        5.0096e-06
+      ],
+      "input_dimensions": [
+        2040,
+        2040
+      ],
+      "output_dimensions": [
+        510,
+        510
+      ],
+      "source_hdus": [
+        "IMAGE",
+        "FLAGS"
+      ],
+      "source_bytes_used": 33330240,
+      "source_byte_range": [
+        0,
+        33330239
+      ],
+      "source_byte_sha256": "4f39525e76f88da62ea7916b6aff953634d4478b788ed3040623be80467d0f45",
+      "processing_version": "6.4+psffix1",
+      "unit": "MJy/sr",
+      "finite_unflagged_or_source_pixels": 4071545,
+      "available_preview_pixels": 260067,
+      "stretch_bounds_mjy_per_sr": [
+        0.3478391349315643,
+        0.8229157161712647
+      ],
+      "source_file_sha256": "4f39525e76f88da62ea7916b6aff953634d4478b788ed3040623be80467d0f45",
+      "source_file_bytes": 33330240,
+      "compare_fov_deg": 0.06
+    },
+    "barnard": {
+      "image": "/assets/mission/full-fields/barnard.webp",
+      "preview_sha256": "3d9a7ea82791cf166a68035af636942bc4c89d0d010584e57af519cf1207efab",
+      "preview_bytes": 133938,
+      "target": "Barnard’s Star",
+      "target_x": 0.7975314708213258,
+      "target_y": 0.8689229575736265,
+      "center_ra_deg": 269.44626688537255,
+      "center_dec_deg": 4.768222216475269,
+      "obs_id": "2025W33_2C_0321_1",
+      "detector": 6,
+      "date_obs": "2025-08-15T20:45:11.337",
+      "mjd": 60902.864714549,
+      "timesys": "UTC",
+      "release": "QR2",
+      "original_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0321_1D6_spx_l2b-v20-2025-266.fits",
+      "footprint_icrs": "POLYGON ICRS 266.69815556008666 5.472441481951474 270.1774057177523 5.149538132435123 269.9973589760409 1.6600605023102528 266.5011912945388 1.990363860634739 266.69815556008666 5.472441481951474",
+      "spectral_bounds_m": [
+        4.4115e-06,
+        5.0096e-06
+      ],
+      "input_dimensions": [
+        2040,
+        2040
+      ],
+      "output_dimensions": [
+        510,
+        510
+      ],
+      "source_hdus": [
+        "IMAGE",
+        "FLAGS"
+      ],
+      "source_bytes_used": 33330240,
+      "source_byte_range": [
+        0,
+        33330239
+      ],
+      "source_byte_sha256": "1bb590446bbe2cbe2002c611679421acb58777c8e2f00eb82e31879ccbcfa635",
+      "processing_version": "6.4+psffix1",
+      "unit": "MJy/sr",
+      "finite_unflagged_or_source_pixels": 4104595,
+      "available_preview_pixels": 260062,
+      "stretch_bounds_mjy_per_sr": [
+        0.27306179970502853,
+        0.6741545641422271
+      ],
+      "source_file_sha256": "1bb590446bbe2cbe2002c611679421acb58777c8e2f00eb82e31879ccbcfa635",
+      "source_file_bytes": 33330240,
+      "compare_fov_deg": 0.06
+    },
+    "epsilon": {
+      "image": "/assets/mission/full-fields/epsilon.webp",
+      "preview_sha256": "fe81e39b0e2b59b7770118043aecf5640a28774e316b594560da1a09e61ea92a",
+      "preview_bytes": 114238,
+      "target": "Epsilon Indi B",
+      "target_x": 0.3986974354249362,
+      "target_y": 0.04270040861447899,
+      "center_ra_deg": 331.04583333,
+      "center_dec_deg": -56.78333333,
+      "obs_id": "2025W18_1B_0081_2",
+      "detector": 6,
+      "date_obs": "2025-04-29T01:33:19.820",
+      "mjd": 60794.064812731,
+      "timesys": "UTC",
+      "release": "QR2",
+      "original_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W18_1B/l2b-v20-2025-240/6/level2_2025W18_1B_0081_2D6_spx_l2b-v20-2025-240.fits",
+      "footprint_icrs": "POLYGON ICRS 336.20873943025794 -59.20764269324975 329.84406402016356 -60.599110364617815 327.2807162011122 -57.36307408709647 333.25246618483857 -56.09770666485309 336.20873943025794 -59.20764269324975",
+      "spectral_bounds_m": [
+        4.4115e-06,
+        5.0096e-06
+      ],
+      "input_dimensions": [
+        2040,
+        2040
+      ],
+      "output_dimensions": [
+        510,
+        510
+      ],
+      "source_hdus": [
+        "IMAGE",
+        "FLAGS"
+      ],
+      "source_bytes_used": 33330240,
+      "source_byte_range": [
+        0,
+        33330239
+      ],
+      "source_byte_sha256": "50076ec8faa670c44da6422f3f0ecea7760a24c7e3c85dc3475ef2f9f8725618",
+      "processing_version": "6.4+psffix1",
+      "unit": "MJy/sr",
+      "finite_unflagged_or_source_pixels": 4039458,
+      "available_preview_pixels": 259962,
+      "stretch_bounds_mjy_per_sr": [
+        0.30042019933462144,
+        0.6775233685970302
+      ],
+      "source_file_sha256": "50076ec8faa670c44da6422f3f0ecea7760a24c7e3c85dc3475ef2f9f8725618",
+      "source_file_bytes": 33330240,
+      "compare_fov_deg": 0.12
+    },
+    "rwaur": {
+      "image": "/assets/mission/full-fields/rwaur.webp",
+      "preview_sha256": "fe564678327e5f00d215ac04c1a6847f8c6fa93ccc72ee6a18d6d37e102a5ba3",
+      "preview_bytes": 114390,
+      "target": "RW Aurigae",
+      "target_x": 0.7014430959530767,
+      "target_y": 0.9237335881164108,
+      "center_ra_deg": 76.95652603458332,
+      "center_dec_deg": 30.401438173888888,
+      "obs_id": "2025W37_2A_0051_1",
+      "detector": 6,
+      "date_obs": "2025-09-11T16:15:33.968",
+      "mjd": 60929.677476481,
+      "timesys": "UTC",
+      "release": "QR2",
+      "original_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W37_2A/l2b-v20-2025-267/6/level2_2025W37_2A_0051_1D6_spx_l2b-v20-2025-267.fits",
+      "footprint_icrs": "POLYGON ICRS 79.8036253712167 30.2563594307581 75.78341089320944 30.081021251582712 75.31413294907674 33.552782503839076 79.52552361435576 33.736619857870025 79.8036253712167 30.2563594307581",
+      "spectral_bounds_m": [
+        4.4115e-06,
+        5.0096e-06
+      ],
+      "input_dimensions": [
+        2040,
+        2040
+      ],
+      "output_dimensions": [
+        510,
+        510
+      ],
+      "source_hdus": [
+        "IMAGE",
+        "FLAGS"
+      ],
+      "source_bytes_used": 33330240,
+      "source_byte_range": [
+        0,
+        33330239
+      ],
+      "source_byte_sha256": "9e26ad8cafa2a870533fd9c7a2e20d96b6606df0729282625da4a0c06b08baaf",
+      "processing_version": "6.4+psffix1",
+      "unit": "MJy/sr",
+      "finite_unflagged_or_source_pixels": 4036642,
+      "available_preview_pixels": 259974,
+      "stretch_bounds_mjy_per_sr": [
+        0.5130308210849762,
+        1.2518936228752133
+      ],
+      "source_file_sha256": "9e26ad8cafa2a870533fd9c7a2e20d96b6606df0729282625da4a0c06b08baaf",
+      "source_file_bytes": 33330240,
+      "compare_fov_deg": 0.06
+    },
+    "rdra": {
+      "image": "/assets/mission/full-fields/rdra.webp",
+      "preview_sha256": "321eb614584e1ca4462aa0b6df22622f8ca80a8abb6799cb622c3ca4bd249d74",
+      "preview_bytes": 125182,
+      "target": "R Draconis",
+      "target_x": 0.8889012607979325,
+      "target_y": 0.04448306953694952,
+      "center_ra_deg": 248.16761083294998,
+      "center_dec_deg": 66.75497941722,
+      "obs_id": "2025W20_2D_0243_1",
+      "detector": 6,
+      "date_obs": "2025-05-16T22:56:23.638",
+      "mjd": 60811.955829144,
+      "timesys": "UTC",
+      "release": "QR2",
+      "original_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_1D6_spx_l2b-v20-2025-247.fits",
+      "footprint_icrs": "POLYGON ICRS 259.9912677711298 67.3466455922603 254.5146223121682 64.66969085619472 247.30066805201193 66.49655153936797 252.40393323582603 69.44150506828515 259.9912677711298 67.3466455922603",
+      "spectral_bounds_m": [
+        4.4115e-06,
+        5.0096e-06
+      ],
+      "input_dimensions": [
+        2040,
+        2040
+      ],
+      "output_dimensions": [
+        510,
+        510
+      ],
+      "source_hdus": [
+        "IMAGE",
+        "FLAGS"
+      ],
+      "source_bytes_used": 33330240,
+      "source_byte_range": [
+        0,
+        33330239
+      ],
+      "source_byte_sha256": "32079bf130cefdd403616f38b19075360a04150dc6d39c3cfe01d1f4c1763e99",
+      "processing_version": "6.4+psffix1",
+      "unit": "MJy/sr",
+      "finite_unflagged_or_source_pixels": 4050048,
+      "available_preview_pixels": 259998,
+      "stretch_bounds_mjy_per_sr": [
+        0.2870537856221199,
+        0.5759894675016403
+      ],
+      "source_file_sha256": "32079bf130cefdd403616f38b19075360a04150dc6d39c3cfe01d1f4c1763e99",
+      "source_file_bytes": 33330240,
+      "compare_fov_deg": 0.06
+    }
+  }
+}

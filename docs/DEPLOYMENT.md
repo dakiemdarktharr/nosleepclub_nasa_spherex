@@ -26,3 +26,11 @@ Bản 0.9 thêm `data/ablation/` và bảng chọn mô hình/hiệu chuẩn có 
 
 
 Bản 0.10 thêm hai API đọc dữ liệu IRSA và dựng ảnh thật. Frame có deadline/socket/byte caps, cache và quota; cấu hình maxDuration=120 cần được deployment thực chấp nhận (Hobby cần Fluid compute). Guard production cần system env VERCEL_ENV đúng và URI MongoDB hiện có; thiếu ngữ cảnh triển khai thì fail-closed, local chỉ bật rõ bởi serve_app. Xem SKY_EXPLORER.md và API_ABUSE_CONTROLS.md. Chưa coi cấu hình file là bằng chứng deployment hoặc SLO. Goal và các nghiệm thu còn mở ở PRODUCTION_READINESS.md.
+
+## What Did SPHEREx See? / SPHEREx đã thấy gì?
+
+Trang gốc mở cảnh quỹ đạo. `#about` mở trang nhiệm vụ, `#night-sky` mở bầu trời và `#explore` vẫn mở tìm theo tọa độ. Lần đầu vào công cụ so ảnh mới tải các script của workspace cũ. WebGL dùng GLB và Three.js được phục vụ cùng origin. CSP thêm `blob:` cho `connect-src` để Three.js đọc texture nhúng trong GLB. Hồ sơ ảnh toàn detector và chuỗi Epsilon DR1 đã lưu nằm trong `web/assets/mission/`, được build tĩnh cùng giao diện.
+
+Trang quỹ đạo có hướng dẫn, poster minh họa và hiệu ứng iris từ logo. Bầu trời hiển thị toàn màn hình với sidebar dữ liệu. So sánh A/B dùng một camera cho hai ảnh trên cùng lưới WCS, với thời điểm và detector riêng cho mỗi ảnh. Tab chuỗi thời gian giữ phát ảnh theo thứ tự quan sát. [Đối chiếu đề chính thức](CHALLENGE_LIVE_REVIEW.md)
+
+Trên preview Vercel, thử hai ngôn ngữ, WebGL và poster dự phòng, mở đủ năm ảnh đã lưu, tra một tọa độ mới và kiểm tra một chuỗi Epsilon Indi B từ IRSA. Đối chiếu URL, release, thời gian, hash và trạng thái hết thời gian. Thử chạy chuỗi đã lưu khi upstream không có mặt. Sau đó chạy smoke giới hạn request và vòng đời nhận xét theo runbook trước khi cập nhật đường dẫn public. [Brief và tiêu chí nghiệm thu](PRODUCTION_PRODUCT_BRIEF.md) · [Receipt chuỗi DR1](data/spherex-dr1-timeline-smoke.json)

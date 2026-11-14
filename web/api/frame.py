@@ -22,16 +22,17 @@ from PIL import Image
 
 try:
     from api._access_control import AccessDenied, guard
+    from api._spherex_products import HOST, PATH, image_identity
     from api._telemetry import emit_request, request_logger
     from api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control', 'api._telemetry', 'api._upstream_diagnostics'):
+    if exc.name not in ('api', 'api._access_control', 'api._spherex_products', 'api._telemetry', 'api._upstream_diagnostics'):
         raise
     from web.api._access_control import AccessDenied, guard
+    from web.api._spherex_products import HOST, PATH, image_identity
     from web.api._telemetry import emit_request, request_logger
     from web.api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 
-HOST = 'irsa.ipac.caltech.edu'
 SCALE_ARCSEC = 6.15
 MAX_BYTES = 12_000_000
 SOCKET_TIMEOUT = 20
@@ -41,7 +42,6 @@ FULLSAMPLE = 1 << 12
 FRAME_CONTRACT = '1.1'
 MASK_POLICY = 'source-only-allowlist-v2'
 logger = request_logger('frame_api')
-PATH = re.compile(r'^/ibe/data/spherex/(?P<release>qr[23])/level2/(?P<period>\d{4}W\d{2}_[0-9][A-Z])/(?P<version>l2b-v\d+-\d{4}-\d{3})/(?P<detector>[1-6])/level2_(?P=period)_(?P<exposure>\d{4}_[0-9])D(?P=detector)_spx_(?P=version)\.fits$')
 
 
 class FrameError(Exception):
@@ -61,12 +61,8 @@ def parse_params(query):
         raise ValueError('invalid_parameters')
     p = {k: v[0] for k, v in pairs.items()}
     url = p.get('url', '')
-    try:
-        parsed = urlsplit(url)
-    except ValueError:
-        raise ValueError('invalid_url')
-    match = PATH.fullmatch(parsed.path)
-    if parsed.scheme != 'https' or parsed.netloc != HOST or not match or parsed.query or parsed.fragment:
+    match = image_identity(url)
+    if not match:
         raise ValueError('invalid_url')
     def num(key, default=None):
         if key not in p:
@@ -163,16 +159,48 @@ def fetch(url):
         raise FrameError('upstream_unavailable', diagnostic=describe_upstream(exc, stage))
 
 
+def validate_flag_layout(header, release):
+    qr2 = {'MP_SOURCE': [21], 'MP_FULLSAMPLE': [12]}
+    current = {'MSKN0021': ['SOURCE'], 'MSKM0021': [SOURCE],
+               'MSKN0012': ['FULLSAMPLE'], 'MSKM0012': [FULLSAMPLE]}
+    values = {key: [card.value for card in header.cards if card.keyword == key]
+              for key in qr2.keys() | current.keys()}
+    legacy_values = {key: values[key] for key in qr2}
+    current_values = {key: values[key] for key in current}
+    if release == 'qr2':
+        valid = legacy_values == qr2 and (not any(current_values.values()) or current_values == current)
+    else:
+        valid = current_values == current and (not any(legacy_values.values()) or legacy_values == qr2)
+    if not valid:
+        raise FrameError('invalid_flag_layout')
+
+
+def center_spectral_display(header, hdus, x, y):
+    """Return visualization-only wavelength and bandwidth from alternate W WCS."""
+    if ('WCS-WAVE' not in hdus or header.get('WCSAXESW') != 2
+            or any(header.get(f'CTYPE{axis}W') != 'WAVE-TAB' for axis in (1, 2))
+            or any(header.get(f'CUNIT{axis}W') != 'um' for axis in (1, 2))):
+        return None
+    # Feed just the alternate WCS cards. Celestial SIP is used separately to
+    # locate the query center on the detector and must not be applied twice.
+    wave_header = fits.Header(card for card in header.cards if card.keyword.endswith('W'))
+    try:
+        wave = WCS(wave_header, fobj=hdus, key='W')
+        wavelength, bandwidth = (float(value) for value in wave.pixel_to_world_values(x, y))
+    except (TypeError, ValueError, KeyError, IndexError, RuntimeError):
+        return None
+    if math.isfinite(wavelength) and math.isfinite(bandwidth) and 0 < bandwidth < wavelength:
+        return wavelength, bandwidth
+    return None
+
+
 def render(content, p):
     if len(content) > MAX_BYTES:
         raise FrameError('upstream_too_large')
     try:
         with fits.open(BytesIO(content), memmap=False, lazy_load_hdus=True) as hdus:
             image_hdu, flags_hdu = hdus['IMAGE'], hdus['FLAGS']
-            layout = {key: [card.value for card in flags_hdu.header.cards if card.keyword == key]
-                      for key in ('MP_SOURCE', 'MP_FULLSAMPLE')}
-            if layout != {'MP_SOURCE': [21], 'MP_FULLSAMPLE': [12]}:
-                raise FrameError('invalid_flag_layout')
+            validate_flag_layout(flags_hdu.header, p['release'])
             image = np.asarray(image_hdu.data, dtype=float)
             flags = np.asarray(flags_hdu.data)
             if image.ndim != 2 or image.shape != flags.shape or max(image.shape) > 512 or not np.issubdtype(flags.dtype, np.integer):
@@ -215,6 +243,9 @@ def render(content, p):
             bad = (flags[iy, ix].astype(np.int64) & ~SOURCE) != 0
             available = inside & np.isfinite(sampled)
             valid = available & ~bad
+            center = n // 2
+            spectrum = (center_spectral_display(hdr, hdus, nx[center, center], ny[center, center])
+                        if valid[center, center] else None)
             low, high = p['low'], p['high']
             mode = 'fixed' if low is not None else 'percentile_1_99'
             if low is None:
@@ -233,6 +264,8 @@ def render(content, p):
             output = BytesIO()
             Image.fromarray(pixels).save(output, format='PNG')
             return output.getvalue(), {'low': low, 'high': high, 'mode': mode, 'mjd': mjd,
+                                       'time_system': 'UTC' if hdr.get('TIMESYS') == 'UTC' else None,
+                                       'center_spectrum': spectrum,
                                        'valid_pixels': int(valid.sum()), 'masked_pixels': int((available & bad).sum()),
                                        'missing_pixels': int((~available).sum()), 'fov_deg': n * SCALE_ARCSEC / 3600}
     except FrameError:
@@ -292,6 +325,13 @@ class handler(BaseHTTPRequestHandler):
                  'X-Frame-Missing-Pixels': meta['missing_pixels']}
             if meta['mjd'] is not None:
                 h['X-Frame-MJD-Obs'] = meta['mjd']
+            if meta['mjd'] is not None and meta['time_system']:
+                h['X-Frame-Time-System'] = meta['time_system']
+            if meta['center_spectrum']:
+                wavelength, bandwidth = meta['center_spectrum']
+                h.update({'X-Frame-Center-Wavelength-Um': wavelength,
+                          'X-Frame-Center-Bandwidth-Um': bandwidth,
+                          'X-Frame-Center-Spectral-Source': 'WCS-WAVE'})
             return self.respond(200, png, 'image/png', 'ok', h)
         except AccessDenied as exc:
             self.retry_after = exc.retry_after

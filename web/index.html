@@ -1,11 +1,179 @@
 <!doctype html>
 <html lang="vi">
-<head><meta name="data-origin" content="mongodb"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000000"><meta name="description" content="So sánh ảnh hồng ngoại thật của WISE 0855, kiểm tra chuyển động và góp nhận xét cùng NoSleepClub."><title>NoSleepClub Sky Lab — Theo dấu WISE 0855</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/fonts/be-vietnam-pro-800-vietnamese.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/be-vietnam-pro-800-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="assets/fonts/be-vietnam-pro.css"><link rel="stylesheet" href="mission.css?v=0.10.0-r14"><script src="review-store.js?v=0.10.0-r11" defer></script><script src="draft-store.js?v=0.11.1-r18" defer></script><script src="app.js?v=0.11.1-r19" defer></script><script src="mission.js?v=0.11.0-r17" defer></script><script src="benchmark.js?v=0.10.0-r11" defer></script><script src="quality.js?v=0.11.0-r17" defer></script><script src="covariance.js?v=0.10.0-r11" defer></script><script src="ablation.js?v=0.10.0-r11" defer></script><script src="explorer.js?v=0.11.1-r19" defer></script><script src="goal-dashboard.js?v=0.10.0-r11" defer></script><script src="linked-evidence.js?v=0.10.0-r11" defer></script><script src="neighbor-evidence.js?v=0.10.0-r11" defer></script><script src="reference-evidence.js?v=0.10.0-r11" defer></script><script src="calibration-evidence.js?v=0.10.0-r12" defer></script><script src="profile-evidence.js?v=0.10.0-r13" defer></script><script src="signal-evidence.js?v=0.10.0-r14" defer></script><script src="data-links.js?v=0.11.1-r19" defer></script><script src="navigation.js?v=0.11.1-r19" defer></script><link rel="stylesheet" href="workflow.css?v=0.11.0-r17"></head>
+<head><meta name="data-origin" content="mongodb"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000000"><meta name="description" content="Khám phá các vùng trời từ ảnh hồng ngoại SPHEREx và so sánh quan sát qua thời gian."><title>SPHEREx đã thấy gì? | NoSleepClub</title><link rel="icon" href="assets/mission/spherex-mark.png" type="image/png"><link rel="preload" href="assets/fonts/be-vietnam-pro-800-vietnamese.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/be-vietnam-pro-800-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="assets/fonts/be-vietnam-pro.css"><link rel="stylesheet" href="mission.css?v=0.10.0-r14"><script src="site-language.js?v=2" defer></script><script src="workspace-language.js?v=1" defer></script><link rel="stylesheet" href="workflow.css?v=0.11.0-r17"><link rel="stylesheet" href="public-site.css?v=2"><link rel="stylesheet" href="about-story.css?v=1"><link rel="stylesheet" href="linked-comparison.css?v=1"><script src="public-site.js?v=2" defer></script></head>
 <body class="workflow-app">
-<a class="skip-link" href="#workflow-main">Đến nội dung</a>
-<header class="site-header workflow-header"><a class="brand" href="#home" aria-label="NoSleepClub Sky Lab, trang chính"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="8"></circle><ellipse cx="20" cy="20" rx="19" ry="7" transform="rotate(-34 20 20)"></ellipse><circle cx="33" cy="10" r="3"></circle></svg><span>NoSleepClub <b>Sky Lab</b></span></a><div class="workflow-top-context"><span id="workflow-context">WISE 0855</span><span class="workflow-source-tag" id="workflow-context-kind">Bộ mẫu</span></div><button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu ☰</button><nav id="main-nav" aria-label="Điều hướng chính"><a href="#home">Dữ liệu</a><a href="#compare-step">So ảnh</a><a href="#check-step">Kiểm tra</a><a href="#review-step">Ghi nhận</a><a href="#research">Nghiên cứu</a></nav><a class="repo-link" href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex" target="_blank" rel="noopener noreferrer">GitHub ↗</a></header>
-<aside class="workflow-sidebar"><nav aria-label="Quy trình xử lý" class="workflow-steps"><a href="#home" data-step-link="data"><span>01</span>Dữ liệu</a><a href="#compare-step" data-step-link="compare"><span>02</span>So ảnh</a><a href="#check-step" data-step-link="check"><span>03</span>Kiểm tra</a><a href="#review-step" data-step-link="review"><span>04</span>Ghi nhận</a></nav><a class="workflow-library-link" href="#research">Kho kiểm chứng ↗</a><button class="text-button" id="guide-open">Hướng dẫn</button><button class="text-button" id="privacy-open">Lưu trữ nhận xét</button><span class="workflow-sidebar-credit">NASA / IPAC IRSA</span></aside>
-<main id="workflow-main" tabindex="-1"><p class="workflow-route-status" id="workflow-route-status" role="status" aria-live="polite"></p>
+<noscript><p>Hãy bật JavaScript để xem bầu trời và ảnh SPHEREx. Enable JavaScript to explore the sky and SPHEREx observations.</p></noscript>
+
+<div id="public-iris" aria-hidden="true" hidden></div>
+<div id="public-site" hidden>
+  <a class="skip-link" href="#public-main" data-copy="skipPublic">Đến nội dung</a>
+  <header class="public-header">
+    <a href="#orbit" class="public-brand" data-iris-home data-nav="orbit"><img class="public-logomark" src="assets/mission/spherex-mark.webp" alt="" width="40" height="40"><span data-copy="brand">SPHEREx đã thấy gì?</span></a>
+    <nav aria-label="Điều hướng" data-label="navigation">
+      <a href="#night-sky" data-nav="night-sky" data-copy="skyNav">Bầu trời</a>
+      <a href="#about" data-nav="about" data-copy="aboutNav">Về SPHEREx</a>
+    </nav>
+    <button type="button" class="language-toggle" data-language data-label="language">English</button>
+  </header>
+  <main id="public-main" tabindex="-1">
+    <section id="orbit" data-public-page aria-labelledby="orbit-title" hidden>
+      <div class="orbital-scene" aria-hidden="true">
+        <div class="earth-plane"></div>
+        <div class="orbital-sun"></div>
+        <div class="orbital-track"></div>
+      </div>
+      <div class="orbit-copy">
+        <h1 id="orbit-title" tabindex="-1"><span id="orbit-title-full" data-copy="brand">SPHEREx đã thấy gì?</span><span aria-hidden="true" id="orbit-title-typed" hidden></span></h1>
+        <a class="public-action primary" href="#night-sky"><span data-copy="explore">Khám phá bầu trời</span><span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="orbit-spacecraft">
+        <a class="spacecraft-target" href="#about" data-label="aboutObject">
+          <img src="assets/mission/spacecraft-poster.webp" alt="" width="760" height="632" fetchpriority="high">
+          <canvas id="spacecraft-canvas" aria-hidden="true" hidden></canvas>
+          <span class="scene-label spacecraft-label"><span></span>SPHEREx <b aria-hidden="true">↗</b></span>
+        </a>
+      </div>
+      <a class="earth-target" href="#night-sky" data-label="earthObject">
+        <span class="scene-label earth-label"><span></span><span data-copy="earth">Trái Đất</span> <b aria-hidden="true">↓</b></span>
+      </a>
+      <a href="#field-guide" class="orbit-scroll" data-copy="guideTitle">Cách sử dụng ↓</a>
+      <div class="orbit-caption">
+        <span data-copy="orbitalIllustration">Minh họa quỹ đạo · NASA / JPL-Caltech</span>
+        <button type="button" id="orbit-motion" data-copy="pauseMotion" aria-pressed="false">Dừng chuyển động</button>
+      </div>
+    </section>
+    <section id="orbit-extras" data-home-extras hidden>
+      <div class="guide-sheet" id="field-guide" tabindex="-1">
+        <div class="guide-heading"><h2 data-copy="guideHeading">Cách sử dụng</h2><a href="#night-sky" class="public-back" data-copy="openSky">Mở bầu trời ↗</a></div>
+        <ol class="guide-steps">
+          <li><div><span aria-hidden="true" class="guide-shape guide-circle">01</span><h3 data-copy="guideOne">Chọn vùng trời</h3></div><p data-copy="guideOneDetail">Chọn Trái Đất, rồi bấm dấu sao hoặc nhập RA/Dec.</p></li>
+          <li><div><span aria-hidden="true" class="guide-shape guide-square">02</span><h3 data-copy="guideTwo">Mở ảnh toàn khung</h3></div><p data-copy="guideTwoDetail">Xem vùng quan sát, ngày chụp và dải bước sóng.</p></li>
+          <li><div><span aria-hidden="true" class="guide-shape guide-offset">03</span><h3 data-copy="guideThree">So ảnh qua thời gian</h3></div><p data-copy="guideThreeDetail">So sánh hai khung hoặc phát chuỗi quan sát đã lưu.</p></li>
+        </ol>
+      </div>
+      <div class="poster-window">
+        <div class="poster-sticky">
+          <div class="poster-copy">
+            <h2 data-copy="brand">SPHEREx đã thấy gì?</h2>
+            <a href="#night-sky" class="public-action primary" data-copy="explore">Khám phá bầu trời</a>
+            <a href="https://irsa.ipac.caltech.edu/Missions/spherex.html" data-copy="irsaSource">Kho dữ liệu NASA/IPAC IRSA ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="about" data-public-page aria-labelledby="about-title" hidden>
+      <div class="about-layout">
+        <div class="about-copy">
+          <a href="#orbit" class="public-back" data-copy="backOrbit">← Về quỹ đạo</a>
+          <h1 id="about-title" tabindex="-1" data-copy="aboutTitle">Về nhiệm vụ SPHEREx</h1>
+          <p data-copy="aboutIntro">SPHEREx là đài quan sát hồng ngoại của NASA. Từ quỹ đạo thấp, vệ tinh lập bản đồ bầu trời theo bước sóng để nghiên cứu các thiên hà, lịch sử vũ trụ và băng trong các vùng hình thành sao.</p>
+          <dl class="mission-specs">
+            <div><dt>102</dt><dd data-copy="spectralBands">kênh phổ danh nghĩa</dd></div>
+            <div><dt>0.75–5.0 µm</dt><dd data-copy="infrared">bước sóng hồng ngoại</dd></div>
+            <div><dt>3</dt><dd data-copy="shields">tấm chắn photon hình nón</dd></div>
+          </dl>
+
+          <a class="public-action primary" href="#night-sky"><span data-copy="explore">Khám phá bầu trời</span><span aria-hidden="true">↓</span></a>
+          <div class="public-source-links">
+            <a href="https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/spacecraft/" target="_blank" rel="noopener noreferrer" data-copy="spacecraftRef">Cấu tạo vệ tinh · JPL ↗</a>
+            <a href="https://eyes.nasa.gov/apps/solar-system/#/sc_spherex" target="_blank" rel="noopener noreferrer" data-copy="eyesRef">Mở trong NASA Eyes ↗</a>
+            <a href="https://svs.gsfc.nasa.gov/14966/" target="_blank" rel="noopener noreferrer" data-copy="animationRef">Hoạt họa nhiều góc ↗</a>
+          </div>
+        </div>
+        <figure class="about-figure">
+          <img data-src="assets/mission/orbit-poster.webp" width="1920" height="1080" alt="" data-label="orbitImage">
+          <figcaption data-copy="aboutCaption">Minh họa SPHEREx trên quỹ đạo · NASA/JPL-Caltech PIA26531</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section id="night-sky" data-public-page hidden aria-labelledby="sky-page-title">
+      <header class="sky-heading">
+        <div>
+          <a href="#orbit" class="public-back" data-copy="backOrbit">← Về quỹ đạo</a>
+          <h1 id="sky-page-title" tabindex="-1" data-copy="skyTitle">Tìm vùng trời</h1>
+        </div>
+      </header>
+      <div class="sky-workspace">
+        <div class="sky-map-panel">
+          <div class="sky-map-toolbar">
+            <p><span aria-hidden="true">✦</span> <span data-copy="markerLegend">Vùng có ảnh mẫu</span></p>
+            <div class="sky-controls">
+              <button id="sky-sidebar-toggle" type="button" aria-controls="sky-sidebar" aria-expanded="false" data-copy="datasets">Bộ dữ liệu</button>
+              <button id="sky-out" type="button" data-label="zoomOut">−</button>
+              <button id="sky-in" type="button" data-label="zoomIn">+</button>
+              <button id="sky-reset" type="button" data-copy="resetView">Về góc đầu</button>
+            </div>
+          </div>
+          <div class="sky-viewport" id="sky-viewport">
+            <canvas id="sky-dome" tabindex="0" data-label="skyCanvas" aria-describedby="sky-guide"></canvas>
+            <div id="sky-markers" class="sky-markers"></div>
+            <div class="sky-horizon" aria-hidden="true"></div>
+            <span class="sky-reticle" aria-hidden="true"></span>
+            <span id="sky-readout" class="sky-readout"></span>
+          </div>
+          <p class="sky-guide"><span id="sky-guide" data-copy="skyGuide">Dùng phím mũi tên để đổi hướng. Đường chân trời minh họa, tọa độ theo ICRS.</span> <a href="https://svs.gsfc.nasa.gov/3895/" target="_blank" rel="noopener noreferrer" data-copy="skyCredits">Ảnh nền · NASA SVS ↗</a></p>
+        </div>
+        <aside class="sky-finder" id="sky-sidebar" aria-labelledby="sky-finder-title" tabindex="-1">
+          <div class="sky-sidebar-heading"><h2 id="sky-finder-title" data-copy="datasets">Bộ dữ liệu</h2><button id="sky-sidebar-close" type="button" data-label="close">×</button></div>
+          <label class="sr-only" for="sky-target-search" data-copy="searchLabel">Tên mục tiêu mẫu</label>
+          <input id="sky-target-search" type="search" data-placeholder="searchHint" placeholder="Tìm tên mục tiêu mẫu">
+          <p id="sky-target-status" class="sky-target-status" role="status"></p><div id="sky-targets" class="sky-targets"></div>
+          <p id="sky-target-empty" data-copy="noTargets" hidden>Thử tên khác, hoặc mở tìm theo tọa độ.</p>
+          <a class="public-action subtle" id="sky-center-search" href="#explore" data-copy="searchCenter" hidden>Tìm ảnh tại tâm ngắm</a>
+          <a class="public-action subtle" id="sky-coordinates" href="#explore" data-copy="enterCoordinates">Nhập tọa độ RA / Dec →</a>
+          <section id="sky-field" class="sky-field" hidden aria-labelledby="sky-field-title">
+          <div class="sky-field-text">
+            <p class="field-label" data-copy="observedField">Ảnh quan sát SPHEREx</p>
+            <h2 id="sky-field-title" tabindex="-1"></h2>
+            <p id="sky-field-when"></p>
+            <p id="sky-field-coordinates"></p>
+            <p id="sky-field-status" role="status"></p>
+            <div class="sky-field-actions">
+              <a id="sky-field-compare" href="#explore" class="public-action primary"><span data-copy="compareImages">So sánh ảnh</span><span aria-hidden="true">→</span></a>
+              <button id="sky-field-example" type="button" class="public-action subtle" data-copy="archivedSequence" hidden>Mở chuỗi ảnh đã lưu</button>
+              <a id="sky-field-original" target="_blank" rel="noopener noreferrer" class="public-action subtle" data-copy="fullFrame">FITS gốc cả detector ↗</a>
+            </div>
+            <p id="sky-field-note" data-copy="fullFieldLimit">Ảnh toàn detector đã giảm độ phân giải và kéo sáng riêng. Vòng xanh đánh dấu tâm truy vấn. Nút So sánh ảnh tìm ảnh DR1 quanh tâm này.</p>
+          </div>
+          <figure class="sky-field-preview">
+            <button id="sky-image-enlarge" type="button" data-label="enlargeImage" hidden><span class="sky-image-wrap"><img id="sky-field-image" alt=""><span class="field-center-marker" id="sky-field-marker" aria-hidden="true" hidden></span></span><span class="sky-enlarge-label" data-copy="enlargeImage">Mở ảnh lớn</span></button>
+          </figure>
+          </section>
+        </aside>
+      </div>
+      <dialog id="sky-image-dialog" aria-labelledby="sky-image-title">
+        <div class="dialog-heading"><h2 id="sky-image-title"></h2><button type="button" id="sky-image-close" data-label="close">×</button></div>
+        <div class="sky-image-wrap"><img id="sky-image-expanded" alt=""><span class="field-center-marker" id="sky-image-marker" aria-hidden="true" hidden></span></div>
+        <p id="sky-image-caption"></p>
+      </dialog>
+      <dialog id="archived-sequence" aria-labelledby="archived-title">
+        <div class="dialog-heading"><h2 id="archived-title" data-copy="archivedTitle">Epsilon Indi B · chuỗi DR1 đã lưu</h2><button type="button" id="archived-close" data-label="close">×</button></div>
+        <p data-copy="archivedDescription">Ba ảnh SPHEREx DR1 D6 đã lưu dùng cùng lưới WCS và thang hiển thị. Dùng chuỗi để quan sát vùng trời.</p>
+        <img id="archived-frame" alt="" width="71" height="71" hidden>
+        <p id="archived-time" role="status"></p>
+        <div class="archived-controls">
+          <button type="button" id="archived-play" class="public-action primary" data-copy="archivedPlay" disabled>Phát chuỗi</button>
+          <button type="button" id="archived-prev" class="public-action subtle" data-copy="archivedPrev" disabled>Ảnh trước</button>
+          <button type="button" id="archived-next" class="public-action subtle" data-copy="archivedNext" disabled>Ảnh sau</button>
+        </div>
+        <div class="public-source-links">
+          <a id="archived-fits" target="_blank" rel="noopener noreferrer" data-copy="archivedFits" hidden>FITS khung đang xem ↗</a>
+          <a href="assets/mission/epsilon-sequence/provenance.json" target="_blank" rel="noopener noreferrer" data-copy="archivedMetadata">Nguồn và thông số JSON ↗</a>
+        </div>
+      </dialog>
+    </section>
+  </main>
+  <footer class="public-footer">
+    <span data-copy="team">Dự án độc lập của NoSleepClub</span>
+    <a href="https://irsa.ipac.caltech.edu/Missions/spherex.html" target="_blank" rel="noopener noreferrer" data-copy="irsaSource">Kho dữ liệu NASA/IPAC IRSA ↗</a>
+    <a href="#research" data-copy="researchNav">Tài liệu kiểm chứng</a>
+  </footer>
+</div>
+
+<a class="skip-link legacy-surface" href="#workflow-main">Đến nội dung</a>
+<header class="site-header workflow-header legacy-surface"><a class="brand" href="#orbit" data-iris-home data-label="homeLink"><img class="public-logomark" src="assets/mission/spherex-mark.webp" alt="" width="38" height="38"><span data-copy="brand">SPHEREx đã thấy gì?</span></a><div class="workflow-top-context"><span id="workflow-context">WISE 0855</span><span class="workflow-source-tag" id="workflow-context-kind">Bộ mẫu</span></div><button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu ☰</button><nav id="main-nav" aria-label="Điều hướng chính"><a href="#night-sky" data-copy="skyNav">Bầu trời</a><a href="#home">Dữ liệu</a><a href="#compare-step">So ảnh</a><a href="#check-step">Kiểm tra</a><a href="#review-step">Ghi nhận</a><a href="#research">Nghiên cứu</a></nav><button type="button" class="language-toggle" data-language data-label="language">English</button><a class="repo-link" href="https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex" target="_blank" rel="noopener noreferrer">GitHub ↗</a></header>
+<aside class="workflow-sidebar legacy-surface"><nav aria-label="Quy trình xử lý" class="workflow-steps"><a href="#home" data-step-link="data"><span>01</span>Dữ liệu</a><a href="#compare-step" data-step-link="compare"><span>02</span>So ảnh</a><a href="#check-step" data-step-link="check"><span>03</span>Kiểm tra</a><a href="#review-step" data-step-link="review"><span>04</span>Ghi nhận</a></nav><a class="outline-button" href="#night-sky" data-copy="skyNav">Bầu trời</a><a class="workflow-library-link" href="#research">Kho kiểm chứng ↗</a><button class="text-button" id="guide-open">Hướng dẫn</button><button class="text-button" id="privacy-open">Lưu trữ nhận xét</button><span class="workflow-sidebar-credit">NASA / IPAC IRSA</span></aside>
+<main class="legacy-surface" id="workflow-main" tabindex="-1"><p id="workspace-progress" role="status" hidden></p><p class="workflow-route-status" id="workflow-route-status" role="status" aria-live="polite"></p>
 <section id="home" data-workflow-view="data" aria-labelledby="step-data-title">
 <header class="workflow-page-heading"><span class="workflow-step-label">01 / Dữ liệu</span><h1 id="step-data-title" tabindex="-1">Chọn dữ liệu</h1></header>
 <div class="workflow-source-switch" role="group" aria-label="Nguồn dữ liệu"><button type="button" id="workflow-source-wise" aria-pressed="true">Bộ mẫu WISE 0855</button><button type="button" id="workflow-source-irsa" aria-pressed="false">Tìm tại IRSA</button></div>
@@ -17,7 +185,7 @@
     <label for="explorer-ra">RA · độ hoặc giờ:phút:giây<input id="explorer-ra" value="133.7601213914074" required autocomplete="off" spellcheck="false"></label>
     <label for="explorer-dec">Dec · độ hoặc độ:phút:giây<input id="explorer-dec" value="-7.242127941212259" required autocomplete="off" spellcheck="false"></label>
     <label for="explorer-fov">Trường nhìn<select id="explorer-fov"><option value="0.06">3,6 phút cung</option><option value="0.12">7,2 phút cung</option><option value="0.02">1,2 phút cung</option></select></label>
-    <label for="explorer-release">Bản dữ liệu<select id="explorer-release"><option value="qr2">QR2</option><option value="qr3">QR3</option></select></label>
+    <label for="explorer-release">Bản dữ liệu<select id="explorer-release"><option value="dr1">DR1</option><option value="qr3">QR3</option></select></label>
     <label for="explorer-detector">Dải detector<select id="explorer-detector"><option value="6">D6 · 4,42–5,00 µm</option><option value="5">D5 · 3,83–4,41 µm</option><option value="4">D4 · 2,42–3,82 µm</option><option value="3">D3 · 1,63–2,41 µm</option><option value="2">D2 · 1,10–1,62 µm</option><option value="1">D1 · 0,75–1,09 µm</option></select></label>
 
 
@@ -66,8 +234,8 @@
     <p id="explorer-warning" class="measurement-quality"></p>
 
     <div class="explorer-grid" id="explorer-display"><div><div class="explorer-image-wrap"><img id="explorer-image" hidden alt="Ảnh quan sát SPHEREx" decoding="async"></div><p id="explorer-frame-label"></p>
-      <div class="explorer-controls"><button type="button" id="explorer-previous" disabled>← Trước</button><label for="explorer-current">Lần quan sát<input type="range" id="explorer-current" min="0" max="0" value="0"></label><button type="button" id="explorer-next" disabled>Sau →</button><button type="button" id="explorer-pin" disabled>Giữ làm ảnh A</button><button type="button" id="explorer-play" disabled>Nhấp nháy A / B</button></div>
-      <button type="button" id="explorer-retry" class="outline-button" hidden>Tải lại ảnh</button><p id="explorer-reference">Giữ một ảnh đối chiếu rồi chọn ảnh ở thời điểm khác.</p>
+      <div class="explorer-controls"><button type="button" id="explorer-previous" disabled>← Trước</button><label for="explorer-current">Lần quan sát<input type="range" id="explorer-current" min="0" max="0" value="0"></label><button type="button" id="explorer-next" disabled>Sau →</button><button type="button" id="explorer-pin" disabled>Giữ làm ảnh A</button><button type="button" id="explorer-play" disabled>Nhấp nháy A / B</button><button type="button" id="explorer-timeline" disabled>Phát chuỗi đã mở</button></div>
+      <button type="button" id="explorer-retry" class="outline-button" hidden>Tải lại ảnh</button><p id="explorer-reference">Giữ một ảnh đối chiếu rồi chọn ảnh ở thời điểm khác.</p><p id="explorer-timeline-hint" class="measurement-quality" hidden></p>
 
     </div><div id="explorer-frames" class="explorer-frame-list" aria-label="Các lần quan sát"></div></div>
   </div></div>
@@ -327,7 +495,7 @@
 </section>
 <details class="workflow-details"><summary>Phương pháp và giới hạn</summary><p>Các kết quả dưới đây được giữ theo phiên bản và thời điểm công bố. Trường đã mở được dùng cho phát triển tiếp theo, không còn là holdout mới.</p></details></details><section class="next-steps page-section" id="next-steps" aria-labelledby="next-heading" data-report-root="next-steps" hidden><div><span class="section-step">Lần kiểm chứng tiếp theo</span><h2 id="next-heading">Tách nguyên nhân sai lệch.<br>Rồi kiểm lại mô hình.</h2><p id="next-summary">Đối chứng tổng hợp giữ đủ 640 lượt: chỉ 70/128 cảnh không nhiễu đạt đủ tiêu chí, dù guard tương đối đạt 64/64. Cần tách quy ước diện tích pixel, sai hình nguồn và nguồn chồng trước khi học lại mô hình; phần dành riêng tiếp tục đóng.</p><a class="text-button" href="#signal-controls">Xem đối chứng mới ↑</a></div><ol><li><strong>Học mẫu điểm sáng bằng tập sao riêng</strong><span>Giữ tâm và flux có nghĩa vật lý; đo sai lệch và giữ tín hiệu trên sao ngoài bước học, kể cả các ca không đạt.</span></li><li><strong>Kiểm chuyển động theo từng ảnh</strong><span>Nối thời gian exposure và bất định căn chỉnh chung; đối chứng cả chuyển động trong mùa và parallax.</span></li><li><strong>Hiệu chuẩn rồi kiểm định riêng</strong><span>Khóa evaluator, ngân sách sai số, gate và overlap trước 12 trường calibration, 12 validation và 6 holdout cuối.</span></li></ol></section></div></section>
 </main>
-<footer class="workflow-footer"><span>NoSleepClub · NASA Space Apps 2026</span><span>Dự án độc lập</span></footer>
+<footer class="workflow-footer legacy-surface"><span>NoSleepClub · NASA Space Apps 2026</span><span data-copy="team">Dự án độc lập</span></footer>
 <dialog id="guide-dialog" aria-labelledby="guide-title"><div class="dialog-heading"><h2 id="guide-title">Quy trình xử lý</h2><button id="guide-close" aria-label="Đóng hướng dẫn">×</button></div><div class="guide-layout"><figure><img src="assets/compare-guide-canva.webp" alt="Minh họa hai trường sao với một điểm đổi vị trí" width="1600" height="899"><figcaption>Minh họa nghệ thuật · Canva. Ảnh quan sát thật ở bước So ảnh.</figcaption></figure><div><ol><li><strong>Chọn dữ liệu.</strong> Dùng bộ mẫu WISE 0855 hoặc tìm ảnh IRSA theo tọa độ.</li><li><strong>So ảnh.</strong> Với IRSA, giữ ảnh A rồi chọn ảnh B. Nhấp nháy để tìm vùng khác nhau.</li><li><strong>Kiểm tra.</strong> Xem nguồn ảnh, mask và giới hạn. Ảnh khác nhau chưa xác nhận chuyển động.</li><li><strong>Ghi nhận.</strong> Nhận xét WISE gắn với vùng và phiên bản phân tích. Ghi chú IRSA xuất cùng đúng cặp ảnh trong JSON.</li></ol><p>Zoom không tạo thêm độ phân giải. Vòng đánh dấu và ellipse là kết quả xử lý; sai số chưa hiệu chuẩn.</p><button class="primary-button" id="guide-start">Trở lại so ảnh</button></div></div></dialog>
 <dialog id="evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-heading"><h2 id="evidence-title">Dữ liệu và giới hạn của bản demo</h2><button id="evidence-close" aria-label="Đóng bảng bằng chứng">×</button></div><p>Cutout thật từ SPHEREx QR2. Highlight hiện được tạo bằng xử lý ảnh cổ điển, chưa dùng vision model đã huấn luyện.</p><div id="evidence-content"></div><a id="download-fits" class="primary-button" href="#" download>Tải FITS đã căn chỉnh</a><h3>Tài liệu gốc</h3><ul><li><a href="https://caltech-ipac.github.io/irsa-tutorials/spherex-cutouts/" target="_blank" rel="noopener noreferrer">IRSA: cutout và spectral WCS</a></li><li><a href="https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/" target="_blank" rel="noopener noreferrer">IRSA: PSF theo vị trí và phiên bản dữ liệu</a></li><li><a href="https://arxiv.org/pdf/1404.6501" target="_blank" rel="noopener noreferrer">Luhman 2014: astrometry và proper motion WISE 0855</a></li></ul></dialog>
 </body></html>

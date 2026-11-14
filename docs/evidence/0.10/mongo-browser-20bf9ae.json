@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "production_commit": "20bf9ae79c9cc50898d71afbf6778f3f8af26078",
+  "wise": {
+    "four_step_flow": true,
+    "mongo_save": true,
+    "json_export_schema": 3,
+    "export_sha256": "f619cceb9f9b804d70a419d7480ca8aa101c88374896f1aef581e6cabbb165c1",
+    "qa_initial_count": 0,
+    "qa_final_count": 0,
+    "own_qa_deleted": true,
+    "residual_hides_target_motion": true,
+    "tab_draft_reload_tested": true
+  },
+  "irsa": {
+    "query": {
+      "p": "ra=350&dec=35&radius=0.03&release=qr2&detector=6&maxrec=300&band_min_um=4.42&band_max_um=5&time_min_mjd=60827&time_max_mjd=60856.99998842593",
+      "ra": 350,
+      "dec": 35,
+      "fov": 0.06,
+      "det": 6,
+      "release": "qr2",
+      "from": "2025-06-01",
+      "to": "2025-06-30"
+    },
+    "observations": 18,
+    "pair": {
+      "reference": "2025W26_2A_0314_1",
+      "current": "2025W26_2A_0314_2"
+    },
+    "export_sha256": "d08047f5eeeacfab3bc882d3787099ff6728e7de03ee539346b2ae94b4a33673",
+    "date_filters_preserved_on_reload": true,
+    "note_restored_only_after_same_pair": true,
+    "blink_paused_on_step_change": true,
+    "qa_draft_cleared": true,
+    "qualification": "User visual inspection; no registered astrometry, spectral matching, calibrated detection probability or fitted motion. Pixel wavelengths require science calibration."
+  },
+  "multipart_download": {
+    "path": "data/signal-controls/records.json.gz",
+    "parts": 20,
+    "bytes": 10046627,
+    "sha256": "ef757d6c605f623ecfae35c0c4ebdc43b8ab3e1308adb741bc9be7d8d2d555a0",
+    "browser_chunk_and_full_hash_passed": true,
+    "local_file_matches_pinned_hash": true
+  },
+  "mobile": {
+    "requested_viewport": [
+      390,
+      844
+    ],
+    "document_client_width": 375,
+    "document_scroll_width": 375,
+    "canvas_width": 244,
+    "canvas_bottom": 658.796875,
+    "action_top": 765,
+    "viewport_reset": true
+  },
+  "screenshots": [
+    "mongo-home-20bf9ae.png",
+    "mongo-demo-20bf9ae.png",
+    "mongo-mobile-20bf9ae.png",
+    "mongo-download-20bf9ae.png",
+    "mongo-irsa-20bf9ae.png"
+  ],
+  "qualification": "Operator walkthrough on IAB desktop and one mobile viewport; not external novice usability, cross-browser or WCAG certification.",
+  "phase_qualification": {
+    "final_20bf9ae": [
+      "WISE data/compare/check/save/export/delete",
+      "IRSA new-tab query/pair/check/export",
+      "verified multipart download",
+      "mobile reflow"
+    ],
+    "phase1_before_cutover": [
+      "WISE draft reload",
+      "IRSA query/date/pair-note reload and blink pause"
+    ]
+  }
+}

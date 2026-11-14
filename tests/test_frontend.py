@@ -1,5 +1,7 @@
 """Keep scientific controls connected through the redesigned beginner journey."""
+from hashlib import sha256
 from html.parser import HTMLParser
+import json
 from pathlib import Path
 import re
 import unittest
@@ -28,6 +30,36 @@ class WorkflowNodes(HTMLParser):
 
 
 class FrontendContract(unittest.TestCase):
+    def test_public_routes_preserve_the_original_comparison_canvas(self):
+        doc=WorkflowNodes()
+        doc.feed((ROOT/'web/index.html').read_text(encoding='utf-8'))
+        for route in ('orbit','about','night-sky'):
+            self.assertIn('data-public-page',doc.tags[route])
+        self.assertEqual(doc.owner['sky'],'compare')
+        self.assertEqual(doc.owner['explorer-timeline'],'compare')
+        self.assertIsNone(doc.owner['archived-sequence'])
+
+    def test_public_preview_filenames_and_hashes_match_observation_provenance(self):
+        assets=ROOT/'web/assets/mission'
+        full=json.loads((assets/'full-fields/provenance.json').read_text(encoding='utf-8'))
+        targets=json.loads((ROOT/'web/data/challenge-targets.json').read_text(encoding='utf-8'))
+        self.assertEqual(set(full['fields']),{row['id'] for row in targets['targets']})
+        for target in targets['targets']:
+            row=full['fields'][target['id']]
+            self.assertEqual((row['center_ra_deg'],row['center_dec_deg'],row['compare_fov_deg']),
+                             (target['ra_deg'],target['dec_deg'],target['fov_deg']))
+            image=ROOT/'web'/row['image'].lstrip('/')
+            self.assertEqual(sha256(image.read_bytes()).hexdigest(),row['preview_sha256'])
+
+        archive=assets/'epsilon-sequence'
+        saved=json.loads((archive/'provenance.json').read_text(encoding='utf-8'))
+        receipt=json.loads((ROOT/'docs/data/spherex-dr1-timeline-smoke.json').read_text(encoding='utf-8'))
+        self.assertEqual(saved['settings'],receipt['settings'])
+        self.assertEqual(len(saved['observations']),3)
+        for loaded,verified in zip(saved['observations'],receipt['observations']):
+            self.assertEqual({k:v for k,v in loaded.items() if k!='image'},verified)
+            self.assertEqual(sha256((archive/loaded['image']).read_bytes()).hexdigest(),verified['png_sha256'])
+
     def test_workflow_controls_belong_to_their_processing_step(self):
         doc=WorkflowNodes();doc.feed((ROOT/'web/index.html').read_text(encoding='utf-8'))
         expected={'scene-select':'data','explorer-form':'data','sky':'compare','explorer-image':'compare',

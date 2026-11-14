@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "qualification": "CI software checks; optional raw inputs are skipped; not scientific or load certification.",
+  "stages": [
+    {
+      "stage": 16,
+      "run": 41184752979,
+      "py": 124489291779,
+      "summary": [
+        "2026-10-31T08:30:01.7609471Z test_commit_header_stays_available_and_is_validated (test_review_api.ReviewHandlerTest.test_commit_header_stays_available_and_is_validated) ... Static shell: 41 files; 614393 bytes; no data/",
+        "2026-10-31T08:30:17.4322954Z Ran 618 tests in 52.664s",
+        "2026-10-31T08:30:17.4323934Z OK (skipped=13)"
+      ],
+      "mongo_passes": [
+        "test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+        "test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+        "test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+        "test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+        "test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+        "test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok"
+      ]
+    },
+    {
+      "stage": 17,
+      "run": 41207949975,
+      "py": 124556802977,
+      "summary": [
+        "2026-10-31T13:59:50.5064892Z test_commit_header_stays_available_and_is_validated (test_review_api.ReviewHandlerTest.test_commit_header_stays_available_and_is_validated) ... Static shell: 41 files; 614393 bytes; no data/",
+        "2026-10-31T14:00:04.3456384Z Ran 621 tests in 43.345s",
+        "2026-10-31T14:00:04.3456894Z OK (skipped=13)"
+      ],
+      "mongo_passes": [
+        "test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+        "test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+        "test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+        "test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+        "test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+        "test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok"
+      ]
+    },
+    {
+      "stage": 18,
+      "run": 41210118758,
+      "py": 124563158800,
+      "summary": [
+        "2026-10-31T14:27:46.0142663Z test_commit_header_stays_available_and_is_validated (test_review_api.ReviewHandlerTest.test_commit_header_stays_available_and_is_validated) ... Static shell: 41 files; 615668 bytes; no data/",
+        "2026-10-31T14:27:59.7573844Z Ran 622 tests in 43.437s",
+        "2026-10-31T14:27:59.7574445Z OK (skipped=13)"
+      ],
+      "mongo_passes": [
+        "test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+        "test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+        "test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+        "test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+        "test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+        "test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok"
+      ]
+    },
+    {
+      "stage": 19,
+      "run": 41211197121,
+      "py": 124566381218,
+      "summary": [
+        "2026-10-31T14:41:17.3103637Z test_commit_header_stays_available_and_is_validated (test_review_api.ReviewHandlerTest.test_commit_header_stays_available_and_is_validated) ... Static shell: 41 files; 615668 bytes; no data/",
+        "2026-10-31T14:41:27.8597347Z Ran 623 tests in 28.891s",
+        "2026-10-31T14:41:27.8597492Z OK (skipped=13)"
+      ],
+      "mongo_passes": [
+        "test_expired_rows_and_auth_failures_never_restore (test_review_backup_mongo.FixtureDrill.test_expired_rows_and_auth_failures_never_restore) ... ok",
+        "test_real_source_to_independent_target_preserves_bson_and_indexes (test_review_backup_mongo.FixtureDrill.test_real_source_to_independent_target_preserves_bson_and_indexes) ... ok",
+        "test_concurrent_same_key_is_idempotent (test_review_transactions.ReplicaSetConcurrency.test_concurrent_same_key_is_idempotent) ... ok",
+        "test_expired_existing_row_resurrection_obeys_owner_live_cap (test_review_transactions.ReplicaSetConcurrency.test_expired_existing_row_resurrection_obeys_owner_live_cap) ... ok",
+        "test_simultaneous_distinct_owners_cannot_cross_physical_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_distinct_owners_cannot_cross_physical_cap) ... ok",
+        "test_simultaneous_owner_inserts_cannot_cross_live_cap (test_review_transactions.ReplicaSetConcurrency.test_simultaneous_owner_inserts_cannot_cross_live_cap) ... ok"
+      ]
+    }
+  ],
+  "canonical_run": {
+    "run_id": 41211686609,
+    "jobs": {
+      "jobs": [
+        {
+          "id": 124567834434,
+          "name": "import",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41211686609,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install pinned transfer dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Recreate public chunks and refuse transport drift",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Import pinned public chunks",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 6
+            },
+            {
+              "name": "Reconcile every public asset through Mongo reader",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Archive sanitized import evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

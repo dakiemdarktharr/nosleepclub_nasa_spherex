@@ -11,7 +11,8 @@ spec = importlib.util.spec_from_file_location('observations_api', Path(__file__)
 api = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(api)
 
-# Field names, units and values reproduced from data/raw/quality/w350p35/qr2.xml.
+# The historical QR2 field schema is shared by DR1. A bounded live check is
+# documented separately.
 SAMPLE = b'''<?xml version="1.0" encoding="utf-8"?>
 <VOTABLE xmlns="http://www.ivoa.net/xml/VOTable/v1.3"><RESOURCE type="results">
 <INFO name="QUERY_STATUS" value="OK"/><TABLE>
@@ -22,7 +23,7 @@ SAMPLE = b'''<?xml version="1.0" encoding="utf-8"?>
 <DATA><TABLEDATA><TR><TD>61024.093720</TD><TD>61024.095053</TD>
 <TD>2.40270e-06</TD><TD>3.84730e-06</TD><TD>2025W51_1A_0021_3</TD><TD>SPHEREx-D4</TD>
 <TD>POLYGON ICRS 348.2 34.1 351.8 35.9 353.8 32.9</TD>
-<TD>https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/a.fits</TD><TD>spherex_qr2</TD>
+<TD>https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W51_1A/l2b-v27-2026-215/4/level2_2025W51_1A_0021_3D4_spx_l2b-v27-2026-215.fits</TD><TD>spherex_dr1</TD>
 </TR></TABLEDATA></DATA></TABLE></RESOURCE></VOTABLE>'''
 
 
@@ -51,6 +52,11 @@ class ObservationsTest(unittest.TestCase):
         return api.parse_params('ra=350&dec=35&maxrec=500' + extra)
 
     def test_input_validation_and_exact_sia_query(self):
+        self.assertEqual(self.params()['release'], 'dr1')
+        self.assertEqual(parse_qs(urlsplit(api.upstream_url(self.params())).query)['COLLECTION'], ['spherex_dr1'])
+        with patch.object(api, 'fetch') as fetch:
+            self.assertEqual(request('/api/observations?ra=350&dec=35&release=qr2')[2], {'error': 'release_retired'})
+            fetch.assert_not_called()
         p = self.params('&radius=0.16&release=qr3&deep=1&detector=6&time_min_mjd=60000&time_max_mjd=61000&band_min_um=1&band_max_um=2')
         q = parse_qs(urlsplit(api.upstream_url(p)).query)
         self.assertEqual(q['COLLECTION'], ['spherex_qr3_deep'])
@@ -70,9 +76,10 @@ class ObservationsTest(unittest.TestCase):
         self.assertAlmostEqual(rows[0]['wavelength_width_um'], 1.4446)
         self.assertEqual(rows[0]['t_min_mjd'], 61024.093720)
         self.assertIn('POLYGON ICRS', rows[0]['footprint'])
+        self.assertIn('/dr1/level2/', rows[0]['access_url'])
         fixture = Path(__file__).resolve().parents[1] / 'data/raw/quality/w350p35/qr2.xml'
         if fixture.exists():
-            rows, truncated, count = api.parse_votable(fixture.read_bytes(), self.params())
+            rows, truncated, count = api.parse_votable(fixture.read_bytes(), {**self.params(), 'release': 'qr2'})
             self.assertEqual(count, 471)
             self.assertEqual(rows[0]['obs_id'], '2025W51_1A_0021_3')
             self.assertFalse(truncated)
@@ -95,7 +102,7 @@ class ObservationsTest(unittest.TestCase):
             api.fetch('https://evil.example/SIA')
         cases = [SAMPLE.replace(b'value="OK"', b'value="ERROR"'),
                  SAMPLE.replace(b'unit="m"', b'unit="um"', 1),
-                 SAMPLE.replace(b'spherex_qr2</TD>', b'spherex_qr3</TD>'),
+                 SAMPLE.replace(b'spherex_dr1</TD>', b'spherex_qr3</TD>'),
                  b'<!DOCTYPE x [<!ENTITY y "abc">]><VOTABLE/>', b'x' * (api.MAX_BYTES + 1),
                  SAMPLE.replace(b'<TABLEDATA>', b'<BINARY>').replace(b'</TABLEDATA>', b'</BINARY>')]
         for sample in cases:

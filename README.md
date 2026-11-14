@@ -1,10 +1,34 @@
-# nosleepclub_nasa_spherex
+# What Did SPHEREx See? / SPHEREx đã thấy gì?
 
 NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details).
 
-Web giúp so sánh ảnh SPHEREx theo thời gian, đánh dấu vùng sai khác và đưa cho con người kiểm tra.
+Từ cảnh SPHEREx trên quỹ đạo, chọn vệ tinh để tìm hiểu sứ mệnh hoặc chọn Trái Đất để nhìn lên bầu trời đêm. Chọn một vùng có dữ liệu hoặc nhập RA/Dec để mở ảnh SPHEREx và so sánh các lần chụp.
 
-**[Mở Sky Lab](https://nosleepclub-nasa-spherex.vercel.app)** · [Khám phá tọa độ](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Cách triển khai](docs/DEPLOYMENT.md) · [Kiểm nghiệm mới](docs/SIGNAL_CONTROL_RESULTS.md).
+From the orbit scene, select SPHEREx to learn about the mission or Earth to look up at the night sky. Open a marked region or enter RA/Dec to view SPHEREx images and compare observations.
+
+## Mở bản xem trước / Open the local preview
+
+Từ thư mục repo, dùng môi trường Python đã cài `web/requirements.txt`. / From the repo root, use a Python environment with `web/requirements.txt` installed.
+
+```sh
+python scripts/serve_app.py
+```
+
+[Trang chủ / Home](http://127.0.0.1:8767/) · [Bầu trời đêm / Night sky](http://127.0.0.1:8767/#night-sky) · [Nhập tọa độ / Coordinate search](http://127.0.0.1:8767/#explore)
+
+Chọn **Epsilon Indi B → Mở chuỗi ảnh đã lưu** để xem ba ảnh DR1 khi IRSA chậm hoặc gián đoạn. / Select **Epsilon Indi B → Open saved sequence** to play three DR1 images when IRSA is slow or unavailable. [Metadata và FITS / Metadata and FITS](web/assets/mission/epsilon-sequence/provenance.json)
+
+Cảnh quỹ đạo dùng mô hình trực quan 3D của NASA’s Eyes và ảnh dự phòng lưu cùng web. Tra cứu và tải ảnh mới cần kết nối IRSA. Bản local đã phát ba ảnh thật DR1 D6 của vùng Epsilon Indi B chụp ngày **29/4, 1/5 và 7/5/2025 UTC**. Độ giao phổ ước tính ở tâm vùng là **99,755%** theo WCS-WAVE. Ba lượt tải cutout mất **4,6–17,6 giây** trong lần kiểm tra này. Tốc độ ở Barnard’s Star thay đổi theo lần tải. Kiểm tra vận hành trên bản public còn chờ. [Nhật ký chuỗi ảnh](docs/data/spherex-dr1-timeline-smoke.json)
+
+The orbit scene uses the NASA’s Eyes visualization model and a local still fallback. Live searches and new images require access to IRSA. The local preview played three real DR1 D6 images of the Epsilon Indi B field from **29 April, 1 May and 7 May 2025 UTC**. Estimated common band overlap at the field center was **99.755%** using WCS-WAVE. The three cutouts took **4.6–17.6 seconds** to load in that run. Barnard’s Star latency varied across requests. Public deployment checks are pending. [Image sequence receipt](docs/data/spherex-dr1-timeline-smoke.json)
+
+[Brief giao nhóm / Team brief](docs/PRODUCTION_PRODUCT_BRIEF.md) · [Góc tham chiếu 3D / Spacecraft references](docs/SPHEREX_REFERENCE_VIEWS.md) · [Danh mục dữ liệu / Dataset catalog](docs/DATASET_CATALOG.md) · [Cách triển khai / Deployment](docs/DEPLOYMENT.md)
+
+## Định hình phiên bản tiếp theo
+
+[Câu hỏi sản phẩm và tiêu chí nghiệm thu](docs/OVERHAUL_DISCOVERY.md) · [Danh mục nguồn dữ liệu](docs/DATASET_CATALOG.md) · [Bản đồ vùng trời 3D](docs/sky-atlas.html).
+
+Mở `docs/sky-atlas.html` trực tiếp trong trình duyệt để xoay thiên cầu và chọn dữ liệu. Bản đồ có sẵn danh mục để dùng ngoại tuyến. Sau khi sửa JSON ở `docs/data/`, chạy `python scripts/embed_sky_atlas.py` để cập nhật dữ liệu nhúng.
 
 ## Giao diện theo quy trình
 
@@ -291,3 +315,6 @@ file trực tiếp, không cần Mongo credential.
 Các deployment cũ vẫn được giữ để rollback. Việc giảm output mới không xóa
 source checkout Git hoặc giảm mọi chi phí băng thông Vercel; M0 chưa qua kiểm
 thử tải/failover dài hạn. [Quy trình và giới hạn](docs/MONGODB_PUBLIC_DATA.md).
+
+Biên nhận cutover, lỗi/rollback được giữ nguyên và kiểm thử public:
+[MONGODB_PUBLIC_DATA_RELEASE.md](docs/MONGODB_PUBLIC_DATA_RELEASE.md).

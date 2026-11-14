@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-31T14:33:37.831823+00:00",
+  "local_commit": "7efcf6b4cfd92f236ae891f4d63597aeb3c4814e",
+  "manifest_sha256": "995117aa25dcf5f5afa20b62cb693ef64845ba00d95718dae89263165d31b776",
+  "canonical_routes": true,
+  "requests": [
+    {
+      "path": "/data/ablation/calibration-q030m10.json",
+      "status": 400,
+      "attempt": 1,
+      "bytes": 30,
+      "elapsed_seconds": 0.292,
+      "accept_encoding": "identity",
+      "content_type": "application/json; charset=utf-8",
+      "content_encoding": null,
+      "cache": "MISS",
+      "request_id": "sfo1::sin1::9tq62-1793457217921-d4e9fa24929c"
+    }
+  ],
+  "assets": [],
+  "passed": false,
+  "qualification": "Exact public-byte transport reconciliation; no science/load/uptime claim.",
+  "finished_at": "2026-10-31T14:33:38.132988+00:00"
+}

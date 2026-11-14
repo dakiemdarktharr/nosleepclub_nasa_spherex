@@ -1,0 +1,1411 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-11-14",
+  "datasets": [
+    {
+      "id": "spherex-dr1",
+      "title": "SPHEREx DR1 · Spectral Images",
+      "group": "SPHEREx",
+      "product": "Ảnh phổ FITS từng lần chụp",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Khảo sát rộng toàn trời · Survey 1 và 2"
+      },
+      "use": "Nguồn ảnh chính để tạo chuỗi thời gian tại RA/Dec. Truy vấn SIA2 với spherex_dr1, rồi lấy cutout từ tệp phù hợp.",
+      "limit": "Một điểm ảnh có bước sóng phụ thuộc vị trí trên detector. Đọc WCS-WAVE, FLAGS, VARIANCE, WCS và thời gian trước khi so sánh.",
+      "sources": [
+        {
+          "label": "IRSA DR1",
+          "url": "https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_dr1.html"
+        },
+        {
+          "label": "Data Explorer",
+          "url": "https://irsa.ipac.caltech.edu/applications/spherex/"
+        },
+        {
+          "label": "SIA2 và cutout",
+          "url": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/"
+        }
+      ]
+    },
+    {
+      "id": "spherex-qr3",
+      "title": "SPHEREx QR3 · Spectral Images",
+      "group": "SPHEREx",
+      "product": "Ảnh phổ FITS từng lần chụp",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Khảo sát rộng toàn trời · độ phủ phụ thuộc thời điểm"
+      },
+      "use": "Tra spherex_qr3 để bổ sung các đợt quan sát sau DR1. IRSA định hướng sử dụng DR1 và QR3 chung.",
+      "limit": "Toàn trời là phạm vi khảo sát. Kiểm tra độ phủ, trùng obs_id và bước sóng tại điểm trước khi ghép. QR2 dùng phiên bản xử lý khác.",
+      "sources": [
+        {
+          "label": "Các bản phát hành",
+          "url": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-releases/"
+        },
+        {
+          "label": "Truy cập SIA2",
+          "url": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/"
+        }
+      ]
+    },
+    {
+      "id": "spherex-sia-samples",
+      "title": "SPHEREx DR1 / QR3 · Footprint mẫu",
+      "group": "SPHEREx",
+      "product": "9 polygon ICRS từ metadata SIA2",
+      "coverage": {
+        "type": "regions",
+        "label": "Năm tâm thử · mỗi truy vấn lấy tối đa 1 hàng",
+        "regions": [
+          {
+            "label": "WISE 0855 · DR1 D3",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                133.24990295057214,
+                -6.792366530370936
+              ],
+              [
+                136.573730639645,
+                -7.893897878777517
+              ],
+              [
+                135.6087246915983,
+                -11.252283174147388
+              ],
+              [
+                132.22997686194108,
+                -10.127262014271603
+              ]
+            ],
+            "metadata": {
+              "targetId": "wise0855",
+              "release": "DR1",
+              "obsId": "2025W19_1B_0116_1",
+              "band": "D3",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W19_1B/l2b-v27-2026-197/3/level2_2025W19_1B_0116_1D3_spx_l2b-v27-2026-197.fits",
+              "productId": "ivo://irsa.ipac/spherex_dr1?2025W19_1B_0116_1/D3",
+              "collection": "spherex_dr1",
+              "timeMinMjd": 60800.700028,
+              "timeMaxMjd": 60800.701361,
+              "wavelengthMinM": 0.0000016301,
+              "wavelengthMaxM": 0.0000024346,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+133.76012139+-7.24212794+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:03+00:00",
+              "responseSha256": "941460cdf510574fb3dfecba60b460f023269360514bd834728ed66cbc36638f",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 133.24990295057214 -6.792366530370936 136.573730639645 -7.893897878777517 135.6087246915983 -11.252283174147388 132.22997686194108 -10.127262014271603 133.24990295057214 -6.792366530370936"
+            }
+          },
+          {
+            "label": "Barnard’s Star · DR1 D6",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                266.69818339020907,
+                5.472469522295728
+              ],
+              [
+                270.1773378537016,
+                5.149486050441448
+              ],
+              [
+                269.9973138381142,
+                1.660074934294828
+              ],
+              [
+                266.5011710028342,
+                1.9904353173956755
+              ]
+            ],
+            "metadata": {
+              "targetId": "barnard",
+              "release": "DR1",
+              "obsId": "2025W33_2C_0321_1",
+              "band": "D6",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W33_2C/l2b-v27-2026-228/6/level2_2025W33_2C_0321_1D6_spx_l2b-v27-2026-228.fits",
+              "productId": "ivo://irsa.ipac/spherex_dr1?2025W33_2C_0321_1/D6",
+              "collection": "spherex_dr1",
+              "timeMinMjd": 60902.864715,
+              "timeMaxMjd": 60902.866047,
+              "wavelengthMinM": 0.0000044115,
+              "wavelengthMaxM": 0.0000050096,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+269.44626689+4.76822222+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:03+00:00",
+              "responseSha256": "5bd4194e5324263c810ac976e99847c36664df37b17fd6b7dad33397346dc512",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 266.69818339020907 5.472469522295728 270.1773378537016 5.149486050441448 269.9973138381142 1.660074934294828 266.5011710028342 1.9904353173956755 266.69818339020907 5.472469522295728"
+            }
+          },
+          {
+            "label": "Barnard’s Star · QR3 D6",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                268.4835901974142,
+                8.349190038591985
+              ],
+              [
+                271.98679534283417,
+                8.059514042636716
+              ],
+              [
+                271.83437494130686,
+                4.568839814042064
+              ],
+              [
+                268.325132311829,
+                4.865058087269894
+              ]
+            ],
+            "metadata": {
+              "targetId": "barnard",
+              "release": "QR3",
+              "obsId": "2026W33_2A_0594_3",
+              "band": "D6",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W33_2A/l2b-v27-2026-241/6/level2_2026W33_2A_0594_3D6_spx_l2b-v27-2026-241.fits",
+              "productId": "ivo://irsa.ipac/spherex_qr3?2026W33_2A_0594_3/D6",
+              "collection": "spherex_qr3",
+              "timeMinMjd": 61268.629319,
+              "timeMaxMjd": 61268.630652,
+              "wavelengthMinM": 0.0000044115,
+              "wavelengthMaxM": 0.0000050096,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+269.44626689+4.76822222+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:04+00:00",
+              "responseSha256": "a33d909b448f3340479c043b8f5e775c9d301c82f0df4cf9bfa8f5d80fa52ba5",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 268.4835901974142 8.349190038591985 271.98679534283417 8.059514042636716 271.83437494130686 4.568839814042064 268.325132311829 4.865058087269894 268.4835901974142 8.349190038591985"
+            }
+          },
+          {
+            "label": "ε Indi B · DR1 D6",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                336.3903457998719,
+                -59.38119393836254
+              ],
+              [
+                329.9983411343592,
+                -60.78021463010135
+              ],
+              [
+                327.40931238091144,
+                -57.54674050284504
+              ],
+              [
+                333.4055904492386,
+                -56.275144661191064
+              ]
+            ],
+            "metadata": {
+              "targetId": "epsilon",
+              "release": "DR1",
+              "obsId": "2025W18_1B_0081_1",
+              "band": "D6",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/6/level2_2025W18_1B_0081_1D6_spx_l2b-v27-2026-196.fits",
+              "productId": "ivo://irsa.ipac/spherex_dr1?2025W18_1B_0081_1/D6",
+              "collection": "spherex_dr1",
+              "timeMinMjd": 60794.06332,
+              "timeMaxMjd": 60794.064653,
+              "wavelengthMinM": 0.0000044115,
+              "wavelengthMaxM": 0.0000050096,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+331.04583333+-56.78333333+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:05+00:00",
+              "responseSha256": "58dd9e95ddb3bee05c72e629e21e3ed0ff49e553560aebfbafb14384fe3e87d1",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 336.3903457998719 -59.38119393836254 329.9983411343592 -60.78021463010135 327.40931238091144 -57.54674050284504 333.4055904492386 -56.275144661191064 336.3903457998719 -59.38119393836254"
+            }
+          },
+          {
+            "label": "ε Indi B · QR3 D3",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                323.08557536348314,
+                -55.83952226463645
+              ],
+              [
+                328.5604471314141,
+                -54.33218809431771
+              ],
+              [
+                331.83344651576687,
+                -57.300460655550005
+              ],
+              [
+                325.9780299933144,
+                -58.95672413781803
+              ]
+            ],
+            "metadata": {
+              "targetId": "epsilon",
+              "release": "QR3",
+              "obsId": "2026W39_1A_0276_2",
+              "band": "D3",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W39_1A/l2b-v27-2026-268/3/level2_2026W39_1A_0276_2D3_spx_l2b-v27-2026-268.fits",
+              "productId": "ivo://irsa.ipac/spherex_qr3?2026W39_1A_0276_2/D3",
+              "collection": "spherex_qr3",
+              "timeMinMjd": 61305.228398,
+              "timeMaxMjd": 61305.229731,
+              "wavelengthMinM": 0.0000016301,
+              "wavelengthMaxM": 0.0000024346,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+331.04583333+-56.78333333+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:05+00:00",
+              "responseSha256": "c2816ca7f1d2daafbfdc7d2dfcb7112ed0cb8dfc1c10ca80cc3360434d8b7a41",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 323.08557536348314 -55.83952226463645 328.5604471314141 -54.33218809431771 331.83344651576687 -57.300460655550005 325.9780299933144 -58.95672413781803 323.08557536348314 -55.83952226463645"
+            }
+          },
+          {
+            "label": "RW Aurigae · DR1 D1",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                77.2503153570916,
+                30.00243749238915
+              ],
+              [
+                73.26502422330879,
+                29.638364956231037
+              ],
+              [
+                72.8937692791407,
+                33.108478351825504
+              ],
+              [
+                77.06432081491849,
+                33.48939928602037
+              ]
+            ],
+            "metadata": {
+              "targetId": "rwaur",
+              "release": "DR1",
+              "obsId": "2025W36_1A_0095_1",
+              "band": "D1",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W36_1A/l2b-v27-2026-232/1/level2_2025W36_1A_0095_1D1_spx_l2b-v27-2026-232.fits",
+              "productId": "ivo://irsa.ipac/spherex_dr1?2025W36_1A_0095_1/D1",
+              "collection": "spherex_dr1",
+              "timeMinMjd": 60919.419647,
+              "timeMaxMjd": 60919.420979,
+              "wavelengthMinM": 7.455e-7,
+              "wavelengthMaxM": 0.0000011167,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+76.95652603+30.40143817+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:05+00:00",
+              "responseSha256": "acab7dfce19b5dca20cc06663f7cd00d56ba5bf99828a69d683d353afdf7836d",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 77.2503153570916 30.00243749238915 73.26502422330879 29.638364956231037 72.8937692791407 33.108478351825504 77.06432081491849 33.48939928602037 77.2503153570916 30.00243749238915"
+            }
+          },
+          {
+            "label": "RW Aurigae · QR3 D1",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                77.53709793289215,
+                29.33574206730101
+              ],
+              [
+                73.57726060890275,
+                28.976332285229475
+              ],
+              [
+                73.21615728437769,
+                32.44715807603707
+              ],
+              [
+                77.35620819388436,
+                32.82295180319422
+              ]
+            ],
+            "metadata": {
+              "targetId": "rwaur",
+              "release": "QR3",
+              "obsId": "2026W36_1A_0476_1",
+              "band": "D1",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W36_1A/l2b-v27-2026-252/1/level2_2026W36_1A_0476_1D1_spx_l2b-v27-2026-252.fits",
+              "productId": "ivo://irsa.ipac/spherex_qr3?2026W36_1A_0476_1/D1",
+              "collection": "spherex_qr3",
+              "timeMinMjd": 61285.097169,
+              "timeMaxMjd": 61285.098502,
+              "wavelengthMinM": 7.455e-7,
+              "wavelengthMaxM": 0.0000011167,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+76.95652603+30.40143817+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:05+00:00",
+              "responseSha256": "65201ce3b796198dec50cc5a468287220caf39a7159464daa9dd42073ed3909e",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 77.53709793289215 29.33574206730101 73.57726060890275 28.976332285229475 73.21615728437769 32.44715807603707 77.35620819388436 32.82295180319422 77.53709793289215 29.33574206730101"
+            }
+          },
+          {
+            "label": "R Draconis · DR1 D6",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                259.99143750908775,
+                67.34662051064976
+              ],
+              [
+                254.51493338800745,
+                64.66954081311222
+              ],
+              [
+                247.3007082551434,
+                66.49656555259199
+              ],
+              [
+                252.40488054282457,
+                69.44161778918311
+              ]
+            ],
+            "metadata": {
+              "targetId": "rdra",
+              "release": "DR1",
+              "obsId": "2025W20_2D_0243_1",
+              "band": "D6",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W20_2D/l2b-v27-2026-198/6/level2_2025W20_2D_0243_1D6_spx_l2b-v27-2026-198.fits",
+              "productId": "ivo://irsa.ipac/spherex_dr1?2025W20_2D_0243_1/D6",
+              "collection": "spherex_dr1",
+              "timeMinMjd": 60811.955829,
+              "timeMaxMjd": 60811.957162,
+              "wavelengthMinM": 0.0000044115,
+              "wavelengthMaxM": 0.0000050096,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+248.16761083+66.75497942+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:06+00:00",
+              "responseSha256": "b19a4d7a9d3e98d05ad84f0982b40791a8a53eafda41768d30fa345cc0e1aed7",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 259.99143750908775 67.34662051064976 254.51493338800745 64.66954081311222 247.3007082551434 66.49656555259199 252.40488054282457 69.44161778918311 259.99143750908775 67.34662051064976"
+            }
+          },
+          {
+            "label": "R Draconis · QR3 D3",
+            "frame": "icrs",
+            "shape": "polygon",
+            "vertices": [
+              [
+                258.9905327713925,
+                67.54496790331592
+              ],
+              [
+                253.75890844095238,
+                64.78273773343824
+              ],
+              [
+                246.36665410322405,
+                66.48773868733451
+              ],
+              [
+                251.11793483416906,
+                69.51068886046932
+              ]
+            ],
+            "metadata": {
+              "targetId": "rdra",
+              "release": "QR3",
+              "obsId": "2026W20_2A_0294_4",
+              "band": "D3",
+              "source": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W20_2A/l2b-v27-2026-267/3/level2_2026W20_2A_0294_4D3_spx_l2b-v27-2026-267.fits",
+              "productId": "ivo://irsa.ipac/spherex_qr3?2026W20_2A_0294_4/D3",
+              "collection": "spherex_qr3",
+              "timeMinMjd": 61176.366728,
+              "timeMaxMjd": 61176.368061,
+              "wavelengthMinM": 0.0000016301,
+              "wavelengthMaxM": 0.0000024346,
+              "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+248.16761083+66.75497942+0.05&MAXREC=1",
+              "retrievedAt": "2026-11-14T02:54:06+00:00",
+              "responseSha256": "cdef3bac6db225de2c7c987192fa7f6efc817042e98d51b158405f7f6ec8f782",
+              "status": "OVERFLOW",
+              "sRegion": "POLYGON ICRS 258.9905327713925 67.54496790331592 253.75890844095238 64.78273773343824 246.36665410322405 66.48773868733451 251.11793483416906 69.51068886046932 258.9905327713925 67.54496790331592"
+            }
+          }
+        ]
+      },
+      "use": "Kiểm tra hình dạng trường chụp, release và detector của các hàng trả về từ IRSA. Đường viền là s_region của chính sản phẩm được chỉ ra.",
+      "limit": "Các hình chỉ đại diện hàng mẫu được trả, chưa đủ xác định số epoch, pixel có giá trị hoặc phép đo. QR3 tại cone WISE 0855 trả 0 hàng trong snapshot này.",
+      "sources": [
+        {
+          "label": "Truy vấn IRSA SIA2",
+          "url": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/"
+        },
+        {
+          "label": "WISE 0855 · DR1 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+133.76012139+-7.24212794+0.05&MAXREC=1"
+        },
+        {
+          "label": "WISE 0855 · QR3 · 0 hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+133.76012139+-7.24212794+0.05&MAXREC=1"
+        },
+        {
+          "label": "Barnard’s Star · DR1 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+269.44626689+4.76822222+0.05&MAXREC=1"
+        },
+        {
+          "label": "Barnard’s Star · QR3 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+269.44626689+4.76822222+0.05&MAXREC=1"
+        },
+        {
+          "label": "ε Indi B · DR1 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+331.04583333+-56.78333333+0.05&MAXREC=1"
+        },
+        {
+          "label": "ε Indi B · QR3 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+331.04583333+-56.78333333+0.05&MAXREC=1"
+        },
+        {
+          "label": "RW Aurigae · DR1 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+76.95652603+30.40143817+0.05&MAXREC=1"
+        },
+        {
+          "label": "RW Aurigae · QR3 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+76.95652603+30.40143817+0.05&MAXREC=1"
+        },
+        {
+          "label": "R Draconis · DR1 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_dr1&POS=CIRCLE+248.16761083+66.75497942+0.05&MAXREC=1"
+        },
+        {
+          "label": "R Draconis · QR3 · có hàng",
+          "url": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=CIRCLE+248.16761083+66.75497942+0.05&MAXREC=1"
+        }
+      ]
+    },
+    {
+      "id": "spherex-deep",
+      "title": "SPHEREx · Deep Survey",
+      "group": "SPHEREx",
+      "product": "Ảnh phổ FITS từng lần chụp",
+      "coverage": {
+        "type": "regions",
+        "label": "Hai trường gần cực hoàng đạo; chỉ đánh dấu hướng cực",
+        "regions": [
+          {
+            "label": "Hướng cực hoàng đạo Bắc",
+            "frame": "icrs",
+            "shape": "point",
+            "lon": 90,
+            "lat": 66.5607
+          },
+          {
+            "label": "Hướng cực hoàng đạo Nam",
+            "frame": "icrs",
+            "shape": "point",
+            "lon": 270,
+            "lat": -66.5607
+          }
+        ]
+      },
+      "use": "Tra spherex_dr1_deep và spherex_qr3_deep để tìm thêm lượt quan sát trong vùng sâu.",
+      "limit": "Hai chấm là cực hoàng đạo J2000 xấp xỉ trong hệ xích đạo. Trường Nam lệch cực. Xem MOC trên IRSA và s_region để biết hình dạng vùng quan sát.",
+      "sources": [
+        {
+          "label": "Thiết kế khảo sát",
+          "url": "https://spherex.caltech.edu/page/survey"
+        },
+        {
+          "label": "MOC trong Data Explorer",
+          "url": "https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/searching.html"
+        },
+        {
+          "label": "Các collection sâu",
+          "url": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/"
+        }
+      ]
+    },
+    {
+      "id": "spherex-cube",
+      "title": "SPHEREx DR1 · All-Sky Cube",
+      "group": "SPHEREx",
+      "product": "Cube phổ FITS HEALPix, 102 kênh danh định",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · hình học theo ô HEALPix"
+      },
+      "use": "Hiển thị nền hồng ngoại hoặc tham khảo phổ theo vị trí. Truy vấn spherex_dr1_cube.",
+      "limit": "Cube tổng hợp ảnh DR1. Trục thứ ba là bước sóng. Lấy Spectral Images để xem riêng từng thời điểm.",
+      "sources": [
+        {
+          "label": "IRSA DR1",
+          "url": "https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_dr1.html"
+        },
+        {
+          "label": "SIA2 / FITS",
+          "url": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/"
+        }
+      ]
+    },
+    {
+      "id": "spherex-qr2",
+      "title": "SPHEREx QR2 · Spectral Images",
+      "group": "SPHEREx",
+      "product": "Ảnh phổ FITS lịch sử, từng lần chụp",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Thiết kế khảo sát rộng toàn trời · dữ liệu lịch sử"
+      },
+      "use": "Tái lập các demo và thí nghiệm QR2 đã khóa trong dự án bằng FITS có hash.",
+      "limit": "DR1 + QR3 đã thay thế QR2. IRSA ghi QR2 không còn tìm qua SIA2 và cho tải trực tiếp đến tháng 2/2027.",
+      "sources": [
+        {
+          "label": "Các bản phát hành",
+          "url": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-releases/"
+        },
+        {
+          "label": "Thư mục tải trực tiếp",
+          "url": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/"
+        }
+      ]
+    },
+    {
+      "id": "spherex-fit-mosaic",
+      "title": "SPHEREx · Mosaic / Spectrophotometry",
+      "group": "SPHEREx",
+      "product": "Cube ghép theo yêu cầu và phổ trích từ ảnh",
+      "coverage": {
+        "type": "targeted",
+        "label": "Vùng trời do người dùng yêu cầu, theo ảnh đầu vào"
+      },
+      "use": "Tạo mosaic hoặc đo phổ tại vị trí bằng công cụ IRSA. Giữ phiên bản, hình học, band và tham số yêu cầu.",
+      "limit": "Phổ forced photometry dùng vị trí đầu vào cố định. Mosaic gộp dữ liệu theo cấu hình và mất thông tin từng lần chụp nếu gộp epoch.",
+      "sources": [
+        {
+          "label": "Data Explorer",
+          "url": "https://irsa.ipac.caltech.edu/applications/spherex/"
+        },
+        {
+          "label": "Spectrophotometry",
+          "url": "https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/sp.html"
+        }
+      ]
+    },
+    {
+      "id": "wise-neowise",
+      "title": "WISE / NEOWISE · Single Exposure",
+      "group": "Hồng ngoại",
+      "product": "Ảnh, uncertainty/mask và bảng nguồn từng exposure",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · mật độ lượt quét biến thiên"
+      },
+      "use": "Xem ảnh lịch sử và quang trắc W1/W2 xuyên nhiều năm. WISE giai đoạn đầu còn có W3/W4.",
+      "limit": "WISE và NEOWISE có các giai đoạn khác nhau. Kiểm tra thời gian, bão hòa, artifact, confusion và PSF trước khi so với SPHEREx.",
+      "sources": [
+        {
+          "label": "Kho WISE và NEOWISE theo giai đoạn",
+          "url": "https://irsa.ipac.caltech.edu/Missions/wise.html"
+        },
+        {
+          "label": "API ảnh",
+          "url": "https://irsa.ipac.caltech.edu/docs/program_interface/api_images.html"
+        }
+      ]
+    },
+    {
+      "id": "allwise",
+      "title": "AllWISE · Atlas và Source Catalog",
+      "group": "Hồng ngoại",
+      "product": "Mosaic WISE W1–W4, catalog và bảng quang trắc nhiều epoch",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · tập dữ liệu tổng hợp"
+      },
+      "use": "Dùng atlas làm lớp bối cảnh và catalog để tra nguồn hàng xóm. Kho IRSA có bảng photometry riêng theo nhiều epoch.",
+      "limit": "Dùng bảng nhiều epoch hoặc Single Exposure nếu cần thời gian. Với nguồn chuyển động nhanh, kiểm tra epoch và dịch chuyển giữa các lần quét.",
+      "sources": [
+        {
+          "label": "WISE IRSA / AllWISE",
+          "url": "https://irsa.ipac.caltech.edu/Missions/wise.html"
+        },
+        {
+          "label": "Tài liệu bản AllWISE",
+          "url": "https://irsa.ipac.caltech.edu/data/WISE/docs/release/allwise/"
+        }
+      ]
+    },
+    {
+      "id": "unwise-time",
+      "title": "unWISE · Time-resolved / Time-Domain Catalog",
+      "group": "Hồng ngoại",
+      "product": "Coadd W1/W2 theo lượt quét và catalog từng epoch",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · các lượt quét gộp theo thời gian"
+      },
+      "use": "Dùng cho blink lịch sử và so chuyển động/biến quang khi cần độ sâu cao hơn ảnh đơn WISE.",
+      "limit": "Mỗi epoch là ảnh gộp theo lượt, nên chuyển động hoặc biến quang trong lượt có thể bị làm mờ. Nhiều bộ unWISE chia sẻ ảnh WISE/NEOWISE.",
+      "sources": [
+        {
+          "label": "unWISE theo sản phẩm",
+          "url": "https://irsa.ipac.caltech.edu/data/WISE/unWISE/overview.html"
+        },
+        {
+          "label": "DOI Time-Domain Catalog",
+          "url": "https://www.ipac.caltech.edu/doi/irsa/10.26131/IRSA580"
+        },
+        {
+          "label": "Tải coadd",
+          "url": "https://unwise.me/"
+        }
+      ]
+    },
+    {
+      "id": "unwise-full",
+      "title": "unWISE · Full-depth Coadds / Source Catalog",
+      "group": "Hồng ngoại",
+      "product": "Mosaic và catalog tĩnh W1/W2",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · W1/W2"
+      },
+      "use": "Lớp hồng ngoại sâu để xem cấu trúc xung quanh mục tiêu và tham chiếu nguồn hàng xóm.",
+      "limit": "Dùng coadd theo lượt quét cho timeline. Kiểm tra phiên bản coadd/catalog và nguồn bị trộn.",
+      "sources": [
+        {
+          "label": "unWISE tại IRSA",
+          "url": "https://irsa.ipac.caltech.edu/data/WISE/unWISE/overview.html"
+        },
+        {
+          "label": "Data access của nhóm tác giả",
+          "url": "https://catalog.unwise.me/"
+        }
+      ]
+    },
+    {
+      "id": "catwise2020",
+      "title": "CatWISE2020",
+      "group": "Catalog",
+      "product": "Vị trí, proper motion, W1/W2 và cờ chất lượng",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · dữ liệu WISE/NEOWISE 2010–2018"
+      },
+      "use": "Đối chiếu nguồn đỏ/mờ khi thiếu Gaia và đưa vị trí về epoch ảnh.",
+      "limit": "Đọc epoch, quy ước đơn vị proper motion, cờ và bảng offset theo tile. Vị trí hướng dẫn suy ra từ catalog có sai số.",
+      "sources": [
+        {
+          "label": "Cột CatWISE2020",
+          "url": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html"
+        },
+        {
+          "label": "Bảng offset",
+          "url": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/CatWISE2020_Table1_20201012.tbl"
+        },
+        {
+          "label": "Catalog Search",
+          "url": "https://irsa.ipac.caltech.edu/Missions/wise.html"
+        }
+      ]
+    },
+    {
+      "id": "varwise",
+      "title": "VarWISE",
+      "group": "Biến quang",
+      "product": "Catalog biến quang W1/W2 và bảng liên kết exposure",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · các nguồn được tuyển chọn"
+      },
+      "use": "Tra nguồn có biến quang hồng ngoại đã được catalog hóa. Liên kết về phép đo NEOWISE đơn ảnh.",
+      "limit": "Mẫu lọc phụ thuộc ngưỡng và chất lượng. Thiếu nguồn trong bảng không loại trừ biến quang.",
+      "sources": [
+        {
+          "label": "Catalog và Associations",
+          "url": "https://irsa.ipac.caltech.edu/data/WISE/VarWISE/overview.html"
+        }
+      ]
+    },
+    {
+      "id": "twomass",
+      "title": "2MASS · All-Sky Atlas và PSC",
+      "group": "Hồng ngoại",
+      "product": "Ảnh Atlas FITS và catalog J, H, Ks",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · ảnh hồng ngoại lịch sử"
+      },
+      "use": "Dùng làm ảnh trước thời SPHEREx và catalog vị trí tham khảo.",
+      "limit": "Độ sâu, band và thời gian khác SPHEREx. Đọc ngày quan sát của tile; tìm thêm 6X nếu có quan sát sâu ở mục tiêu.",
+      "sources": [
+        {
+          "label": "All-Sky Data Release",
+          "url": "https://irsa.ipac.caltech.edu/data/2MASS/docs/releases/allsky/"
+        },
+        {
+          "label": "Image Services",
+          "url": "https://irsa.ipac.caltech.edu/applications/2MASS/IM/"
+        }
+      ]
+    },
+    {
+      "id": "twomass-sixx",
+      "title": "2MASS · 6X",
+      "group": "Hồng ngoại",
+      "product": "Ảnh phơi lâu J, H, Ks và catalog 6X",
+      "coverage": {
+        "type": "targeted",
+        "label": "Một số vùng khảo sát sâu, ví dụ Pleiades và Lockman Hole"
+      },
+      "use": "Tìm ảnh 2MASS sâu hơn quanh trường có dữ liệu 6X.",
+      "limit": "Khả năng có dữ liệu tùy vị trí. Dùng inventory 6X và footprint để lập coverage theo từng tệp.",
+      "sources": [
+        {
+          "label": "Mô tả 6X",
+          "url": "https://irsa.ipac.caltech.edu/data/2MASS/docs/releases/allsky/doc/seca3_1.html"
+        },
+        {
+          "label": "Inventory",
+          "url": "https://irsa.ipac.caltech.edu/applications/2MASS/IM/inventory.html"
+        }
+      ]
+    },
+    {
+      "id": "gaia-dr3",
+      "title": "Gaia DR3",
+      "group": "Catalog",
+      "product": "Astrometry, photometry, chuyển động riêng và thị sai",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · mật độ phụ thuộc Gaia"
+      },
+      "use": "Overlay sao chuẩn, chuyển vị trí sang epoch ảnh, truy vấn dữ liệu biến quang hoặc vật thể Hệ Mặt Trời nơi có.",
+      "limit": "Giữ covariance, cờ chất lượng và epoch tham chiếu. Gaia thu ánh sáng quang học, nên có thể thiếu nguồn lạnh hoặc đỏ mạnh.",
+      "sources": [
+        {
+          "label": "Tài liệu ESA DR3",
+          "url": "https://gea.esac.esa.int/archive/documentation/GDR3/index.html"
+        },
+        {
+          "label": "MAST Gaia",
+          "url": "https://archive.stsci.edu/missions-and-data/gaia"
+        }
+      ]
+    },
+    {
+      "id": "panstarrs-dr2",
+      "title": "Pan-STARRS1 DR2",
+      "group": "Quang học",
+      "product": "Catalog phát hiện và ảnh grizy stack/warp",
+      "coverage": {
+        "type": "regions",
+        "label": "Chủ yếu Dec ≥ −30°",
+        "regions": [
+          {
+            "label": "Phạm vi danh định PS1",
+            "frame": "icrs",
+            "shape": "box",
+            "lonMin": 0,
+            "lonMax": 360,
+            "latMin": -30,
+            "latMax": 90
+          }
+        ]
+      },
+      "use": "Dùng stack làm nền quang học hoặc ảnh warp từng epoch để đối chiếu phía Bắc.",
+      "limit": "Đường Dec là ranh giới danh định; có lỗ và một số ảnh rời phía Nam. Trường ε Indi B nằm dưới giới hạn này.",
+      "sources": [
+        {
+          "label": "MAST catalog",
+          "url": "https://catalogs.mast.stsci.edu/panstarrs/"
+        },
+        {
+          "label": "Ảnh stack và warp",
+          "url": "https://outerspace.stsci.edu/spaces/PANSTARRS/pages/298812333/PS1%2BImage%2BData%2BProducts"
+        }
+      ]
+    },
+    {
+      "id": "skymapper-dr4",
+      "title": "SkyMapper DR4",
+      "group": "Quang học",
+      "product": "Ảnh đã hiệu chuẩn và catalog uvgriz",
+      "coverage": {
+        "type": "regions",
+        "label": "Bầu trời phía Nam đến Dec +16° cho đủ sáu dải",
+        "regions": [
+          {
+            "label": "Phạm vi danh định đủ sáu dải",
+            "frame": "icrs",
+            "shape": "box",
+            "lonMin": 0,
+            "lonMax": 360,
+            "latMin": -90,
+            "latMax": 16
+          }
+        ]
+      },
+      "use": "Bối cảnh quang học ở phía Nam, bổ sung vùng ngoài phạm vi Pan-STARRS.",
+      "limit": "Một số trường chỉ phủ một phần các dải đến khoảng +28°. Xem độ phủ thực và cờ ở từng trường.",
+      "sources": [
+        {
+          "label": "DR4 và truy cập dữ liệu",
+          "url": "https://skymapper.anu.edu.au/data-release/dr4/"
+        },
+        {
+          "label": "Bài báo DR4 của nhóm khảo sát",
+          "url": "https://www.mso.anu.edu.au/~cwolf/smss_dr420231207_GDaC.pdf"
+        }
+      ]
+    },
+    {
+      "id": "ztf",
+      "title": "ZTF · Public releases",
+      "group": "Biến quang",
+      "product": "Ảnh từng epoch, ảnh tham chiếu, difference imaging và light curve",
+      "coverage": {
+        "type": "regions",
+        "label": "Trường chủ yếu từ Palomar ở phía Bắc và gần xích đạo"
+      },
+      "use": "Kiểm tra light curve quang học của sao biến quang như RW Aur hoặc R Dra nếu có dữ liệu sạch.",
+      "limit": "Độ phủ và nhịp quan sát phụ thuộc phần khảo sát, filter và bản phát hành. Xem bản đồ epoch tại IRSA.",
+      "sources": [
+        {
+          "label": "IRSA ZTF",
+          "url": "https://irsa.ipac.caltech.edu/Missions/ztf.html"
+        },
+        {
+          "label": "Archive GUI",
+          "url": "https://irsa.ipac.caltech.edu/applications/ztf/"
+        },
+        {
+          "label": "Hình độ phủ ví dụ DR16",
+          "url": "https://irsa.ipac.caltech.edu/data/ZTF/docs/releases/dr16/ztf_release_notes_dr16.pdf"
+        }
+      ]
+    },
+    {
+      "id": "asas-sn",
+      "title": "ASAS-SN · Sky Patrol",
+      "group": "Biến quang",
+      "product": "Quang trắc và light curve V/g",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời · phụ thuộc thời gian và phép đo hợp lệ"
+      },
+      "use": "Tham chiếu biến thiên quang học cho RW Aur và R Dra, theo từng dải và thời gian.",
+      "limit": "Kiểm tra bão hòa, sao lân cận, sai số và điểm đo khác camera. Độ sáng quang học không dự đoán trực tiếp flux hồng ngoại.",
+      "sources": [
+        {
+          "label": "Sky Patrol",
+          "url": "https://www.astronomy.ohio-state.edu/asassn/public/"
+        },
+        {
+          "label": "Sky Patrol V2 của nhóm tác giả",
+          "url": "https://asas-sn.github.io/skypatrol/"
+        }
+      ]
+    },
+    {
+      "id": "atlas",
+      "title": "ATLAS · Forced Photometry",
+      "group": "Biến quang",
+      "product": "Quang trắc chuỗi thời gian, ảnh cắt theo yêu cầu",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời theo thiết kế hiện đại; dữ liệu lịch sử phụ thuộc trạm"
+      },
+      "use": "Bổ sung light curve quang học, thời gian và đối chiếu vật thể Hệ Mặt Trời.",
+      "limit": "Dịch vụ dùng tài khoản và hàng đợi. Xem điều kiện sử dụng, dải c/o, ảnh trực tiếp hay ảnh hiệu và giới hạn bão hòa.",
+      "sources": [
+        {
+          "label": "Forced Photometry Server",
+          "url": "https://fallingstar-data.com/forcedphot/"
+        },
+        {
+          "label": "Tài liệu phạm vi của nhóm ATLAS",
+          "url": "https://astroportal.ifa.hawaii.edu/atlas/sscat/README.md"
+        }
+      ]
+    },
+    {
+      "id": "aavso",
+      "title": "AAVSO · International Database / VSX",
+      "group": "Biến quang",
+      "product": "Phép đo độ sáng theo thời gian và chỉ mục sao biến quang",
+      "coverage": {
+        "type": "targeted",
+        "label": "Độ phủ theo danh sách sao và quan sát đóng góp"
+      },
+      "use": "Tra RW Aur, R Dra và đối chiếu biên độ/thời gian theo từng bộ lọc.",
+      "limit": "VSX dùng để tra nhận dạng và phân loại. AID cung cấp phép đo. Dữ liệu nhiều kỹ thuật và nhiều người quan sát cần kiểm tra cờ.",
+      "sources": [
+        {
+          "label": "Tìm và tải dữ liệu AAVSO",
+          "url": "https://aavso.org/search-and-download-data/"
+        },
+        {
+          "label": "VSX",
+          "url": "https://vsx.aavso.org/"
+        }
+      ]
+    },
+    {
+      "id": "tess",
+      "title": "TESS · FFI / light curves",
+      "group": "Biến quang",
+      "product": "Ảnh toàn khung, pixel mục tiêu và light curve",
+      "coverage": {
+        "type": "regions",
+        "label": "Các sector quan sát; độ phủ giao nhau gần cực hoàng đạo"
+      },
+      "use": "Tìm sector có ảnh theo tọa độ và ngày để đối chiếu biến quang nhanh.",
+      "limit": "Vị trí trên sector phụ thuộc lịch, detector và khoảng trống giữa camera. Dùng công cụ MAST để tra sector cụ thể.",
+      "sources": [
+        {
+          "label": "Kho TESS tại MAST",
+          "url": "https://archive.stsci.edu/missions-and-data/tess"
+        },
+        {
+          "label": "Tải theo sector",
+          "url": "https://archive.stsci.edu/tess/bulk_downloads.html"
+        }
+      ]
+    },
+    {
+      "id": "dss",
+      "title": "Digitized Sky Survey · DSS",
+      "group": "Quang học",
+      "product": "Ảnh tấm kính quang học số hóa",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Toàn trời theo hợp tuyển khảo sát Bắc và Nam"
+      },
+      "use": "Dùng để xem bối cảnh lịch sử và phạm vi dịch chuyển dài hạn của nguồn nhìn thấy trong quang học.",
+      "limit": "Ngày chụp, dải, độ méo và độ sâu tùy tấm kính. Dùng Plate Finder để truy ngày và dữ liệu gốc.",
+      "sources": [
+        {
+          "label": "MAST DSS",
+          "url": "https://archive.stsci.edu/dss/"
+        },
+        {
+          "label": "Plate Finder",
+          "url": "https://archive.stsci.edu/dss/plate_finder_help.html"
+        }
+      ]
+    },
+    {
+      "id": "legacy",
+      "title": "DESI Legacy Imaging Surveys",
+      "group": "Quang học",
+      "product": "Ảnh quang học, mosaic và catalog Tractor",
+      "coverage": {
+        "type": "regions",
+        "label": "Các vùng khảo sát rời · DR9 Bắc và DR10 Nam"
+      },
+      "use": "Dùng ảnh nền quang học sâu và catalog nguồn xung quanh nếu trường có dữ liệu.",
+      "limit": "Footprint có đường biên phức tạp và độ sâu tùy dải. Dùng bản đồ độ sâu hoặc ranh giới theo brick.",
+      "sources": [
+        {
+          "label": "DR10 ở Legacy Surveys",
+          "url": "https://www.legacysurvey.org/dr10/description/"
+        },
+        {
+          "label": "Bản đồ DR9 Bắc và DR10 Nam",
+          "url": "https://datalab.noirlab.edu/data/legacy-surveys"
+        }
+      ]
+    },
+    {
+      "id": "spitzer-seip",
+      "title": "Spitzer · Heritage Archive / SEIP",
+      "group": "Hồng ngoại",
+      "product": "Ảnh, spectra, Super Mosaics và Source List",
+      "coverage": {
+        "type": "targeted",
+        "label": "Các chương trình quan sát rời theo mục tiêu"
+      },
+      "use": "Tìm ảnh IRAC 3,6/4,5 µm và phổ. Kho Heritage có quan sát; SEIP cung cấp sản phẩm tổng hợp thời cryogenic.",
+      "limit": "WISE 0855 có tham chiếu Spitzer trong repo; tra Heritage để xác định quan sát nào. SEIP không đại diện toàn bộ quan sát Spitzer.",
+      "sources": [
+        {
+          "label": "Kho Spitzer",
+          "url": "https://irsa.ipac.caltech.edu/Missions/spitzer.html"
+        },
+        {
+          "label": "SIA2 cho SEIP",
+          "url": "https://irsa.ipac.caltech.edu/docs/program_interface/siav2_seip.html"
+        }
+      ]
+    },
+    {
+      "id": "glimpse",
+      "title": "Spitzer/IRAC · GLIMPSE I và II",
+      "group": "Hồng ngoại",
+      "product": "Mosaic và catalog khảo sát dọc mặt phẳng Ngân Hà",
+      "coverage": {
+        "type": "regions",
+        "label": "Dải hẹp quanh b = 0° trong hệ Ngân Hà",
+        "regions": [
+          {
+            "label": "GLIMPSE I · l 10°–65°",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 10,
+            "lonMax": 65,
+            "latMin": -1,
+            "latMax": 1
+          },
+          {
+            "label": "GLIMPSE I · l 295°–350°",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 295,
+            "lonMax": 350,
+            "latMin": -1,
+            "latMax": 1
+          },
+          {
+            "label": "GLIMPSE II · l 5°–10°",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 5,
+            "lonMax": 10,
+            "latMin": -1,
+            "latMax": 1
+          },
+          {
+            "label": "GLIMPSE II · l 350°–355°",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 350,
+            "lonMax": 355,
+            "latMin": -1,
+            "latMax": 1
+          },
+          {
+            "label": "GLIMPSE II · l 2°–5°",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 2,
+            "lonMax": 5,
+            "latMin": -1.5,
+            "latMax": 1.5
+          },
+          {
+            "label": "GLIMPSE II · l 355°–358°",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 355,
+            "lonMax": 358,
+            "latMin": -1.5,
+            "latMax": 1.5
+          },
+          {
+            "label": "GLIMPSE II · qua l = 0°",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 358,
+            "lonMax": 2,
+            "latMin": -2,
+            "latMax": 2
+          }
+        ]
+      },
+      "use": "Tham khảo cảnh hồng ngoại dày nguồn quanh mặt phẳng Ngân Hà, với ảnh 3,6/4,5/5,8/8 µm.",
+      "limit": "Các dải vẽ theo mô tả khảo sát. Bỏ qua phần bổ sung gần l ≈ 284° vì bảng tóm tắt không nêu rõ bề rộng; các chương trình GLIMPSE mở rộng tra riêng.",
+      "sources": [
+        {
+          "label": "Bảng độ phủ và tải ảnh IRSA",
+          "url": "https://irsa.ipac.caltech.edu/data/SPITZER/GLIMPSE/overview.html"
+        }
+      ]
+    },
+    {
+      "id": "vista-vvv",
+      "title": "VISTA VVV/VVVX · VIRAC2",
+      "group": "Hồng ngoại",
+      "product": "Catalog vị trí, chuyển động và light curve nhiều epoch",
+      "coverage": {
+        "type": "regions",
+        "label": "Phình và đĩa phía Nam Ngân Hà",
+        "regions": [
+          {
+            "label": "Đĩa Ngân Hà · xấp xỉ",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 295,
+            "lonMax": 350,
+            "latMin": -2,
+            "latMax": 2
+          },
+          {
+            "label": "Phình Ngân Hà qua l = 0° · xấp xỉ",
+            "frame": "galactic",
+            "shape": "box",
+            "lonMin": 350,
+            "lonMax": 10,
+            "latMin": -10,
+            "latMax": 5
+          }
+        ]
+      },
+      "use": "Thử đối chiếu biến quang và proper motion cận hồng ngoại ở các trường đông nguồn.",
+      "limit": "Hai hộp chỉ bao vùng gần đúng theo mô tả và Hình 1 của ESO. VIRAC2 dùng vùng VVV gốc; tra tile và mask cho biên chính xác.",
+      "sources": [
+        {
+          "label": "VIRAC2 tại ESO Phase 3",
+          "url": "https://www.eso.org/rm/api/v1/public/releaseDescriptions/227"
+        },
+        {
+          "label": "Bản đồ VVV/VVVX của ESO",
+          "url": "https://cdn3.eso.org/public/images/eso2413g/"
+        }
+      ]
+    },
+    {
+      "id": "vista-vhs",
+      "title": "VISTA Hemisphere Survey · VHS",
+      "group": "Hồng ngoại",
+      "product": "Ảnh và catalog cận hồng ngoại",
+      "coverage": {
+        "type": "regions",
+        "label": "Phần lớn bầu trời phía Nam ngoài vùng VISTA chuyên biệt"
+      },
+      "use": "Ảnh J và Ks là lớp tham chiếu phía Nam nếu tile mục tiêu đã phát hành.",
+      "limit": "Ranh giới phụ thuộc release và survey con. Xem bản đồ VISTA và tra tile trong kho ESO.",
+      "sources": [
+        {
+          "label": "Các khảo sát ESO/VISTA và bản đồ",
+          "url": "https://www.eso.org/sci/observing/PublicSurveys/sciencePublicSurveys.html"
+        }
+      ]
+    },
+    {
+      "id": "jwst-wise0855",
+      "title": "JWST/NIRSpec · WISE 0855",
+      "group": "Hồng ngoại",
+      "product": "Phổ NIRSpec theo chương trình, gồm PRISM và G395M",
+      "coverage": {
+        "type": "targeted",
+        "label": "Một hướng mục tiêu WISE 0855",
+        "regions": [
+          {
+            "label": "WISE 0855 · hướng theo tọa độ đề bài",
+            "frame": "icrs",
+            "shape": "point",
+            "lon": 133.79512917,
+            "lat": -7.24514722
+          }
+        ]
+      },
+      "use": "Dùng phổ độc lập theo thiết bị để tham khảo bandpass/SED. Repo đã ghi provenance của sản phẩm PRISM và phổ ngoài.",
+      "limit": "Chấm dùng tọa độ đề bài, xấp xỉ hướng mục tiêu. Epoch của JWST và SPHEREx khác nhau; tra MAST để lấy hình học/association thực.",
+      "sources": [
+        {
+          "label": "Kho JWST công khai",
+          "url": "https://archive.stsci.edu/missions-and-data/jwst"
+        },
+        {
+          "label": "Sản phẩm PRISM x1d trên MAST",
+          "url": "https://mast.stsci.edu/jwst/api/v0.1/Download/file?uri=mast%3AJWST%2Fproduct%2Fjw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits"
+        },
+        {
+          "label": "Bài báo Luhman và cộng sự",
+          "url": "https://doi.org/10.3847/1538-3881/ad0b72"
+        }
+      ]
+    },
+    {
+      "id": "hst",
+      "title": "HST · MAST",
+      "group": "Quang học",
+      "product": "Ảnh quang học/UV/IR và phổ theo chương trình",
+      "coverage": {
+        "type": "targeted",
+        "label": "Trường nhỏ theo mục tiêu/chương trình"
+      },
+      "use": "Kiểm tra nguồn hàng xóm hoặc cấu trúc góc nhỏ khi có ảnh lưu trữ.",
+      "limit": "Kiểm tra hình dạng vùng chụp, thiết bị, dải, epoch và quyền truy cập của từng tệp.",
+      "sources": [
+        {
+          "label": "HST tại MAST",
+          "url": "https://archive.stsci.edu/missions-and-data/hst"
+        }
+      ]
+    },
+    {
+      "id": "euclid-dr1",
+      "title": "Euclid DR1-Foundation",
+      "group": "Hồng ngoại",
+      "product": "Ảnh VIS/NISP, phổ và catalog",
+      "coverage": {
+        "type": "regions",
+        "label": "Các vùng khảo sát rộng và sâu xuất bản tháng 11/2026"
+      },
+      "use": "Dùng ảnh quang học hoặc cận hồng ngoại sâu để kiểm tra trường có giao nhau.",
+      "limit": "Cần tra footprint DR1-Foundation theo tile. Q1, Q2 và DR1-Foundation là các bản phát hành riêng.",
+      "sources": [
+        {
+          "label": "Euclid ở IRSA",
+          "url": "https://irsa.ipac.caltech.edu/Missions/euclid.html"
+        },
+        {
+          "label": "Bản đồ phủ ESA",
+          "url": "https://www.esa.int/media/about-us/directorates/science/euclid/euclid-s-wide-and-deep-surveys-dr1-foundation"
+        },
+        {
+          "label": "DOI DR1-Foundation",
+          "url": "https://www.ipac.caltech.edu/doi/10.26131/IRSA674"
+        }
+      ]
+    },
+    {
+      "id": "neossat",
+      "title": "NEOSSat · CADC",
+      "group": "Hệ Mặt Trời",
+      "product": "Quan sát FITS của vệ tinh Canada",
+      "coverage": {
+        "type": "targeted",
+        "label": "Theo trường quan sát và lịch điều khiển vệ tinh"
+      },
+      "use": "Bộ đối chiếu độc lập cho vật thể gần Trái Đất ở những trường và thời gian có ảnh.",
+      "limit": "Tra CADC theo tên, tọa độ và thời gian. Giữ metadata và đọc mục tiêu quan sát của từng tệp trước khi ghép.",
+      "sources": [
+        {
+          "label": "Kho NEOSSat ở CADC",
+          "url": "https://cadcftp.cadc.hia.nrc-cnrc.gc.ca/en/neossat/"
+        },
+        {
+          "label": "Tutorial của CSA",
+          "url": "https://github.com/asc-csa/NEOSSAT_Tutorial"
+        },
+        {
+          "label": "Giới thiệu nhiệm vụ CSA",
+          "url": "https://www.asc-csa.gc.ca/eng/satellites/neossat/"
+        }
+      ]
+    },
+    {
+      "id": "jpl-horizons",
+      "title": "JPL Horizons / SB Identification",
+      "group": "Hệ Mặt Trời",
+      "product": "Ephemeris và đối sánh vật thể đã biết",
+      "coverage": {
+        "type": "unknown",
+        "label": "Hướng thay đổi theo thời gian và vị trí quan sát"
+      },
+      "use": "Tra vị trí dự báo hoặc ứng viên vật thể đã biết có thể đi vào footprint ở thời điểm ảnh.",
+      "limit": "Kết quả tính từ quỹ đạo. Kiểm tra observer, hệ thời gian, sai số quỹ đạo và phạm vi tra trước khi đối sánh với ảnh.",
+      "sources": [
+        {
+          "label": "Horizons API",
+          "url": "https://ssd-api.jpl.nasa.gov/doc/horizons.html"
+        },
+        {
+          "label": "SB Identification API",
+          "url": "https://ssd-api.jpl.nasa.gov/doc/sb_ident.html"
+        }
+      ]
+    },
+    {
+      "id": "mpc",
+      "title": "Minor Planet Center · Observations",
+      "group": "Hệ Mặt Trời",
+      "product": "Bản ghi astrometry đã báo cáo cho tiểu hành tinh và sao chổi",
+      "coverage": {
+        "type": "targeted",
+        "label": "Theo vật thể, thời gian và đài quan sát"
+      },
+      "use": "Dùng báo cáo vị trí nhận diện vật thể đã biết hoặc để kiểm tra trước khi gửi ứng viên.",
+      "limit": "Dữ liệu là bản ghi quan sát. Đọc quy ước thời gian, tọa độ, định danh và mã đài theo ADES.",
+      "sources": [
+        {
+          "label": "MPC Data Services",
+          "url": "https://data.minorplanetcenter.net/"
+        },
+        {
+          "label": "Chuẩn quan sát MPC",
+          "url": "https://docs.minorplanetcenter.net/mpc-ops-docs/observations/"
+        }
+      ]
+    },
+    {
+      "id": "spiff",
+      "title": "SPIFF · QR2-2026-04-24",
+      "group": "SPHEREx",
+      "product": "Phổ sao lùn M/L/T/Y và template từ SPHEREx",
+      "coverage": {
+        "type": "targeted",
+        "label": "Theo danh sách nguồn của SPIFF"
+      },
+      "use": "Dùng để tham khảo phương pháp trích phổ và xây dựng bộ thử nguồn lạnh có đối chiếu.",
+      "limit": "SPIFF dùng pixel SPHEREx. Khi kiểm chứng độc lập, tránh dùng trùng nguồn hoặc exposure với bộ dùng để xây template.",
+      "sources": [
+        {
+          "label": "Bản Zenodo của nhóm tác giả",
+          "url": "https://zenodo.org/records/19051216"
+        },
+        {
+          "label": "Bài báo và phương pháp",
+          "url": "https://arxiv.org/abs/2604.22012"
+        }
+      ]
+    },
+    {
+      "id": "akari",
+      "title": "AKARI · IRC/FIS",
+      "group": "Hồng ngoại",
+      "product": "Catalog 9/18 µm và ảnh/bảng xa hồng ngoại",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Khảo sát gần toàn trời · phạm vi khác nhau theo sản phẩm"
+      },
+      "use": "Xem nền bụi hoặc nguồn sáng đỏ ở bước sóng dài hơn SPHEREx.",
+      "limit": "Mức phủ, độ phân giải và bước sóng khác SPHEREx. Xác minh footprint và độ sâu trước khi đưa lớp nền vào phân tích.",
+      "sources": [
+        {
+          "label": "AKARI ở IRSA",
+          "url": "https://irsa.ipac.caltech.edu/data/AKARI/overview.html"
+        }
+      ]
+    },
+    {
+      "id": "iras-iris",
+      "title": "IRAS / IRIS",
+      "group": "Hồng ngoại",
+      "product": "Bản đồ nền trung và xa hồng ngoại",
+      "coverage": {
+        "type": "all-sky",
+        "label": "Mosaic rộng gần toàn trời · độ phủ theo bản đồ"
+      },
+      "use": "Xem nền bụi 12, 25, 60 và 100 µm ở quy mô rộng.",
+      "limit": "Độ phân giải thấp hơn nhiều so với ảnh nguồn điểm SPHEREx. Dùng để kiểm tra cấu trúc nền rộng.",
+      "sources": [
+        {
+          "label": "IRIS data products",
+          "url": "https://irsa.ipac.caltech.edu/data/IRIS/overview.html"
+        },
+        {
+          "label": "Atlas IRIS",
+          "url": "https://irsa.ipac.caltech.edu/data/IRIS/"
+        }
+      ]
+    },
+    {
+      "id": "ptf",
+      "title": "PTF / iPTF",
+      "group": "Biến quang",
+      "product": "Ảnh và light curve Palomar lịch sử",
+      "coverage": {
+        "type": "regions",
+        "label": "Các trường quan sát thời gian trên bầu trời Palomar"
+      },
+      "use": "Kiểm tra quang trắc và ảnh quang học lịch sử ở những trường khảo sát đã ghé.",
+      "limit": "Độ phủ và sampling theo phiên bản và đợt quan sát. Tra theo tọa độ và ngày ở kho IRSA.",
+      "sources": [
+        {
+          "label": "Archive PTF/iPTF",
+          "url": "https://irsa.ipac.caltech.edu/Missions/ptf.html"
+        }
+      ]
+    }
+  ]
+}
