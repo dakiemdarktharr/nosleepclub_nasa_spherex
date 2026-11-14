@@ -18,10 +18,18 @@ from scripts.browser_smoke import QuietHandler, ROOT
 
 @contextmanager
 def serve():
+    class SecurityHandler(QuietHandler):
+        def end_headers(self):
+            # Match production restrictions; no browser-side CSP bypass.
+            self.send_header('Content-Security-Policy',
+                             "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+                             "img-src 'self' data: blob:; connect-src 'self' blob:; object-src 'none'; "
+                             "base-uri 'self'; frame-ancestors 'none'; form-action 'self'")
+            super().end_headers()
     class Server(ThreadingHTTPServer):
         request_queue_size = 128
         daemon_threads = True
-    server = Server(('127.0.0.1', 0), partial(QuietHandler, directory=str(ROOT / 'web')))
+    server = Server(('127.0.0.1', 0), partial(SecurityHandler, directory=str(ROOT / 'web')))
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     try:
@@ -88,7 +96,7 @@ def check_case(browser, base, output, width, language, light=False):
 
         # The new public route must remain public after the research router loads.
         page.goto(f'{base}/?lang={language}&flow_source=wise#compare-step')
-        page.wait_for_function('window.SkyApp?.context().ready === true')
+        page.wait_for_function('() => window.SkyApp?.context().ready === true')
         expect(page).to_have_title(re.compile(r'sphere x search'))
         expect(page.locator('.workflow-header .brand')).to_contain_text('sphere x search')
         page.locator('.workflow-header [data-iris-home]').click()
@@ -178,7 +186,7 @@ def fallback_case(browser, base, output):
         page.goto(f'{base}/?lang=vi#orbit')
         target = page.locator('#gagoo-target')
         expect(target).to_have_attribute('data-model', 'fallback')
-        page.wait_for_function('document.querySelector("#gagoo-fallback").naturalWidth > 0')
+        page.wait_for_function('() => document.querySelector("#gagoo-fallback").naturalWidth > 0')
         page.screenshot(path=str(output / 'fallback-320.png'))
         target.tap()
         expect(target).to_have_attribute('data-tap-preview', 'true')

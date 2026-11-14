@@ -222,14 +222,16 @@
 
   async function enterLearn() {
     if (gagooEntering || transitioning || currentPage !== "orbit") return;
+    const homeSnapshot = gagoo?.snapshot?.();
     gagooEntering = true;
     gagoo?.refresh();
     try {
-      const {playGagooEntrance} = await import("./gagoo-entrance.js?v=1");
+      const {playGagooEntrance} = await import("./gagoo-entrance.js?v=2");
       if (currentPage !== "orbit") return;
       await playGagooEntrance({
         reduced: media,
         language: window.SpherexSite.language(),
+        home: {element: orbit, actorTarget: el("gagoo-target"), snapshot: homeSnapshot},
         onCovered: () => { if (currentPage === "orbit") openLearn(); }
       });
     } catch {
@@ -244,7 +246,7 @@
 
   function startGagoo() {
     if (!gagooLoading) {
-      gagooLoading = import("./gagoo-scene.js?v=1").then(({mountGagoo}) => mountGagoo({
+      gagooLoading = import("./gagoo-scene.js?v=2").then(({mountGagoo}) => mountGagoo({
         canvas: el("gagoo-canvas"), target: el("gagoo-target"), stage: orbit,
         reduced: media,
         isActive: () => currentPage === "orbit" && !gagooEntering,

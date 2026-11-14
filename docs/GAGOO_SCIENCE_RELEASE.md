@@ -1,5 +1,7 @@
 # Gagoo and the SPHEREx science showcase
 
+Historical receipt for the 14 November 2026 release. The subsequent [rig and control-room milestone](CONTROL_ROOM_PROTOTYPE.md) adds an armature and replaces the sliding exit with a backward rebound; the model counts and armature limitation below describe the earlier release.
+
 Delivery scope: the orbital home now opens a separate learning route through Gagoo, while the existing research workspace and full-resolution SPHEREx timeline remain available. Learn intentionally contains no lessons yet.
 
 ## Product changes

@@ -1,7 +1,9 @@
 import * as Three from "./assets/three-0.187.0/three.module.js";
 import {bodyBounds, clampBody, stepBody, createRope, stepRope, ropePath} from "./gagoo-physics.js";
+import {attachGagooRig} from "./gagoo-rig.js";
+import {createRagdollController} from "./gagoo-ragdoll.js";
 
-/** Broad planar forms; +Z faces the viewer. The rigid mascot is 3.2 units tall. */
+/** Broad planar forms; +Z faces the viewer. The articulated mascot is 3.2 units tall. */
 export function createGagooModel(T = Three) {
   const root = new T.Group(); root.name = 'Gagoo — bushbaby astronaut';
   const body = new T.Group(); root.add(body);
@@ -25,7 +27,8 @@ export function createGagooModel(T = Three) {
   };
   const link = (from, to, r1, r2, material, name, parent = body) => {
     const a = new T.Vector3(...from), b = new T.Vector3(...to), direction = b.clone().sub(a);
-    const m = mesh(new T.CylinderGeometry(r2, r1, direction.length(), 6), material, name, a.clone().add(b).multiplyScalar(.5).toArray(), parent);
+    const openJoint = ['upper sleeve', 'forearm sleeve', 'upper leg', 'lower leg'].includes(name);
+    const m = mesh(new T.CylinderGeometry(r2, r1, direction.length(), 6, 1, openJoint), material, name, a.clone().add(b).multiplyScalar(.5).toArray(), parent);
     m.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), direction.normalize()); return m;
   };
   const tube = (points, radius, material, name, parent = body) => mesh(new T.TubeGeometry(new T.CatmullRomCurve3(points.map(p => new T.Vector3(...p))), 5, radius, 4, false), material, name, [0, 0, 0], parent);
@@ -73,11 +76,15 @@ export function createGagooModel(T = Three) {
   for (const x of [-.05, .06]) disc(.022, .022, pale, 'panel status dot', [x, .113, .391], body, 6);
   for (const side of [-1, 1]) {
     const arm = new T.Group(); arm.position.set(side * .48, .30, 0); arm.name = side < 0 ? 'left arm' : 'right arm'; body.add(arm);
-    link([side * .05, 0, 0], [side * .29, -.48, .06], .20, .155, white, 'tapered sleeve', arm);
+    link([side * .05, 0, 0], [side * .17, -.24, .03], .20, .1775, white, 'upper sleeve', arm);
+    link([side * .17, -.24, .03], [side * .29, -.48, .06], .1775, .155, white, 'forearm sleeve', arm);
+    mesh(new T.SphereGeometry(.1775, 6, 4), white, 'elbow joint', [side * .17, -.24, .03], arm);
     link([side * .28, -.43, .057], [side * .31, -.53, .07], .163, .161, shadow, 'simple cuff', arm);
     const glove = mesh(polygon(octagon(.18, .18, .5), .23, .04), white, 'mitten hand', [side * .32, -.64, .09], arm); glove.rotation.z = side * -.12;
     root.userData[side < 0 ? 'leftArm' : 'rightArm'] = arm;
-    link([side * .27, -.36, 0], [side * .34, -.92, .04], .21, .18, white, 'short separated leg');
+    link([side * .27, -.36, 0], [side * .305, -.64, .02], .21, .195, white, 'upper leg');
+    link([side * .305, -.64, .02], [side * .34, -.92, .04], .195, .18, white, 'lower leg');
+    mesh(new T.SphereGeometry(.195, 6, 4), white, 'knee joint', [side * .305, -.64, .02]);
     const boot = slab(.23, .16, .46, white, 'flat-soled boot', [side * .35, -1.06, .14], body, .035);
     boot.geometry.translate(0, .025, 0);
   }
@@ -113,6 +120,7 @@ export function createGagooModel(T = Three) {
   mesh(shell, glass, 'clear polygonal helmet').renderOrder = 5;
   const sheen = new T.MeshBasicMaterial({color: 0xe8f1e8, transparent: true, opacity: .32, depthWrite: false}); materials.add(sheen);
   tube([[.35, 3.08, .38], [.56, 3.01, .45], [.72, 2.92, .51]], .018, sheen, 'single soft upper reflection');
+  attachGagooRig(T, root, body, head);
   const unscaled = new T.Box3().setFromObject(body), size = unscaled.getSize(new T.Vector3()); body.position.y = -(unscaled.min.y + unscaled.max.y) / 2;
   const scale = 3.2 / size.y; root.scale.setScalar(scale); root.updateMatrixWorld(true); const bounds = new T.Box3().setFromObject(root);
   let triangles = 0, meshes = 0; root.traverse(node => { if (node.isMesh) { meshes++; triangles += (node.geometry.index?.count ?? node.geometry.attributes.position.count) / 3; } });
@@ -137,6 +145,7 @@ export function mountGagoo({canvas, target, stage, reduced, isActive = () => tru
     const light = new Three.DirectionalLight(color, intensity); light.position.set(...position); scene.add(light);
   }
   const model = createGagooModel(); scene.add(model);
+  const ragdoll = createRagdollController(model);
   const svgNS = "http://www.w3.org/2000/svg";
   let svg, ownRope = false;
   if (!tetherPath) {
@@ -152,6 +161,7 @@ export function mountGagoo({canvas, target, stage, reduced, isActive = () => tru
   const body = {x: 0, y: 0, vx: 0, vy: 0, width: 0, height: 0};
   let frame = 0, last = 0, elapsed = 0, disposed = false, lost = false, inView = true, drag = null;
   let suppressClick = false, suppressTimer = 0, entrance = false;
+  let previousVelocity = {x: 0, y: 0};
   const listeners = [];
   const listen = (node, event, callback, options) => { node.addEventListener(event, callback, options); listeners.push(() => node.removeEventListener(event, callback, options)); };
   const available = () => !disposed && !lost && isActive() && inView && !document.hidden;
@@ -186,9 +196,20 @@ export function mountGagoo({canvas, target, stage, reduced, isActive = () => tru
       model.rotation.y = -.28 + elapsed * Math.PI * 2 / 45;
       model.rotation.x = .03 + Math.sin(elapsed * .33) * .055;
       model.rotation.z = Math.sin(elapsed * .65) * .045 - Math.max(-.2, Math.min(.2, body.vx * .001));
-      model.userData.leftArm.rotation.z = -.045 + Math.sin(elapsed * .7) * .035;
-      model.userData.rightArm.rotation.z = .06 + Math.sin(elapsed * .5) * .04;
+      if (animate) {
+        const pixelsToWorld = 3.6 / Math.max(1, body.height);
+        const inertia = new Three.Vector3(
+          -(body.vx - previousVelocity.x) / Math.max(dt, .008) * pixelsToWorld,
+          (body.vy - previousVelocity.y) / Math.max(dt, .008) * pixelsToWorld,
+          0
+        ).applyQuaternion(model.quaternion.clone().invert());
+        ragdoll.step(dt, {acceleration: inertia, pose: {
+          leftArm: [0, 0, -.045 + Math.sin(elapsed * .7) * .035],
+          rightArm: [0, 0, .06 + Math.sin(elapsed * .5) * .04]
+        }});
+      }
     }
+    previousVelocity = {x: body.vx, y: body.vy};
     target.style.transform = `translate3d(${body.x.toFixed(2)}px,${body.y.toFixed(2)}px,0)`;
     scene.updateMatrixWorld(true); camera.updateMatrixWorld(true);
     const end = model.userData.backpackAnchor.getWorldPosition(new Three.Vector3()).project(camera);
@@ -198,6 +219,7 @@ export function mountGagoo({canvas, target, stage, reduced, isActive = () => tru
     const d = ropePath(rope); tetherPath.setAttribute("d", d);
     if (ownRope) svg.firstElementChild.setAttribute("d", d);
     renderer.render(scene, camera); canvas.hidden = false; target.dataset.model = "3d";
+    target.dataset.ragdoll = ragdoll.energy > .02 ? "active" : "settled";
     if (animate || drag) frame = requestAnimationFrame(render); else last = 0;
   }
   function refresh() {
@@ -272,6 +294,17 @@ export function mountGagoo({canvas, target, stage, reduced, isActive = () => tru
   refresh();
   return {
     refresh,
+    snapshot() {
+      // Capture synchronously while this renderer still owns its drawing buffer.
+      // The cinematic receives the same pose and screen registration, not a reset.
+      scene.updateMatrixWorld(true);
+      renderer.render(scene, camera);
+      const rect = target.getBoundingClientRect();
+      let dataUrl;
+      try { dataUrl = canvas.toDataURL('image/png'); } catch { /* Live canvas remains available. */ }
+      return {canvas, dataUrl, rect: {x: rect.x, y: rect.y, width: rect.width, height: rect.height},
+        rotation: model.rotation.toArray().slice(0, 3), pose: ragdoll.snapshot(), modelHeight: 3.2};
+    },
     playEntrance: () => { entrance = true; body.vx = body.vy = 0; refresh(); return () => { entrance = false; refresh(); }; },
     dispose() {
       disposed = true; if (frame) cancelAnimationFrame(frame); clearTimeout(suppressTimer);

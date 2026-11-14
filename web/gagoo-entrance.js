@@ -1,30 +1,32 @@
 // A local implementation of the cover/swap/reveal blinds pattern described at
 // https://motion.dev/docs/curtains#blinds. No Motion+ code or service is required.
 let activeEntrance;
-const CINEMA_MS = 3100;
+const CINEMA_MS = 4050;
+const FLIGHT_START = 550;
+const CONTACT_START = 2050;
+const RECOIL_START = 2350;
 const clamp = (value) => Math.max(0, Math.min(1, value));
 const smooth = (value) => value * value * (3 - 2 * value);
 const mix = (a, b, progress) => a + (b - a) * progress;
 
+/** Timing is shared by the camera, continuity layer and deterministic QA. */
 export function sampleGagooEntrance(milliseconds, contactZ = 2.36) {
-  const pullback = smooth(clamp(milliseconds / 850));
-  const flight = clamp((milliseconds - 650) / 1150);
-  const contact = clamp((milliseconds - 1800) / 220);
-  const slide = clamp((milliseconds - 2020) / 1080);
-  const impact = milliseconds >= 1800 && milliseconds < 2020 ? Math.sin(contact * Math.PI) : 0;
+  const pullback = smooth(clamp(milliseconds / 1200));
+  const flight = smooth(clamp((milliseconds - FLIGHT_START) / (CONTACT_START - FLIGHT_START)));
+  const contact = clamp((milliseconds - CONTACT_START) / (RECOIL_START - CONTACT_START));
+  const recoil = clamp((milliseconds - RECOIL_START) / (CINEMA_MS - RECOIL_START));
+  const impact = milliseconds >= CONTACT_START && milliseconds < RECOIL_START ? Math.sin(contact * Math.PI) : 0;
   return {
-    cameraZ: mix(1.6, 7.7, pullback),
-    x: Math.sin(flight * Math.PI) * .42 + slide * slide * .35,
-    y: .12 - slide * slide * 5.4,
-    z: mix(-7.5, contactZ, flight * flight),
-    rotationZ: -.08 * Math.sin(flight * Math.PI) - slide * .34,
-    rotationX: .12 * (1 - flight) + slide * .12,
-    scaleX: 1 + impact * .07,
-    scaleY: 1 - impact * .07,
-    scaleZ: 1 - impact * .28,
-    contact: milliseconds >= 1800,
-    markOpacity: milliseconds < 1800 ? 0 : .12 * (1 - slide),
-    phase: milliseconds < 850 ? "pullback" : milliseconds < 1800 ? "flight" : milliseconds < 2020 ? "contact" : "slide"
+    cameraZ: mix(1.5, 7.8, pullback), pullback, flight, recoil,
+    z: milliseconds < RECOIL_START ? mix(-3, contactZ, flight) : contactZ - 8.5 * smooth(recoil),
+    rotationZ: recoil * .38,
+    rotationX: -recoil * .65,
+    scaleX: 1 + impact * .045,
+    scaleY: 1 - impact * .04,
+    scaleZ: 1 - impact * .16,
+    contact: milliseconds >= CONTACT_START,
+    markOpacity: milliseconds < CONTACT_START ? 0 : .12 * (1 - recoil),
+    phase: milliseconds < FLIGHT_START ? "pullback" : milliseconds < CONTACT_START ? "flight" : milliseconds < RECOIL_START ? "contact" : "recoil"
   };
 }
 
@@ -48,139 +50,203 @@ function roundedPath(Three, width, height, radius) {
   return path;
 }
 
-async function createCinema(canvas, signal) {
-  const [Three, {createGagooModel}] = await Promise.all([
-    import("./assets/three-0.187.0/three.module.js"), import("./gagoo-scene.js")
+/** Retain the real home, including its WebGL canvases, below the modal.
+ * Only presentation styles change; the original nodes/listeners are never cloned.
+ */
+function createHomeContinuity(home) {
+  const element = home?.element;
+  const target = home?.actorTarget;
+  const original = new Map();
+  let restored = false;
+  const remember = (node, property, value) => {
+    if (!node) return;
+    if (!original.has(node)) original.set(node, new Map());
+    const values = original.get(node);
+    if (!values.has(property)) values.set(property, [node.style.getPropertyValue(property), node.style.getPropertyPriority(property)]);
+    node.style.setProperty(property, value);
+  };
+  const animations = element?.getAnimations({subtree: true}).filter(animation => animation.playState === "running") || [];
+  animations.forEach(animation => animation.pause());
+  const rect = element?.getBoundingClientRect();
+  const tetherPaths = element ? [...element.querySelectorAll(".gagoo-tether path")] : [];
+  const tetherOriginal = tetherPaths.map(path => path.getAttribute("d"));
+  const tetherPath = tetherPaths.at(-1);
+  const tetherLength = tetherPath?.getTotalLength() || 0;
+  const tetherPoints = tetherLength ? Array.from({length: 21}, (_, index) => tetherPath.getPointAtLength(tetherLength * index / 20)) : [];
+  const ui = element ? [...element.querySelectorAll(".orbit-copy,.orbit-caption,.orbit-scroll,.scene-label"), ...document.querySelectorAll(".public-header")] : [];
+  if (element) {
+    remember(element, "will-change", "transform");
+    remember(element, "transform-origin", `${innerWidth / 2 - rect.left}px ${innerHeight / 2 - rect.top}px`);
+  }
+  return {
+    available: Boolean(element && home?.snapshot?.rect),
+    update(progress, transferred) {
+      if (restored || !element) return;
+      remember(element, "transform", `scale(${mix(1, .86, progress)})`);
+      for (const node of ui) remember(node, "opacity", String(1 - smooth(clamp(progress * 2.3))));
+      if (target) remember(target, "visibility", transferred ? "hidden" : "visible");
+    },
+    sourceRect(width, height, progress) {
+      const source = home?.snapshot?.rect || {x: width * .22, y: height * .35, width: width * .18, height: height * .34};
+      const scale = mix(1, .86, progress);
+      return {x: width / 2 + (source.x - width / 2) * scale,
+        y: height / 2 + (source.y - height / 2) * scale,
+        width: source.width * scale, height: source.height * scale};
+    },
+    moveTether(screenX, screenY, progress) {
+      if (restored || !tetherPoints.length || !rect) return;
+      const scale = mix(1, .86, progress), endpoint = tetherPoints.at(-1);
+      const x = (screenX - innerWidth / 2) / scale + innerWidth / 2 - rect.left;
+      const y = (screenY - innerHeight / 2) / scale + innerHeight / 2 - rect.top;
+      // Preserve the anchored curve at handover and continuously pull its free end.
+      const d = tetherPoints.map((point, index) => {
+        const weight = (index / 20) ** 2;
+        return `${index ? "L" : "M"}${(point.x + (x - endpoint.x) * weight).toFixed(2)},${(point.y + (y - endpoint.y) * weight).toFixed(2)}`;
+      }).join(" ");
+      tetherPaths.forEach(path => path.setAttribute("d", d));
+    },
+    restore() {
+      if (restored) return;
+      restored = true;
+      for (const [node, values] of original) for (const [property, [value, priority]] of values) {
+        if (value) node.style.setProperty(property, value, priority); else node.style.removeProperty(property);
+      }
+      tetherPaths.forEach((path, index) => {
+        if (tetherOriginal[index] !== null) path.setAttribute("d", tetherOriginal[index]);
+        else path.removeAttribute("d");
+      });
+      animations.forEach(animation => { if (animation.playState === "paused") animation.play(); });
+    }
+  };
+}
+
+async function createCinema(canvas, signal, home) {
+  const [Three, {createGagooModel}, {createRagdollController}] = await Promise.all([
+    import("./assets/three-0.187.0/three.module.js"), import("./gagoo-scene.js?v=2"), import("./gagoo-ragdoll.js")
   ]);
   if (signal.aborted) throw abortError();
-  const renderer = new Three.WebGLRenderer({canvas, alpha: false, antialias: true, powerPreference: "low-power"});
+  const renderer = new Three.WebGLRenderer({canvas, alpha: true, antialias: true, powerPreference: "low-power"});
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
-  renderer.setClearColor(0x08162e);
+  renderer.setClearColor(0x08162e, 0);
   renderer.toneMapping = Three.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = 1.13;
   const scene = new Three.Scene();
   const camera = new Three.PerspectiveCamera(46, 1, .05, 80);
   const model = createGagooModel(Three);
+  const ragdoll = createRagdollController(model);
+  if (home?.snapshot?.pose) ragdoll.restore(home.snapshot.pose);
   model.updateMatrixWorld(true);
   const modelBounds = new Three.Box3().setFromObject(model);
   const modelSize = modelBounds.getSize(new Three.Vector3());
   const helmetCenter = new Three.Box3().setFromObject(model.getObjectByName("clear polygonal helmet") || model.userData.head || model).getCenter(new Three.Vector3());
   const modelBaseScale = model.scale.clone();
-  let modelFit = .77;
-  let frontDepth = Math.max(.01, modelBounds.max.z * modelFit);
-  let halfHeight = modelSize.y * modelFit / 2;
-  const actor = new Three.Group();
-  actor.add(model);
-  model.scale.copy(modelBaseScale).multiplyScalar(modelFit);
-  scene.add(actor);
-  scene.add(new Three.HemisphereLight(0xdffaff, 0x14325c, 2.8));
-  const key = new Three.DirectionalLight(0xffffff, 4);
-  key.position.set(-4, 5, 7);
-  scene.add(key);
-  const rim = new Three.DirectionalLight(0x42e7ff, 2.7);
-  rim.position.set(3, 1, -1);
-  scene.add(rim);
-  const cabin = new Three.Group();
-  scene.add(cabin);
-  const materials = [];
-  const geometries = [];
+  const sourceRotation = home?.snapshot?.rotation || [0, -.28, 0];
+  const sourcePose = home?.snapshot?.pose?.pose || {};
+  const actor = new Three.Group(); actor.add(model); scene.add(actor);
+  // Match home lighting at the handover; no abrupt new material treatment.
+  scene.add(new Three.HemisphereLight(0xdcf2ff, 0x5d6580, 2.55));
+  for (const [color, intensity, position] of [[0xffecc8, 2.6, [-3, 4, 5]], [0x74d9ff, 2.2, [3, 1, -3]], [0xffffff, .6, [2, 0, 5]]]) {
+    const light = new Three.DirectionalLight(color, intensity); light.position.set(...position); scene.add(light);
+  }
+  const continuity = createHomeContinuity(home);
+  const cabin = new Three.Group(); scene.add(cabin);
+  const materials = [], geometries = [];
   const material = (options) => { const item = new Three.MeshStandardMaterial(options); materials.push(item); return item; };
-  const white = material({color: 0xe9f5f7, metalness: .38, roughness: .33});
-  const navy = material({color: 0x14287b, metalness: .35, roughness: .4});
-  const cyan = material({color: 0x22d6ed, emissive: 0x159bb4, emissiveIntensity: .45, metalness: .2, roughness: .4});
+  const white = material({color: 0xe9f5f7, metalness: .24, roughness: .48});
+  const navy = material({color: 0x14287b, metalness: .2, roughness: .5});
+  const cyan = material({color: 0x22d6ed, emissive: 0x159bb4, emissiveIntensity: .4, metalness: .2, roughness: .4});
   const glassMaterial = new Three.MeshBasicMaterial({color: 0x8bedff, transparent: true, opacity: .035, depthWrite: false, side: Three.DoubleSide});
   const markMaterial = new Three.MeshBasicMaterial({color: 0xc3f8ff, transparent: true, opacity: 0, depthWrite: false});
   materials.push(glassMaterial, markMaterial);
   const mesh = (geometry, surface, parent = cabin) => {
-    geometries.push(geometry);
-    const item = new Three.Mesh(geometry, surface);
-    parent.add(item);
-    return item;
+    geometries.push(geometry); const item = new Three.Mesh(geometry, surface); parent.add(item); return item;
   };
   const mark = mesh(new Three.RingGeometry(.16, .17, 24), markMaterial, scene);
-  mark.position.set(0, .12 + helmetCenter.y * modelFit, 2.95);
   mark.scale.set(1, .62, 1);
-  const starPoints = [];
-  let seed = 57;
-  const random = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-  for (let i = 0; i < 110; i++) starPoints.push((random() - .5) * 44, (random() - .5) * 27, -15 - random() * 20);
-  const starsGeometry = new Three.BufferGeometry();
-  starsGeometry.setAttribute("position", new Three.Float32BufferAttribute(starPoints, 3));
-  const starsMaterial = new Three.PointsMaterial({color: 0xd5f5ff, size: .045, sizeAttenuation: true});
-  geometries.push(starsGeometry); materials.push(starsMaterial);
-  scene.add(new Three.Points(starsGeometry, starsMaterial));
-  let width = 0, height = 0;
+  let width = 0, height = 0, openingWidth = 0, openingHeight = 0, contactFit = 1, frontDepth = 0;
   function resize() {
     const nextWidth = canvas.clientWidth, nextHeight = canvas.clientHeight;
     if (!nextWidth || !nextHeight || (nextWidth === width && nextHeight === height)) return;
     width = nextWidth; height = nextHeight;
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
+    renderer.setSize(width, height, false); camera.aspect = width / height; camera.updateProjectionMatrix();
     for (const item of [...cabin.children]) {
-      item.geometry.dispose();
-      const position = geometries.indexOf(item.geometry);
-      if (position !== -1) geometries.splice(position, 1);
-      cabin.remove(item);
+      item.geometry.dispose(); const index = geometries.indexOf(item.geometry);
+      if (index !== -1) geometries.splice(index, 1); cabin.remove(item);
     }
-    const openingWidth = Math.min(7.8, 3.5 * camera.aspect);
-    const openingHeight = 3.25;
-    // Fit the actual shared model, including its helmet/ears, on narrow screens.
-    // Contact is measured from its front bound rather than a stale model size.
-    modelFit = Math.min(.77, openingWidth * .82 / modelSize.x, openingHeight * .8 / modelSize.y);
-    model.scale.copy(modelBaseScale).multiplyScalar(modelFit);
-    frontDepth = Math.max(.01, modelBounds.max.z * modelFit);
-    halfHeight = modelSize.y * modelFit / 2;
-    mark.position.set(helmetCenter.x * modelFit, .12 + helmetCenter.y * modelFit, 2.95);
-    const outer = roundedPath(Three, openingWidth + 8, 10, .7);
-    const hole = roundedPath(Three, openingWidth, openingHeight, Math.min(.42, openingWidth / 5));
-    outer.holes.push(new Three.Path(hole.getPoints(24).reverse()));
+    const visibleHeight = 2 * Math.tan(Three.MathUtils.degToRad(23)) * (7.8 - 3);
+    openingWidth = Math.min(2.85, visibleHeight * camera.aspect * .88);
+    openingHeight = openingWidth / .85;
+    contactFit = Math.min(openingWidth * .89 / modelSize.x, openingHeight * .91 / modelSize.y);
+    frontDepth = Math.max(.01, modelBounds.max.z * contactFit);
+    mark.position.set(helmetCenter.x * contactFit, helmetCenter.y * contactFit, 2.95);
+    const radius = Math.min(.34, openingWidth * .16);
+    const outer = roundedPath(Three, 24, 22, .7);
+    outer.holes.push(new Three.Path(roundedPath(Three, openingWidth, openingHeight, radius).getPoints(24).reverse()));
     const frame = mesh(new Three.ExtrudeGeometry(outer, {depth: .16, bevelEnabled: true, bevelSegments: 2, steps: 1, bevelSize: .045, bevelThickness: .035}), white);
     frame.position.z = 3;
-    const inset = roundedPath(Three, openingWidth + .16, openingHeight + .16, .46);
-    inset.holes.push(new Three.Path(roundedPath(Three, openingWidth + .05, openingHeight + .05, .43).getPoints(24).reverse()));
+    const inset = roundedPath(Three, openingWidth + .16, openingHeight + .16, radius + .08);
+    inset.holes.push(new Three.Path(roundedPath(Three, openingWidth + .05, openingHeight + .05, radius + .025).getPoints(24).reverse()));
     mesh(new Three.ShapeGeometry(inset), cyan).position.z = 3.2;
-    const glass = mesh(new Three.PlaneGeometry(openingWidth, openingHeight), glassMaterial);
-    glass.position.z = 2.92;
+    mesh(new Three.PlaneGeometry(openingWidth, openingHeight), glassMaterial).position.z = 2.92;
     for (const side of [-1, 1]) {
       const panel = mesh(new Three.BoxGeometry(.12, .7, .05), navy);
       panel.position.set(side * (openingWidth / 2 + .3), .15, 3.22);
       for (const vertical of [-1, 1]) {
-        const bolt = mesh(new Three.CylinderGeometry(.035, .035, .02, 12), navy);
-        bolt.rotation.x = Math.PI / 2;
+        const bolt = mesh(new Three.CylinderGeometry(.035, .035, .02, 12), navy); bolt.rotation.x = Math.PI / 2;
         bolt.position.set(side * (openingWidth / 2 + .22), vertical * (openingHeight / 2 + .2), 3.22);
       }
     }
   }
-  let lost = false;
+  let lost = false, lastTime = 0, struck = false, disposed = false;
   const onLost = (event) => { event.preventDefault(); lost = true; };
   canvas.addEventListener("webglcontextlost", onLost);
   return {
     draw(milliseconds) {
-      if (lost) return false;
+      if (lost || disposed) return false;
       resize();
       const pose = sampleGagooEntrance(milliseconds, 2.92 - frontDepth);
-      camera.position.set(0, 0, pose.cameraZ);
-      camera.lookAt(0, 0, -4);
-      const keepContact = pose.contact ? (1 - pose.scaleZ) * frontDepth - Math.sin(pose.rotationX) * halfHeight : 0;
-      actor.position.set(pose.x, pose.y, pose.z + keepContact);
-      actor.rotation.set(pose.rotationX, 0, pose.rotationZ);
+      camera.position.set(0, 0, pose.cameraZ); camera.lookAt(0, 0, -4);
+      const dt = Math.max(0, Math.min(.04, (milliseconds - lastTime) / 1000)); lastTime = milliseconds;
+      const transferred = milliseconds >= FLIGHT_START;
+      continuity.update(pose.pullback, transferred);
+      actor.visible = transferred || !continuity.available;
+      const source = continuity.sourceRect(width, height, pose.pullback);
+      const sourceDistance = pose.cameraZ + 3;
+      const viewHeight = 2 * Math.tan(Three.MathUtils.degToRad(23)) * sourceDistance;
+      const startFit = source.height / height * viewHeight / 3.6;
+      const startX = ((source.x + source.width / 2) / width - .5) * viewHeight * camera.aspect;
+      const startY = (.5 - (source.y + source.height / 2) / height) * viewHeight;
+      const fit = mix(startFit, contactFit, pose.flight);
+      model.scale.copy(modelBaseScale).multiplyScalar(fit);
+      const impactCorrection = pose.contact && milliseconds < RECOIL_START ? (1 - pose.scaleZ) * frontDepth : 0;
+      actor.position.set(mix(startX, .04, pose.flight) + Math.sin(pose.recoil * Math.PI) * .38,
+        mix(startY, 0, pose.flight) + pose.recoil * .4, pose.z + impactCorrection);
+      actor.rotation.set(mix(sourceRotation[0], 0, pose.flight) + pose.rotationX,
+        mix(sourceRotation[1], 0, pose.flight) + pose.recoil * .85,
+        mix(sourceRotation[2], 0, pose.flight) + pose.rotationZ);
       actor.scale.set(pose.scaleX, pose.scaleY, pose.scaleZ);
-      const reaching = clamp((milliseconds - 1100) / 700);
-      const slipping = clamp((milliseconds - 2020) / 1080);
-      for (const [name, side] of [["leftArm", -1], ["rightArm", 1]]) {
-        if (!model.userData[name]) continue;
-        model.userData[name].rotation.x = -.6 * reaching * (1 - slipping * .6);
-        model.userData[name].rotation.z = side * (.25 * reaching + slipping * .42);
+      if (milliseconds >= CONTACT_START && !struck) { struck = true; ragdoll.impulse({x: .35, y: -.12, z: -2.7}, 1); }
+      if (transferred) {
+        const blendedPose = Object.fromEntries(Object.entries(sourcePose).map(([joint, angles]) => [joint, angles.map(angle => angle * (1 - pose.flight))]));
+        ragdoll.step(dt, {acceleration: {x: 0, y: 0, z: milliseconds < CONTACT_START ? .2 : 0}, strength: 1, pose: blendedPose});
+        actor.updateMatrixWorld(true); camera.updateMatrixWorld(true);
+        const anchor = model.userData.backpackAnchor?.getWorldPosition(new Three.Vector3()).project(camera);
+        if (anchor) continuity.moveTether((anchor.x + 1) * width / 2, (1 - anchor.y) * height / 2, pose.pullback);
       }
       markMaterial.opacity = pose.markOpacity;
       canvas.dataset.phase = pose.phase;
+      canvas.dataset.continuity = continuity.available ? "home" : "fallback";
+      canvas.dataset.actorDepth = String(actor.position.z);
+      canvas.dataset.windowOccupancy = JSON.stringify({width: modelSize.x * contactFit / openingWidth, height: modelSize.y * contactFit / openingHeight});
       renderer.render(scene, camera);
       return true;
     },
     dispose() {
+      if (disposed) return;
+      disposed = true;
+      continuity.restore();
       canvas.removeEventListener("webglcontextlost", onLost);
-      model.userData.dispose?.();
+      ragdoll.dispose?.(); model.userData.dispose?.();
       for (const item of geometries) item.dispose();
       for (const item of materials) item.dispose();
       renderer.dispose();
@@ -196,7 +262,7 @@ export function cancelGagooEntrance() { activeEntrance?.abort(); }
  * onCovered changes the route directly, without adding another transition.
  * Resolves after cleanup; cancellation never invokes onCovered.
  */
-export async function playGagooEntrance({reduced, onCovered, signal, language = "vi"} = {}) {
+export async function playGagooEntrance({reduced, onCovered, signal, language = "vi", home} = {}) {
   if (typeof onCovered !== "function") throw new TypeError("onCovered must be a function");
   cancelGagooEntrance();
   const controller = new AbortController();
@@ -300,7 +366,7 @@ export async function playGagooEntrance({reduced, onCovered, signal, language = 
     skip.focus({preventScroll: true});
     if (!reducedValue(reduced)) {
       try {
-        const pending = createCinema(canvas, controller.signal);
+        const pending = createCinema(canvas, controller.signal, home);
         const interrupted = new Promise((resolve) => {
           cinemaDone = () => resolve(undefined);
           loadingTimeout = setTimeout(finishCinema, 5000);
