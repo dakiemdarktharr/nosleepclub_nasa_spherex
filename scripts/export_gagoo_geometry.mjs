@@ -4,6 +4,7 @@ import {createHash} from "node:crypto";
 import {resolve, dirname} from "node:path";
 import * as Three from "../web/assets/three-0.187.0/three.module.js";
 import {createGagooModel} from "../web/gagoo-scene.js";
+import {createRagdollController, GAGOO_JOINTS} from "../web/gagoo-ragdoll.js";
 
 const output = resolve(process.argv[2] || "data/raw/gagoo-assets/gagoo-geometry.json");
 const model = createGagooModel(Three);
@@ -33,27 +34,46 @@ function serializeMaterial(material) {
 }
 model.traverse((object) => {
   const node = {id: nodeIds.get(object), parent: object === model ? null : nodeIds.get(object.parent), name: object.name || object.type, matrix: object.matrix.toArray(), type: object.type};
+  if (object.isBone) {
+    let parentBone = object.parent;
+    while (parentBone && !parentBone.isBone) parentBone = parentBone.parent;
+    node.bone_parent = parentBone ? nodeIds.get(parentBone) : null;
+    node.rest_matrix_world = object.matrixWorld.toArray();
+    node.joint = object.userData.joint;
+    node.limits = GAGOO_JOINTS[node.joint].limits;
+  }
   if (object.isMesh) {
     if (Array.isArray(object.material)) throw new Error("Material groups require an explicit importer; refusing to flatten them silently.");
     const position = object.geometry.getAttribute("position");
     node.positions = Array.from(position.array);
     node.indices = object.geometry.index ? Array.from(object.geometry.index.array) : Array.from({length: position.count}, (_, index) => index);
     node.material_id = serializeMaterial(object.material);
+    node.rigid_bone = object.userData.rigidBone;
+    if (!node.rigid_bone) throw new Error(`Unbound rig mesh: ${object.name}`);
     node.uv = object.geometry.getAttribute("uv") ? Array.from(object.geometry.getAttribute("uv").array) : null;
   }
   nodes.push(node);
 });
 const sourceHashes = {};
-for (const path of ["web/gagoo-scene.js", "web/gagoo-physics.js", "web/assets/three-0.187.0/three.module.js"]) {
+for (const path of ["web/gagoo-scene.js", "web/gagoo-physics.js", "web/gagoo-rig.js", "web/gagoo-ragdoll.js", "web/assets/three-0.187.0/three.module.js"]) {
   sourceHashes[path] = createHash("sha256").update(await readFile(path)).digest("hex");
 }
 const bounds = new Three.Box3().setFromObject(model);
+const motion = createRagdollController(model);
+const samples = [];
+for (let frame = 0; frame <= 120; frame++) {
+  if (frame === 1) motion.impulse({x: 8, y: -3, z: 7}, .85);
+  if (frame > 0) motion.step(1 / 30);
+  samples.push({time: frame / 30, rotations: Object.fromEntries(Object.entries(model.userData.rig.joints).map(([name, bone]) => [bone.name, bone.quaternion.toArray()]))});
+}
+motion.reset();
 const payload = {
-  schema_version: 1, source_kind: "runtime procedural geometry export; not hand-sculpted",
+  schema_version: 2, source_kind: "runtime articulated geometry and bone rig export; not hand-sculpted",
   source_axes: "Y up, face +Z", source_hashes: sourceHashes,
   bounds: {min: bounds.min.toArray(), max: bounds.max.toArray()},
   materials, nodes,
-  limits: ["Static mesh handoff, no armature or baked animation.", "Browser and Blender lighting/alpha sorting can differ; geometry and part transforms are preserved."]
+  rig: {type: 'rigid-part armature', bone_count: Object.keys(model.userData.rig.joints).length, influences_per_vertex: 1, clip: {name: 'Gagoo_Inertial_Rebound', fps: 30, samples}},
+  limits: ["Rigid-part FK armature: each vertex has one bone influence; no soft-skin deformation or IK controls.", "One rebound demonstration is baked from the runtime spring solver; browser dragging is simulated live, not replayed.", "Browser and Blender lighting/alpha sorting can differ; geometry and part transforms are preserved."]
 };
 await mkdir(dirname(output), {recursive: true});
 const bytes = JSON.stringify(payload);

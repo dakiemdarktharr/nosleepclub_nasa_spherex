@@ -10,7 +10,7 @@ const {pathToFileURL} = require('node:url');
   const bounds = new T.Box3().setFromObject(model);
   assert.ok(Math.abs(bounds.max.y - bounds.min.y - 3.2) < 1e-6, 'shared cinematic model remains normalized');
   assert.ok(model.userData.geometryStats.triangles < 4000, 'keep broad low-poly geometry');
-  assert.ok(model.userData.geometryStats.meshes < 45, 'avoid restoring layered suit and face parts');
+  assert.ok(model.userData.geometryStats.meshes < 50, 'keep simple parts, including four joint cores that close elbow/knee gaps');
   const eyes = [];
   model.traverse(node => { if (node.name === 'single amber eye') eyes.push(node); });
   assert.equal(eyes.length, 2);

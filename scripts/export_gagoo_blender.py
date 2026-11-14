@@ -1,7 +1,7 @@
 """Run with Blender --background --factory-startup --python THIS -- [options].
 
 Imports the geometry exported from the actual browser factory, keeping named
-parts editable. This is a conversion handoff, not hand sculpting or rigging.
+parts editable, with a weighted FK armature and a runtime-sampled rebound clip.
 """
 import argparse
 from hashlib import sha256
@@ -33,12 +33,18 @@ def render_poster_only(output, resolution):
     scene.render.resolution_x = scene.render.resolution_y = resolution
     scene.render.resolution_percentage = 100
     scene.render.image_settings.color_mode = 'RGBA'
+    # Alpha-blended visor coverage needs more samples than opaque studio views;
+    # otherwise the transparent fallback shows conspicuous grain on dark UI.
+    scene.cycles.samples = 256
+    scene.cycles.use_denoising = True
     poster = output / 'gagoo-poster.png'
     scene.render.filepath = str(poster)
     bpy.ops.render.render(write_still=True)
     report['artifacts'][poster.name] = {'bytes': poster.stat().st_size, 'sha256': sha256(poster.read_bytes()).hexdigest()}
     report['studio']['poster_resolution'] = resolution
     report['studio']['poster_transparent'] = True
+    report['studio']['poster_samples'] = scene.cycles.samples
+    report['studio']['poster_denoising'] = scene.cycles.use_denoising
     report['studio']['poster_source_blend_sha256'] = report['artifacts']['gagoo.blend']['sha256']
     report_path.write_text(json.dumps(report, indent=2), encoding='utf-8')
     print(json.dumps({'poster': str(poster), 'resolution': resolution, **report['artifacts'][poster.name]}))
@@ -62,7 +68,7 @@ def main():
         return
     raw = source.read_bytes()
     data = json.loads(raw)
-    if data.get('schema_version') != 1:
+    if data.get('schema_version') != 2:
         raise ValueError('Unsupported geometry handoff')
     # Called in a separate factory-startup process; no user's open scene is used.
     bpy.ops.object.select_all(action='SELECT')
@@ -76,7 +82,7 @@ def main():
     root.rotation_euler.x = math.pi / 2
     root['source_kind'] = data['source_kind']
     root['source_geometry_sha256'] = sha256(raw).hexdigest()
-    root['limits'] = 'Static editable runtime parts; no armature, no hand-sculpt claim.'
+    root['limits'] = 'Editable rigid parts with one bone influence per vertex; no soft skin or IK.'
     materials = {}
     for item in data['materials']:
         material = bpy.data.materials.new(f"MAT_{item['id']:02d}_{item['name']}")
@@ -130,6 +136,77 @@ def main():
         elements = item['matrix']
         obj.matrix_basis = Matrix([[elements[col * 4 + row] for col in range(4)] for row in range(4)])
         objects[item['id']] = obj
+    # Build a genuine deform armature from the browser's named bone hierarchy.
+    # Bone axes match the runtime local XYZ axes; meshes receive a deterministic
+    # one-bone weight instead of automatic weights that smear the broad planes.
+    armature_data = bpy.data.armatures.new('ARM_Gagoo_Bones')
+    armature = bpy.data.objects.new('ARM_Gagoo', armature_data)
+    geometry_collection.objects.link(armature)
+    armature.parent = root
+    armature.show_in_front = True
+    armature_data.display_type = 'OCTAHEDRAL'
+    bpy.ops.object.select_all(action='DESELECT')
+    armature.select_set(True)
+    bpy.context.view_layer.objects.active = armature
+    bpy.ops.object.mode_set(mode='EDIT')
+    bone_nodes = [item for item in data['nodes'] if item['type'] == 'Bone']
+    if len(bone_nodes) != data['rig']['bone_count']:
+        raise ValueError('Bone manifest count mismatch')
+    edit_bones = {}
+    for item in bone_nodes:
+        elements = item['rest_matrix_world']
+        matrix = Matrix([[elements[col * 4 + row] for col in range(4)] for row in range(4)])
+        edit = armature_data.edit_bones.new(item['name'])
+        edit.head = matrix.translation
+        edit.tail = edit.head + Vector((0, .10, 0))
+        edit.use_deform = True
+        if item['bone_parent']:
+            edit.parent = edit_bones[item['bone_parent']]
+        edit_bones[item['id']] = edit
+    bpy.ops.object.mode_set(mode='OBJECT')
+    bpy.context.view_layer.update()
+    for item in data['nodes']:
+        if 'positions' not in item:
+            continue
+        obj = objects[item['id']]
+        bone_name = item['rigid_bone']
+        if bone_name not in armature_data.bones:
+            raise ValueError(f'Missing bind bone for {item["name"]}')
+        world_matrix = obj.matrix_world.copy()
+        obj.parent = armature
+        obj.matrix_world = world_matrix
+        group = obj.vertex_groups.new(name=bone_name)
+        group.add(list(range(len(obj.data.vertices))), 1.0, 'REPLACE')
+        modifier = obj.modifiers.new('Gagoo_Rigid_Weights', 'ARMATURE')
+        modifier.object = armature
+        modifier.use_deform_preserve_volume = False
+    for item in bone_nodes:
+        pose = armature.pose.bones[item['name']]
+        pose.rotation_mode = 'QUATERNION'
+        limit = pose.constraints.new('LIMIT_ROTATION')
+        limit.name = 'Runtime_joint_limits'
+        limit.owner_space = 'LOCAL'
+        # Three's intrinsic XYZ Euler composition matches Blender's ZYX
+        # decomposition. AUTO/XYZ would clamp a different set of angles.
+        limit.euler_order = 'ZYX'
+        for axis, bounds in zip('xyz', item['limits']):
+            setattr(limit, 'use_limit_' + axis, True)
+            setattr(limit, 'min_' + axis, bounds[0])
+            setattr(limit, 'max_' + axis, bounds[1])
+    clip = data['rig']['clip']
+    scene = bpy.context.scene
+    scene.render.fps = clip['fps']
+    scene.frame_start = 0
+    scene.frame_end = len(clip['samples']) - 1
+    for index, sample in enumerate(clip['samples']):
+        for name, rotation in sample['rotations'].items():
+            pose = armature.pose.bones[name]
+            x, y, z, w = rotation
+            pose.rotation_quaternion = (w, x, y, z)
+            pose.keyframe_insert(data_path='rotation_quaternion', frame=index, group=name)
+    armature.animation_data.action.name = clip['name']
+    scene.frame_set(0)
+    bpy.context.view_layer.update()
     lower, upper = data['bounds']['min'], data['bounds']['max']
     center = Vector(((lower[0] + upper[0]) / 2, -(lower[2] + upper[2]) / 2, (lower[1] + upper[1]) / 2))
     height = upper[1] - lower[1]
@@ -212,7 +289,7 @@ def main():
     blend = output / 'gagoo.blend'
     glb = output / 'gagoo-lowpoly.glb'
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
-    bpy.ops.export_scene.gltf(filepath=str(glb), export_format='GLB', use_selection=True, export_yup=True, export_extras=True)
+    bpy.ops.export_scene.gltf(filepath=str(glb), export_format='GLB', use_selection=True, export_yup=True, export_extras=True, export_skins=True, export_animations=True)
     artifacts = [blend, glb]
     render_checks = {}
     if args.render:
@@ -247,10 +324,11 @@ def main():
         'source_hashes': data['source_hashes'], 'blender_version': bpy.app.version_string,
         'mesh_objects': sum(obj.type == 'MESH' for obj in objects.values()),
         'triangles': triangle_count, 'materials': len(materials), 'review_cameras': list(cameras),
+        'rig': {'bone_count': len(armature_data.bones), 'weighted_meshes': sum(obj.type == 'MESH' for obj in objects.values()), 'influences_per_vertex': 1, 'joint_constraints': len(bone_nodes), 'animation': clip['name'], 'animation_samples': len(clip['samples'])},
         'source_bounds': data['bounds'], 'blender_axes': 'Z up, face -Y; GLB exported Y up',
         'studio': {'background': 'plain light gray', 'ground_z': floor_z, 'engine': 'Cycles CPU', 'samples': scene.cycles.samples, 'resolution': args.resolution, 'render_checks': render_checks, 'ground_and_cameras_excluded_from_glb': True},
         'artifacts': {path.name: {'bytes': path.stat().st_size, 'sha256': sha256(path.read_bytes()).hexdigest()} for path in artifacts},
-        'limits': data['limits'] + ['Geometry conversion; no rig, baked motion, LOD or production-asset certification.']
+        'limits': data['limits'] + ['Geometry conversion; no IK, soft-skin deformation, LOD or production-asset certification.']
     }
     (output / 'blender-handoff.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
     print(json.dumps(report, indent=2))

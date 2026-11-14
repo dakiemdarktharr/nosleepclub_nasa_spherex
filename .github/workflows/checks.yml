@@ -131,6 +131,8 @@ jobs:
         run: python -m scripts.browser_gagoo --output "$RUNNER_TEMP/browser-smoke/gagoo"
       - name: Verify cinematic cancellation and fallback
         run: python -m scripts.check_gagoo_entrance --output "$RUNNER_TEMP/browser-smoke/entrance"
+      - name: Exercise control-room movement and learning interactions
+        run: python -m scripts.browser_control_room --output "$RUNNER_TEMP/browser-smoke/control-room"
       - name: Upload screenshots and browser traces
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0

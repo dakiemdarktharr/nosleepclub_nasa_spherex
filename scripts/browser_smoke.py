@@ -103,7 +103,7 @@ def run_case(browser, base, output, mobile, language):
 
         # Follow the public two-step workflow after the bundled image set is ready.
         page.goto(f'{base}/?lang={language}&flow_source=wise#home')
-        page.wait_for_function('window.SkyApp?.context().ready === true')
+        page.wait_for_function('() => window.SkyApp?.context().ready === true')
         expect(page.locator('#workflow-data-next')).to_be_enabled()
         page.locator('#workflow-data-next').focus()
         page.keyboard.press('Enter')
@@ -258,7 +258,7 @@ def timeline_case(browser, base, output):
         page.wait_for_timeout(1100)
         expect(page.locator('#explorer-frame-label')).to_contain_text('1/5')
         page.locator('#explorer-timeline-play').click()
-        page.wait_for_function("document.querySelector('#explorer-frame-label').textContent.includes('2/5')", timeout=5000)
+        page.wait_for_function("() => document.querySelector('#explorer-frame-label').textContent.includes('2/5')", timeout=5000)
         page.locator('#explorer-timeline-play').click()
         expect(page.locator('#explorer-timeline-play')).to_contain_text('Resume')
         assert len([call for call in api_calls if call['path'] == '/api/observations']) == 1
@@ -324,7 +324,7 @@ def script_recovery_case(browser, base):
         context.route('**/app.js*', fail_once)
         page.goto(f'{base}/?lang=en&flow_source=wise#compare-step')
         page.locator('[data-copy="reloadPage"]').click()
-        page.wait_for_function('window.SkyApp?.context().ready === true && !!window.SkyWorkflow')
+        page.wait_for_function('() => window.SkyApp?.context().ready === true && !!window.SkyWorkflow')
         expect(page.locator('#workspace-progress')).not_to_be_visible()
         assert len(requests) == 2, 'Reload should retry the failed module exactly once'
         assert page.locator('script[src^="app.js"]').count() == 1, 'Duplicate module execution'

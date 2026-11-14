@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#14287b">
+  <meta name="description" content="Phòng điều khiển thử nghiệm 3D của sphere x learn.">
+  <title>Control room · sphere x learn</title>
+  <link rel="icon" href="assets/mission/spherex-white.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/fonts/be-vietnam-pro.css">
+  <link rel="stylesheet" href="control-room.css?v=1">
+  <script src="control-room.js?v=1" defer></script>
+</head>
+<body data-game-state="room" data-scene-state="loading">
+  <main id="room-shell">
+    <section id="room-screen" aria-label="Phòng điều khiển 3D">
+      <canvas id="room-canvas" aria-label="Gagoo trong phòng điều khiển, cạnh tablet và Alien X"></canvas>
+      <header class="room-topbar">
+        <a class="room-home" href="./#orbit" aria-label="Về trang chủ"><img src="assets/mission/spherex-white.svg" alt="" width="34" height="34"></a>
+        <div class="room-brand"><span>sphere x learn</span><strong data-text="roomTitle">PHÒNG ĐIỀU KHIỂN</strong></div>
+        <span class="room-prototype" data-text="prototype">BẢN THỬ</span>
+        <button id="room-language" type="button" aria-label="Switch to English">EN</button>
+      </header>
+      <div class="room-load" id="room-loading" role="status"><span class="room-orbit-dot" aria-hidden="true"></span><span data-text="loading">Đang mở khoang tàu…</span></div>
+      <div id="room-error" class="room-error" hidden><strong data-text="fallbackTitle">Chưa mở được phòng 3D</strong><p data-text="fallbackBody">Bạn vẫn có thể dùng hai lối tắt bên dưới để thử tablet và hội thoại.</p><button type="button" id="room-reload" data-text="reload">Tải lại</button></div>
+      <div class="room-prompt" id="room-prompt" aria-hidden="true"><span class="room-keycap">E</span><span id="room-prompt-text">Khám phá khoang tàu</span></div>
+      <div class="room-scene-label" aria-hidden="true"><span>01</span><span>ORBITAL CLASSROOM</span></div>
+      <div id="room-overlay" class="room-overlay" role="dialog" aria-labelledby="room-overlay-title" hidden>
+        <h2 id="room-overlay-title" class="room-sr"></h2>
+        <button type="button" id="room-close" class="room-close" aria-label="Đóng">×</button>
+        <section id="room-tablet-panel" class="room-tablet-panel" hidden aria-label="Tablet trống">
+          <div class="room-tablet-camera" aria-hidden="true"></div>
+          <div class="room-tablet-display" aria-label="Màn hình tablet trống"></div>
+          <span class="room-tablet-home" aria-hidden="true"></span>
+        </section>
+        <section id="room-dialogue-panel" class="room-dialogue-panel" hidden>
+          <div class="room-speaker" aria-hidden="true"><svg viewBox="0 0 180 180"><path fill="#9bdd53" stroke="#101727" stroke-width="7" d="M47 53 34 30 42 16 60 18 65 35 61 49M124 48 124 24 137 10 153 16 156 33 141 44M39 54 75 38 128 45 151 75 145 128 116 149 64 148 34 122 26 83Z"/><path fill="#101727" d="M43 75Q70 69 79 117Q43 117 43 75M134 65Q101 63 91 115Q135 114 134 65"/><circle cx="56" cy="86" r="8" fill="#fff"/><circle cx="119" cy="79" r="9" fill="#fff"/><path stroke="#101727" stroke-width="4" stroke-linecap="round" d="m81 131 10 1"/><circle cx="48" cy="27" r="5" fill="#ff9bc6"/><circle cx="140" cy="26" r="5" fill="#4856c9"/></svg></div>
+          <div class="room-speech">
+            <span class="room-speaker-name">ALIEN X</span>
+            <p id="room-dialogue-text"></p>
+            <div class="room-speech-actions"><button id="room-dialogue-next" type="button"><span data-text="next">Tiếp theo</span><span aria-hidden="true">↗</span></button><button id="room-test-choice" type="button" hidden>test <span aria-hidden="true">↗</span></button></div>
+          </div>
+        </section>
+        <section id="room-study-panel" class="room-study-panel" hidden aria-labelledby="room-quiz-title">
+          <div class="room-study-top"><span data-text="quizLabel">BÀI THỬ SPHEREx</span><span id="room-quiz-count">01 / 02</span></div>
+          <h3 id="room-quiz-title"></h3>
+          <div id="room-quiz-options"></div>
+          <div id="room-quiz-feedback" role="status" aria-live="polite" hidden><strong id="room-quiz-result"></strong><p id="room-quiz-explanation"></p><a id="room-quiz-source" target="_blank" rel="noopener noreferrer">NASA / JPL ↗</a></div>
+          <div class="room-quiz-actions"><button id="room-quiz-retry" type="button" hidden data-text="tryAgain">Thử lại</button><button id="room-quiz-next" type="button" hidden data-text="next">Tiếp theo</button></div>
+        </section>
+      </div>
+    </section>
+    <section id="room-controls" aria-label="Điều khiển trò chơi">
+      <div class="room-controls-top"><div><span class="room-controller-brand">GAGOO / 01</span><p id="room-status" role="status" aria-live="polite">Di chuyển tới tablet hoặc Alien X.</p></div><button id="room-motion" type="button" aria-pressed="false" aria-label="Dừng chuyển động trang trí">Ⅱ</button></div>
+      <div class="room-mobile-pad">
+        <div class="room-dpad" role="group" aria-label="Di chuyển">
+          <button type="button" data-direction="up" class="room-dpad-up" aria-label="Đi lên">▲</button>
+          <button type="button" data-direction="left" class="room-dpad-left" aria-label="Đi trái">◀</button>
+          <span class="room-dpad-center" aria-hidden="true">✦</span>
+          <button type="button" data-direction="right" class="room-dpad-right" aria-label="Đi phải">▶</button>
+          <button type="button" data-direction="down" class="room-dpad-down" aria-label="Đi xuống">▼</button>
+        </div>
+        <div class="room-action-pad"><div><button id="room-back" class="room-game-button secondary" type="button" aria-label="Quay lại">B</button><span data-text="back">Quay lại</span></div><div><button id="room-interact" class="room-game-button primary" type="button" aria-label="Tương tác">A</button><span id="room-action-label">Tương tác</span></div></div>
+      </div>
+      <div class="room-stations" role="group" aria-label="Đi tới điểm tương tác"><button id="room-tablet-shortcut" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M10 18h4"/></svg><span>Tablet</span><span aria-hidden="true">↗</span></button><button id="room-alien-shortcut" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6-2-4m14 4 2-4M12 4C0 4 3 19 12 22 21 19 24 4 12 4Z"/><path d="m7 10 2 4m8-4-2 4"/></svg><span>Alien X</span><span aria-hidden="true">↗</span></button></div>
+      <p class="room-keyboard-hint"><kbd>W A S D</kbd> / <kbd>↑ ← ↓ →</kbd> <span data-text="move">Di chuyển</span><i></i><kbd>E</kbd> <span data-text="interact">Tương tác</span><i></i><kbd>Esc</kbd> <span data-text="back">Quay lại</span></p>
+      <div class="room-speaker-slots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </section>
+  </main>
+  <noscript><p class="room-noscript">Bật JavaScript để chơi thử. Enable JavaScript to try this prototype. <a href="./#orbit">Trang chủ / Home</a></p></noscript>
+</body>
+</html>

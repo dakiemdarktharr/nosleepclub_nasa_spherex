@@ -1,4 +1,6 @@
-.gagoo-entrance {
+.gagoo-entrance,
+.workflow-app dialog.gagoo-entrance,
+[data-theme] .workflow-app dialog.gagoo-entrance {
   position: fixed;
   inset: 0;
   z-index: 10000;
@@ -9,11 +11,16 @@
   margin: 0;
   padding: 0;
   border: 0;
+  border-radius: 0;
   overflow: hidden;
-  background: #08162e;
+  background: transparent;
   color: #14287b;
 }
-.gagoo-entrance::backdrop { background: transparent; }
+.gagoo-entrance::backdrop,
+.workflow-app dialog.gagoo-entrance::backdrop {
+  background: transparent;
+  backdrop-filter: none;
+}
 .gagoo-entrance-canvas { display: block; width: 100%; height: 100%; }
 .gagoo-entrance-controls {
   position: absolute;
