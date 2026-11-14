@@ -432,7 +432,7 @@ async function detectorOnlySequenceAllowsMaskedCenterAndWarnsAboutWavelengths(){
   assert.match(h.element("explorer-status").textContent,/wavelength at this coordinate is not available/);
   h.element("explorer-timeline-play").fire("click");assert.equal(h.timers.size,1);
   const tick=[...h.timers.values()][0];tick();
-  assert.match(h.element("explorer-center-status").textContent,/center pixel was excluded/);
+  assert.match(h.element("explorer-center-status").textContent,/exact center pixel is excluded/);
   h.api.pause();
 }
 async function changingQueryCancelsUserSequenceLoad(){
