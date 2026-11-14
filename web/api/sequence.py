@@ -53,7 +53,7 @@ def parse_request(body):
         low, high = float(body['low']), float(body['high'])
     except (TypeError, ValueError):
         raise ValueError('invalid_parameters') from None
-    if not (0 <= ra < 360 and -90 <= dec <= 90 and 0 < fov <= 0.12
+    if not (0 <= ra < 360 and -90 <= dec <= 90 and 0 < fov <= 0.40
             and low < high and abs(low) <= 1e9 and abs(high) <= 1e9):
         raise ValueError('invalid_parameters')
     parsed, indices, ids = [], set(), set()
