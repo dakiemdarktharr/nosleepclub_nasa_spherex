@@ -258,7 +258,7 @@ def timeline_case(browser, base, output):
         page.wait_for_timeout(1100)
         expect(page.locator('#explorer-frame-label')).to_contain_text('1/5')
         page.locator('#explorer-timeline-play').click()
-        page.wait_for_function("document.querySelector('#explorer-frame-label').textContent.includes('2/5')", timeout=5000)
+        page.wait_for_function("() => document.querySelector('#explorer-frame-label').textContent.includes('2/5')", timeout=5000)
         page.locator('#explorer-timeline-play').click()
         expect(page.locator('#explorer-timeline-play')).to_contain_text('Resume')
         assert len([call for call in api_calls if call['path'] == '/api/observations']) == 1
