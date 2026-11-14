@@ -55,7 +55,7 @@ def main():
         return
     handler = partial(AppHandler, directory=str(ROOT / "web"))
     server = ThreadingHTTPServer(("127.0.0.1", args.port), handler)
-    print(f"Sky explorer: http://127.0.0.1:{server.server_port}/#explore", flush=True)
+    print(f"What Did SPHEREx See? http://127.0.0.1:{server.server_port}/", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

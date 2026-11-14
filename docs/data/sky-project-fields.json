@@ -1,0 +1,3392 @@
+{
+  "schemaVersion": 1,
+  "coordinateFrame": "ICRS",
+  "units": "deg",
+  "description": "Bản đồ lấy hình học từ các snapshot đã công bố trong repo và kiểm tra các FITS nguồn có định danh cùng hash đã công bố.",
+  "notes": [
+    "Polygon dùng s_region của từng detector hoặc biên pixel theo WCS HDU chỉ định. Phần bên trong có thể chứa pixel bị mask hoặc thiếu dữ liệu.",
+    "Bán kính cone theo tham số truy vấn, khác kích thước ảnh và độ phủ detector.",
+    "Dữ liệu QR2 được ghim từ snapshot cũ. Theo hướng dẫn IRSA ngày 12/11/2026, QR2 còn tải trực tiếp đến tháng 02/2027 và đã dừng cho tìm kiếm.",
+    "Mỗi điểm mang epoch và vai trò từ nguồn nếu được cung cấp. Tâm vùng thử dự kiến thể hiện hình học lựa chọn."
+  ],
+  "datasets": [
+    {
+      "id": "guide-wise0855",
+      "label": "WISE 0855",
+      "group": "Đề bài",
+      "category": "Tâm trường",
+      "geometryType": "point",
+      "description": "Tọa độ dự báo cho 01/01/2026 bằng mô hình chuyển động đã dùng trong repo. Điểm dùng để mở vùng tìm kiếm.",
+      "sourceUrl": "https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details",
+      "localSource": "web/data/challenge-targets.json",
+      "provenance": {
+        "epoch": "2026-01-01",
+        "coordinateOrigin": "scripts/build_demo.py:expected_position; docs/WISE0855_GAIA.md",
+        "suggestedFovDeg": 0.06,
+        "sha256": "e47deb07db8c7ae915c45e975f0ecc6d3efca177c8bb6c5f34f354c824abeed4"
+      },
+      "coordinates": [
+        133.7601213914074,
+        -7.242127941212259
+      ]
+    },
+    {
+      "id": "guide-barnard",
+      "label": "Barnard’s Star",
+      "group": "Đề bài",
+      "category": "Tâm trường",
+      "geometryType": "point",
+      "description": "Dự báo chuyển động không gian Gaia DR3 tại J2026.0 TCB, bỏ qua thị sai theo vị trí người quan sát. Điểm dùng để mở vùng tìm kiếm.",
+      "sourceUrl": "https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details",
+      "localSource": "web/data/challenge-targets.json",
+      "provenance": {
+        "epoch": "J2026.0 TCB",
+        "coordinateOrigin": "web/data/benchmark/protocol.json positive_control; Gaia DR3 4472832130942575872; RV -110.11 km/s",
+        "suggestedFovDeg": 0.06,
+        "sha256": "e47deb07db8c7ae915c45e975f0ecc6d3efca177c8bb6c5f34f354c824abeed4"
+      },
+      "coordinates": [
+        269.44626688537255,
+        4.768222216475269
+      ]
+    },
+    {
+      "id": "guide-epsilon",
+      "label": "Epsilon Indi B",
+      "group": "Đề bài",
+      "category": "Tâm trường",
+      "geometryType": "point",
+      "description": "Tâm trường lịch sử ESO khoảng 2004. Phạm vi hiển thị đề xuất 0,12° để chừa chỗ cho chuyển động riêng. Điểm dùng để mở vùng tìm kiếm.",
+      "sourceUrl": "https://www.hq.eso.org/sci/activities/vltsv/visirsv/sterzik.html",
+      "localSource": "web/data/challenge-targets.json",
+      "provenance": {
+        "epoch": "historical ESO field center, approximately 2004",
+        "coordinateOrigin": "https://www.hq.eso.org/sci/activities/vltsv/visirsv/sterzik.html",
+        "suggestedFovDeg": 0.12,
+        "sha256": "e47deb07db8c7ae915c45e975f0ecc6d3efca177c8bb6c5f34f354c824abeed4"
+      },
+      "coordinates": [
+        331.04583333,
+        -56.78333333
+      ]
+    },
+    {
+      "id": "guide-rwaur",
+      "label": "RW Aurigae",
+      "group": "Đề bài",
+      "category": "Tâm trường",
+      "geometryType": "point",
+      "description": "Tâm trường theo catalog J2000. Điểm dùng để mở vùng tìm kiếm.",
+      "sourceUrl": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=RW+Aur",
+      "localSource": "web/data/challenge-targets.json",
+      "provenance": {
+        "epoch": "catalog J2000 field center",
+        "coordinateOrigin": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=RW+Aur",
+        "suggestedFovDeg": 0.06,
+        "sha256": "e47deb07db8c7ae915c45e975f0ecc6d3efca177c8bb6c5f34f354c824abeed4"
+      },
+      "coordinates": [
+        76.95652603458332,
+        30.401438173888888
+      ]
+    },
+    {
+      "id": "guide-rdra",
+      "label": "R Draconis",
+      "group": "Đề bài",
+      "category": "Tâm trường",
+      "geometryType": "point",
+      "description": "Tâm trường theo catalog J2000. Điểm dùng để mở vùng tìm kiếm.",
+      "sourceUrl": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=V%2A+R+Dra",
+      "localSource": "web/data/challenge-targets.json",
+      "provenance": {
+        "epoch": "catalog J2000 field center",
+        "coordinateOrigin": "https://simbad.cds.unistra.fr/simbad/sim-id?Ident=V%2A+R+Dra",
+        "suggestedFovDeg": 0.06,
+        "sha256": "e47deb07db8c7ae915c45e975f0ecc6d3efca177c8bb6c5f34f354c824abeed4"
+      },
+      "coordinates": [
+        248.16761083294998,
+        66.75497941722
+      ]
+    },
+    {
+      "id": "qr2-discovery-wise0855",
+      "label": "IRSA QR2 · truy vấn WISE 0855",
+      "group": "SPHEREx QR2",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Vòng truy vấn SIA2 trong kiểm tra ngày 30/10/2026. Snapshot giữ 43 hàng D6 sau lọc. IRSA đã dừng tra cứu QR2 qua SIA2.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "release": "QR2",
+        "detector": 6,
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=CIRCLE+133.760121391+-7.24212794121+0.001&MAXREC=300&RESPONSEFORMAT=VOTABLE&BAND=4.42e-06+5e-06",
+        "responseSha256": "cea99c1ab14e041caab2c1184c2138b63815e11772bd33f832dd14304924a786",
+        "retrievedAt": "2026-10-30T13:36:19.485671+00:00",
+        "matchCount": 43,
+        "bandUm": [
+          4.42,
+          5.0
+        ]
+      },
+      "coordinates": [
+        133.7601213914074,
+        -7.242127941212259
+      ],
+      "radiusDeg": 0.001
+    },
+    {
+      "id": "qr2-detector-wise0855-first",
+      "label": "WISE 0855 · khung đầu D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W19_1B/l2b-v20-2025-241/6/level2_2025W19_1B_0116_1D6_spx_l2b-v20-2025-241.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2025W19_1B_0116_1",
+        "detector": 6,
+        "mjdStart": 60800.700028,
+        "mjdEnd": 60800.701361,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v20-2025-241",
+        "responseSha256": "cea99c1ab14e041caab2c1184c2138b63815e11772bd33f832dd14304924a786",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W19_1B/l2b-v20-2025-241/6/level2_2025W19_1B_0116_1D6_spx_l2b-v20-2025-241.fits?center=133.760121391%2C-7.24212794121&size=0.10279859",
+        "cutoutSha256": "68dd2ce3f5710076478574485311af65899cec66f2e9196727e90ddcd3f906ca",
+        "preview": "web/data/explorer-check/wise0855-first.png",
+        "previewSha256": "d4501b6df08eeb07f945acea30da5b0f21504728216e98a219a7eb43c0809c46"
+      },
+      "coordinates": [
+        [
+          133.24794850558743,
+          -6.807190737769642
+        ],
+        [
+          136.57324739632523,
+          -7.916194479118611
+        ],
+        [
+          135.60160625044074,
+          -11.276278805666877
+        ],
+        [
+          132.22056868731252,
+          -10.14353053061383
+        ]
+      ],
+      "center": [
+        133.7601213914074,
+        -7.242127941212259
+      ]
+    },
+    {
+      "id": "qr2-detector-wise0855-last",
+      "label": "WISE 0855 · khung cuối D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0033_1D6_spx_l2b-v24-2026-135.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2026W20_1A_0033_1",
+        "detector": 6,
+        "mjdStart": 61171.09635,
+        "mjdEnd": 61171.097683,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v24-2026-135",
+        "responseSha256": "cea99c1ab14e041caab2c1184c2138b63815e11772bd33f832dd14304924a786",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W20_1A/l2b-v24-2026-135/6/level2_2026W20_1A_0033_1D6_spx_l2b-v24-2026-135.fits?center=133.760121391%2C-7.24212794121&size=0.10279859",
+        "cutoutSha256": "aeb93e0a79744e07761ff30fce145d0799902731942990c25dc46d2d57b4f1bc",
+        "preview": "web/data/explorer-check/wise0855-last.png",
+        "previewSha256": "586f2382b9a05f3cecd238c7e09745a65f3c946a4553dc675e26dbe0edd57088"
+      },
+      "coordinates": [
+        [
+          133.2486732162476,
+          -6.806982250432644
+        ],
+        [
+          136.57389432201106,
+          -7.915814996285832
+        ],
+        [
+          135.60239697781523,
+          -11.275911093275237
+        ],
+        [
+          132.22138657108232,
+          -10.143230765482745
+        ]
+      ],
+      "center": [
+        133.7601213914074,
+        -7.242127941212259
+      ]
+    },
+    {
+      "id": "qr2-discovery-barnard",
+      "label": "IRSA QR2 · truy vấn Barnard’s Star",
+      "group": "SPHEREx QR2",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Vòng truy vấn SIA2 trong kiểm tra ngày 30/10/2026. Snapshot giữ 42 hàng D6 sau lọc. IRSA đã dừng tra cứu QR2 qua SIA2.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "release": "QR2",
+        "detector": 6,
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=CIRCLE+269.446266885+4.76822221648+0.001&MAXREC=300&RESPONSEFORMAT=VOTABLE&BAND=4.42e-06+5e-06",
+        "responseSha256": "002f8dadddb053ea592e7c43383fd01d114a909a53a8386bf6de1424e94f3578",
+        "retrievedAt": "2026-10-30T13:36:58.257341+00:00",
+        "matchCount": 42,
+        "bandUm": [
+          4.42,
+          5.0
+        ]
+      },
+      "coordinates": [
+        269.44626688537255,
+        4.768222216475269
+      ],
+      "radiusDeg": 0.001
+    },
+    {
+      "id": "qr2-detector-barnard-first",
+      "label": "Barnard’s Star · khung đầu D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0321_1D6_spx_l2b-v20-2025-266.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2025W33_2C_0321_1",
+        "detector": 6,
+        "mjdStart": 60902.864715,
+        "mjdEnd": 60902.866047,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v20-2025-266",
+        "responseSha256": "002f8dadddb053ea592e7c43383fd01d114a909a53a8386bf6de1424e94f3578",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0321_1D6_spx_l2b-v20-2025-266.fits?center=269.446266885%2C4.76822221648&size=0.10279859",
+        "cutoutSha256": "3db88f38e574118b30ad7d2b6266d936d5994acf62bbfc35fd232b13c14616e2",
+        "preview": "web/data/explorer-check/barnard-first.png",
+        "previewSha256": "fbd0d8b4e74f95e2dd262daa09cf502a5e24b82007ae929affce0e0cbddc9bca"
+      },
+      "coordinates": [
+        [
+          266.69815556008666,
+          5.472441481951474
+        ],
+        [
+          270.1774057177523,
+          5.149538132435123
+        ],
+        [
+          269.9973589760409,
+          1.6600605023102528
+        ],
+        [
+          266.5011912945388,
+          1.990363860634739
+        ]
+      ],
+      "center": [
+        269.44626688537255,
+        4.768222216475269
+      ]
+    },
+    {
+      "id": "qr2-detector-barnard-last",
+      "label": "Barnard’s Star · khung cuối D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0403_1D6_spx_l2b-v24-2026-131.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2026W19_1A_0403_1",
+        "detector": 6,
+        "mjdStart": 61165.082972,
+        "mjdEnd": 61165.084304,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v24-2026-131",
+        "responseSha256": "002f8dadddb053ea592e7c43383fd01d114a909a53a8386bf6de1424e94f3578",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0403_1D6_spx_l2b-v24-2026-131.fits?center=269.446266885%2C4.76822221648&size=0.10279859",
+        "cutoutSha256": "36a3cb0be5dd265c39414969a18c901f849a645b961afcf90600ac21bfc7b207",
+        "preview": "web/data/explorer-check/barnard-last.png",
+        "previewSha256": "e1091d2569254f2e9a951ebd53ac38bbbe5edb81e36126eecb884612603f9c29"
+      },
+      "coordinates": [
+        [
+          270.2312246614481,
+          4.114069868296318
+        ],
+        [
+          266.742961426555,
+          4.180551180327823
+        ],
+        [
+          266.6468000694446,
+          7.673680566126728
+        ],
+        [
+          270.1878449061526,
+          7.601870649934903
+        ]
+      ],
+      "center": [
+        269.44626688537255,
+        4.768222216475269
+      ]
+    },
+    {
+      "id": "qr2-discovery-epsilon",
+      "label": "IRSA QR2 · truy vấn Epsilon Indi B",
+      "group": "SPHEREx QR2",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Vòng truy vấn SIA2 trong kiểm tra ngày 30/10/2026. Snapshot giữ 57 hàng D6 sau lọc. IRSA đã dừng tra cứu QR2 qua SIA2.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "release": "QR2",
+        "detector": 6,
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=CIRCLE+331.04583333+-56.78333333+0.001&MAXREC=300&RESPONSEFORMAT=VOTABLE&BAND=4.42e-06+5e-06",
+        "responseSha256": "30da116625d9a591dcd4ce3cac59f2b8f94559e9cdee57764cdafae2f561c8a3",
+        "retrievedAt": "2026-10-30T13:37:09.688597+00:00",
+        "matchCount": 57,
+        "bandUm": [
+          4.42,
+          5.0
+        ]
+      },
+      "coordinates": [
+        331.04583333,
+        -56.78333333
+      ],
+      "radiusDeg": 0.001
+    },
+    {
+      "id": "qr2-detector-epsilon-first",
+      "label": "Epsilon Indi B · khung đầu D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W18_1B/l2b-v20-2025-240/6/level2_2025W18_1B_0081_2D6_spx_l2b-v20-2025-240.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2025W18_1B_0081_2",
+        "detector": 6,
+        "mjdStart": 60794.064813,
+        "mjdEnd": 60794.066145,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v20-2025-240",
+        "responseSha256": "30da116625d9a591dcd4ce3cac59f2b8f94559e9cdee57764cdafae2f561c8a3",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W18_1B/l2b-v20-2025-240/6/level2_2025W18_1B_0081_2D6_spx_l2b-v20-2025-240.fits?center=331.04583333%2C-56.78333333&size=0.19726217",
+        "cutoutSha256": "ad68dd7e2e4df33ff27d629927b0ee9c1cd9285b2f9aba38525886738203bde5",
+        "preview": "web/data/explorer-check/epsilon-first.png",
+        "previewSha256": "2bbdcc06ebf30c281f3a0ebadedf4f51ff306dbd481130582ba588f9482afbf6"
+      },
+      "coordinates": [
+        [
+          336.20873943025794,
+          -59.20764269324975
+        ],
+        [
+          329.84406402016356,
+          -60.599110364617815
+        ],
+        [
+          327.2807162011122,
+          -57.36307408709647
+        ],
+        [
+          333.25246618483857,
+          -56.09770666485309
+        ]
+      ],
+      "center": [
+        331.04583333,
+        -56.78333333
+      ]
+    },
+    {
+      "id": "qr2-detector-epsilon-last",
+      "label": "Epsilon Indi B · khung cuối D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0041_1D6_spx_l2b-v24-2026-131.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2026W19_1A_0041_1",
+        "detector": 6,
+        "mjdStart": 61164.11695,
+        "mjdEnd": 61164.118282,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v24-2026-131",
+        "responseSha256": "30da116625d9a591dcd4ce3cac59f2b8f94559e9cdee57764cdafae2f561c8a3",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W19_1A/l2b-v24-2026-131/6/level2_2026W19_1A_0041_1D6_spx_l2b-v24-2026-131.fits?center=331.04583333%2C-56.78333333&size=0.19726217",
+        "cutoutSha256": "bffbaf30248856ddd768b644b476fa2bf1be5c766b05eafa59e3beb946b50053",
+        "preview": "web/data/explorer-check/epsilon-last.png",
+        "previewSha256": "02c4d209cbe72e10a2cb3d99a5e73b6ed8350a27c124b547eaa3007c10c21eeb"
+      },
+      "coordinates": [
+        [
+          334.7824517877454,
+          -57.82348215213696
+        ],
+        [
+          328.6294344482262,
+          -59.15746324432771
+        ],
+        [
+          326.25317836638504,
+          -55.90350566031679
+        ],
+        [
+          332.03797582708455,
+          -54.68532670576337
+        ]
+      ],
+      "center": [
+        331.04583333,
+        -56.78333333
+      ]
+    },
+    {
+      "id": "qr2-discovery-rwaur",
+      "label": "IRSA QR2 · truy vấn RW Aurigae",
+      "group": "SPHEREx QR2",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Vòng truy vấn SIA2 trong kiểm tra ngày 30/10/2026. Snapshot giữ 36 hàng D6 sau lọc. IRSA đã dừng tra cứu QR2 qua SIA2.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "release": "QR2",
+        "detector": 6,
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=CIRCLE+76.9565260346+30.4014381739+0.001&MAXREC=300&RESPONSEFORMAT=VOTABLE&BAND=4.42e-06+5e-06",
+        "responseSha256": "612b04df01ca0729791fed15996ea175676bf92099753ded0b4167f8e3390e92",
+        "retrievedAt": "2026-10-30T13:37:22.152811+00:00",
+        "matchCount": 36,
+        "bandUm": [
+          4.42,
+          5.0
+        ]
+      },
+      "coordinates": [
+        76.95652603458332,
+        30.401438173888888
+      ],
+      "radiusDeg": 0.001
+    },
+    {
+      "id": "qr2-detector-rwaur-first",
+      "label": "RW Aurigae · khung đầu D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W37_2A/l2b-v20-2025-267/6/level2_2025W37_2A_0051_1D6_spx_l2b-v20-2025-267.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2025W37_2A_0051_1",
+        "detector": 6,
+        "mjdStart": 60929.677476,
+        "mjdEnd": 60929.678809,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v20-2025-267",
+        "responseSha256": "612b04df01ca0729791fed15996ea175676bf92099753ded0b4167f8e3390e92",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W37_2A/l2b-v20-2025-267/6/level2_2025W37_2A_0051_1D6_spx_l2b-v20-2025-267.fits?center=76.9565260346%2C30.4014381739&size=0.10279859",
+        "cutoutSha256": "3917457f8eeb94d5b886a874e7643de49c7cf3169829c8ccddf713cdb2a52666",
+        "preview": "web/data/explorer-check/rwaur-first.png",
+        "previewSha256": "1abc7b642d7d5819ac889e99ed743e68bebf03d4bc58495ccc40fafea28cc3f0"
+      },
+      "coordinates": [
+        [
+          79.8036253712167,
+          30.2563594307581
+        ],
+        [
+          75.78341089320944,
+          30.081021251582712
+        ],
+        [
+          75.31413294907674,
+          33.552782503839076
+        ],
+        [
+          79.52552361435576,
+          33.736619857870025
+        ]
+      ],
+      "center": [
+        76.95652603458332,
+        30.401438173888888
+      ]
+    },
+    {
+      "id": "qr2-detector-rwaur-last",
+      "label": "RW Aurigae · khung cuối D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W10_1A/l2b-v24-2026-094/6/level2_2026W10_1A_0120_1D6_spx_l2b-v24-2026-094.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2026W10_1A_0120_1",
+        "detector": 6,
+        "mjdStart": 61101.563363,
+        "mjdEnd": 61101.564696,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v24-2026-094",
+        "responseSha256": "612b04df01ca0729791fed15996ea175676bf92099753ded0b4167f8e3390e92",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W10_1A/l2b-v24-2026-094/6/level2_2026W10_1A_0120_1D6_spx_l2b-v24-2026-094.fits?center=76.9565260346%2C30.4014381739&size=0.10279859",
+        "cutoutSha256": "9945cdcd51a99f3b36c83fe8fd241582df20bd4006c023fff29d8e2737772b8c",
+        "preview": "web/data/explorer-check/rwaur-last.png",
+        "previewSha256": "f44082a985623fa23a6cf9dfbef9773f6d3e259a714eb9508c2ae21345c62d77"
+      },
+      "coordinates": [
+        [
+          73.07883393941424,
+          32.28620375901379
+        ],
+        [
+          77.19359765022747,
+          32.45648432965791
+        ],
+        [
+          77.48835114259667,
+          28.971718972035685
+        ],
+        [
+          73.48325230051198,
+          28.816010282297263
+        ]
+      ],
+      "center": [
+        76.95652603458332,
+        30.401438173888888
+      ]
+    },
+    {
+      "id": "qr2-discovery-rdra",
+      "label": "IRSA QR2 · truy vấn R Draconis",
+      "group": "SPHEREx QR2",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Vòng truy vấn SIA2 trong kiểm tra ngày 30/10/2026. Snapshot giữ 89 hàng D6 sau lọc. IRSA đã dừng tra cứu QR2 qua SIA2.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "release": "QR2",
+        "detector": 6,
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=CIRCLE+248.167610833+66.7549794172+0.001&MAXREC=300&RESPONSEFORMAT=VOTABLE&BAND=4.42e-06+5e-06",
+        "responseSha256": "83458b9996efaa3f53c74dbb08cff33b5a73c7d825eaa7b3605b5afea5d85cb5",
+        "retrievedAt": "2026-10-30T13:37:35.139694+00:00",
+        "matchCount": 89,
+        "bandUm": [
+          4.42,
+          5.0
+        ]
+      },
+      "coordinates": [
+        248.16761083294998,
+        66.75497941722
+      ],
+      "radiusDeg": 0.001
+    },
+    {
+      "id": "qr2-detector-rdra-first",
+      "label": "R Draconis · khung đầu D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_1D6_spx_l2b-v20-2025-247.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2025W20_2D_0243_1",
+        "detector": 6,
+        "mjdStart": 60811.955829,
+        "mjdEnd": 60811.957162,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v20-2025-247",
+        "responseSha256": "83458b9996efaa3f53c74dbb08cff33b5a73c7d825eaa7b3605b5afea5d85cb5",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W20_2D/l2b-v20-2025-247/6/level2_2025W20_2D_0243_1D6_spx_l2b-v20-2025-247.fits?center=248.167610833%2C66.7549794172&size=0.10279859",
+        "cutoutSha256": "189f96aac7eca95ed5bce224e1b0c1e04bdf071a01f08e2d94f426b301f24534",
+        "preview": "web/data/explorer-check/rdra-first.png",
+        "previewSha256": "0cf59821d43cef935a40783f65dbcae5c397449766fd3ba3bc5a8b657ae998ad"
+      },
+      "coordinates": [
+        [
+          259.9912677711298,
+          67.3466455922603
+        ],
+        [
+          254.5146223121682,
+          64.66969085619472
+        ],
+        [
+          247.30066805201193,
+          66.49655153936797
+        ],
+        [
+          252.40393323582603,
+          69.44150506828515
+        ]
+      ],
+      "center": [
+        248.16761083294998,
+        66.75497941722
+      ]
+    },
+    {
+      "id": "qr2-detector-rdra-last",
+      "label": "R Draconis · khung cuối D6",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên detector đầy đủ từ s_region do IRSA lưu. Đây là khung được chọn để kiểm tra truy cập và hiển thị. Chất lượng từng pixel cần đọc FLAGS và VARIANCE.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_4D6_spx_l2b-v25-2026-166.fits",
+      "localSource": "web/data/explorer-check/coverage.json",
+      "provenance": {
+        "geometrySource": "IRSA SIA2 s_region (STC-S ICRS)",
+        "release": "QR2",
+        "obsId": "2026W24_2B_0242_4",
+        "detector": 6,
+        "mjdStart": 61203.860905,
+        "mjdEnd": 61203.862237,
+        "bandpass": "SPHEREx-D6",
+        "bandMeters": [
+          4.4115e-06,
+          5.0096e-06
+        ],
+        "unit": "MJy/sr",
+        "processingVersion": "v25-2026-166",
+        "responseSha256": "83458b9996efaa3f53c74dbb08cff33b5a73c7d825eaa7b3605b5afea5d85cb5",
+        "cutoutUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2026W24_2B/l2b-v25-2026-166/6/level2_2026W24_2B_0242_4D6_spx_l2b-v25-2026-166.fits?center=248.167610833%2C66.7549794172&size=0.10279859",
+        "cutoutSha256": "72d8ef24e5e4425f59ce2e022ae7fc45ea2e3c997ba6c5eae4d65d762d205a32",
+        "preview": "web/data/explorer-check/rdra-last.png",
+        "previewSha256": "c4ad010aacb60d1708de16e03d24470acaf88eeb7e33fcaedfbeb06ca7108771"
+      },
+      "coordinates": [
+        [
+          253.32489030999753,
+          67.04661380525745
+        ],
+        [
+          250.85191611170958,
+          63.722388194553204
+        ],
+        [
+          242.9904265976288,
+          64.33220968979242
+        ],
+        [
+          244.4430455223469,
+          67.79275223833434
+        ]
+      ],
+      "center": [
+        248.16761083294998,
+        66.75497941722
+      ]
+    },
+    {
+      "id": "wise-original-qr2-metadata",
+      "label": "WISE 0855 · tra cứu lịch sử QR2",
+      "group": "SPHEREx QR2",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn tại tọa độ WISE 0855 ghi trong đề vào 30/10/2026. Kết quả metadata trong snapshot gồm 278 hàng; vùng này biểu diễn vị trí tìm.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "docs/irsa-wise0855-metadata-check.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+133.79512917+-7.24514722+0.05",
+        "checkedDate": "2026-10-30",
+        "matchCount": 278,
+        "release": "QR2",
+        "sha256": "fb7240bd2308a34edaedafa2565685558e637c31148d330f767ca8cd7bc72b49"
+      },
+      "coordinates": [
+        133.79512917,
+        -7.24514722
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "wise-original-qr3-metadata",
+      "label": "WISE 0855 · tra cứu lịch sử QR3",
+      "group": "SPHEREx QR3",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn tại tọa độ WISE 0855 ghi trong đề vào 30/10/2026. Kết quả metadata trong snapshot gồm 0 hàng; vùng này biểu diễn vị trí tìm.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "docs/irsa-wise0855-metadata-check.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=circle+133.79512917+-7.24514722+0.05",
+        "checkedDate": "2026-10-30",
+        "matchCount": 0,
+        "release": "QR3",
+        "sha256": "fb7240bd2308a34edaedafa2565685558e637c31148d330f767ca8cd7bc72b49"
+      },
+      "coordinates": [
+        133.79512917,
+        -7.24514722
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "wise-qr3-release-study",
+      "label": "WISE 0855 · truy vấn QR3 quanh tâm phân tích",
+      "group": "SPHEREx QR3",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Snapshot kiểm tra QR3 của dự án trả về 0 hàng SIA2 tại tâm phân tích. Kết quả gắn với lần truy vấn đã lưu.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/release/protocol.json",
+      "provenance": {
+        "release": "QR3",
+        "protocolVersion": "0.5.0",
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr3&POS=circle+133.76037473328523+-7.242149767967145+0.05",
+        "responseSha256": "d2cce5b4542afdde6fa4e4d770e6352b3b9e65476a6f8c2ba7387beb88301414",
+        "checkedDate": "2026-10-29T22:20:22.873698+00:00",
+        "matchCount": 0
+      },
+      "coordinates": [
+        133.76037473328523,
+        -7.242149767967145
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "wise-qr2-comparison-grid",
+      "label": "WISE 0855 · lưới FITS của 7 bộ so sánh",
+      "group": "SPHEREx QR2",
+      "category": "Sản phẩm xử lý",
+      "geometryType": "polygon",
+      "description": "Bảy bộ so sánh ảnh và ảnh cộng dùng cùng lưới TAN ICRS 64×64, tỉ lệ 6,15 giây cung/pixel. Hình vẽ là biên lưới đầu ra. Dùng HDU VALID và trường validFraction để kiểm tra vùng có pixel đủ điều kiện.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/",
+      "localSource": "web/data/manifest.json",
+      "provenance": {
+        "geometrySource": "FITS BEFORE / AFTER, biên pixel ngoài cùng từ WCS",
+        "release": "QR2",
+        "processingVersion": "0.3.0",
+        "analysisSha256": "24e6906adb049f7fc39a73552e9a0764d55108c30d5051ddb25f96078824e7a1",
+        "maskExtension": "VALID",
+        "pixelScaleArcsec": 6.15,
+        "products": [
+          {
+            "id": "coadd-gaia-broad",
+            "label": "Gaia · Cộng 10 ảnh / epoch",
+            "localPath": "web/data/coadd-gaia-broad/comparison.fits",
+            "sha256": "e805c6f6a73e986a4292188a67df9c65850f6dae1acb3ee1db263ac955f4783c",
+            "validFraction": 0.173095703125,
+            "observationIds": [
+              "10 matched spectral exposures",
+              "10 matched spectral exposures"
+            ],
+            "mjd": [
+              60990.715758890175,
+              61154.18050499187
+            ],
+            "pipelineVersions": [
+              "6.4+psffix1",
+              "6.5.6"
+            ],
+            "wavelengthUmAtTarget": [
+              4.717985441254767,
+              4.714748383478138
+            ],
+            "units": "MJy/sr",
+            "shape": [
+              64,
+              64
+            ]
+          },
+          {
+            "id": "coadd-gaia-strict",
+            "label": "Gaia · Cộng 2 ảnh / epoch",
+            "localPath": "web/data/coadd-gaia-strict/comparison.fits",
+            "sha256": "4c03491c51336d75d4df702922feaddb5f1511ea4bfcb0fd4eea57e8f62b2979",
+            "validFraction": 0.210693359375,
+            "observationIds": [
+              "2 matched spectral exposures",
+              "2 matched spectral exposures"
+            ],
+            "mjd": [
+              60989.366912695376,
+              61153.06763100437
+            ],
+            "pipelineVersions": [
+              "6.4+psffix1",
+              "6.5.6"
+            ],
+            "wavelengthUmAtTarget": [
+              4.588698089245041,
+              4.593610630474874
+            ],
+            "units": "MJy/sr",
+            "shape": [
+              64,
+              64
+            ]
+          },
+          {
+            "id": "coadd-broad",
+            "label": "Cộng 10 ảnh / epoch",
+            "localPath": "web/data/coadd-broad/comparison.fits",
+            "sha256": "932c35bf32002b15f9d4f3b7218a30ef144c6271c89ac9256c57a00480abf600",
+            "validFraction": 0.16357421875,
+            "observationIds": [
+              "10 matched spectral exposures",
+              "10 matched spectral exposures"
+            ],
+            "mjd": [
+              60990.69291929882,
+              61154.178273565616
+            ],
+            "pipelineVersions": [
+              "6.4+psffix1",
+              "6.5.6"
+            ],
+            "wavelengthUmAtTarget": [
+              4.717985441254767,
+              4.714748383478137
+            ],
+            "units": "MJy/sr",
+            "shape": [
+              64,
+              64
+            ]
+          },
+          {
+            "id": "coadd-strict",
+            "label": "Cộng 2 ảnh / epoch",
+            "localPath": "web/data/coadd-strict/comparison.fits",
+            "sha256": "f680e288ad2f198d43b2ec012c887bdf93df2488e39198b86496d4191376a818",
+            "validFraction": 0.206298828125,
+            "observationIds": [
+              "2 matched spectral exposures",
+              "2 matched spectral exposures"
+            ],
+            "mjd": [
+              60989.36695324151,
+              61153.06199027182
+            ],
+            "pipelineVersions": [
+              "6.4+psffix1",
+              "6.5.6"
+            ],
+            "wavelengthUmAtTarget": [
+              4.588698089245041,
+              4.593610630474874
+            ],
+            "units": "MJy/sr",
+            "shape": [
+              64,
+              64
+            ]
+          },
+          {
+            "id": "matched-4853",
+            "label": "4.853 µm · khớp phổ tốt nhất",
+            "localPath": "web/data/matched-4853/comparison.fits",
+            "sha256": "af07afffb495388f82d27e43bd6f9878752bd1bd766e1a38f07b86f95e312a3d",
+            "validFraction": 0.779296875,
+            "observationIds": [
+              "2025W19_1B_0138_1",
+              "2026W19_2A_0651_1"
+            ],
+            "mjd": [
+              60800.834437847,
+              61169.194222546
+            ],
+            "pipelineVersions": [
+              "6.4+psffix1",
+              "6.5.6"
+            ],
+            "wavelengthUmAtTarget": [
+              4.8535248334993994,
+              4.853311229642043
+            ],
+            "units": "MJy/sr",
+            "shape": [
+              64,
+              64
+            ]
+          },
+          {
+            "id": "matched-4961",
+            "label": "4.961 µm · đối chiếu độc lập",
+            "localPath": "web/data/matched-4961/comparison.fits",
+            "sha256": "75a434c1ada4826b1c7297811a94a955cf4acf152c5194ead3cc3acd34f7350f",
+            "validFraction": 0.764892578125,
+            "observationIds": [
+              "2025W19_1B_0116_1",
+              "2026W20_1A_0033_1"
+            ],
+            "mjd": [
+              60800.700028461,
+              61171.096350255
+            ],
+            "pipelineVersions": [
+              "6.4+psffix1",
+              "6.5.6"
+            ],
+            "wavelengthUmAtTarget": [
+              4.961049802305413,
+              4.960913464654949
+            ],
+            "units": "MJy/sr",
+            "shape": [
+              64,
+              64
+            ]
+          },
+          {
+            "id": "matched-4609",
+            "label": "4.609 µm · baseline ngắn hơn",
+            "localPath": "web/data/matched-4609/comparison.fits",
+            "sha256": "2eba66cea5ce50d0180640a091f4dcac134792af5630763131f63ac9aae52416",
+            "validFraction": 0.677734375,
+            "observationIds": [
+              "2025W46_1A_0090_3",
+              "2026W17_1B_0634_1"
+            ],
+            "mjd": [
+              60989.367760625,
+              61153.436457037
+            ],
+            "pipelineVersions": [
+              "6.4+psffix1",
+              "6.5.6"
+            ],
+            "wavelengthUmAtTarget": [
+              4.606615128054428,
+              4.610911260132259
+            ],
+            "units": "MJy/sr",
+            "shape": [
+              64,
+              64
+            ]
+          }
+        ]
+      },
+      "coordinates": [
+        [
+          133.81548769042715,
+          -7.296813078714214
+        ],
+        [
+          133.81547432763668,
+          -7.187479829125803
+        ],
+        [
+          133.70527513894334,
+          -7.187479829125803
+        ],
+        [
+          133.70526177615287,
+          -7.296813078714214
+        ]
+      ],
+      "center": [
+        133.76037473329,
+        -7.242149767967106
+      ]
+    },
+    {
+      "id": "wise-gaia-dr3",
+      "label": "WISE 0855 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao làm mốc căn chỉnh, bán kính 0,25° và G < 18,5. Kết quả lưu 675 nguồn. Phân tích chọn 14 sao để fit căn chỉnh và giữ 7 sao riêng để kiểm tra.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/gaia/results.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',133.76037473328523,-7.242149767967145,0.25))=1 AND phot_g_mean_mag < 18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "437e920b73426aa214c68d1e5cfaa20b1538fd5c46fe4fcccfea1b1ada46d821",
+        "matchCount": 675,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0",
+        "processingVersion": "0.3.0",
+        "analysisSha256": "24e6906adb049f7fc39a73552e9a0764d55108c30d5051ddb25f96078824e7a1"
+      },
+      "coordinates": [
+        133.76037473328523,
+        -7.242149767967145
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "wise-catwise-2020",
+      "label": "WISE 0855 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn catalog hồng ngoại bán kính 0,30°, W2 < 17 và S/N W2 ≥ 5. Snapshot lưu 5.078 nguồn. Bản gate trong protocol giữ 1.783 nguồn.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/release/protocol.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',133.76037473328523,-7.242149767967145,0.30))=1 AND w2mpro_pm<17.0 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "a6877eaad2f3b57534e50861aed20b75971c4b1b950202a315abd59c63c16bf6",
+        "matchCount": 5078,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170,
+        "protocolVersion": "0.5.0"
+      },
+      "coordinates": [
+        133.76037473328523,
+        -7.242149767967145
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "wise-gaia-wide-native",
+      "label": "WISE 0855 · một cutout D6 trường Gaia",
+      "group": "SPHEREx QR2",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits?center=133.76037473328523,-7.242149767967145&size=0.32",
+      "localSource": "web/data/manifest.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W46_1A_0090_2",
+        "detector": 6,
+        "mjd": 60989.366268,
+        "unit": "MJy / sr",
+        "sha256": "a06699c974d9783092ff7d1b75098ec551850940198056d0f485879b8ae333d3",
+        "processingVersion": "v20-2025-318",
+        "shape": [
+          187,
+          187
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W46_1A/l2b-v20-2025-318/6/level2_2025W46_1A_0090_2D6_spx_l2b-v20-2025-318.fits",
+        "queryCenter": [
+          133.76037473328523,
+          -7.242149767967145
+        ],
+        "requestedWidthDeg": 0.32
+      },
+      "coordinates": [
+        [
+          133.85608519302366,
+          -7.452162044355544
+        ],
+        [
+          133.96387948409335,
+          -7.150129855755197
+        ],
+        [
+          133.66356003339584,
+          -7.031425777176312
+        ],
+        [
+          133.55582593877193,
+          -7.333530058091504
+        ]
+      ],
+      "center": [
+        133.75983110240193,
+        -7.241985680534369
+      ]
+    },
+    {
+      "id": "barnard-test-sia",
+      "label": "Barnard’s Star · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Benchmark ảnh thật. Vòng truy vấn SIA2 đã lưu gồm 256 hàng metadata. Manifest ghi 42 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+269.45207695861876+4.693364966576667+0.05",
+        "release": "QR2",
+        "responseSha256": "ef9a24658e28e3263a6b8ad2f59ab4dc7f4a045e3c77cc57ff47da5c3d72b5e7",
+        "manifestSha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "matchCount": 256,
+        "downloadedCutouts": 42,
+        "protocolVersion": "0.6.0"
+      },
+      "coordinates": [
+        269.45207695861876,
+        4.693364966576667
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "barnard-native-qr2",
+      "label": "Barnard’s Star · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0321_1D6_spx_l2b-v20-2025-266.fits?center=269.45207695861876,4.693364966576667&size=0.32",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W33_2C_0321_1",
+        "detector": 6,
+        "mjd": 60902.864715,
+        "unit": "MJy / sr",
+        "sha256": "fdffbb530659097780ca5d53a06044854116709ab68c990222c08e27575615ca",
+        "processingVersion": "v20-2025-266",
+        "shape": [
+          187,
+          187
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W33_2C/l2b-v20-2025-266/6/level2_2025W33_2C_0321_1D6_spx_l2b-v20-2025-266.fits",
+        "queryCenter": [
+          269.45207695861876,
+          4.693364966576667
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "6c1919c7a070f58668c54ef757197384f95b751c5c8913fbfab0c50cd2579b3f",
+        "protocolVersion": "0.6.0",
+        "downloadedCutouts": 42
+      },
+      "coordinates": [
+        [
+          269.3008321323933,
+          4.869331013667899
+        ],
+        [
+          269.28312939636055,
+          4.550660946159106
+        ],
+        [
+          269.6026101814736,
+          4.517951691310214
+        ],
+        [
+          269.62020926407024,
+          4.836690337363975
+        ]
+      ],
+      "center": [
+        269.4516481005364,
+        4.693801439436491
+      ]
+    },
+    {
+      "id": "barnard-gaia",
+      "label": "Barnard’s Star · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 3952 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',269.45207695861876,4.693364966576667,0.25))=1 AND phot_g_mean_mag < 18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "6abb9972ddad07ed13c6b08ee96a0ab035d3fd5958b2c3f41b2c7f0627207af0",
+        "matchCount": 3952,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        269.45207695861876,
+        4.693364966576667
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "barnard-catwise",
+      "label": "Barnard’s Star · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 11054 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',269.45207695861876,4.693364966576667,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "1ca69cff9b04f2b03e1bd3ec1d24524f2fb2714351ed553bcd5c0c85bbe2e3a9",
+        "matchCount": 11054,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        269.45207695861876,
+        4.693364966576667
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "rw-aur-test-sia",
+      "label": "RW Aurigae · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Benchmark ảnh thật. Vòng truy vấn SIA2 đã lưu gồm 226 hàng metadata. Manifest ghi 36 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+76.95652603458332+30.401438173888888+0.05",
+        "release": "QR2",
+        "responseSha256": "42b4bf74f3e05d50f2e562daee5758b4eb8abf9ff085e367899094d1e58ed55b",
+        "manifestSha256": "09cd2d377801b8f0b325de11448cef0783b6ddd9aea94c1557560a37b8dcede8",
+        "matchCount": 226,
+        "downloadedCutouts": 36,
+        "protocolVersion": "0.6.0"
+      },
+      "coordinates": [
+        76.95652603458332,
+        30.401438173888888
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "rw-aur-native-qr2",
+      "label": "RW Aurigae · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W37_2A/l2b-v20-2025-267/6/level2_2025W37_2A_0051_1D6_spx_l2b-v20-2025-267.fits?center=76.95652603458332,30.401438173888888&size=0.32",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W37_2A_0051_1",
+        "detector": 6,
+        "mjd": 60929.677476,
+        "unit": "MJy / sr",
+        "sha256": "c1e975c4124d4301a31a842893c299cf0fa279474ed58ce98c3b52da605f6c09",
+        "processingVersion": "v20-2025-267",
+        "shape": [
+          188,
+          188
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W37_2A/l2b-v20-2025-267/6/level2_2025W37_2A_0051_1D6_spx_l2b-v20-2025-267.fits",
+        "queryCenter": [
+          76.95652603458332,
+          30.401438173888888
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "09cd2d377801b8f0b325de11448cef0783b6ddd9aea94c1557560a37b8dcede8",
+        "protocolVersion": "0.6.0",
+        "downloadedCutouts": 36
+      },
+      "coordinates": [
+        [
+          77.15967111923237,
+          30.25094520478512
+        ],
+        [
+          77.12484076652248,
+          30.57021711963897
+        ],
+        [
+          76.75208163814307,
+          30.553260553832605
+        ],
+        [
+          76.78841074855464,
+          30.234061796364735
+        ]
+      ],
+      "center": [
+        76.95633623446243,
+        30.402140400386827
+      ]
+    },
+    {
+      "id": "rw-aur-gaia",
+      "label": "RW Aurigae · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 2413 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',76.95652603458332,30.401438173888888,0.25))=1 AND phot_g_mean_mag < 18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "e55d2de524288d96eee9fdd45e183f2082976596c9e0265211659baa3dfea54e",
+        "matchCount": 2413,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        76.95652603458332,
+        30.401438173888888
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "rw-aur-catwise",
+      "label": "RW Aurigae · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 8797 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',76.95652603458332,30.401438173888888,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "89930b20c9df4d0df5ae0c781db762dce26766c7b1321dd9453de9661f48af71",
+        "matchCount": 8797,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        76.95652603458332,
+        30.401438173888888
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "r-dra-test-sia",
+      "label": "R Draconis · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Benchmark ảnh thật. Vòng truy vấn SIA2 đã lưu gồm 570 hàng metadata. Manifest ghi 51 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+248.16761083294998+66.75497941722+0.05",
+        "release": "QR2",
+        "responseSha256": "aaed55b125e1389b14d491522de69b1f23397b2dc25bdeb1224e21fb88c18e81",
+        "manifestSha256": "e8f9d2790b79b84da4717d777cb756352dec051b804fbf0380ac2c72a0411586",
+        "matchCount": 570,
+        "downloadedCutouts": 51,
+        "protocolVersion": "0.6.0"
+      },
+      "coordinates": [
+        248.16761083294998,
+        66.75497941722
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "r-dra-native-qr2",
+      "label": "R Draconis · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_2D6_spx_l2b-v22-2026-006.fits?center=248.16761083294998,66.75497941722&size=0.32",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W52_2A_0227_2",
+        "detector": 6,
+        "mjd": 61035.557488,
+        "unit": "MJy / sr",
+        "sha256": "8b635dded56b0b2ee660e01a8c694be86413e42c6bd7460c612ade0dff7d924c",
+        "processingVersion": "v22-2026-006",
+        "shape": [
+          189,
+          188
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W52_2A/l2b-v22-2026-006/6/level2_2025W52_2A_0227_2D6_spx_l2b-v22-2026-006.fits",
+        "queryCenter": [
+          248.16761083294998,
+          66.75497941722
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "e8f9d2790b79b84da4717d777cb756352dec051b804fbf0380ac2c72a0411586",
+        "protocolVersion": "0.6.0",
+        "downloadedCutouts": 51
+      },
+      "coordinates": [
+        [
+          248.02596050176942,
+          66.52864052202428
+        ],
+        [
+          248.71732015569,
+          66.7006566360983
+        ],
+        [
+          248.30912998872734,
+          66.98027366529047
+        ],
+        [
+          247.6130149295889,
+          66.80620915983542
+        ]
+      ],
+      "center": [
+        248.16605727818546,
+        66.75434640224671
+      ]
+    },
+    {
+      "id": "r-dra-gaia",
+      "label": "R Draconis · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 371 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/benchmark/protocol.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',248.16761083294998,66.75497941722,0.25))=1 AND phot_g_mean_mag < 18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "b391215e6515d2c5b12e1915415134d1920d0812644a8911fffff653b6449419",
+        "matchCount": 371,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        248.16761083294998,
+        66.75497941722
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "q030m10-test-sia",
+      "label": "q030m10 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Đánh giá gate chất lượng. Vòng truy vấn SIA2 đã lưu gồm 342 hàng metadata. Manifest ghi 39 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+30.0+-10.0+0.05",
+        "release": "QR2",
+        "responseSha256": "ae76b2c11c0e8031e3edfe9dbcf0c9409a514186176de05f933dec33183529ac",
+        "manifestSha256": "b927ce13aa58d3b5a35e060b004233ecdd08a6080a86cf95b7d3729a998338da",
+        "matchCount": 342,
+        "downloadedCutouts": 39,
+        "protocolVersion": "0.7.0"
+      },
+      "coordinates": [
+        30.0,
+        -10.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "q030m10-native-qr2",
+      "label": "q030m10 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W29_1A/l2b-v20-2025-261/6/level2_2025W29_1A_0375_2D6_spx_l2b-v20-2025-261.fits?center=30.0,-10.0&size=0.32",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W29_1A_0375_2",
+        "detector": 6,
+        "mjd": 60871.998188,
+        "unit": "MJy / sr",
+        "sha256": "7e869917a3ed96e4f8181d39924b4d285c48d48115ee4c195ffd1fd45cdfe0c9",
+        "processingVersion": "v20-2025-261",
+        "shape": [
+          188,
+          190
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W29_1A/l2b-v20-2025-261/6/level2_2025W29_1A_0375_2D6_spx_l2b-v20-2025-261.fits",
+        "queryCenter": [
+          30.0,
+          -10.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "b927ce13aa58d3b5a35e060b004233ecdd08a6080a86cf95b7d3729a998338da",
+        "protocolVersion": "0.7.0",
+        "downloadedCutouts": 39
+      },
+      "coordinates": [
+        [
+          30.212438215422942,
+          -10.100131241287283
+        ],
+        [
+          30.101228375813285,
+          -9.79876812938512
+        ],
+        [
+          29.7892012883259,
+          -9.90054072990531
+        ],
+        [
+          29.900366638845714,
+          -10.201948925101695
+        ]
+      ],
+      "center": [
+        30.00087165869599,
+        -10.000478173462904
+      ]
+    },
+    {
+      "id": "q030m10-gaia",
+      "label": "q030m10 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 189 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',30.0,-10.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "4751af5779f36f7750a145ce1c69015201683362618d37fdb287794b71388cba",
+        "matchCount": 189,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        30.0,
+        -10.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "q030m10-catwise",
+      "label": "q030m10 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 3774 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',30.0,-10.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "02415ca4a8593472a3f5a716f68eebb13d0a789ee829ccdd4891b1a6ca98cf60",
+        "matchCount": 3774,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        30.0,
+        -10.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "q180p20-test-sia",
+      "label": "q180p20 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Đánh giá gate chất lượng. Vòng truy vấn SIA2 đã lưu gồm 341 hàng metadata. Manifest ghi 36 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+180.0+20.0+0.05",
+        "release": "QR2",
+        "responseSha256": "049c382cc1e1a6ef74ccfc560548973be72c66c7a576012c67908d440a3fd61d",
+        "manifestSha256": "8bca01b91c6fc78f2b4e84d458f6383a221b0d81b2d454a12e5f6e75d690770c",
+        "matchCount": 341,
+        "downloadedCutouts": 36,
+        "protocolVersion": "0.7.0"
+      },
+      "coordinates": [
+        180.0,
+        20.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "q180p20-native-qr2",
+      "label": "q180p20 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W50_2A/l2b-v20-2025-349/6/level2_2025W50_2A_0659_1D6_spx_l2b-v20-2025-349.fits?center=180.0,20.0&size=0.32",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W50_2A_0659_1",
+        "detector": 6,
+        "mjd": 61023.050546,
+        "unit": "MJy / sr",
+        "sha256": "95ad70b1fcf1a375b095d5652722f75e7faa8c4af0d3e349a2e805d8286e8b48",
+        "processingVersion": "v20-2025-349",
+        "shape": [
+          188,
+          188
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W50_2A/l2b-v20-2025-349/6/level2_2025W50_2A_0659_1D6_spx_l2b-v20-2025-349.fits",
+        "queryCenter": [
+          180.0,
+          20.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "8bca01b91c6fc78f2b4e84d458f6383a221b0d81b2d454a12e5f6e75d690770c",
+        "protocolVersion": "0.7.0",
+        "downloadedCutouts": 36
+      },
+      "coordinates": [
+        [
+          180.0818666229844,
+          19.78364608643912
+        ],
+        [
+          180.22302829196192,
+          20.07597161225776
+        ],
+        [
+          179.91597880921069,
+          20.216282190519014
+        ],
+        [
+          179.77555562100625,
+          19.923541850877605
+        ]
+      ],
+      "center": [
+        179.9991014239914,
+        19.999772171780187
+      ]
+    },
+    {
+      "id": "q180p20-gaia",
+      "label": "q180p20 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 150 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',180.0,20.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "ec9b2e3dc54d0e40b3ce0c671fe823956604a1e83afccf1c520918008598c864",
+        "matchCount": 150,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        180.0,
+        20.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "q180p20-catwise",
+      "label": "q180p20 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 3302 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',180.0,20.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "97274ae31a10a237af6078872333c14034b2041ea400cd585dfcc2092a8eccce",
+        "matchCount": 3302,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        180.0,
+        20.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "q300m30-test-sia",
+      "label": "q300m30 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Đánh giá gate chất lượng. Vòng truy vấn SIA2 đã lưu gồm 238 hàng metadata. Manifest ghi 40 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+300.0+-30.0+0.05",
+        "release": "QR2",
+        "responseSha256": "dfc9ac5adcf7220f3643e5029e82de2fa2188ecfca81839a060f6a9e70900e9d",
+        "manifestSha256": "a1446f0e0adfffa30133b0b021c59e57fdf5a6005c20e298c89f50860c99c0bb",
+        "matchCount": 238,
+        "downloadedCutouts": 40,
+        "protocolVersion": "0.7.0"
+      },
+      "coordinates": [
+        300.0,
+        -30.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "q300m30-native-qr2",
+      "label": "q300m30 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W39_1A/l2b-v20-2025-273/6/level2_2025W39_1A_0070_4D6_spx_l2b-v20-2025-273.fits?center=300.0,-30.0&size=0.32",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W39_1A_0070_4",
+        "detector": 6,
+        "mjd": 60940.372164,
+        "unit": "MJy / sr",
+        "sha256": "a160e1ec37c4830921528bcc0a583dffd0e048160e2a30206faa094a69840647",
+        "processingVersion": "v20-2025-273",
+        "shape": [
+          188,
+          188
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W39_1A/l2b-v20-2025-273/6/level2_2025W39_1A_0070_4D6_spx_l2b-v20-2025-273.fits",
+        "queryCenter": [
+          300.0,
+          -30.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "a1446f0e0adfffa30133b0b021c59e57fdf5a6005c20e298c89f50860c99c0bb",
+        "protocolVersion": "0.7.0",
+        "downloadedCutouts": 40
+      },
+      "coordinates": [
+        [
+          299.7800100531349,
+          -29.870088343300736
+        ],
+        [
+          299.85348307223825,
+          -30.185366425191045
+        ],
+        [
+          300.2197423303381,
+          -30.12959433893122
+        ],
+        [
+          300.14486273079336,
+          -29.81453446769277
+        ]
+      ],
+      "center": [
+        299.9994512016825,
+        -29.999901575641267
+      ]
+    },
+    {
+      "id": "q300m30-gaia",
+      "label": "q300m30 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 1506 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',300.0,-30.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "a8318a7360220958a4c77dcfe3a7b33020650dbf9959cccfeea646a18305777d",
+        "matchCount": 1506,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        300.0,
+        -30.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "q300m30-catwise",
+      "label": "q300m30 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 6773 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/quality/protocol.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',300.0,-30.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "8a85887d6f6237bab0f7baa0739090eb2c6387ec6d587a82c4db1e115ad19a34",
+        "matchCount": 6773,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        300.0,
+        -30.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "v060m30-test-sia",
+      "label": "v060m30 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Kiểm tra covariance. Vòng truy vấn SIA2 đã lưu gồm 241 hàng metadata. Manifest ghi 40 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+60.0+-30.0+0.05",
+        "release": "QR2",
+        "responseSha256": "c8c93b0172d7de591ff0749b59ef7a03f63ae5f2abf91144cd1559b2508bed54",
+        "manifestSha256": "86f3e657242b28933c4e35ccb4726ff12a5510fdef599eb3a6561f744eb88795",
+        "matchCount": 241,
+        "downloadedCutouts": 40,
+        "protocolVersion": "0.8.0"
+      },
+      "coordinates": [
+        60.0,
+        -30.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "v060m30-native-qr2",
+      "label": "v060m30 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W32_2D/l2b-v20-2025-265/6/level2_2025W32_2D_0586_1D6_spx_l2b-v20-2025-265.fits?center=60.0,-30.0&size=0.32",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W32_2D_0586_1",
+        "detector": 6,
+        "mjd": 60897.596948,
+        "unit": "MJy / sr",
+        "sha256": "df89704879ac8740bea06241c4d5fabfdb55627b2344b4979ecb6590c2e2d4c2",
+        "processingVersion": "v20-2025-265",
+        "shape": [
+          188,
+          188
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W32_2D/l2b-v20-2025-265/6/level2_2025W32_2D_0586_1D6_spx_l2b-v20-2025-265.fits",
+        "queryCenter": [
+          60.0,
+          -30.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "86f3e657242b28933c4e35ccb4726ff12a5510fdef599eb3a6561f744eb88795",
+        "protocolVersion": "0.8.0",
+        "downloadedCutouts": 40
+      },
+      "coordinates": [
+        [
+          60.224557133910075,
+          -30.12799827226507
+        ],
+        [
+          60.142531588472586,
+          -29.814032490901972
+        ],
+        [
+          59.77671845591032,
+          -29.871586062177965
+        ],
+        [
+          59.8579468760252,
+          -30.185778394296573
+        ]
+      ],
+      "center": [
+        60.00051649614525,
+        -30.00010671322403
+      ]
+    },
+    {
+      "id": "v060m30-gaia",
+      "label": "v060m30 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 226 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',60.0,-30.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "b09e3c8a6f3f4ac19afd65a0b529f0a848012b2b63093bd25b805b033d7af0ea",
+        "matchCount": 226,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        60.0,
+        -30.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "v060m30-catwise",
+      "label": "v060m30 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 3905 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',60.0,-30.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "18f52faf1a13d2ce4ddc06591ae67b484319ad77e94dcec6334f57de060a03ee",
+        "matchCount": 3905,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        60.0,
+        -30.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "v150p45-test-sia",
+      "label": "v150p45 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Kiểm tra covariance. Vòng truy vấn SIA2 đã lưu gồm 299 hàng metadata. Manifest ghi 43 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+150.0+45.0+0.05",
+        "release": "QR2",
+        "responseSha256": "c31caaa555bb326bac09027b14efc8a45f041b50ebb04153e8efeddf6985982f",
+        "manifestSha256": "3aa6b26d1ddc1c4cdb066393853181c4978210a659a381c104698a222c601b77",
+        "matchCount": 299,
+        "downloadedCutouts": 43,
+        "protocolVersion": "0.8.0"
+      },
+      "coordinates": [
+        150.0,
+        45.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "v150p45-native-qr2",
+      "label": "v150p45 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W45_1A/l2b-v20-2025-311/6/level2_2025W45_1A_0622_4D6_spx_l2b-v20-2025-311.fits?center=150.0,45.0&size=0.32",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W45_1A_0622_4",
+        "detector": 6,
+        "mjd": 60984.761063,
+        "unit": "MJy / sr",
+        "sha256": "109200d0d6e7e32982a0b876090b27bd3260c34c8e7c9b310d27d8f81fc2bfc8",
+        "processingVersion": "v20-2025-311",
+        "shape": [
+          188,
+          188
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W45_1A/l2b-v20-2025-311/6/level2_2025W45_1A_0622_4D6_spx_l2b-v20-2025-311.fits",
+        "queryCenter": [
+          150.0,
+          45.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "3aa6b26d1ddc1c4cdb066393853181c4978210a659a381c104698a222c601b77",
+        "protocolVersion": "0.8.0",
+        "downloadedCutouts": 43
+      },
+      "coordinates": [
+        [
+          150.12085324447344,
+          44.78558623239143
+        ],
+        [
+          150.29761250493812,
+          45.082709443091304
+        ],
+        [
+          149.88097373673162,
+          45.215021935281456
+        ],
+        [
+          149.7062819097499,
+          44.917116580960844
+        ]
+      ],
+      "center": [
+        150.0013978155961,
+        45.000187874278744
+      ]
+    },
+    {
+      "id": "v150p45-gaia",
+      "label": "v150p45 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 194 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',150.0,45.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "a495679b6186c9955c7f921d2883d2fcb36e15a12f3bb5833faf6cd605b5045a",
+        "matchCount": 194,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        150.0,
+        45.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "v150p45-catwise",
+      "label": "v150p45 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 3814 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',150.0,45.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "72ba80fe6421d8e235a22ae6bd3f9817d06aea893e9528489efbbd95a9103b5c",
+        "matchCount": 3814,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        150.0,
+        45.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "v330p10-test-sia",
+      "label": "v330p10 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Kiểm tra covariance. Vòng truy vấn SIA2 đã lưu gồm 356 hàng metadata. Manifest ghi 39 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+330.0+10.0+0.05",
+        "release": "QR2",
+        "responseSha256": "e10e835508d64b7e9aa516aa183bdfe89e9fc701ae6fbd23e40b2b6f3ed8f89d",
+        "manifestSha256": "4c50a3fff6b0cbab0e95b27c4b18df9d844bd43ef6b4e56f4884420ad741eee3",
+        "matchCount": 356,
+        "downloadedCutouts": 39,
+        "protocolVersion": "0.8.0"
+      },
+      "coordinates": [
+        330.0,
+        10.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "v330p10-native-qr2",
+      "label": "v330p10 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W21_2C/l2b-v20-2025-250/6/level2_2025W21_2C_0534_1D6_spx_l2b-v20-2025-250.fits?center=330.0,10.0&size=0.32",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W21_2C_0534_1",
+        "detector": 6,
+        "mjd": 60820.709956,
+        "unit": "MJy / sr",
+        "sha256": "57ec2c59ceed4790f478168eeb57e843b2ea581e6222ec5d508a24d400a5f951",
+        "processingVersion": "v20-2025-250",
+        "shape": [
+          187,
+          187
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W21_2C/l2b-v20-2025-250/6/level2_2025W21_2C_0534_1D6_spx_l2b-v20-2025-250.fits",
+        "queryCenter": [
+          330.0,
+          10.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "4c50a3fff6b0cbab0e95b27c4b18df9d844bd43ef6b4e56f4884420ad741eee3",
+        "protocolVersion": "0.8.0",
+        "downloadedCutouts": 39
+      },
+      "coordinates": [
+        [
+          330.2136641181822,
+          9.908386261261748
+        ],
+        [
+          330.0909403863399,
+          10.204321090771337
+        ],
+        [
+          329.78687247100055,
+          10.091988718111843
+        ],
+        [
+          329.9100728865863,
+          9.796219917560402
+        ]
+      ],
+      "center": [
+        330.00046822230473,
+        10.000162314191874
+      ]
+    },
+    {
+      "id": "v330p10-gaia",
+      "label": "v330p10 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 608 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',330.0,10.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "72e73570868cbdfd718275cb8f6f34e21d25467ce6250be2335d94cca9b1ab83",
+        "matchCount": 608,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        330.0,
+        10.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "v330p10-catwise",
+      "label": "v330p10 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 4575 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/covariance/design.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',330.0,10.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "ea3db32132947a512df03cd8e582e053b9f3a434b492fa6b8a36b7b5de5fa739",
+        "matchCount": 4575,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        330.0,
+        10.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "w090p10-test-sia",
+      "label": "w090p10 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Kiểm tra hiệu chỉnh. Vòng truy vấn SIA2 đã lưu gồm 244 hàng metadata. Manifest ghi 38 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+90.0+10.0+0.05",
+        "release": "QR2",
+        "responseSha256": "ff7476c9f0f27f1e35e8e39cc49faf578a2e4280603cb4f24b853f823b748a55",
+        "manifestSha256": "03b80dd990842cc2b60574e4183f24e53044d7fa20a92f0ec36f718e46dd6a90",
+        "matchCount": 244,
+        "downloadedCutouts": 38,
+        "protocolVersion": "0.9.0"
+      },
+      "coordinates": [
+        90.0,
+        10.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "w090p10-native-qr2",
+      "label": "w090p10 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W39_1A/l2b-v20-2025-273/6/level2_2025W39_1A_0299_4D6_spx_l2b-v20-2025-273.fits?center=90.0,10.0&size=0.32",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W39_1A_0299_4",
+        "detector": 6,
+        "mjd": 60941.625765,
+        "unit": "MJy / sr",
+        "sha256": "aeb649c0c57a103012b06a9a11d0a35330a629167ee5c622e173d94cd227eee9",
+        "processingVersion": "v20-2025-273",
+        "shape": [
+          188,
+          187
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W39_1A/l2b-v20-2025-273/6/level2_2025W39_1A_0299_4D6_spx_l2b-v20-2025-273.fits",
+        "queryCenter": [
+          90.0,
+          10.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "03b80dd990842cc2b60574e4183f24e53044d7fa20a92f0ec36f718e46dd6a90",
+        "protocolVersion": "0.9.0",
+        "downloadedCutouts": 38
+      },
+      "coordinates": [
+        [
+          90.15845006129341,
+          9.829493832776642
+        ],
+        [
+          90.1663392293407,
+          10.150713553278694
+        ],
+        [
+          89.84173805186582,
+          10.171091273528047
+        ],
+        [
+          89.83442514303336,
+          9.849805956039487
+        ]
+      ],
+      "center": [
+        90.00028551382042,
+        10.00018511837718
+      ]
+    },
+    {
+      "id": "w090p10-gaia",
+      "label": "w090p10 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 2902 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',90.0,10.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "078b9bccc0d6787d6968a4b9218faac6fe9bba4cb2f6f52ba04721723677919b",
+        "matchCount": 2902,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        90.0,
+        10.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "w090p10-catwise",
+      "label": "w090p10 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 9494 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',90.0,10.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "f7493e87064e0a1d201bcf77b42ca03953a168e5d34d24cdca653cda98db11b0",
+        "matchCount": 9494,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        90.0,
+        10.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "w210m20-test-sia",
+      "label": "w210m20 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Kiểm tra hiệu chỉnh. Vòng truy vấn SIA2 đã lưu gồm 389 hàng metadata. Manifest ghi 37 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+210.0+-20.0+0.05",
+        "release": "QR2",
+        "responseSha256": "623031b60825ccb0b72ec783d6b44026b4f7d0067aafc768f5625d7abbfbb922",
+        "manifestSha256": "decd5bf97b101a6a5215f263ccbec71ec23126690962f89abf6dae238edea02f",
+        "matchCount": 389,
+        "downloadedCutouts": 37,
+        "protocolVersion": "0.9.0"
+      },
+      "coordinates": [
+        210.0,
+        -20.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "w210m20-native-qr2",
+      "label": "w210m20 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_1A/l2b-v20-2025-257/6/level2_2025W26_1A_0520_4D6_spx_l2b-v20-2025-257.fits?center=210.0,-20.0&size=0.32",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W26_1A_0520_4",
+        "detector": 6,
+        "mjd": 60851.655047,
+        "unit": "MJy / sr",
+        "sha256": "b7466efc6cf05a933d5038ebc3ce2ed8d012fb370f938e948ab49c1162c5ff77",
+        "processingVersion": "v20-2025-257",
+        "shape": [
+          187,
+          187
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_1A/l2b-v20-2025-257/6/level2_2025W26_1A_0520_4D6_spx_l2b-v20-2025-257.fits",
+        "queryCenter": [
+          210.0,
+          -20.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "decd5bf97b101a6a5215f263ccbec71ec23126690962f89abf6dae238edea02f",
+        "protocolVersion": "0.9.0",
+        "downloadedCutouts": 37
+      },
+      "coordinates": [
+        [
+          209.89953653264217,
+          -19.78674187351781
+        ],
+        [
+          209.78280258297403,
+          -20.088793293901198
+        ],
+        [
+          210.0990441839262,
+          -20.214544560142823
+        ],
+        [
+          210.21500577568844,
+          -19.912118804118776
+        ]
+      ],
+      "center": [
+        209.99908439501834,
+        -20.000466561085492
+      ]
+    },
+    {
+      "id": "w210m20-gaia",
+      "label": "w210m20 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 514 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',210.0,-20.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "4d4ef04ac2835d093d3f5f91fabd2faeffb9d3e48e70120b13ccd7740c3ef57f",
+        "matchCount": 514,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        210.0,
+        -20.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "w210m20-catwise",
+      "label": "w210m20 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 4037 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',210.0,-20.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "893baa51824da6914585ab45f7283f03a049b3da869facf85663bcd28c7b919d",
+        "matchCount": 4037,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        210.0,
+        -20.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "w350p35-test-sia",
+      "label": "w350p35 · IRSA QR2",
+      "group": "Trường kiểm thử",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Kiểm tra hiệu chỉnh. Vòng truy vấn SIA2 đã lưu gồm 471 hàng metadata. Manifest ghi 60 cutout QR2 D6 được tải. Các nghiên cứu trong repo có thể dùng lại cùng các khung.",
+      "sourceUrl": "https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "queryUrl": "https://irsa.ipac.caltech.edu/SIA?COLLECTION=spherex_qr2&POS=circle+350.0+35.0+0.05",
+        "release": "QR2",
+        "responseSha256": "7e5dbd75ce137b6afa5a58344dc163e5147483f57ee6be83c624d41d9b64e27d",
+        "manifestSha256": "88e8e1db06ee6864d66eff7a13097f7407ffab1a245dcfd750efbb2c7a043260",
+        "matchCount": 471,
+        "downloadedCutouts": 60,
+        "protocolVersion": "0.9.0"
+      },
+      "coordinates": [
+        350.0,
+        35.0
+      ],
+      "radiusDeg": 0.05
+    },
+    {
+      "id": "w350p35-native-qr2",
+      "label": "w350p35 · cutout SPHEREx D6",
+      "group": "Trường kiểm thử",
+      "category": "Ảnh quan sát",
+      "geometryType": "polygon",
+      "description": "Biên của một cutout đại diện đã ghim. Bốn góc biên pixel đi qua WCS gốc của HDU IMAGE, có hiệu chỉnh SIP. Chất lượng bên trong phụ thuộc FLAGS. Cutout khác trong trường có thể khác biên.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_2A/l2b-v20-2025-258/6/level2_2025W26_2A_0337_1D6_spx_l2b-v20-2025-258.fits?center=350.0,35.0&size=0.32",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "geometrySource": "FITS IMAGE, 4 góc pixel ngoài cùng từ WCS native",
+        "release": "QR2",
+        "obsId": "2025W26_2A_0337_1",
+        "detector": 6,
+        "mjd": 60854.073315,
+        "unit": "MJy / sr",
+        "sha256": "fae55bcb86cc8220a8c50fb3243b44cc7976ac976a45c0716643c76268457ae3",
+        "processingVersion": "v20-2025-258",
+        "shape": [
+          188,
+          189
+        ],
+        "accessUrl": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_2A/l2b-v20-2025-258/6/level2_2025W26_2A_0337_1D6_spx_l2b-v20-2025-258.fits",
+        "queryCenter": [
+          350.0,
+          35.0
+        ],
+        "requestedWidthDeg": 0.32,
+        "manifestSha256": "88e8e1db06ee6864d66eff7a13097f7407ffab1a245dcfd750efbb2c7a043260",
+        "protocolVersion": "0.9.0",
+        "downloadedCutouts": 60
+      },
+      "coordinates": [
+        [
+          350.2731997005762,
+          34.93989696682964
+        ],
+        [
+          350.0708269455329,
+          35.21497655813225
+        ],
+        [
+          349.72548482140496,
+          35.0578011195407
+        ],
+        [
+          349.928915000671,
+          34.78338473429289
+        ]
+      ],
+      "center": [
+        349.9997369009363,
+        34.99909302758224
+      ]
+    },
+    {
+      "id": "w350p35-gaia",
+      "label": "w350p35 · Gaia DR3",
+      "group": "Gaia",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn sao nền để căn chỉnh và đánh giá trường. Snapshot lưu 734 hàng theo câu ADQL của protocol.",
+      "sourceUrl": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "query": "SELECT source_id, ref_epoch, ra, dec, parallax, pmra, pmdec, ra_error, dec_error, parallax_error, pmra_error, pmdec_error, ra_dec_corr, ra_parallax_corr, ra_pmra_corr, ra_pmdec_corr, dec_parallax_corr, dec_pmra_corr, dec_pmdec_corr, parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, phot_g_mean_mag, bp_rp, ruwe, astrometric_params_solved, visibility_periods_used, duplicated_source, ipd_frac_multi_peak, non_single_star, phot_variable_flag FROM gaia_dr3_source WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',350.0,35.0,0.25))=1 AND phot_g_mean_mag<18.5 ORDER BY source_id",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "107066aeb1a75733e214613630f54b35dd921c58a03840007d16eed2b21823b0",
+        "matchCount": 734,
+        "release": "Gaia DR3",
+        "catalogReferenceEpoch": "J2016.0"
+      },
+      "coordinates": [
+        350.0,
+        35.0
+      ],
+      "radiusDeg": 0.25
+    },
+    {
+      "id": "w350p35-catwise",
+      "label": "w350p35 · CatWISE2020",
+      "group": "CatWISE",
+      "category": "Vùng truy vấn",
+      "geometryType": "cone",
+      "description": "Truy vấn nguồn hồng ngoại tham chiếu. Snapshot lưu 4776 hàng theo lọc W2 và S/N của protocol.",
+      "sourceUrl": "https://irsa.ipac.caltech.edu/data/WISE/CatWISE/gator_docs/catwise_colDescriptions.html",
+      "localSource": "web/data/ablation/design.json",
+      "provenance": {
+        "query": "SELECT source_name,ra,dec,ra_pm,dec_pm,sigra_pm,sigdec_pm,pmra,pmdec,sigpmra,sigpmdec,meanobsmjd,w1mpro_pm,w2mpro_pm,w2snr_pm,w2rchi2_pm,cc_flags,ab_flags FROM catwise_2020 WHERE CONTAINS(POINT('ICRS',ra,dec),CIRCLE('ICRS',350.0,35.0,0.30))=1 AND w2mpro_pm<17 AND w2snr_pm>=5 ORDER BY source_name",
+        "endpoint": "https://irsa.ipac.caltech.edu/TAP/sync",
+        "responseSha256": "1ffa261d9d3c34f3d630b1350b7ed19dd7cc6276dd8dc0f744497afb5248c418",
+        "matchCount": 4776,
+        "release": "CatWISE2020",
+        "catalogProperMotionEpochMjd": 57170
+      },
+      "coordinates": [
+        350.0,
+        35.0
+      ],
+      "radiusDeg": 0.3
+    },
+    {
+      "id": "wise-jwst-prism",
+      "label": "WISE 0855 · JWST/NIRSpec PRISM/CLEAR",
+      "group": "JWST",
+      "category": "Phổ tham chiếu",
+      "geometryType": "point",
+      "description": "Phổ trích 1D x1d của quan sát 17/04/2023. Điểm lấy từ TARG_RA/TARG_DEC ở FITS Primary. Tọa độ metadata dùng để chỉ mục quan sát. Sản phẩm Stage 3 của MAST.",
+      "sourceUrl": "https://mast.stsci.edu/jwst/api/v0.1/Download/file?uri=mast%3AJWST%2Fproduct%2Fjw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits",
+      "localSource": "web/data/external/wise0855-prism-reference.json",
+      "provenance": {
+        "geometrySource": "FITS Primary TARG_RA, TARG_DEC",
+        "program": "1230",
+        "obsId": "jw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1",
+        "dateObs": "2023-04-17",
+        "processingVersion": "3.0.0",
+        "crdsContext": "jwst_1584.pmap",
+        "units": {
+          "wavelength": "µm",
+          "flux": "Jy"
+        },
+        "sha256": "17164197d803117d02c0e1e89ce64d5521ba86b523d3ba0cc03679974df53e3f"
+      },
+      "coordinates": [
+        133.766033744466,
+        -7.2427481065161
+      ]
+    },
+    {
+      "id": "wise-jwst-sed",
+      "label": "WISE 0855 · JWST/NIRSpec G395M/F290LP",
+      "group": "JWST",
+      "category": "Phổ tham chiếu",
+      "geometryType": "point",
+      "description": "Phổ trích 1D x1d của quan sát 17/04/2023. Điểm lấy từ TARG_RA/TARG_DEC ở FITS Primary. Tọa độ metadata dùng để chỉ mục quan sát. Sản phẩm Stage 3 của MAST.",
+      "sourceUrl": "https://mast.stsci.edu/jwst/api/v0.1/Download/file?uri=mast%3AJWST%2Fproduct%2Fjw01230-o007_t001-s000000001_nirspec_f290lp-g395m-s200a1-subs200a1_x1d.fits",
+      "localSource": "web/data/external/wise0855-sed-reference.json",
+      "provenance": {
+        "geometrySource": "FITS Primary TARG_RA, TARG_DEC",
+        "program": "1230",
+        "obsId": "jw01230-o007_t001-s000000001_nirspec_f290lp-g395m-s200a1-subs200a1",
+        "dateObs": "2023-04-17",
+        "processingVersion": "3.0.0",
+        "crdsContext": "jwst_1584.pmap",
+        "units": {
+          "wavelength": "µm",
+          "flux": "Jy"
+        },
+        "sha256": "9474fbbcfe1304fa6763fd3a9ea3190f419785763f53a1827ac997aef84e19a6"
+      },
+      "coordinates": [
+        133.76603420314356,
+        -7.242748144659157
+      ]
+    },
+    {
+      "id": "wise-spitzer-astrometry",
+      "label": "WISE 0855 · astrometry Spitzer công bố",
+      "group": "Spitzer",
+      "category": "Astrometry công bố",
+      "geometryType": "point",
+      "description": "Vị trí tham chiếu trong bảng 5 của Kirkpatrick và cộng sự (2021). Tọa độ ứng với MJD 57633,39. Bảng công bố sai số riêng từng tọa độ và thị sai. Dữ liệu này làm mốc tham khảo giữa các epoch.",
+      "sourceUrl": "https://doi.org/10.3847/1538-4365/abd107",
+      "localSource": "web/data/external/wise0855-sed-reference.json",
+      "provenance": {
+        "mjd": 57633.39,
+        "positionErrorMas": [
+          2.3,
+          2.3
+        ],
+        "parallaxMas": 439.0,
+        "parallaxErrorMas": 2.4,
+        "source": "Kirkpatrick et al. 2021, Table 5"
+      },
+      "coordinates": [
+        133.780984,
+        -7.243932
+      ]
+    },
+    {
+      "id": "spiff-qr2-local",
+      "label": "SPIFF · catalog và mẫu phổ đã tải",
+      "group": "SPIFF",
+      "category": "Thư viện phổ",
+      "geometryType": "none",
+      "description": "Bản tải nhỏ gồm catalog, mẫu phổ và tài liệu. Các mẫu hybrid tổng hợp phổ theo lớp. Bản đồ chưa nạp tọa độ từng nguồn từ catalog.",
+      "sourceUrl": "https://zenodo.org/records/19051216",
+      "localSource": "web/data/external/spiff-reference.json",
+      "provenance": {
+        "release": "QR2-2026-04-24",
+        "license": {
+          "id": "CC-BY-4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        "metadataSha256": "11504c14cd99f7030d2c247815f9c6584c056e852af526697084d0770bf82f42"
+      }
+    },
+    {
+      "id": "spx-calibration-spectral-wcs",
+      "label": "SPHEREx · Spectral WCS D6 / CWAVE–CBAND",
+      "group": "Hiệu chuẩn",
+      "category": "Hiệu chuẩn detector",
+      "geometryType": "none",
+      "description": "Tệp hiệu chuẩn trên hệ tọa độ detector. Vị trí tương ứng trên trời phụ thuộc WCS của từng exposure.",
+      "sourceUrl": "https://nasa-irsa-spherex.s3.us-east-1.amazonaws.com/qr2/spectral_wcs/cal-wcs-v4-2025-254/6/spectral_wcs_D6_spx_cal-wcs-v4-2025-254.fits",
+      "localSource": "web/data/gaia/results.json",
+      "provenance": {
+        "sha256": "8872df333578ac80c308c7077bb86e4d3d2a639ee53c75f0f2fe94ee04ab6a96",
+        "processingVersion": "spectral_wcs_D6_spx_cal-wcs-v4-2025-254.fits",
+        "units": "µm"
+      }
+    },
+    {
+      "id": "spx-calibration-epsf",
+      "label": "SPHEREx · ePSF D6",
+      "group": "Hiệu chuẩn",
+      "category": "Hiệu chuẩn detector",
+      "geometryType": "none",
+      "description": "Tệp hiệu chuẩn trên hệ tọa độ detector. Vị trí tương ứng trên trời phụ thuộc WCS của từng exposure.",
+      "sourceUrl": "https://nasa-irsa-spherex.s3.us-east-1.amazonaws.com/qr3/epsf/cal-epsf-v1-2026-191/6/epsf_D6_spx_cal-epsf-v1-2026-191.fits",
+      "localSource": "web/data/gaia/results.json",
+      "provenance": {
+        "sha256": "52f85faeb93d67ed2020b68a628fc947c1f0b78cbf9282ca193ec6d588ac1a36",
+        "processingVersion": "epsf_D6_spx_cal-epsf-v1-2026-191.fits",
+        "units": "ePSF chuẩn hóa"
+      }
+    },
+    {
+      "id": "wise-synthetic-controls",
+      "label": "Đối chứng tín hiệu tổng hợp",
+      "group": "Đối chứng",
+      "category": "Dữ liệu tổng hợp",
+      "geometryType": "none",
+      "description": "Scene và tín hiệu được mô phỏng trên hình học của stamp nguồn đã chọn. Kết quả phục vụ kiểm tra fitter và sai số có điều kiện.",
+      "sourceUrl": null,
+      "localSource": "web/data/signal-controls/overview.json",
+      "provenance": {
+        "sha256": "b0b96b6496ef1a368e891411ff32a1b103fc8f7dcd16de8b700401f65e91d7c1",
+        "protocol": "docs/SIGNAL_CONTROL_PROTOCOL.md"
+      }
+    },
+    {
+      "id": "prospective-r238m45",
+      "label": "r238m45 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "07ce80b133a4b67643a7d03d29126bc284cb00082813b043f007a61fa98bd64e",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        238,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r166m45",
+      "label": "r166m45 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "221aab3241f141f2018408c5f67c457ae31e60d18314637397b2b8b467eec010",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        166,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r130m45",
+      "label": "r130m45 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "4ca1890c61793d3cdda76c0ec565a520f3e4878f5d516dd030217b5967a7bd6c",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        130,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r022m45",
+      "label": "r022m45 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "7d9670c36fae5aeca80d8a0245081b1ecacf0edd46733da4c6f880b6d6293240",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        22,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r202m45",
+      "label": "r202m45 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "9e4a4a5f375f65b1ef02e665d95df72e86b00b1eb3f536d480efe549bb00ddd6",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        202,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r094m45",
+      "label": "r094m45 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "a843be1d88ba9928f699628717ea1b93e6e6eb3770b42491c3939c6ebcbd4541",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        94,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r274m45",
+      "label": "r274m45 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "b0448f3fae390e645d9aef32c47ad9098c49c7e3ec7bc6681eb8d4640a2e5c49",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        274,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r346m45",
+      "label": "r346m45 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "c11f2a14e2605f026a9b1c4d3457472a48dce5e2610c0020b727e0c89d662142",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        346,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r310m45",
+      "label": "r310m45 · kiểm tra giữ riêng",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "final_holdout",
+        "selectionSha256": "ee22fb93d58e4e9f667fbfee89a0b471fe4a00b7e196baa26f247357a5965d1b",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        310,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r058m45",
+      "label": "r058m45 · kiểm tra giữ riêng",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "final_holdout",
+        "selectionSha256": "f7a099138ce20fbf289665c8ba303fbafaf5520e1fea4b3d929e93f44a06a957",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        58,
+        -45
+      ]
+    },
+    {
+      "id": "prospective-r238p00",
+      "label": "r238p00 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "13272e60ff5ed42d7e103c812d4a11b78f8298dfe46a35e266c501e97f36da58",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        238,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r274p00",
+      "label": "r274p00 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "39172c7134248c6e64c490b52b258b04330cacb7749c45accd892ebec562e0e6",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        274,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r346p00",
+      "label": "r346p00 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "4801350875831eeacc1d63739b0cdb5a8ee43347a446e17799976f9c4d9eb46e",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        346,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r310p00",
+      "label": "r310p00 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "88a671ce9dc611225ea4172c3f46f5a6542c8544598c2c50a67cf4807530c325",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        310,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r058p00",
+      "label": "r058p00 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "9610388367e124fb737bbfc199486ff0e0b55a9d0dcff3006433bd68af8f79be",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        58,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r094p00",
+      "label": "r094p00 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "a6293263775a08409c2b9a609c8e261023f2207b355c39b96a1ac1fe6ece98a3",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        94,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r130p00",
+      "label": "r130p00 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "dd805deb09b2eed16e367b4a0c1cb8b094d6d85ce25d929cdf7f01ae4bdf14df",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        130,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r022p00",
+      "label": "r022p00 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "f1cb9e96aab70595ddef9c6bfcaecc2539ba5458f6f580f05c1d4137940d7210",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        22,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r166p00",
+      "label": "r166p00 · kiểm tra giữ riêng",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "final_holdout",
+        "selectionSha256": "f87cc3453718ec021dddddc4c2194172e4f5c6fb7342910c956e7bc08c696de3",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        166,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r202p00",
+      "label": "r202p00 · kiểm tra giữ riêng",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "final_holdout",
+        "selectionSha256": "f901b1e4132e62e78d291ae24d7a14d705a9b5569b537959244348a1c5536194",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        202,
+        0
+      ]
+    },
+    {
+      "id": "prospective-r130p45",
+      "label": "r130p45 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "0c322bddaac4f4c872b4b58c13aea9754a067896245c1a53fdd48b9d3fe4509a",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        130,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r058p45",
+      "label": "r058p45 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "2260bf1348ada72146c16be68ef4d13ae52b3fe5a9fd697c9efe27dfd64b4890",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        58,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r274p45",
+      "label": "r274p45 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "384f6bab6c4c34a6e1d63ebc63f1efb62d0790909934b5f7341b853b458202d9",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        274,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r094p45",
+      "label": "r094p45 · hiệu chuẩn",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "calibration",
+        "selectionSha256": "39fb0e0d061ab454ea7a791da56a7ae555faa3b34712c8384a4ca6451efc56b6",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        94,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r022p45",
+      "label": "r022p45 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "426c6d7e2589a56579de9bf684f6f82d5c9ea524ed239dcbb695704563f61a3d",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        22,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r202p45",
+      "label": "r202p45 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "913d66a7f5733e91d9ee5359ca15eb051f1d292ff584fd31a7e17c2e40844616",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        202,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r166p45",
+      "label": "r166p45 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "91f4d2aa65eada02ccd2c485e7be154b15ff722913892bc7b56e3cb72a61f1ab",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        166,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r346p45",
+      "label": "r346p45 · thẩm định",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "validation",
+        "selectionSha256": "983c3c3f1a1c25de8b030ad94c6974dd39c2f333030610498478abf3cd321b2d",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        346,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r238p45",
+      "label": "r238p45 · kiểm tra giữ riêng",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "final_holdout",
+        "selectionSha256": "a4a2f168f31596b99e9c65f79ccac1c0631379958f2c21e7d34aa1ceca3f5d06",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        238,
+        45
+      ]
+    },
+    {
+      "id": "prospective-r310p45",
+      "label": "r310p45 · kiểm tra giữ riêng",
+      "group": "Trường dự kiến",
+      "category": "Tâm trường dự kiến",
+      "geometryType": "point",
+      "description": "Tâm vùng thử được chọn trước theo hình học. Snapshot chỉ công bố danh sách tâm và vai trò dự kiến. Chưa truy vấn độ phủ hay đo nguồn ở các điểm này.",
+      "sourceUrl": null,
+      "localSource": "web/data/independent-fields/selection.json",
+      "provenance": {
+        "status": "prospective_geometry_only",
+        "role": "final_holdout",
+        "selectionSha256": "e13397386d8554a5e282a0c9da2ee021b9c1a70031ef242a376a646c632f9020",
+        "selectorSha256": "87745172ff6d40a5856d06ef6525c52be4ea6b8700501e7532ce66ca62edb626"
+      },
+      "coordinates": [
+        310,
+        45
+      ]
+    }
+  ]
+}

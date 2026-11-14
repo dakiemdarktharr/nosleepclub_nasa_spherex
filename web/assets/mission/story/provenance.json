@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "role": "Illustrative scroll montage from original pixels. Hand-drawn alpha masks, crops, and resizing retain visible source pixels. The in-orbit image is an artist concept. The all-sky mosaic uses measured infrared observations and mapped colors. The assembly is illustrative and the adjacent milestone date describes the event rather than the acquisition date of every visual layer.",
+  "sources": {
+    "shields": {
+      "input": "User attachment 3, illuminated shield photograph",
+      "mission_reference": "https://www.jpl.nasa.gov/news/nasa-to-preview-sky-mapping-space-telescope-ahead-of-launch/",
+      "image_credit": "BAE Systems",
+      "source_image": "https://d2pn8kiwq2w21t.cloudfront.net/original_images/spherex-cleanroom-main.webp"
+    },
+    "telescope": {
+      "input": "User attachment 4, telescope assembly photograph",
+      "mission_reference": "https://science.nasa.gov/photojournal/spherex-telescope-at-jpl/",
+      "image_credit": "NASA/JPL-Caltech"
+    },
+    "orbit": {
+      "input": "User attachment 5, orbital artist concept",
+      "mission_reference": "https://spherex.caltech.edu/image/spherex03062022b-sectional-view-of-the-spherex-with-cosmic-structures",
+      "image_credit": "NASA/JPL-Caltech"
+    },
+    "open-fairing": {
+      "input": "User attachment 6 matched to the higher-resolution NASA Image and Video Library version",
+      "mission_reference": "https://science.nasa.gov/blogs/punch/2025/03/04/nasas-spherex-punch-spacecraft-encapsulated-as-launch-nears/",
+      "image_credit": "NASA Kennedy Space Center / BAE Systems / Benjamin Fry",
+      "source_image": "https://images-assets.nasa.gov/image/KSC-20250227-PH-BNF01_0004/KSC-20250227-PH-BNF01_0004~medium.jpg"
+    },
+    "closed-fairing": {
+      "input": "User attachment 7, Falcon 9 payload fairing photograph",
+      "mission_reference": "https://www.spacex.com/launches/spherex",
+      "image_credit": "SpaceX",
+      "source_image": "https://sxcontent9668.azureedge.us/cms-assets/assets/SPHER_Ex_Vertical_7376_Mobile_1304b7e7fb.jpg",
+      "placement": "Mission documentary chronology. Original insignia retained as part of the vehicle photograph."
+    },
+    "first-map": {
+      "mission_reference": "https://www.jpl.nasa.gov/images/pia26600-spherexs-first-all-sky-map/",
+      "image_credit": "NASA/JPL-Caltech",
+      "source_image": "https://d2pn8kiwq2w21t.cloudfront.net/original_images/e1a-SPHEREx_all_sky_stars_and_gas-dust.jpg"
+    }
+  },
+  "assets": {
+    "instrument.webp": {
+      "kind": "photographic cutout",
+      "source_id": "telescope",
+      "input_sha256": "56f7fa539ecd27a7114442202b89d8b308bd87d5189ff23b8e6c364ca2be9b0e",
+      "sha256": "86ee9a0ccf3429fcd02fd14427b170aa9e7bceab7671250f744fa8a22ba849ab",
+      "width": 331,
+      "height": 550,
+      "bytes": 40214
+    },
+    "shield.webp": {
+      "kind": "photographic cutout",
+      "source_id": "shields",
+      "input_sha256": "13112ca26206350bc2d883cac3d7104d1c29e1d1ff3c350ebc341e30b78664d2",
+      "sha256": "4acee4de40d4264ffe42c4ac7e5679fdbe1180b0c839e795ddfab4aa8d8b31c7",
+      "width": 497,
+      "height": 610,
+      "bytes": 87552
+    },
+    "shield-core.webp": {
+      "kind": "photographic cutout",
+      "source_id": "shields",
+      "input_sha256": "13112ca26206350bc2d883cac3d7104d1c29e1d1ff3c350ebc341e30b78664d2",
+      "sha256": "49fc87d52e053f967f981edc17f4ced2bd4569cec83238e18a813448e3041bdb",
+      "width": 327,
+      "height": 437,
+      "bytes": 52554
+    },
+    "adapter.webp": {
+      "kind": "photographic cutout",
+      "source_id": "open-fairing",
+      "input_sha256": "7a0f22e3f81f6f1fa990852b9b778b07e653fd84d7a59a04b210872e86d5f08b",
+      "sha256": "97719c093ab09ace75798fed721594bad49386e1fcc3fff654e03331bd539ec4",
+      "width": 420,
+      "height": 449,
+      "bytes": 40762
+    },
+    "fairing-shell.webp": {
+      "kind": "photographic cutout",
+      "source_id": "open-fairing",
+      "input_sha256": "7a0f22e3f81f6f1fa990852b9b778b07e653fd84d7a59a04b210872e86d5f08b",
+      "sha256": "2abcede436f09e74abd8486ceb99ad2aea5f64afd5a49d7c21ac90dc714298ea",
+      "width": 245,
+      "height": 690,
+      "bytes": 30934
+    },
+    "packed-stack.webp": {
+      "kind": "photographic cutout",
+      "source_id": "closed-fairing",
+      "input_sha256": "c1a85581776abdab185dc7e50dae7b591cc12db5acf0ef2ecb41993ef7fc2b61",
+      "sha256": "2a045eb5f562875d95e109ec6ebd1f23a9744fa641353ae3d8cbd3aa844a8dda",
+      "width": 254,
+      "height": 670,
+      "bytes": 20392
+    },
+    "in-orbit.webp": {
+      "kind": "cropped illustration",
+      "source_id": "orbit",
+      "input_sha256": "ca7b6f04bfd16e33a3858b02c602743bf2447e683356081ab51a633572a118e0",
+      "sha256": "aaca3552b59c7b4958fe4d89553dc7f3deb0fb31fe70222040046b7dbaa4e513",
+      "width": 338,
+      "height": 279,
+      "bytes": 26188
+    },
+    "first-map.webp": {
+      "kind": "observed all-sky mosaic",
+      "source_id": "first-map",
+      "input_sha256": "71526ddf5084ec294e1def11a56f27bb83f822fbb3583128ea6294e424b1f4cb",
+      "sha256": "dab6f68d878931ff657ff6a0e9d386a597f16a2bfb70a0dbeab4bba16027c8bc",
+      "width": 950,
+      "height": 480,
+      "bytes": 67738
+    },
+    "payload.webp": {
+      "kind": "photographic cutout",
+      "source_id": "open-fairing",
+      "input_sha256": "7a0f22e3f81f6f1fa990852b9b778b07e653fd84d7a59a04b210872e86d5f08b",
+      "sha256": "012e9e58e81a9ca2d118fd505cbbf0d3bfa75c6de42bc9e1121a6d0a84a91601",
+      "width": 300,
+      "height": 338,
+      "bytes": 19268
+    }
+  }
+}

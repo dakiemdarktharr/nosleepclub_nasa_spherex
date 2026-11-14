@@ -17,12 +17,14 @@ import xml.etree.ElementTree as ET
 
 try:
     from api._access_control import AccessDenied, guard
+    from api._spherex_products import image_identity
     from api._telemetry import emit_request, request_logger
     from api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control', 'api._telemetry', 'api._upstream_diagnostics'):
+    if exc.name not in ('api', 'api._access_control', 'api._spherex_products', 'api._telemetry', 'api._upstream_diagnostics'):
         raise
     from web.api._access_control import AccessDenied, guard
+    from web.api._spherex_products import image_identity
     from web.api._telemetry import emit_request, request_logger
     from web.api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 
@@ -32,6 +34,7 @@ MAX_ROWS = 500
 TIMEOUT = 6
 DEADLINE = 8
 logger = request_logger('observations_api')
+LIVE_RELEASES = ('dr1', 'qr3')
 
 
 class UpstreamError(Exception):
@@ -65,8 +68,10 @@ def parse_params(query):
     ra, dec, radius = number('ra'), number('dec'), number('radius', 0.05)
     if not 0 <= ra < 360 or not -90 <= dec <= 90 or not 0 < radius <= 0.16:
         raise ValueError('out_of_range')
-    release, deep = p.get('release', 'qr2'), p.get('deep', '0')
-    if release not in ('qr2', 'qr3') or deep not in ('0', '1'):
+    release, deep = p.get('release', 'dr1'), p.get('deep', '0')
+    if release == 'qr2':
+        raise ValueError('release_retired')
+    if release not in LIVE_RELEASES or deep not in ('0', '1'):
         raise ValueError('invalid_parameters')
     detector = p.get('detector')
     if detector is not None and detector not in ('1', '2', '3', '4', '5', '6'):
@@ -152,11 +157,8 @@ def local(tag):
 
 
 def safe_access_url(value, release):
-    try:
-        p = urlsplit(value)
-        return value if p.scheme == 'https' and p.netloc == 'irsa.ipac.caltech.edu' and p.path.startswith('/ibe/data/spherex/' + release + '/level2/') and not (p.query or p.fragment) else None
-    except ValueError:
-        return None
+    match = image_identity(value)
+    return value if match and match['release'] == release else None
 
 
 def parse_votable(content, p):

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "role": "Public orbit illustration and navigation background",
+  "accessed_on": "2026-11-14",
+  "assets": {
+    "spacecraft-poster.webp": {
+      "source": "https://spherex.caltech.edu/image/spherex01062022b-spherex-spacecraft-transparent",
+      "source_asset": "https://spherex.caltech.edu/system/avm_images/binaries/3/original/SPHEREx_March2022_Update_Still02_R08_TransparentBackground_5760x3240.png",
+      "source_sha256": "5464ac67dff428de8d99169a3d530b46efc0462d84ece276538a0923dbbef4bb",
+      "sha256": "36bef1733e256b48a8ce37d3323df98d90e3b712aa72ea9321e45878b9e81e65",
+      "bytes": 35476,
+      "credit": "NASA/JPL-Caltech",
+      "processing": "Transparent 2022 mission illustration cropped to visible pixels and resized for the WebGL fallback"
+    },
+    "orbit-poster.webp": {
+      "source": "https://science.nasa.gov/photojournal/spherex-in-orbit-artists-concept/",
+      "source_asset": "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia26/pia26531/PIA26531.jpg",
+      "source_sha256": "b6bb377ec29f6dd29dc342dcf7e6889013cb98435c354ad6dfe37bf2797dcc3d",
+      "sha256": "28c9f9c2dcb92fa601edda7d806072fdd9fd9ab718186fa64c593f906b21bc45",
+      "bytes": 66382,
+      "credit": "NASA/JPL-Caltech",
+      "processing": "PIA26531 artist concept, RGB converted to WebP"
+    },
+    "earth-plane.webp": {
+      "source": "https://science.nasa.gov/photojournal/spherex-in-orbit-artists-concept/",
+      "source_asset": "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia26/pia26531/PIA26531.jpg",
+      "source_sha256": "b6bb377ec29f6dd29dc342dcf7e6889013cb98435c354ad6dfe37bf2797dcc3d",
+      "sha256": "40d3dbfe1ff5ad474b4db7994bde2efde6df038d064cd0f63b8b6a7757d97b94",
+      "bytes": 22200,
+      "credit": "NASA/JPL-Caltech",
+      "processing": "Lower cloud-layer crop of PIA26531, resized for the illustrative moving Earth layer"
+    },
+    "celestial-sky.webp": {
+      "source": "https://svs.gsfc.nasa.gov/3895/",
+      "source_asset": "https://svs.gsfc.nasa.gov/vis/a000000/a003800/a003895/starmap_4k.jpg",
+      "source_sha256": "0b33503895abebeb92fd89d3332e3ca62515b8cc458d243f208e4ca5d8c1452d",
+      "sha256": "99b5b712a985697797dfd2710216bb88540cee3e0b3870eaccf9ff509d3c5e6d",
+      "bytes": 446956,
+      "credit": "NASA's Goddard Space Flight Center Scientific Visualization Studio / Ernie Wright",
+      "processing": "J2000 equatorial plate carree, RA 0 at center increasing left, resized to 3072 x 1536 and converted to WebP"
+    },
+    "spherex-mark.webp": {
+      "source": "https://www.jpl.nasa.gov/news/nasa-to-preview-sky-mapping-space-telescope-ahead-of-launch/",
+      "credit": "BAE Systems",
+      "source_sha256": "13112ca26206350bc2d883cac3d7104d1c29e1d1ff3c350ebc341e30b78664d2",
+      "sha256": "4bf7bebae4efe0e37bb45af4093b7f69b1693e22766dc9085935ed1cacad86a7",
+      "bytes": 18694,
+      "processing": "Circular detail crop of the attached cleanroom photo; used as the project mark."
+    },
+    "spherex-mark.png": {
+      "source": "https://www.jpl.nasa.gov/news/nasa-to-preview-sky-mapping-space-telescope-ahead-of-launch/",
+      "credit": "BAE Systems",
+      "source_sha256": "13112ca26206350bc2d883cac3d7104d1c29e1d1ff3c350ebc341e30b78664d2",
+      "sha256": "cbbb81c8a19a420d57adee1610675c083f30d8574fab6d6f20302f6eee65c8b8",
+      "bytes": 3089,
+      "processing": "32px favicon derived from the same cleanroom-photo crop."
+    },
+    "bauhaus-footer.webp": {
+      "source": "User-provided SPHEREx artist concept (attachment 2)",
+      "credit": "Reference artist concept credited NASA/JPL-Caltech; project poster adapted with ImageGen",
+      "source_sha256": "ca7b6f04bfd16e33a3858b02c602743bf2447e683356081ab51a633572a118e0",
+      "sha256": "639880eae10f3c59c69ac0654937827fddc8d77040a61608bb049bf9de4b382b",
+      "bytes": 352112,
+      "processing": "Illustrative poster with spacecraft and Earth duotone #CCFF00 and #14287B, plus Bauhaus geometry. This asset is separate from the photographic milestone montage."
+    }
+  }
+}

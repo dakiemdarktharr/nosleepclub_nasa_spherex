@@ -1,6 +1,6 @@
 # Planet X and SPHEREx — ghi chú đề bài
 
-Nguồn: [Details chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details), đọc ngày 30/10/2026. Độ khó: **Advanced**.
+Độ khó **Advanced**. Đã đối chiếu lại ngày 14/11/2026. [Details chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details) · [Đối chiếu yêu cầu và tài nguyên](CHALLENGE_LIVE_REVIEW.md)
 
 ## Yêu cầu chính
 
@@ -25,9 +25,7 @@ Xây dựng web công khai: nhập tọa độ **Right Ascension (RA)** và **de
 
 ## Tài nguyên
 
-Tab [Resources chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=resources) ghi sẽ có tài nguyên ngày **13/11/2026**. Chưa xác nhận endpoint, định dạng, quyền truy cập hoặc bộ ảnh khả dụng.
-
-Trang cũng nhắc không bắt đầu làm sản phẩm trước khi hackathon diễn ra. Repo hiện chứa tài liệu chuẩn bị.
+Tab Resources ngày 14/11/2026 hiển thị tám tài nguyên. Nhóm NASA liệt kê IRSA, notebook SPHEREx, WiseView và Gaia DR3. Đối tác CSA liệt kê trang giới thiệu NEOSSat, CADC, tutorial NEOSSat và dataset NEOSSat. [Resources chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=resources) · [Các đường dẫn và ghi chú](CHALLENGE_LIVE_REVIEW.md#các-gợi-ý-tùy-chọn-và-nguồn-của-đề)
 
 ## Cách nhóm sẽ đánh giá prototype — đề xuất
 

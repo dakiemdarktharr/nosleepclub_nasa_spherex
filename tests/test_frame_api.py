@@ -24,7 +24,7 @@ def parameters(**extra):
     return api.parse_params(urlencode({'url': URL, 'ra': 350, 'dec': 35, 'fov_deg': .005, **extra}))
 
 
-def synthetic(rotation=0, sip=False, center_flag=0, top_flag=0, bottom_nan=False, zodi=1):
+def synthetic(rotation=0, sip=False, center_flag=0, top_flag=0, bottom_nan=False, zodi=1, current_flags=False):
     w = WCS(naxis=2)
     w.wcs.crpix = [3, 3]
     w.wcs.crval = [350, 35]
@@ -50,7 +50,11 @@ def synthetic(rotation=0, sip=False, center_flag=0, top_flag=0, bottom_nan=False
     zh.header['BUNIT'] = 'MJy / sr'
     output = BytesIO()
     flag_hdu = fits.ImageHDU(flags, name='FLAGS')
-    flag_hdu.header['HIERARCH MP_SOURCE'], flag_hdu.header['HIERARCH MP_FULLSAMPLE'] = 21, 12
+    if current_flags:
+        flag_hdu.header['MSKN0021'], flag_hdu.header['MSKM0021'] = 'SOURCE', 1 << 21
+        flag_hdu.header['MSKN0012'], flag_hdu.header['MSKM0012'] = 'FULLSAMPLE', 1 << 12
+    else:
+        flag_hdu.header['HIERARCH MP_SOURCE'], flag_hdu.header['HIERARCH MP_FULLSAMPLE'] = 21, 12
     fits.HDUList([fits.PrimaryHDU(), fits.ImageHDU(data, header=hdr, name='IMAGE'), flag_hdu, zh]).writeto(output)
     return output.getvalue()
 
@@ -94,6 +98,10 @@ class FrameTest(unittest.TestCase):
 
     def test_input_allowlist_and_limits(self):
         self.assertEqual(parameters()['size_px'], 3)
+        retry_url = URL.replace('/qr2/', '/dr1/').replace('l2b-v21', 'l2b_retry-v27')
+        self.assertEqual(parameters(url=retry_url)['release'], 'dr1')
+        with self.assertRaises(ValueError):
+            parameters(url=retry_url.replace('/l2b_retry-v27', '/l2b-v27'))
         self.assertLessEqual(parameters(fov_deg=.12)['size_px'], 192)
         for extra in ({'url': URL.replace('irsa.ipac.caltech.edu', 'evil.example')},
                       {'url': URL + '?x=1'}, {'url': URL.replace('/qr2/', '/qr1/')},
@@ -136,6 +144,21 @@ class FrameTest(unittest.TestCase):
         with self.assertRaises(api.FrameError) as error:
             api.render(invalid.getvalue(), p)
         self.assertEqual(error.exception.code, 'invalid_flag_layout')
+
+    def test_current_release_flags_use_named_bit_masks(self):
+        for release in ('dr1', 'qr3'):
+            p = parameters(url=URL.replace('/qr2/', f'/{release}/'))
+            png, meta = api.render(synthetic(center_flag=api.SOURCE, top_flag=api.FULLSAMPLE, current_flags=True), p)
+            self.assertTrue(png.startswith(b'\x89PNG'))
+            self.assertEqual(meta['masked_pixels'], 1)
+            self.assertEqual(meta['valid_pixels'], 8)
+            with fits.open(BytesIO(synthetic(current_flags=True))) as hdus:
+                hdus['FLAGS'].header['MSKM0021'] = 1
+                changed = BytesIO()
+                hdus.writeto(changed)
+            with self.assertRaises(api.FrameError) as error:
+                api.render(changed.getvalue(), p)
+            self.assertEqual(error.exception.code, 'invalid_flag_layout')
 
     def test_wcs_rotation_and_sip_keep_north_up_east_left(self):
         for rotation in (0, 90, 180, 270):

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "asset": {
+    "path": "assets/mission/spherex.glb",
+    "format": "glTF 2.0 binary",
+    "bytes": 3829608,
+    "sha256": "215679caf8cf708314a3dec9977113b1da809f60265f87e34acc284649fa7d60",
+    "geometry_bytes": 2846148,
+    "geometry_sha256": "26f5a0211d5fac1c2254cba4d00e5a8cdd415844f358a0db26b81099ba164fbc",
+    "meshes": 55,
+    "triangles": 75425,
+    "required_extensions": ["EXT_texture_webp", "KHR_texture_transform"]
+  },
+  "source": {
+    "viewer": "https://eyes.nasa.gov/apps/solar-system/#/sc_spherex",
+    "directory": "https://eyes.nasa.gov/assets/static/models/sc_spherex/",
+    "credit": "NASA/JPL-Caltech, NASA Eyes on the Solar System",
+    "retrieved_on": "2026-11-14",
+    "http_last_modified": "2026-06-17T14:55:25Z",
+    "source_generator": "Khronos glTF Blender I/O v4.2.69",
+    "usage_guidelines": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "files": [
+      {
+        "path": "spherex.gltf",
+        "bytes": 99076,
+        "sha256": "964d237845f7bd130b983c935a68504791c9f2bc626a48b76ea3aa8cf1aa2467"
+      },
+      {
+        "path": "spherex.bin",
+        "bytes": 2846148,
+        "sha256": "26f5a0211d5fac1c2254cba4d00e5a8cdd415844f358a0db26b81099ba164fbc"
+      },
+      {
+        "path": "spherex_albedo_webp.webp",
+        "bytes": 626410,
+        "sha256": "d8bea233f51632d432788fc2fc862b72da7083caa0a33f3a2514b785f57d0170",
+        "source_side_px": 4096,
+        "packed_side_px": 2048,
+        "packed_sha256": "386bf20ae9bb54297ea31fb6b58ad7174f4061005a2952e891a9f8f2d36b4d35"
+      },
+      {
+        "path": "spherex_normals.webp",
+        "bytes": 3096208,
+        "sha256": "d70833e212901622e6d47a9c940bbc9f987eb1dd21cb99366cc38ad8c77c325c",
+        "source_side_px": 4096,
+        "packed_side_px": 2048,
+        "packed_sha256": "e3e708b4d55b787288f3321588bcc6fc77d506cc3c8b259f914949dc1d3b550f"
+      },
+      {
+        "path": "spherex_pbr.webp",
+        "bytes": 241428,
+        "sha256": "4f0d44617903b8bf27c533c5b7748edfb1bb0eaa5878601299d8438664f3bad0",
+        "source_side_px": 4096,
+        "packed_side_px": 2048,
+        "packed_sha256": "75b5f0731509687a380fe5b1258cea82a4e776d1aed8213d7c3a36b2caeb1a28"
+      },
+      {
+        "path": "corrugated_normal.webp",
+        "bytes": 3900,
+        "sha256": "e3ab79635be3ff6fc3a32f384011fb9ded9c7686ed19988c1bbc8506b7123848",
+        "source_side_px": 512,
+        "packed_side_px": 512
+      },
+      {
+        "path": "foil_normal.webp",
+        "bytes": 11512,
+        "sha256": "74ea208d3d49600e918776910e0688dd6530bcb8a2b1fbeb0397e25fbafe54a5",
+        "source_side_px": 512,
+        "packed_side_px": 512
+      }
+    ]
+  },
+  "conversion": {
+    "image_library": "Pillow 12.3.0",
+    "resample": "Lanczos",
+    "webp_quality": 88,
+    "webp_method": 6,
+    "notes": "Geometry, scene transforms and material definitions use the source glTF data. Base color and large normal map resize to 2048 by 2048 and use WebP quality 88. PBR map resizes to the same resolution then encodes losslessly. Two 512 by 512 WebP normal maps keep their original bytes. The source requires EXT_texture_webp and the public viewer requests WebP, so the two JPG fallbacks were omitted. The output contains no external URI dependencies."
+  }
+}

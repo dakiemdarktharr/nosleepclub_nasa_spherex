@@ -17,8 +17,9 @@ import truststore
 
 ROOT=Path(__file__).resolve().parents[1]
 BASE='https://nosleepclub-nasa-spherex.vercel.app'
-PINNED_FRAME='https://irsa.ipac.caltech.edu/ibe/data/spherex/qr2/level2/2025W26_2A/l2b-v20-2025-258/6/level2_2025W26_2A_0314_1D6_spx_l2b-v20-2025-258.fits'
-PINNED_CUTOUT_SHA='514ac17f7c8d2b7de1f723e4464dfc85a1caacf666f868e70fd844c9d80de8a6'
+PINNED_FRAME='https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W19_1B/l2b-v27-2026-197/6/level2_2025W19_1B_0116_1D6_spx_l2b-v27-2026-197.fits'
+PINNED_CUTOUT_SHA='8fafa27d72cd359521246d691659f6cc5d40a61a964a7b3c9591aa5860fa9d77'
+PINNED_RA, PINNED_DEC = 133.7601213914074, -7.242127941212259
 ASSETS=('index.html','explorer.js','app.js','mission.js','quality.js','review-store.js','goal-dashboard.js','mission.css','linked-evidence.js','neighbor-evidence.js',
         'data/manifest.json','data/continuous-epsf/design.json',
         'data/continuous-epsf/development-summary.json','data/explorer-check/coverage.json',
@@ -125,7 +126,7 @@ def verify(write_smoke=False, report=None):
     response=request('/api/data_import',method='POST',data=b'')
     require(response.status_code==403,'public importer is not disabled without a capability')
 
-    params={'ra':350,'dec':35,'radius':.03,'release':'qr2','detector':6,'maxrec':5,
+    params={'ra':PINNED_RA,'dec':PINNED_DEC,'radius':.001,'release':'dr1','detector':6,'maxrec':100,
             'band_min_um':4.42,'band_max_um':5.0}
     response=request('/api/observations',params=params)
     require(response.status_code==200,'production observations unavailable')
@@ -138,11 +139,13 @@ def verify(write_smoke=False, report=None):
     require(response.status_code==200 and response.json()['status']=='no_data','no-data is not distinguished')
     response=request('/api/observations',params={**params,'ra':360})
     require(response.status_code==400,'invalid RA was not rejected')
-    response=request('/api/frame',params={'url':PINNED_FRAME,'ra':350,'dec':35,'fov_deg':.06,'zodi':'subtract'})
+    response=request('/api/frame',params={'url':PINNED_FRAME,'ra':PINNED_RA,'dec':PINNED_DEC,'fov_deg':.06,'zodi':'subtract'})
     require(response.status_code==200 and response.content.startswith(b'\x89PNG\r\n\x1a\n'),'real frame unavailable')
     require(response.headers.get('X-App-Commit')==report['local_commit'],'frame API commit mismatch')
     require(response.headers.get('X-Frame-Cutout-SHA256')==PINNED_CUTOUT_SHA,'pinned cutout changed')
     require(response.headers.get('X-Frame-Unit')=='MJy/sr','frame unit mismatch')
+    require(response.headers.get('X-Frame-Release')=='dr1' and response.headers.get('X-Frame-Time-System')=='UTC','frame release/time mismatch')
+    require(response.headers.get('X-Frame-Center-Spectral-Source')=='WCS-WAVE','center wavelength unavailable')
     require(response.headers.get('X-Frame-Contract')=='1.1' and response.headers.get('X-Frame-Mask-Policy')=='source-only-allowlist-v2','frame mask contract mismatch')
     require(int(response.headers.get('X-Frame-Valid-Pixels','0'))>0,'frame has no valid pixels')
     require(sum(int(response.headers.get(k,'-1')) for k in ['X-Frame-Valid-Pixels','X-Frame-Masked-Pixels','X-Frame-Missing-Pixels'])
