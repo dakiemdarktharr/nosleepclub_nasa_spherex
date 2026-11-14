@@ -2,7 +2,7 @@
 /* One current data context, two viewing steps, explicit research navigation. */
 ((root,factory)=>{const api=factory();if(typeof module==="object"&&module.exports)module.exports=api;if(root?.document)api.mount(root);})(typeof window!=="undefined"?window:globalThis,()=>{
   const t=(vi,en)=>typeof document!=="undefined"&&document.documentElement.lang==="en"?en:vi;
-  const pageRoutes=new Set(["orbit","about","night-sky","field-guide"]);
+  const pageRoutes=new Set(["orbit","about","night-sky","field-guide","learn"]);
   const stepIds={data:"home",compare:"compare-step",research:"research"};
   const titles={data:"Chọn dữ liệu",compare:"Xem ảnh",research:"Kho kiểm chứng"};
   const englishTitles={data:"Choose data",compare:"View images",research:"Validation reports"};
@@ -35,7 +35,7 @@
     const views=[...d.querySelectorAll("[data-workflow-view]")],stepLinks=[...d.querySelectorAll("[data-step-link]")],reportRoots=[...d.querySelectorAll("[data-report-root]")];
     const context=()=>source==="wise"?w.SkyApp?.context():w.SkyExplorer?.context();
     const pause=()=>{w.SkyApp?.pause();w.SkyExplorer?.pause();};
-    const updateTitle=()=>{d.title=`${t(titles[step],englishTitles[step])} · ${t("SPHEREx đã thấy gì?","What Did SPHEREx See?")}`;};
+    const updateTitle=()=>{d.title=`${t(titles[step],englishTitles[step])} · sphere x search`;};
     function displaySource(){
       const wise=source==="wise";
       el("workflow-source-wise").setAttribute("aria-pressed",String(wise));el("workflow-source-irsa").setAttribute("aria-pressed",String(!wise));
@@ -79,7 +79,7 @@
     function choose(next){const url=new URL(w.location.href);url.searchParams.set("flow_source",next);w.history.replaceState(null,"",url);if(next===source)return;pause();source=next;displaySource();update();}
     function requested(){
       let id;try{id=decodeURIComponent(w.location.hash.slice(1));}catch{id="";}
-      if(pageRoutes.has(id)||!id&&!w.location.search.includes("sky_ra=")&&!w.location.search.includes("flow_source="))return null;
+      if(pageRoutes.has(id)||id==="about-story-title"||/^ss-\d+-[a-z-]+$/.test(id)||el(id)?.closest("section[data-public-page]")||!id&&!w.location.search.includes("sky_ra=")&&!w.location.search.includes("flow_source="))return null;
       if(!id)return {id:"home",step:"data"};
       const aliases={home:"data","data-step":"data","compare-step":"compare","check-step":"compare","review-step":"compare",research:"research",workspace:"compare",review:"compare",explore:"data"};
       if(aliases[id])return {id,step:aliases[id],source:id==="workspace"||id==="review"?"wise":id==="explore"?"irsa":null};
@@ -126,7 +126,7 @@
     el("workflow-data-next").addEventListener("click",()=>go("compare-step",true));
     d.addEventListener("scene:loading",()=>changed("loading"));d.addEventListener("scene:loaded",()=>changed("loaded"));d.addEventListener("scene:failed",()=>changed("failed"));d.addEventListener("selection:changed",()=>changed("selection"));
     d.addEventListener("explorer:state",event=>{if(source==="irsa")changed(event.detail.kind);});
-    d.addEventListener("click",event=>{if(event.defaultPrevented)return;const link=event.target.closest?.('a[href^="#"]');if(!link)return;if(link.getAttribute("href")==="#workflow-main"){event.preventDefault();el("workflow-main").focus();return;}if(link.getAttribute("href")===w.location.hash){event.preventDefault();navigate(true);}});
+    d.addEventListener("click",event=>{if(event.defaultPrevented)return;const link=event.target.closest?.('a[href^="#"]');if(!link)return;if(link.getAttribute("href")==="#workflow-main"){event.preventDefault();el("workflow-main").focus();return;}if(link.getAttribute("href")===w.location.hash&&requested()){event.preventDefault();navigate(true);}});
     w.addEventListener("hashchange",()=>navigate(true));
     d.addEventListener("spherex:language",()=>{if(requested()){update();updateTitle();}});
     source=sourceFromSearch(w.location.search);

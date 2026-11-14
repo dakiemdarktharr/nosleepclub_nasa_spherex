@@ -33,7 +33,7 @@ class FrontendContract(unittest.TestCase):
     def test_public_routes_preserve_the_original_comparison_canvas(self):
         doc=WorkflowNodes()
         doc.feed((ROOT/'web/index.html').read_text(encoding='utf-8'))
-        for route in ('orbit','about','night-sky'):
+        for route in ('orbit','about','night-sky','learn'):
             self.assertIn('data-public-page',doc.tags[route])
         self.assertEqual(doc.owner['sky'],'compare')
         self.assertEqual(doc.owner['explorer-timeline'],'compare')
