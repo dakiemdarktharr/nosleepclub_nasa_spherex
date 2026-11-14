@@ -12,15 +12,26 @@
     id: "epsilon-dr1",
     observations: ["2025W18_1B_0081_3", "2025W18_2B_0011_3", "2025W19_1B_0344_3"]
   };
+  const maxTimelineCandidates=6;
   let rows=[], query=null, provenance=null, current=-1, displayed=-1, reference=-1, generation=0, request=null, timer=null, range=null, maskPolicy=null, dirty=true;
   let frameQueue=Promise.resolve(), pendingFrames=new Map();
   let playback=null, truncated=false, sequenceRun=null, retrySequence=null;
+  let automaticTimelineAttempted=false;
   const publicRoutes = new Set(["#orbit", "#about", "#night-sky"]);
   const searchRoutes = new Set(["#home", "#explore", "#compare-step", "#data-step"]);
   const workspaceActive = () => !publicRoutes.has(location.hash) &&
     (Boolean(location.hash) || /[?&](?:sky_ra|flow_source)=/.test(location.search));
   const searchActive = () => searchRoutes.has(location.hash)||(!location.hash&&workspaceActive());
   const timeline = el("explorer-timeline");
+  const fallbackLinks=["workflow-frame-status","explorer-status"].map(id=>{
+    const link=document.createElement("a");
+    link.className="outline-button explorer-saved-sequence";
+    link.hidden=true;
+    el(id).after(link);
+    return link;
+  });
+  const incoming = new URLSearchParams(location.search);
+  let requestedView = incoming.get("sky_view") === "timeline" ? "timeline" : "compare";
   const images=new Map();
   let comparison, linkedPair=null;
   const noteDrafts=new Map();let noteKey=null;
@@ -81,7 +92,7 @@
   }
   function dateSummary(){const a=el("explorer-from").value,b=el("explorer-to").value,fmt=v=>english()?v:v.split("-").reverse().join("/");el("explorer-date-summary").textContent=a&&b?`${t("Khoảng ngày","Date range")} · ${fmt(a)}–${fmt(b)}`:a||b?t("Khoảng ngày · chưa đủ hai ngày","Date range · enter both dates"):t("Khoảng ngày · tùy chọn","Date range · optional");}
   function setStatus(text,error=false) {el("explorer-status").textContent=text;el("explorer-status").classList.toggle("is-error",error);notify("status");}
-  function markDirty(){saveNote();dateSummary();dirty=true;sequenceRun=retrySequence=null;stop();noteKey=null;el("explorer-note").value="";for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;notify("dirty");}
+  function markDirty(){saveNote();dateSummary();dirty=true;sequenceRun=retrySequence=null;toggleFallback(false);stop();noteKey=null;el("explorer-note").value="";for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;notify("dirty");}
   function apiError(response,code) {
     if(response.status===429){
       const retry=response.headers?.get("Retry-After");
@@ -113,14 +124,14 @@
     if(!Number.isFinite(mjd)||mjd<=0||!Number.isFinite(center)||!Number.isFinite(width)||!(center>width&&width>0))return null;
     return {mjd, low:center-width/2, high:center+width/2, width};
   }
-  function timelineFrames() {
-    const currentImage=images.get(current), anchor=spectralSample(currentImage);
+  function timelineFrames(anchorIndex=current) {
+    const currentImage=images.get(anchorIndex), anchor=spectralSample(currentImage);
     if(dirty||!range||maskPolicy==="undeclared"||!anchor||currentImage.row.detector!==query.det||!currentImage.row.obs_id)return [];
     const entries=[...images].map(([index, info])=>({index, info, band:spectralSample(info)}))
       .filter(({info,band})=>band&&info.row.detector===query.det&&info.row.obs_id)
       .sort((a,b)=>a.band.mjd-b.band.mjd);
-    const selected=[{index:current, band:anchor}];
-    const times=new Set([anchor.mjd]), ids=new Set([rows[current].obs_id]);
+    const selected=[{index:anchorIndex, band:anchor}];
+    const times=new Set([anchor.mjd]), ids=new Set([rows[anchorIndex].obs_id]);
     let low=anchor.low, high=anchor.high, widest=anchor.width;
     for(const {index, info, band} of entries){
       const nextLow=Math.max(low,band.low),nextHigh=Math.min(high,band.high),nextWidest=Math.max(widest,band.width);
@@ -138,12 +149,14 @@
     const loading=Boolean(sequenceRun);
     timeline.disabled=loading||frames.length<3||playback==="pair";
     timeline.setAttribute("aria-busy",String(loading));
-    timeline.textContent=playing?t("Dừng chuỗi","Pause timeline"):t(`Phát chuỗi (${frames.length})`,`Play timeline (${frames.length})`);
+    timeline.textContent=playing?t("Tạm dừng","Pause"):t(`Phát chuỗi · ${frames.length} ảnh`,`Play timeline · ${frames.length} frames`);
     timeline.title=t("Cần ít nhất 3 ảnh đã mở, khác thời điểm và có dải WCS-WAVE tương thích tại tâm vùng.","Requires at least 3 opened images with distinct times and compatible WCS-WAVE ranges at the field center.");
     const hint=el("explorer-timeline-hint");
     if(hint){
-      hint.textContent=loading?t("Đang chuẩn bị ba ảnh từ IRSA.","Preparing three IRSA images."):
-        frames.length<3?t("Mở thêm ảnh để phát chuỗi. Cần ba thời điểm có bước sóng gần nhau tại tâm vùng.","Open more images for a timeline. It takes three observations with similar wavelengths at the field center."):"";
+      hint.textContent=sequenceRun?.automatic?
+        t(`Đang thử các mốc quan sát cách nhau · ${sequenceRun.position}/${sequenceRun.total}.`,`Checking spaced observations · ${sequenceRun.position}/${sequenceRun.total}.`):
+        loading?t("Đang chuẩn bị ba ảnh từ IRSA.","Preparing three IRSA images."):
+        frames.length<3?t("Mở ảnh trong danh sách để tạo chuỗi. Cần ít nhất ba lần quan sát với bước sóng tương thích tại tâm.","Open images from the list to build a sequence. Playback requires three observations with compatible wavelengths at the field center."):"";
       hint.hidden=!loading&&frames.length>=3;
     }
   }
@@ -155,7 +168,25 @@
     el("explorer-reference").textContent=t("Giữ một ảnh đối chiếu rồi chọn ảnh ở thời điểm khác.","Pin a reference image and select another observation.");
     el("explorer-download-fits").removeAttribute("href");el("explorer-download-fits").hidden=true;
     el("explorer-display").hidden=true;
+    toggleFallback(false);
     timelineControls();
+  }
+
+  function toggleFallback(show) {
+    for(const link of fallbackLinks)link.hidden=!show;
+  }
+
+  function localizeFallback() {
+    const url=new URL(location.href);
+    for(const key of [...url.searchParams.keys()])url.searchParams.delete(key);
+    url.searchParams.set("lang",english()?"en":"vi");
+    url.searchParams.set("field","epsilon");
+    url.searchParams.set("view","saved");
+    url.hash="#night-sky";
+    for(const link of fallbackLinks){
+      link.textContent=t("Mở chuỗi Epsilon Indi B đã lưu","Open saved Epsilon Indi B sequence");
+      link.href=url.href;
+    }
   }
   function inputQuery() {
     const ra=coordinate(el("explorer-ra").value,true),dec=coordinate(el("explorer-dec").value,false),fov=Number(el("explorer-fov").value),det=Number(el("explorer-detector").value);
@@ -173,13 +204,15 @@
     const sequence=incoming.get("sky_sequence")===epsilonTimeline.id
       && Math.abs(ra-presets.epsilon[0])<1e-8 && Math.abs(dec-presets.epsilon[1])<1e-8
       && fov===.12 && det===6 && release==="dr1" ? epsilonTimeline.id : "";
-    return {p,ra,dec,fov,det,release,from:start,to:end,sequence};
+    return {p,ra,dec,fov,det,release,from:start,to:end,sequence,view:requestedView};
   }
   function renderList() {
     const root=el("explorer-frames");root.replaceChildren();
     rows.forEach((row,index)=>{
       const button=document.createElement("button"),title=document.createElement("strong"),detail=document.createElement("span");
       button.type="button";button.setAttribute("aria-pressed",String(index===current));button.disabled=!row.access_url;
+      if(index===displayed)button.setAttribute("aria-current","true");
+      if(images.has(index))button.dataset.loaded="true";
       title.textContent=`${index+1}. ${index===reference?t("Ảnh A · ","Image A · "):index===current&&reference>=0?t("Ảnh B · ","Image B · "):""}${displayMjd(row.t_min_mjd)}`;detail.textContent=`D${row.detector??"?"} · ${row.obs_id||t("Không có obs ID","No observation ID")}${row.access_url?"":t(" · Không có URL ảnh"," · Image URL unavailable")}`;
       button.append(title,detail);button.addEventListener("click",()=>show(index));root.append(button);
     });
@@ -239,12 +272,12 @@
     })();
     frameQueue=task.catch(()=>{});return task;
   }
-  function load(index,seq) {
+  function load(index,seq,active=()=>seq===generation&&current===index,background=false) {
     if(images.has(index))return images.get(index);
     if(pendingFrames.has(index))return pendingFrames.get(index);
     const jobs=pendingFrames;
-    const task=enqueueFrame(rows[index],request.signal,()=>seq===generation&&current===index,
-      ()=>setStatus(t("IRSA tạm lỗi khi tải ảnh. Đang thử lại…","IRSA could not return the image. Retrying…")))
+    const task=enqueueFrame(rows[index],request.signal,active,
+      ()=>{if(!background)setStatus(t("IRSA tạm lỗi khi tải ảnh. Đang thử lại…","IRSA could not return the image. Retrying…"));})
       .then(info=>{images.set(index,info);return info;});
     jobs.set(index,task);task.then(()=>jobs.delete(index),()=>jobs.delete(index));return task;
   }
@@ -269,13 +302,18 @@
     if(!response.ok)throw new Error(apiError(response,data.error));
     return {rows:data.observations, truncated:Boolean(data.truncated), provenance:data.provenance};
   }
-  function draw(info,index) {
+  function draw(info,index,sequencePosition="") {
     const img=el("explorer-image");img.src=info.src;img.hidden=false;
+    const list=el("explorer-frames");
+    list.children[displayed]?.removeAttribute("aria-current");
     displayed=index;
+    list.children[index]?.setAttribute("aria-current","true");
     const time=info.headers["x-frame-time-system"]==="UTC"&&info.headers["x-frame-mjd-obs"]?displayMjd(Number(info.headers["x-frame-mjd-obs"]),"UTC"):displayMjd(info.row.t_min_mjd);
     const release=(info.row.release||query.release).toUpperCase();
     img.alt=t(`Ảnh SPHEREx ${release}, detector ${info.row.detector}, ${time}, ${info.row.obs_id}. Bắc ở trên, Đông bên trái. Cam là pixel bị mask, tím là thiếu dữ liệu.`,`SPHEREx ${release} image, detector ${info.row.detector}, ${time}, ${info.row.obs_id}. North is up and east is left. Orange pixels are masked and purple pixels are missing.`);
-    el("explorer-frame-label").textContent=`${index+1}/${rows.length} · ${time} · ${info.row.obs_id}`;
+    const band=spectralSample(info);
+    const wavelength=band?` · λ ${((band.low+band.high)/2).toFixed(3)} µm`:"";
+    el("explorer-frame-label").textContent=`${sequencePosition || `${index+1}/${rows.length}`} · ${time}${wavelength} · ${info.row.obs_id}`;
     if(!linkedPair)fillFrameMetadata(info);
     el("explorer-current").value=String(index);el("explorer-pin").disabled=false;el("explorer-export").disabled=false;
   }
@@ -326,6 +364,7 @@
       el("explorer-play").disabled=reference<0||reference===index||!images.has(reference);
       timelineControls();
       notify("frame");
+      if(!curated)void prepareTimeline();
       return info;
     }catch(error){if(error.name!=="AbortError"&&seq===generation&&current===index&&(!curated||sequenceRun===curated)){setStatus(t(`Không tải được cutout: ${error.message}. Chọn ảnh khác trong danh sách hoặc bấm Tải lại ảnh.`,`Could not load the cutout: ${error.message}. Select another image or retry.`),true);el("explorer-image").hidden=true;el("explorer-retry").hidden=!rows[index]?.access_url;}}
   }
@@ -346,8 +385,10 @@
     if(!workspaceActive())return;
     timelineControls();
     if(timelineFrames().length>=3){
+      toggleFallback(false);
       setStatus(t("Ba ảnh Epsilon Indi B đã sẵn sàng. Chọn Phát chuỗi để xem theo thời gian.","Three Epsilon Indi B images are ready. Select Play timeline to see them in time order."));
     } else {
+      toggleFallback(true);
       if(indices.some(index=>!images.has(index))){
         retrySequence=indices;
         el("explorer-retry").hidden=false;
@@ -357,9 +398,66 @@
       }
     }
   }
+
+  function spacedCandidates() {
+    const ids=new Set(), times=new Set();
+    const candidates=[];
+    rows.forEach((row,index)=>{
+      if(!row.access_url||!row.obs_id||!Number.isFinite(row.t_min_mjd)||ids.has(row.obs_id)||times.has(row.t_min_mjd))return;
+      ids.add(row.obs_id);
+      times.add(row.t_min_mjd);
+      candidates.push({index,time:row.t_min_mjd});
+    });
+    if(candidates.length<=maxTimelineCandidates)return candidates.map(c=>c.index);
+    const start=candidates[0].time, end=candidates.at(-1).time;
+    const spaced=new Set([candidates[0].index,candidates.at(-1).index]);
+    for(let i=1;i<maxTimelineCandidates-1;i++){
+      const target=start+(end-start)*i/(maxTimelineCandidates-1);
+      const nearest=candidates.reduce((best,item)=>!spaced.has(item.index)&&
+        (!best||Math.abs(item.time-target)<Math.abs(best.time-target))?item:best,null);
+      spaced.add(nearest.index);
+    }
+    // Try widely separated times first, then fill the gaps if needed.
+    return [...spaced];
+  }
+
+  async function prepareTimeline() {
+    if(automaticTimelineAttempted||sequenceRun||query?.sequence||query?.view!=="timeline"||!images.has(current)||timelineFrames().length>=3)return;
+    automaticTimelineAttempted=true;
+    const candidates=spacedCandidates();
+    const pending=candidates.filter(index=>!images.has(index)).slice(0,maxTimelineCandidates-1);
+    if(!pending.length)return;
+    const run={automatic:true,position:candidates.filter(index=>images.has(index)).length,total:candidates.length};
+    const active=()=>sequenceRun===run&&workspaceActive()&&!dirty&&query?.view==="timeline";
+    const seq=generation;
+    sequenceRun=run;
+    timelineControls();
+    for(const index of pending){
+      if(!active()||timelineFrames().length>=3)break;
+      const stillNeeded=()=>active()||seq===generation&&current===index;
+      try{await load(index,seq,stillNeeded,true);}catch(error){if(error.name==="AbortError")break;}
+      if(!active())break;
+      run.position++;
+      timelineControls();
+      if(el("explorer-frames").children[index]&&images.has(index))el("explorer-frames").children[index].dataset.loaded="true";
+    }
+    if(sequenceRun!==run)return;
+    sequenceRun=null;
+    if(!workspaceActive()||dirty||query?.view!=="timeline")return;
+    if(timelineFrames().length<3){
+      const compatible=[...images.keys()].find(index=>timelineFrames(index).length>=3);
+      if(compatible!==undefined)await show(compatible);
+    }
+    timelineControls();
+    if(timelineFrames().length>=3){
+      setStatus(t("Chuỗi đã sẵn sàng. Nhấn Phát để xem các lần quan sát theo thời gian.","Timeline is ready. Select Play to view the observations in chronological order."));
+    } else {
+      setStatus(t("Chưa đủ ba ảnh tương thích. Chọn thêm lần quan sát trong danh sách để thử.","Fewer than three compatible images are open. Select more observations from the list to try again."));
+    }
+  }
   el("explorer-form").addEventListener("submit",async event=>{
     event.preventDefault();let next;try{next=inputQuery();}catch(error){setStatus(error.message,true);return;}
-    saveNote();noteKey=null;el("explorer-note").value="";request?.abort();sequenceRun=retrySequence=null;stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;dirty=false;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
+    saveNote();noteKey=null;el("explorer-note").value="";request?.abort();sequenceRun=retrySequence=null;automaticTimelineAttempted=false;stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;dirty=false;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
     resetDisplay();el("explorer-results").hidden=true;el("explorer-search").disabled=true;
     setStatus(t("Đang truy vấn độ phủ SPHEREx tại IRSA…","Searching SPHEREx coverage at IRSA…"));
     try {
@@ -370,15 +468,21 @@
       el("explorer-display").hidden=!rows.length;el("explorer-current").disabled=!rows.length;
       el("explorer-upstream").href=provenance.query_url;el("explorer-current").max=String(Math.max(0,rows.length-1));renderResults();
       const share=new URL(location.href);for(const key of [...share.searchParams.keys()])if(key.startsWith("sky_"))share.searchParams.delete(key);
-      for(const key of ["ra","dec","fov","det","release","from","to","sequence"])if(query[key]!=="")share.searchParams.set(`sky_${key}`,String(query[key]));
+      for(const key of ["ra","dec","fov","det","release","from","to","sequence","view"])if(query[key]!=="")share.searchParams.set(`sky_${key}`,String(query[key]));
       history.replaceState(null,"",share);
       notify("results");const first=rows.findIndex(row=>row.access_url);
       if(query.sequence&&timeline){
         const indices=epsilonTimeline.observations.map(id=>rows.findIndex(row=>row.obs_id===id&&row.detector===6&&row.access_url));
         if(indices.every(index=>index>=0)){await loadEpsilonTimeline(indices);return;}
+        toggleFallback(true);
       }
       if(first>=0)await show(first);else setStatus(rows.length?t("Danh sách không có URL ảnh hỗ trợ. Quay lại Dữ liệu để đổi truy vấn.","These results have no supported image URLs. Return to Data to change the search."):data.truncated?t("Chưa thấy detector đã chọn trong phần kết quả bị cắt. Hãy thu hẹp truy vấn.","The selected detector did not appear in this truncated result. Narrow the search."):t("Không có quan sát phù hợp. Đổi release hoặc khoảng ngày rồi tìm lại.","No matching observations. Try a different release or date range."));
-    }catch(error){if(error.name!=="AbortError"&&seq===generation&&searchActive())setStatus(t(`Truy vấn chưa thành công: ${error.message}. Bấm tìm lại hoặc chọn Bộ mẫu WISE 0855.`,`Search failed: ${error.message}. Try again or choose the WISE 0855 sample.`),true);}
+    }catch(error){
+      if(error.name!=="AbortError"&&seq===generation&&searchActive()){
+        toggleFallback(Boolean(query.sequence));
+        setStatus(t(`Truy vấn chưa thành công: ${error.message}. Bấm tìm lại hoặc chọn Bộ mẫu WISE 0855.`,`Search failed: ${error.message}. Try again or choose the WISE 0855 sample.`),true);
+      }
+    }
     finally{if(seq===generation)el("explorer-search").disabled=false;}
   });
   el("explorer-preset").addEventListener("change",()=>{const id=el("explorer-preset").value,p=presets[id];if(p){el("explorer-ra").value=p[0].toString();el("explorer-dec").value=p[1].toString();el("explorer-fov").value=id==="epsilon"?"0.12":"0.06";}markDirty();});
@@ -394,14 +498,20 @@
     timer=setInterval(()=>{index=index===a?b:a;draw(images.get(index),index);},800);
   });
   timeline?.addEventListener("click",()=>{
-    if(timer){stop();if(context().ready)setStatus(frameStatus());return;}
+    if(timer){
+      const paused=displayed;
+      stop();
+      if(paused>=0&&context().ready)show(paused);
+      return;
+    }
     const frames=timelineFrames();
     if(frames.length<3)return;
     playback="timeline";let index=0;
-    draw(images.get(frames[index]),frames[index]);
+    const showPlayingFrame=()=>draw(images.get(frames[index]),frames[index],`${index+1}/${frames.length}`);
+    showPlayingFrame();
     timer=setInterval(()=>{
       index=(index+1)%frames.length;
-      draw(images.get(frames[index]),frames[index]);
+      showPlayingFrame();
     },950);
     timelineControls();
     setStatus(t("Đang phát các ảnh cùng thang hiển thị và dải WCS-WAVE gần nhau tại tâm. Chưa xác nhận chuyển động hay biến quang.","Playing frames with a shared display scale and similar center WCS-WAVE bands. Motion and variability are unconfirmed."));
@@ -435,18 +545,31 @@
   });
   document.addEventListener("spherex:language",()=>{
     dateSummary();
+    localizeFallback();
     stop();
     if(query&&!el("explorer-results").hidden)renderResults();
     el("explorer-reference").textContent=referenceText();
-    if(context().ready){draw(images.get(current),current);setStatus(frameStatus());}
+    if(images.has(current)&&context().ready){draw(images.get(current),current);setStatus(frameStatus());}
     if(el("explorer-note").value)el("explorer-note-state").textContent=draftMessage();
   });
   el("explorer-form").addEventListener("input",markDirty);el("explorer-form").addEventListener("change",markDirty);
   el("explorer-note").addEventListener("input",saveNote);
   if(typeof window!=="undefined")window.SkyExplorer={context,pause:stop};
   comparison=window.SkyLinkedComparison?.mount({root:el("explorer-results"), bands:BANDS, timeLabel:displayMjd,
-    loadFrame:loadComparisonFrame, loadObservations:comparisonObservations, stopTimeline:stop, onPairChange:selectLinkedPair});
-  const incoming=new URLSearchParams(location.search);
+    loadFrame:loadComparisonFrame, loadObservations:comparisonObservations, stopTimeline:stop, onPairChange:selectLinkedPair,
+    initialMode:requestedView, onModeChange(view){
+      requestedView=view;
+      if(query)query.view=view;
+      if(view==="compare"&&sequenceRun?.automatic){
+        sequenceRun=null;
+        timelineControls();
+        setStatus(frameStatus());
+      }
+      const share=new URL(location.href);
+      share.searchParams.set("sky_view",view);
+      history.replaceState(history.state,"",share);
+      if(view==="timeline")void prepareTimeline();
+    }});
   const legacyRelease=incoming.get("sky_release")==="qr2";
   for(const [name,id] of [["ra","explorer-ra"],["dec","explorer-dec"],["fov","explorer-fov"],["det","explorer-detector"],["release","explorer-release"],["from","explorer-from"],["to","explorer-to"]]){
     if(!incoming.has(`sky_${name}`))continue;
@@ -461,7 +584,7 @@
     el("explorer-preset").value=selected;
   }
   for(const id of ["explorer-ra","explorer-dec"])el(id).addEventListener("input",syncPreset);
-  syncPreset();dateSummary();timelineControls();
+  syncPreset();dateSummary();timelineControls();localizeFallback();
   if(legacyRelease)setStatus(t("Liên kết QR2 cũ. Chọn Tìm ảnh để tra DR1 đã xử lý lại.","This is a legacy QR2 link. Search to use the reprocessed DR1 release."));
   if(!legacyRelease&&(incoming.get("sky_autoload")==="1"||incoming.get("sky_sequence")===epsilonTimeline.id)
       &&["#explore","#compare-step"].includes(location.hash)&&incoming.has("sky_ra")&&incoming.has("sky_dec")){

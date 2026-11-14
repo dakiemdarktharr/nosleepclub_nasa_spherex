@@ -77,7 +77,7 @@
       const target=el(id),owner=target?.closest("[data-workflow-view]");
       return owner?{id,step:owner.dataset.workflowView,target,report:target.closest("[data-report-root]")}: {id:"home",step:"data",unknown:true};
     }
-    function go(id){if(w.location.hash==="#"+id)navigate(true);else w.location.hash=id;}
+    function go(id,animated=false){if(w.location.hash==="#"+id)navigate(true);else if(animated&&w.SpherexTransition)w.SpherexTransition(id);else w.location.hash=id;}
     function navigate(focus=false){
       const request=requested();if(!request){pause();return;}if(request.source)choose(request.source);else{const restored=sourceFromSearch(w.location.search);if(restored!==source)choose(restored);}
       pause();const c=update(),result=decide(request.step,source,c,checked);step=result.step;
@@ -117,10 +117,10 @@
     }
     el("workflow-source-wise").addEventListener("click",()=>{choose("wise");go("home");});
     el("workflow-source-irsa").addEventListener("click",()=>{choose("irsa");go("home");});
-    for(const[id,dest]of[["workflow-data-next","compare-step"],["workflow-compare-next","check-step"],["workflow-check-next","review-step"]])el(id).addEventListener("click",()=>go(dest));
+    for(const[id,dest]of[["workflow-data-next","compare-step"],["workflow-compare-next","check-step"],["workflow-check-next","review-step"]])el(id).addEventListener("click",()=>go(dest,true));
     d.addEventListener("scene:loading",()=>changed("loading"));d.addEventListener("scene:loaded",()=>changed("loaded"));d.addEventListener("scene:failed",()=>changed("failed"));d.addEventListener("selection:changed",()=>changed("selection"));
     d.addEventListener("explorer:state",event=>{if(source==="irsa")changed(event.detail.kind);});
-    d.addEventListener("click",event=>{const link=event.target.closest?.('a[href^="#"]');if(!link)return;if(link.getAttribute("href")==="#workflow-main"){event.preventDefault();el("workflow-main").focus();return;}if(link.getAttribute("href")===w.location.hash){event.preventDefault();navigate(true);}});
+    d.addEventListener("click",event=>{if(event.defaultPrevented)return;const link=event.target.closest?.('a[href^="#"]');if(!link)return;if(link.getAttribute("href")==="#workflow-main"){event.preventDefault();el("workflow-main").focus();return;}if(link.getAttribute("href")===w.location.hash){event.preventDefault();navigate(true);}});
     w.addEventListener("hashchange",()=>navigate(true));
     d.addEventListener("spherex:language",()=>{if(requested()){update();updateTitle();}});
     source=sourceFromSearch(w.location.search);

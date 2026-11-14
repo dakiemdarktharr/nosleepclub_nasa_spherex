@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "activity_target_seconds": 90,
+  "legend": {
+    "masked": {
+      "color": "#ff8c00",
+      "label": { "vi": "Pixel bị loại bởi mặt nạ chất lượng", "en": "Pixel excluded by the quality mask" }
+    },
+    "missing": {
+      "color": "#ff00ff",
+      "label": { "vi": "Pixel thiếu dữ liệu", "en": "Pixel with missing data" }
+    }
+  },
+  "science_caveat": {
+    "vi": "Hai ảnh cho thấy cùng vùng trời ở gần 4,458 µm tại tâm. Bài này luyện cách đọc ảnh. Cần kiểm tra tệp FITS và sai số để kết luận về độ sáng hay chuyển động.",
+    "en": "Both images show the same sky field near 4.458 µm at its center. This activity practices reading images. Brightness or motion claims require checking the FITS data and uncertainties."
+  },
+  "cases": [
+    {
+      "id": "epsilon-quality-mask",
+      "observations": ["2025W18_1B_0081_3", "2025W18_2B_0011_3"],
+      "highlight": { "x": 37, "y": 32 },
+      "title": { "vi": "Nhận ra pixel bị loại", "en": "Spot an excluded pixel" },
+      "prompt": {
+        "vi": "Một điểm xám ở ảnh bên trái có màu cam ở cùng vị trí trong ảnh bên phải. Màu cam cho biết gì?",
+        "en": "A gray pixel on the left is orange at the same position on the right. What does the orange color mean?"
+      },
+      "options": [
+        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã sáng lên", "en": "The source grew brighter" } },
+        { "id": "masked", "label": { "vi": "Pixel bị loại bởi mặt nạ chất lượng", "en": "The quality mask excludes the pixel" } },
+        { "id": "missing", "label": { "vi": "Ảnh thiếu dữ liệu tại pixel này", "en": "The image has missing data at this pixel" } }
+      ],
+      "answer": "masked",
+      "explanation": {
+        "vi": "Màu cam đánh dấu pixel đã bị loại khi tạo ảnh xem trước. Hãy bỏ qua điểm này khi so độ sáng và tìm một vị trí có dữ liệu khả dụng ở cả hai ảnh.",
+        "en": "Orange marks a pixel excluded from the preview. Skip it when comparing brightness and look for a position with usable data in both images."
+      }
+    },
+    {
+      "id": "epsilon-missing-data",
+      "observations": ["2025W18_2B_0011_3", "2025W19_1B_0344_3"],
+      "highlight": { "x": 21, "y": 39 },
+      "title": { "vi": "Nhận ra pixel thiếu dữ liệu", "en": "Spot a missing pixel" },
+      "prompt": {
+        "vi": "Cùng một vị trí có màu xám ở ảnh bên trái và màu tím ở ảnh bên phải. Bạn có thể kết luận gì về độ sáng tại đó?",
+        "en": "The same position is gray on the left and purple on the right. What can you say about its brightness?"
+      },
+      "options": [
+        { "id": "masked", "label": { "vi": "Pixel bên phải bị loại bởi mặt nạ chất lượng", "en": "The quality mask excludes the pixel on the right" } },
+        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã mờ đi", "en": "The source grew fainter" } },
+        { "id": "missing", "label": { "vi": "Chưa đủ dữ liệu để so độ sáng", "en": "There is too little data to compare brightness" } }
+      ],
+      "answer": "missing",
+      "explanation": {
+        "vi": "Màu tím đánh dấu vị trí thiếu giá trị đo trên ảnh xem trước. Muốn so độ sáng ở điểm này, hãy tìm lần quan sát khác có dữ liệu khả dụng.",
+        "en": "Purple marks a position with no measured value in the preview. To compare brightness here, find another observation with usable data."
+      }
+    },
+    {
+      "id": "wise0855-transfer-mask",
+      "archive": "../../../data/guided-transfer/provenance.json",
+      "observations": ["2025W19_1B_0116_1", "2026W20_1A_0033_1"],
+      "highlight": { "x": 14, "y": 22 },
+      "title": { "vi": "Thử trên một vùng trời mới", "en": "Try a new sky field" },
+      "prompt": {
+        "vi": "Tại vị trí khoanh xanh, ảnh A có pixel màu cam, ảnh B có pixel màu xám. Bạn sẽ ghi nhận gì về vị trí này?",
+        "en": "Inside the blue square, image A has an orange pixel and image B has a gray pixel. What would you record about this position?"
+      },
+      "options": [
+        { "id": "brightness-change", "label": { "vi": "Nguồn sáng đã mờ đi", "en": "The source grew fainter" } },
+        { "id": "missing", "label": { "vi": "Cả hai lần quan sát đều thiếu dữ liệu tại đây", "en": "Both observations lack data here" } },
+        { "id": "masked", "label": { "vi": "Ảnh A có pixel bị loại. Cần thêm ảnh đủ dữ liệu để so độ sáng", "en": "The pixel is masked in image A. Another usable observation is needed to compare brightness" } }
+      ],
+      "answer": "masked",
+      "explanation": {
+        "vi": "Mặt nạ chất lượng đã loại pixel màu cam ở ảnh A. Ảnh B có giá trị hiển thị ở cùng vị trí. Hãy chọn hai lần quan sát có dữ liệu sử dụng được tại điểm này trước khi so độ sáng.",
+        "en": "The quality mask excluded the orange pixel in image A. Image B has a displayed value at the same position. Compare brightness using two observations with usable data at that point."
+      },
+      "science_caveat": {
+        "vi": "Hai ảnh của vùng WISE 0855 có bước sóng tại tâm gần 4,967 µm. Bài này kiểm tra cách đọc mặt nạ. Đo độ sáng hoặc chuyển động cần kiểm tra FITS và sai số.",
+        "en": "These WISE 0855 frames sample near 4.967 µm at the field center. This exercise checks how you read the quality mask. Measuring brightness or motion requires the FITS data and uncertainties."
+      }
+    }
+  ]
+}

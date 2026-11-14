@@ -65,7 +65,7 @@ export async function mountOrbit({canvas, target, orbit, reduced, isActive, isPa
       camera.updateProjectionMatrix();
     }
     const animate = !isPaused() && !reduced.matches;
-    const hovered = target.matches(":hover, :focus-visible");
+    const hovered = target.matches(":hover, :focus-visible, [data-tap-preview]");
     outlinePivot.visible = hovered;
     const spin = animate && hovered;
     if (spin && last) pivot.rotation.y += Math.min(40, now - last) * .00075;
@@ -89,6 +89,7 @@ export async function mountOrbit({canvas, target, orbit, reduced, isActive, isPa
   });
   canvas.addEventListener("webglcontextrestored", () => { lost = false; refresh(); });
   for (const name of ["pointerenter", "pointerleave", "focus", "blur"]) target.addEventListener(name, refresh);
+  new MutationObserver(refresh).observe(target, {attributeFilter: ["data-tap-preview"]});
   reduced.addEventListener("change", refresh);
   document.addEventListener("visibilitychange", refresh);
   new ResizeObserver(refresh).observe(target);

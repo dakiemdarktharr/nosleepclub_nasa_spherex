@@ -5,6 +5,7 @@
     timeline: ["Chuỗi thời gian", "Observation timeline"],
     actions: ["Chế độ xem", "View mode"],
     reset: ["Đặt lại", "Reset"],
+    overview: ["Toàn khung", "Overview"],
     zoomIn: ["Phóng to", "Zoom in"],
     zoomOut: ["Thu nhỏ", "Zoom out"],
     detector: ["Dải danh nghĩa", "Nominal band"],
@@ -18,7 +19,9 @@
     noImage: ["Chưa có ảnh.", "No image loaded."],
     missingWave: ["Bước sóng tại tâm chưa xác định", "Center wavelength unavailable"],
     sameGrid: ["Cùng lưới WCS và thang sáng · Bắc ↑, Đông ←", "Shared WCS and display scale · north ↑, east ←"],
-    panHelp: ["Kéo hoặc dùng phím mũi tên. Cả hai ảnh di chuyển cùng nhau.", "Drag or use the arrow keys. Both images move together."],
+    panHelp: ["Kéo ảnh hoặc kéo ô xanh trên bản đồ nhỏ để đổi vùng xem.", "Drag the image or the blue box in the overview to move around."],
+    keyboardHelp: ["Dùng phím mũi tên để di chuyển, +/− để đổi độ phóng đại và Home để đặt lại.", "Use arrow keys to pan, +/− to zoom, and Home to reset."],
+    overviewHelp: ["Chọn một vị trí để phóng vào, hoặc kéo ô xanh để di chuyển khung nhìn.", "Select a point to zoom in, or drag the blue box to move the view."],
     spectral: ["Các dải hoặc bước sóng khác nhau có thể làm độ sáng thay đổi.", "Differences in wavelength can change apparent brightness."],
     clipped: ["Kết quả IRSA bị giới hạn. Thu hẹp khoảng ngày để tìm thêm ảnh.", "IRSA results were capped. Narrow the date range to find more images."],
     source: ["Nguồn FITS", "Source FITS"],
@@ -30,8 +33,16 @@
   const choose = (key) => copy[key][document.documentElement.lang.startsWith("en") ? 1 : 0];
   const clamp = (value, min, max) => Math.max(min, Math.min(value, max));
 
-  function mount({root, bands, timeLabel, loadFrame, loadObservations, stopTimeline, onPairChange}) {
+  function mount({root, bands, timeLabel, loadFrame, loadObservations, stopTimeline, onPairChange, initialMode = "compare", onModeChange}) {
     const timelineView = root.querySelector("#explorer-display");
+    const timelineViewport = timelineView.querySelector(".explorer-image-wrap");
+    const timelineImage = timelineViewport.querySelector("img");
+    timelineViewport.classList.add("linked-viewport");
+    timelineViewport.tabIndex = 0;
+    timelineViewport.setAttribute("role", "group");
+    timelineViewport.setAttribute("aria-describedby", "linked-pan-help");
+    timelineViewport.setAttribute("aria-labelledby","explorer-frame-label");
+    timelineImage.draggable = false;
     const player = root.querySelector("#explorer-timeline");
     const modes = document.createElement("div");
     modes.className = "linked-switch";
@@ -52,16 +63,36 @@
     const help = document.createElement("span");
     help.className = "sr-only";
     help.id = "linked-pan-help";
-    toolbar.append(align, minus, scale, plus, reset, help);
+    const instructions = document.createElement("span");
+    instructions.className = "linked-instructions";
+    const toolbarCopy = document.createElement("div");
+    toolbarCopy.className = "linked-tool-copy";
+    toolbarCopy.append(align, instructions, help);
+    const zoomControls = document.createElement("div");
+    zoomControls.className = "linked-zoom";
+    zoomControls.append(minus, scale, plus, reset);
+    const overview = document.createElement("button");
+    overview.type = "button";
+    overview.className = "linked-overview";
+    overview.hidden = true;
+    const overviewImage = document.createElement("img");
+    overviewImage.alt = "";
+    overviewImage.draggable = false;
+    const overviewBox = document.createElement("span");
+    overviewBox.className = "linked-overview-box";
+    overviewBox.setAttribute("aria-hidden", "true");
+    overview.append(overviewImage, overviewBox);
+    toolbar.append(toolbarCopy, zoomControls, overview);
     const spectral = document.createElement("p");
     spectral.className = "linked-caveat";
     spectral.hidden = true;
     const panes = ["A","B"].map(createPane);
-    comparison.append(toolbar, grid, spectral);
+    comparison.append(grid, spectral);
     for (const pane of panes) grid.append(pane.element);
     modes.append(compareButton, timelineButton);
     modes.classList.add("linked-switch-host");
     root.insertBefore(modes, timelineView);
+    root.insertBefore(toolbar, timelineView);
     root.insertBefore(comparison, timelineView);
     if (player) {
       modes.append(player);
@@ -72,7 +103,7 @@
     timelineButton.setAttribute("aria-controls", timelineView.id);
 
     const camera = {zoom:1, x:0, y:0};
-    let activeQuery, snapshot, mode = "compare", initial = false;
+    let activeQuery, snapshot, mode = initialMode, initial = false;
     const observations = new Map();
     const start = () => mode === "compare" && Boolean(activeQuery);
 
@@ -164,19 +195,38 @@
       }
       modes.setAttribute("aria-label",choose("actions"));
       align.textContent=choose("sameGrid");
-      help.textContent=choose("panHelp");
+      instructions.textContent=choose("panHelp");
+      help.textContent=choose("keyboardHelp");
+      overview.setAttribute("aria-label",choose("overview")+". "+choose("overviewHelp")+" "+choose("keyboardHelp"));
+      overview.title=choose("overviewHelp");
       spectral.textContent=choose("spectral");
     }
 
     function viewStyle() {
-      const limit = (camera.zoom - 1) / 2;
-      camera.x = clamp(camera.x, -limit, limit); camera.y = clamp(camera.y, -limit, limit);
-      comparison.style.setProperty("--linked-zoom", camera.zoom);
-      comparison.style.setProperty("--linked-x", camera.x * 100+"%");
-      comparison.style.setProperty("--linked-y", camera.y * 100+"%");
-      scale.textContent = camera.zoom.toFixed(1)+"×";
+      // Keep the reference center in view and allow limited overscan at fit.
+      const limit = Math.max(.25, (camera.zoom - 1) / 2);
+      camera.x = clamp(camera.x, -limit, limit);
+      camera.y = clamp(camera.y, -limit, limit);
+      root.style.setProperty("--linked-zoom", camera.zoom);
+      root.style.setProperty("--linked-x", camera.x * 100+"%");
+      root.style.setProperty("--linked-y", camera.y * 100+"%");
+      const halfView = .5 / camera.zoom;
+      for (const [axis, startEdge, endEdge] of [["x","left","right"], ["y","top","bottom"]]) {
+        const center = .5 - camera[axis] / camera.zoom;
+        overviewBox.style[startEdge] = clamp(center - halfView, 0, 1) * 100 + "%";
+        overviewBox.style[endEdge] = (1 - clamp(center + halfView, 0, 1)) * 100 + "%";
+      }
+      scale.textContent = new Intl.NumberFormat(document.documentElement.lang, {maximumFractionDigits:1}).format(camera.zoom)+"×";
       plus.disabled = camera.zoom >= 8;
       minus.disabled = camera.zoom <= 1;
+    }
+
+    function updateOverview() {
+      const timelineSource = snapshot?.images.values().next().value?.src;
+      const source = (mode === "compare" ? panes.find(pane => pane.info)?.info.src : null) || timelineSource;
+      overview.hidden = !source;
+      if (source && overviewImage.getAttribute("src") !== source) overviewImage.src = source;
+      if (!source) overviewImage.removeAttribute("src");
     }
 
     function zoom(ratio, originX=0, originY=0) {
@@ -196,10 +246,23 @@
     minus.addEventListener("click",()=>zoom(1/1.35));
     reset.addEventListener("click",clearView);
 
-    for (const {viewport} of panes) {
+    function viewKeys(event) {
+      if (event.target !== event.currentTarget) return;
+      const position = {ArrowLeft:["x",.06], ArrowRight:["x",-.06], ArrowUp:["y",.06], ArrowDown:["y",-.06]}[event.key];
+      if (position) {
+        camera[position[0]] += position[1];
+        viewStyle();
+      } else if (event.key === "+" || event.key === "=") zoom(1.35);
+      else if (event.key === "-") zoom(1/1.35);
+      else if (event.key === "Home") clearView();
+      else return;
+      event.preventDefault();
+    }
+
+    for (const viewport of [...panes.map(pane => pane.viewport), timelineViewport]) {
       let drag;
       viewport.addEventListener("pointerdown",event=>{
-        if (!event.isPrimary||event.button!==0||event.target.closest("button")) return;
+        if (!event.isPrimary||event.button!==0||event.target.closest("button")||viewport.querySelector("img").hidden) return;
         const width=viewport.clientWidth, height=viewport.clientHeight;
         if (!width||!height) return;
         drag={id:event.pointerId,x:event.clientX,y:event.clientY,panX:camera.x,panY:camera.y,width,height};
@@ -212,29 +275,59 @@
         camera.y=drag.panY+(event.clientY-drag.y)/drag.height;
         viewStyle();
       });
-      viewport.addEventListener("lostpointercapture",()=>{drag=null;viewport.classList.remove("is-grabbing");});
+      viewport.addEventListener("lostpointercapture",()=>{ drag=null; viewport.classList.remove("is-grabbing"); });
       viewport.addEventListener("wheel",event=>{
         const box=viewport.getBoundingClientRect();
-        if(!box.width||!box.height||event.ctrlKey||event.metaKey)return;
+        if(!box.width||!box.height||event.ctrlKey||event.metaKey||event.deltaY===0||viewport.querySelector("img").hidden)return;
         event.preventDefault();
         zoom(event.deltaY<0?1.16:1/1.16,(event.clientX-box.left)/box.width-.5,(event.clientY-box.top)/box.height-.5);
       },{passive:false});
-      viewport.addEventListener("keydown",event=>{
-        if(event.target!==viewport)return;
-        const position={ArrowLeft:["x",.06],ArrowRight:["x",-.06],ArrowUp:["y",.06],ArrowDown:["y",-.06]}[event.key];
-        if(position){camera[position[0]]+=position[1];viewStyle();}
-        else if(event.key==="+"||event.key==="=")zoom(1.35);
-        else if(event.key==="-")zoom(1/1.35);
-        else if(event.key==="Home")clearView();
-        else return;
-        event.preventDefault();
-      });
+      viewport.addEventListener("keydown", viewKeys);
     }
+
+    function overviewPoint(event) {
+      const box = overview.getBoundingClientRect();
+      return {x:(event.clientX - box.left) / box.width - .5, y:(event.clientY - box.top) / box.height - .5};
+    }
+
+    function focusOverview(point) {
+      camera.zoom = Math.max(camera.zoom, 2);
+      camera.x = -point.x * camera.zoom;
+      camera.y = -point.y * camera.zoom;
+      viewStyle();
+    }
+
+    let overviewDrag;
+    overview.addEventListener("pointerdown", event => {
+      if (!event.isPrimary || event.button !== 0) return;
+      const point = overviewPoint(event);
+      overviewDrag = {id:event.pointerId, point, panX:camera.x, panY:camera.y, moved:false};
+      overview.setPointerCapture(event.pointerId);
+    });
+    overview.addEventListener("pointermove", event => {
+      if (overviewDrag?.id !== event.pointerId) return;
+      const point = overviewPoint(event);
+      const dx = point.x - overviewDrag.point.x, dy = point.y - overviewDrag.point.y;
+      if (!overviewDrag.moved && Math.hypot(dx, dy) < .025) return;
+      overviewDrag.moved = true;
+      camera.x = overviewDrag.panX - dx * camera.zoom;
+      camera.y = overviewDrag.panY - dy * camera.zoom;
+      viewStyle();
+    });
+    overview.addEventListener("pointerup", event => {
+      if (overviewDrag?.id === event.pointerId && !overviewDrag.moved) focusOverview(overviewPoint(event));
+    });
+    overview.addEventListener("lostpointercapture", () => { overviewDrag = null; });
+    overview.addEventListener("click", event => {
+      if (event.detail === 0) focusOverview({x:-camera.x/camera.zoom, y:-camera.y/camera.zoom});
+    });
+    overview.addEventListener("keydown", viewKeys);
 
     function setMode(next, stop = true) {
       if(next===mode&&comparison.hidden===!start())return;
       if(next==="compare"&&stop)stopTimeline();
       mode=next;
+      onModeChange?.(mode);
       updateVisibility();
       updatePair();
       if(start()) loadInitial();
@@ -242,10 +335,13 @@
 
     function updateVisibility() {
       modes.hidden=!activeQuery;
+      toolbar.hidden=!activeQuery;
       comparison.hidden=!start();
       root.classList.toggle("linked-show-comparison",start());
+      root.classList.toggle("linked-show-timeline",Boolean(activeQuery)&&mode==="timeline");
       compareButton.setAttribute("aria-pressed",String(mode==="compare"));
       timelineButton.setAttribute("aria-pressed",String(mode==="timeline"));
+      updateOverview();
     }
 
     compareButton.addEventListener("click",()=>setMode("compare"));
@@ -271,6 +367,7 @@
       const frames=panes.map(pane=>pane.info);
       const pair=mode==="compare"&&frames.every(Boolean)&&frames[0].row.access_url!==frames[1].row.access_url?frames:null;
       onPairChange(pair);
+      updateOverview();
     }
 
     function displayState(pane, key, error="", progress=null) {
@@ -436,7 +533,7 @@
             pane.epoch.selectedIndex=-1;
             displayState(pane,"pickFrame");
           }
-          mode="compare";
+          mode=query.view || initialMode;
         }
       }
       updateVisibility();
@@ -450,6 +547,7 @@
 
     document.addEventListener("spherex:language",()=>{
       gettext();
+      viewStyle();
       for(const pane of panes){
         renderImage(pane);
         if(pane.status)displayState(pane,pane.status.key,pane.status.error,pane.status.progress);

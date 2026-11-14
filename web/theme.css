@@ -1,0 +1,61 @@
+:root { color-scheme: dark; }
+:root[data-theme="light"] {
+  color-scheme: light;
+  --public-sky: #f4f6ff;
+  --public-panel: #fff;
+  --public-border: #a3b1d0;
+  --public-text: #121e39;
+  --public-muted: #3c4e70;
+  --public-accent: #163e80;
+}
+
+#orbit, .public-header, .sky-map-panel, .sky-field-preview { color-scheme: dark; color: #f2f5fa; }
+.workflow-header { color-scheme: dark; color: #f2f5fa; background: #07173f; }
+.workflow-header .theme-toggle { flex: 0 0 auto; }
+
+[data-theme="light"] .workflow-app {
+  --paper: #f4f6ff;
+  --surface: #fff;
+  --raised: #e9efff;
+  --line: #a3b1d0;
+  --muted: #3c4e70;
+  --white: #121e39;
+  --amber: #784400;
+  color: var(--white);
+}
+[data-theme="light"] .workflow-header .repo-link { color: #dee6ff; }
+[data-theme="light"] .public-footer { background: #e9efff; }
+[data-theme="light"] .guide-sheet { background: #e9efff; border-color: var(--public-border); }
+[data-theme="light"] .guide-steps li { background: #ffffffa8; border-color: var(--public-border); }
+[data-theme="light"] .guide-steps h3::before, [data-theme="light"] .guide-steps li::after { color: #24488d; }
+[data-theme="light"] .guide-steps p { color: var(--public-muted); }
+[data-theme="light"] :is(.sky-finder,.sky-field) { background: var(--public-sky); }
+[data-theme="light"] .sky-finder .sky-targets button { color: var(--public-text); border-color: var(--public-border); }
+[data-theme="light"] .sky-finder .sky-targets button[aria-pressed="true"] { color: var(--public-accent); border-color: var(--public-accent); }
+[data-theme="light"] .sky-map-panel { --public-muted: #ccd7ee; --public-accent: #a3e2ff; }
+[data-theme="light"] .sky-field-preview { --public-accent: #a3e2ff; }
+[data-theme="light"] #public-site :is(.guide-sheet,.sky-finder,.about-layout,.about-mission) :focus-visible { outline-color: #24488d; }
+[data-theme="light"] .scene-label { --public-accent: #a3e2ff; }
+
+[data-theme="light"] .workflow-sidebar,
+[data-theme="light"] .workflow-app :is(.workflow-source-switch button,.workflow-details,.workflow-compact-context,.observation,.inspector,.review-form,dialog) { background: var(--surface); }
+[data-theme="light"] .workflow-app :is(.workflow-step-actions,.workflow-footer) { background: var(--paper); }
+[data-theme="light"] .workflow-app :is(select,input:not([type="checkbox"]):not([type="range"]),textarea) {
+  background: var(--surface); border-color: #667a9d; color: var(--white);
+}
+[data-theme="light"] .workflow-app :is(.workflow-steps a,.workflow-sidebar-credit,.workflow-step-actions > span,.workflow-compact-context a,.workflow-details > summary,.text-button,.workflow-step-label,.workflow-chip,#workflow-wise-load,#explorer-status,#workflow-frame-status,.mode-instruction,.view-switch button,.footer-brand,.release-status) { color: #32486d; }
+[data-theme="light"] .workflow-app :is(.workflow-steps a[aria-current="step"],.workflow-source-switch button[aria-pressed="true"],.view-switch button[aria-pressed="true"]) { background: #dfe9ff; color: #142f57; border-color: #416099; }
+[data-theme="light"] .workflow-app .workflow-steps a[data-complete="true"] span { color: #186257; border-color: #409383; }
+[data-theme="light"] .workflow-app .workflow-library-link[aria-current] { color: #163e80; }
+[data-theme="light"] .workflow-app .outline-button, [data-theme="light"] .workflow-app .outline-button:hover { color: #213e70; background: #eaf0ff; border-color: #7185ac; }
+[data-theme="light"] .workflow-app .primary-button { color: #101e30; background: #eafe07; border-color: #899600; }
+[data-theme="light"] .workflow-route-status { background: #fff1da; color: #62420a; }
+[data-theme="light"] .workflow-app :is(.workflow-header,.workflow-data-thumbnails,.viewer-shell,.explorer-image-wrap) { color-scheme: dark; color: #f4f7fc; }
+[data-theme="light"] .workflow-header .menu-toggle { color: #f4f7fc; }
+
+@media (max-width: 620px) {
+  .workflow-header { gap: .45rem; padding-inline: .65rem; }
+  .workflow-header .brand { gap: .4rem; margin-right: auto; }
+  .workflow-header .brand span { max-width: 12ch; font-size: 12px; }
+  .workflow-top-context { display: none; }
+}
