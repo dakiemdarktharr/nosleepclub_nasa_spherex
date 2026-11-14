@@ -44,6 +44,6 @@ Các bản ghi có hạn dùng chưa đến sẽ tiếp tục chịu TTL gốc. 
 
 Unit tests cover authenticated encryption, BSON types, ID forms, refusal of existing targets and bad sources, plus actual Windows DPAPI key protection. The MongoDB integration test runs only when `REVIEW_TEST_MONGODB_URI` points to the isolated loopback fixture. A skip is not a successful restore drill.
 
-At implementation time, no production snapshot or real MongoDB restore has been run: the production URI is unavailable locally and no local MongoDB fixture is configured. Actual backup/restore timing, capacity and recovery objectives remain unmeasured. The CLI is preparation, not evidence that production reviews have already been backed up.
+The synthetic restore into an isolated MongoDB replica set passed in [GitHub CI run 43582777817](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/43582777817), including BSON equality, indexes and expiry handling. Windows DPAPI was tested locally. No production snapshot has been taken: the production URI is unavailable locally. Production backup/restore timing, capacity and recovery objectives remain unmeasured. These tests are not evidence that production reviews have already been backed up.
 
 References: [Windows current-user DPAPI](https://learn.microsoft.com/en-us/windows/win32/api/dpapi/nf-dpapi-cryptprotectdata), [PyMongo sessions and transactions](https://pymongo.readthedocs.io/en/stable/api/pymongo/client_session.html), [existing fixture-only protocol](BACKUP_RESTORE_PROTOCOL.md).

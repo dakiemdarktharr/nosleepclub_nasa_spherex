@@ -78,7 +78,7 @@ class ResponseCacheTest(unittest.TestCase):
         # Even deliberately prefilled production bytes cannot skip caller validation.
         p=api.parse_params('ra=350&dec=35')
         api.response_cache.run(cache_key('production','observations/1.0',p),lambda:(b'{}',{}))
-        with patch.dict(os.environ,{'VERCEL_ENV':'production','MONGODB_URI':'secret'},clear=True), patch.object(api,'fetch') as fetched:
+        with patch.dict(os.environ,{'VERCEL_ENV':'production','MONGODB_URI':'secret'},clear=True), patch.object(api,'fetch') as fetched, patch.object(control,'database') as database:
             self.assertEqual(observations.request('/api/observations?ra=350&dec=35')[0],503)
             fetched.assert_not_called()
 

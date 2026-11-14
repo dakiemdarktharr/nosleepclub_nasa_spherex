@@ -137,10 +137,12 @@ class FrameTest(unittest.TestCase):
             self.assertEqual(tuple(rgb[1, 1]), (255, 140, 0))
             self.assertEqual(info['valid_pixels'] + info['masked_pixels'] + info['missing_pixels'], 9)
             self.assertEqual(info['masked_pixels'], 1)
+            self.assertEqual(info['center_pixel_status'], 'masked')
         png, info = api.render(synthetic(center_flag=api.SOURCE), p)
         rgb = np.array(Image.open(BytesIO(png)))
         self.assertEqual(rgb[1, 1, 0], rgb[1, 1, 1])
         self.assertEqual(info['masked_pixels'], 0)
+        self.assertEqual(info['center_pixel_status'], 'valid')
         with fits.open(BytesIO(synthetic())) as hdus:
             hdus['FLAGS'].header['MP_SOURCE'] = 20
             invalid = BytesIO(); hdus.writeto(invalid)
@@ -183,6 +185,7 @@ class FrameTest(unittest.TestCase):
         self.assertEqual(headers['X-Frame-Grid-Scale-Arcsec'], '6.15')
         self.assertEqual(headers['X-Frame-Contract'], '1.1')
         self.assertEqual(headers['X-Frame-Mask-Policy'], 'source-only-allowlist-v2')
+        self.assertEqual(headers['X-Frame-Center-Pixel-Status'], 'valid')
         self.assertIn('max-age=300', headers['Cache-Control'])
         self.assertEqual(Image.open(BytesIO(body)).size, (3, 3))
         api.response_cache.clear()  # Exercise an uncached upstream failure.

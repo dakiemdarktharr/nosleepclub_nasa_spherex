@@ -247,6 +247,8 @@ def render(content, p):
             available = inside & np.isfinite(sampled)
             valid = available & ~bad
             center = n // 2
+            center_pixel_status = ('valid' if valid[center, center] else
+                                   'masked' if available[center, center] and bad[center, center] else 'missing')
             spectrum = (center_spectral_display(hdr, hdus, nx[center, center], ny[center, center])
                         if valid[center, center] else None)
             low, high = p['low'], p['high']
@@ -269,6 +271,7 @@ def render(content, p):
             return output.getvalue(), {'low': low, 'high': high, 'mode': mode, 'mjd': mjd,
                                        'time_system': 'UTC' if hdr.get('TIMESYS') == 'UTC' else None,
                                        'center_spectrum': spectrum,
+                                       'center_pixel_status': center_pixel_status,
                                        'valid_pixels': int(valid.sum()), 'masked_pixels': int((available & bad).sum()),
                                        'missing_pixels': int((~available).sum()), 'fov_deg': n * SCALE_ARCSEC / 3600}
     except FrameError:
@@ -329,7 +332,8 @@ class handler(BaseHTTPRequestHandler):
                      'X-Frame-Contrast-Mode': meta['mode'], 'X-Frame-Contrast-Low': meta['low'],
                      'X-Frame-Contrast-High': meta['high'], 'X-Frame-Valid-Pixels': meta['valid_pixels'],
                      'X-Frame-Mask-Policy': MASK_POLICY, 'X-Frame-Masked-Pixels': meta['masked_pixels'],
-                     'X-Frame-Missing-Pixels': meta['missing_pixels']}
+                     'X-Frame-Missing-Pixels': meta['missing_pixels'],
+                     'X-Frame-Center-Pixel-Status': meta['center_pixel_status']}
                 if meta['mjd'] is not None:
                     h['X-Frame-MJD-Obs'] = meta['mjd']
                 if meta['mjd'] is not None and meta['time_system']:
