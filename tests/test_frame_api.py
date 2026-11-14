@@ -78,6 +78,9 @@ def request(path, method='GET'):
 
 
 class FrameTest(unittest.TestCase):
+    def setUp(self):
+        api.response_cache.clear()
+
     def test_upstream_http_failure_logs_only_code_and_status(self):
         with patch.object(api, 'build_opener') as opener:
             opener.return_value.open.side_effect = HTTPError(URL, 503, 'private upstream body', {}, BytesIO())
@@ -185,6 +188,7 @@ class FrameTest(unittest.TestCase):
         self.assertEqual(headers['X-Frame-Center-Pixel-Status'], 'valid')
         self.assertIn('max-age=300', headers['Cache-Control'])
         self.assertEqual(Image.open(BytesIO(body)).size, (3, 3))
+        api.response_cache.clear()  # Exercise an uncached upstream failure.
         with patch.object(api, 'fetch', side_effect=api.FrameError('upstream_timeout', 504)):
             status, headers, body = request(path)
         self.assertEqual(status, 504)

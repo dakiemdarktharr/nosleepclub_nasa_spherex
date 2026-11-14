@@ -48,6 +48,9 @@ def request(path, method='GET'):
 
 
 class ObservationsTest(unittest.TestCase):
+    def setUp(self):
+        api.response_cache.clear()
+
     def params(self, extra=''):
         return api.parse_params('ra=350&dec=35&maxrec=500' + extra)
 
@@ -92,6 +95,7 @@ class ObservationsTest(unittest.TestCase):
         self.assertEqual((body['status'], body['returned_count'], body['upstream_count']), ('truncated', 0, 1))
         self.assertTrue(body['truncated'])
         self.assertEqual(len(body['provenance']['response_sha256']), 64)
+        api.response_cache.clear()  # Simulate a later archive response after expiry.
         with patch.object(api, 'fetch', return_value=SAMPLE):
             self.assertEqual(request('/api/observations?ra=350&dec=35&detector=6')[2]['status'], 'no_data')
 

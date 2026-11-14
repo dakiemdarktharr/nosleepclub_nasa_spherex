@@ -222,12 +222,19 @@
     }).catch(() => {
       progress.dataset.copy = "workspaceError";
       progress.textContent = t("workspaceError");
+      const reload = document.createElement("button");
+      reload.type = "button";
+      reload.className = "outline-button";
+      reload.dataset.copy = "reloadPage";
+      reload.textContent = t("reloadPage");
+      reload.addEventListener("click", () => location.reload());
+      progress.after(reload);
     });
     return workspaceLoading;
   }
 
   async function localJson(path) {
-    const response = await fetch(path);
+    const response = await fetch(path, {signal: AbortSignal.timeout(15000)});
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return response.json();
   }
@@ -368,6 +375,8 @@
 
   async function loadSky() {
     const status = el("sky-target-status");
+    el("sky-retry")?.remove();
+    status.hidden = false;
     status.dataset.copy = "loadingFields";
     status.textContent = t("loadingFields");
     try {
@@ -376,6 +385,15 @@
     } catch {
       status.dataset.copy = "fieldsUnavailable";
       status.textContent = t("fieldsUnavailable");
+      skyLoading = null;
+      const retry = document.createElement("button");
+      retry.id = "sky-retry";
+      retry.type = "button";
+      retry.className = "outline-button";
+      retry.dataset.copy = "retryFields";
+      retry.textContent = t("retryFields");
+      retry.addEventListener("click", () => { if (!skyLoading) skyLoading = loadSky(); });
+      status.after(retry);
       return;
     }
     status.hidden = true;

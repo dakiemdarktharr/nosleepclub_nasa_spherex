@@ -17,6 +17,7 @@
     retry: ["Thử lại", "Retry"],
     empty: ["Không tìm thấy ảnh ở dải này.", "No images found in this band."],
     noImage: ["Chưa có ảnh.", "No image loaded."],
+    unavailable: ["Lần quan sát trong liên kết không còn trong kết quả. Chọn một lần quan sát khác.", "The linked observation is not in these results. Choose another observation."],
     missingWave: ["Bước sóng tại tâm chưa xác định", "Center wavelength unavailable"],
     sameGrid: ["Cùng lưới WCS và thang sáng · Bắc ↑, Đông ←", "Shared WCS and display scale · north ↑, east ←"],
     panHelp: ["Kéo ảnh hoặc kéo ô xanh trên bản đồ nhỏ để đổi vùng xem.", "Drag the image or the blue box in the overview to move around."],
@@ -33,7 +34,7 @@
   const choose = (key) => copy[key][document.documentElement.lang.startsWith("en") ? 1 : 0];
   const clamp = (value, min, max) => Math.max(min, Math.min(value, max));
 
-  function mount({root, bands, timeLabel, loadFrame, loadObservations, stopTimeline, onPairChange, initialMode = "compare", onModeChange}) {
+  function mount({root, bands, timeLabel, loadFrame, loadObservations, stopTimeline, onPairChange, initialMode = "compare", onModeChange, onViewStateChange}) {
     const timelineView = root.querySelector("#explorer-display");
     const timelineViewport = timelineView.querySelector(".explorer-image-wrap");
     const timelineImage = timelineViewport.querySelector("img");
@@ -106,6 +107,16 @@
     let activeQuery, snapshot, mode = initialMode, initial = false;
     const observations = new Map();
     const start = () => mode === "compare" && Boolean(activeQuery);
+    function rememberView() {
+      if(!activeQuery||!initial)return;
+      const state={camera:{...camera}};
+      for(const pane of panes){
+        const row=pane.items[pane.index];
+        if(row)state[pane.letter.toLowerCase()]={obs:row.obs_id,det:row.detector};
+        else if(pane.requested)state[pane.letter.toLowerCase()]=pane.requested;
+      }
+      onViewStateChange?.(state);
+    }
 
     function button(key, symbol) {
       const element = document.createElement("button");
@@ -180,7 +191,7 @@
       details.append(summary,quality,fit,integrity);
       element.append(header,viewport,details);
       const pane={letter,element,detector,epoch,viewport,image,state,message,track,fill,retry,details,timestamp,wavelength,fit,quality,integrity,
-        items:[],controller:null,info:null,index:-1,status:null,engaged:false};
+        items:[],controller:null,info:null,index:-1,status:null,engaged:false,requested:null};
       detector.addEventListener("change",()=>{pane.engaged=true;setBand(pane);});
       epoch.addEventListener("change",()=>{pane.engaged=true;selectFrame(pane,Number(epoch.value));});
       retry.addEventListener("click",()=>pane.items[pane.index]?selectFrame(pane,pane.index):setBand(pane));
@@ -219,6 +230,7 @@
       scale.textContent = new Intl.NumberFormat(document.documentElement.lang, {maximumFractionDigits:1}).format(camera.zoom)+"×";
       plus.disabled = camera.zoom >= 8;
       minus.disabled = camera.zoom <= 1;
+      rememberView();
     }
 
     function updateOverview() {
@@ -366,7 +378,7 @@
     function updatePair() {
       const frames=panes.map(pane=>pane.info);
       const pair=mode==="compare"&&frames.every(Boolean)&&frames[0].row.access_url!==frames[1].row.access_url?frames:null;
-      onPairChange(pair);
+      onPairChange(pair,frames);
       updateOverview();
     }
 
@@ -435,6 +447,8 @@
       const signal=begin(pane);
       pane.index=index;
       pane.epoch.value=String(index);
+      pane.requested={obs:row.obs_id,det:row.detector};
+      rememberView();
       dropImage(pane);
       perhapsWarn();
       displayState(pane,"loading");
@@ -465,12 +479,14 @@
     const usable = (rows) => rows.filter(row=>row.access_url&&row.obs_id)
       .sort((a,b)=>(a.t_min_mjd??Infinity)-(b.t_min_mjd??Infinity));
 
-    async function setBand(pane) {
+    async function setBand(pane, observation) {
       const band=Number(pane.detector.value);
       const signal=begin(pane);
       dropImage(pane);
       listEpochs(pane,[]);
       pane.index=-1;
+      pane.requested=observation?{obs:observation,det:band}:null;
+      rememberView();
       perhapsWarn();
       displayState(pane,"looking");
       try {
@@ -483,29 +499,40 @@
         }
         listEpochs(pane,result.items,result.truncated);
         if (!result.items.length){displayState(pane,"empty");return;}
-        selectFrame(pane,pane.letter==="A"?0:result.items.length-1);
+        const index=observation?result.items.findIndex(row=>row.obs_id===observation):pane.letter==="A"?0:result.items.length-1;
+        if(index<0){pane.epoch.selectedIndex=-1;displayState(pane,"unavailable");return;}
+        selectFrame(pane,index);
       } catch(error) {
         if(!signal.aborted&&error.name!=="AbortError")displayState(pane,null,error.message);
       }
     }
 
     function loadInitial() {
-      if(initial||!start()||!snapshot.images.size)return;
+      if(initial||!start())return;
       const examples=observations.get(activeQuery.det)?.items;
       if(!examples?.length)return;
       const loaded=examples.map((row,index)=>({row,index})).filter(({row})=>{
         const at=snapshot.rows.indexOf(row);
         return snapshot.images.has(at);
       }).map(item=>item.index);
-      if(!loaded.length)return;
-      if(!panes[0].engaged&&panes[0].index<0)selectFrame(panes[0],loaded[0]);
       if(snapshot.busy)return;
       initial=true;
-      const latest=loaded.length>1?loaded.at(-1):examples.length-1;
-      if(!panes[1].engaged){
-        if(latest!==loaded[0])selectFrame(panes[1],latest);
-        else displayState(panes[1],"noImage");
+      const state=activeQuery.viewState||{};
+      if(state.camera)Object.assign(camera,state.camera);
+      for(const pane of panes){
+        if(pane.engaged||pane.info)continue;
+        const restored=state[pane.letter.toLowerCase()];
+        if(restored){
+          pane.detector.value=String(restored.det);
+          void setBand(pane,restored.obs);
+        } else {
+          const first=loaded[0]??0, last=loaded.length>1?loaded.at(-1):examples.length-1;
+          const index=pane.letter==="A"?first:last;
+          if(pane.letter==="B"&&index===first)displayState(pane,"noImage");
+          else void selectFrame(pane,index);
+        }
       }
+      viewStyle();
     }
 
     function update(next) {
@@ -521,6 +548,7 @@
           dropImage(pane);
           pane.index=-1;
           pane.engaged=false;
+          pane.requested=null;
           displayState(pane,"noImage");
         }
         spectral.hidden=true;

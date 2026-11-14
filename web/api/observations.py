@@ -16,14 +16,16 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 import xml.etree.ElementTree as ET
 
 try:
-    from api._access_control import AccessDenied, guard
+    from api._access_control import AccessDenied, guard, identity
+    from api._response_cache import ResponseCache, cache_key
     from api._spherex_products import image_identity
     from api._telemetry import emit_request, request_logger
     from api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control', 'api._spherex_products', 'api._telemetry', 'api._upstream_diagnostics'):
+    if exc.name not in ('api', 'api._access_control', 'api._response_cache', 'api._spherex_products', 'api._telemetry', 'api._upstream_diagnostics'):
         raise
-    from web.api._access_control import AccessDenied, guard
+    from web.api._access_control import AccessDenied, guard, identity
+    from web.api._response_cache import ResponseCache, cache_key
     from web.api._spherex_products import image_identity
     from web.api._telemetry import emit_request, request_logger
     from web.api._upstream_diagnostics import describe as describe_upstream, emit as emit_upstream
@@ -34,6 +36,7 @@ MAX_ROWS = 500
 TIMEOUT = 6
 DEADLINE = 8
 logger = request_logger('observations_api')
+response_cache = ResponseCache(ttl=60, wait_seconds=15)
 LIVE_RELEASES = ('dr1', 'qr3')
 
 
@@ -242,19 +245,23 @@ class handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def reply(self, status, body, category, error_code=None):
-        raw = json.dumps(body, ensure_ascii=False, allow_nan=False).encode()
+    def reply(self, status, body, category, error_code=None, cached=None):
+        raw = body if isinstance(body, bytes) else json.dumps(body, ensure_ascii=False, allow_nan=False).encode()
         self.send_response(status)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Content-Length', str(len(raw)))
-        self.send_header('Cache-Control', 'no-store')
+        self.send_header('Cache-Control', 'public, max-age=60' if status == 200 else 'no-store')
+        if status == 200:
+            self.send_header('Vercel-CDN-Cache-Control', 'public, s-maxage=60')
+        if cached:
+            self.send_header('X-Response-Cache', cached)
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('X-Request-ID', self.request_id)
         commit = os.environ.get('VERCEL_GIT_COMMIT_SHA', '')
         if re.fullmatch(r'[0-9a-f]{40}', commit): self.send_header('X-App-Commit', commit)
         if status == 405:
             self.send_header('Allow', 'GET')
-        if status == 429:
+        if status in (429, 503) and getattr(self, 'retry_after', None):
             self.send_header('Retry-After', str(self.retry_after))
         self.end_headers()
         if self.command != 'HEAD':
@@ -271,18 +278,25 @@ class handler(BaseHTTPRequestHandler):
         stage = 'open'
         try:
             params = parse_params(urlsplit(self.path).query)
-            guard('observations', self.headers, self.client_address)
-            url = upstream_url(params)
-            content = fetch(url)
-            retrieved = datetime.now(timezone.utc).isoformat()
-            stage = 'parse'
-            rows, truncated, scanned = parse_votable(content, params)
-            state = 'truncated' if truncated else ('ok' if rows else 'no_data')
-            return self.reply(200, {'contract_version': '1.0', 'status': state, 'query': params,
-                                    'observations': rows, 'returned_count': len(rows), 'upstream_count': scanned,
-                                    'truncated': truncated, 'provenance': {'endpoint': ENDPOINT, 'query_url': url,
-                                    'response_sha256': sha256(content).hexdigest(), 'retrieved_at': retrieved,
-                                    'source_format': 'VOTable TABLEDATA', 'collection': 'spherex_' + params['release'] + ('_deep' if params['deep'] else '')}}, 'ok')
+            namespace, _ = identity(self.headers, self.client_address)
+            key = cache_key(namespace, 'observations/1.0', params)
+            def produce():
+                nonlocal stage
+                guard('observations', self.headers, self.client_address)
+                url = upstream_url(params)
+                content = fetch(url)
+                retrieved = datetime.now(timezone.utc).isoformat()
+                stage = 'parse'
+                rows, truncated, scanned = parse_votable(content, params)
+                state = 'truncated' if truncated else ('ok' if rows else 'no_data')
+                result = {'contract_version': '1.0', 'status': state, 'query': params,
+                                        'observations': rows, 'returned_count': len(rows), 'upstream_count': scanned,
+                                        'truncated': truncated, 'provenance': {'endpoint': ENDPOINT, 'query_url': url,
+                                        'response_sha256': sha256(content).hexdigest(), 'retrieved_at': retrieved,
+                                        'source_format': 'VOTable TABLEDATA', 'collection': 'spherex_' + params['release'] + ('_deep' if params['deep'] else '')}}
+                return json.dumps(result, ensure_ascii=False, allow_nan=False).encode(), {}
+            (raw, _), cached = response_cache.run(key, produce)
+            return self.reply(200, raw, 'ok', cached=cached)
         except AccessDenied as exc:
             self.retry_after = exc.retry_after
             return self.reply(exc.status, {'error': exc.code}, 'rate_limit' if exc.status == 429 else 'rate_unavailable')

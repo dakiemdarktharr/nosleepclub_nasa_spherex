@@ -71,6 +71,7 @@ function harness(options={}) {
     "explorer-detector":"6","explorer-release":"dr1","explorer-from":"","explorer-to":""}))element(id).value=value;
   element("explorer-sequence-count").value="3";
   element("explorer-form").requestSubmit=()=>element("explorer-form").fire("submit");
+  if(options.linked)context.window.SkyLinkedComparison={mount(args){context.linked=args;return {update(){}};}};
   vm.runInNewContext(fs.readFileSync("web/explorer.js","utf8"),context);
   return {element,calls,timers,timeouts,blobs,events,context,api:context.window.SkyExplorer};
 }
@@ -301,6 +302,7 @@ async function main() {
   await userSequenceWaitsForRateLimitAndRetriesOnce();
   await changingQueryCancelsRateLimitWait();
   await changingQueryCancelsUserSequenceLoad();
+  await switchingToComparisonStopsSelectedSequence();
   await timelineEntryChecksSpacedCompatibleFrames();
   await explicitAutoloadIsValidatedAndPreservesLanguage();
   await curatedSequenceLoadsExactFramesOnly();
@@ -308,6 +310,21 @@ async function main() {
   await abandonedSearchDoesNotChangePublicRoute();
   await transientFrameIsRetriedOnce();
   console.log("Explorer DOM and HTTP race cases passed");
+}
+async function switchingToComparisonStopsSelectedSequence(){
+  const h=harness({lang:"en",search:"?sky_view=timeline",linked:true});
+  const ids=["A","B","C","D","E"];
+  const {submit}=await begin(h,ids);
+  h.element("explorer-sequence-count").value="5";
+  const prepare=h.element("explorer-sequence-load").fire("click");await flush();
+  frame(find(h,"frame")[0],"A",{spectral:{mjd:60000,center:4.73,width:.036}});await flush();
+  assert.equal(find(h,"frame").length,2);
+  h.context.linked.onModeChange("compare");
+  frame(find(h,"frame")[1],"B",{spectral:{mjd:60001,center:4.73,width:.036}});
+  await submit;await prepare;await flush();
+  assert.equal(find(h,"frame").length,2,"changing to A/B does not continue a hidden five-image download");
+  assert.equal(h.element("explorer-sequence-count").disabled,false);
+  assert.match(h.context.shared,/sky_view=compare/);
 }
 async function userSequencesPlayExactlyTwoAndTenFrames(){
   const h=harness({lang:"en"}),ids=Array.from({length:12},(_,i)=>`OBS${String(i).padStart(2,"0")}`);
@@ -559,7 +576,7 @@ async function explicitAutoloadIsValidatedAndPreservesLanguage(){
   observations(find(h,"observations")[0],["A"]);await flush();
   frame(find(h,"frame")[0],"A");await flush();
   assert.match(h.context.shared,/lang=en/);
-  assert.doesNotMatch(h.context.shared,/sky_autoload/);
+  assert.match(h.context.shared,/sky_autoload=1/);
   assert.match(h.context.shared,/sky_view=timeline/);
   assert.match(h.element("explorer-status").textContent,/Image loaded/);
   const invalid=harness({search:search.replace("350","360"),lang:"en"});
@@ -571,7 +588,7 @@ async function explicitAutoloadIsValidatedAndPreservesLanguage(){
   assert.match(unknownView.context.shared,/sky_view=compare/);
 }
 async function curatedSequenceLoadsExactFramesOnly(){
-  const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
+  const url="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
   const h=harness({search:url,lang:"en"});
   const ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
   observations(find(h,"observations")[0],["others",ids[2],ids[0],ids[1]]);await flush();
@@ -600,7 +617,7 @@ async function abandonedSearchDoesNotChangePublicRoute(){
   assert.equal(h.context.location.hash,"#night-sky");
 }
 async function curatedSequenceResumesMissingFrames(){
-  const search="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
+  const search="?lang=en&sky_autoload=1&sky_sequence=epsilon-dr1&sky_view=timeline&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1";
   const h=harness({search,lang:"en"}),ids=["2025W18_1B_0081_3","2025W18_2B_0011_3","2025W19_1B_0344_3"];
   observations(find(h,"observations")[0],ids);await flush();
   const spectral=mjd=>({spectral:{mjd,center:4.73,width:.036}});

@@ -107,6 +107,9 @@
     previewUnavailable: ["Tạm thời chưa tải được ảnh mẫu. Bạn có thể tìm ảnh DR1 cho vùng này.", "This preview is unavailable. You can search DR1 for this field."],
     workspaceLoading: ["Đang mở công cụ so ảnh…", "Opening the comparison workspace…"],
     workspaceError: ["Chưa mở được công cụ. Hãy tải lại trang để thử lại.", "The workspace could not open. Reload the page to try again."],
+    reloadPage: ["Tải lại trang", "Reload page"],
+    serviceStatus: ["Trạng thái dịch vụ", "Service status"],
+    retryFields: ["Tải lại danh sách vùng trời", "Retry sky fields"],
     skyFallback: ["Dùng danh sách mục tiêu để chọn vùng.", "Use the target list to choose a field."]
   };
 

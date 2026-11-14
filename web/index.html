@@ -226,6 +226,7 @@
     <span data-copy="team">Dự án độc lập của NoSleepClub</span>
     <a href="https://irsa.ipac.caltech.edu/Missions/spherex.html" target="_blank" rel="noopener noreferrer" data-copy="irsaSource">Kho dữ liệu NASA/IPAC IRSA ↗</a>
     <a href="#research" data-copy="researchNav">Tài liệu kiểm chứng</a>
+    <a href="status.html" data-copy="serviceStatus">Trạng thái</a>
   </footer>
 </div>
 
@@ -563,14 +564,22 @@
   <div id="guided-body" hidden>
     <p id="guided-context"></p>
     <div class="guided-panes" id="guided-panes"></div>
+    <section id="guided-tour" aria-labelledby="guided-tour-title" hidden>
+      <div aria-live="polite" aria-atomic="true">
+        <span id="guided-tour-step"></span>
+        <h3 id="guided-tour-title"></h3>
+        <p id="guided-tour-copy"></p>
+      </div>
+      <div class="guided-actions"><button class="public-action subtle" id="guided-tour-prev" type="button"></button><button class="public-action primary" id="guided-tour-next" type="button"></button></div>
+    </section>
     <p id="guided-limit"></p>
     <form id="guided-form">
       <fieldset><legend id="guided-question"></legend><div id="guided-options"></div></fieldset>
-      <button class="public-action primary" type="submit" data-copy="guidedAnswer">Xem lời giải</button>
     </form>
+    <button class="text-button" id="guided-tour-replay" type="button" hidden></button>
     <section id="guided-feedback" tabindex="-1" hidden>
-      <h3 id="guided-result"></h3>
-      <p id="guided-explanation"></p>
+      <div id="guided-verdict" role="status" aria-live="polite" aria-atomic="true"><h3 id="guided-result"></h3><p id="guided-explanation"></p></div>
+      <button class="public-action subtle" id="guided-try-again" type="button"></button>
       <label for="guided-note" data-copy="guidedNote">Ghi chú riêng trên thiết bị</label>
       <textarea id="guided-note" maxlength="2000" rows="3"></textarea>
       <p id="guided-note-status" role="status"></p>

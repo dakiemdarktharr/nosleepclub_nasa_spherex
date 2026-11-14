@@ -56,8 +56,6 @@
         0.3478391349315643,
         0.8229157161712647
       ],
-      "source_file_sha256": "4f39525e76f88da62ea7916b6aff953634d4478b788ed3040623be80467d0f45",
-      "source_file_bytes": 33330240,
       "compare_fov_deg": 0.06
     },
     "barnard": {
@@ -107,8 +105,6 @@
         0.27306179970502853,
         0.6741545641422271
       ],
-      "source_file_sha256": "1bb590446bbe2cbe2002c611679421acb58777c8e2f00eb82e31879ccbcfa635",
-      "source_file_bytes": 33330240,
       "compare_fov_deg": 0.06
     },
     "epsilon": {
@@ -158,8 +154,6 @@
         0.30042019933462144,
         0.6775233685970302
       ],
-      "source_file_sha256": "50076ec8faa670c44da6422f3f0ecea7760a24c7e3c85dc3475ef2f9f8725618",
-      "source_file_bytes": 33330240,
       "compare_fov_deg": 0.12
     },
     "rwaur": {
@@ -209,8 +203,6 @@
         0.5130308210849762,
         1.2518936228752133
       ],
-      "source_file_sha256": "9e26ad8cafa2a870533fd9c7a2e20d96b6606df0729282625da4a0c06b08baaf",
-      "source_file_bytes": 33330240,
       "compare_fov_deg": 0.06
     },
     "rdra": {
@@ -260,9 +252,8 @@
         0.2870537856221199,
         0.5759894675016403
       ],
-      "source_file_sha256": "32079bf130cefdd403616f38b19075360a04150dc6d39c3cfe01d1f4c1763e99",
-      "source_file_bytes": 33330240,
       "compare_fov_deg": 0.06
     }
-  }
+  },
+  "source_hash_scope": "source_byte_sha256 covers only the inclusive source_byte_range used to render the preview. No complete-FITS hash was computed."
 }
