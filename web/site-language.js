@@ -13,7 +13,7 @@
     guideThree: ["Xem ảnh toàn khung", "Inspect the full detector image"],
     guideThreeDetail: ["Mở ảnh lớn và xem thời điểm chụp. Chọn Chuỗi thời gian hoặc So ảnh A/B ngay trên thẻ.", "Enlarge the image and check the observation time. Choose Observation timeline or Compare A/B on the card."],
     guideFour: ["Phát lại các lần quan sát", "Play the observations"],
-    guideFourDetail: ["Bấm Phát, hoặc chọn từng mốc để dừng ở lần quan sát bạn muốn xem.", "Press Play or select an observation to pause on that frame."],
+    guideFourDetail: ["Chọn 2, 3, 5 hoặc 10 lần quan sát để chuẩn bị chuỗi, rồi bấm Phát. Chọn từng mốc để dừng ở ảnh đó.", "Choose 2, 3, 5 or 10 observations to prepare a sequence, then press Play. Select a frame to pause on it."],
     guideFive: ["So ảnh A/B", "Compare A/B"],
     guideFiveDetail: ["Chọn một lần chụp cho mỗi bên. Phóng to hoặc kéo một bên để cả hai cùng dịch chuyển.", "Choose an observation for each side. Zoom or drag one image to move both together."],
     guidedOpen: ["Thử so ảnh có hướng dẫn", "Try a guided comparison"],
