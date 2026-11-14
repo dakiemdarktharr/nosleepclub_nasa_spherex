@@ -82,7 +82,7 @@ class FrontendContract(unittest.TestCase):
             self.assertNotIn(removed,primary+sidebar)
         self.assertNotIn('id="workflow-compare-next"',html)
         self.assertNotIn('id="privacy-open"',html)
-        self.assertIn('<option value="0.06" selected>',html)
+        self.assertIn('<option value="0.10" selected>',html)
 
     def test_workflow_has_visible_labels_focus_targets_and_no_inline_execution(self):
         html=(ROOT/'web/index.html').read_text(encoding='utf-8');doc=WorkflowNodes();doc.feed(html)
