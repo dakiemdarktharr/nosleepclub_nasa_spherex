@@ -126,6 +126,13 @@
 .workflow-app #explorer-image { display:block; width:100%; height:100%; margin:0; image-rendering:pixelated; }
 .workflow-app .explorer-controls { gap:10px; flex-wrap:wrap; }
 .workflow-app .explorer-controls button { min-height:44px; padding:12px; font-size:12px; border:1px solid #617895; border-radius:4px; }
+#explorer-results:not(.linked-show-timeline) .explorer-sequence-setup,#explorer-results:not(.linked-show-timeline) #explorer-sequence-summary { display:none; }
+.workflow-app .explorer-sequence-setup { display:flex; align-items:flex-end; flex-wrap:wrap; gap:10px; margin-top:12px; }
+.workflow-app .explorer-sequence-setup label { display:grid; gap:5px; min-width:145px; color:#dbe8f9; font-size:12px; line-height:1.7; }
+.workflow-app .explorer-sequence-setup select { width:auto; min-width:120px; min-height:44px; margin:0; }
+.workflow-app .explorer-sequence-setup button { min-height:44px; padding:12px 14px; border:1px solid #617895; border-radius:4px; background:#122238; color:#f3f7fc; font-family:inherit; font-size:12px; font-weight:600; }
+.workflow-app .explorer-sequence-setup button:disabled { opacity:.48; cursor:not-allowed; }
+#explorer-sequence-summary { margin:8px 0 12px; font-size:11px; line-height:1.8; overflow-wrap:anywhere; }
 .workflow-app .explorer-frame-list { max-height:680px; }
 .workflow-app .explorer-frame-list button { padding:14px; }
 .workflow-app .explorer-frame-list button strong { font-size:12px; }

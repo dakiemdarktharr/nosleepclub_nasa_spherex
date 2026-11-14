@@ -16,7 +16,7 @@
   let rows=[], query=null, provenance=null, current=-1, displayed=-1, reference=-1, generation=0, request=null, timer=null, range=null, maskPolicy=null, dirty=true;
   let frameQueue=Promise.resolve(), pendingFrames=new Map();
   let playback=null, truncated=false, sequenceRun=null, retrySequence=null;
-  let automaticTimelineAttempted=false;
+  let automaticTimelineAttempted=false, preparedSequence=null, timelineState=null;
   const publicRoutes = new Set(["#orbit", "#about", "#night-sky"]);
   const searchRoutes = new Set(["#home", "#explore", "#compare-step", "#data-step"]);
   const workspaceActive = () => !publicRoutes.has(location.hash) &&
@@ -92,7 +92,7 @@
   }
   function dateSummary(){const a=el("explorer-from").value,b=el("explorer-to").value,fmt=v=>english()?v:v.split("-").reverse().join("/");el("explorer-date-summary").textContent=a&&b?`${t("Khoảng ngày","Date range")} · ${fmt(a)}–${fmt(b)}`:a||b?t("Khoảng ngày · chưa đủ hai ngày","Date range · enter both dates"):t("Khoảng ngày · tùy chọn","Date range · optional");}
   function setStatus(text,error=false) {el("explorer-status").textContent=text;el("explorer-status").classList.toggle("is-error",error);notify("status");}
-  function markDirty(){saveNote();dateSummary();dirty=true;sequenceRun=retrySequence=null;toggleFallback(false);stop();noteKey=null;el("explorer-note").value="";for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;notify("dirty");}
+  function markDirty(){saveNote();dateSummary();dirty=true;sequenceRun=retrySequence=null;preparedSequence=timelineState=null;toggleFallback(false);stop();noteKey=null;el("explorer-note").value="";for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;notify("dirty");}
   function apiError(response,code) {
     if(response.status===429){
       const retry=response.headers?.get("Retry-After");
@@ -117,48 +117,147 @@
     }
   }
   function clearImages() {for(const item of images.values())URL.revokeObjectURL(item.src);images.clear();}
-  function spectralSample(info) {
-    const h=info?.headers;
-    if(h?.["x-frame-center-spectral-source"]!=="WCS-WAVE"||h["x-frame-time-system"]!=="UTC")return null;
-    const mjd=Number(h["x-frame-mjd-obs"]), center=Number(h["x-frame-center-wavelength-um"]), width=Number(h["x-frame-center-bandwidth-um"]);
-    if(!Number.isFinite(mjd)||mjd<=0||!Number.isFinite(center)||!Number.isFinite(width)||!(center>width&&width>0))return null;
-    return {mjd, low:center-width/2, high:center+width/2, width};
+  function observationTime(info) {
+    const h=info?.headers, mjd=Number(h?.["x-frame-mjd-obs"]);
+    return h?.["x-frame-time-system"]==="UTC"&&Number.isFinite(mjd)&&mjd>0?{mjd}:null;
   }
-  function timelineFrames(anchorIndex=current) {
-    const currentImage=images.get(anchorIndex), anchor=spectralSample(currentImage);
-    if(dirty||!range||maskPolicy==="undeclared"||!anchor||currentImage.row.detector!==query.det||!currentImage.row.obs_id)return [];
-    const entries=[...images].map(([index, info])=>({index, info, band:spectralSample(info)}))
-      .filter(({info,band})=>band&&info.row.detector===query.det&&info.row.obs_id)
-      .sort((a,b)=>a.band.mjd-b.band.mjd);
-    const selected=[{index:anchorIndex, band:anchor}];
-    const times=new Set([anchor.mjd]), ids=new Set([rows[anchorIndex].obs_id]);
-    let low=anchor.low, high=anchor.high, widest=anchor.width;
-    for(const {index, info, band} of entries){
-      const nextLow=Math.max(low,band.low),nextHigh=Math.min(high,band.high),nextWidest=Math.max(widest,band.width);
-      // The 75% common overlap is a display heuristic. WCS-WAVE does not
-      // replace calibrated spectral response or photometry.
-      if(times.has(band.mjd)||ids.has(info.row.obs_id)||nextHigh-nextLow<.75*nextWidest)continue;
-      selected.push({index,band});times.add(band.mjd);ids.add(info.row.obs_id);
-      low=nextLow;high=nextHigh;widest=nextWidest;
+  function spectralSample(info) {
+    const h=info?.headers,time=observationTime(info);
+    if(!time||h?.["x-frame-center-spectral-source"]!=="WCS-WAVE")return null;
+    const center=Number(h["x-frame-center-wavelength-um"]), width=Number(h["x-frame-center-bandwidth-um"]);
+    if(!Number.isFinite(center)||!Number.isFinite(width)||!(center>width&&width>0))return null;
+    return {...time,low:center-width/2,high:center+width/2,width};
+  }
+  function timelineBandMode(indices=null) {
+    const source=(indices||[...images.keys()]).map(index=>images.get(index)).filter(Boolean);
+    if(!source.length)return "none";
+    const measured=source.map(info=>Boolean(spectralSample(info)));
+    return measured.every(Boolean)?"wcs":measured.every(value=>!value)?"nominal":"mixed";
+  }
+  function timelineBandCaveat(indices=null) {
+    return timelineBandMode(indices)==="nominal"
+      ?t(" WCS-WAVE tại tâm không có trong các FITS này; ảnh chỉ được ghép theo detector danh định, chưa xác nhận đáp ứng phổ chi tiết hay phép đo độ sáng."," WCS-WAVE is unavailable at the center in these FITS files; frames are grouped by nominal detector only, without verified detailed spectral response or photometry.")
+      :"";
+  }
+  function timelineUnavailableReason(indices) {
+    const loaded=indices.map(index=>images.get(index)).filter(Boolean);
+    if(loaded.some(info=>info.headers?.["x-frame-center-pixel-status"]!=="valid"))
+      return t("Ít nhất một ảnh không có pixel hợp lệ tại tâm truy vấn; không thể so cùng điểm trời qua các epoch.","At least one image has no valid pixel at the query center, so the same sky point cannot be compared across epochs.");
+    if(loaded.some(info=>!observationTime(info)))
+      return t("Ít nhất một FITS không cung cấp MJD UTC hợp lệ.","At least one FITS file lacks a valid UTC MJD.");
+    if(timelineBandMode(indices)==="mixed")
+      return t("Chuỗi trộn FITS có và không có WCS-WAVE tại tâm; hãy chọn chuỗi khác để tránh ghép dải phổ chưa xác minh.","This sequence mixes FITS files with and without center WCS-WAVE; choose another sequence to avoid unverified spectral mixing.");
+    return t("Có khung không cùng release/detector, mask hoặc thang hiển thị.","A frame differs in release, detector, mask policy or display scale.");
+  }
+  function timelineFrames(indices=null) {
+    const requested=indices||preparedSequence?.indices||null,explicit=Boolean(indices||preparedSequence?.indices);
+    if(dirty||!range||maskPolicy==="undeclared"||!query)return [];
+    const source=requested?requested.map(index=>[index,images.get(index)]):[...images];
+    const entries=source.map(([index,info])=>({index,info,time:observationTime(info),band:spectralSample(info)}))
+      .filter(({index,info,time})=>{
+        const h=info?.headers||{}, low=Number(h["x-frame-contrast-low"]), high=Number(h["x-frame-contrast-high"]);
+        return Boolean(info&&time&&h["x-frame-center-pixel-status"]==="valid"&&h["x-frame-release"]===query.release
+          &&Number(h["x-frame-detector"])===query.det&&h["x-frame-obs-id"]===info.row.obs_id
+          &&info.row.detector===query.det&&info.row.obs_id&&h["x-frame-mask-policy"]===maskPolicy
+          &&Number.isFinite(low)&&Number.isFinite(high)&&Math.abs(low-range[0])<1e-7&&Math.abs(high-range[1])<1e-7);
+      })
+      .sort((a,b)=>a.time.mjd-b.time.mjd||String(a.info.row.obs_id).localeCompare(String(b.info.row.obs_id)));
+    const unique=[],seenTimes=new Set(),seenIds=new Set();
+    for(const entry of entries){
+      const timeKey=entry.time.mjd.toFixed(8),id=entry.info.row.obs_id;
+      if(seenTimes.has(timeKey)||seenIds.has(id))continue;
+      seenTimes.add(timeKey);seenIds.add(id);unique.push(entry);
     }
-    return selected.sort((a,b)=>a.band.mjd-b.band.mjd).map(item=>item.index);
+    const mode=timelineBandMode(unique.map(entry=>entry.index));
+    if(mode==="mixed")return [];
+    if(mode==="wcs"){
+      if(explicit&&unique.length!==requested.length)return unique.map(entry=>entry.index);
+      if(explicit){
+        let low=-Infinity,high=Infinity,widest=0;
+        for(const {band} of unique){low=Math.max(low,band.low);high=Math.min(high,band.high);widest=Math.max(widest,band.width);}
+        if(high-low<.75*widest)return [];
+      }else{
+        const anchor=unique.find(entry=>entry.index===current)||unique[0];
+        if(!anchor)return [];
+        const selected=[anchor],times=new Set([anchor.time.mjd.toFixed(8)]),ids=new Set([anchor.info.row.obs_id]);
+        let low=anchor.band.low,high=anchor.band.high,widest=anchor.band.width;
+        for(const entry of unique){
+          if(entry===anchor)continue;
+          const nextLow=Math.max(low,entry.band.low),nextHigh=Math.min(high,entry.band.high),nextWidth=Math.max(widest,entry.band.width);
+          if(times.has(entry.time.mjd.toFixed(8))||ids.has(entry.info.row.obs_id)||nextHigh-nextLow<.75*nextWidth)continue;
+          selected.push(entry);times.add(entry.time.mjd.toFixed(8));ids.add(entry.info.row.obs_id);low=nextLow;high=nextHigh;widest=nextWidth;
+        }
+        return selected.sort((a,b)=>a.time.mjd-b.time.mjd).map(entry=>entry.index);
+      }
+    }
+    if(explicit&&unique.length!==requested.length)return unique.map(entry=>entry.index);
+    return unique.map(entry=>entry.index);
   }
   function timelineControls() {
     if(!timeline)return;
-    const frames=timelineFrames(), playing=playback==="timeline";
+    const requested=preparedSequence?.indices||null;
+    const frames=timelineState?.generation===generation?timelineState.frames:timelineFrames(requested), playing=playback==="timeline";
     const loading=Boolean(sequenceRun);
-    timeline.disabled=loading||frames.length<3||playback==="pair";
+    const complete=requested?frames.length===requested.length:frames.length>=3;
+    timeline.disabled=loading||!complete||playback==="pair";
     timeline.setAttribute("aria-busy",String(loading));
-    timeline.textContent=playing?t("Tạm dừng","Pause"):t(`Phát chuỗi · ${frames.length} ảnh`,`Play timeline · ${frames.length} frames`);
-    timeline.title=t("Cần ít nhất 3 ảnh đã mở, khác thời điểm và có dải WCS-WAVE tương thích tại tâm vùng.","Requires at least 3 opened images with distinct times and compatible WCS-WAVE ranges at the field center.");
+    const paused=Boolean(timelineState&&!playing&&timelineState.generation===generation);
+    timeline.textContent=playing?t("Tạm dừng chuỗi","Pause sequence"):
+      paused?t(`Phát tiếp chuỗi (${frames.length})`,`Resume sequence (${frames.length})`):
+      requested?t(`Phát chuỗi (${frames.length})`,`Play sequence (${frames.length})`):
+      t(`Phát ${frames.length} ảnh đã mở`,`Play ${frames.length} loaded images`);
+    timeline.title=requested?t(`Chuỗi đã chọn gồm ${requested.length} lần quan sát riêng biệt.`,`${requested.length} distinct observations are selected for this sequence.`):
+      t("Phát ảnh đã mở cùng detector, pixel tâm hợp lệ, MJD UTC và dải WCS-WAVE tương thích nếu có.","Play loaded images from the same detector with valid center pixels, UTC MJD, and compatible WCS-WAVE ranges when available.");
     const hint=el("explorer-timeline-hint");
     if(hint){
-      hint.textContent=sequenceRun?.automatic?
-        t(`Đang thử các mốc quan sát cách nhau · ${sequenceRun.position}/${sequenceRun.total}.`,`Checking spaced observations · ${sequenceRun.position}/${sequenceRun.total}.`):
-        loading?t("Đang chuẩn bị ba ảnh từ IRSA.","Preparing three IRSA images."):
-        frames.length<3?t("Mở ảnh trong danh sách để tạo chuỗi. Cần ít nhất ba lần quan sát với bước sóng tương thích tại tâm.","Open images from the list to build a sequence. Playback requires three observations with compatible wavelengths at the field center."):"";
-      hint.hidden=!loading&&frames.length>=3;
+      hint.textContent=loading?t(`Đang tải ảnh ${sequenceRun.position}/${sequenceRun.indices.length} lần lượt từ IRSA.`,`Loading frame ${sequenceRun.position}/${sequenceRun.indices.length} from IRSA, one at a time.`):
+        requested&&!complete?t(`${frames.length}/${requested.length} ảnh đạt điều kiện MJD UTC, pixel tâm, mask và thang hiển thị; nếu có WCS-WAVE thì phải tương thích. Không tự bỏ ảnh.`,`${frames.length}/${requested.length} frames pass UTC MJD, center-pixel, mask and display-scale checks; available WCS-WAVE must be compatible. Frames are not silently dropped.`):
+        requested&&complete?t(`Chuỗi ${frames.length} ảnh đã qua kiểm tra, phát theo thứ tự MJD trong FITS.${timelineBandCaveat(requested)}`,`The ${frames.length}-image sequence passed checks and plays in FITS MJD order.${timelineBandCaveat(requested)}`):
+        frames.length<3?t("Chọn số khung bên dưới rồi chuẩn bị chuỗi; hoặc mở thêm ảnh để phát mọi khung tương thích đã tải.","Choose a frame count below and prepare a sequence, or open more images to play all compatible frames already loaded."):"";
+      hint.hidden=!loading&&((requested&&complete)||(!requested&&frames.length>=3));
     }
+    sequenceControls();
+  }
+  function sequenceCandidates() {
+    const sorted=rows.map((row,index)=>({index,row,time:Number(row.t_min_mjd)}))
+      .filter(({row,time})=>row.detector===query?.det&&row.access_url&&row.obs_id&&Number.isFinite(time)&&time>0)
+      .sort((a,b)=>a.time-b.time||String(a.row.obs_id).localeCompare(String(b.row.obs_id))
+        ||String(a.row.access_url).localeCompare(String(b.row.access_url))||a.index-b.index);
+    const ids=new Set(),times=new Set(),candidates=[];
+    for(const item of sorted){
+      const timeKey=item.time.toFixed(8);
+      if(ids.has(item.row.obs_id)||times.has(timeKey))continue;
+      ids.add(item.row.obs_id);times.add(timeKey);candidates.push(item);
+    }
+    return candidates;
+  }
+  function sampleSequence(count,candidates=sequenceCandidates()) {
+    if(!Number.isInteger(count)||count<2||candidates.length<count)return [];
+    if(count===2)return [candidates[0].index,candidates.at(-1).index];
+    return Array.from({length:count},(_,position)=>candidates[Math.round(position*(candidates.length-1)/(count-1))].index);
+  }
+  function sequenceControls(){
+    const countControl=el("explorer-sequence-count"),loadButton=el("explorer-sequence-load"),label=el("explorer-sequence-load-label"),summary=el("explorer-sequence-summary");
+    if(!countControl||!loadButton||!label||!summary)return;
+    const count=Number(countControl.value)||3,candidates=sequenceCandidates(),loading=Boolean(sequenceRun);
+    countControl.disabled=dirty||loading||!rows.length;
+    label.textContent=t(`Chuẩn bị ${count} khung`,`Prepare ${count} frames`);
+    loadButton.disabled=dirty||loading||candidates.length<count;
+    if(loading){summary.textContent=t(`Đang tải lần lượt ${sequenceRun.position}/${sequenceRun.indices.length}; ảnh không tương thích sẽ không được phát.`,`Loading serially, ${sequenceRun.position}/${sequenceRun.indices.length}; incompatible frames will not play.`);return;}
+    if(dirty){summary.textContent=t("Cấu hình đã đổi. Chạy lại truy vấn để chuẩn bị chuỗi.","Search settings changed. Run the query again to prepare a sequence.");return;}
+    if(!rows.length){summary.textContent=t("Chạy truy vấn để chọn 2, 3, 5 hoặc 10 lần quan sát.","Search first, then choose 2, 3, 5 or 10 observations.");return;}
+    if(preparedSequence){
+      const compatible=timelineFrames(preparedSequence.indices),ready=compatible.length===preparedSequence.indices.length;
+      if(ready){
+        const omitted=Math.max(0,preparedSequence.sourceCount-preparedSequence.indices.length);
+        summary.textContent=preparedSequence.kind==="curated"?t("Ba ảnh Epsilon Indi B đã tải; dùng chuỗi DR1 đã lưu trong provenance.","Three Epsilon Indi B images are loaded from the provenance-backed DR1 sequence."):
+          t(`Đã chuẩn bị ${preparedSequence.indices.length} ảnh theo MJD trong FITS${omitted?`; chọn đều từ ${preparedSequence.sourceCount}, bỏ qua ${omitted} ảnh không nạp`:"; đã dùng tất cả kết quả có URL"}${preparedSequence.truncated?"; phản hồi IRSA bị cắt":""}.${timelineBandCaveat(preparedSequence.indices)}`,`Prepared ${preparedSequence.indices.length} images in FITS MJD order${omitted?`; evenly selected from ${preparedSequence.sourceCount}, with ${omitted} not loaded`:"; all results with URLs were used"}${preparedSequence.truncated?"; IRSA response was truncated":""}.${timelineBandCaveat(preparedSequence.indices)}`);
+      }else{
+        summary.textContent=t(`Chuỗi đang có ${compatible.length}/${preparedSequence.indices.length} ảnh đạt điều kiện. ${timelineUnavailableReason(preparedSequence.indices)} Không phát thiếu khung; thử lại ảnh lỗi hoặc chọn chuỗi khác.`,`The sequence has ${compatible.length}/${preparedSequence.indices.length} frames that pass checks. ${timelineUnavailableReason(preparedSequence.indices)} Playback will not omit frames; retry a failed image or choose another sequence.`);
+      }
+      return;
+    }
+    summary.textContent=t(`${candidates.length} thời điểm riêng biệt có URL ảnh; chọn đều theo thời gian. Phản hồi${truncated?" bị cắt":" chưa bị cắt"}.`,`${candidates.length} distinct times have image URLs; selection is evenly spaced. The response${truncated?" was truncated":" was not truncated"}.`);
   }
   function resetDisplay() {
     el("explorer-image").hidden=true;el("explorer-image").removeAttribute("src");
@@ -231,6 +330,16 @@
     }
     return new Blob(chunks, {type:"image/png"});
   }
+  function waitForRetry(seconds,signal) {
+    return new Promise((resolve,reject)=>{
+      let id,done=false;
+      const abort=()=>{if(done)return;done=true;clearTimeout(id);reject(new DOMException(t("Đã đổi vùng trời","Sky region changed"),"AbortError"));};
+      id=setTimeout(()=>{if(done)return;done=true;signal?.removeEventListener?.("abort",abort);resolve();},Math.min(300,Math.max(1,seconds))*1000);
+      if(done)return;
+      if(signal?.aborted){abort();return;}
+      signal?.addEventListener?.("abort",abort,{once:true});
+    });
+  }
   function enqueueFrame(row, signal, active, retry, progress) {
     if(!row?.access_url)throw new Error(t("Quan sát không có URL FITS được hỗ trợ.","This observation has no supported FITS URL."));
     const previous=frameQueue, search=query, seq=generation;
@@ -252,6 +361,12 @@
           retry();
           response=await fetch(endpoint,{signal});
         } else throw new Error(apiError(response,failure?.error));
+      }
+      if(response.status===429&&response.headers?.get("Retry-After")&&/^\d{1,5}$/.test(response.headers.get("Retry-After"))){
+        const seconds=Number(response.headers.get("Retry-After"));
+        setStatus(t(`IRSA đang giới hạn tốc độ. Tạm chờ ${seconds} giây rồi tiếp tục chuỗi…`,`IRSA rate limit reached. Waiting ${seconds} seconds before continuing the sequence…`));
+        await waitForRetry(seconds,signal);
+        assertActive();retry();response=await fetch(endpoint,{signal});
       }
       if(!response.ok){let error;try{error=(await response.json()).error;}catch{}throw new Error(apiError(response,error));}
       if(!response.headers.get("Content-Type")?.startsWith("image/png"))throw new Error(t("Máy chủ chưa cung cấp ảnh PNG.","The server did not return a PNG image."));
@@ -323,7 +438,8 @@
     const quality=counts.every(v=>Number.isInteger(v)&&v>=0)?t(` ${counts[0]} pixel khả dụng; ${counts[1]} bị loại; ${counts[2]} thiếu.`,` ${counts[0]} valid pixels, ${counts[1]} masked, ${counts[2]} missing.`):"";
     const contrast=range?range.map(x=>x.toFixed(4)).join("–"):t("theo ảnh","per frame");
     const band=spectralSample(info), spectrum=band?` · WCS-WAVE ${((band.low+band.high)/2).toFixed(3)} µm, Δ${band.width.toFixed(3)} µm`:"";
-    el("explorer-frame-meta").textContent=t(`${release} · D${info.row.detector} · 6,15″/pixel · ZODI đã trừ · mức xám ${contrast} MJy/sr. Cam là mask, tím là thiếu dữ liệu.`,`${release} · D${info.row.detector} · 6.15″/pixel · ZODI subtracted · grayscale ${contrast} MJy/sr. Orange marks masked pixels and purple marks missing data.`)+quality+spectrum;
+    const center=info.headers["x-frame-center-pixel-status"]||t("chưa rõ pixel tâm","center pixel unknown");
+    el("explorer-frame-meta").textContent=t(`${release} · D${info.row.detector} · 6,15″/pixel · ZODI đã trừ · mức xám ${contrast} MJy/sr. Pixel tâm: ${center}. Cam là mask, tím là thiếu dữ liệu.`,`${release} · D${info.row.detector} · 6.15″/pixel · ZODI subtracted · grayscale ${contrast} MJy/sr. Query-center pixel: ${center}. Orange marks masked pixels and purple marks missing data.`)+quality+spectrum;
     const sha=info.headers["x-frame-cutout-sha256"]||"";
     el("explorer-frame-hash").textContent=sha?`SHA-256 cutout: ${sha}`:t("Hash cutout xem trong gói bằng chứng.","See the cutout hash in the evidence bundle.");
     el("explorer-download-fits").href=info.headers["x-frame-cutout-url"];
@@ -345,7 +461,7 @@
   async function show(index, curated) {
     if(!rows[index]||!query)return;
     if(dirty){setStatus(t("Cấu hình đã đổi. Tìm lại ảnh để tiếp tục.","Search settings changed. Search for images to continue."),true);return;}
-    if(!curated)sequenceRun=retrySequence=null;
+    if(!curated){sequenceRun=retrySequence=null;timelineState=null;}
     saveNote();stop();noteKey=null;el("explorer-note").value="";const seq=generation;current=index;renderList();
     el("explorer-image").hidden=true;for(const id of["explorer-pin","explorer-play","explorer-export"])el(id).disabled=true;
     el("explorer-retry").hidden=true;
@@ -353,7 +469,7 @@
     timelineControls();
     if(timeline)timeline.disabled=true;
     const progress=curated?`${curated.position}/${curated.indices.length}`:`${index+1}/${rows.length}`;
-    setStatus(curated?t(`Đang tải chuỗi Epsilon Indi B · ảnh ${progress}. IRSA có thể mất vài giây…`,`Loading the Epsilon Indi B sequence · frame ${progress}. IRSA can take several seconds…`):
+    setStatus(curated?t(`Đang tải ảnh ${progress} trong chuỗi. IRSA có thể mất vài giây…`,`Loading frame ${progress} in the sequence. IRSA can take several seconds…`):
       t(`Đang tải cutout thật ${progress} từ IRSA…`,`Loading IRSA cutout ${progress}…`));
     try {
       const info=await load(index,seq);
@@ -369,7 +485,9 @@
     }catch(error){if(error.name!=="AbortError"&&seq===generation&&current===index&&(!curated||sequenceRun===curated)){setStatus(t(`Không tải được cutout: ${error.message}. Chọn ảnh khác trong danh sách hoặc bấm Tải lại ảnh.`,`Could not load the cutout: ${error.message}. Select another image or retry.`),true);el("explorer-image").hidden=true;el("explorer-retry").hidden=!rows[index]?.access_url;}}
   }
   async function loadEpsilonTimeline(indices) {
-    const run={indices,position:0};
+    const run={kind:"curated",indices,position:0};
+    preparedSequence={kind:"curated",indices:indices.slice(),sourceCount:indices.length,truncated:false};
+    timelineState=null;
     sequenceRun=run;
     retrySequence=null;
     let lastLoaded;
@@ -384,13 +502,13 @@
     if(lastLoaded!==undefined&&current!==lastLoaded)await show(lastLoaded);
     if(!workspaceActive())return;
     timelineControls();
-    if(timelineFrames().length>=3){
+    if(timelineFrames(indices).length===indices.length){
       toggleFallback(false);
       setStatus(t("Ba ảnh Epsilon Indi B đã sẵn sàng. Chọn Phát chuỗi để xem theo thời gian.","Three Epsilon Indi B images are ready. Select Play timeline to see them in time order."));
     } else {
       toggleFallback(true);
       if(indices.some(index=>!images.has(index))){
-        retrySequence=indices;
+        retrySequence={kind:"curated",indices:indices.slice(),sourceCount:indices.length,truncated:false};
         el("explorer-retry").hidden=false;
         setStatus(t("Chưa tải đủ ba ảnh. Bấm Tải lại ảnh để thử các khung còn thiếu hoặc chọn ảnh khác trong danh sách.","The sequence is incomplete. Choose Retry image to load the remaining frames or select another frame from the list."),true);
       } else {
@@ -400,34 +518,26 @@
   }
 
   function spacedCandidates() {
-    const ids=new Set(), times=new Set();
-    const candidates=[];
-    rows.forEach((row,index)=>{
-      if(!row.access_url||!row.obs_id||!Number.isFinite(row.t_min_mjd)||ids.has(row.obs_id)||times.has(row.t_min_mjd))return;
-      ids.add(row.obs_id);
-      times.add(row.t_min_mjd);
-      candidates.push({index,time:row.t_min_mjd});
-    });
-    if(candidates.length<=maxTimelineCandidates)return candidates.map(c=>c.index);
-    const start=candidates[0].time, end=candidates.at(-1).time;
-    const spaced=new Set([candidates[0].index,candidates.at(-1).index]);
+    const candidates=sequenceCandidates();
+    if(candidates.length<=maxTimelineCandidates)return candidates.map(item=>item.index);
+    const selected=[candidates[0].index,candidates.at(-1).index],occupied=new Set(selected);
+    const start=candidates[0].time,end=candidates.at(-1).time;
     for(let i=1;i<maxTimelineCandidates-1;i++){
       const target=start+(end-start)*i/(maxTimelineCandidates-1);
-      const nearest=candidates.reduce((best,item)=>!spaced.has(item.index)&&
+      const nearest=candidates.reduce((best,item)=>!occupied.has(item.index)&&
         (!best||Math.abs(item.time-target)<Math.abs(best.time-target))?item:best,null);
-      spaced.add(nearest.index);
+      if(nearest){selected.push(nearest.index);occupied.add(nearest.index);}
     }
-    // Try widely separated times first, then fill the gaps if needed.
-    return [...spaced];
+    return selected;
   }
 
   async function prepareTimeline() {
-    if(automaticTimelineAttempted||sequenceRun||query?.sequence||query?.view!=="timeline"||!images.has(current)||timelineFrames().length>=3)return;
+    if(automaticTimelineAttempted||sequenceRun||preparedSequence||query?.sequence||query?.view!=="timeline"||!images.has(current)||timelineFrames().length>=3)return;
     automaticTimelineAttempted=true;
     const candidates=spacedCandidates();
     const pending=candidates.filter(index=>!images.has(index)).slice(0,maxTimelineCandidates-1);
     if(!pending.length)return;
-    const run={automatic:true,position:candidates.filter(index=>images.has(index)).length,total:candidates.length};
+    const run={automatic:true,indices:candidates,position:candidates.filter(index=>images.has(index)).length,total:candidates.length};
     const active=()=>sequenceRun===run&&workspaceActive()&&!dirty&&query?.view==="timeline";
     const seq=generation;
     sequenceRun=run;
@@ -445,8 +555,8 @@
     sequenceRun=null;
     if(!workspaceActive()||dirty||query?.view!=="timeline")return;
     if(timelineFrames().length<3){
-      const compatible=[...images.keys()].find(index=>timelineFrames(index).length>=3);
-      if(compatible!==undefined)await show(compatible);
+      const compatible=[...images.keys()].find(index=>images.has(index));
+      if(compatible!==undefined&&current!==compatible)await show(compatible);
     }
     timelineControls();
     if(timelineFrames().length>=3){
@@ -455,9 +565,45 @@
       setStatus(t("Chưa đủ ba ảnh tương thích. Chọn thêm lần quan sát trong danh sách để thử.","Fewer than three compatible images are open. Select more observations from the list to try again."));
     }
   }
+  async function loadUserSequence(retry=null) {
+    if(dirty||!query||sequenceRun)return;
+    stop();
+    const candidates=sequenceCandidates(),count=Number(el("explorer-sequence-count").value)||3;
+    const indices=retry?.indices||sampleSequence(count,candidates);
+    const sourceCount=retry?.sourceCount??candidates.length,wasTruncated=retry?.truncated??truncated;
+    if(!retry&&indices.length!==count){
+      setStatus(t(`Chưa đủ ${count} thời điểm riêng biệt có URL ảnh. Hãy thu hẹp khoảng ngày hoặc chọn ít khung hơn.`,`There are not ${count} distinct observations with image URLs. Narrow the date range or choose fewer frames.`),true);
+      return;
+    }
+    preparedSequence={kind:"user",indices:indices.slice(),sourceCount,truncated:wasTruncated};
+    timelineState=null;
+    const run={kind:"user",indices:indices.slice(),position:0,sourceCount,truncated:wasTruncated};
+    sequenceRun=run;retrySequence=null;timelineControls();
+    let lastLoaded;
+    for(const [position,index] of indices.entries()){
+      if(sequenceRun!==run)return;
+      run.position=position+1;
+      if(await show(index,run))lastLoaded=index;else break;
+    }
+    if(sequenceRun!==run)return;
+    sequenceRun=null;
+    if(lastLoaded!==undefined&&current!==lastLoaded)await show(lastLoaded);
+    if(!workspaceActive())return;
+    const frames=timelineFrames(indices);
+    if(frames.length!==indices.length&&indices.some(index=>!images.has(index))){
+      retrySequence={indices:indices.slice(),sourceCount,truncated:wasTruncated};
+      el("explorer-retry").hidden=false;
+      setStatus(t("Chuỗi chưa tải đủ ảnh. Bấm Tải lại ảnh để thử lại từ khung còn thiếu.","The sequence did not finish loading. Retry the failed frame to continue."),true);
+    }else if(frames.length!==indices.length){
+      setStatus(t(`Đã tải ${indices.length} ảnh, nhưng chuỗi chưa qua kiểm tra. ${timelineUnavailableReason(indices)}`,`Loaded ${indices.length} images, but the sequence did not pass validation. ${timelineUnavailableReason(indices)}`),true);
+    }else{
+      setStatus(t(`Đã chuẩn bị đủ ${frames.length} ảnh thật từ IRSA theo thời gian. Chọn Phát chuỗi để xem.${timelineBandCaveat(indices)}`,`Prepared ${frames.length} real IRSA images in time order. Select Play sequence to view them.${timelineBandCaveat(indices)}`));
+    }
+    timelineControls();
+  }
   el("explorer-form").addEventListener("submit",async event=>{
     event.preventDefault();let next;try{next=inputQuery();}catch(error){setStatus(error.message,true);return;}
-    saveNote();noteKey=null;el("explorer-note").value="";request?.abort();sequenceRun=retrySequence=null;automaticTimelineAttempted=false;stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;dirty=false;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
+    saveNote();noteKey=null;el("explorer-note").value="";request?.abort();sequenceRun=retrySequence=null;preparedSequence=timelineState=null;automaticTimelineAttempted=false;stop();generation++;const seq=generation;request=new AbortController();clearImages();query=next;dirty=false;range=null;maskPolicy=null;rows=[];current=displayed=reference=-1;provenance=null;frameQueue=Promise.resolve();pendingFrames=new Map();
     resetDisplay();el("explorer-results").hidden=true;el("explorer-search").disabled=true;
     setStatus(t("Đang truy vấn độ phủ SPHEREx tại IRSA…","Searching SPHEREx coverage at IRSA…"));
     try {
@@ -488,7 +634,9 @@
   el("explorer-preset").addEventListener("change",()=>{const id=el("explorer-preset").value,p=presets[id];if(p){el("explorer-ra").value=p[0].toString();el("explorer-dec").value=p[1].toString();el("explorer-fov").value=id==="epsilon"?"0.12":"0.06";}markDirty();});
   el("explorer-previous").addEventListener("click",()=>show(current-1));el("explorer-next").addEventListener("click",()=>show(current+1));
   el("explorer-current").addEventListener("change",()=>show(Number(el("explorer-current").value)));
-  el("explorer-retry").addEventListener("click",()=>retrySequence?loadEpsilonTimeline(retrySequence):show(current));
+  el("explorer-retry").addEventListener("click",()=>retrySequence?.kind==="curated"?loadEpsilonTimeline(retrySequence.indices):retrySequence?loadUserSequence(retrySequence):show(current));
+  el("explorer-sequence-count")?.addEventListener("change",()=>{stop();preparedSequence=timelineState=null;timelineControls();});
+  el("explorer-sequence-load")?.addEventListener("click",()=>loadUserSequence());
   el("explorer-pin").addEventListener("click",()=>{saveNote();stop();if(!context().ready)return;reference=displayed;restoreNote();renderList();el("explorer-reference").textContent=referenceText();el("explorer-play").disabled=true;el("explorer-export").disabled=true;notify("pin");});
   el("explorer-play").addEventListener("click",()=>{
     if(timer){stop();return;}if(dirty||reference<0||reference===current||!images.has(reference)||!images.has(current))return;
@@ -499,22 +647,31 @@
   });
   timeline?.addEventListener("click",()=>{
     if(timer){
-      const paused=displayed;
+      const pausedIndex=timelineState?.generation===generation?timelineState.frames[timelineState.index]:displayed;
       stop();
-      if(paused>=0&&context().ready)show(paused);
+      if(pausedIndex>=0&&images.has(pausedIndex)){
+        current=pausedIndex;renderList();draw(images.get(pausedIndex),pausedIndex,`${timelineState.index+1}/${timelineState.frames.length}`);
+        el("explorer-previous").disabled=pausedIndex===0;el("explorer-next").disabled=pausedIndex===rows.length-1;
+        timelineControls();notify("frame");
+        setStatus(t(`Đã tạm dừng ở ảnh ${timelineState.index+1}/${timelineState.frames.length}. Chọn Phát tiếp để tiếp tục theo thời gian.`,`Paused at image ${timelineState.index+1}/${timelineState.frames.length}. Select Resume to continue in time order.`));
+      }
       return;
     }
-    const frames=timelineFrames();
-    if(frames.length<3)return;
-    playback="timeline";let index=0;
+    const requested=preparedSequence?.indices||null;
+    const frames=timelineFrames(requested), complete=requested?frames.length===requested.length:frames.length>=3;
+    if(!complete)return;
+    const resume=timelineState?.generation===generation&&timelineState.frames.length===frames.length;
+    const state=resume?timelineState:{generation,frames,index:0};
+    timelineState=state;playback="timeline";let index=state.index;
     const showPlayingFrame=()=>draw(images.get(frames[index]),frames[index],`${index+1}/${frames.length}`);
     showPlayingFrame();
     timer=setInterval(()=>{
       index=(index+1)%frames.length;
+      state.index=index;
       showPlayingFrame();
     },950);
     timelineControls();
-    setStatus(t("Đang phát các ảnh cùng thang hiển thị và dải WCS-WAVE gần nhau tại tâm. Chưa xác nhận chuyển động hay biến quang.","Playing frames with a shared display scale and similar center WCS-WAVE bands. Motion and variability are unconfirmed."));
+    setStatus(t(`Đang phát ảnh theo thời gian với cùng thang hiển thị.${timelineBandCaveat(frames)} Chưa xác nhận chuyển động hay biến quang.`,`Playing images in time order with a shared display scale.${timelineBandCaveat(frames)} Motion and variability are unconfirmed.`));
   });
   el("explorer-export").addEventListener("click",()=>{
     const selected=context();if(!selected.ready||!selected.paired)return;
