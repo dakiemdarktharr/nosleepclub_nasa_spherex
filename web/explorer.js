@@ -176,7 +176,7 @@
     const entries=source.map(([index,info])=>({index,info,time:observationTime(info),band:spectralSample(info),grid:gridSignature(info)}))
       .filter(({index,info,time,grid})=>{
         const h=info?.headers||{}, low=Number(h["x-frame-contrast-low"]), high=Number(h["x-frame-contrast-high"]);
-        return Boolean(info&&time&&grid&&Number(h["x-frame-valid-pixels"])>0
+        return Boolean(info?.decoded&&time&&grid&&Number(h["x-frame-valid-pixels"])>0
           &&(h["x-frame-release"]||info.row.release||query.release).toLowerCase()===query.release
           &&Number(h["x-frame-detector"])===query.det&&h["x-frame-obs-id"]===info.row.obs_id
           &&info.row.detector===query.det&&info.row.obs_id&&h["x-frame-mask-policy"]===maskPolicy
@@ -210,7 +210,7 @@
     timeline.textContent=loading?t("Đang tải đủ 5 ảnh…","Loading all 5 frames…"):
       preparedSequence?t("Đã tải đủ 5 ảnh","All 5 frames are ready"):t("Tải trước 5 ảnh","Preload 5 frames");
     timeline.title=t("Chọn 5 lần chụp liền nhau theo MJD; tải đủ trước khi phát.","Select five consecutive observations by MJD and preload them before playback.");
-    const missing=indices.some(index=>!images.has(index));
+    const missing=indices.some(index=>!images.get(index)?.decoded);
     timelinePlay.disabled=dirty||loading||!preparedSequence||!complete||playback==="pair";
     timelinePlay.textContent=playing?t("Ⅱ Tạm dừng","Ⅱ Pause"):paused?t("▶ Phát tiếp","▶ Resume"):t("▶ Phát","▶ Play");
     newSequence.hidden=!preparedSequence||!selection||selection.windowCount<2;
@@ -381,12 +381,14 @@
     return {src:URL.createObjectURL(blob),headers,row};
   }
   async function decodeFrameImage(info) {
+    if(info.decoded)return info;
     const image=new Image();image.src=info.src;
     try {
       await image.decode();
       const size=Number(info.headers["x-frame-grid-size-px"]);
       if(!Number.isInteger(size)||image.naturalWidth!==size||image.naturalHeight!==size)throw new Error(t("Ảnh trả về sai kích thước lưới.","The returned image dimensions do not match the sky grid."));
     } catch(error) {URL.revokeObjectURL(info.src);throw error;}
+    info.decoded=true;
     return info;
   }
   function decodeBase64Image(value) {
@@ -396,10 +398,8 @@
     return new Blob([bytes],{type:"image/png"});
   }
   async function loadSequenceBatch(indices,seq) {
-    const missing=indices.filter(index=>!images.has(index));
-    if(!missing.length)return [];
     const payload={ra:query.ra,dec:query.dec,fov_deg:query.fov,zodi:"subtract",low:range[0],high:range[1],
-      frames:missing.map(index=>({index,url:rows[index].access_url}))};
+      frames:indices.map(index=>({index,url:rows[index].access_url}))};
     const response=await fetch("/api/sequence",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:request.signal});
     const data=await response.json().catch(()=>null);
     if(!response.ok)throw new Error(apiError(response,data?.error));
@@ -407,14 +407,16 @@
     const received=new Set(),decodeErrors=[];
     await Promise.all(data.frames.map(async item=>{
       const index=item?.index;
-      if(!missing.includes(index)||received.has(index)||!rows[index]||!item.png||!item.headers)return;
+      if(!indices.includes(index)||received.has(index)||!rows[index]||!item.png||!item.headers)return;
       try{
         const info=await decodeFrameImage(frameInfoFromBlob(decodeBase64Image(item.png),item.headers,rows[index],request.signal,seq));
+        const previous=images.get(index);if(previous?.src&&previous.src!==info.src)URL.revokeObjectURL(previous.src);
         images.set(index,info);received.add(index);
         const button=el("explorer-frames").children[index];if(button)button.dataset.loaded="true";
       }catch(error){decodeErrors.push({index,error:error?.message||"image_decode_failed"});}
     }));
-    return [...data.errors,...decodeErrors];
+    const notDecoded=indices.filter(index=>!images.get(index)?.decoded);
+    return [...data.errors,...decodeErrors,...notDecoded.filter(index=>!decodeErrors.some(item=>item.index===index)).map(index=>({index,error:"frame_not_returned"}))];
   }
   function load(index,seq,active=()=>seq===generation&&current===index,background=false) {
     if(images.has(index))return images.get(index);
@@ -422,7 +424,6 @@
     const jobs=pendingFrames;
     const task=enqueueFrame(rows[index],request.signal,active,
       ()=>{if(!background)setStatus(t("IRSA tạm lỗi khi tải ảnh. Đang thử lại…","IRSA could not return the image. Retrying…"));})
-      .then(info=>decodeFrameImage(info))
       .then(info=>{images.set(index,info);return info;});
     jobs.set(index,task);task.then(()=>jobs.delete(index),()=>jobs.delete(index));return task;
   }
@@ -542,11 +543,11 @@
     if(sequenceRun!==run){timelineControls();notify("sequence-ready");return;}
     sequenceRun=null;
     if(!workspaceActive())return;
-    const frames=timelineFrames(indices),missing=indices.some(index=>!images.has(index));
+    const frames=timelineFrames(indices),missing=indices.some(index=>!images.get(index)?.decoded);
     if(missing){
       retrySequence={indices:indices.slice()};el("explorer-retry").hidden=false;
-      const failed=errors.length||indices.filter(index=>!images.has(index)).length;
-      setStatus(t(`Đã có ${indices.length-indices.filter(index=>!images.has(index)).length}/5 ảnh; ${failed} còn lỗi. Bấm Tải lại ảnh.`,`Loaded ${indices.length-indices.filter(index=>!images.has(index)).length}/5 frames; ${failed} failed. Retry the missing frames.`),true);
+      const readyCount=indices.filter(index=>images.get(index)?.decoded).length,failed=Math.max(errors.length,indices.length-readyCount);
+      setStatus(t(`Đã tải và giải mã ${readyCount}/5 ảnh; ${failed} còn lỗi. Bấm Tải lại ảnh.`,`Loaded and decoded ${readyCount}/5 frames; ${failed} failed. Retry the sequence.`),true);
     }else if(frames.length!==SEQUENCE_SIZE){
       setStatus(t(`Đã tải đủ ảnh nhưng không cùng lưới, mask hoặc thời gian. ${timelineUnavailableReason(indices)}`,`All frames loaded but they do not share a valid grid, mask or time. ${timelineUnavailableReason(indices)}`),true);
     }else{
