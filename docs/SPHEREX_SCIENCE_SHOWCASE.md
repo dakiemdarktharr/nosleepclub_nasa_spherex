@@ -1,66 +1,66 @@
-# SPHEREx science showcase
+# SPHEREx Science Showcase
 
-Rà soát: **14/11/2026**. Phần nội dung song ngữ VI/EN sau lịch sử SPHEREx. Đây là phần giảng giải về nhiệm vụ, thiết kế và cách đọc dữ liệu; các SVG là sơ đồ do dự án dựng, không phải sản phẩm khoa học hay mô phỏng vật lý.
+Reviewed on **14 November 2026**. The page content remains bilingual VI/EN, following the SPHEREx history. This section explains the mission, design, and how to read the data; its SVGs are project-created diagrams, not science products or physical simulations.
 
-## Tích hợp
+## Integration
 
 - CSS: `web/spherex-science.css`.
-- JS: `web/spherex-science.js`, không dependency, không gọi mạng, không lưu dữ liệu người dùng.
-- Điểm gắn: `window.SpherexScience.mount(container)`. Module cũng tự tìm `#spherex-science` khi DOM sẵn sàng. Gọi lại với cùng phần tử không tạo bản sao hoặc listener mới.
-- `mount` thay nội dung fallback, chuyển class `about-mission` sang `spherex-science`, đặt heading và `aria-labelledby` của container.
-- Ngôn ngữ ban đầu lấy từ `document.documentElement.lang`; nghe `document` event `spherex:language` với `{detail: {language: "vi" | "en"}}`. Khi đổi ngôn ngữ, giữ lựa chọn, slider, details đang mở và focus của control.
-- Hàm trả về có `destroy()` để gỡ listener. Dự án hiện dùng một container cố định; không cần gọi khi đổi route.
-- Mục lục dùng anchor `#about-story-title` và `#ss-1-*` cho instance thông thường. Router cần giữ người dùng ở trang About khi chọn anchor này.
-- Dùng biến theme `--public-text`, `--public-muted`, `--public-panel`, `--public-border`, `--public-accent`. Không phụ thuộc font tải mạng. Các sơ đồ dùng nền tối cố định và màu chữ riêng để giữ tương phản ở cả hai theme.
+- JS: `web/spherex-science.js`, no dependencies, network calls, or user-data storage.
+- Mount point: `window.SpherexScience.mount(container)`. The module also finds `#spherex-science` when the DOM is ready. Calling it again with the same element does not create duplicate content or listeners.
+- `mount` replaces fallback content, changes the container class from `about-mission` to `spherex-science`, and sets the heading and container `aria-labelledby`.
+- Initial language comes from `document.documentElement.lang`; the module listens for the document `spherex:language` event with `{detail: {language: "vi" | "en"}}`. Changing languages preserves selections, slider position, open details, and control focus.
+- The returned object has `destroy()` to remove listeners. The project currently uses one fixed container; it does not need to be called on route changes.
+- The table of contents uses `#about-story-title` and `#ss-1-*` anchors for the standard instance. The router should keep users on About when they select one of these anchors.
+- Use theme variables `--public-text`, `--public-muted`, `--public-panel`, `--public-border`, and `--public-accent`. Do not depend on a network-loaded font. Diagrams use fixed dark backgrounds and separate text colors to preserve contrast in both themes.
 
-## Nội dung và thao tác
+## Content and interactions
 
-1. **Ba câu hỏi lớn:** chọn vũ trụ sơ khai / lịch sử thiên hà / băng liên sao. Sơ đồ, phương pháp và giới hạn kết luận đổi theo lựa chọn.
-2. **Quỹ đạo và Mặt Trời:** ba trạng thái quỹ đạo cực / hướng an toàn / vùng phủ theo mùa. Phân biệt hướng miệng bộ chắn photon với trục quang học và tấm pin.
-3. **Thiết kế:** chọn quang học / chắn photon / tản nhiệt / điện & dữ liệu. Sơ đồ cắt lớp làm sáng hệ thống tương ứng; các chi tiết sâu mở bằng `details`.
-4. **Sáu detector và 102 kênh:** chọn một trong sáu dải detector, kéo vị trí nguồn trên LVF. Năm vị trí minh họa nguyên lý, không giả lập exposure hoặc trả một bước sóng hiệu chuẩn. Không dựng đồ thị phổ giả.
-5. **Kết quả đã công bố:** phân biệt mốc khảo sát, kết quả quan sát, bài báo và phát hành dữ liệu. Những ví dụ chọn lọc không được gọi là danh sách đầy đủ mọi phát hiện của nhiệm vụ.
-6. **Từ photon tới bằng chứng:** đo → hiệu chuẩn → sản phẩm → kiểm chứng. Mở giải thích FITS, wavelength calibration, hạn chế cube DR1 và metadata để tái lập.
+1. **Three big questions:** choose early universe / galaxy history / interstellar ice. The diagram, method, and limits of inference change with the selection.
+2. **Orbit and Sun:** three orbital states: polar orbit / safe orientation / seasonal coverage. Distinguish the opening of the photon shield from the optical axis and solar array.
+3. **Design:** select optics / photon shield / radiator / power and data. A cutaway diagram highlights the corresponding system; deeper details open with `details`.
+4. **Six detectors and 102 channels:** choose one of six detector bands and move a source position across the LVF. Five positions illustrate the principle; they do not simulate an exposure or return a calibrated wavelength. Do not draw a fabricated spectrum.
+5. **Published results:** distinguish survey milestones, observations, papers, and data releases. Selected examples are not presented as an exhaustive list of all mission discoveries.
+6. **From photons to evidence:** measurement → calibration → product → validation. Expand explanations of FITS, wavelength calibration, DR1 cube limits, and reproducibility metadata.
 
-Các nội dung quan trọng đều có văn bản ngoài SVG; screen reader nhận mô tả sơ đồ, button có `aria-pressed`, range có label/output/`aria-valuetext`. Nội dung thay đổi có vùng thông báo lịch sự. Không tự động chuyển cảnh, không chạy animation liên tục. Tôn trọng `prefers-reduced-motion`.
+All important content is available outside SVG. Screen readers receive diagram descriptions; buttons have `aria-pressed`; ranges have labels/output/`aria-valuetext`. Changing content uses a polite live region. Do not switch scenes automatically or run continuous animation. Respect `prefers-reduced-motion`.
 
-## Nguồn và phạm vi khẳng định
+## Sources and claim scope
 
-| Chủ đề | Nguồn chính đã kiểm tra | Quy tắc diễn giải |
+| Topic | Primary source checked | Interpretation rule |
 |---|---|---|
-| Thiết kế nhiệm vụ, 102 kênh, dải 0,75–5 µm | [Bock et al., The SPHEREx Satellite Mission](https://arxiv.org/abs/2511.02985), [bản xuất bản tại Caltech](https://authors.library.caltech.edu/records/1hhqm-ehm09) | Khảo sát phổ toàn trời; không mô tả là 102 camera hoặc mọi pixel của một ảnh cùng bước sóng. |
-| Vũ trụ sơ khai | [Caltech: Origin of the Universe](https://spherex.caltech.edu/page/the-origin-of-the-universe) | Phân bố thiên hà và dịch đỏ giúp kiểm tra mô hình lạm phát; không chụp trực tiếp Big Bang hay nói đã xác định cơ chế lạm phát. |
-| Thiên hà và EBL | [Caltech: Origin and History of Galaxies](https://spherex.caltech.edu/page/the-origin-and-history-of-galaxies) | Nền ngoài Ngân Hà và biến thiên không gian; cực hoàng đạo khác cực địa lý. |
-| Băng liên sao | [Caltech: Origin of Water](https://spherex.caltech.edu/page/the-origin-of-water-in-planetary-systems) | Phổ hấp thụ nhận diện các phân tử trong băng; không suy ra sự sống. |
-| Quỹ đạo | [JPL: Mission overview](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/) | Khoảng 650 km, 98 phút, một lượt khoảng sáu tháng, bốn lượt trong kế hoạch chính; đây không phải ephemeris trực tiếp. Press kit là tài liệu trước phóng, không lấy ngày phóng dự kiến làm ngày thực tế. |
-| Hướng tương đối với Mặt Trời | [JPL: Spacecraft, Cooling Orbit and Orientation](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/spacecraft/) | **91° áp dụng cho hướng miệng bộ chắn photon, không phải trục kính.** Kính bên trong hơi nghiêng về phía Mặt Trời để phủ toàn trời. Tấm pin gần như luôn hướng về Mặt Trời; kính quan sát ra xa Trái Đất. |
-| Quang học, LVF | [Caltech: Instrument](https://spherex.caltech.edu/page/instrument), [Korngut et al., calibration/testing/performance](https://arxiv.org/abs/2603.29835) | Khẩu độ 20 cm, ba gương, hai nhánh qua dichroic, sáu detector với LVF cố định. Không mô phỏng đúng đường tia bằng hình zigzag. Trang Instrument có thông số thiết kế lịch sử; không lấy resolving power cũ để gán cho DR1. |
-| Cấu trúc, nhiệt, điện, liên lạc | [JPL: Spacecraft](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/spacecraft/), [Bock et al.](https://arxiv.org/abs/2511.02985) | Phân biệt ba photon shields và V-groove radiators. Làm lạnh thụ động trong hoạt động bình thường không có nghĩa vệ tinh không cần điện. Tấm pin khoảng 750 W theo thiết kế. Hệ thống có heater cho mục đích khử nhiễm ban đầu; nội dung không khẳng định “không bao giờ dùng heater”. |
-| Bản đồ đầu tiên | [JPL, 18/12/2025](https://www.jpl.nasa.gov/news/nasas-spherex-observatory-completes-first-cosmic-map-like-no-other/) | Mốc khảo sát và trực quan hóa; không phải xác nhận tất cả mục tiêu khoa học. |
-| 3I/ATLAS | [NASA, 04/02/2026](https://science.nasa.gov/blogs/3iatlas/2026/02/04/nasas-spherex-mission-tracks-brightening-of-interstellar-comet/), [Lisse et al.](https://arxiv.org/abs/2601.06759) | Quan sát tháng 12/2025, hoạt động sau cận nhật và bụi/khí trong coma. Gắn nhãn “kết quả quan sát”, không biến nó thành nghiên cứu sự sống. |
-| Băng/PAH | [Hora et al., ApJ 1001, 165](https://authors.library.caltech.edu/records/ba2ay-z4658), [preprint](https://arxiv.org/abs/2603.12390) | Bản đồ Cygnus X và North America Nebula; công bố 15/04/2026. Phân biệt màu giả gán cho phân tử với màu mắt người nhìn thấy. |
-| Sao lùn nâu | [NASA, 08/10/2026](https://www.nasa.gov/missions/spherex/nasas-spherex-telescope-sees-menagerie-of-brown-dwarfs/), [Rustamkulov et al.](https://arxiv.org/abs/2607.00543) | Mẫu 37 sao lùn nâu và đối chiếu mô hình khí quyển. 08/10 là ngày NASA giới thiệu nghiên cứu, không gán là ngày công bố bài báo. |
-| Pipeline | [Akeson et al.](https://arxiv.org/abs/2511.15823), [Cukierman et al.](https://arxiv.org/abs/2603.25790) | Hiệu chuẩn, map making, foreground và sai số hệ thống là phần của nghiên cứu; blink ảnh chỉ hỗ trợ quan sát. |
-| DR1 hiện hành | [IRSA DR1 overview](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_dr1.html), [IRSA data products](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/), [Explanatory Supplement](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp.pdf) | DR1 tháng 11/2026, dùng ảnh xử lý lại cùng QR3. WCS-WAVE cho visualization; CWAVE/CBAND cho science. Cube kênh 51/52 trống, có stripes, đã trừ ZODI; spectral IMAGE chưa trừ ZODI. HiPS PNG không thay FITS phân tích. |
+| Mission design, 102 channels, 0.75–5 µm range | [Bock et al., *The SPHEREx Satellite Mission*](https://arxiv.org/abs/2511.02985), [published Caltech version](https://authors.library.caltech.edu/records/1hhqm-ehm09) | An all-sky spectral survey; do not describe it as 102 cameras or imply every pixel in an image has the same wavelength. |
+| Early universe | [Caltech: Origin of the Universe](https://spherex.caltech.edu/page/the-origin-of-the-universe) | Galaxy distribution and redshift help test inflation models; the mission does not directly image the Big Bang or claim to have identified the inflation mechanism. |
+| Galaxies and EBL | [Caltech: Origin and History of Galaxies](https://spherex.caltech.edu/page/the-origin-and-history-of-galaxies) | Extragalactic background light and spatial variation; the ecliptic poles are not geographic poles. |
+| Interstellar ice | [Caltech: Origin of Water](https://spherex.caltech.edu/page/the-origin-of-water-in-planetary-systems) | Absorption spectra identify molecules in ice; do not infer life. |
+| Orbit | [JPL: Mission overview](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/) | About 650 km, 98 minutes, one pass about every six months, four planned passes in the prime mission; this is not a live ephemeris. The press kit predates launch; do not use its planned launch date as the actual date. |
+| Orientation relative to the Sun | [JPL: Spacecraft, Cooling Orbit and Orientation](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/spacecraft/) | **91° refers to the photon-shield opening, not the telescope axis.** The telescope inside tilts slightly sunward for all-sky coverage. Solar arrays point almost continuously toward the Sun; the telescope observes away from Earth. |
+| Optics, LVF | [Caltech: Instrument](https://spherex.caltech.edu/page/instrument), [Korngut et al., calibration/testing/performance](https://arxiv.org/abs/2603.29835) | 20 cm aperture, three mirrors, two dichroic branches, six detectors with fixed LVFs. Do not depict the actual ray path as a zigzag. The Instrument page has historical design values; do not assign an older resolving power to DR1. |
+| Structure, thermal, power, communications | [JPL: Spacecraft](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/spacecraft/), [Bock et al.](https://arxiv.org/abs/2511.02985) | Distinguish three photon shields from V-groove radiators. Passive cooling in normal operation does not mean the spacecraft needs no power. Solar arrays are about 750 W by design. The system has a heater for initial decontamination; do not claim it “never uses a heater.” |
+| First map | [JPL, 18 December 2025](https://www.jpl.nasa.gov/news/nasas-spherex-observatory-completes-first-cosmic-map-like-no-other/) | A survey milestone and visualization, not confirmation of every science objective. |
+| 3I/ATLAS | [NASA, 4 February 2026](https://science.nasa.gov/blogs/3iatlas/2026/02/04/nasas-spherex-mission-tracks-brightening-of-interstellar-comet/), [Lisse et al.](https://arxiv.org/abs/2601.06759) | December 2025 observations, post-perihelion activity, and coma dust/gas. Label as an “observation result”; do not turn it into a life-search claim. |
+| Ice/PAHs | [Hora et al., ApJ 1001, 165](https://authors.library.caltech.edu/records/ba2ay-z4658), [preprint](https://arxiv.org/abs/2603.12390) | Cygnus X and North America Nebula maps; published 15 April 2026. Distinguish false color assigned to molecules from colors visible to the human eye. |
+| Brown dwarfs | [NASA, 8 October 2026](https://www.nasa.gov/missions/spherex/nasas-spherex-telescope-sees-menagerie-of-brown-dwarfs/), [Rustamkulov et al.](https://arxiv.org/abs/2607.00543) | Sample of 37 brown dwarfs and comparison with atmospheric models. 8 October is NASA's feature date, not the paper's publication date. |
+| Pipeline | [Akeson et al.](https://arxiv.org/abs/2511.15823), [Cukierman et al.](https://arxiv.org/abs/2603.25790) | Calibration, map making, foregrounds, and systematic errors are part of the research; blinking images only supports visual inspection. |
+| Current DR1 | [IRSA DR1 overview](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_dr1.html), [IRSA data products](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/), [Explanatory Supplement](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp.pdf) | DR1, November 2026, uses reprocessed images with QR3. WCS-WAVE is for visualization; CWAVE/CBAND are for science. Cube channels 51/52 are empty and have stripes; ZODI has been subtracted. Spectral IMAGE has not had ZODI subtracted. HiPS PNGs do not replace analytical FITS. |
 
-Không nêu catalog tương lai là đã phát hành. Không đưa các ảnh “first light” chưa hiệu chuẩn vào danh sách dữ liệu đủ dùng cho khoa học. Các kết quả nghiên cứu có link tới bài báo hoặc bản author repository, không chỉ bài truyền thông.
+Do not describe a future catalog as released. Do not include uncalibrated first-light images in a list of science-ready data. Research results link to papers or author repositories, not only press coverage.
 
-## Kiểm tra
+## Checks
 
-Chạy Python Playwright từ `.venv/Scripts/python.exe`, Chromium, với harness cục bộ riêng dưới `data/raw/science-showcase-review/` (ignored).
+Run Python Playwright from `.venv/Scripts/python.exe`, Chromium, with a separate local harness under `data/raw/science-showcase-review/` (ignored).
 
-- Desktop 1366 px, mobile 390 px và 320 px.
-- Bấm toàn bộ 3 mục tiêu, 3 trạng thái quỹ đạo, 4 hệ thống, 6 detector; kiểm tra chỉ một nút của mỗi nhóm có `aria-pressed=true`.
-- Slider dùng phím Home/ArrowRight, output và `aria-valuetext` khớp.
-- VI → EN → VI giữ detector, range, details mở.
-- Dark/light, không overflow ngang, không JavaScript error; mount lần hai không nhân bản.
-- Kiểm tra bounding box chữ trong SVG, ảnh chụp để đối chiếu trực quan ở desktop/mobile.
-- Bằng chứng: `data/raw/science-showcase-review/results.json`, `orbit-1366-light.png`, `orbit-390-dark.png`, các ảnh toàn trang và các lượt kiểm tra bổ sung cùng thư mục.
+- Desktop 1366 px, mobile 390 px and 320 px.
+- Click all 3 science goals, 3 orbit states, 4 systems, and 6 detectors; verify only one button per group has `aria-pressed=true`.
+- Use Home/ArrowRight on the slider; output and `aria-valuetext` match.
+- VI → EN → VI preserves detector, range, and open details.
+- Dark/light theme, no horizontal overflow or JavaScript errors; a second mount does not duplicate content.
+- Check SVG text bounding boxes and desktop/mobile screenshots for visual comparison.
+- Evidence: `data/raw/science-showcase-review/results.json`, `orbit-1366-light.png`, `orbit-390-dark.png`, full-page screenshots, and additional checks in the same directory.
 
-Kiểm thử module độc lập không thay thế smoke test router/trang About sau tích hợp. Root phụ trách kiểm thử cùng site, các anchor và các thay đổi khác trước phát hành.
+Module tests do not replace a router/About-page smoke test after integration. The repo owner is responsible for testing with the full site, anchors, and other changes before release.
 
-## Ranh giới và việc tiếp theo
+## Boundaries and next steps
 
-- Sơ đồ thuật toán giảng giải không khẳng định kích thước, góc chi tiết, vị trí linh kiện hay công suất tức thời đúng với spacecraft thật.
-- Không đo learning outcome chỉ từ việc control hoạt động; cần quan sát người học hiểu sự khác nhau giữa shield/kính, thời gian/bước sóng và ảnh đẹp/số đo.
-- Bước tiếp theo: thử một lượt đọc–thao tác–giải thích với từng nhóm tuổi, kiểm tra họ giải thích được vì sao hai ảnh khác nhau chưa chắc thiên thể biến đổi; thêm bài tập bằng dữ liệu thật ở nền tảng học khi nội dung được duyệt.
+- The explanatory diagrams do not claim exact size, detailed angles, component positions, or instantaneous power for the real spacecraft.
+- Working controls do not establish learning outcomes; observe whether learners understand the differences among shield/telescope, time/wavelength, and a visually attractive image/a measurement.
+- Next, try a read–interact–explain activity with each age group and check whether learners can explain why two different images do not necessarily mean the object changed. Add a real-data exercise to the learning platform after the content has been reviewed.

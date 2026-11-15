@@ -1,6 +1,6 @@
-# Quyết định giấy phép mã nguồn
+# Source Code License Decision
 
-Chủ repo đã chấp thuận MIT cho mã nguồn riêng ngày 31/10/2026. Quyết định được áp dụng trong [LICENSE](../LICENSE), [README](../README.md) và [NOTICE](../NOTICE.md). Font, FITS/catalog, minh họa Canva, dữ liệu bên ngoài và dependency giữ quyền/license riêng; không nằm trong grant này. Không thêm header vào các script khoa học đã khóa để giữ nguyên hash và khả năng tái lập. Nội dung đã được đề xuất và chấp thuận:
+The repository owner approved the MIT license for original source code on 31 October 2026. The decision is reflected in [LICENSE](../LICENSE), [README](../README.md), and [NOTICE](../NOTICE.md). Fonts, FITS/catalog files, Canva illustrations, external data, and dependencies retain their own rights and licenses; they are not covered by this grant. No headers were added to frozen science scripts, preserving their hashes and reproducibility. The approved text is:
 
 ```text
 MIT License
@@ -26,4 +26,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-Nguồn mẫu: https://api.github.com/licenses/mit · Hướng dẫn GitHub: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
+Template source: https://api.github.com/licenses/mit · GitHub guidance: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository

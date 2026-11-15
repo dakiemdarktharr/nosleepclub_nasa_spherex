@@ -1,39 +1,11 @@
-# Kiểm toán độc lập synthetic signal controls
+# Independent Audit of Synthetic Signal Controls
 
-Auditor chỉ chạy sau khi cả 640 ô đã hoàn tất, trên protocol commit
-`9894074fdacbba908b8816d3dbcac1df901731f1`. Mọi checkpoint là terminal,
-hash-bound và không ghi đè. Không chạy optimizer, IRLS, fit vị trí mới,
-truy vấn sky hay mở assessment. Các bank PCG64 được tái dựng đúng seed đã
-khóa, không tạo các realization mới cho thí nghiệm.
+The auditor runs only after all 640 cells are complete, using protocol commit `9894074fdacbba908b8816d3dbcac1df901731f1`. Every checkpoint is terminal, hash-bound, and cannot be overwritten. The auditor does not run an optimizer or IRLS, fit new positions, query the sky, or open the assessment. PCG64 banks are regenerated with the locked seeds; no new experiment realizations are created.
 
-Kiểm chứng journal, nguồn và design, upstream, summary, seed/pixel/mask,
-pha và phép đổi tọa độ; so synthetic mean/data và các cặp dùng chung ảnh.
-Truth Gaussian được tính độc lập bằng mật độ covariance khai triển với
-Gauss–Legendre 64 điểm mỗi chiều trên mọi pixel đã chọn của tám geometry–pha,
-so L1 với generator 24 điểm. Matched dùng chính ePSF gốc, là kiểm tra phần mềm
-inverse crime và không xác nhận physical PSF. Nền, tọa độ và variance vẫn là
-điều kiện cố định; original IMAGE không được cộng vào mean.
+Verify the journal, sources and design, upstream, summary, seed/pixel/mask, phase, and coordinate transforms; compare synthetic mean/data and image-sharing pairs. Compute Gaussian truth independently from the expanded covariance density using 64-point Gauss–Legendre quadrature per dimension across all selected pixels in eight geometry–phase combinations, then compare L1 against the 24-point generator. Matched truth uses the original ePSF; this is an inverse-crime software check, not physical-PSF validation. Background, coordinates, and variance remain fixed conditions; original IMAGE is not added to the mean.
 
-Tại từng vị trí đã lưu, giải tuyến tính tự do bằng `numpy.linalg.lstsq` với
-các cột được chuẩn hóa và đúng final weights: so flux target/neighbor, nền,
-model, residual và weighted cost. Với các start cuối thành công, chỉ kiểm
-objective ở tọa độ đã lưu. Failure được giữ, phân biệt kiểm input với không
-có objective; không gọi replay là chứng minh optimizer tìm được nghiệm tối ưu.
-Giải độc lập dùng ngưỡng hạng tương đối `1e-10`, khớp guard đã khóa. Lỗi
-chuẩn bị chỉ được ghi nhận là đã tái hiện khi cả loại lỗi, thông điệp và
-stage `geometry_or_realization` hoặc `preparation` khớp chính xác record gốc;
-checkpoint giữ lỗi và stage đã tái hiện, không khẳng định có objective. Lỗi
-kiểm toán hay stage/thông điệp không khớp là finding và làm receipt failed.
-Tính lại độc lập các mẫu số, stratum, cặp và guard, dùng khoảng nhị thức chính
-xác hai phía từ `scipy.stats.binomtest` thay cho công thức beta của study.
+At each stored position, solve the unconstrained linear system independently with `numpy.linalg.lstsq`, normalized columns, and the exact final weights; compare target/neighbor flux, background, model, residual, and weighted cost. For successful final starts, check the objective only at the stored coordinates. Retain failures and distinguish input validation from cases with no objective; a replay does not prove that the optimizer found an optimum. The independent solve uses a relative rank threshold of `1e-10`, matching the locked guard. A preparation error is recorded as reproduced only if error type, message, and stage (`geometry_or_realization` or `preparation`) exactly match the original record; the checkpoint retains the error and reproduced stage and does not claim an objective exists. Audit errors or a mismatched stage/message are findings and fail the receipt. Independently recalculate denominators, strata, pairs, and guards; use two-sided exact binomial intervals from `scipy.stats.binomtest` instead of the study's beta formula.
 
-Ngưỡng cố định trước audit: cost `atol=1e-8, rtol=1e-9`; hệ số flux Jy
-`atol=1e-10, rtol=1e-8`; pixel/model `atol=1e-9, rtol=1e-9`; tọa độ native
-`atol=1e-7, rtol=0`; Gaussian L1 không quá `1e-10 + 1e-10*selected_mass`.
-Khoảng confidence so `atol=2e-12`; các metrics còn lại so `atol=1e-10,
-rtol=1e-9`. Mismatch là finding, không nới ngưỡng theo kết quả.
+Thresholds fixed before the audit: cost `atol=1e-8, rtol=1e-9`; flux coefficients in Jy `atol=1e-10, rtol=1e-8`; pixel/model `atol=1e-9, rtol=1e-9`; native coordinates `atol=1e-7, rtol=0`; Gaussian L1 no greater than `1e-10 + 1e-10*selected_mass`. Confidence intervals compare with `atol=2e-12`; other metrics compare with `atol=1e-10, rtol=1e-9`. A mismatch is a finding; do not relax thresholds based on results.
 
-Kiểm toán điều kiện này không chứng nhận PSF vật lý, bias thiên văn, coverage,
-source detection hay khả năng mở assessment; các ô lỗi không được loại khỏi
-mẫu số. Hash phát hiện thay đổi vô ý, không chống tác nhân có thể ghi lại tất
-cả hash.
+This conditional audit does not certify a physical PSF, astronomical bias, coverage, source detection, or readiness to open the assessment; failed cells remain in the denominator. Hashes detect accidental changes, not an actor able to rewrite all hashes.

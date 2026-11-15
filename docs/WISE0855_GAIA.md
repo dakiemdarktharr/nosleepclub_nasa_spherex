@@ -1,82 +1,82 @@
-# WISE 0855: mở rộng trường sao và kiểm chứng với Gaia DR3
+# WISE 0855: Expanded Star Field and Gaia DR3 Check
 
-Ngày thực hiện: 30/10/2026. [Demo đang chạy](http://127.0.0.1:8766/), [kết quả máy đọc và provenance](../web/data/gaia/results.json), [bản đồ sao](../web/data/gaia/map.json), [research và bibliography](GAIA_RESEARCH.md).
+Run date: 2026-10-30. [Running demo](http://127.0.0.1:8766/), [machine-readable results and provenance](../web/data/gaia/results.json), [star map](../web/data/gaia/map.json), [research and bibliography](GAIA_RESEARCH.md).
 
-## Kết quả và ý nghĩa
+## Results and interpretation
 
-Frame astrometry ít thay đổi khi đổi sao tham chiếu. Ngân sách sai số theo mô hình giảm ở cấu hình phổ rộng, nhưng các thử nghiệm trên nền ảnh thật còn cho sai lệch đáng kể. **Chưa xác nhận chuyển động thiên thể hoặc độ chính xác hệ thống của WISE 0855.**
+The astrometric frame changes little when reference stars are changed. The modeled error budget falls for the broad-spectrum configuration, but tests on real image backgrounds still show substantial errors. **WISE 0855's astronomical motion and systematic accuracy remain unconfirmed.**
 
-| Đại lượng | Phổ chặt, cấu hình chính | Phổ rộng, kiểm tra độ nhạy |
-| --- | ---: | ---: |
-| Exposure mỗi epoch | 2 | 10 |
-| Đông / Bắc đo được | −2,86″ / +1,07″ | −3,26″ / +0,43″ |
-| Độ dài vector ± sai số có điều kiện | 3,06″ ± 0,99″ | 3,29″ ± 0,52″ |
-| Thay đổi vector so với bản trước Gaia | 0,21″ | 0,40″ |
-| RMS 7 sao giữ ngoài fit, sau trừ Gaia motion | 0,27″ | 0,17″ |
-| Đổi chéo tập sao: thay đổi vector | 0,16″ | 0,04″ |
-| Bỏ từng sao: thay đổi lớn nhất, 14/14 lượt chạy được | 0,09″ | 0,17″ |
-| Thử affine: thay đổi vector | 0,04″ | 0,10″ |
-| Chênh vector dự báo ngoài | 1,70″ | 1,21″ |
+| Quantity | Strict spectrum, primary | Broad spectrum, sensitivity check |
+|---|---:|---:|
+| Exposures per epoch | 2 | 10 |
+| Measured East / North | −2.86″ / +1.07″ | −3.26″ / +0.43″ |
+| Vector length ± conditional error | 3.06″ ± 0.99″ | 3.29″ ± 0.52″ |
+| Vector change from pre-Gaia version | 0.21″ | 0.40″ |
+| RMS of 7 stars held out from fitting, after Gaia-motion subtraction | 0.27″ | 0.17″ |
+| Star-set swap: vector change | 0.16″ | 0.04″ |
+| Leave-one-star-out: maximum change, 14/14 runs completed | 0.09″ | 0.17″ |
+| Affine test: vector change | 0.04″ | 0.10″ |
+| Difference from external predicted vector | 1.70″ | 1.21″ |
 
-Không chọn cấu hình rộng làm cấu hình chính vì sai số nhỏ hơn. Hai cấu hình và quy tắc phổ được giữ từ bước trước, có dùng chung exposure, nên không phải hai kiểm chứng độc lập. S/N khẩu độ phổ rộng trước/sau hiện là 7,68 / 7,42, so ảnh đơn tốt nhất 4,90 / 4,91; phổ chặt là 3,18 / 4,50 so 2,99 / 4,60. Đây là S/N có điều kiện tại vị trí fit, với mask và coverage tương ứng, chưa phải độ tin cậy phát hiện mù hoặc tổng thông lượng.
+The broad configuration was not selected as primary because its error is smaller. Both configurations and spectral rules are carried over from the previous step and share exposures, so they are not independent checks. Current broad-spectrum aperture S/N before/after is 7.68 / 7.42, versus best single-image 4.90 / 4.91; strict is 3.18 / 4.50, versus 2.99 / 4.60. These are conditional S/N values at the fitted position with the corresponding masks/coverage, not confidence in a blind detection or total flux.
 
-## Dữ liệu và chọn sao
+## Data and star selection
 
-Giữ đúng 20 exposure trong cấu hình rộng cũ, không thêm thời điểm hay đổi phiên bản calibration. Tải cutout rộng 0,32° thay 0,12°, cùng center; raw có URL, observation ID, SHA-256 và WCS native. Dùng ePSF chính thức D6 oversampling 5 và CWAVE/CBAND đã ghim ở bước trước. [IRSA khuyến nghị ePSF này cho cả QR2](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/).
+Keep the same 20 exposures from the earlier broad configuration; add no epochs and change no calibration release. Download 0.32° cutouts instead of 0.12°, at the same center; raw records include URL, observation ID, SHA-256, and native WCS. Use the official D6 ePSF at 5× oversampling and CWAVE/CBAND pinned in the previous step. [IRSA recommends this ePSF for QR2 as well](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/).
 
-Truy vấn `gaia_dr3_source` qua `https://irsa.ipac.caltech.edu/TAP/sync`: cone 0,25°, G<18,5, trả 675 nguồn. ADQL đầy đủ, hash VOTable và các trường covariance được lưu trong report. `source_id` giữ dạng chuỗi khi xuất JSON để tránh mất chính xác số nguyên 64 bit trong JavaScript.
+Query `gaia_dr3_source` through `https://irsa.ipac.caltech.edu/TAP/sync`: 0.25° cone, G<18.5, returning 675 sources. Full ADQL, VOTable hash, and covariance fields are saved in the report. Export `source_id` as a string in JSON to preserve 64-bit integer precision in JavaScript.
 
-Trước khi fit lại mục tiêu, chọn sao bằng các quy tắc cố định trong `RULES`:
+Before refitting the target, select stars using the fixed `RULES`:
 
-- Có giải astrometry 5/6 tham số, RUWE≤1,4, ≥9 visibility periods; không có cờ duplicated/non-single-star, `ipd_frac_multi_peak`≤2.
-- Giới hạn |proper motion|≤300 mas/năm, |parallax|≤20 mas để giữ xấp xỉ lan truyền bậc nhất phù hợp; đây là lựa chọn của phép thử, không phải tiêu chuẩn Gaia phổ quát.
-- Ghép peak SPHEREx và Gaia đã lan truyền trong 1 pixel; không có hàng xóm Gaia G<18,5 trong 18″ hoặc peak SPHEREx trong 3,5 pixel. Loại vùng mục tiêu bán kính 8 pixel và sao sát rìa.
-- Fit ePSF native từng sao/từng exposure: S/N≥7, reduced chi-square≤3, hội tụ và không chạm biên. Cần ≥70% trong 20 exposure hợp lệ và ≥3 exposure ở mỗi epoch.
+- Five- or six-parameter astrometric solution, RUWE≤1.4, ≥9 visibility periods; no duplicated/non-single-star flags, `ipd_frac_multi_peak`≤2.
+- |proper motion|≤300 mas/year and |parallax|≤20 mas to keep first-order propagation appropriate. This is a study choice, not a universal Gaia standard.
+- Match SPHEREx peaks with propagated Gaia positions within 1 pixel; exclude Gaia neighbors with G<18.5 within 18″ or SPHEREx peaks within 3.5 pixels. Exclude the 8-pixel-radius target region and stars near edges.
+- Fit each star/exposure with native ePSF: S/N≥7, reduced chi-square≤3, converged and no boundary hit. Require valid fits in ≥70% of 20 exposures and ≥3 exposures in each epoch.
 
-Có 85 ghép cô lập ban đầu; 21 nguồn qua kiểm tra native. Report giữ audit ghép, số frame hợp lệ, lý do loại của từng nguồn và từng frame của nguồn được chọn. Chọn trải các góc phần tư rồi chia bằng hash source ID cố định: **14 sao căn chỉnh, 7 sao giữ ngoài fit**. Trên mỗi exposure thực tế dùng 12–14 sao ở cấu hình rộng; đổi chéo còn ít nhất 6 sao. Không dùng vector WISE 0855 hoặc độ giống dự báo để chọn sao.
+There were 85 initially isolated matches; 21 sources passed native checks. The report retains the match audit, valid-frame counts, and rejection reasons for every source and selected-source frame. Select sources across quadrants, then split by fixed source-ID hash: **14 alignment stars, 7 heldout from fitting**. Each broad exposure actually uses 12–14 stars; swaps retain at least 6. Do not use the WISE 0855 vector or agreement with the prediction to choose stars.
 
-Gaia DR3 có reference epoch 2016.0 theo TCB. Lan truyền proper motion có cos Dec và parallax dùng vị trí barycentric Trái Đất; giữ ma trận covariance 5×5 và các correlation. Thông tin trường gốc có trong [schema Gaia/DPAC tại AIP](https://gaia.aip.de/metadata/gaiadr3/gaia_source/). Chưa mô hình perspective acceleration, Gaia global systematics, hoặc vị trí vệ tinh thay cho Trái Đất; với tập sao chuyển động/parallax nhỏ đã giới hạn, các hạng này nhỏ hơn mức sai số SPHEREx hiện tại.
+Gaia DR3 has reference epoch 2016.0 in TCB. Propagate proper motion including cos Dec and parallax using Earth's barycentric position; retain the 5×5 covariance and correlations. Original field information is in the [Gaia/DPAC schema at AIP](https://gaia.aip.de/metadata/gaiadr3/gaia_source/). Perspective acceleration, Gaia global systematics, and spacecraft position instead of Earth are not modeled; for this limited low-motion/parallax star set, these terms are below current SPHEREx error levels.
 
-## Fit frame, kiểm tra và ngân sách sai số
+## Frame fit, checks, and error budget
 
-Fit translation theo GLS cho từng exposure từ hiệu centroid native trừ vị trí Gaia đã lan truyền, có covariance centroid và Gaia, thêm floor 0,01 pixel cho sao tham chiếu. Tăng covariance khi chi-square>1. Fit WISE 0855 riêng từng epoch trên pixel gốc, giữ biên độ và mặt phẳng nền riêng từng exposure; không buộc vector theo dự báo ngoài.
+Fit a translation per exposure by GLS from native centroid minus propagated Gaia position, using centroid and Gaia covariance plus a 0.01-pixel floor for reference stars. Inflate covariance when chi-square>1. Fit WISE 0855 separately in each epoch on original pixels with per-exposure amplitude and background plane; do not constrain the vector to the external prediction.
 
-Đổi chéo tập sao, bỏ lần lượt từng sao training và thử affine sáu tham số đều chạy được. Khi đổi calibration, giữ nguyên tập pixel và ePSF của stamp mục tiêu; affine được đưa vào cả tâm và Jacobian cục bộ. Nhờ vậy kiểm tra độ nhạy không trộn với việc thêm/bớt pixel rìa khi cắt lại stamp.
+Star-set swaps, leave-one-training-star-out checks, and a six-parameter affine fit all completed. When changing calibration, keep the target-stamp pixel set and ePSF fixed; apply affine transformation to both the center and local Jacobian. This avoids mixing sensitivity with added/removed edge pixels from recutting the stamp.
 
-Ngân sách covariance của hiệu vị trí gồm:
+Displacement covariance budget:
 
-1. Noise centroid: covariance Jacobian, tăng theo chi-square, đối chiếu 128 mô phỏng noise Gaussian/epoch.
-2. Calibration: truyền covariance qua influence Gauss–Newton của từng exposure trên tập pixel cố định. Tổng influence của một translation chung phải bằng −I; kiểm thử kiểm tra tính bất biến tọa độ này. Bootstrap 256 lần với số lần chọn sao được ghép cặp giữa hai epoch; mỗi sao có một draw Gaia 5 tham số dùng chung qua mọi exposure, giữ correlation qua thời gian. Lấy positive covariance envelope với estimate formal thay vì giảm sai số khi bootstrap nhỏ hơn.
-3. Sao giữ lại: second moment của residual hiệu vị trí sau trừ Gaia motion, giữ cả mean bias và scatter. Hạng này thận trọng, có thể đếm một phần noise hai lần; chỉ có bảy sao và chúng sáng/cô lập hơn nguồn mục tiêu.
+1. **Centroid noise:** Jacobian covariance, inflated by chi-square, checked against 128 Gaussian-noise simulations per epoch.
+2. **Calibration:** propagate covariance through per-exposure Gauss–Newton influence on the fixed pixel set. The total influence for a shared translation must equal −I; tests check this coordinate invariance. Bootstrap 256 times with paired star resampling across epochs; draw one shared Gaia five-parameter sample per star for all exposures, preserving temporal correlation. Use a positive covariance envelope with the formal estimate rather than reducing errors when bootstrap is smaller.
+3. **Heldout stars:** second moment of residual displacement after Gaia-motion subtraction, retaining mean bias and scatter. This is conservative and may count some noise twice; only seven stars are available, and they are brighter/more isolated than the target.
 
-Các bootstrap calibration đều đủ 256 draw, không có draw thất bại. Sai số từng vị trí có hạng calibration và residual field riêng; sai số giữa hai epoch có tương quan, nên không lấy đơn giản tổng hai ellipse vị trí để suy ra sai số vector. Ellipse vector 68% dùng Δχ²=2,30; sai số độ dài vector là phép truyền bậc nhất theo hướng vector.
+All calibration bootstraps produced 256 draws with no failures. Each position's error has separate calibration and field-residual terms; errors between epochs are correlated, so do not simply add two position ellipses to get the vector error. The 68% vector ellipse uses Δχ²=2.30; vector-length error is first-order propagation along its direction.
 
-Gaia cũng góp phần vào WCS đầu vào của SPHEREx. “Giữ ngoài fit” ở đây có nghĩa không tham gia **fit cục bộ của demo**, không phải một catalog hoặc bộ quan sát độc lập với hiệu chuẩn nhiệm vụ. Photocentre quang học Gaia và hồng ngoại có thể khác nhau do màu hoặc nguồn lân cận chưa tách.
+Gaia also contributes to the input WCS of SPHEREx. “Held out from fitting” means excluded from this demo's **local fit**, not independent from the mission's calibration catalog or observations. Gaia optical and infrared photocenters may differ due to color or unresolved neighbors.
 
-## Injection: sai số mô hình chưa đủ mô tả mọi nền ảnh
+## Injection: the model error does not describe every image background
 
-Giữ cố định tám vị trí ngoài vùng mục tiêu, tiêm nguồn đứng yên hoặc dịch chuyển (0,60; 0,05) pixel. Hai độ sáng bằng 0,5× và 1× profile biên độ từng exposure đo của WISE 0855. Không thay ảnh khoa học xuất ra, không thêm shot noise, không thay sao căn chỉnh. Dùng cùng họ ePSF để tiêm và fit; chưa đánh giá riêng sai số calibration ePSF.
+Keep eight off-target positions fixed and inject stationary or moving sources with displacement `(0.60, 0.05)` pixel. Two brightness levels are 0.5× and 1× the per-exposure WISE 0855 amplitude profile. Do not change exported science images, add shot noise, or change alignment stars. Use the same ePSF family for injection and fitting; ePSF calibration error is not separately tested.
 
-| Cấu hình | Độ sáng | Kiểu nguồn | Trong ellipse 68% / 8 lượt | RMS sai lệch vector |
-| --- | ---: | --- | ---: | ---: |
-| Chặt | 0,5× | Đứng yên | 7/8 | 2,68″ |
-| Chặt | 0,5× | Dịch chuyển | 6/8 | 1,76″ |
-| Chặt | 1× | Đứng yên | 7/8 | 1,33″ |
-| Chặt | 1× | Dịch chuyển | 7/8 | 0,83″ |
-| Rộng | 0,5× | Đứng yên | 5/8 | 3,05″ |
-| Rộng | 0,5× | Dịch chuyển | 2/8 | 2,26″ |
-| Rộng | 1× | Đứng yên | 6/8 | 2,72″ |
-| Rộng | 1× | Dịch chuyển | 6/8 | 1,75″ |
+| Configuration | Brightness | Source case | Inside 68% ellipse / 8 attempts | Vector-error RMS |
+|---|---:|---|---:|---:|
+| Strict | 0.5× | Stationary | 7/8 | 2.68″ |
+| Strict | 0.5× | Moving | 6/8 | 1.76″ |
+| Strict | 1× | Stationary | 7/8 | 1.33″ |
+| Strict | 1× | Moving | 7/8 | 0.83″ |
+| Broad | 0.5× | Stationary | 5/8 | 3.05″ |
+| Broad | 0.5× | Moving | 2/8 | 2.26″ |
+| Broad | 1× | Stationary | 6/8 | 2.72″ |
+| Broad | 1× | Moving | 6/8 | 1.75″ |
 
-Tất cả lượt fit hội tụ và không chạm biên; vẫn giữ cả các sai lệch lớn. Có trường hợp fit vào photocentre trộn với nền; chi-square lớn làm tăng sai số nhưng chưa loại được bias. Đặc biệt, 2/8 ở nhóm nguồn mờ/chuyển động là dấu hiệu mô hình sai số cần kiểm tra thêm. Tám vị trí, các độ sáng/kiểu nguồn và hai cấu hình dùng chung nền; các tỷ lệ này có tương quan, không phải 64 mẫu độc lập, completeness hoặc false-positive rate đã hiệu chuẩn. Không lấy một RMS chung để gán lại sai số cho mục tiêu.
+All fits converged without boundary hits; large errors remain included. Some fits land on photocenters blended with background; high chi-square inflates the error but does not remove bias. In particular, 2/8 in the faint/moving group indicates that the error model needs more testing. Eight positions, brightness/source cases, and two configurations share backgrounds; these rates are correlated and are not 64 independent samples, completeness, or a calibrated false-positive rate. Do not use pooled RMS to reassign the target's error.
 
-Vector phổ rộng chênh dự báo Luhman 2014 + parallax ngoài khoảng 1,21″. Report không fit lại proper motion/parallax và chưa cộng uncertainty của dự báo cũ vào phép so sánh này. Chênh lệch còn lại và injection bias là lý do tiếp tục giữ trạng thái **candidate_motion_unconfirmed**, dù frame ổn định khi đổi sao. Chưa diễn giải Mahalanobis thành Gaussian sigma hay xác suất khám phá.
+The broad-spectrum vector differs from the Luhman 2014 + external parallax prediction by about 1.21″. The report does not refit proper motion/parallax or add uncertainty from the old prediction to this comparison. The residual difference and injection bias justify keeping **`candidate_motion_unconfirmed`** despite frame stability under star changes. Do not interpret Mahalanobis distance as Gaussian sigma or discovery probability.
 
-## Demo và tái tạo
+## Demo and reproduction
 
-Web thêm hai cấu hình Gaia, bản đồ trường rộng với sao căn chỉnh/giữ lại bấm chọn được, chất lượng Gaia của từng sao, bảng CV, ngân sách sai số và toàn bộ nhóm injection. Giữ bản trước Gaia để so sánh. Download FITS/JSON có WCS, đơn vị và provenance. Native centroid được fit trước khi cross-convolution ảnh hiển thị. Source code và calibration hash có trong report; raw lớn vẫn ở thư mục ignored.
+The web UI adds two Gaia configurations, a wide-field map with selectable alignment/heldout stars, Gaia quality for each star, a CV table, error budget, and all injection groups. The pre-Gaia version remains available for comparison. FITS/JSON downloads have WCS, units, and provenance. Native centroids are fit before display-image cross-convolution. Source code and calibration hashes are in the report; large raw files remain ignored.
 
-Theo lệnh trong README, sau các bước baseline/coadd chạy:
+After the baseline/coadd steps, use the README commands:
 
 ```sh
 .venv\Scripts\python scripts/prepare_gaia_data.py
@@ -84,12 +84,12 @@ Theo lệnh trong README, sau các bước baseline/coadd chạy:
 .venv\Scripts\python -m unittest discover -s tests -v
 ```
 
-Không có `--publish`, script chỉ ghi kết quả vào cache xử lý; `--references-only` dừng sau chọn/đo sao. Cache centroid có fingerprint theo các hàm xử lý, rules, input manifest và dependencies; sửa phép đo làm cache mất hiệu lực. 31 kiểm thử offline bao gồm lan truyền Gaia, correlation, GLS/affine và dấu influence, covariance budget, audit split, provenance/phiên bản FITS và các kiểm tra baseline cũ. Kiểm thử phần mềm qua không phải xác nhận thiên thể.
+Without `--publish`, the script writes only to the processing cache; `--references-only` stops after star selection/measurement. The centroid cache fingerprint covers processing functions, rules, input manifest, and dependencies; measurement edits invalidate it. The 31 offline tests cover Gaia propagation, correlations, GLS/affine and influence signs, covariance budget, split audit, provenance/FITS versions, and old baseline checks. Software tests passing do not confirm an astronomical source.
 
-## Bước tiếp theo và điều kiện hoàn thành
+## Next step and completion criteria
 
-**Milestone tiếp theo: mô hình nhiều nguồn trên pixel gốc cho WISE 0855 và nền lân cận**, giữ frame Gaia vừa kiểm tra. Dùng danh sách nguồn hồng ngoại bổ sung, fit chung nuisance/background theo exposure, đánh giá phụ thuộc màu và đáp ứng phổ; chưa dùng source ID Gaia như danh sách đầy đủ của các nguồn hồng ngoại.
+**Next milestone: fit multiple sources on original pixels for WISE 0855 and nearby background**, retaining the Gaia frame just checked. Add infrared sources, jointly fit nuisance/background by exposure, and evaluate color/spectral-response dependence; do not use Gaia source IDs as a complete infrared source list.
 
-Điều kiện hoàn thành: so single-source/joint-source trên cùng dữ liệu; tách tập injection dùng phát triển và tập giữ lại theo vị trí/vùng trời; báo bias, failure/boundary và coverage ellipse ở nhiều độ sáng. Kiểm tra nominal 68% có phù hợp khoảng tin cậy lấy mẫu trên tập giữ lại, cùng bias so với sai số công bố. Chỉ nâng trạng thái khoa học khi các hạng hệ thống có ngân sách rõ và thêm epoch đủ phân biệt proper motion/parallax. Sau đó mới xây vision model xếp hạng ứng viên trên benchmark không rò rỉ vùng trời.
+Completion requires comparing single-source/joint-source fits on identical data; splitting injection development and heldout sets by position/sky region; and reporting bias, failures/boundary hits, and ellipse coverage across brightness levels. Check whether nominal 68% matches sampling coverage on heldout data and compare bias with published error. Upgrade the science status only when systematic terms have a defined budget and more epochs can distinguish proper motion/parallax. Then build a candidate-ranking vision model on a benchmark without sky-region leakage.
 
-Ghi nguồn Gaia: dữ liệu từ sứ mệnh Gaia của ESA, do DPAC xử lý. Kinh phí từ các tổ chức quốc gia tham gia Gaia Multilateral Agreement; xem [hướng dẫn ghi nguồn](https://gaia.aip.de/metadata/gaiadr3/gaia_source/).
+Gaia acknowledgment: data from ESA's Gaia mission, processed by DPAC. Funding is provided by national institutions participating in the Gaia Multilateral Agreement; see the [citation guidance](https://gaia.aip.de/metadata/gaiadr3/gaia_source/).

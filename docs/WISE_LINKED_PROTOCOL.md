@@ -1,113 +1,49 @@
-# WISE 0855: đối chứng flux riêng và flux có ràng buộc phổ
+# WISE 0855: Independent-Flux and Spectrally Constrained-Flux Controls
 
-Đây là phép thử development trên **20 cutout QR2 trường rộng đã mở**,
-không phải validation mới hoặc thay số đo công bố. Cấu hình broad dùng 10
-exposure mỗi epoch; strict dùng hai mỗi epoch, là tập con của broad. Không
-tính hai cấu hình là 24 exposure độc lập. Khóa code/input trước lần chạy
-point model mới; dữ liệu WISE và vị trí đo cũ đã được xem từ các nghiên cứu
-trước, vì vậy không gọi đây là phép thử ngoài mẫu.
+This is a development experiment on **20 previously opened wide-field QR2 cutouts**, not new validation and not a replacement for the published measurement. Broad uses 10 exposures per epoch; strict uses two per epoch and is a subset of broad. Do not treat the configurations as 24 independent exposures. Code/inputs were locked before the new point-model run; WISE data and earlier measured positions had already been viewed in prior studies, so this is not an out-of-sample experiment.
 
-## Giả thuyết và đối chứng
+## Hypothesis and control
 
-Fit quanh anchor sky-grid (31,5;31,5), bounds ±2,5 pixel; mỗi epoch có vị trí
-và flux tự do riêng. Không buộc vị trí theo vector chuyển động hoặc flux
-theo trị tuyệt đối của JWST. Nhánh control `independent` có flux Jy riêng
-mỗi frame. Candidate định trước `shared_r7_68_a0` có một biên độ Jy mỗi
-epoch nhân với tỷ số phổ PRISM. So sánh này nhằm tách tác động giảm số
-nuisance flux; không chọn candidate theo khoảng cách tới vector trong tài
-liệu hoặc theo covariance nhỏ hơn.
+Fit around sky-grid anchor `(31.5,31.5)` with ±2.5-pixel bounds; each epoch has its own free position and flux. Do not constrain position with the motion vector or flux with JWST absolute flux. The `independent` control uses a separate Jy flux per frame. The prespecified `shared_r7_68_a0` candidate uses one Jy amplitude per epoch multiplied by the PRISM spectral ratio. This comparison isolates the effect of reducing flux nuisance parameters; do not select a candidate based on proximity to a published vector or smaller covariance.
 
-Cả hai dùng cùng pixel/mask, renderer, neighbor/background span và offset
-Gaia đã đóng băng. Renderer dùng WCS nguồn chính xác, ePSF QR3 zero-pad 16,
-chuẩn hóa toàn lattice native theo pha trước mask, và Ω nguồn tính từ
-celestial WCS (2/4 subdivisions, refinement diagnostic ≤1e−4). Đây là xấp xỉ
-geometric center-Ω, không phải bằng chứng exact SAPM hoặc chuẩn màu. Nuisance
-cũ gồm mặt phẳng và hàng xóm giữ vị trí/hình dạng; chỉ span tuyến tính được
-tái sử dụng. IMAGE−ZODI−scalar giữ nguyên; hằng số fit hấp thụ scalar. Cờ
-SOURCE được phép trong target mask; đơn vị và thứ tự pixel kiểm tường minh.
+Both branches use the same pixels/mask, renderer, neighbor/background span, and frozen Gaia offsets. The renderer uses exact source WCS, QR3 ePSF zero-padded by 16, normalizes over the full native lattice at each phase before masking, and computes source Ω from celestial WCS (2/4 subdivisions, refinement diagnostic ≤1e−4). This is a geometric center-Ω approximation, not exact SAPM binding or color calibration evidence. Existing nuisance terms include a plane and neighbors with fixed positions/shapes; only the linear span is reused. Preserve IMAGE−ZODI−scalar; the fitted constant absorbs the scalar. The SOURCE flag is allowed in the target mask; units and pixel order are checked explicitly.
 
-Control mới cũng thay WCS/normalization và có thể thay mask so với estimator
-cũ. Vì vậy không gọi nó là replay byte-identical của phép đo 0.3/0.10 trước.
+The new control also changes WCS/normalization and may change the mask relative to the old estimator. Therefore it is not a byte-identical replay of the earlier 0.3/0.10 measurement.
 
-## Bảy nhánh đã định, đủ cả broad và strict
+## Seven prespecified branches, both broad and strict
 
-1. `independent`: flux riêng từng frame, không dùng tỷ số phổ.
-2. `shared_r7_68_a0`: candidate chính, Cent 68 kênh, center R7, α=0.
-3. `tilt_r7_68_a0`: thêm một nuisance độ nghiêng phổ chung mỗi epoch, pivot
-   4,75 µm, scale 0,20 µm. Với hai frame và hai wavelength khác nhau, flux
-   basis này có thể tương đương hoàn toàn nhánh independent; đó là sanity
-   check đại số, không phải xác nhận thứ ba.
-4. `shared_r7_68_am4`: cùng candidate nhưng α=−4.
-5. `shared_r7_68_ap4`: cùng candidate nhưng α=+4.
-6. `shared_qr2_68_a0`: lấy center từ CWAVE QR2 thay center R7.
-7. `shared_r7_17_a0`: Cent 17 kênh thay 68.
+1. `independent`: separate flux per frame, no spectral ratio.
+2. `shared_r7_68_a0`: primary candidate, Cent 68 channels, R7 center, α=0.
+3. `tilt_r7_68_a0`: add a shared per-epoch spectral tilt nuisance, pivot 4.75 µm, scale 0.20 µm. With two strict frames at different wavelengths, this flux basis can be exactly equivalent to the independent branch; that is an algebraic sanity check, not a third confirmation.
+4. `shared_r7_68_am4`: same candidate with α=−4.
+5. `shared_r7_68_ap4`: same candidate with α=+4.
+6. `shared_qr2_68_a0`: use the center from CWAVE QR2 instead of R7.
+7. `shared_r7_17_a0`: Cent 17 channels instead of 68.
 
-PRISM là spectrum pipeline MAST riêng, không ghép G395M, scale Spitzer hay
-deconvolve LSF. Response Cent được tịnh tiến từ center CSV đến center của
-pixel gần anchor; không co giãn width hoặc tích phân response qua footprint
-PSF. Channel map R7 dùng SKY trực tiếp, BC/BW dùng DEVICE nên D6 lật x riêng
-hai map này. Mọi pixel map có header/provenance theo HDU, không lật toàn gói.
+PRISM is a separate MAST pipeline spectrum; do not merge with G395M, scale by Spitzer, or deconvolve the LSF. Translate the Cent response from its CSV center to the pixel nearest the anchor; do not rescale width or integrate the response across the PSF footprint. The R7 channel map uses SKY directly, whereas BC/BW use DEVICE, so D6 flips x only for those two maps. Each pixel map has per-HDU header/provenance; do not flip the whole package.
 
-Quy ước giả định là photon-weighted Fν với reference
-`Fν(λ)/Fν(λlocal)=(λ/λlocal)^α`; **chưa xác minh đây là quy ước calibration
-SPHEREx**. Thiếu bất kỳ absolute response support nào thì từ chối chuẩn bị
-nhánh; không ngoại suy hay bỏ frame để làm fit tốt. Tỷ số coefficient chia
-giá trị cố định 0,0005 Jy cho cả hai epoch, chỉ đổi tham số hóa A, không đặt A
-theo JWST. Chuẩn bị theo từng epoch; lỗi ở epoch này không chặn fit epoch kia.
-Tỷ số cố định tại anchor; chưa đạo hàm response theo vị trí nguồn đang fit.
+Assumed convention is photon-weighted Fν with reference `Fν(λ)/Fν(λlocal)=(λ/λlocal)^α`; **this has not been verified as SPHEREx's calibration convention**. If any absolute response support is missing, refuse branch preparation; do not extrapolate or drop frames to improve a fit. Divide the coefficient ratio by fixed 0.0005 Jy in both epochs; this changes parameterization A and does not set A from JWST. Prepare separately by epoch; an error in one epoch does not block fitting the other. The ratio is fixed at the anchor; response is not differentiated by fitted source position.
 
-## Solver, mode và uncertainty
+## Solver, modes, and uncertainty
 
-Năm khởi tạo: anchor và (±0,7;0)/(0;±0,7); chọn nghiệm solver thành công có
-χ² nhỏ nhất. Profile tuyến tính bằng SVD có chuẩn hóa cột, không pinv che
-rank. Huber threshold 2,5 dùng residual/error **gốc**, cập nhật whitening và
-projection nuisance, tối đa 20 lượt. Sau ít nhất hai lượt, đòi đổi vị trí
-≤1e−4 pixel và đổi max weight tiếp theo ≤1e−3. Không hội tụ giữ điểm/mẫu số
-nhưng không vượt screening số học.
+Use five starts: anchor and (±0.7,0)/(0,±0.7); choose the successful solver result with lowest χ². Profile linear terms with column-scaled SVD; do not use a pseudoinverse to conceal rank problems. Huber threshold 2.5 uses **original** residual/error to update whitening and nuisance projection, for at most 20 iterations. After at least two iterations, require position change ≤1e−4 pixel and next maximum weight change ≤1e−3. Nonconvergence remains in the denominator/records but does not pass numerical screening.
 
-Chạy lại đủ năm start trên trọng số cuối cố định, không cập nhật IRLS và
-không âm thầm thay point. Lưu các mode cách nhau >0,15 pixel, mode có χ² tốt
-hơn point >1e−4 và các mode trong Δχ²≤5,991 của best. Ngưỡng này là heuristic
-phát hiện cạnh tranh nghiệm, không có bảo đảm likelihood coverage.
+Rerun all five starts at fixed final weights, without IRLS updates or silently replacing the selected point. Save modes separated by >0.15 pixel, any mode with χ² better than the selected point by >1e−4, and modes within Δχ²≤5.991 of the best. This threshold is a heuristic for competing solutions, not a likelihood-coverage guarantee.
 
-Lưu GN và observed profile-H ở bước 0,002/0,004 pixel; H chỉ supported khi
-PD/rank và đổi tương đối ≤5%. Không nhân reduced χ². Covariance là
-**centroid-only có điều kiện** theo trọng số cuối và noise diagonal, không
-có registration chung, uncertainty ePSF/SED/response/neighbor, biến thiên
-nguồn hay calibration. Screening solver không phải scientific validation.
-Khi cộng covariance hai epoch, giả định cross-epoch centroid covariance bằng
-0 có điều kiện; đây không phải tổng ngân sách hoặc kiểm tra độc lập hai epoch.
-Không clip amplitude âm hoặc diễn SNR fixed-position thành xác suất phát hiện.
+Save GN and observed profile-H at steps 0.002/0.004 pixel; H is supported only if PD/rank pass and relative change ≤5%. Do not multiply by reduced χ². Covariance is **conditional centroid-only**, based on final weights and diagonal noise; it excludes shared registration, ePSF/SED/response/neighbor uncertainty, source variability, and calibration. Solver screening is not scientific validation. When adding epoch covariances, cross-epoch centroid covariance is assumed zero conditionally; this is not a total error budget or an independent two-epoch check. Do not clip negative amplitudes or interpret fixed-position S/N as detection probability.
 
-## Mẫu số và giới hạn
+## Denominator and limitations
 
-Hai cấu hình × bảy nhánh × hai epoch = **28 attempt**. Checkpoint sau từng
-epoch, giữ failure và mọi start/mode cùng native x/y, error, ePSF zone, mask
-selection, provenance và Ω tại nghiệm. Lỗi chuẩn bị theo configuration/epoch
-được lưu cho các attempt tương ứng, không thả frame. Lỗi hash/protocol/runtime
-hoặc hợp đồng dữ liệu toàn bộ thì dừng toàn run. Báo toàn bộ vector và độ đổi so control
-khi cả hai epoch có điểm; độ đổi là model sensitivity, không phải bias hay
-accuracy. Không có truth độc lập để báo RMS/coverage từ một đối tượng.
+Two configurations × seven branches × two epochs = **28 attempts**. Checkpoint after each epoch and retain failures and all starts/modes with native x/y, errors, ePSF zone, mask selection, provenance, and Ω at the solution. Save preparation failures per configuration/epoch for the affected attempts; do not drop frames. A global hash/protocol/runtime or data-contract failure stops the full run. Report all vectors and changes from control when both epochs have a solution; these are model sensitivity, not bias or accuracy. There is no independent truth for RMS/coverage from one object.
 
-Vẫn dùng một vị trí mỗi mùa, bỏ chuyển động/parallax trong khoảng vài ngày;
-offset Gaia giữ cố định, không propagate covariance. Giả định phổ nguồn
-2023 có thể sai cho 2025–2026; α sensitivity không bao trọn calibration,
-variability hoặc LSF. Không có promotion/default switch dù candidate trông
-tốt hơn. Bước tiếp theo cần controls thật/PSF khác, noise phù hợp, time model
-và calibration riêng trước khi mở 30 trường mới.
+One position per season still omits motion/parallax over days; Gaia offsets remain fixed and covariance is not propagated. A 2023 spectral assumption may not hold in 2025–2026; α sensitivity does not cover calibration, variability, or LSF. Do not promote or switch the default even if the candidate looks better. Next, use real controls/different PSF, suitable noise, a time model, and separate calibration before opening 30 new fields.
 
 ```powershell
 .venv/Scripts/python.exe -B -m unittest tests.test_linked_epoch_model tests.test_wise_linked_inputs -v
 .venv/Scripts/python.exe -B -m scripts.run_wise_linked_study --design
-# Commit toàn bộ source/test/protocol/design, rồi mới chạy:
+# Commit all source/tests/protocol/design before running:
 .venv/Scripts/python.exe -B -m scripts.run_wise_linked_study --run --configurations broad --variants independent
 .venv/Scripts/python.exe -B -m scripts.run_wise_linked_study --run
 ```
 
-`--design` chỉ hash inputs, không tính coefficient/fit. `--run` kiểm design,
-source/metadata khớp Git HEAD và raw hashes; không ghi đè study hoàn tất.
-Runner giữ khóa OS trong suốt lệnh; process chết giải phóng khóa, file khóa
-còn lại không tự là bằng chứng có job sống. Checkpoint ghi atomically, mỗi
-attempt có checksum; resume kiểm cả runtime/package pin và checksum, không
-trộn môi trường. Chỉ một runner ghi tại một thời điểm. Resume bỏ qua các attempt đã ghi kể cả failure, không rerun ca khó hoặc
-đổi protocol sau xem point để làm đẹp kết quả. Raw output bị Git bỏ qua.
+`--design` hashes inputs only; it does not compute coefficients/fits. `--run` checks design, source/metadata against Git HEAD, and raw hashes; it does not overwrite completed studies. The runner holds an OS lock throughout the command; process termination releases it, and a leftover lock file alone is not evidence of a live job. Checkpoints write atomically and each attempt has a checksum. Resume checks runtime/package pins and checksums; do not mix environments. Only one runner may write at a time. Resume skips recorded attempts, including failures; do not rerun difficult cases or change protocol after viewing a point to make results look better. Raw output is Git-ignored.

@@ -1,19 +1,19 @@
 ---
-name: Công việc
-about: Công việc có mục tiêu và điều kiện hoàn thành rõ ràng
+name: Task
+about: A task with a clear objective and completion criteria
 title: ''
 labels: ''
 assignees: ''
 ---
 
-## Mục tiêu
+## Objective
 
-Mô tả kết quả cần đạt và lý do.
+Describe the expected outcome and why it is needed.
 
-## Điều kiện hoàn thành
+## Acceptance criteria
 
-- [ ] Kết quả có thể kiểm chứng
+- [ ] The result can be verified
 
-## Tài nguyên và phụ thuộc
+## Resources and dependencies
 
-Link dữ liệu, tài liệu hoặc công việc liên quan nếu có.
+Link related data, documentation, or work, if applicable.

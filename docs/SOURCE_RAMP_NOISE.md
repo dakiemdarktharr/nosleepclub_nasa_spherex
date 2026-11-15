@@ -1,10 +1,10 @@
-# Injection Poisson nguồn cho ramp lý tưởng
+# Source Poisson Injection for an Idealized Ramp
 
-Module [source_ramp_noise.py](../scripts/source_ramp_noise.py) sinh **phần tín hiệu và shot noise của nguồn được thêm vào** cho mô hình up-the-ramp lý tưởng. Nó không sinh lại sky, read noise hay dark noise của ảnh gốc, không sửa ảnh/variance đầu vào và không xác nhận mô hình detector SPHEREx thực.
+The [source_ramp_noise.py](../scripts/source_ramp_noise.py) module generates the **signal and shot noise from an added source** for an idealized up-the-ramp model. It does not regenerate sky, read noise, or dark noise in the original image, modify input image/variance, or validate the actual SPHEREx detector model.
 
-## Nguồn công thức và phép suy độc lập
+## Formula source and independent derivation
 
-Trong [source pipeline SPHEREx công khai của Caltech/IPAC](https://github.com/Caltech-IPAC/spherex-pipelines/blob/aa0ba446ee12971024fe13dc1c47387615bbe85e/py_src/spx_tasks/create_variance_map.py), snapshot commit `aa0ba446ee12971024fe13dc1c47387615bbe85e`, blob Git SHA-1 `c682a3c8574b16e0f092dd89266a0dbaeaad9b47`, nhánh nominal dùng:
+In the public [Caltech/IPAC SPHEREx source pipeline](https://github.com/Caltech-IPAC/spherex-pipelines/blob/aa0ba446ee12971024fe13dc1c47387615bbe85e/py_src/spx_tasks/create_variance_map.py), snapshot commit `aa0ba446ee12971024fe13dc1c47387615bbe85e`, Git blob SHA-1 `c682a3c8574b16e0f092dd89266a0dbaeaad9b47`, the nominal branch uses:
 
 ```text
 n = SURLIM - (SURDLY - 1)
@@ -13,9 +13,9 @@ P(n) = (6/5) * (n² + 1)/(n² - 1)
 Var(source rate) = P(n) * s / (n * TSAMP)
 ```
 
-Đây là đối chiếu công thức ở snapshot được đọc, không khẳng định mọi version dữ liệu hoặc mọi pixel dùng xử lý nominal đó. [Explanatory Supplement](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp_QR.pdf) mô tả variance map và các trường hợp overflow/transient được xử lý riêng.
+This checks the formula in the inspected snapshot; it does not claim every data version or pixel uses that nominal processing. The [Explanatory Supplement](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp_QR.pdf) describes the variance map and separately handled overflow/transient cases.
 
-Suy từ mô hình lý tưởng: lấy `n` mẫu điện tích không phá hủy tại `t_k=k*dt`, `k=0,…,n−1`. Tăng điện tích giữa các mẫu là `X_j ~ Poisson(s*dt)` độc lập với `j=1,…,n−1`; mẫu ban đầu là intercept và triệt khi fit slope OLS có intercept. Hệ số của từng increment trong slope là
+Independent derivation under an idealized model: take `n` nondestructive charge samples at `t_k=k*dt`, `k=0,…,n−1`. Charge increments between samples are independent `X_j ~ Poisson(s*dt)`, `j=1,…,n−1`; the initial sample is an intercept and is removed when fitting an OLS slope with intercept. The coefficient of each increment in the slope is:
 
 ```text
 w_j = 6*j*(n-j) / [dt*n*(n²-1)]
@@ -23,23 +23,23 @@ slope − s = Σ_j w_j * (X_j − s*dt)
 Var(slope) = s*dt*Σ_j w_j² = P(n)*s/(n*dt)
 ```
 
-Vì `Σ w_j*dt=1`, phép trừ mean không thêm hoặc bớt signal kỳ vọng. Tính trực tiếp covariance tích lũy `Cov(Q_i,Q_j)=s*dt*min(i,j)` cho cùng kết quả: `P(2)=2`, `P(3)=1,5`, `P(75)=1,2004267425320057`. Mô phỏng dùng **Poisson nguyên** cho từng increment, không thay bằng Gaussian.
+Because `Σ w_j*dt=1`, subtracting the mean does not add or remove expected signal. Directly calculating accumulated-charge covariance `Cov(Q_i,Q_j)=s*dt*min(i,j)` gives the same result: `P(2)=2`, `P(3)=1.5`, `P(75)=1.2004267425320057`. The simulation uses **integer Poisson draws** for each increment, not a Gaussian approximation.
 
-## API và timing
+## API and timing
 
-`inject_source_ramp(expected_source, gain, header, valid_mask, rng, *, gain_provenance, source_provenance=None, batch_pixels=4096)` nhận:
+`inject_source_ramp(expected_source, gain, header, valid_mask, rng, *, gain_provenance, source_provenance=None, batch_pixels=4096)` accepts:
 
-- `expected_source`: ảnh 2D Astropy `Quantity`, chuyển được sang `MJy/sr`, hữu hạn và không âm trên pixel hợp lệ.
-- `gain`: scalar hoặc ảnh cùng shape Astropy `Quantity`, đơn vị có thể chuyển sang `(MJy/sr)/(electron/s)`, hữu hạn và dương trên pixel hợp lệ. Đây là **absolute physical gain**, không phải electronic gain e⁻/ADU. Caller phải xác minh gain map phù hợp detector, epoch, version, detector/sky orientation và phép xử lý của ảnh. Module không tự kiểm chứng sự phù hợp đó.
-- `header`: bắt buộc `SURLIM`, `SURDLY` là integer, `TSAMP`, `XPOSURE` là giây dương hữu hạn. Duplicate key (kể cả khác chữ hoa/thường) hoặc thiếu key bị từ chối. `2 ≤ n ≤ 10000` là giới hạn triển khai. Header phải thỏa `XPOSURE ≈ (n−1)*TSAMP`, dung sai lớn hơn của 1e-4 giây và 1e-8 lần span. Nếu không, module từ chối thay vì chọn thời gian khác.
-- `valid_mask`: ảnh boolean cùng shape. Chỉ pixel `True` được mô phỏng/kiểm giá trị. Pixel `False` trả NaN trong cả ba layer bổ sung; caller phải giữ nguyên ảnh/variance/flags của chúng. Mask phải loại trước các pixel không phù hợp mô hình nominal.
-- `rng`: `numpy.random.Generator` được tạo tường minh. `gain_provenance` phải có chuỗi `source` không rỗng; caller có thể cung cấp URL, hash và version calibration. `source_provenance` ghi thông tin nguồn tổng hợp.
+- `expected_source`: a 2D Astropy `Quantity`, convertible to `MJy/sr`, finite and nonnegative on valid pixels.
+- `gain`: a scalar or same-shape Astropy `Quantity`, convertible to `(MJy/sr)/(electron/s)`, finite and positive on valid pixels. This is an **absolute physical gain**, not electronic gain in e⁻/ADU. The caller must verify that the gain map matches detector, epoch, version, detector/sky orientation, and image processing. The module does not verify this compatibility.
+- `header`: requires integer `SURLIM` and `SURDLY`, plus finite positive `TSAMP` and `XPOSURE` in seconds. Duplicate keys (including case-only duplicates) and missing keys are rejected. `2 ≤ n ≤ 10000` is an implementation limit. Header must satisfy `XPOSURE ≈ (n−1)*TSAMP`, with tolerance equal to the larger of 1e-4 seconds and 1e-8 times the span. Otherwise the module rejects the input instead of choosing a different time.
+- `valid_mask`: same-shape boolean array. Only `True` pixels are simulated/validated. `False` pixels return NaN in all three added layers; the caller must preserve their original image/variance/flags. The mask must exclude pixels that do not match the nominal model first.
+- `rng`: an explicitly created `numpy.random.Generator`. `gain_provenance` must have a nonempty `source` string; the caller may supply calibration URL, hash, and version. `source_provenance` records synthetic source information.
 
-`XPOSURE` là **khoảng giữa mẫu đầu/cuối** trong mô hình này, `(n−1)*TSAMP`; `n*TSAMP` là quy ước `t_intg` trong công thức variance pipeline. Không thay một giá trị cho giá trị kia. Ví dụ header nominal `SURLIM=77`, `SURDLY=3`, `TSAMP=1,5349 s`: `n=75`, span `113,5826 s`, còn `t_intg=115,1175 s`.
+In this model `XPOSURE` is the **time span between the first and last sample**, `(n−1)*TSAMP`; `n*TSAMP` is the `t_intg` convention in the pipeline variance formula. Do not substitute one value for the other. Example nominal header `SURLIM=77`, `SURDLY=3`, `TSAMP=1.5349 s`: `n=75`, span `113.5826 s`, while `t_intg=115.1175 s`.
 
-Nếu `S` là intensity kỳ vọng MJy/sr và `g` là gain khớp `(MJy/sr)/(e⁻/s)`, rate nguồn là `s=S/g`; noise intensity là `g*(slope−s)`, `added_image=S+noise`, và `added_variance=P(n)*g*S/(n*dt)` theo `(MJy/sr)²`. Output gồm ba layer `added_image`, `source_noise`, `added_variance`, mask bản sao và provenance. Provenance lưu SHA-256 mảng nguồn/gain/mask theo dạng số chuẩn hóa, giá trị header/đơn vị, nguồn calibration do caller khai, RNG bit-generator/state trước và sau, batch size, công thức và source pipeline. Caller chịu trách nhiệm cung cấp version/URL/hash calibration chính xác; hash mảng không chứng minh calibration đúng vật lý.
+If `S` is expected intensity in MJy/sr and `g` is matching gain in `(MJy/sr)/(e⁻/s)`, source rate is `s=S/g`; intensity noise is `g*(slope−s)`, `added_image=S+noise`, and `added_variance=P(n)*g*S/(n*dt)` in `(MJy/sr)²`. Output has three layers: `added_image`, `source_noise`, and `added_variance`, plus a copied mask and provenance. Provenance records SHA-256 hashes for normalized numeric source/gain/mask arrays, header values/units, caller-provided calibration source, RNG bit-generator/state before and after, batch size, formula, and source pipeline. The caller is responsible for supplying the exact calibration version/URL/hash; an array hash does not prove that calibration is physically correct.
 
-Không tạo mảng `n × image`: scratch Poisson xử lý từng batch tối đa `batch_pixels`; bộ nhớ bổ sung tỷ lệ `O(image pixels + batch_pixels + n)`. Cùng input, seed, bit-generator và batch size cho output có thể tái lập; thay batch size có thể đổi thứ tự dùng RNG. Giới hạn batch là 1–1.000.000 pixel.
+The module does not allocate an `n × image` array: Poisson scratch values are processed in batches of at most `batch_pixels`; additional memory scales as `O(image pixels + batch_pixels + n)`. With the same inputs, seed, bit generator, and batch size, output can be reproduced; changing batch size may change RNG consumption order. The batch limit is 1–1,000,000 pixels.
 
 ```python
 import numpy as np
@@ -53,15 +53,15 @@ valid = np.ones((3, 3), dtype=bool)
 addition = srn.inject_source_ramp(source, gain, header, valid, np.random.default_rng(123),
                                   gain_provenance={'source': 'synthetic example'},
                                   source_provenance={'source': 'synthetic model'})
-# Người gọi cộng added_image và added_variance vào các pixel valid của ảnh/variance gốc.
+# The caller adds added_image and added_variance to the original image/variance at valid pixels.
 ```
 
-## Giới hạn và kiểm tra
+## Limits and checks
 
-Nguồn bức xạ Poisson được giả định độc lập giữa pixel và khoảng lấy mẫu; OLS unweighted và gain tuyến tính, không có covariance do tái lấy mẫu. Các pixel partial-ramp, overflow, transient, nonlinearity, saturation, persistence, crosstalk, không chắc chắn PSF/gain hay các xử lý khác không được mô hình hóa; valid mask và metadata phải loại những trường hợp này. Không thể suy completeness, coverage, calibration hay phát hiện thiên văn từ primitive hoặc unit tests.
+Photon arrivals are assumed independent across pixels and sampling intervals; slope fitting is unweighted OLS with a linear gain and no resampling covariance. Partial-ramp, overflow, transient, nonlinearity, saturation, persistence, crosstalk, PSF/gain uncertainty, and other processing are not modeled; the valid mask and metadata must exclude these cases. This primitive and its unit tests cannot establish completeness, coverage, calibration, or an astronomical detection.
 
 ```powershell
 .venv/Scripts/python.exe -m unittest tests.test_source_ramp_noise -v
 ```
 
-Kiểm thử bao gồm covariance ramp OLS độc lập cho n=2/3/75, hỗ trợ Poisson rời rạc, mean/variance và cross-covariance thực nghiệm trên seed cố định với dung sai sáu sai số chuẩn, đơn vị và scaling, mask/zero, tính tái lập, và từ chối input/header không hợp lệ. Chỉ dùng primitive trong một nghiên cứu đã khóa source, gain và giao thức trước khi chạy; đây chưa phải nghiên cứu Monte Carlo trên ảnh thật.
+Tests include independent OLS ramp covariance for n=2/3/75, discrete Poisson support, empirical mean/variance/cross-covariance with a fixed seed and six-standard-error tolerance, units and scaling, mask/zero behavior, reproducibility, and rejection of invalid inputs/headers. Use the primitive only in a study with source, gain, and protocol locked before running; this is not a Monte Carlo study on real images.

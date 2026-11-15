@@ -1,11 +1,11 @@
-## Thay đổi
+## Changes
 
-Mô tả vấn đề và hành vi/kết quả sau thay đổi.
+Describe the issue and the behavior or outcome after this change.
 
-## Kiểm chứng
+## Verification
 
-Nêu các bước kiểm tra đã thực hiện và giới hạn còn lại. Nếu có thay đổi giao diện, thêm ảnh hoặc video phù hợp.
+List the checks performed and any remaining limitations. If the change affects the interface, include a relevant screenshot or video.
 
-## Liên quan
+## Related work
 
-Issue, nguồn dữ liệu hoặc tài liệu liên quan nếu có.
+Link any related issue, data source, or documentation.

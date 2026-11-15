@@ -1,250 +1,250 @@
-# SPHEREx Change Explorer — phân tích kỹ thuật và hướng triển khai
+# SPHEREx Change Explorer — Technical Analysis and Implementation Direction
 
-Ngày nghiên cứu: **30/10/2026**. Tài liệu thiết kế; chưa phải báo cáo về một mô hình đã huấn luyện hoặc một pipeline đã chạy thành công trên dữ liệu.
+Research date: **30 October 2026**. This is a design document, not a report of a trained model or a pipeline that has run successfully on data.
 
-Ghi chú tiến độ: đây là bản nghiên cứu trước khi triển khai. Bản demo cutout thật và các phép đo thực hiện sau đó được ghi riêng trong [WISE0855_DEMO.md](WISE0855_DEMO.md); dùng tài liệu đó để xem trạng thái sản phẩm hiện tại.
+Progress note: this is research from before implementation. The real-cutout demo and subsequent measurements are documented separately in [WISE0855_DEMO.md](WISE0855_DEMO.md); consult that document for the current product state.
 
-## Quyết định đề xuất
+## Proposed decision
 
-Xây dựng web giúp người dùng xem một vùng trời theo thời gian, nhận các vùng thay đổi được đánh dấu, rồi kiểm tra bằng chứng và đưa ra nhận xét. Thiết kế gồm ba thành phần:
+Build a web experience that lets people view a sky region over time, see flagged areas of change, inspect evidence, and record an assessment. The design has three parts:
 
-1. Pipeline thiên văn chuẩn bị các quan sát có thể so sánh và tạo ứng viên.
-2. Một CNN nhỏ xếp hạng ứng viên theo dấu hiệu thật/nhiễu.
-3. Không gian review hiển thị ảnh, phép đo, cảnh báo chất lượng và lịch sử quyết định.
+1. An astronomy pipeline prepares comparable observations and generates candidates.
+2. A small CNN ranks candidates for real-signal/noise characteristics.
+3. A review workspace shows images, measurements, quality warnings, and decision history.
 
-Mô hình chạy trực tiếp trong trình duyệt là một đích khả thi về kiến trúc. Xử lý FITS và kiểm chứng khoa học vẫn đặt ở backend. Việc chạy được model trên web không tự chứng minh model có giá trị trên SPHEREx.
+Running the model directly in a browser is architecturally feasible. FITS processing and scientific validation remain on the backend. Running a model on the web does not by itself show that it is useful on SPHEREx data.
 
-## 1. Phạm vi đề bài và phạm vi sản phẩm
+## 1. Challenge requirements and product scope
 
-[Đề chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details) yêu cầu web công khai, nhập RA/Dec và xem chuỗi ảnh cùng vùng trời theo thời gian. Các mục tiêu kiểm thử là Barnard’s Star, Epsilon Indi B, WISE 0855, RW Aurigae và R Draconis. AI là phần mở rộng do nhóm đề xuất.
+The [official challenge](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details) asks for a public web application where users enter RA/Dec and view an image sequence of the same sky region over time. Suggested test targets are Barnard's Star, Epsilon Indi B, WISE 0855, RW Aurigae, and R Draconis. AI is an extension proposed by the team.
 
-Sản phẩm đề xuất ưu tiên ba tình huống:
+The proposed product prioritizes three scenarios:
 
-| Tình huống | Bằng chứng cần trình bày | Kết luận ban đầu phù hợp |
-| --- | --- | --- |
-| Nguồn đổi vị trí | Tọa độ qua các epoch, sai số, độ khớp với nền sao | Ứng viên chuyển động |
-| Nguồn đổi độ sáng | Flux và sai số trong passband tương thích, light curve | Ứng viên biến quang |
-| Nguồn xuất hiện/biến mất | Phát hiện mới và giới hạn phát hiện ở ảnh còn lại | Ứng viên transient hoặc thiếu dữ liệu cần kiểm tra |
+| Scenario | Evidence to show | Appropriate initial interpretation |
+|---|---|---|
+| Source changes position | Coordinates across epochs, errors, and fit relative to background stars | Moving-source candidate |
+| Source changes brightness | Flux and errors in compatible passbands, light curve | Variable-source candidate |
+| Source appears/disappears | New detection and detection limit in the other image | Transient candidate or missing-data case for review |
 
-Không tự kết luận "Planet X" từ một vùng sáng khác biệt. Không có đối sánh catalog chỉ có nghĩa là chưa tìm thấy đối sánh theo truy vấn hiện tại.
+Do not conclude “Planet X” from a different-looking bright region. No catalog match means only that the current query did not find a match.
 
-## 2. Dữ liệu đã có, nhưng cần kiểm tra khả năng so sánh
+## 2. Available data and comparability checks
 
-IRSA đã phát hành QR2 và bắt đầu QR3 trong tháng 9/2026. [Thông báo IRSA](https://irsa.ipac.caltech.edu/newsletter/2026/IRSA_NL_2026_08.html) nêu QR3 cải thiện PSF và các hiệu chuẩn liên quan. Việc tab Resources của cuộc thi chưa mở không đồng nghĩa dữ liệu SPHEREx chưa công khai.
+IRSA has released QR2 and began QR3 release in September 2026. The [IRSA announcement](https://irsa.ipac.caltech.edu/newsletter/2026/IRSA_NL_2026_08.html) says QR3 improves the PSF and related calibrations. The competition Resources tab not being available does not mean SPHEREx data is not public.
 
-[Tài liệu truy cập IRSA](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/) mô tả SIA2, PyVO/Astroquery và dịch vụ cutout. Luồng lấy dữ liệu đề xuất:
+The [IRSA access documentation](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/) describes SIA2, PyVO/Astroquery, and the cutout service. Proposed retrieval flow:
 
-1. Tìm metadata theo vùng trời, thời gian và collection.
-2. Lấy `access_url` của quan sát phù hợp, rồi yêu cầu cutout.
-3. Giữ định danh quan sát, release và phiên bản xử lý trong manifest.
-4. Tải có cache, giới hạn đồng thời và khả năng tiếp tục khi lỗi.
+1. Query metadata by sky region, time, and collection.
+2. Use `access_url` for a suitable observation, then request a cutout.
+3. Preserve observation ID, release, and processing version in the manifest.
+4. Download with caching, concurrency limits, and retry/resume behavior.
 
-Không hardcode danh sách tệp từ một ví dụ tài liệu. Không coi cùng một exposure được xử lý ở QR2 và QR3 là hai epoch độc lập.
+Do not hard-code a file list from a documentation example. Do not treat the same exposure processed in QR2 and QR3 as two independent epochs.
 
-### Kiểm tra metadata trực tiếp đã thực hiện
+### Direct metadata check completed
 
-Ngày 30/10/2026, đã gửi truy vấn SIA2 tới vùng RA `133.79512917°`, Dec `−7.24514722°`, bán kính `0.05°` (3 arcmin), tính từ tọa độ WISE 0855 trong đề. Hai response HTTP 200 dùng TABLEDATA, `QUERY_STATUS=OK`:
+On 30 October 2026, an SIA2 query was sent for RA `133.79512917°`, Dec `−7.24514722°`, radius `0.05°` (3 arcmin), derived from the WISE 0855 coordinates in the challenge. Two HTTP 200 responses used TABLEDATA with `QUERY_STATUS=OK`:
 
-| Collection truy vấn | Số bản ghi metadata | Khoảng `t_min` trả về, MJD |
-| --- | --- | --- |
+| Queried collection | Metadata records | Returned `t_min` range, MJD |
+|---|---:|---|
 | `spherex_qr2` | 278 | 60800.700028–61174.287218 |
-| `spherex_qr3` | 0 | Không có trong kết quả truy vấn này |
+| `spherex_qr3` | 0 | None in this query result |
 
-Đã lưu [bằng chứng truy vấn](irsa-wise0855-metadata-check.json). Đây là số bản ghi của vùng trời; không phải số epoch độc lập hay số phát hiện WISE 0855. Chưa tải FITS, chưa truyền vị trí nguồn theo proper motion, chưa kiểm tra passband tại pixel mục tiêu. QR3 mới hơn không đồng nghĩa QR3 đã có dữ liệu phù hợp ở mọi vùng cần demo.
+The [query receipt](irsa-wise0855-metadata-check.json) was saved. These are records for a sky region, not independent epochs or WISE 0855 detections. FITS files were not downloaded, proper motion was not applied to the source position, and passband at the target pixel was not checked. A newer QR3 release does not imply suitable data exist for every region needed in the demo.
 
-### Rủi ro chính: màu phổ dễ bị nhầm là thay đổi thời gian
+### Main risk: spectral color can be mistaken for temporal change
 
-SPHEREx dùng **linear variable filter**: bước sóng phụ thuộc vị trí trên detector. Phổ đầy đủ được tích lũy qua nhiều exposure; không thể mặc định mỗi timestamp chứa sẵn 102 ảnh đồng bộ. [Giải thích của đội SPHEREx](https://spherex.caltech.edu/page/survey).
+SPHEREx uses a **linear variable filter**: wavelength depends on detector position. The full spectrum is accumulated across multiple exposures; do not assume that each timestamp already contains 102 synchronized images. [SPHEREx team explanation](https://spherex.caltech.edu/page/survey).
 
-Hệ quả thiết kế: ghép ảnh theo bước sóng/bandwidth tại vùng ứng viên, không chỉ theo detector ID. Nếu không có quan sát tương thích, giao diện vẫn cho xem ảnh nhưng pipeline phải từ chối kết luận biến quang. Gộp theo detector chỉ được xem là sản phẩm khám phá có giả định phổ được công bố.
+Design implication: match images by wavelength/bandwidth at the candidate location, not only detector ID. If no compatible observation exists, the interface may still display the images, but the pipeline must reject a variability conclusion. Detector-level aggregation can be shown only as an exploratory product with its spectral assumptions stated.
 
-## 3. Các điều kiện khoa học trước khi chạy CNN
+## 3. Scientific conditions before running a CNN
 
-| Vấn đề | Cách xử lý đề xuất |
-| --- | --- |
-| Hệ tọa độ, xoay ảnh, WCS lệch | Reproject về cùng lưới để xem; đo và hiệu chỉnh sai lệch còn lại bằng các nguồn nền phù hợp |
-| PSF khác nhau | Dùng ePSF đúng vị trí/phiên bản; matching hoặc forward modeling theo từng exposure |
-| Nền thay đổi | Ước lượng nền cục bộ và kiểm tra zodiacal/straylight; giữ lại cách xử lý trong provenance |
-| Pixel lỗi, saturation, ghost | Giải mã bitmask theo release; hiển thị ảnh hưởng tới từng ứng viên |
-| Hiệu chuẩn thay đổi giữa release | Ưu tiên một release nhất quán; chỉ trộn sau khi áp dụng và kiểm tra hiệu chỉnh chính thức |
-| Thiếu vùng phủ | Giữ footprint/mask; không biến pixel thiếu thành giá trị 0 để đưa vào detector |
-| Độ sâu quan sát khác nhau | So sánh cùng độ bất định; nondetection phải kèm giới hạn phát hiện |
-| Chuyển động nhỏ | Giữ sai số centroid/astrometry; không nâng độ phân giải hiển thị thành bằng chứng đo chính xác hơn |
+| Issue | Proposed handling |
+|---|---|
+| Coordinate system, image rotation, WCS offset | Reproject onto a common viewing grid; measure and correct residual offsets using suitable background sources |
+| Different PSFs | Use ePSF matched to position/version; match or forward-model each exposure |
+| Changing background | Estimate local background and check zodiacal/straylight effects; retain processing details in provenance |
+| Bad pixels, saturation, ghosts | Decode bitmasks by release; show their effect for each candidate |
+| Calibration changes between releases | Prefer one consistent release; mix only after applying and checking official corrections |
+| Missing coverage | Retain footprint/mask; do not turn missing pixels into zeros for the detector |
+| Different observation depth | Compare at matched uncertainty; pair non-detections with detection limits |
+| Small motion | Retain centroid/astrometry errors; do not present display resolution as evidence of greater measurement precision |
 
-Các điểm cần lưu ý từ tài liệu:
+Points to retain from the documentation:
 
-- MEF có ảnh khoa học, FLAGS, VARIANCE, ZODI, PSF và thông tin bước sóng. WCS-WAVE dành cho trực quan hóa; phân tích khoa học cần tham khảo CWAVE/CBAND trong sản phẩm hiệu chuẩn phổ. [Data Products](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/).
-- PSF cutout giữ liên hệ với detector gốc và phiên bản dữ liệu; không lấy một Gaussian chung thay thế mọi trường hợp. [Tutorial ePSF](https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/).
-- `reproject` giả định WCS đầu vào đúng; bản thân nó không giải quyết registration khi WCS sai. [Tài liệu reproject](https://reproject.readthedocs.io/en/stable/).
-- Không lọc toàn bộ `FLAGS != 0`: bit SOURCE có thể là nguồn thật bình thường, hữu ích khi ước lượng nền. Bit TRANSIENT trong FLAGS có thể chỉ cosmic-ray hit, không phải nhãn transient thiên văn. [Tài liệu photometry và bitflags](https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/sp.html).
+- MEF products contain science images, FLAGS, VARIANCE, ZODI, PSF, and wavelength information. WCS-WAVE is for visualization; scientific analysis should consult CWAVE/CBAND in spectral calibration products. [Data Products](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/).
+- PSF cutouts remain tied to the original detector and data version; do not replace every case with a generic Gaussian. [ePSF tutorial](https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/).
+- `reproject` assumes the input WCS is correct; it does not solve registration when WCS is wrong. [reproject documentation](https://reproject.readthedocs.io/en/stable/).
+- Do not reject every `FLAGS != 0` pixel: SOURCE can be a normal real source and can be useful when estimating background. TRANSIENT in FLAGS may indicate a cosmic-ray hit, not an astronomical transient label. [Photometry and bit-flag documentation](https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/sp.html).
 
-Tạo ảnh PNG để hiển thị sau cùng. Đầu vào model và phép đo giữ giá trị số cùng đơn vị; không học từ screenshot đã đổi contrast tùy ý. Không dùng generative enhancement để tạo chi tiết rồi xem đó là bằng chứng.
+Create PNGs only at the final display stage. Model inputs and measurements retain numerical values and units; do not train from screenshots with arbitrary contrast changes. Do not use generative enhancement to create details and then treat them as evidence.
 
-## 4. Pipeline phát hiện thay đổi
+## 4. Change-detection pipeline
 
 ```mermaid
 flowchart TD
-    A[RA/Dec, trường nhìn, thời gian] --> B[IRSA metadata và FITS cutouts]
-    B --> C[Kiểm tra chất lượng và khả năng so sánh]
-    C --> D[Nhánh chuyển động: centroid và liên kết theo thời gian]
-    C --> E[Nhánh độ sáng: photometry và image differencing]
-    D --> F[Danh sách ứng viên và bằng chứng]
+    A[RA/Dec, field of view, time] --> B[IRSA metadata and FITS cutouts]
+    B --> C[Quality and comparability checks]
+    C --> D[Motion branch: centroids and temporal association]
+    C --> E[Brightness branch: photometry and image differencing]
+    D --> F[Candidate list and evidence]
     E --> F
-    F --> G[CNN nhỏ: xếp hạng thật / nhiễu]
-    G --> H[Web: highlight và hàng chờ review]
-    H --> I[Nhãn và nhận xét của con người]
-    I --> J[Tập dữ liệu được kiểm tra]
-    J --> K[Huấn luyện và đánh giá offline]
+    F --> G[Small CNN: real-signal/noise ranking]
+    G --> H[Web: highlight and review queue]
+    H --> I[Human labels and notes]
+    I --> J[Reviewed dataset]
+    J --> K[Offline training and evaluation]
     K --> G
 ```
 
-### Nhánh chuyển động
+### Motion branch
 
-Đo vị trí nguồn qua các quan sát, kiểm tra độ dịch chuyển tương đối với nền và liên kết thành tracklet khi đủ epoch. Dùng tọa độ trời, thời gian thật và sai số đo. Tránh khớp global alignment bằng cách khóa vào chính mục tiêu đang di chuyển.
+Measure source positions across observations, check displacement relative to the background, and link a tracklet when enough epochs exist. Use sky coordinates, actual times, and measurement errors. Avoid fitting global alignment anchored to the moving target itself.
 
-Hai epoch có thể tạo ứng viên dịch chuyển nhưng chưa đủ chứng minh quỹ đạo hay phân biệt chắc chắn proper motion, parallax và lỗi ghép nguồn. Số epoch, khoảng cách thời gian và độ sâu quyết định kết luận có thể đưa ra.
+Two epochs can form a displacement candidate but do not prove an orbit or reliably distinguish proper motion, parallax, and source-association error. The number of epochs, time baseline, and depth determine which conclusion is supportable.
 
-### Nhánh độ sáng và transient
+### Brightness and transient branch
 
-Đo flux trên passband tương thích, xây reference từ epoch phù hợp, rồi xét ảnh sai khác và light curve. Reference phải loại epoch đang kiểm tra; tránh coadd thời gian quá dài làm triệt tiêu/nhòe nguồn di chuyển.
+Measure flux in compatible passbands, build a reference from suitable epochs, then evaluate difference images and the light curve. Exclude the epoch under test from the reference; avoid long time coadds that can suppress or smear moving sources.
 
-[ZOGY — Zackay, Ofek & Gal-Yam 2016](https://arxiv.org/html/1601.02655) cung cấp nền tảng image subtraction và thống kê phát hiện với các giả định về noise, registration và sampling. Đây là hướng tham chiếu để đánh giá, không phải lời bảo đảm mọi ảnh SPHEREx đều đáp ứng giả định. Bản đầu có thể dùng phép trừ sau matching được kiểm chứng, rồi so với ZOGY.
+[ZOGY — Zackay, Ofek & Gal-Yam 2016](https://arxiv.org/html/1601.02655) provides a basis for image subtraction and detection statistics under assumptions about noise, registration, and sampling. It is a reference direction to evaluate, not a guarantee that all SPHEREx images meet its assumptions. The first version could use validated subtraction after matching, then compare it with ZOGY.
 
-Resampling và convolution làm tương quan nhiễu. Do đó không gọi một ảnh residual chia đơn giản cho căn variance là "sigma khoa học đã hiệu chuẩn". Kiểm tra phân bố nền thực tế và injection–recovery trước khi công bố ý nghĩa thống kê.
+Resampling and convolution create correlated noise. Therefore, do not call a residual image divided by the square root of variance a “calibrated scientific sigma.” Check the empirical background distribution and injection–recovery before reporting statistical significance.
 
-## 5. Vision model phù hợp
+## 5. Suitable vision model
 
-### Bản đầu: CNN chấm điểm thật/nhiễu cho ứng viên
+### First version: CNN score for real/noise candidates
 
-[Braai trong ZTF — Duev et al. 2019](https://arxiv.org/html/1907.11259) dùng triplet science/reference/difference để học phân biệt tín hiệu thật và giả. Nhóm có thể kế thừa ý tưởng kiến trúc; ảnh hồng ngoại SPHEREx khác miền dữ liệu ZTF, nên kết quả của ZTF không phải benchmark SPHEREx.
+[Braai in ZTF — Duev et al. 2019](https://arxiv.org/html/1907.11259) uses a science/reference/difference triplet to learn to distinguish real from bogus signals. The team can reuse the architecture idea; SPHEREx infrared images differ from ZTF, so ZTF results are not an SPHEREx benchmark.
 
-Đề xuất đầu vào:
+Proposed inputs:
 
-- Patch khoa học tại epoch đang xét.
-- Patch reference trên cùng lưới và passband tương thích.
-- Ảnh sai khác giữ dấu âm/dương.
-- Mask hợp lệ và độ bất định đã xử lý đúng.
-- Metadata: chênh lệch thời gian, chất lượng ghép phổ/registration, detector, tỷ lệ pixel ảnh hưởng.
+- Science patch at the epoch under review.
+- Reference patch on the same grid and a compatible passband.
+- Difference image retaining positive and negative signs.
+- Validity mask and correctly handled uncertainty.
+- Metadata: time difference, spectral/registration match quality, detector, and affected-pixel fraction.
 
-Kích thước patch và số channel là hyperparameter cần thử; `64×64` là điểm bắt đầu kỹ thuật, không phải thông số đã tối ưu cho SPHEREx. Chuẩn hóa chung phải giữ thông tin thay đổi flux, tránh chuẩn hóa riêng mỗi ảnh đến mức xóa tín hiệu cần tìm.
+Patch size and channel count are hyperparameters to test; `64×64` is a technical starting point, not an SPHEREx-optimized setting. Shared normalization must retain flux-change information; avoid normalizing each image independently in a way that removes the signal of interest.
 
-Đầu ra đầu tiên là **điểm xếp hạng**, kèm khả năng từ chối đánh giá. Phân loại "chuyển động" hay "biến quang" phải dựa thêm vào phép đo theo thời gian. Chỉ gọi score là xác suất sau khi kiểm tra calibration trên tập dữ liệu phù hợp.
+The first output is a **ranking score**, with the option to abstain. Classifying “motion” versus “variability” also requires measurements over time. Call the score a probability only after checking calibration on a suitable dataset.
 
-Không dùng classifier transient ở vị trí cố định làm cổng loại bỏ toàn bộ ứng viên chuyển động. Một nguồn dịch chuyển tạo residual âm tại vị trí cũ, dương tại vị trí mới; đây có thể giống lỗi registration. Nhánh chuyển động cần positive examples riêng và kiểm tra nền sao, thay vì tự gắn mọi dipole là bogus.
+Do not use a fixed-position transient classifier as a gate that removes all moving-source candidates. A moving source creates a negative residual at the old position and a positive residual at the new one; this can resemble registration error. The motion branch needs its own positive examples and checks against the star background instead of labeling every dipole as bogus.
 
-[Repo Braai](https://github.com/dmitryduev/braai) có mã và model tham khảo, được hiển thị với MIT license. Cần kiểm tra riêng provenance/điều kiện của dữ liệu và weights sử dụng, cũng như khả năng chuyển đổi sang ONNX. Không mặc định có sẵn một pretrained model SPHEREx đáp ứng bài toán này.
+The [Braai repository](https://github.com/dmitryduev/braai) provides code and model references under an MIT license. Check the provenance/conditions of the data and weights separately, as well as ONNX conversion compatibility. Do not assume a pretrained SPHEREx model for this task is available.
 
-### Các lựa chọn tiếp theo
+### Later options
 
-| Phương án | Vai trò đề xuất | Khi nào nên đầu tư |
-| --- | --- | --- |
-| CNN trên triplet + metadata | Lọc và xếp hạng giả cảnh báo | Bản đầu, sau khi có baseline và nhãn |
-| Siamese/temporal CNN | Học trực tiếp quan hệ giữa nhiều epoch | Khi đã có tập dữ liệu đủ đa dạng và baseline rõ |
-| Anomaly detection tự giám sát | Tìm trường hợp lạ chưa thuộc các loại quen | Nhánh khám phá bổ sung; phải kiểm tra nhiễu thiết bị |
-| Vision-language model few-shot | Thử nghiệm phân loại triplet và diễn giải cho người review | Có thể thử sớm khi ít nhãn; đo trên SPHEREx trước khi dùng để lọc |
+| Option | Proposed role | When to invest |
+|---|---|---|
+| CNN on triplets + metadata | Filter and rank bogus alerts | First version, after a baseline and labels exist |
+| Siamese/temporal CNN | Learn relations among multiple epochs directly | Once a sufficiently diverse dataset and clear baseline exist |
+| Self-supervised anomaly detection | Find cases outside familiar classes | Additional discovery branch; instrument noise must be checked |
+| Few-shot vision-language model | Experiment with triplet classification and reviewer explanations | Can be tried early with few labels; evaluate on SPHEREx before using for filtering |
 
-Đây là thứ tự ưu tiên thiết kế của nhóm, không phải bảng xếp hạng thực nghiệm. VLM không được tự sinh tọa độ, flux hoặc tuyên bố phát hiện. Template giải thích từ phép đo là lựa chọn ban đầu dễ kiểm chứng hơn.
+This is the team's design priority, not an empirical ranking. A VLM must not generate coordinates, flux, or detection claims. Measurement-derived explanation templates are a more verifiable starting point.
 
-[Stoppa et al., Nature Astronomy 2025](https://www.nature.com/articles/s41550-025-02670-z) báo cáo accuracy trung bình 93% với 15 triplet mẫu mỗi survey trên ba bộ dữ liệu quang học. Kết quả này ủng hộ thử VLM, chưa xác nhận hiệu năng SPHEREx. Prompt của nghiên cứu coi residual âm/dương do misalignment là bogus; bài toán tìm vật thể chuyển động cần sửa và kiểm chứng tiêu chí đó.
+[Stoppa et al., Nature Astronomy 2025](https://www.nature.com/articles/s41550-025-02670-z) reports a mean accuracy of 93% using 15 sample triplets per survey across three optical datasets. This supports trying a VLM, but does not validate performance on SPHEREx. The study's prompt treats positive/negative residuals from misalignment as bogus; a moving-object search needs that criterion revised and tested.
 
-Có thể chạy đối chứng VLM trên một tập giữ lại cùng baseline/CNN. Không sao chép policy ưu tiên "biến quang ít thú vị" của nghiên cứu transient: với đề này, biến quang chính là tín hiệu cần tìm. Tự đánh giá coherence của VLM chỉ là một feature thử nghiệm, không thay thế calibration hoặc review độc lập.
+A VLM can be compared with a baseline/CNN on the same held-out set. Do not copy the transient study's policy of preferring “less interesting” variables: variability is itself the target signal here. VLM self-rated coherence is only an experimental feature, not a substitute for calibration or independent review.
 
-## 6. Web app và vị trí chạy model
+## 6. Web application and model placement
 
-**Web-based** có hai cách triển khai: người dùng truy cập model qua API hoặc tải model nhỏ về trình duyệt. Đề xuất hỗ trợ backend trước để chuẩn hóa đánh giá, rồi thêm inference trong trình duyệt sau khi đã có model hữu ích.
+“Web-based” permits two deployment options: users access the model through an API, or download a small model to the browser. The proposal is to support backend inference first for standardized evaluation, then add in-browser inference after the model proves useful.
 
-| Thành phần | Công nghệ đề xuất | Trách nhiệm |
-| --- | --- | --- |
-| Giao diện | Next.js/React + TypeScript | Truy vấn, timeline, inspector, review queue |
-| Bản đồ trời | Aladin Lite hoặc viewer cutout riêng | Tọa độ, vùng phủ, catalog và overlay |
-| API | Python/FastAPI | Tạo job và trả metadata/kết quả |
-| Worker khoa học | Astropy, PyVO/Astroquery, reproject, Photutils | FITS, WCS, PSF, photometry, phát hiện |
-| Huấn luyện | PyTorch hoặc framework phù hợp với artifact tái sử dụng | Dataset, model và đánh giá có phiên bản |
-| Trình duyệt | ONNX Runtime Web trong Web Worker | Xếp hạng patch khi thiết bị đáp ứng |
-| Lưu trữ logic | Object store + cơ sở dữ liệu kết quả | Tách ảnh/tensor khỏi metadata và lịch sử review |
+| Component | Proposed technology | Responsibility |
+|---|---|---|
+| Interface | Next.js/React + TypeScript | Queries, timeline, inspector, review queue |
+| Sky map | Aladin Lite or custom cutout viewer | Coordinates, coverage, catalogs, overlays |
+| API | Python/FastAPI | Create jobs and return metadata/results |
+| Science worker | Astropy, PyVO/Astroquery, reproject, Photutils | FITS, WCS, PSF, photometry, detection |
+| Training | PyTorch or a framework suited to reusable artifacts | Versioned datasets, models, and evaluation |
+| Browser | ONNX Runtime Web in a Web Worker | Rank patches when device capabilities allow |
+| Logical storage | Object store + result database | Separate images/tensors from metadata and review history |
 
-Chưa chọn hoặc provision dịch vụ hosting, database, object store hay GPU. Đây là sơ đồ thành phần, không phải hạ tầng đã có.
+No hosting service, database, object store, or GPU has been selected or provisioned. This is a component diagram, not infrastructure that already exists.
 
-[ONNX Runtime Web](https://onnxruntime.ai/docs/tutorials/web/) hỗ trợ WebGPU và WASM; các execution provider có khả năng hỗ trợ operator khác nhau. [Hướng dẫn WebGPU](https://onnxruntime.ai/docs/tutorials/web/ep-webgpu.html) xác nhận cách dùng GPU trong browser. Cần feature detection, kiểm tra model thực tế và đường fallback WASM/API; không hứa mọi trình duyệt có GPU phù hợp.
+[ONNX Runtime Web](https://onnxruntime.ai/docs/tutorials/web/) supports WebGPU and WASM; execution providers support different operators. The [WebGPU guide](https://onnxruntime.ai/docs/tutorials/web/ep-webgpu.html) documents browser GPU usage. Feature detection, testing the actual model, and a WASM/API fallback are required; do not promise that every browser has a suitable GPU.
 
-Phần FITS/PSF và batch lớn đặt ở worker, không chạy trong mỗi lần React render. Backend trả preview để xem và tensor số để infer theo nhu cầu. Giới hạn vùng trời, số epoch và tài nguyên mỗi job; cache theo manifest, pipeline version và model version. Giao diện theo dõi tiến độ thay vì giữ một HTTP request dài đến khi xử lý xong.
+FITS/PSF processing and large batches belong in workers, not in each React render. The backend returns previews and numeric tensors for on-demand inference. Limit sky area, epochs, and resources per job; cache by manifest, pipeline version, and model version. The interface should show progress instead of holding one long HTTP request until processing finishes.
 
-Kết quả được lưu chính thức cần có pipeline/model version và có thể tái tạo trên backend; score chạy phía client là hỗ trợ tương tác, không phải kết quả tin cậy mặc định để tự ghi đè dữ liệu chung.
+Results stored as official should include pipeline/model versions and be reproducible on the backend; client-side scores are interaction aids, not trusted results that automatically overwrite shared data.
 
-## 7. Người dùng sẽ thao tác như thế nào
+## 7. User interaction
 
 ### Explore
 
-Nhập RA/Dec hoặc chọn mục tiêu mẫu; chọn thời gian, trường nhìn và bước sóng. Hiển thị ngay ma trận thời gian × phổ cho biết các ảnh nào có thể so sánh. Playback ghi timestamp và khoảng thời gian thật, không khiến cadence không đều trông như camera thời gian thực.
+Enter RA/Dec or choose a sample target; select time, field of view, and wavelength. Show a time × spectrum matrix immediately to indicate which images can be compared. Playback includes timestamps and actual time intervals; do not make irregular cadence look like real-time video.
 
 ### Inspect
 
-Ảnh chính có vòng highlight gắn với tọa độ trời; nhấp vào mở đồng thời science/reference/difference. Bảng cạnh bên hiển thị light curve có sai số, tọa độ qua epoch, các phép đo và cờ chất lượng. Màu sắc không phải dấu hiệu duy nhất để phân biệt các loại ứng viên.
+The main image has a highlight linked to sky coordinates; clicking opens science/reference/difference together. A side panel shows the light curve with errors, coordinates across epochs, measurements, and quality flags. Color alone must not distinguish candidate classes.
 
-Ưu tiên overlay vùng residual hoặc đường đi đo được. Saliency map của model, nếu có, chỉ bổ sung chẩn đoán; không gọi đó là vùng thay đổi đã được xác nhận.
+Prefer overlays of residual regions or measured tracks. A model saliency map, if available, is an additional diagnostic; do not call it a confirmed change region.
 
 ### Review
 
-Reviewer chọn "có dấu hiệu thật", "nhiễu/lỗi xử lý" hoặc "chưa đủ bằng chứng", kèm loại thay đổi và nhận xét. Giữ cả kết quả model ban đầu, người review, thời gian và bằng chứng đã xem. Tránh đặt nhãn quyết định là "đã phát hiện hành tinh".
+The reviewer selects “real-signal candidate,” “noise/processing artifact,” or “insufficient evidence,” with change type and a note. Retain the initial model output, reviewer, time, and evidence inspected. Do not label a decision “planet discovered.”
 
-Một phần hàng chờ dành cho điểm cao; một phần cho trường hợp không chắc/khác miền và mẫu ngẫu nhiên. Cách này giúp phát hiện các lỗi model đang bỏ sót. Mâu thuẫn nhãn được đưa cho reviewer khác; không tự động huấn luyện lại ngay sau mỗi lượt click.
+Reserve some of the queue for high scores and some for uncertain/out-of-domain cases and random samples. This helps surface errors the model is missing. Send label conflicts to another reviewer; do not retrain automatically after every click.
 
-## 8. Huấn luyện và đánh giá
+## 8. Training and evaluation
 
-Năm mục tiêu trong đề là smoke test khoa học, không đủ làm dataset huấn luyện và đánh giá tổng quát.
+The five challenge targets are science smoke tests, not enough for a general training/evaluation dataset.
 
-Tập dữ liệu đề xuất kết hợp:
+Proposed dataset combination:
 
-1. Ứng viên SPHEREx thật được người có chuyên môn kiểm tra.
-2. Hard negatives: ghost, saturation, lệch WCS/PSF, mép ảnh, nguồn chồng lấn và ảnh khác bước sóng.
-3. Nguồn giả được bơm vào ảnh số gốc bằng PSF phù hợp: thay đổi flux hoặc vị trí có kiểm soát. Chạy lại toàn pipeline để đo tỷ lệ khôi phục; mô tả rõ noise/SED giả định và giới hạn mô phỏng.
+1. Real SPHEREx candidates reviewed by domain specialists.
+2. Hard negatives: ghosts, saturation, WCS/PSF offsets, image edges, blended sources, and cross-wavelength images.
+3. Synthetic sources injected into original digital images using suitable PSFs: controlled flux or position changes. Rerun the full pipeline to measure recovery; document noise/SED assumptions and simulation limits.
 
-Tách train/validation/test theo **nguồn, vùng trời và thời gian** trước khi tạo các cặp/patch tăng cường. Không để các crop của cùng một nguồn hoặc phiên bản xử lý khác nhau của cùng exposure lọt sang tập test. Với temporal evaluation, reference cũng không được dùng dữ liệu tương lai ngoài phạm vi đã định.
+Split train/validation/test by **source, sky region, and time** before creating augmented pairs/patches. Do not put crops from the same source or differently processed versions of the same exposure into the test set. For temporal evaluation, do not include future data in the reference beyond the defined scope.
 
-| Chỉ số | Ý nghĩa |
-| --- | --- |
-| Recall theo flux, vận tốc biểu kiến và điều kiện quan sát | Model bỏ sót tín hiệu nào |
-| Precision và false positives trên mỗi vùng trời/epoch | Reviewer phải loại bao nhiêu nhiễu |
-| Recovery rate qua injection | Toàn pipeline nhìn thấy tín hiệu ở đâu |
-| Sai số vị trí và flux | Kết quả có thể dùng để đo đến mức nào |
-| Ứng viên hữu ích trên mỗi lượt review/phút | AI có giảm công con người không |
-| Tỷ lệ từ chối đánh giá và calibration của score | Model có biết giới hạn của nó không |
-| Thời gian tải, inference và bộ nhớ trên thiết bị thật | Browser deployment có khả dụng không |
+| Metric | What it tells you |
+|---|---|
+| Recall by flux, apparent speed, and observing conditions | Which signals the model misses |
+| Precision and false positives per sky region/epoch | How much noise reviewers must reject |
+| Injection recovery rate | Where the full pipeline can see a signal |
+| Position and flux errors | How far the result can be used for measurement |
+| Useful candidates per review pass/minute | Whether AI reduces human workload |
+| Abstention rate and score calibration | Whether the model recognizes its limits |
+| Load time, inference, and memory on real devices | Whether browser deployment is practical |
 
-So ba cấu hình trên cùng tập giữ lại: baseline khoa học; baseline + CNN; baseline + CNN + policy hàng chờ. Chỉ giữ CNN nếu nó cải thiện chất lượng/khối lượng review ở recall phù hợp. Các chỉ tiêu số cụ thể phải chốt sau pilot, chưa có căn cứ để cam kết "độ chính xác 99%".
+Compare three configurations on the same held-out set: scientific baseline; baseline + CNN; and baseline + CNN + queue policy. Keep the CNN only if it improves review quality/workload at acceptable recall. Set concrete thresholds after a pilot; there is no basis to promise “99% accuracy.”
 
-## 9. Trình tự thực hiện
+## 9. Implementation sequence
 
-### Cổng 0 — xác minh dữ liệu
+### Gate 0 — verify the data
 
-Tạo bảng cho 5 mục tiêu: vùng phủ, epoch, passband, release, chất lượng và tín hiệu kỳ vọng. Tải vài cutout và kiểm tra nội dung thực. Điều kiện qua cổng: ít nhất một chuỗi có thể so sánh được và các giới hạn còn lại được ghi rõ.
+Create a table for all five targets with coverage, epochs, passband, release, quality, and expected signal. Download a few cutouts and inspect real content. Gate condition: at least one comparable sequence exists and remaining limitations are documented.
 
-### Cổng 1 — một luồng web hoàn chỉnh
+### Gate 1 — one complete web workflow
 
-Chọn một vùng có dữ liệu thực phù hợp; dựng truy vấn → xử lý → playback → ứng viên → review. Lưu các frame đã kiểm chứng để demo ổn định, đồng thời ghi nguồn và timestamp. Nếu truy vấn mới không có dữ liệu so sánh, trả trạng thái trung thực.
+Choose a region with suitable real data; build query → processing → playback → candidate → review. Cache verified frames for a stable demo while recording source and timestamp. If a new query has no comparable data, return an honest status.
 
-### Cổng 2 — AI có ích
+### Gate 2 — useful AI
 
-Gắn CNN khi có nhãn và đánh giá độc lập. Có thể demo model thực nghiệm trên nguồn bơm giả nhưng phải gắn nhãn mô phỏng; không báo kết quả đó là hiệu năng tìm thiên thể thật.
+Add the CNN once labels and independent evaluation exist. A demo model can be tested on injected sources, but must be labeled as a simulation; do not report it as real-object detection performance.
 
-### Phạm vi 48 giờ giả định
+### Assumed 48-hour scope
 
-Đây là khung ước lượng cho hackathon 48 giờ, không phải lịch sự kiện đã được xác minh:
+This is an estimate for a 48-hour hackathon, not a verified event schedule:
 
-| Khoảng thời gian | Đầu ra ưu tiên |
-| --- | --- |
-| 0–8 giờ | Kiểm tra dữ liệu, manifest, một chuỗi ảnh hợp lệ |
-| 8–20 giờ | Baseline + viewer playback và trạng thái lỗi |
-| 20–32 giờ | Highlight, inspector, review và lưu provenance |
-| 32–42 giờ | CNN thực nghiệm nếu đủ nhãn; kiểm tra độc lập và browser export nếu khả thi |
-| 42–48 giờ | Kiểm thử mục tiêu, ghi giới hạn, demo và thuyết minh |
+| Time range | Priority output |
+|---|---|
+| 0–8 hours | Check data and manifest; find one valid image sequence |
+| 8–20 hours | Baseline viewer with playback and error states |
+| 20–32 hours | Highlights, inspector, review, provenance storage |
+| 32–42 hours | Experimental CNN if labels suffice; independent check and browser export if feasible |
+| 42–48 hours | Test targets, document limits, demo, and presentation |
 
-Huấn luyện một model tổng quát đáng tin và kiểm chứng đủ nhiều điều kiện là giai đoạn nghiên cứu tiếp theo. Không đặt việc train model lớn từ đầu làm điều kiện để có một ứng dụng sử dụng được.
+Training a reliable general model and validating enough conditions is later research. Do not make training a large model from scratch a requirement for a usable application.
 
-## 10. Những điểm chưa được chứng minh trong nghiên cứu này
+## 10. What this research has not established
 
-- Đã kiểm tra thành công metadata vùng WISE 0855 qua HTTPS/SIA2 như ghi ở phần 2; chưa kiểm tra đủ 5 mục tiêu hoặc tải/đo FITS. Bằng chứng metadata không thay thế kiểm tra dữ liệu ảnh thực.
-- Chưa xác nhận số cặp ảnh có passband và chất lượng phù hợp cho từng mục tiêu.
-- Chưa huấn luyện, chuyển ONNX hoặc benchmark bất kỳ model nào trên SPHEREx.
-- Chưa chọn dịch vụ triển khai hoặc ước lượng chi phí từ workload thực.
-- PDF Explanatory Supplement hiện tại quá lớn để công cụ web đọc trực tiếp; các kết luận ở đây dựa vào hướng dẫn HTML chính thức, tutorial và bài báo đã truy cập. Cần đọc supplement khi triển khai chi tiết calibration/bitmask.
+- Metadata for the WISE 0855 region was successfully checked over HTTPS/SIA2 as recorded in section 2; all five targets were not checked, and FITS images were not downloaded/measured. Metadata evidence does not replace inspection of image data.
+- The number of image pairs with passband and quality suitable for each target has not been confirmed.
+- No model has been trained, converted to ONNX, or benchmarked on SPHEREx.
+- No deployment service has been selected, and cost has not been estimated from real workloads.
+- The current Explanatory Supplement PDF is too large for the web tool to read directly; conclusions here rely on official HTML guides, tutorials, and papers accessed. Read the supplement when implementing detailed calibration/bitmask handling.

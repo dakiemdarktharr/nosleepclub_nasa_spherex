@@ -1,63 +1,63 @@
-# Checklist đề bài — Planet X and SPHEREx
+# Challenge Requirements Checklist — Planet X and SPHEREx
 
-> Checklist nghiệm thu theo challenge **Planet X and SPHEREx** của NASA Space Apps 2026. Các ô để trống là mục cần nhóm xác minh và tick khi có bằng chứng; không đồng nghĩa chức năng hiện chưa có.
+> Acceptance checklist for NASA Space Apps Challenge 2026 challenge **Planet X and SPHEREx**. An unchecked box marks an item for the team to verify and support with evidence; it does not necessarily mean the feature is absent.
 
-**Nguồn chính thức**
+**Official sources**
 
 - [Challenge Details](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details)
 - [Challenge Resources](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=resources)
 
-Đã đối chiếu nội dung trang chính thức ngày 14/11/2026. Challenge được xếp độ khó **Advanced**.
+The official challenge page was reviewed on 14 November 2026. The challenge is rated **Advanced**.
 
-## 1. Mục tiêu bắt buộc
+## 1. Required objectives
 
-- [ ] **R1 — Công cụ công khai:** Xây dựng một web tool hướng tới công chúng.
-- [ ] **R2 — Đúng dữ liệu:** Hiển thị ảnh bầu trời từ sứ mệnh NASA SPHEREx.
-- [ ] **R3 — Tọa độ vùng trời:** Cho phép người dùng nhập tọa độ Right Ascension (RA) và declination (Dec) của một vùng trời.
-- [ ] **R4 — Chuỗi theo thời gian:** Hiển thị một chuỗi ảnh của cùng vùng trời như một video ngắn.
-- [ ] **R5 — Dễ nhận ra thay đổi:** Giúp người dùng nhanh chóng quan sát thay đổi theo thời gian và phát hiện các vật thể đang dịch chuyển.
-- [ ] **R6 — Kiểm thử Barnard’s Star:** Thử công cụ trên Barnard’s Star.
-- [ ] **R7 — Kiểm thử Epsilon Indi B:** Thử công cụ trên Epsilon Indi B, một cặp sao lùn nâu quay quanh một ngôi sao.
-- [ ] **R8 — Kiểm thử WISE 0855:** Thử trên WISE 0855 tại RA 08h55m10.831s, Dec −7°14′42.53″; đây là sao lùn nâu chuyển động nhanh.
-- [ ] **R9 — Kiểm thử RW Aurigae:** Thử công cụ trên sao biến quang RW Aurigae.
-- [ ] **R10 — Kiểm thử R Draconis:** Thử công cụ trên sao biến quang R Draconis.
+- [ ] **R1 — Public tool:** Build a web tool for the public.
+- [ ] **R2 — Correct data:** Display sky images from NASA’s SPHEREx mission.
+- [ ] **R3 — Sky coordinates:** Allow users to enter right ascension (RA) and declination (Dec) for a region of the sky.
+- [ ] **R4 — Time sequence:** Display a sequence of images of the same region as a short video.
+- [ ] **R5 — Make changes easier to see:** Help users quickly inspect changes over time and identify moving objects.
+- [ ] **R6 — Barnard’s Star test:** Test the tool with Barnard’s Star.
+- [ ] **R7 — Epsilon Indi B test:** Test the tool with Epsilon Indi B, a brown-dwarf pair orbiting a star.
+- [ ] **R8 — WISE 0855 test:** Test the tool with WISE 0855 at RA 08h55m10.831s, Dec −7°14′42.53″; it is a fast-moving brown dwarf.
+- [ ] **R9 — RW Aurigae test:** Test the tool with the variable star RW Aurigae.
+- [ ] **R10 — R Draconis test:** Test the tool with the variable star R Draconis.
 
-## 2. Bối cảnh khoa học của đề
+## 2. Scientific context in the challenge
 
-Các ý dưới đây giải thích vì sao challenge quan tâm tới chuỗi ảnh; chúng không tự tạo thêm tính năng bắt buộc ngoài mục 1.
+The following points explain why the challenge focuses on image sequences. They do not add required features beyond the objectives in Section 1.
 
-- SPHEREx lập bản đồ toàn bầu trời mỗi sáu tháng.
-- Nhiệm vụ thu thập ảnh ở 102 dải cận hồng ngoại.
-- Tập dữ liệu bao gồm hơn một tỷ vật thể; đề nhắc đến sao lùn nâu, sao chổi, tiểu hành tinh, sao, siêu tân tinh và thiên hà.
-- Chuyển động biểu kiến giữa các thời điểm có thể giúp tìm vật thể mới và đo khoảng cách.
+- SPHEREx maps the entire sky every six months.
+- The mission collects images in 102 near-infrared bands.
+- The dataset includes more than one billion objects; the challenge mentions brown dwarfs, comets, asteroids, stars, supernovae, and galaxies.
+- Apparent motion between observations can help locate new objects and measure distance.
 
-## 3. Các hướng mở rộng tùy chọn
+## 3. Optional extensions
 
-Challenge ghi rõ các cân nhắc sau là **không bắt buộc**. Chỉ đánh dấu nếu nhóm chọn triển khai và có bằng chứng kiểm tra.
+The challenge explicitly marks the following considerations as **optional**. Check an item only if the team chooses to implement it and has evidence that it works.
 
-- [ ] **O1 — Cập nhật dữ liệu:** Thiết kế để dễ cập nhật các bản phát hành SPHEREx mới.
-- [ ] **O2 — 102 dải hồng ngoại:** Tìm cách trình bày dữ liệu từ 102 dải để hỗ trợ khám phá.
-- [ ] **O3 — Cộng theo detector:** Cân nhắc cộng dữ liệu của sáu mảng detector riêng rẽ để cải thiện signal-to-noise.
-- [ ] **O4 — Phổ:** Có thể tạo phổ theo yêu cầu.
-- [ ] **O5 — Cộng/trừ ảnh:** Cho phép cộng hoặc trừ các ảnh lấy ở những thời điểm khác nhau.
-- [ ] **O6 — Trường nhìn:** Cho người dùng chọn field of view, nêu rõ đánh đổi giữa vùng quan sát rộng hơn và thời gian truyền dữ liệu lâu hơn.
-- [ ] **O7 — Overlay catalog:** Cho phép chồng dữ liệu từ các sứ mệnh khác như Gaia hoặc WISE.
-- [ ] **O8 — Chia sẻ tọa độ:** Cho phép đặt tọa độ trong URL để nhúng/chia sẻ truy vấn.
-- [ ] **O9 — Metadata:** Hiển thị metadata hữu ích, ví dụ cờ nhiễm.
-- [ ] **O10 — Công cụ thiên văn:** Đánh giá công cụ công khai như Astropy để xử lý dữ liệu và Aladin để hiển thị dữ liệu thiên văn.
+- [ ] **O1 — Data updates:** Design the tool so new SPHEREx releases can be added easily.
+- [ ] **O2 — 102 infrared bands:** Consider ways to present all 102 bands to support exploration.
+- [ ] **O3 — Combine detector arrays:** Consider combining data from the six detector arrays independently to improve signal-to-noise.
+- [ ] **O4 — Spectra:** Optionally generate spectra on demand.
+- [ ] **O5 — Image arithmetic:** Allow users to add or subtract images from different observation times.
+- [ ] **O6 — Field of view:** Let users choose the field of view and explain the trade-off between wider coverage and longer data transfer times.
+- [ ] **O7 — Catalog overlays:** Optionally overlay data from other missions, such as Gaia or WISE.
+- [ ] **O8 — Share coordinates:** Allow coordinates to be embedded in a URL so a query can be shared.
+- [ ] **O9 — Metadata:** Display useful metadata, such as contamination flags.
+- [ ] **O10 — Astronomy tools:** Evaluate public tools such as Astropy for data processing and Aladin for astronomical visualization.
 
-## 4. Tài nguyên chính thức để tham khảo
+## 4. Official reference resources
 
-Các liên kết dưới đây là tài nguyên tham khảo, không phải yêu cầu phải tích hợp tất cả vào sản phẩm.
+These links are references; the product is not required to integrate every resource.
 
-- [ ] Xem tài nguyên SPHEREx của NASA/IPAC Infrared Science Archive (IRSA).
-- [ ] Xem các tutorial notebook SPHEREx và cách truy cập dữ liệu bằng Python.
-- [ ] Tham khảo WiseView như một sản phẩm tương tự để lấy cảm hứng.
-- [ ] Dùng Gaia Data Release 3 nếu sản phẩm cần dữ liệu Gaia.
-- [ ] Xem tài nguyên NEOSSat/CADC của Canadian Space Agency nếu phù hợp.
+- [ ] Review SPHEREx resources from the NASA/IPAC Infrared Science Archive (IRSA).
+- [ ] Review SPHEREx tutorial notebooks and Python data-access examples.
+- [ ] Review WiseView as a related product for inspiration.
+- [ ] Use Gaia Data Release 3 if the product needs Gaia data.
+- [ ] Review Canadian Space Agency NEOSSat/CADC resources if relevant.
 
-## 5. Quy ước nghiệm thu
+## 5. Acceptance conventions
 
-- Mỗi ô chỉ được tick khi có bằng chứng cụ thể trong ứng dụng, dữ liệu, kiểm tra hoặc tài liệu.
-- Với mục kiểm thử, ghi lại tọa độ/truy vấn, số quan sát, thời điểm ảnh đầu/cuối, và trạng thái nếu dữ liệu nguồn không có.
-- Không diễn giải khác biệt ảnh thành phát hiện thiên thể đã xác nhận nếu chưa có kiểm chứng khoa học độc lập.
+- Check an item only when there is specific evidence in the application, data, a check, or documentation.
+- For each test target, record the coordinates or query, number of observations, dates of the first and last images, and status if the source data is unavailable.
+- Do not describe an image difference as a confirmed astronomical detection without independent scientific validation.

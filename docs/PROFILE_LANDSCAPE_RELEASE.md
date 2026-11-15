@@ -1,76 +1,32 @@
-# Phát hành chẩn đoán profile — 31/10/2026
+# Profile Diagnostic Release — 2026-10-31
 
-[Mở sản phẩm](https://nosleepclub-nasa-spherex.vercel.app/#profile-landscape)
-→ chọn sao A/B và “Ảnh bị gate chặn”, rồi so với “Ảnh liền trước”. Bốn ô
-đồ thị tách ePSF gốc/hiệu chỉnh và hai vector trọng số đã lưu. Bảng số mở
-bằng Enter; archive tải riêng chứa đủ hai journal. README/NOTICE đã cập nhật;
-mã nguồn riêng dùng MIT, quyền dữ liệu/font/Canva giữ riêng.
+[Open the product](https://nosleepclub-nasa-spherex.vercel.app/#profile-landscape), select star A/B and **Image rejected by the gate**, then compare it with **Previous image**. Four plots separate original/corrected ePSF and the two saved weight vectors. The numeric table opens with Enter; the separate archive contains both full journals. README/NOTICE were updated. Source code uses MIT; data, font, and Canva rights remain separate.
 
-Milestone này đã được triển khai và kiểm tra. Toàn bộ goal production vẫn
-chưa hoàn tất; không có phép đo khoa học hoặc mô hình sai số mới được chấp nhận.
+This milestone was deployed and checked. The overall production goal is still incomplete; no new scientific measurement or error model was accepted.
 
-## Commit, CI và triển khai
+## Commit, CI, and deployment
 
-- [PR #13](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/13)
-  đã merge sau hai check bắt buộc. Head được kiểm tra:
-  `57ba06c9a01812625f869d09307ca39c27285d72`; main production:
-  `da79c6b9b3cb06dfea0126bd88b153d7ce73e89b`. Hai cây Git giống hệt nhau.
-- [CI run 41164187761](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41164187761):
-  564 ca Python, 551 đạt và 13 optional raw-cache/photutils skip. Cả sáu ca
-  Mongo replica set thật đều đạt; bảy suite Node 24 đạt. [Biên nhận CI](evidence/0.10/ci-pr13-57ba06c.json).
-- Local chạy 564 ca: 558 đạt, sáu ca Mongo dành cho CI. Các assertion metadata
-  hình bổ sung được kiểm lại bằng ba ca product và sau đó toàn bộ cây được CI
-  kiểm tra. [Biên nhận local](evidence/0.10/profile-landscape-local-tests.json).
-- Vercel production `dpl_7549bc8xMUnG2yV2ukQBQYUirgAp`, vùng cấu hình `sin1`,
-  READY và alias public đúng commit. [Biên nhận deployment](evidence/0.10/deployment-da79c6b.json).
-  Preview chỉ được xem metadata, không fetch hoặc tạo share link.
+- [PR #13](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/13) merged after two required checks. Checked head: `57ba06c9a01812625f869d09307ca39c27285d72`; production main: `da79c6b9b3cb06dfea0126bd88b153d7ce73e89b`. The two Git trees are identical.
+- [CI run 41164187761](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/actions/runs/41164187761): 564 Python cases, 551 passed and 13 optional raw-cache/photutils skips. All six real Mongo replica-set cases passed; seven Node suites passed. [CI receipt](evidence/0.10/ci-pr13-57ba06c.json).
+- Local run: 564 cases, 558 passed and six Mongo cases reserved for CI. Additional figure-metadata assertions were rechecked with three product cases, then CI checked the full tree. [Local receipt](evidence/0.10/profile-landscape-local-tests.json).
+- Vercel production `dpl_7549bc8xMUnG2yV2ukQBQYUirgAp`, configured region `sin1`, READY with the public alias on the expected commit. [Deployment receipt](evidence/0.10/deployment-da79c6b.json). Preview metadata was inspected only; no fetch or share link was created.
 
-[88 phản hồi production](evidence/0.10/production-da79c6b.json) xác nhận 74
-artifact theo byte Git, commit của cả ba API, FITS/mask contract và vòng QA
-khách mới. Có 85 HTTP 200, hai HTTP 400 và một HTTP 403 theo các ca từ chối
-được định trước; không có 5xx hoặc retry trong lượt này. Tất cả cờ kiểm tra
-ID ổn định, expiry, tách owner, Origin, stale analysis, xóa theo ID và cleanup
-đều đạt. Worktree sạch khi verifier bắt đầu. Credential Mongo không được tải
-về local hay CI; QA chỉ dùng API production bằng session mới.
+The [88 production responses](evidence/0.10/production-da79c6b.json) confirm 74 artifacts byte-for-byte against Git, commits for all three APIs, the FITS/mask contract, and a fresh QA cycle. There were 85 HTTP 200, two HTTP 400, and one HTTP 403 responses under prespecified rejection cases; no 5xx or retry occurred in this run. Checks for stable IDs, expiry, owner separation, Origin, stale analysis, deletion by ID, and cleanup all passed. The worktree was clean when verification began. Mongo credentials were not downloaded locally or into CI; QA used a new session against the production API.
 
-Hai lỗi 502 của lần phát hành trước vẫn ở receipt cũ. Telemetry mới chỉ bổ
-sung enum cho giai đoạn/loại lỗi, không retry hoặc cache. Các fault path đã
-được thử offline; lượt production này không phát sinh lỗi upstream để xác
-nhận sự kiện lỗi thực trên cloud. Chưa kết luận nguyên nhân hoặc độ tin cậy
-từ một lần smoke thành công.
+Two earlier 502 errors remain in the old receipt. New telemetry adds only phase/error-type enums; it does not retry or cache. Fault paths were tested offline; this production run did not trigger an upstream error that could confirm an actual cloud failure event. A single successful smoke test does not establish the cause or reliability.
 
-## Bằng chứng khoa học và giao diện
+## Science and interface evidence
 
-Protocol `704e3ef` khóa trước 112 nhánh. Có 96 nhánh profile và 16 nhánh thiếu
-đầu vào; đủ 14 sao được giữ. Kiểm toán WLS độc lập kiểm 2.760 nút được chọn,
-stencil ba bước tại 192 điểm fit và 480 objective đã lưu. Các file source,
-design, journal và hình đều có hash. [Kết quả đầy đủ](PROFILE_LANDSCAPE_RESULTS.md).
+Protocol `704e3ef` was locked before 112 branches. There are 96 profile branches and 16 missing-input branches; all 14 stars remain in the sample. An independent WLS audit checked 2,760 selected nodes, three-step stencils at 192 fit points, and 480 saved objectives. Source, design, journal, and image files are hashed. See [full results](PROFILE_LANDSCAPE_RESULTS.md).
 
-Hessian dương và các vùng liên thông trên lưới không chứng nhận nghiệm vật lý,
-không phải coverage và không xóa gate cũ. Cả 252 ô assessment và 30 trường
-triển vọng vẫn chưa mở. Chưa tăng độ chính xác thiên văn đã được chứng minh.
+Positive Hessians and connected regions on a grid do not certify physical solutions, establish coverage, or remove the old gate. The 252 assessment cells and 30 prospective fields remain unopened. No improvement in astronomical accuracy has been demonstrated.
 
-Browser public đã hiển thị đúng `96/112`, `16`, phần dành riêng chưa mở và
-PNG 1.404 px tải thành công. [Bằng chứng public](evidence/0.10/profile-production-browser-da79c6b.json)
-và [ảnh chụp](evidence/0.10/profile-production-da79c6b.png) bổ sung cho HTTP.
-Local kiểm đổi sao/ảnh, Enter, Tab và reflow 390 px; bảng có vùng cuộn ngang,
-không tràn toàn trang. Đây chưa phải kiểm toán screen reader/accessibility đầy đủ.
+The public browser showed `96/112`, `16`, the unopened reserved section, and a 1,404 px PNG loaded successfully. [Public evidence](evidence/0.10/profile-production-browser-da79c6b.json) and [screenshot](evidence/0.10/profile-production-da79c6b.png) supplement HTTP checks. Local verification checked star/image selection, Enter, Tab, and 390 px reflow; the table has its own horizontal scroll area without page overflow. This is not a complete screen-reader/accessibility audit.
 
-File dependency vẽ có sẵn được giữ nguyên byte. Một chỉnh sửa tạm thời đã
-được hoàn tác trước CI phát hành; metadata inspection được sửa tương ứng,
-giữ [biên nhận](evidence/0.10/profile-figure-environment-correction.json) và
-lịch sử Git. Không render lại hình hay thay journal/gate khoa học.
+The existing figure dependency file was preserved byte-for-byte. A temporary edit was reverted before release CI; figure inspection metadata was corrected accordingly, with the [receipt](evidence/0.10/profile-figure-environment-correction.json) and Git history retained. Figures were not rerendered and the science journal/gate was not changed.
 
-## Mốc kế tiếp
+## Next milestone
 
-Khóa đối chứng native về tín hiệu, nguồn chồng, template và pha pixel bằng
-nguồn giả độc lập. Trước khi chạy phải có ngân sách bias/thu hồi tín hiệu,
-định danh nguồn, điều kiện từ chối, seed và đủ mẫu số theo từng điều kiện.
-Tiêu chí nghiệm thu là tái tạo được mọi lượt, kiểm toán chân trị/đơn vị/mask,
-báo cáo cả lỗi và đạt ngân sách đã khóa; chưa dùng tập dành riêng để chọn mô hình.
+Lock a native control for signal, blends, template, and pixel phase using independent synthetic sources. Before running it, specify bias/signal-recovery budgets, source identification, refusal conditions, seeds, and denominators for every condition. Acceptance requires reproducing every attempt, auditing truth/units/masks, reporting failures, and meeting the locked budget; do not use reserved data to select a model.
 
-Recovery production, tải đại diện/SLO, full uncertainty coverage, kiểm định
-bầu trời độc lập và các hạng mục còn mở vẫn nằm trong
-[bảng 20 tiêu chí](PRODUCTION_READINESS.md). Các receipt phát hành được lưu ở
-commit tài liệu sau khi kiểm tra; API public vẫn là `da79c6b`, không tự đổi
-theo HEAD của nhánh lưu bằng chứng.
+Production recovery, representative load/SLO, full uncertainty coverage, independent sky validation, and remaining items are still open in the [20-item checklist](PRODUCTION_READINESS.md). Release receipts are stored in a later documentation commit after verification; the public API remains at `da79c6b`, and does not follow the HEAD of the evidence-storage branch automatically.

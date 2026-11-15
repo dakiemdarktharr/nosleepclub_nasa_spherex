@@ -1,88 +1,88 @@
-# WISE 0855: cộng ảnh theo epoch và astrometry độc lập
+# WISE 0855: Epoch Coadds and Independent Astrometry
 
-Ngày thực hiện: 30/10/2026. [Mở demo](http://127.0.0.1:8766/). Các số đầy đủ, covariance, observation ID, URL và hash nằm trong [results.json](../web/data/motion/results.json), [manifest web](../web/data/manifest.json) và evidence JSON của từng cấu hình.
+Run date: 2026-10-30. [Open the demo](http://127.0.0.1:8766/). Full values, covariance, observation IDs, URLs, and hashes are in [results.json](../web/data/motion/results.json), the [web manifest](../web/data/manifest.json), and configuration-specific evidence JSON.
 
-Đây là báo cáo trước khi neo Gaia. Bước mở rộng trường sao đã hoàn thành; xem [kết quả Gaia mới và các giới hạn còn lại](WISE0855_GAIA.md). Các sản phẩm của bước này được giữ nguyên để so sánh.
+This report predates Gaia anchoring. The expanded star-field step is complete; see [new Gaia results and remaining limits](WISE0855_GAIA.md). Products from this step are retained unchanged for comparison.
 
-## Kết quả hiện tại
+## Current results
 
-Đã đo được dấu hiệu dịch chuyển về phía tây của nguồn trong vùng WISE 0855. Hai vị trí được fit độc lập trên pixel gốc, không buộc theo vector chuyển động cũ. Chưa xác nhận chuyển động thiên thể từ phép đo này vì ngân sách sai số hệ thống còn chưa hoàn chỉnh.
+A westward displacement signal has been measured for the source in the WISE 0855 region. Two positions were fit independently on original pixels without forcing the old motion vector. This measurement does not confirm astronomical motion because the systematic-error budget is incomplete.
 
-| Cấu hình | Ảnh mỗi epoch | S/N ảnh đơn tốt nhất → cộng, trước | S/N ảnh đơn tốt nhất → cộng, sau | Đông / Bắc | Độ dịch chuyển ± sai số theo mô hình | RMS sao giữ lại |
-| --- | ---: | ---: | ---: | --- | --- | --- |
-| Phổ chặt, cấu hình chính | 2 | 2,55 → 2,60 | 4,66 → 4,57 | −3,08″ / +1,05″ | 3,25″ ± 1,05″ | 0,53″, 3 sao |
-| Phổ rộng, kiểm tra độ nhạy | 10 | 5,11 → 7,87 | 4,64 → 7,58 | −3,24″ / +0,03″ | 3,25″ ± 0,80″ | 0,66″, 4 sao |
+| Configuration | Images per epoch | Best single-image → coadd S/N, before | Best single-image → coadd S/N, after | East / North | Displacement ± model error | Heldout-star RMS |
+|---|---:|---:|---:|---|---|---|
+| Strict spectrum, primary | 2 | 2.55 → 2.60 | 4.66 → 4.57 | −3.08″ / +1.05″ | 3.25″ ± 1.05″ | 0.53″, 3 stars |
+| Broad spectrum, sensitivity check | 10 | 5.11 → 7.87 | 4.64 → 7.58 | −3.24″ / +0.03″ | 3.25″ ± 0.80″ | 0.66″, 4 stars |
 
-Cấu hình chặt không tăng S/N rõ; giữ nguyên kết quả này. Hai cấu hình dùng chung một số ảnh, không phải hai lần xác minh độc lập. Cấu hình rộng được mở đầu trong web để xem lợi ích cộng ảnh, nhưng được đánh dấu rõ là kiểm tra độ nhạy.
+The strict configuration does not clearly improve S/N; retain the result as is. The two configurations share some images and are not independent confirmations. The broad configuration is shown first on the web to demonstrate coaddition, but is clearly labeled as a sensitivity check.
 
-S/N là thống kê khẩu độ tại vị trí đã fit, chưa phải độ tin cậy của phát hiện mù. Độ phủ khẩu độ trước/sau là 94,7% / 100% ở cấu hình chặt và 84,2% / 100% ở cấu hình rộng. Các ảnh đơn được so tại cùng vị trí và có thêm mặt nạ hợp lệ của ảnh cộng. Đây không phải phép đo tổng thông lượng hoặc bằng chứng biến thiên độ sáng.
+S/N is an aperture statistic at the fitted position, not confidence in a blind detection. Before/after aperture coverage is 94.7% / 100% for strict and 84.2% / 100% for broad. Single images are compared at the same position and additionally use the valid mask from the coadd. This is not a total-flux measurement or evidence of brightness variability.
 
-## Chọn dữ liệu và phổ
+## Data and spectral selection
 
-- Nguồn: SPHEREx QR2, D6, 31 cutout thật trong hai cửa sổ MJD [60989, 60994) và [61151, 61157), tương ứng tháng 11/2025 và tháng 4/2026. Mỗi cutout rộng 0,12°, centered quanh vùng mục tiêu.
-- Giữ IMAGE, VARIANCE, FLAGS, ZODI, native WCS và WCS detector gốc. Mask chất lượng giống baseline, vẫn giữ bit SOURCE.
-- Dùng bản đồ khoa học đầy đủ CWAVE/CBAND `cal-wcs-v4-2025-254`; WCS-WAVE của baseline chỉ dành cho trực quan hóa. Dùng ePSF `cal-epsf-v1-2026-191`, oversampling 5, đã tích chập đáp ứng pixel. Theo IRSA, ePSF mới được khuyến nghị cả cho ảnh QR2.
-- Chọn bước sóng tại vùng mục tiêu trong 4,55–4,94 µm. Ghép một đối một giữa hai epoch theo |Δλ| / bề rộng phổ trung bình, bằng tối ưu assignment; không nhân bản exposure. Gate chặt ≤ 0,20; gate rộng ≤ 0,50. Cấu hình được cố định trước khi fit mục tiêu.
-- Hai ảnh mỗi epoch ở cấu hình chặt là hai cặp gần 4,572/4,578 và 4,606/4,611 µm. Cấu hình rộng có 10 cặp trải đến khoảng 4,94 µm. Đây là cộng nhiều kênh phổ có trọng số, không phải 10 ảnh cùng bước sóng.
-- Mỗi cặp dùng trọng số tỷ lệ nghịch tổng variance trung vị của hai exposure; chuẩn hóa rồi dùng **cùng trọng số phổ ở cả hai epoch**. Có chuẩn hóa cục bộ theo coverage; chỉ giữ pixel có ≥90% tổng trọng số đầu vào. Ghép tâm/bề rộng chưa đảm bảo toàn bộ đáp ứng phổ tương đương.
+- Source: SPHEREx QR2, D6, 31 real cutouts in MJD windows [60989, 60994) and [61151, 61157), corresponding to November 2025 and April 2026. Each cutout is 0.12° wide, centered on the target region.
+- Retain IMAGE, VARIANCE, FLAGS, ZODI, native WCS, and original detector WCS. Use the baseline quality mask and retain the SOURCE bit.
+- Use the complete science CWAVE/CBAND map `cal-wcs-v4-2025-254`; baseline WCS-WAVE is for visualization only. Use ePSF `cal-epsf-v1-2026-191`, oversampling 5, convolved with pixel response. IRSA recommends the newer ePSF for QR2 images as well.
+- Select target-region wavelengths within 4.55–4.94 µm. Match exposures one-to-one across epochs by `|Δλ| / mean spectral width`, using an assignment optimizer and no duplicated exposures. Strict gate ≤0.20; broad gate ≤0.50. Fix configuration before fitting the target.
+- Strict uses two pairs per epoch near 4.572/4.578 and 4.606/4.611 µm. Broad has 10 pairs extending to about 4.94 µm. This is a weighted coadd of multiple spectral channels, not 10 images at the same wavelength.
+- Each pair uses weights inversely proportional to the summed median variance of the two exposures. Normalize, then use the **same spectral weights in both epochs**. Apply local coverage normalization; retain pixels with at least 90% of total input weight. Matching central wavelength/width does not guarantee identical full spectral response.
 
-URL và SHA-256 của hai calibration được ghim trong `prepare_motion_data.py`; raw giữ ở `data/raw/` và không commit. Tệp hiệu chuẩn mới trong tương lai không tự thay đổi phép thử này.
+The two calibration URLs and SHA-256 hashes are pinned in `prepare_motion_data.py`; raw data stays uncommitted under `data/raw/`. A future calibration file does not silently change this experiment.
 
-## Cộng ảnh và đo vị trí
+## Coaddition and position measurement
 
-1. Trừ ZODI và nền trung vị đã sigma clip. Chiếu mỗi ảnh lên TAN 64×64, 6,15″/pixel bằng toán tử bilinear thưa, dùng bình phương trọng số để truyền variance. Thiếu support được giữ là thiếu dữ liệu.
-2. Chọn sao sáng có mặt ở cả hai ảnh cộng, tránh mục tiêu và rìa. Chia xen kẽ thành tập căn chỉnh và tập giữ lại: 3/3 hoặc 4/4. Từng exposure fit ePSF cho sao căn chỉnh; cần ít nhất 2 sao có S/N ≥7 và fit không chạm biên. Chỉ hiệu chỉnh translation, không fit biến dạng cao bậc với ít sao.
-3. Fit ePSF trên pixel gốc của mỗi epoch, centroid chung cho các exposure trong epoch; mỗi exposure có biên độ và mặt phẳng nền riêng. Không ép chung màu phổ hoặc thông lượng. Hai epoch dùng cùng vùng tìm kiếm 31,5 ±2,5 pixel, không dùng vector dự báo làm ràng buộc vị trí.
-4. Fit nhiều điểm khởi đầu, kiểm tra hội tụ và biên. Tất cả centroid mục tiêu hội tụ và không chạm biên. Reduced chi-square khoảng 1,09–1,18. Vị trí là trung bình thời gian trong epoch; effective MJD dùng trọng số S/N² từ fit. Chưa fit chuyển động trong cửa sổ <6 ngày; ngoại suy cũ gợi ý smear <0,14″.
-5. Covariance centroid từ Jacobian, tăng khi reduced chi-square >1. Kiểm tra thêm 128 mô phỏng noise Gaussian trên pixel gốc mỗi epoch/cấu hình, seed được lưu. Lấy phần tăng covariance dương từ bootstrap; không giảm sai số hình thức. Tỷ lệ fit chạm biên trong mô phỏng là 0.
-6. Đo dịch chuyển của sao giữ lại bằng cùng phương pháp, độc lập với fit căn chỉnh. Thêm second moment của các residual giữ lại (gồm cả bias trung bình), cùng covariance căn chỉnh trung bình của hai epoch, vào covariance dịch chuyển mục tiêu. Hạng này có thể đếm một phần noise hai lần, được giữ theo hướng thận trọng.
+1. Subtract ZODI and a sigma-clipped median background. Reproject each image to a 64×64 TAN grid at 6.15″/pixel using a sparse bilinear operator; propagate variance with squared weights. Missing support remains missing data.
+2. Select bright stars present in both coadds, away from the target and edges. Alternate them into alignment and heldout sets: 3/3 or 4/4. Fit ePSFs to alignment stars in each exposure; require at least two stars with S/N ≥7 and no boundary hit. Fit translation only; do not fit high-order distortion with few stars.
+3. Fit ePSF to original pixels in each epoch, with a shared centroid across exposures within the epoch; each exposure has its own amplitude and background plane. Do not constrain shared spectral color or flux. Both epochs use the same search region, 31.5 ±2.5 pixels; the predicted vector is not a position constraint.
+4. Use multiple initial positions and check convergence/bounds. All target centroids converge and avoid bounds. Reduced chi-square is about 1.09–1.18. Position is the time-weighted mean within the epoch; effective MJD uses fitted S/N² weights. Motion is not fit across the <6-day window; old extrapolation suggests <0.14″ smear.
+5. Centroid covariance comes from the Jacobian and is inflated when reduced chi-square >1. Also run 128 Gaussian-noise simulations on original pixels for each epoch/configuration with saved seeds. Use only the positive covariance increase from bootstrap; do not reduce formal error. No simulated fit hits a boundary.
+6. Measure heldout-star displacements with the same method, independently of the alignment fit. Add the second moment of heldout residuals (including mean bias), plus the mean alignment covariance across both epochs, to the target displacement covariance. This term may count some noise twice and is retained conservatively.
 
-| Cấu hình | Effective MJD trước / sau | RA, Dec trước (độ) | RA, Dec sau (độ) |
-| --- | --- | --- | --- |
-| Chặt | 60989,366953 / 61153,061990 | 133,759831; −7,242381 | 133,758970; −7,242088 |
-| Rộng | 60990,692919 / 61154,178274 | 133,759818; −7,242080 | 133,758910; −7,242072 |
+| Configuration | Effective MJD before / after | RA, Dec before (degrees) | RA, Dec after (degrees) |
+|---|---|---|---|
+| Strict | 60989.366953 / 61153.061990 | 133.759831; −7.242381 | 133.758970; −7.242088 |
+| Broad | 60990.692919 / 61154.178274 | 133.759818; −7.242080 | 133.758910; −7.242072 |
 
-Đây là tọa độ theo WCS SPHEREx được căn chỉnh tương đối, chưa neo một frame astrometry ngoài. Covariance đầy đủ có trong JSON. Web hiển thị σ từng trục với hạng căn chỉnh và nửa hạng giữ lại mỗi epoch; tổng hai covariance này khớp covariance hiệu vị trí. Ellipse 68% dùng Δχ²=2,30 theo giả định Gaussian hai chiều. Sai số của độ dài vector là phép truyền bậc nhất theo hướng vector, không phải độ chính xác hệ thống tuyệt đối.
+These are positions in the relatively aligned SPHEREx WCS, not anchored to an external astrometric frame. Full covariance is in JSON. The web displays per-axis σ with alignment and half the heldout-star term per epoch; the two covariance contributions sum to the displacement covariance. The 68% ellipse uses Δχ²=2.30 under a 2D Gaussian assumption. Uncertainty in vector length is first-order propagation along the vector direction, not absolute systematic accuracy.
 
-Để tính S/N khẩu độ bán kính 2,5 pixel và vành nền 4–6 pixel, trọng số khẩu độ/nền được truyền ngược qua toán tử chiếu về pixel gốc. Cách này giữ covariance do nội suy trong thống kê khẩu độ; vẫn giả định pixel gốc và các exposure độc lập. Mặt phẳng nền được khử cả với mặt nạ không đối xứng.
+For aperture S/N with 2.5-pixel radius and 4–6-pixel background annulus, aperture/background weights are propagated back through the reprojection operator to original pixels. This retains interpolation covariance in the aperture statistic, while still assuming independence between original pixels and exposures. Background-plane removal works with asymmetric masks.
 
-## Đối chiếu dự báo và đối chứng
+## Prediction comparison and controls
 
-Dự báo ngoài dùng [Luhman 2014, Tables 1–2](https://arxiv.org/pdf/1404.6501): μRA cos Dec = −8,06″/năm, μDec = +0,70″/năm, parallax 0,454″, cộng dịch chuyển barycentric Trái Đất từ ephemeris built-in Astropy. Ở cấu hình rộng, dự báo Đông/Bắc khoảng −4,47″ / +0,54″, so với đo −3,24″ / +0,03″. Đây là đối chiếu; chưa fit proper motion và parallax riêng bằng hai epoch. Dấu dự báo nét đứt trên ảnh vẫn là ngoại suy tuyến tính cũ không parallax, được ghi riêng để tránh lẫn với vector dự báo trong biểu đồ.
+External prediction uses [Luhman 2014, Tables 1–2](https://arxiv.org/pdf/1404.6501): μRA cos Dec = −8.06″/year, μDec = +0.70″/year, parallax 0.454″, plus Earth's barycentric displacement from Astropy's built-in ephemeris. For the broad configuration, predicted East/North is about −4.47″ / +0.54″ versus measured −3.24″ / +0.03″. This is a comparison; proper motion and parallax are not independently fit from two epochs. The dashed image annotation still shows the old linear extrapolation without parallax and is recorded separately to distinguish it from the vector in the plot.
 
-Mahalanobis 2 chiều của dịch chuyển so với zero là 3,18 (chặt), 4,34 (rộng). **Không chuyển thành Gaussian sigma, xác suất phát hiện hay xác nhận thiên thể**, vì sai số hệ thống và lựa chọn nguồn chưa được hiệu chuẩn đầy đủ.
+Two-dimensional Mahalanobis displacement relative to zero is 3.18 (strict) and 4.34 (broad). **Do not convert these to Gaussian sigma, detection probability, or astronomical confirmation**, because systematic errors and source selection are not fully calibrated.
 
-Đã tiêm nguồn ePSF giả ở vị trí ngoài mục tiêu trên nền dữ liệu thật; dữ liệu hiển thị và sao căn chỉnh không bị thay đổi:
+Synthetic ePSF sources were injected at off-target locations on real-data backgrounds; displayed data and alignment stars were not changed:
 
-| Cấu hình | Nguồn đứng yên: vector đo (pixel) | Nguồn dịch chuyển thật (0,60; 0,05) pixel: vector đo | Sai lệch Mahalanobis đứng yên / dịch chuyển |
-| --- | --- | --- | --- |
-| Chặt | (0,008; −0,096) | (0,690; −0,025) | 0,87 / 1,10 |
-| Rộng | (0,008; −0,145) | (0,656; −0,088) | 2,59 / 2,77 |
+| Configuration | Stationary source: measured vector (pixel) | True-moving source `(0.60, 0.05)` pixel: measured vector | Mahalanobis error, stationary / moving |
+|---|---|---|---|
+| Strict | (0.008; −0.096) | (0.690; −0.025) | 0.87 / 1.10 |
+| Broad | (0.008; −0.145) | (0.656; −0.088) | 2.59 / 2.77 |
 
-Nguồn đứng yên vẫn lệch 0,59″ / 0,89″. Đối chứng này chỉ có một vị trí và một mức biên độ, không thêm shot noise nguồn, dùng calibration cố định. Nó cho thấy ảnh hưởng nền/blending có thể đáng kể; không dùng kết quả một vị trí để chỉnh sai số mục tiêu cho đẹp. Chưa có benchmark completeness hoặc false-positive rate.
+The stationary source is still offset by 0.59″ / 0.89″. This control has one position and one amplitude, adds no source shot noise, and uses fixed calibration. It shows that background/blending effects may be substantial; do not use one-position results to tune the target error for a better-looking value. There is no completeness or false-positive benchmark.
 
-Đã thử đổi chéo tập sao căn chỉnh/giữ lại, nhưng thất bại vì `2025W46_1A_0090_3` không còn đủ 2 sao đạt S/N ≥7. Giữ nguyên ngưỡng và ghi lý do trong JSON/web. Đây là kiểm tra robustness **chưa đạt**, không phải một kiểm tra đã qua.
+An alignment/heldout-star swap was attempted but failed because `2025W46_1A_0090_3` no longer has two stars with S/N ≥7. Keep the threshold and record the reason in JSON/web. This robustness check **failed**; it is not a passed test.
 
-18 kiểm thử offline bao gồm hồi phục centroid nguồn đứng yên/dịch chuyển với phase pixel khác nhau, variance khẩu độ đối chiếu Monte Carlo, khử nền với pixel thiếu, dấu WCS, control PSF, hash/provenance, tập sao disjoint, covariance dương và mask highlight. Qua kiểm thử phần mềm không đồng nghĩa xác nhận chuyển động thiên văn.
+The 18 offline tests cover stationary/moving centroid recovery at different pixel phases, aperture variance against Monte Carlo, background subtraction with missing pixels, WCS sign, PSF controls, hashes/provenance, disjoint star sets, positive covariance, and highlight masks. Software tests passing do not confirm astronomical motion.
 
-## Demo và sản phẩm
+## Demo and products
 
-Demo giữ hai cấu hình cộng ảnh và ba cặp ảnh đơn. Chấm/ellipse là phép đo; overlay dự kiến có thể bật riêng. Xem song song, kéo vạch, nhấp nháy hoặc sai khác; nhấn **Phóng vào vùng chọn** để xem dịch chuyển dưới pixel. Không có residual tự động vượt ngưỡng ở cấu hình rộng sau các gate hiện tại; centroid vùng nguồn biết trước vẫn được đo độc lập như trên. Không gắn highlight residual thành WISE 0855 khi chưa có bằng chứng danh tính.
+The demo retains two coadd configurations and three single-image pairs. Markers/ellipses are measurements; predicted overlays can be enabled separately. Compare side-by-side, wipe, blink, or difference; press **Zoom to selection** to inspect subpixel displacement. No automatic residual exceeds the current broad-configuration gates; the known-position source-region centroid is still measured independently as above. Do not label a residual highlight as WISE 0855 without source-identity evidence.
 
-PNG dùng cùng asinh stretch cho hai epoch, giới hạn từ median−2σ đến median+12σ của nền gộp; sao sáng có thể bị clip trên màn hình. Ảnh hiển thị được cross-convolution bằng ePSF tổng hợp cục bộ và hiệu chỉnh gain/nền. Việc này chỉ phục vụ xem và residual, **không dùng các ảnh đã làm mượt để fit centroid**. Variance output là đường chéo; covariance đầy đủ do convolution không được lưu. Điểm EMP_SCORE chỉ là điểm residual thực nghiệm.
+PNGs use the same asinh stretch in both epochs, clipped from median−2σ to median+12σ of the combined background; bright stars may be clipped on screen. Display images are cross-convolved with a local synthetic ePSF and corrected for gain/background. This is for viewing/residual inspection only; **smoothed images are not used to fit centroids**. Output variance is diagonal; full convolution covariance is not saved. EMP_SCORE is an empirical residual score.
 
-FITS có WCS và đơn vị cho BEFORE/AFTER, VAR_BEFORE/VAR_AFTER, COADD_A/COADD_B, DIFFERENCE, EMP_SCORE và VALID. Raw, calibration và covariance centroid giữ provenance trong evidence JSON. Tái tạo bằng các lệnh trong [README](../README.md).
+FITS contains WCS and units for BEFORE/AFTER, VAR_BEFORE/VAR_AFTER, COADD_A/COADD_B, DIFFERENCE, EMP_SCORE, and VALID. Raw/calibration/centroid-covariance provenance remains in evidence JSON. Reproduce with the commands in the [README](../README.md).
 
-## Giới hạn và milestone tiếp theo
+## Limitations and next milestone
 
-Sai số hiện là sai số có điều kiện với ePSF, noise map và tập sao đã chọn. Chưa xử lý đầy đủ sai số ePSF, pixel thiết bị tương quan, màu phổ khác nhau, blending, chuyển động riêng của sao nền hoặc sai số WCS ngoài. Bootstrap chỉ mô phỏng noise, không bao phủ các sai số này. Cả hai cấu hình có cùng ảnh thành phần nên không độc lập. Hai epoch không đủ tách proper motion/parallax.
+Current errors are conditional on the chosen ePSF, noise map, and reference-star set. ePSF error, correlated detector pixels, different spectral colors, blending, background-star proper motion, and external WCS error are not fully modeled. Bootstrap simulates noise only and does not cover these uncertainties. Both configurations share input images and are not independent. Two epochs cannot separate proper motion and parallax.
 
-**Milestone ngay sau khi duyệt bản này: mở rộng vùng sao tham chiếu và đối chiếu Gaia.** Mục tiêu là kiểm tra xem vector khoảng 3,25″ có ổn định khi thay đổi frame astrometry hay không. Điều kiện hoàn thành:
+**Next milestone after this version: expand the reference-star field and compare with Gaia.** The goal is to test whether the approximately 3.25″ vector is stable under a changed astrometric frame. Acceptance conditions:
 
-1. Có thêm sao tham chiếu đủ S/N, cross-match catalog và lan truyền vị trí sao đến epoch quan sát, lưu cả quy tắc loại nguồn.
-2. Đổi chéo và bỏ lần lượt sao căn chỉnh chạy được trên mọi exposure, báo cả trường hợp không đạt; giữ một tập kiểm tra ngoài fit.
-3. Injection nhiều vị trí/độ sáng đo bias và coverage của khoảng sai số. Chỉ nâng trạng thái tin cậy khi residual nền và thay đổi vector nằm trong ngân sách sai số đã định trước.
+1. Add enough high-S/N reference stars, cross-match the catalog, propagate stellar positions to observation epochs, and record exclusion rules.
+2. Run alignment-star swaps and leave-one-out checks on every exposure; report failures and keep an independent heldout set.
+3. Use multi-position/brightness injections to measure bias and uncertainty-interval coverage. Raise confidence only if background residuals and vector changes remain within a prespecified error budget.
 
-Tiếp đó kiểm tra toàn bộ đáp ứng phổ và thêm epoch thứ ba để thử mô hình chuyển động + parallax. Khi baseline đủ ổn định, dùng review thật và injection đã đánh giá để xây bộ nhãn, benchmark và vision model xếp hạng ứng viên cho người xử lý.
+Then verify the full spectral response and add a third epoch to test a motion + parallax model. Once the baseline is stable enough, use real review and evaluated injections to build labels, benchmarks, and a vision model that ranks candidates for human review.
 
-Tài liệu hiệu chuẩn chính thức: [IRSA data products](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/), [hướng dẫn ePSF](https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/).
+Official calibration references: [IRSA data products](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/) and the [ePSF guide](https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/).

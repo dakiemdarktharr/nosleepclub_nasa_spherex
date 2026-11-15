@@ -1,60 +1,29 @@
-# Đối chứng phổ JWST và đáp ứng SPHEREx R7
+# JWST Spectral Reference and SPHEREx R7 Response Control
 
-Đây là chẩn đoán trên dữ liệu development đã có, nhằm kiểm tra liệu thay phổ
-bằng một điểm đơn sắc có làm thay đổi thông lượng dự đoán. Chưa fit vị trí,
-bơm nguồn, mở 30 trường mới hoặc thay số đo WISE. Khóa code, quy tắc và hash
-đầu vào trước khi tính convolution; không chọn kiểu đáp ứng theo kết quả đẹp.
+This is a diagnostic on development data already available. It asks whether replacing a spectrum with a single monochromatic sample changes the predicted flux. It does not fit positions, inject sources, open 30 new fields, or change the WISE measurement. Code, rules, and input hashes were locked before convolution; no response model was selected based on which result looked best.
 
-Nguồn phổ là [MAST G395M x1d đã kiểm tra](WISE0855_EXTERNAL_SED.md), không phải
-bảng author Fig 4. Dùng đúng DQ=0, flux/error hữu hạn và error>0; giữ flux âm.
-Nguồn đáp ứng là [gói lab chính thức](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/spherex_spectral_calibrations.html),
-archive 436.705.280 byte, SHA-256
-`45ff6c57ca68da00a595a4e8a5c2f875cc98b094fde143d9ce109e69df252f09`.
-Không giải nén archive ra filesystem; kiểm tra hash toàn bộ và hash riêng
-35 CSV D6 được đọc. Raw FITS/tar giữ trong `data/raw/` bị Git bỏ qua.
+The spectrum is the [validated MAST G395M x1d product](WISE0855_EXTERNAL_SED.md), not the author's Figure 4 table. Use only rows with DQ=0, finite flux/error, and error > 0; retain negative flux. The response comes from the [official lab package](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/spherex_spectral_calibrations.html), a 436,705,280-byte archive with SHA-256 `45ff6c57ca68da00a595a4e8a5c2f875cc98b094fde143d9ce109e69df252f09`. The archive is not extracted to disk; verify the full archive hash and the hashes of the 35 D6 CSV files that are read. Raw FITS/tar files remain in Git-ignored `data/raw/`.
 
-## Phép tính đã định
+## Prespecified calculation
 
-Tính đủ 17 kênh danh nghĩa D6, cả `Cent` và `Allpix`, tại ba độ dịch trục đáp
-ứng −0,0064 / 0 / +0,0064 µm: 102 lượt. Cent/Allpix là hai cách tổng hợp cùng
-phép đo lab, không phải hai bộ kiểm định độc lập. Độ dịch chỉ là sensitivity;
-không khẳng định đó là phép biến đổi QR2→R7 hoặc sửa wavelength của cutout.
+Evaluate all 17 nominal D6 channels, for both `Cent` and `Allpix`, at three response-axis shifts: −0.0064 / 0 / +0.0064 µm, for 102 evaluations. Cent and Allpix are two summaries of the same lab measurement, not independent validation sets. The shifts are sensitivity checks; they are not asserted to represent QR2-to-R7 conversion or a wavelength correction for a cutout.
 
-Quy ước chẩn đoán là trung bình photon-weighted của Fν:
-`∫ Fν(λ) R(λ) dλ/λ / ∫ R(λ) dλ/λ`, trả Jy. Giữ response âm nhỏ được đo,
-không gắn nhãn chúng là throughput vật lý không âm. Nội suy tuyến tính giữa
-các mẫu hợp lệ liền kề; không đi qua DQ lỗi hoặc khoảng cách quá 0,01 µm,
-không ngoại suy. Tích phân trên hợp các knots phổ, đáp ứng và zero crossing.
+The diagnostic convention is the photon-weighted mean of Fν:
+`∫ Fν(λ) R(λ) dλ/λ / ∫ R(λ) dλ/λ`, returned in Jy. Retain measured small negative response values; do not label them as nonnegative physical throughput. Interpolate linearly between adjacent valid samples only. Do not cross bad-DQ regions or gaps larger than 0.01 µm, and do not extrapolate. Integrate over the union of the spectrum, response, and zero-crossing knots.
 
-Thiếu bất kỳ absolute response-weight khác 0 thì full-band mean
-phải là null. Vẫn báo mean của phần có hỗ trợ dưới tên riêng, phần absolute
-weight bị thiếu, phần âm và hash vector trọng số; không dùng partial mean như
-ước lượng toàn dải. Tỷ số so giá trị đơn sắc và độ nhạy khi dịch chỉ tính cho
-full-support mean, mẫu số đơn sắc/baseline dương. Giữ mọi lượt thiếu hỗ trợ
-trong mẫu số 102. Không có ngưỡng promotion hoặc chọn mô hình trong audit này.
+If any nonzero absolute response weight is unsupported, the full-band mean must be null. Still report the mean over the supported portion under its own name, the missing absolute weight, negative weight, and the weight-vector hash; never use a partial mean as a full-band estimate. Ratios against monochromatic values and shift sensitivity are calculated only for full-support means with positive monochromatic/baseline denominators. Keep all unsupported evaluations in the denominator of 102. This audit has no promotion threshold and does not select a model.
 
-Không suy sai số tổng bằng cách xem các dòng phổ độc lập: thiếu covariance
-phổ đầy đủ, calibration chung, khác biệt epoch và variability. Chưa xác minh
-quy ước photometric reference của pipeline SPHEREx; quy ước photon này là một
-linear functional minh bạch, chưa được chuyển thành MJy/sr của ảnh SPHEREx.
+Do not infer total uncertainty by treating spectral rows as independent. Full spectral covariance, shared calibration, epoch differences, and variability are not available. The pipeline's photometric reference convention has not been verified; this photon-weighted convention is a transparent linear functional, not a conversion into SPHEREx image MJy/sr.
 
-## Khóa, chạy và giới hạn
+## Lock, run, and limitations
 
 ```powershell
 .venv/Scripts/python.exe -B -m unittest tests.test_spectral_bandpass tests.test_lab_spectral_response tests.test_wise0855_x1d -v
 .venv/Scripts/python.exe -B -m scripts.audit_spectral_reference --design
-# Commit nguồn, test, protocol và design trước lệnh sau:
+# Commit source, tests, protocol, and design before the next command:
 .venv/Scripts/python.exe -B -m scripts.audit_spectral_reference --run
 ```
 
-Design và output từ chối ghi đè. Runner kiểm nguồn/design khớp Git HEAD,
-hash/size cả hai raw inputs và schema từng CSV. Chưa ghép detector-coordinate
-của response R7 với WCS A của từng exposure; D4–D6 cần chú ý chiều x theo tài
-liệu. Không lấy nominal channel mean làm response chính xác của một pixel.
+The design and output refuse overwrites. The runner checks that the source/design match Git HEAD, verifies both raw input hashes/sizes, and checks each CSV schema. The R7 response's detector coordinates have not been matched to WCS A for each exposure; the x-axis direction for D4–D6 requires care. A nominal channel mean is not an exact response for an individual pixel.
 
-[Tài liệu delivery](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHERExSpectralFiles_202607.pdf)
-ghi đây là sản phẩm R7; phổ response ở vị trí trung tâm và trung bình cả kênh
-có độ rộng khác nhau, D5/D6 có hiệu chỉnh band center so bản trước. Ghép các
-giả định này vào QR2, xử lý negative response, solid angle, gain và uncertainty
-phải là protocol mới trước mô phỏng vật lý hoặc fit biên độ chung. Audit này
-chỉ kiểm tra sự khác biệt spectral predictions, không đo astrometric bias.
+The [delivery documentation](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHERExSpectralFiles_202607.pdf) identifies these as R7 products. The response at a position and the channel average have different widths; D5/D6 band centers were corrected relative to the previous release. Before combining those assumptions with QR2, handling negative response, solid angle, gain, and uncertainty, a new protocol is required. This audit compares spectral predictions only; it does not measure astrometric bias.

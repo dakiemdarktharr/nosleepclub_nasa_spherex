@@ -1,85 +1,31 @@
-# Chẩn đoán profile tại trọng số cố định
+# Fixed-Weight Profile Diagnostic
 
-Phiên bản `0.10.0-profile-landscape.1`, khóa trước mọi phép lấy mẫu mới.
-Đây là phép chẩn đoán hậu nghiệm của gate ePSF đã thất bại, không phải tập
-validation độc lập hay một cơ hội thay đổi gate cũ. Kết quả cũ và hệ số ePSF
-đã niêm phong giữ nguyên; không fit vị trí mới, không cập nhật Huber, không
-điều chỉnh covariance hay ngưỡng phát hiện.
+Version `0.10.0-profile-landscape.1`, locked before any new sampling. This is a post hoc diagnostic of the failed ePSF gate, not an independent validation set or an opportunity to change the old gate. Earlier results and sealed ePSF coefficients remain unchanged; no new positions are fit, Huber weights updated, covariance adjusted, or detection thresholds changed.
 
-## Câu hỏi và mẫu
+## Question and sample
 
-Hai ô `2025W46_2A_0214_3` của sao Gaia `5756942110218608640` và
-`5756958431094222592` chuyển từ một sang hai nhóm nghiệm gần tốt nhất khi
-thêm hiệu chỉnh ePSF. Nhóm được tạo từ chín lần khởi tạo, khoảng cách 0,15
-pixel chung và khoảng chi phí 5,991. Quy tắc đó không chứng minh có hai cực
-tiểu vật lý. Bộ giải có thể dừng bởi thay đổi chi phí hoặc bước vị trí nhỏ;
-trạng thái success không đảm bảo gradient nhỏ hay cực tiểu toàn cục.
+Two cells at `2025W46_2A_0214_3` for Gaia stars `5756942110218608640` and `5756958431094222592` changed from one to two near-best solution groups after the ePSF correction. Groups are formed from nine starts, a separation of 0.15 common pixels, and a cost difference of 5.991. This rule does not establish that two physical minima exist. The solver may stop because the cost change or position step is small; a success status does not guarantee a small gradient or a global minimum.
 
-Giữ đủ 14 ID training gốc, kể cả sao không có fit. Chỉ dùng hai exposure
-đã nằm trong calibration: `2025W46_2A_0214_2` và `_3`. Bốn nhánh trên mỗi ô:
-ePSF gốc/gốc đã hiệu chỉnh × trọng số Huber cuối của fit gốc/fit đã hiệu
-chỉnh. Tổng 112 nhánh dự kiến. Mọi lỗi chuẩn bị và lỗi profile đều được ghi;
-thiếu fit của một phía làm cả phép so sánh ghép không khả dụng, không biến
-thành kết quả âm hay bị xóa khỏi mẫu. Hai sao bị gate chặn được công bố là
-mẫu được chọn sau khi xem kết quả; các sao khác là mô tả đối chứng cùng trường.
+Retain all 14 original training IDs, including stars without a fit. Use only the two exposures already included in calibration: `2025W46_2A_0214_2` and `_3`. Four branches per cell: original/corrected ePSF × final Huber weights from original/corrected fits. There are 112 planned branches. Record all preparation and profile errors; if either side of a pair is missing, the paired comparison is unavailable, not a negative result or a row to remove. The two stars rejected by the gate are identified as a sample selected after viewing the results; other stars are descriptive controls from the same field.
 
-Giữ nguyên pixel native, VARIANCE, mask, pixel area, Gaia/registration, láng
-giềng, nền phẳng nghiêng và biên ±2,5 pixel chung. Các hệ số thông lượng Jy
-có dấu và hệ số nền được giải tuyến tính tại từng vị trí cố định. Hai vector
-trọng số chỉ được đọc lại và hoán đổi, không ước lượng lại. Hiệu chỉnh ePSF
-áp dụng cho cả mục tiêu và láng giềng. Tại nhánh ePSF/trọng số cùng họ, kiểm
-tra lại chi phí của điểm đã lưu và tất cả final start thành công với
-`rtol=atol=1e-10` trước khi chẩn đoán. Sai khác làm nhánh lỗi, không tự sửa.
+Keep native pixels, VARIANCE, mask, pixel area, Gaia/registration, neighbors, sloped plane background, and ±2.5 common-pixel bounds fixed. At every fixed position, solve signed Jy flux coefficients and background coefficients linearly. Read and swap the two saved weight vectors without re-estimating them. Apply the ePSF correction to both target and neighbors. For branches with matching ePSF/weight families, recheck the saved point and all successful final starts with `rtol=atol=1e-10` before the diagnostic. Any mismatch fails the branch; do not repair it silently.
 
-## Đại lượng được khóa
+## Locked quantities
 
-- Lưới toàn miền 51 × 51 trên anchor ±2,5 pixel chung, bước 0,1 pixel.
-- Với hai sao focus, lưới 21 × 21, bán kính 0,2 pixel, bước 0,02 quanh mọi
-  near-best candidate khác tọa độ chính xác của hai họ fit đã lưu. Phần nằm
-  ngoài miền được ghi thiếu, không cắt vị trí hay đổi tâm lưới.
-- Probe tại điểm fit và mọi final start thành công của cả hai họ. Chỉ gộp
-  tọa độ giống hệt, giữ đủ nguồn gốc. Đạo hàm sai phân trung tâm với ba bước
-  cố định 0,004 / 0,002 / 0,001 pixel chung; stencil vượt biên không khả dụng.
-- Chi phí là `F=rᵀr`, với residual chuẩn hóa theo sai số gốc và nhân căn bậc
-  hai trọng số. Đây là hai lần `cost` theo quy ước SciPy.
-- Giữ riêng gradient từ residual `2Jᵀr`, gradient sai phân trực tiếp của F,
-  Hessian sai phân trực tiếp của F và Gauss–Newton `2JᵀJ`, eigenvalue, chuẩn
-  cột J và hạng J đã chuẩn cột với tỷ lệ singular value `1e-10`. Không nghịch
-  đảo Hessian thành covariance, không đặt ngưỡng đạt stationarity sau khi xem.
-- Đếm thành phần liên thông 4 và 8 láng giềng tại các mức F trừ minimum
-  **trên chính lưới** bằng 0,1 / 1 / 2,3 / 5,991. Ghi số nút, chạm biên và
-  chạm nút thiếu. Các mức này không mang ý nghĩa coverage/confidence.
-- Không RNG, không truy vấn mạng, không pixel mới, không phép tối ưu vị trí.
-  Hai shard theo thứ tự source ID, mỗi tiến trình yêu cầu BLAS/OMP một luồng;
-  đây là yêu cầu môi trường, không phải đo số luồng thực tế. Cache template
-  giới hạn 8.192 vị trí cho mỗi ô/ePSF, chỉ dùng để chia sẻ render giữa hai
-  nhánh trọng số, không thay đổi mô hình hay cache dữ liệu người dùng.
+- Full-domain grid: 51 × 51 over anchor ±2.5 common pixels, at 0.1-pixel spacing.
+- For the two focus stars, a 21 × 21 grid with radius 0.2 pixels and 0.02-pixel spacing around every near-best candidate that differs from the exact coordinates of the two saved fit families. Record out-of-domain points as missing; do not clip positions or shift grid centers.
+- Probe the fit point and every successful final start from both families. Deduplicate only exactly identical coordinates and retain all origins. Central finite differences use three fixed steps: 0.004 / 0.002 / 0.001 common pixels; stencils that cross a boundary are unavailable.
+- Cost is `F=rᵀr`, with residuals normalized by original errors and multiplied by square-root weights. This is twice SciPy's `cost` convention.
+- Keep separate the residual gradient `2Jᵀr`, direct finite-difference gradient of F, direct finite-difference Hessian of F, and Gauss–Newton `2JᵀJ`, along with eigenvalues, J column norms, and column-scaled J rank using singular-value ratio `1e-10`. Do not invert the Hessian into covariance or set a stationarity threshold after viewing results.
+- Count 4- and 8-neighbor connected components at F levels relative to the minimum **on that grid** of 0.1 / 1 / 2.3 / 5.991. Record node counts, boundary contact, and contact with missing nodes. These levels do not represent coverage or confidence.
+- No RNG, network queries, new pixels, or position optimization. Two shards follow source-ID order; each process requests one BLAS/OMP thread. This is an environment request, not a measurement of actual thread count. Template cache is limited to 8,192 positions per cell/ePSF and only shares renders across the two weight branches; it does not change the model or user-data cache.
 
-## Niêm phong và diễn giải
+## Seal and interpretation
 
-Design chứa hash mã mới, test, tài liệu này, các nguồn khoa học kế thừa,
-hệ số đã niêm phong, gate cũ và digest journal gốc/corrected. Phải commit
-design trước khi chạy bằng SHA đầy đủ. Journal bất biến có đủ 112 khóa;
-resume không ghi đè kết quả. Assessment directory phải vắng trước và sau.
-252 ô corrected assessment và 30 trường độc lập tiếp tục chưa mở.
+The design contains hashes for new code, tests, this document, inherited science sources, sealed coefficients, the old gate, and original/corrected journal digests. Commit the design before running, using the full SHA. The immutable journal contains all 112 keys; resume must not overwrite results. The assessment directory must be absent before and after. The 252 corrected assessment cells and 30 independent fields remain unopened.
 
-Kiểm thử analytic gồm quadratic có gradient/Hessian biết trước, double-well
-có rào chi phí biết trước, residual phẳng không định danh, nút lỗi và stencil
-vượt biên. Kiểm thử runner xác nhận đủ mẫu, hoán đổi đúng trọng số, replay
-chi phí, không gọi optimizer, không mở assessment và resume bất biến.
+Analytic tests cover a quadratic with known gradient/Hessian, a double well with known cost barrier, an unidentifiable flat residual, error nodes, and out-of-bound stencils. Runner tests verify complete sample counts, correct weight swapping, cost replay, no optimizer calls, no assessment access, and immutable resume.
 
-Lưới hữu hạn có thể bỏ sót thung lũng hẹp hoặc đường nối cong; đạo hàm hữu hạn
-phụ thuộc bước và nội suy. Nhiều thành phần mẫu không chứng minh nhiều cực
-tiểu, một thành phần cũng không loại trừ chúng. Huber cố định có điều kiện
-theo ảnh, không phải likelihood đã hiệu chuẩn; nuisance, đăng ký, catalog,
-PSF và nhiễu tương quan vẫn có các giới hạn đã công bố. Dù chẩn đoán chỉ ra
-solver dừng sớm, gate cũ không được sửa thành đạt. Mọi thay đổi bộ giải hay
-screening tiếp theo cần phiên bản, kiểm thử và protocol mới trước khi dùng
-trên tập chưa mở.
+A finite grid may miss a narrow valley or curved connecting path; finite derivatives depend on step and interpolation. Multiple sampled components do not prove multiple minima, and one component does not rule them out. Fixed Huber weights are conditional on the image, not a calibrated likelihood; nuisance terms, registration, catalogs, PSF, and correlated noise retain their stated limitations. Even if the diagnostic indicates early solver termination, the old gate must not be changed to pass. Any next solver or screening changes require a new version, tests, and protocol before use on unopened data.
 
-Nguồn phương pháp: [SciPy least_squares 1.17](https://docs.scipy.org/doc/scipy-1.17.0/reference/generated/scipy.optimize.least_squares.html)
-giải thích tiêu chí dừng và success; môi trường dự án giữ SciPy 1.17.1.
-[O’Leary và Rust, NIST](https://www.nist.gov/publications/variable-projection-nonlinear-least-squares-problems)
-trình bày variable projection cho bài toán có cả tham số tuyến tính và phi
-tuyến. Việc giữ nguyên các nuisance tuyến tính ở đây là một chẩn đoán của
-bài toán đang dùng, không phải xác nhận mô hình quang học đúng.
+Method references: [SciPy least_squares 1.17](https://docs.scipy.org/doc/scipy-1.17.0/reference/generated/scipy.optimize.least_squares.html) documents stopping criteria and success; the project pins SciPy 1.17.1. [O'Leary and Rust, NIST](https://www.nist.gov/publications/variable-projection-nonlinear-least-squares-problems) describe variable projection for problems with both linear and nonlinear parameters. Keeping linear nuisance terms fixed here is a diagnostic of the current problem, not confirmation that the optical model is correct.

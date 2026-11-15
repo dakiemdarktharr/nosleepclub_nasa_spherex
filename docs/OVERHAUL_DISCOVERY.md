@@ -1,74 +1,74 @@
-# Định hình lại Sky Lab
+# Reshaping Sky Lab
 
-## Đề bài và khoảng cách của bản hiện tại
+## Challenge and current product gap
 
-**Planet X and SPHEREx** yêu cầu một web công khai để nhập RA/Dec và phát ảnh SPHEREx của cùng một vùng trời theo thời gian, giúp người xem nhận ra thay đổi. Năm mục tiêu dùng để kiểm thử là Barnard’s Star, Epsilon Indi B, WISE 0855, RW Aurigae và R Draconis. Đề gợi ý thêm cộng/trừ ảnh, đổi trường nhìn, phổ, lớp Gaia/WISE, cờ nhiễm và tọa độ trong URL. [Ghi chú đề bài](CHALLENGE.md) · [Details chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details) · [Bản đăng lại của HackAthlone](https://hackathlone.com/challenges/planet-x-and-spherex).
+**Planet X and SPHEREx** asks for a public web application where users enter RA/Dec and play SPHEREx images of the same sky region over time to identify changes. The five test targets are Barnard's Star, Epsilon Indi B, WISE 0855, RW Aurigae, and R Draconis. The challenge suggests image addition/subtraction, field-of-view controls, spectra, Gaia/WISE layers, contamination flags, and coordinates in the URL. [Challenge notes](CHALLENGE.md) · [Official Details](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details) · [HackAthlone repost](https://hackathlone.com/challenges/planet-x-and-spherex).
 
-Ngày 14/11/2026, trang Details và Resources chính thức không mở được từ công cụ tra cứu. Bản đăng lại của sự kiện HackAthlone khớp mục tiêu đã lưu trong repo và liệt kê tám tài nguyên, gồm IRSA, notebook SPHEREx, WiseView, Gaia DR3, CADC và NEOSSat. Trạng thái của một bộ cutout dựng sẵn cho cả năm mục tiêu vẫn chưa được xác nhận. [Resources chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=resources) · [Tài nguyên HackAthlone](https://hackathlone.com/challenges/planet-x-and-spherex#resources) · [Trao đổi với Space Apps Navigator](https://github.com/nasa/spaceapps/discussions/1847).
+On 14 November 2026, the official Details and Resources pages did not open in the lookup tool. The HackAthlone repost matched the repository's saved goal and listed eight resources, including IRSA, the SPHEREx notebook, WiseView, Gaia DR3, CADC, and NEOSSat. A prepared cutout set for all five targets remains unconfirmed. [Official Resources](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=resources) · [HackAthlone resources](https://hackathlone.com/challenges/planet-x-and-spherex#resources) · [Discussion with Space Apps Navigator](https://github.com/nasa/spaceapps/discussions/1847).
 
-| Yêu cầu | Bản hiện tại | Việc cần làm cho bản mới |
-| --- | --- | --- |
-| Tìm vùng bằng RA/Dec | Có hai định dạng tọa độ, năm mục tiêu mẫu và truy vấn IRSA theo bản dữ liệu, detector, trường nhìn, khoảng ngày. Tiêu đề trang và bộ mẫu chính tập trung vào WISE 0855. | Đưa mục tiêu mẫu và ô nhập tọa độ vào cùng lối vào. Chuyển truy vấn sống sang DR1/QR3 và kiểm lại. |
-| Xem vùng thay đổi theo thời gian | Có danh sách lần chụp, bước tới/lùi và nhấp nháy giữa hai ảnh A/B đã tải. Có bằng chứng lịch sử về hai cutout QR2 cho mỗi mục tiêu. | Phát nhiều khung theo thời điểm chụp, có thanh thời gian, tạm dừng và đọc từng khung. Dùng A/B khi chỉ có hai ảnh phù hợp. |
-| Hiểu điều đang thay đổi | Ảnh IRSA cùng lưới hiển thị WCS, có cờ pixel và thang tương phản chung. Chưa đăng ký lại theo sao hay kiểm bước sóng ngay tại nguồn. | Hiện thời điểm, detector, bản dữ liệu, dải phổ đã biết và cờ cạnh ảnh. Báo khi thiếu dữ liệu để so sánh ở cùng dải sóng. |
-| Kiểm tra và lưu bằng chứng | Có kho kiểm chứng, JSON và đường dẫn FITS. Nhận xét WISE theo phiên khách riêng. Truy vấn IRSA xuất ghi chú theo cặp. | Cho chuyên gia mở metadata mà vẫn giữ vùng và khung đang xem. Chọn dạng chia sẻ theo nhu cầu thực tế. |
+| Requirement | Current version | Work for the next version |
+|---|---|---|
+| Find a region by RA/Dec | Accepts two coordinate formats, has five sample targets, and queries IRSA by data release, detector, field of view, and date range. Page title and default sample focus on WISE 0855. | Put sample targets and coordinate entry in the same entry point. Move live queries to DR1/QR3 and verify them. |
+| View change over time | Has observation list, previous/next steps, and blinking between two loaded A/B images. Historical evidence has two QR2 cutouts per target. | Play multiple frames in observation-time order with a timeline, pause, and frame-by-frame controls. Use A/B when only two suitable images exist. |
+| Understand what changed | IRSA images share a display WCS grid and have pixel flags and a common contrast scale. They have not been star-registered or checked for wavelength at the source. | Show time, detector, data release, known band, and image-edge flags. Report when same-band comparison data are unavailable. |
+| Inspect and save evidence | Has an audit archive, JSON, and FITS links. WISE notes use separate guest sessions. IRSA queries export notes for each pair. | Let experts open metadata while keeping the current region/frame. Choose a sharing format based on actual needs. |
 
-[Luồng hiện tại](WORKFLOW_UI.md) · [Explorer và lần kiểm tra năm mục tiêu](SKY_EXPLORER.md) · [Mã phát A/B](../web/explorer.js#L171) · [Trạng thái kiểm định](PRODUCTION_READINESS.md).
+[Current workflow](WORKFLOW_UI.md) · [Explorer and five-target checks](SKY_EXPLORER.md) · [A/B playback code](../web/explorer.js#L171) · [Readiness status](PRODUCTION_READINESS.md).
 
-Tài liệu IRSA ngày 12/11/2026 xác nhận **DR1 và QR3 đã thay QR2**. DR1 xử lý lại ảnh Survey 1–2. QR3 bao gồm Survey 3–4 và được thiết kế để dùng cùng ảnh DR1. IRSA ghi QR2 đã rời dịch vụ tìm kiếm và còn tải trực tiếp đến tháng 02/2027. Giao diện/API hiện chỉ nhận `qr2` hoặc `qr3`, mặc định `qr2`. Nên kiểm riêng truy vấn DR1/QR3 mới và giữ nhãn QR2 trên các sản phẩm lịch sử. Cube DR1 toàn trời có 102 kênh danh nghĩa. Trình phát cần **Spectral Images** theo từng lần quan sát. [IRSA Data Releases](https://irsa.ipac.caltech.edu/spherex-archive-documentation/spherex-data-releases/) · [IRSA DR1 Overview](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_dr1.html) · [API hiện tại](OBSERVATION_API_CONTRACT.md).
+IRSA documentation dated 12 November 2026 confirms **DR1 and QR3 have replaced QR2**. DR1 reprocesses Survey 1–2 images. QR3 covers Survey 3–4 and is designed to be used with DR1 images. IRSA says QR2 has left the search service and remains available for direct download until February 2027. The current interface/API accepts only `qr2` or `qr3`, with `qr2` as the default. Query newer DR1/QR3 separately and retain QR2 labels on historical products. The DR1 all-sky cube has 102 nominal channels. The player needs **Spectral Images** per observation. [IRSA Data Releases](https://irsa.ipac.caltech.edu/spherex-archive-documentation/spherex-data-releases/) · [IRSA DR1 Overview](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_dr1.html) · [Current API](OBSERVATION_API_CONTRACT.md).
 
-## Sáu câu quyết định hướng làm
+## Six decisions that set direction
 
-Bạn có thể trả lời bằng mã câu và vài chữ. Cột cuối là phương án đề xuất để bạn sửa hoặc thay.
+You can reply with a question number and a few words. The last column is the proposed option for you to correct or replace.
 
-| # | Câu hỏi | Phương án đề xuất |
-| --- | --- | --- |
-| **1. Mục đích và hạn** | Bản đầu phục vụ **nộp hackathon**, **người dùng quan sát lâu dài**, hay **cả hai**? Mốc cứng là lúc nào, ai duyệt và cần giao URL, video hay bản thử nội bộ? | Với hạn hackathon, ưu tiên một quy trình công khai trọn vẹn cho giám khảo và chuẩn bị bộ ảnh thật tải sẵn cho phần demo. |
-| **2. Người dùng và việc đầu tiên** | Ai cần dùng tốt trước, người tò mò chưa biết RA/Dec, học sinh/người hướng dẫn, người săn ứng viên nghiệp dư, hay nhà thiên văn? Trong lần đầu, họ phải hoàn thành việc gì để bạn coi là thành công? | Người mới mở một mẫu và phát được ảnh. Người có kinh nghiệm nhập thẳng RA/Dec, đổi bộ lọc và tải bằng chứng. |
-| **3. Câu chuyện khoa học** | Bạn muốn dẫn bằng **chuyển động** của Barnard/WISE 0855, **biến quang** của RW Aur/R Dra, **sàng lọc ứng viên** cần người xem lại, hay câu chuyện khác? Mục tiêu nào sẽ lên màn hình đầu tiên? | Chọn mẫu chuyển động sau khi kiểm được chuỗi phù hợp. Dùng các mục tiêu còn lại để khám phá và ghi rõ trạng thái dữ liệu từng vùng. |
-| **4. Điều hướng và bản đồ** | Vào web nên gặp **mục tiêu mẫu**, **ô tọa độ** hay **bản đồ 3D** trước? Hai nhóm dùng chung màn hình có phần nâng cao, hay cần hai chế độ riêng? Bạn muốn giữ thao tác nào từ bản đang có? | Một màn hình quan sát, có mục tiêu mẫu và lối nhập tọa độ trực tiếp. Phần nâng cao mở tại chỗ, bản đồ 3D mở qua tab Khám phá. |
-| **5. Phạm vi dữ liệu và đo đạc** | Bản đầu cần **chuỗi ảnh SPHEREx**, **thêm Gaia/WISE để đối chiếu**, hay **so sánh nhiều khảo sát**? Trong số các công cụ chuyên gia như metadata và mask, đăng ký sao, phép trừ ảnh, đo vị trí, đường cong ánh sáng, phổ và tải hàng loạt, hai mục nào quan trọng nhất? | Phát ảnh DR1/QR3 theo thời gian, hiện WCS/mask/metadata và tải FITS. Đưa overlay hoặc phép đo vào theo thứ tự bạn chọn. |
-| **6. Kết quả và thiết bị** | Người xem cần gửi gì sau khi quan sát? Có thể chọn **link mở lại vùng/khung**, **ảnh/video**, **JSON/CSV/FITS** hoặc **hồ sơ review chung**. Thiết bị, ngôn ngữ, mạng yếu hoặc offline nào là bắt buộc? | Link mở lại truy vấn và các khung đã chọn, kèm JSON/FITS khi cần tái lập. Web dùng được bằng bàn phím và điện thoại, chọn ngôn ngữ mặc định theo người nhận. |
+| # | Question | Proposed option |
+|---|---|---|
+| **1. Purpose and deadline** | Is the first release for **the hackathon submission**, **long-term users**, or **both**? What is the hard deadline, who will review it, and do you need a URL, video, or internal prototype? | For a hackathon deadline, prioritize one complete public workflow for judges and prepare real images cached for a stable demo. |
+| **2. First user and task** | Who must succeed first: a curious newcomer unfamiliar with RA/Dec, students/educators, amateur candidate hunters, or astronomers? What must they accomplish on their first visit for you to call it a success? | A newcomer opens a sample and plays its images. An experienced user enters RA/Dec directly, changes filters, and downloads evidence. |
+| **3. Science story** | Should the lead be **motion** of Barnard/WISE 0855, **variability** of RW Aur/R Dra, **candidate triage** for human review, or another story? Which target appears first? | Choose a motion example after verifying a suitable sequence. Use other targets for exploration and state the data status for each region. |
+| **4. Entry and map** | Should the first screen show **sample targets**, a **coordinate field**, or the **3D map**? Should both groups use one screen with advanced controls or separate modes? Which current interaction must remain? | Use one observation screen with sample targets and direct coordinate entry. Open advanced controls in place and put the 3D map under Explore. |
+| **5. Data and measurements** | Should the first version use **SPHEREx image sequences**, **Gaia/WISE comparison**, or **multiple surveys**? Which two expert functions matter most: metadata/masks, star registration, image subtraction, position measurement, light curves, spectra, or batch download? | Play DR1/QR3 images over time, show WCS/mask/metadata, and provide FITS download. Add overlays or measurements in the order you choose. |
+| **6. Output and devices** | What should a viewer be able to submit after observing? Options include a **link reopening region/frames**, **image/video**, **JSON/CSV/FITS**, or a **shared review record**. Which devices, languages, weak-network, or offline constraints are mandatory? | Provide a link reopening the query and selected frames, with JSON/FITS when needed for reproduction. Support keyboard and mobile use; set the default language based on the recipient. |
 
-## Câu hỏi chi tiết để chốt phạm vi
+## Detailed scope questions
 
-### Tìm và xem ảnh
+### Finding and viewing images
 
-7. Ngoài RA/Dec theo độ và dạng giờ–phút–giây, có cần tìm theo tên thiên thể, chọn trên quả cầu, mở từ link chia sẻ, hay dán danh sách tọa độ? Nếu tìm theo tên, cần hiện nguồn định danh và epoch như thế nào?
-8. Trình phát cần tua tốc độ, bước từng khung, chiếu lặp, khóa tương phản, đồng bộ zoom/pan hay nhấp nháy A/B? Bạn muốn chọn các khung vào chuỗi hay để web đề xuất trước? Khi vùng không đủ khung hợp lệ, bạn muốn hiện số khung thật, đổi khoảng ngày hay gợi ý mục tiêu khác?
-9. Bạn muốn chọn dữ liệu bằng tên dải dễ hiểu, detector D1–D6, bước sóng tại điểm đang xem, hay cả ba theo mức kinh nghiệm? Cần trường nhìn tối đa, khoảng ngày mặc định hoặc thao tác đánh dấu một vùng con để kiểm tra không?
-10. Bản đồ 3D cần dẫn từ **chọn khảo sát → vùng phủ → chọn vị trí → mở ảnh**, hay chủ yếu dùng để học và thuyết trình? Bạn có cần một lớp ảnh nền, đường xích đạo/dải Ngân Hà, mặt cắt theo thời gian, hoặc footprint từng ảnh? [Bản đồ trời thử](sky-atlas.html) · [Danh mục nguồn](DATASET_CATALOG.md).
+7. Beyond RA/Dec in degrees and hour/minute/second format, do you need object-name search, sky-sphere selection, shared links, or pasted coordinate lists? For name search, how should the identifier source and epoch be shown?
+8. Does the player need speed controls, frame stepping, looping, locked contrast, synchronized zoom/pan, or A/B blinking? Should users select frames for a sequence, or should the site suggest them first? If a region lacks enough valid frames, should the interface show the real count, change the date range, or suggest another target?
+9. Should users select data by human-readable band, detector D1–D6, wavelength at the current point, or all three at different expertise levels? Do you need a maximum field of view, default date range, or a way to mark a subregion for checking?
+10. Should the 3D map guide users through **survey selection → footprint → position selection → image**, or mainly support learning/presentations? Do you need a background image, equator/Milky Way, time cross-section, or per-image footprints? [Prototype sky map](sky-atlas.html) · [Source catalog](DATASET_CATALOG.md).
 
-### Bằng chứng khoa học
+### Scientific evidence
 
-11. Khi xếp ảnh, bản đầu cần hiển thị nhanh chung lưới WCS, hay cần đăng ký theo sao tham chiếu và kiểm residual trước khi so sánh? Bạn muốn hệ thống chọn ít ảnh tương thích phổ, hay cho chọn rộng với nhãn rõ mức tương thích?
-12. Nếu thêm lớp ngoài SPHEREx, việc nào cần làm trước? Có thể dùng Gaia để đối chiếu vị trí và chuyển động, WISE/NEOWISE cho lịch sử hồng ngoại, ZTF cho biến quang quang học hoặc JWST để đối chiếu phổ của một nguồn. Bạn muốn xem cạnh nhau, xếp chồng hay đo chung? Ai quyết định điều kiện để so được phép đo qua các khảo sát?
-13. Bạn muốn công cụ dừng ở quan sát và ghi chú, hay xếp hạng ứng viên để chuyên gia duyệt? Nếu có xếp hạng, cần phân biệt tín hiệu chuyển động, biến quang, vật thể di động, ảnh lỗi và ca chưa đủ bằng chứng ra sao? Ai xem lại ứng viên và bằng chứng nào đủ để gửi cho người khác?
-14. Chuyên gia cần tái lập truy vấn, cách đặt ảnh lên cùng lưới hay cả phép đo? Bạn cần lưu kèm những gì trong số danh sách khung, thời điểm, dữ liệu gốc, mask, bước sóng, tham số, phiên bản xử lý và sai số? Có cần xuất bảng theo nhiều mục tiêu hoặc định dạng khớp notebook đang dùng?
+11. When stacking images, should the first version simply place them on a common WCS grid, or register to reference stars and check residuals before comparison? Should the system choose a small set of spectrally compatible images, or allow a broader selection with explicit compatibility labels?
+12. If an external survey layer is added, what should come first? Gaia can provide positions/motion cross-checks, WISE/NEOWISE infrared history, ZTF optical variability, or JWST spectral comparison for one source. Should these be shown side by side, overlaid, or measured jointly? Who sets the conditions for comparing measurements across surveys?
+13. Should the tool stop at inspection and notes, or rank candidates for expert review? If ranking is added, how should it distinguish motion, variability, moving objects, image artifacts, and insufficient-evidence cases? Who reviews candidates, and what evidence is sufficient to share one?
+14. Do experts need to reproduce only the query, the common-grid image placement, or the measurement too? Which items must be retained: frame list, time, original data, mask, wavelength, parameters, processing version, and errors? Is batch export across targets needed, or a format matching a current notebook?
 
-### Phát hành và vận hành
+### Release and operations
 
-15. Có cần tải phiên làm việc lên máy chủ, dùng trên nhiều thiết bị, chia sẻ riêng hoặc cộng tác chuyên gia? Nếu có, ai được xem, sửa, xóa và giữ trong bao lâu? Một link chỉ chứa cấu hình truy vấn có đáp ứng nhu cầu của bạn không?
-16. Nên giữ URL và nhận xét của Sky Lab đang chạy hay dùng một preview riêng để thử? Bạn có trang tham chiếu về cách trình bày, tên/thương hiệu cần giữ, yêu cầu tiếng Anh trước khi nộp, hoặc giới hạn chi phí lưu trữ, băng thông và ước lượng số người dùng không?
-17. Bạn có thể mời ai thử trước khi chốt? Bạn muốn đo thời gian từ trang đầu đến phát chuỗi, tỷ lệ tự tìm được ảnh, tỷ lệ mở lại đúng truy vấn từ link hay khả năng đọc được nguồn và giới hạn của từng khung?
+15. Do you need to upload sessions to a server, use them across devices, share privately, or collaborate with experts? If so, who can view/edit/delete and for how long? Would a link containing only query configuration meet your needs?
+16. Should the running Sky Lab URL be retained, or should a separate preview be used? Do you have a presentation reference, name/brand to keep, English-before-submission requirement, or storage/bandwidth cost and user-count limits?
+17. Who can try it before the scope is finalized? Do you want to measure time from landing page to playback, whether users can find images without help, reopening the right query from a link, or their ability to read each frame's source and limits?
 
-## Milestone tiếp theo đề xuất
+## Proposed next milestone
 
-**Từ tọa độ đến trình phát SPHEREx**. Sau khi chốt các câu 1–6, chọn mẫu dẫn và dựng một luồng chung với bản xem trước riêng. Kiểm API DR1/QR3 trước để tránh làm giao diện dựa vào một nguồn đã đổi.
+**From coordinates to a SPHEREx player.** After decisions 1–6 are settled, choose a lead example and build one workflow with a separate preview. Verify the DR1/QR3 API first to avoid designing the interface around a source that has changed.
 
-1. Nhập RA/Dec hoặc mở mục tiêu mẫu, phát thử **ít nhất ba khung quan sát thật tương thích của một vùng**, theo thứ tự thời điểm quan sát. Xác minh từng khung có đúng vùng phủ, chất lượng đủ để hiển thị, cùng lưới và thang hiển thị, và có thông tin phổ đủ cho cách so sánh đã chọn. Ghi timestamp, bản phát hành, detector, URL gốc, hash và mask trong bằng chứng. Mỗi lần quan sát được đếm một lần dù có nhiều bản xử lý.
-2. Kiểm truy vấn mới cho cả năm mục tiêu. Trường hợp có hai khung phù hợp cho phép nhấp nháy A/B. Trường hợp còn một hoặc không có khung phù hợp báo đúng số lượng và lý do có thể xác định. Nếu IRSA lỗi, bản demo tải sẵn hiện rõ bản phát hành và thời điểm chụp.
-3. Mời ba người mới mở mẫu và phát ảnh không cần chỉ chỗ, sau đó hỏi họ ảnh chụp ngày nào và một thay đổi nhìn thấy có thể do đâu. Mời một người có kinh nghiệm tái lập lần xem từ tọa độ và kiểm nguồn dữ liệu từng khung. Thử luồng bằng bàn phím và điện thoại, gồm quay lại và tạm dừng trình phát. Các con số thử người dùng là đề xuất để bạn điều chỉnh.
-4. Hiện riêng ảnh quan sát, tọa độ ngoại suy, nguồn giả và kết quả mô hình. Hiển thị chi tiết điều kiện so sánh theo khung. Xác nhận khoa học cần phép đo, sai số và đối chứng thích hợp. [Giới hạn khoa học và vận hành đã ghi](PRODUCTION_READINESS.md).
+1. Enter RA/Dec or open a sample target, then play **at least three compatible real observations from one region**, ordered by observation time. Verify each frame's footprint, display quality, common grid and display scale, and sufficient spectral metadata for the chosen comparison. Record timestamp, release, detector, original URL, hash, and mask in the evidence. Count each observation once even if it has multiple processed versions.
+2. Check new queries for all five targets. Two suitable frames permit A/B blinking. If only one or no suitable frames exist, report the count and any known reason. If IRSA fails, the cached demo must show release and observation time clearly.
+3. Ask three newcomers to open a sample and play images without route guidance, then ask which dates they saw and what might explain one visible change. Ask one experienced user to reproduce the view from coordinates and inspect each frame's data source. Test keyboard and mobile flows, including back and pause. User-test counts are proposals for you to adjust.
+4. Separate observed images, extrapolated coordinates, synthetic sources, and model outputs. Show comparison conditions for each frame. Scientific confirmation requires appropriate measurements, errors, and controls. [Recorded science and operating limits](PRODUCTION_READINESS.md).
 
-**Trả lời nhanh**
+**Quick reply**
 
 ```text
-1. Mục đích / hạn:
-2. Người dùng đầu tiên / việc phải làm được:
-3. Câu chuyện / mục tiêu dẫn:
-4. Mở đầu / cách dùng nâng cao:
-5. Nguồn dữ liệu / hai tính năng chuyên gia:
-6. Đầu ra / thiết bị / ngôn ngữ:
-Điều bắt buộc khác:
+1. Purpose / deadline:
+2. First user / required task:
+3. Story / lead target:
+4. Entry / advanced use:
+5. Data sources / two expert features:
+6. Output / devices / languages:
+Other requirements:
 ```

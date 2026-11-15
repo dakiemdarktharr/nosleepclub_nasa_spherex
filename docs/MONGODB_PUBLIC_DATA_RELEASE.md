@@ -1,101 +1,45 @@
-# Chuyển dữ liệu công khai sang MongoDB — 31/10/2026
+# Public Data Migration to MongoDB — 31 October 2026
 
-Production: [mở demo](https://nosleepclub-nasa-spherex.vercel.app/#home),
-commit `20bf9ae79c9cc50898d71afbf6778f3f8af26078`, deployment
-`dpl_6uuZugMniSWj2of6AE59DX5ZTfSM`. Source được merge qua
-[PR #16](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/16),
-[17](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/17),
-[18](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/18) và
-[19](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/19).
+Production: [open demo](https://nosleepclub-nasa-spherex.vercel.app/#home), commit `20bf9ae79c9cc50898d71afbf6778f3f8af26078`, deployment `dpl_6uuZugMniSWj2of6AE59DX5ZTfSM`. Source was merged through [PR #16](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/16), [#17](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/17), [#18](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/18), and [#19](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/19).
 
-## Kết quả đã đo
+## Measured results
 
-| Phần | Kết quả |
-| --- | --- |
-| Dữ liệu công khai | 213 Git blob, 212.215.160 byte gốc |
-| Mongo transport | 426 phần, 127.478.741 byte đã nén |
-| Canonical public | 213/213 khớp byte/hash; 607 phản hồi: 213 × 307, 394 × 200; không retry |
-| Vercel static output | 41 file, 615.668 byte; không có `data/` |
-| Mongo database | Khoảng 170 MB logical, 339 MB allocated; một M0, không tạo cluster/tier mới |
-| Software CI cuối | 623 ca Python: 610 đạt, 13 optional raw-cache/photutils skip; cả sáu ca Mongo fixture thật đạt; 11 chương trình Node đạt |
-| Production smoke | 173 phản hồi đạt hợp đồng; 84 payload kiểm hash, ba audit lớn kiểm metadata/redirect ở smoke và kiểm đủ byte trong canonical reconciliation |
+| Area | Result |
+|---|---|
+| Public data | 213 Git blobs, 212,215,160 original bytes |
+| Mongo transport | 426 parts, 127,478,741 compressed bytes |
+| Canonical public | 213/213 byte/hash matches; 607 responses: 213 × 307, 394 × 200; no retries |
+| Vercel static output | 41 files, 615,668 bytes; no `data/` |
+| Mongo database | About 170 MB logical, 339 MB allocated; one M0, no new cluster/tier |
+| Final software CI | 623 Python cases: 610 passed, 13 optional raw-cache/photutils skips; all six real Mongo fixture cases passed; 11 Node programs passed |
+| Production smoke | 173 contract-passing responses; 84 payloads hash-checked, three large audits metadata/redirect-checked in smoke and full-byte checked in canonical reconciliation |
 
-[Canonical receipt](evidence/0.10/mongo-canonical-20bf9ae.json),
-[smoke](evidence/0.10/mongo-production-20bf9ae.json),
-[CI](evidence/0.10/mongo-ci-chain.json),
-[capacity](evidence/0.10/mongo-capacity-after-import.json),
-[remote build](evidence/0.10/mongo-deployment-20bf9ae.json).
+[Canonical receipt](evidence/0.10/mongo-canonical-20bf9ae.json), [smoke](evidence/0.10/mongo-production-20bf9ae.json), [CI](evidence/0.10/mongo-ci-chain.json), [capacity](evidence/0.10/mongo-capacity-after-import.json), [remote build](evidence/0.10/mongo-deployment-20bf9ae.json).
 
-Smoke có 99 HTTP 200, 70 redirect 307, hai 400 và hai 403 có chủ đích;
-không retry. Nhận xét QA được tạo/đọc/xóa, kiểm ổn định ID, expiry,
-scope/Origin isolation, stale analysis và cleanup. Không dùng số lượng HTTP
-200 làm bằng chứng độ chính xác thiên văn hay uptime.
+Smoke included 99 HTTP 200s, 70 redirects 307, two intentional 400s, and two intentional 403s; no retries. QA reviews were created/read/deleted; checks covered stable IDs, expiry, scope/Origin isolation, stale analysis, and cleanup. HTTP 200 counts do not establish astronomical accuracy or uptime.
 
-## Hai luồng và tải audit
+## Two flows and audit download
 
-Đã thử WISE từ chọn dữ liệu → chọn R01 → xem giới hạn → lưu riêng Mongo →
-xuất JSON → xóa nhận xét QA; lịch sử bắt đầu/kết thúc đều 0. Nháp được thử
-qua reload trước khi lưu ở bản pha 1; logic draft không đổi trong cutover.
-Vùng residual không hiện nhầm vector WISE.
+WISE was tested from data selection → R01 selection → limits → Mongo-only save → JSON export → QA review deletion; history was 0 at start and end. A draft was tested across reload before saving in phase 1; draft logic did not change during cutover. Residual did not incorrectly show the WISE vector.
 
-IRSA dùng lại vùng đã mở RA 350°, Dec 35°, QR2/D6, 01–30/06/2025: 18 quan
-sát; chọn `2025W26_2A_0314_1` / `_2`, xem giới hạn, ghi chú và xuất JSON ở
-bản cuối. Nhấp nháy và query/date/pair draft qua reload được thử ở pha 1.
-Bản cuối hiện cả ngày giờ
-UTC và ảnh A/B; ghi chú IRSA không được gửi vào API nhận xét WISE. Nháp QA
-đã xóa. Không truy vấn 30 trường dành riêng.
+IRSA reused the already opened region RA 350°, Dec 35°, QR2/D6, 1–30 June 2025: 18 observations. Select `2025W26_2A_0314_1` / `_2`, inspect limits, write a note, and export JSON in the final build. Blinking and query/date/pair draft across reload were tested in phase 1. Final build shows both UTC date/time and image A/B; IRSA notes are not sent to the WISE review API. QA draft was deleted. The 30 reserved fields were not queried.
 
-Audit đối chứng tín hiệu tải 20 phần trong browser, chỉ mở nút lưu khi hash
-từng phần/toàn tệp khớp. Tệp thực tải xuống có 10.046.627 byte, SHA-256
-`ef757d6c605f623ecfae35c0c4ebdc43b8ab3e1308adb741bc9be7d8d2d555a0`,
-khớp sản phẩm Git đã khóa. Desktop và viewport 390 × 844 đã kiểm; document
-375/375 px không tràn ngang, canvas không bị nút tiếp tục đè. Viewport đã reset.
-[Browser evidence](evidence/0.10/mongo-browser-20bf9ae.json).
+The signal-control audit was downloaded in the browser as 20 parts; Save was enabled only after per-part/full-file hashes matched. The downloaded file contains 10,046,627 bytes, SHA-256 `ef757d6c605f623ecfae35c0c4ebdc43b8ab3e1308adb741bc9be7d8d2d555a0`, matching the locked Git product. Desktop and 390 × 844 viewport were checked; the 375/375 px document did not overflow horizontally and the canvas was not covered by the continue button. Viewport was reset. [Browser evidence](evidence/0.10/mongo-browser-20bf9ae.json).
 
-## Quyền nhập và các lần lỗi được giữ lại
+## Import permissions and retained failures
 
-Mongo URI vẫn chỉ ở production Vercel. Chủ repo đã duyệt capability tạm cho
-GitHub Actions; permit gắn hash manifest, chỉ nhận byte công khai đã ghim,
-insert-only và tối đa 45 phút. Permit được xóa lúc 14:21:17 UTC; khóa cũ trả
-403, GitHub Secret và tệp khóa cục bộ đã xóa.
-[Revocation](evidence/0.10/mongo-import-revocation.json).
+Mongo URI remains only in production Vercel. The repository owner approved a temporary GitHub Actions capability; the permit is tied to the manifest hash, accepts only pinned public bytes, is insert-only, and lasts at most 45 minutes. Permit was removed at 14:21:17 UTC; the old key returns 403, and the GitHub Secret and local key file were deleted. [Revocation receipt](evidence/0.10/mongo-import-revocation.json).
 
-- Connector từ chối lô lớn bằng 413 trước khi nhập. Đường truyền local timeout
-  khi gửi; khối 512 KiB sau đó cần 41,312 giây. Chuyển upload sang runner theo
-  chấp thuận, không chuyển Mongo credential vào CI.
-- [Import](evidence/0.10/mongo-import-41208174465.json) hoàn tất 426 phần, nhưng
-  [reconciliation đầu](evidence/0.10/mongo-initial-reconciliation-41208174465.json)
-  dừng sau 32 sản phẩm vì CDN gzip thêm NPZ. Verifier sửa thương lượng HTTP,
-  giữ kiểm MIME/encoding và byte/hash. [Pre-cutover](evidence/0.10/mongo-reader-before-cutover.json)
-  đạt 213 sản phẩm với 396 attempt records, gồm hai read timeout và hai retry
-  được giữ nguyên. [Source binding](evidence/0.10/mongo-reader-source-binding.json)
-  khớp file verifier trong commit `1862358`; lúc chạy file còn ở working tree.
-- Cutover `7efcf6b` có [smoke 400](evidence/0.10/mongo-production-7efcf6b-failed.json)
-  và [canonical failure](evidence/0.10/mongo-canonical-7efcf6b-failed.json).
-  Wildcard rewrite không tương thích parser; query nội bộ chính xác chưa được
-  ghi lại. Đã rollback về static `2f1442a`, xác minh manifest HTTP 200, rồi
-  dùng 213 redirect cụ thể theo hash. Query validation không được nới lỏng.
+- The connector rejected a large batch with 413 before import. Local transfer timed out; a 512 KiB block later took 41.312 seconds. Upload was moved to a runner under authorization; Mongo credentials were not moved into CI.
+- [Import](evidence/0.10/mongo-import-41208174465.json) completed all 426 parts, but [initial reconciliation](evidence/0.10/mongo-initial-reconciliation-41208174465.json) stopped after 32 products because the CDN gzip-compressed NPZ data. The verifier was corrected for HTTP negotiation while retaining MIME/encoding and byte/hash checks. [Pre-cutover](evidence/0.10/mongo-reader-before-cutover.json) passed 213 products with 396 attempt records, including two retained read timeouts and two retries. [Source binding](evidence/0.10/mongo-reader-source-binding.json) matched the verifier file in commit `1862358`; the file was still in the working tree when run.
+- Cutover `7efcf6b` had a [400 smoke failure](evidence/0.10/mongo-production-7efcf6b-failed.json) and [canonical failure](evidence/0.10/mongo-canonical-7efcf6b-failed.json). Wildcard rewrite was incompatible with the parser; the exact internal query was not recorded. It was rolled back to static `2f1442a`, the manifest HTTP 200 was verified, and then 213 specific redirects by hash were used. Query validation was not relaxed.
 
-Các lỗi không bị thay thế bằng lượt thành công. Smoke cuối so Git blob và API
-commit; cờ working-tree-dirty đến từ bản sao receipt lỗi chưa commit, không có
-thay đổi source runtime. Archive tài liệu/evidence được commit sau bản production
-để tránh tạo vòng deploy chỉ để lưu biên nhận.
+Failures were retained, not replaced with a successful run. Final smoke compared Git blob and API commit; `worktree_dirty` was due to an uncommitted copy of the failure receipt, not a runtime-source change. The documentation/evidence archive was committed after production to avoid a deployment cycle just to store receipts.
 
-## Giới hạn và mốc tiếp theo
+## Limits and next milestone
 
-Đã giảm **static output của bản mới**, không xóa dataset khỏi Git/source checkout
-hoặc các deployment cũ được giữ để rollback. Các Python function vẫn có cảnh báo
-bundle 261–297 MB trước tối ưu; chưa có số đo byte triển khai cuối từng function.
-Không cộng static shell 616 KB thành dung lượng toàn project Vercel.
+The **static output of the new build** was reduced; datasets were not removed from Git/source checkout or older deployments retained for rollback. Python functions still show bundle warnings of 261–297 MB before optimization; final deployed byte size per function has not been measured. Do not add the 616 KB static shell as if it were the total Vercel project size.
 
-M0 chưa có chứng nhận tải lớn, failover, SLO dài hạn hoặc recovery production.
-Kiểm thử browser của agent không thay nghiên cứu với người mới thật, screen reader
-hoặc toàn bộ browser/device matrix. IRSA vẫn chỉ là so ảnh hiển thị; phép đo WISE
-vẫn có sai số mô hình chưa hiệu chuẩn. Không thay threshold/PSF/covariance, không
-mở 252 assessment cells hoặc 30 trường dành riêng, không tuyên bố phát hiện.
+M0 has no large-load, failover, long-term SLO, or production-recovery certification. Agent browser checks do not replace a study with real newcomers, screen-reader testing, or a full browser/device matrix. IRSA remains visual image comparison only; WISE measurements retain uncalibrated model error. Do not change threshold/PSF/covariance, open the 252 assessment cells or 30 reserved fields, or claim a detection.
 
-Mốc đề xuất tiếp theo: tách dependency của reader/review khỏi xử lý FITS để giảm
-bundle Python. Nghiệm thu bằng số đo bundle trước/sau trên Vercel, reader/review
-không mang Astropy/Pillow không cần thiết, và giữ toàn bộ byte/hash, private-review
-lifecycle cùng hai luồng end-to-end đạt. Sau đó mới khóa một đợt thử tải để quyết
-định scale, dựa trên latency/cache/memory thay vì nhân cluster theo cảm tính.
+Proposed next milestone: separate reader/review dependencies from FITS processing to reduce the Python bundle. Accept based on before/after Vercel bundle sizes, reader/review without unnecessary Astropy/Pillow, and all bytes/hashes, private-review lifecycle, and two end-to-end flows passing. Then lock a load test to decide scaling from measured latency/cache/memory rather than duplicating clusters by intuition.

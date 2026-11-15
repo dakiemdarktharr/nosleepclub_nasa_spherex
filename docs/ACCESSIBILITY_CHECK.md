@@ -1,19 +1,19 @@
-# Kiểm tra khả năng truy cập 0.10
+# Accessibility Check 0.10
 
-Ngày 2026-10-30, kiểm tra thủ công trong trình duyệt theo phương pháp `accessibility-compliance:wcag-audit-patterns`. Đây là kiểm tra có phạm vi, chưa phải chứng nhận WCAG 2.2 AA hay thử nghiệm với người dùng screen-reader.
+Manual browser review on 30 October 2026, following the `accessibility-compliance:wcag-audit-patterns` method. This is a scoped check, not WCAG 2.2 AA certification or a screen-reader user study.
 
-## Đã đo và thực hiện
+## Checks performed
 
-- Font của trường nhập là Be Vietnam Pro tự host; tiếng Việt được xem trực tiếp. Trên các phần tử đang hiển thị có nền đặc, phép tính luminance từ màu chữ và màu nền kế thừa không tìm thấy trường hợp dưới 4,5:1 cho chữ thường hoặc 3:1 cho chữ lớn. Bỏ qua control disabled và nền ảnh; phép kiểm chưa bao gồm mọi opacity, trạng thái tương tác hoặc pixel trong ảnh minh họa.
-- Skip link **Đến ảnh quan sát** hoạt động bằng Enter. Tab tiếp theo vào nút `workspace-help` trong vùng so ảnh, bỏ qua điều hướng; focus ở dưới header cố định.
-- Enter mở hướng dẫn; Escape đóng và trả focus về nút mở. Phát hiện vòng Tab native của trình duyệt này có lúc ra BODY; đã bổ sung vòng focus cho hai dialog. Ở bản local đã sửa, Tab từ nút cuối về `guide-close`, Shift+Tab từ nút đầu tới `guide-start`, focus vẫn trong dialog. Không chặn các tổ hợp Ctrl/Alt/Meta+Tab.
-- Mở báo cáo ePSF bằng Enter, thấy cả sáu hàng có mẫu số và giá trị đúng. Kho thí nghiệm cũ mở theo deep link. Điều khiển thời gian nhận phím End để tới ảnh cuối.
-- Menu mobile mở và đóng khi chọn liên kết; layout 390 × 844 không có input/select/button phần Khám phá tràn ngang. Nút đóng bằng Escape đã được bổ sung; kiểm tra production sau deploy còn cần ghi nhận.
+- The input fields use self-hosted Be Vietnam Pro, and Vietnamese copy was inspected directly. For visible elements on solid backgrounds, relative luminance checks of text and inherited background colors found no cases below 4.5:1 for normal text or 3:1 for large text. Disabled controls and image backgrounds were excluded; the check did not cover every opacity, interactive state, or pixel in illustrative images.
+- The **Skip to observed images** link works with Enter. The next Tab reaches `workspace-help` in the image-comparison area, bypassing the navigation; focus remains below the fixed header.
+- Enter opens the guide; Escape closes it and returns focus to the opener. The browser’s native Tab sequence sometimes moved to BODY, so focus cycling was added to both dialogs. In the corrected local build, Tab from the last control returns to `guide-close`, and Shift+Tab from the first control goes to `guide-start`; focus stays in the dialog. Ctrl/Alt/Meta+Tab combinations are not intercepted.
+- The ePSF report opens with Enter and shows all six rows with their denominators and values. The older experiment archive opens through its deep link. The time control accepts End to move to the last image.
+- The mobile menu opens and closes when a link is selected. At 390 × 844, no input/select/button in Explore overflows horizontally. Escape was added to close the menu; production verification after deployment was still pending.
 
-Bổ sung production `c88fe57`: Tab/Shift+Tab vòng trong dialog và Escape trả về nút mở đều đã thử trên URL public; menu mobile Escape đóng và trả focus đúng. [Ảnh focus](evidence/0.10/dialog-keyboard-production.png). Bảng sandwich mới được thử riêng local: hai select có tên accessible tường minh; Enter mở details, các lựa chọn 50/68/95% và mẫu accepted hiển thị đúng. Chiều ngang document mobile không tăng theo bảng; vùng bảng cuộn ngang riêng. Phần này chưa thay thế screen-reader/reflow audit.
+Production hardening in `c88fe57`: Tab/Shift+Tab cycling inside the dialog and Escape returning focus to the opener were tested on the public URL. Escape also closes the mobile menu and restores focus. The newer sandwich table was checked locally: both selects have explicit accessible names; Enter opens the details; the 50/68/95% choices and accepted sample render correctly. The mobile document width does not grow with the table; the table has its own horizontal scroll area. This does not replace screen-reader or reflow auditing.
 
-Ảnh kiểm tra vòng focus: [dialog-keyboard-local.jpg](evidence/0.10/dialog-keyboard-local.jpg). Kiểm tra web/dữ liệu thật và giới hạn môi trường ở [BROWSER_VERIFICATION.md](BROWSER_VERIFICATION.md).
+Focus-cycle evidence: [dialog-keyboard-local.jpg](evidence/0.10/dialog-keyboard-local.jpg). See [BROWSER_VERIFICATION.md](BROWSER_VERIFICATION.md) for checks on the web app/data and environment limitations.
 
-## Còn cần kiểm tra
+## Still to check
 
-Screen-reader thực (ít nhất NVDA và một tổ hợp khác), toàn bộ keyboard journey và dialog bằng chứng có nội dung dài, zoom/reflow 200–400%, chế độ tương phản cao, reduced motion, mô tả phi thị giác của ảnh khoa học và marker, mobile thật/touch, cùng kiểm tra tương phản các trạng thái focus/hover và nền ảnh. Giữ giới hạn này trong ledger; không đổi kết quả khoa học dựa vào kiểm tra giao diện.
+Test a real screen reader (at least NVDA and one other combination), the full keyboard journey and a long evidence dialog, 200–400% zoom/reflow, high-contrast mode, reduced motion, nonvisual descriptions of science images and markers, real mobile/touch devices, and contrast for focus/hover states and image backgrounds. Keep these limits in the verification ledger; do not change scientific results based on interface checks.

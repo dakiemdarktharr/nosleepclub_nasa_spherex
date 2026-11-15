@@ -1,133 +1,55 @@
-# Đối chứng tín hiệu, nguồn chồng, template và pha native
+# Signal, Blend, Template, and Native-Phase Controls
 
-Phiên bản `0.10.0-signal-controls.1`. Khóa mã, test, seed, danh sách lượt và
-ngưỡng dưới đây trong Git trước khi tạo scene/nhiễu hoặc fit thí nghiệm.
-Đây là phát triển có chủ đích trên dữ liệu đã mở, chưa phải validation bầu trời.
+Version `0.10.0-signal-controls.1`. Lock code, tests, seeds, attempt list, and thresholds below in Git before generating scenes/noise or fitting the experiment. This is intentional development on opened data, not sky validation.
 
-## Câu hỏi và miền dữ liệu
+## Question and data domain
 
-Đo bias vị trí/thông lượng và mức giữ tín hiệu của hai fitter đã có khi thay
-template truth, pha dưới pixel và thông tin về nguồn chồng. Không học lại PSF,
-đổi bộ giải, sửa gate cũ hay chọn mô hình từ kết quả này.
+Measure positional/flux bias and signal preservation for the two existing fitters when truth template, subpixel phase, and blend information vary. Do not relearn the PSF, change the solver, revise old gates, or select a model from these results.
 
-Chỉ dùng hình học hai sao training `5756942110218608640` và
-`5756958431094222592` tại exposure cũ `2025W46_2A_0214_3`. Cả hai được chọn sau
-gate cũ bị chặn; đây là hai stamp trong **một** exposure/trường đã chọn từ ảnh.
-Không coi chúng là các trường độc lập. Pipeline xác minh parent protocol
-`704e3ef`, journal/nguồn kế thừa và coefficient seal trước khi chuẩn bị input.
-Ba artifact public của parent (overview, audit, archive đủ journal/checkpoint)
-được ràng buộc hash và đối chiếu digest trước khi tạo design hoặc chạy.
+Use only the geometry of two training stars, `5756942110218608640` and `5756958431094222592`, at the old exposure `2025W46_2A_0214_3`. Both were selected after the old gate failed; they are two stamps in **one** image/field selected from images. They are not independent fields. Before preparing inputs, the pipeline verifies parent protocol `704e3ef`, inherited journal/source, and coefficient seal. Three public parent artifacts (overview, audit, complete journal/checkpoint archive) are hash-bound and digest-checked before design or execution.
 
-Giữ nguyên các pixel đã chọn, mask, VARIANCE gốc, WCS và registration cũ.
-Thay IMAGE bằng **scene tổng hợp**; không cộng vào ảnh nhiễu thật, không lấy
-residual thật làm chân trị. Catalog neighbor gốc được thay bằng đúng nguồn
-chồng kiểm soát; không âm thầm giữ sao thật trong mean tổng hợp.
+Keep selected pixels, mask, original VARIANCE, WCS, and old registration fixed. Replace IMAGE with a **synthetic scene**; do not add it to real noisy images or use real residuals as truth. Replace the original neighbor catalog with the specified controlled sources; do not silently retain real stars in the synthetic mean scene.
 
-Tâm mục tiêu native bằng floor(tâm Gaia đã đăng ký) cộng một trong bốn pha:
-`(.25,.25), (.25,.75), (.75,.25), (.75,.75)`. Anchor tìm kiếm của fitter vẫn là
-Gaia cũ cho mọi scene có nguồn, không biết vị trí được chèn. Riêng null dùng
-anchor common chuyển từ native phase tương ứng; null không có source truth.
-Nguồn chồng cách mục tiêu `(+1.5,0)`
-native pixel, thông lượng bằng mục tiêu. Dùng WCS thuận/nghịch cùng offset
-để chuyển tọa độ, kiểm roundtrip `1e-7` pixel. Bias/khoảng cách luôn đo bằng
-**native pixel**, không nhân thang 6,15″ của lưới chung để giả làm native.
+Target native center is `floor(registered Gaia center)` plus one of four phases: `(.25,.25), (.25,.75), (.75,.25), (.75,.75)`. The fitter search anchor remains the old Gaia position for every source-containing scene and does not know the injected location. Null cases use a common anchor transformed from the corresponding native phase; null has no source truth. A blend is offset `(+1.5,0)` native pixels from target and has the same flux. Use forward/inverse WCS with offsets for coordinate conversion and verify round trip to `1e-7` pixel. All biases/separations are measured in **native pixels**; do not multiply by the 6.15″ common-grid scale and call the result native.
 
-## Factorial đã khóa: 640 fit
+## Locked factorial: 640 fits
 
-| Phần | Phép nhân | Fit |
-| --- | --- | ---: |
-| Không nhiễu | 2 geometry × 2 truth × 4 pha × 3 cảnh × 2 flux × 2 fitter | 192 |
-| Có nhiễu | 2 geometry × Gaussian truth × 2 pha × 3 cảnh × 1 flux × 16 draw × 2 fitter | 384 |
-| Null | 2 geometry × 2 pha anchor × 8 draw × 2 fitter | 64 |
+| Component | Product | Fits |
+|---|---|---:|
+| Noiseless | 2 geometries × 2 truths × 4 phases × 3 scenes × 2 fluxes × 2 fitters | 192 |
+| Noisy | 2 geometries × Gaussian truth × 2 phases × 3 scenes × 1 flux × 16 draws × 2 fitters | 384 |
+| Null | 2 geometries × 2 phase anchors × 8 draws × 2 fitters | 64 |
 
-Truth gồm (1) ePSF nearest **gốc**, khớp mô hình để kiểm phần mềm — đây là
-inverse crime, có thể có cánh âm; (2) Gaussian elip dương tích phân pixel,
-σ=(.55,.70) native pixel, xoay 25°. Gaussian là họ toán học khác fitter,
-không phải PSF SPHEREx đo độc lập. Hai nhánh fitter là nearest gốc và nearest
-cộng đúng vector shape đã seal, áp dụng cho target và neighbor đang có.
+Truth cases: (1) original nearest ePSF, matched to the model as a software check — an inverse crime that may contain negative wings; (2) positive pixel-integrated elliptical Gaussian with σ=(0.55,0.70) native pixel, rotated 25°. Gaussian is a different mathematical family from the fitter, not an independently measured SPHEREx PSF. The fitters are original nearest and nearest plus exactly the sealed shape vector, applied to current target and neighbor.
 
-Ba cảnh: `isolated` chỉ target; `modeled` có companion được fit tại tọa độ đúng;
-`omitted` có cùng target+companion/ảnh/nhiễu như modeled nhưng bỏ cột companion
-khỏi fitter. Cảnh omitted là stress sai mô hình, không phải mẫu để yêu cầu
-fidelity khi mô hình cố ý thiếu nguồn. Nó không được chọn/bỏ sau khi xem kết quả.
+Three scenes: `isolated` has target only; `modeled` has a companion fit at its true position; `omitted` uses the same target+companion/image/noise as modeled but omits the companion column from the fitter. Omitted is a model-misspecification stress test, not a sample where fidelity is required despite intentionally missing a source. Do not select/drop it after seeing results.
 
-Noiseless dùng 600 và 1.200 µJy; noisy chỉ Gaussian, 1.200 µJy, pha 0 và 3.
-Null không có target hoặc companion; pha chỉ chỉ định anchor tương ứng, không
-có tọa độ truth của một nguồn. Mọi fitter giữ target/neighbor flux có dấu, nền
-plane, chín starts, ±2,5 common pixel và tối đa 20 vòng IRLS như code đã khóa.
+Noiseless uses 600 and 1,200 µJy; noisy uses Gaussian truth only at 1,200 µJy, phases 0 and 3. Null has neither target nor companion; phase only specifies the corresponding anchor, with no source-truth position. All fitters retain signed target/neighbor flux, a plane background, nine starts, ±2.5 common-pixel bounds, and up to 20 IRLS iterations as locked in code.
 
-## Chuẩn hóa, nền và nhiễu
+## Normalization, background, and noise
 
-Gaussian có mật độ chuẩn hóa trên toàn mặt phẳng, tích phân bằng Gauss–Legendre
-12 và 24 điểm mỗi trục/pixel. Dùng kết quả 24, từ chối nếu L1 chênh quá
-`1e-12+1e-10*selected_mass`. Không chuẩn hóa lại trên mask; lưu phần flux nằm
-trong và ngoài tập pixel. Chuyển Jy sang MJy/sr bằng Ω riêng từng pixel.
+The Gaussian has full-plane normalized density, integrated with 12- and 24-point Gauss–Legendre quadrature per pixel/axis. Use the 24-point result; refuse if L1 disagreement exceeds `1e-12+1e-10*selected_mass`. Do not renormalize on the mask; save flux inside/outside selected pixels. Convert Jy to MJy/sr using per-pixel Ω.
 
-Matched truth và fitter giữ nguyên quy ước Ω tại tâm nguồn của renderer cũ.
-Lưu Ω tâm target/companion và khoảng min/max Ω(pixel)/Ω(tâm). Vì vậy, so hai
-họ truth gồm cả khác biệt shape **và** quy ước solid-angle; không quy mọi sai
-lệch cho PSF. Không sửa renderer cũ để tạo sự khớp giả. Nền mean cố định bằng
-ba cột plane cũ nhân hệ số `[.04,.015,-.01]` MJy/sr.
+Matched truth and fitter preserve the old renderer's source-center Ω convention. Save target/companion center Ω and min/max Ω(pixel)/Ω(center). Therefore, comparison between the two truth families includes both shape **and** solid-angle convention differences; do not attribute every error to PSF. Do not alter the old renderer to create artificial agreement. Fixed mean background is the three old plane columns times `[.04,.015,-.01]` MJy/sr.
 
-Noisy/null cộng Gaussian độc lập theo VARIANCE quan sát gốc, không source
-Poisson hoặc variance oracle. VARIANCE vốn phản ánh ảnh đã quan sát; đây chỉ
-là mô hình conditional, không xác nhận noise detector, tương quan nền hay
-thông lượng nguồn thực. Mỗi draw dùng PCG64/SeedSequence `[2026103102, draw]`
-để tạo bank theo toàn shape exposure, thứ tự C. Cùng pixel vật lý và draw dùng
-cùng Z ở hai stamp, mọi pha/cảnh/flux/fitter; null dùng tám bank đầu. Draws
-độc lập có điều kiện, các nhánh/strata được ghép cặp và không độc lập nhau.
+Noisy/null scenes add independent Gaussian noise scaled by observed VARIANCE; no source Poisson or oracle variance. VARIANCE reflects observed images; this is only a conditional model and does not validate detector noise, background correlations, or real source flux. Each draw uses PCG64/SeedSequence `[2026103102, draw]` to generate a bank across the full exposure shape in C order. The same physical pixel and draw use the same Z across both stamps and every phase/scene/flux/fitter; null uses the first eight banks. Draws are conditionally independent; branches/strata are paired and not independent of one another.
 
-## Đại lượng và ngưỡng trước kết quả
+## Metrics and prespecified thresholds
 
-Giữ mọi lượt chuẩn bị lỗi, fit lỗi, fit hoàn tất nhưng bị từ chối số học.
-Mỗi stratum báo đủ planned/completed/supported, dx/dy có dấu, radial/RMS/P90/max,
-Fhat/Ftrue và bias. Báo riêng all-completed và supported-completed; không dùng
-mean có dấu để che bias triệt tiêu giữa các pha. MCSE của tỷ số flux chỉ mô tả
-nhiễu Monte Carlo trên các draw hoàn tất, chưa xử lý missingness hoặc covariance
-thiên văn. Cặp baseline/corrected báo đủ số cặp dự kiến và thiếu.
+Retain all preparation failures, fit errors, and completed fits rejected numerically. For each stratum report planned/completed/supported, signed dx/dy, radial/RMS/P90/max, Fhat/Ftrue, and bias. Report all-completed and supported-completed separately; do not use a signed mean to hide cancellation across phases. MCSE for flux ratios describes Monte Carlo noise over completed draws only; it does not address missingness or astronomical covariance. For baseline/corrected pairs, report expected and missing counts.
 
-- **Noiseless sạch:** mọi **128 fit** isolated/modeled phải hoàn tất, được hỗ
-  trợ số học, radial≤0,1 native pixel và Fhat/Ftrue∈[0,9;1,1]. Một ca sai vẫn
-  làm guard chung trượt, không gộp với pha khác để xóa failure.
-- **Noisy sạch:** mỗi trong **16 strata** geometry×pha×scene×fitter có 16 draw;
-  ít nhất 15 phải đồng thời hoàn tất, được hỗ trợ, Fhat>0, radial≤0,5 native
-  pixel và Fhat/Ftrue∈[0,5;1,5]. Đây là ngưỡng **mẫu quan sát**, chưa chứng nhận
-  tỷ lệ quần thể. Lỗi/thiếu là không đạt trong mẫu số 16.
-- **Giữ tín hiệu khi thêm correction:** đủ **64 cặp noiseless sạch** hoàn tất,
-  không có numerical refusal mới, radial không tăng quá 0,02 native pixel và
-  |Fhat/Ftrue−1| không tăng quá 0,02. Guard này không thay gate fidelity trên.
-- Omitted báo đủ bias, nhầm sang companion và mức hỗ trợ/lỗi; không yêu cầu
-  đạt fidelity của cảnh sạch hoặc chọn mô hình từ stress thuận lợi.
-- Null chỉ báo flux có dấu và số fit đồng thời supported+flux dương với khoảng
-  Clopper–Pearson. Không có radial truth, flux ratio, detection hoặc false-alarm
-  rate đã hiệu chuẩn; không tái dùng ngưỡng nhận nguồn cũ cho PSF này.
+- **Clean noiseless:** all **128 fits** in isolated/modeled cases must complete, be numerically supported, have radial≤0.1 native pixel and Fhat/Ftrue∈[0.9,1.1]. One failing case makes the shared guard fail; do not pool across phases to erase failures.
+- **Clean noisy:** each of the **16 strata** (geometry×phase×scene×fitter) has 16 draws; at least 15 must jointly complete, be supported, have Fhat>0, radial≤0.5 native pixel, and Fhat/Ftrue∈[0.5,1.5]. These are **observed-sample** thresholds, not population certification. A failed/missing attempt does not pass within denominator 16.
+- **Signal preservation after correction:** all **64 clean noiseless pairs** must complete; there must be no new numerical refusal, radial error must not rise by more than 0.02 native pixels, and `|Fhat/Ftrue−1|` must not increase by more than 0.02. This guard does not replace the fidelity gate above.
+- Omitted cases report all bias, companion confusion, support, and errors; they are not required to pass clean-scene fidelity and must not be used to select a model from a favorable stress case.
+- Null reports signed flux and the count jointly supported with positive flux, with Clopper–Pearson intervals. There is no radial truth, flux ratio, calibrated detection, or false-alarm rate; do not reuse the old source-acceptance threshold for this PSF.
 
-Các budget là điều kiện phát triển cần thiết để phát hiện hỏng tín hiệu và
-nhận nhầm nguồn, không phải yêu cầu NASA hoặc chứng nhận độ chính xác vật lý.
-Khoảng binomial 95% hai phía tính riêng mỗi stratum cố định; không gộp strata
-ghép cặp thành IID. Với N=16, ngay 16/16 có cận dưới≈0,794; 15/16≈0,698.
-P(đạt≥15/16|p=.9)≈.515, nên pilot không đủ power chứng nhận 90% population
-recovery. Null N=8 với zero outcome vẫn có cận trên≈.369. Công bố toàn bộ
-strata và uncertainty, không chọn phần đạt rồi gọi là miền đã kiểm định.
+Budgets are development conditions for detecting signal damage and source confusion; they are not NASA requirements or certification of physical accuracy. Two-sided 95% binomial intervals are calculated separately for each fixed stratum; do not pool paired strata as IID. With N=16, even 16/16 gives a lower bound ≈0.794; 15/16 gives ≈0.698. `P(pass≥15/16 | p=.9)≈.515`, so this pilot is underpowered to certify 90% population recovery. Null N=8 with zero outcomes still has an upper bound ≈0.369. Report every stratum and uncertainty; do not select only passing cases and call them the validated domain.
 
-## Isolation và công bố
+## Isolation and publication
 
-Design ghi hash code/test/tài liệu, nguồn/raw đã ghim, gate cũ, seal và đúng
-640 khóa. Commit/push trước chạy; hai shard theo geometry, yêu cầu BLAS/OMP một
-luồng mỗi process (không phải phép đo số luồng thực). Journal giữ terminal
-records bất biến và resume không thay kết quả. Assessment directory phải vắng
-trước/sau. Mỗi fitter/nhánh companion được chuẩn bị lazy riêng; lỗi correction
-hoặc companion không làm mất ca baseline/nguồn đơn không liên quan. Truth matched
-chỉ phụ thuộc template gốc cần thiết, Gaussian không phụ thuộc model fitter.
-Dù mọi guard mới đạt, **gate cũ vẫn trượt**; 252 ô dành riêng và
-30 trường mới không được mở bởi study này. Chưa có model selection hoặc promotion.
+Design records hashes for code/tests/document, pinned source/raw data, old gate/seal, and exactly 640 keys. Commit/push before running; shards are split by geometry and each process requests one BLAS/OMP thread (actual thread count is not measured). Journal keeps immutable terminal records and resume cannot replace results. The assessment directory must be absent before/after. Prepare each fitter/companion branch lazily; a correction/companion error must not erase unrelated baseline/single-source cases. Matched truth depends only on the required original template; Gaussian truth does not depend on the fitter model. Even if all new guards pass, **the old gate still fails**; this study does not open the 252 reserved cells or 30 new fields. No model selection or promotion follows.
 
-Kiểm toán độc lập sẽ kiểm scene/seed/đơn vị, objective tại vị trí đã lưu và
-gate/mẫu số trước công bố. UI phải ghi rõ ảnh tổng hợp, không gọi nguồn giả
-là đo lại WISE 0855. Thí nghiệm tiếp theo cần protocol mới, nguồn dữ liệu độc
-lập vật lý, đánh giá nền thật và covariance; không nới ngưỡng sau lần này.
+Independent audit will check scene, seed, units, objective at saved positions, gate, and denominators before publication. UI must clearly identify synthetic images and never call simulated sources a remeasurement of WISE 0855. A future experiment needs a new protocol, independent physical source data, real-background evaluation, and covariance; do not relax thresholds after this run.
 
-Nguồn phương pháp: [Gaussian2D, Astropy](https://docs.astropy.org/en/stable/api/astropy.modeling.functional_models.Gaussian2D.html),
-[quadrature, NumPy](https://numpy.org/doc/stable/reference/generated/numpy.polynomial.legendre.leggauss.html),
-[exact binomial interval, SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats._result_classes.BinomTestResult.proportion_ci.html).
-Code dùng phiên bản đã ghim trong requirements, không tự nâng package theo trang docs hiện hành.
+Method references: [Gaussian2D, Astropy](https://docs.astropy.org/en/stable/api/astropy.modeling.functional_models.Gaussian2D.html), [quadrature, NumPy](https://numpy.org/doc/stable/reference/generated/numpy.polynomial.legendre.leggauss.html), [exact binomial interval, SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats._result_classes.BinomTestResult.proportion_ci.html). Code uses the versions pinned in requirements; it does not automatically upgrade packages based on current documentation pages.

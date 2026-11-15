@@ -1,61 +1,31 @@
-# Đối chứng phổ: có dữ liệu thật, chưa đủ hệ số cho fit ảnh
+# Spectral Control: Real Data, No Flux Coefficient Ready for Image Fitting
 
-Đã có hai phổ JWST/NIRSpec công khai của WISE 0855 cùng chương trình 1230:
-[G395M](WISE0855_EXTERNAL_SED.md) và [PRISM](WISE0855_PRISM.md). Cả hai là
-pipeline MAST, không phải bảng tác giả trích xuất riêng hoặc phép chuẩn
-Spitzer của bài báo. Raw FITS, association và metadata giữ trong cache bị
-Git bỏ qua; repo giữ source URL, hash và báo cáo, không sao chép raw vào web.
+Two public JWST/NIRSpec spectra of WISE 0855 from program 1230 are now available: [G395M](WISE0855_EXTERNAL_SED.md) and [PRISM](WISE0855_PRISM.md). Both are MAST pipeline products, not author-extracted Figure 4 tables or the paper's Spitzer calibration. Raw FITS, associations, and metadata remain in a Git-ignored cache. The repository records source URLs, hashes, and reports; it does not copy raw data into the web application.
 
-## Kết quả đã ghi
+## Recorded results
 
-| Phép kiểm tra | Kết quả | Diễn giải |
+| Check | Result | Interpretation |
 |---|---|---|
-| G395M x1d | 1.233/1.254 hàng usable, 335/335 trong 4,4–5,0 µm | Mask kỹ thuật; không phải chứng nhận flux chính xác |
-| Response lab R7 | 17 kênh D6 × Cent/Allpix × 3 shift = 102 điều kiện | Kênh danh nghĩa, chưa ghép response của mỗi pixel QR2 |
-| Kernel V2 trên G395M | 102 tính được; 102 partial; 0 full; 0 numerical failure | Không ngoại suy qua DQ hoặc ngoài miền file |
-| Trọng số tuyệt đối thiếu | 0,0136776–0,1592443% | Tỷ lệ trọng số, không phải độ lệch hoặc sai số flux |
-| PRISM bổ sung | 100/100 mẫu trong miền response, 102/102 tính cả bracket | Chưa convolution, ghép phổ, scale hoặc sửa LSF |
+| G395M x1d | 1,233/1,254 usable rows; 335/335 in 4.4–5.0 µm | Technical mask; not a flux-accuracy certification |
+| R7 lab response | 17 D6 channels × Cent/Allpix × 3 shifts = 102 conditions | Nominal channels; not matched to each QR2 pixel's response |
+| V2 kernel on G395M | 102 computed; 102 partial; 0 full; 0 numerical failures | No extrapolation across DQ flags or outside the file domain |
+| Missing absolute weight | 0.0136776–0.1592443% | Fraction of weight, not a flux offset or flux error |
+| Additional PRISM data | 100/100 samples within the response domain; 102/102 including brackets | No convolution, spectrum merge, scaling, or LSF correction yet |
 
-Phổ G395M có điểm usable cuối tại 5,0930738449 µm; các điểm tiếp theo có DQ.
-Response lab gốc kéo đến 5,104283 µm, với shift lớn nhất đến 5,110683 µm.
-Do đó 102 điều kiện thiếu trọng số vì DQ cuối phổ; 68 điều kiện còn vượt miền
-file G395M. Các tail nhỏ không được tự coi flux bằng 0. Mean của phần có hỗ
-trợ được lưu riêng; mọi full-band mean và tỷ số dùng full-band mean là null.
-Không suy confidence interval từ các dòng flux có thể tương quan.
+The final usable G395M sample is at 5.0930738449 µm; following samples have DQ flags. The original lab response extends to 5.104283 µm, and the largest shift extends to 5.110683 µm. Thus all 102 conditions have missing weight because of the final DQ-masked spectrum; 68 conditions also extend beyond the G395M file domain. Do not assume the small tails have zero flux. The mean over the supported part is recorded separately; all full-band means and ratios that require a full-band mean are null. Do not infer confidence intervals from potentially correlated flux samples.
 
-PRISM có các mẫu hợp lệ kẹp toàn bộ miền response ở giới hạn gap 0,01 µm.
-Điều đó giải quyết khả năng lấy mẫu của dữ liệu bổ sung, chưa xác nhận
-convolution có cùng độ phân giải hoặc chuẩn flux. Chưa dùng PRISM thay G395M
-trong 102 kết quả trên và chưa tạo SED tổng hợp.
+Valid PRISM samples bracket the entire response domain within the 0.01 µm gap limit. This resolves sample availability for the supplemental data; it does not establish equivalent resolution or flux calibration. PRISM was not substituted for G395M in the 102 results above, and no merged SED was produced.
 
-## Lỗi, khóa cấu hình và tái lập
+## Failure, configuration lock, and reproducibility
 
-V1 `b3eb94c` dừng ở điều kiện thứ tư do root fraction làm tròn thành 1,
-làm mất chiều dài một thùy đáp ứng nhỏ. [Receipt thất bại](evidence/0.10/spectral-reference-b3eb94c-aborted.json)
-và nguồn V1 còn nguyên. V2 giữ hai thùy bằng moment giải tích ổn định, không
-clip dấu. Numerical preflight đã xem 102 điều kiện development trước khi
-khóa V2; không gọi đây là validation chưa xem trước.
+V1 `b3eb94c` stopped on the fourth condition because a rounded root fraction became 1 and lost the width of a small response lobe. The [failure receipt](evidence/0.10/spectral-reference-b3eb94c-aborted.json) and V1 source remain intact. V2 preserves both lobes with a stable analytic moment and does not clip signs. A numerical preflight examined the 102 development conditions before V2 was locked; this is not unseen validation.
 
-Lượt ghi chính thức dùng commit `f5a1e518a4d0f28268337f42af0bbabdfc605e78`,
-[design V2](../web/data/spectral-response/v2-design.json) SHA-256
-`fd7c0c6141d7a8b204190b04ca140017e9b0316585df07d21d913937c37718c9`.
-[Báo cáo 102 điều kiện](../web/data/spectral-response/v2-development-audit.json),
-150.164 byte, SHA-256
-`21a07ae84771d4267c8afc992005a74eb82554c375e4c62cee21c3049187a97b`.
-Mỗi curve có hash CSV, mỗi functional có hash vector trọng số; 35 CSV đã đọc
-không được giải nén ra filesystem. Ba test sản phẩm tính lại mẫu số, kiểm
-hash và replay toàn bộ khi có raw. Kernel V2 có 13 test, gồm regression thật
-và đối chiếu tích phân độc lập; parser lab 3, G395M 3, PRISM 5 test.
+The official run used commit `f5a1e518a4d0f28268337f42af0bbabdfc605e78`. [V2 design](../web/data/spectral-response/v2-design.json) SHA-256: `fd7c0c6141d7a8b204190b04ca140017e9b0316585df07d21d913937c37718c9`. [Report for 102 conditions](../web/data/spectral-response/v2-development-audit.json): 150,164 bytes, SHA-256 `21a07ae84771d4267c8afc992005a74eb82554c375e4c62cee21c3049187a97b`. Each curve and functional weight vector has a hash; the 35 CSV files that were read were not extracted to disk. Three product tests recalculate denominators, check hashes, and replay all conditions when raw data are available. The V2 kernel has 13 tests, including real-data regressions and independent integration checks; the lab parser has 3, G395M 3, and PRISM 5 tests.
 
-## Trước khi ràng buộc flux trong fit WISE
+## Before constraining flux in a WISE fit
 
-1. Ghép response theo detector/pixel, wavelength và đúng release; kiểm quy
-   ước flux cùng solid angle, gain. R7 không tự thay calibration QR2.
-2. Định nghĩa xử lý LSF, negative response, normalization và covariance của
-   PRISM/G395M; báo sai khác và giới hạn thay vì ghép theo mắt.
-3. Khóa adapter và point model trên development, kiểm S/N, centroid bias,
-   modes và uncertainty với source-noise/PSF độc lập trước calibration ngoài.
+1. Match the response by detector/pixel, wavelength, and release; verify flux convention, solid angle, and gain. R7 does not automatically replace QR2 calibration.
+2. Define LSF handling, negative-response treatment, normalization, and PRISM/G395M covariance; report differences and limits instead of visually merging the spectra.
+3. Lock the adapter and point model on development data; test S/N, centroid bias, modes, and uncertainty with independent source-noise/PSF controls before external calibration.
 
-[Lõi shared flux](LINKED_FLUX_MODEL.md) đã có kiểm số học nhưng chưa nối
-các giả định trên vào pixel thật. Ba mươi trường triển vọng vẫn chưa được
-đo; không xem bất kỳ kết quả này là xác nhận chuyển động hoặc production.
+The [shared-flux core](LINKED_FLUX_MODEL.md) has passed arithmetic checks but does not yet connect these assumptions to real image pixels. The 30 prospective fields remain unmeasured. None of these results confirms motion or production readiness.

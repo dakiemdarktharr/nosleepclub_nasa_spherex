@@ -1,50 +1,50 @@
-# Chẩn đoán bias và độ phủ trên dữ liệu đã mở — 0.10
+# Bias and Coverage Diagnostics on Opened Data — 0.10
 
-Đây là phát triển sau validation 0.9, không phải tập kiểm định ngoài mới. Nguồn và số đo 0.3–0.9 giữ nguyên. Chưa có mô hình hay covariance mới được áp dụng lên WISE 0855.
+This is development work following validation 0.9, not a new external test set. Sources and measurements from 0.3–0.9 remain unchanged. No new model or covariance has been applied to WISE 0855.
 
-## Tái hiện và can thiệp
+## Reproduction and interventions
 
-Mã `diagnose_bias.py` khóa tại `a33dd64`. Ba trường w350p35, w090p10, w210m20 đã được mở ở 0.9. Mỗi trường kiểm tra vùng số 1, tọa độ lưới [57.5,5.5], hai ca: S/N mỗi frame 2/đứng yên và S/N 4/dịch [0.6,0.05] pixel. Hai yếu tố cùng thay đổi, nên không gọi đây là ablation riêng S/N. Tái hiện vector gốc khớp trong 1e-5 arcsec.
+The `diagnose_bias.py` code is locked at `a33dd64`. The three fields `w350p35`, `w090p10`, and `w210m20` were opened in 0.9. For each field, the study checks source region 1 at grid coordinate `[57.5, 5.5]` in two cases: S/N 2 per frame/stationary and S/N 4/moving by `[0.6, 0.05]` pixels. Both factors change together, so this is not an S/N-only ablation. Reproduced original vectors match within 1e-5 arcsec.
 
-So bốn point model trên đúng nguồn tiêm cũ, tìm nghiệm từ chín điểm khởi đầu ở trọng số IRLS cuối, bỏ từng exposure (20 lần/ca), và tách tín hiệu tiêm khỏi toàn bộ nền/noise gốc. Đối chứng chỉ có tín hiệu phục hồi sai lệch <0.00002 arcsec. Đối chứng này là một can thiệp oracle có biết nguồn tiêm, không thể dùng để xóa nền quanh nguồn thiên văn chưa biết.
+Compare four point models on the same previously injected source, search from nine starting points using final IRLS weights, omit each exposure in turn (20 times per case), and separate the injected signal from all original background/noise. The signal-only recovery control has error <0.00002 arcsec. This is an oracle intervention that knows the injected source; it cannot be used to remove background around an unknown astronomical source.
 
-Sau đó tạo 64 noise realizations Gaussian độc lập mỗi ca từ variance gốc, ePSF ghép đúng với fitter, giữ nguyên masks/bố cục và offset. Các ca dùng stream noise ghép cặp; không coi 384 ca là 384 vùng trời độc lập. Không thêm shot noise nguồn; đây là kiểm tra thống kê nội tại, chưa phải mô phỏng detector vật lý.
+Then generate 64 independent Gaussian noise realizations per case from the original variance, using the ePSF matched to the fitter and retaining masks/layout and offsets. Cases use paired noise streams; do not treat the 384 cases as 384 independent sky regions. No source shot noise is added; this is an internal statistical check, not a physical detector simulation.
 
-| Trường | Ca | Sai lệch trên nền gốc | RMS noise Gaussian | Raw ellipse 68% trên noise Gaussian | Đổi vector lớn nhất khi bỏ exposure |
+| Field | Case | Error on original background | Gaussian-noise RMS | Raw 68% ellipses containing truth on Gaussian noise | Largest vector change when omitting an exposure |
 |---|---|---:|---:|---:|---:|
-| w090p10 | S/N 2, đứng yên | 1.338″ | 1.943″ | 28/64 | 1.298″ |
-| w090p10 | S/N 4, dịch chuyển | 0.544″ | 0.782″ | 39/64 | 0.460″ |
-| w210m20 | S/N 2, đứng yên | 1.732″ | 2.095″ | 22/64 | 2.981″ |
-| w210m20 | S/N 4, dịch chuyển | 0.444″ | 0.854″ | 36/64 | 0.531″ |
-| w350p35 | S/N 2, đứng yên | 2.589″ | 2.291″ | 24/64 | 1.017″ |
-| w350p35 | S/N 4, dịch chuyển | 1.192″ | 0.803″ | 39/64 | 0.533″ |
+| w090p10 | S/N 2, stationary | 1.338″ | 1.943″ | 28/64 | 1.298″ |
+| w090p10 | S/N 4, moving | 0.544″ | 0.782″ | 39/64 | 0.460″ |
+| w210m20 | S/N 2, stationary | 1.732″ | 2.095″ | 22/64 | 2.981″ |
+| w210m20 | S/N 4, moving | 0.444″ | 0.854″ | 36/64 | 0.531″ |
+| w350p35 | S/N 2, stationary | 2.589″ | 2.291″ | 24/64 | 1.017″ |
+| w350p35 | S/N 4, moving | 1.192″ | 0.803″ | 39/64 | 0.533″ |
 
-Tỷ lệ noise Gaussian có sai lệch lớn hơn ca w350 gốc là 14/64 và 6/64. Đây là so sánh mô tả, không phải p-value kiểm định nguyên nhân nền. Một realization noise cố định được dùng lại cho nhiều nguồn tiêm có thể tạo các vector lệch cùng hướng. Chưa có bằng chứng đủ để gán lỗi w350 riêng cho blending hay nền khuếch tán.
+The Gaussian-noise error exceeded the original-background result in 14/64 and 6/64 realizations for the two `w350p35` cases. This is a descriptive comparison, not a p-value for a background-caused effect. Reusing one fixed noise realization for multiple injected sources can produce vectors that are biased in the same direction. There is not enough evidence to attribute the `w350p35` errors specifically to blending or diffuse background.
 
-Không mô hình phức tạp nào cứu đồng đều cả hai ca w350. Ở ca mờ, sai lệch nền phẳng/ePSF cố định 2.589″; nền bậc hai 2.640″; ePSF linh hoạt 2.836″; cả hai 2.829″. Ở ca sáng hơn, các phương án giảm nhẹ 1.192″ xuống 1.134–1.165″. Vùng có ảnh hưởng exposure lớn hơn w350 vẫn có thể phục hồi tốt hơn; một ngưỡng jackknife đơn lẻ chưa giải thích được miscoverage.
+No complex model consistently rescues both `w350p35` cases. For the fainter case, the flat-background/fixed-ePSF error is 2.589″; quadratic background is 2.640″; flexible ePSF is 2.836″; and both changes together give 2.829″. For the brighter case, the alternatives reduce the error modestly from 1.192″ to 1.134–1.165″. A field with greater exposure influence than `w350p35` can still recover better; a single jackknife threshold does not explain the undercoverage.
 
-## Thử độ cong likelihood
+## Likelihood-curvature experiment
 
-`profile_uncertainty.py`, `run_profile_diagnostics.py` và các numerical controls khóa tại `ecd61de` trước khi so trên cùng 64 realizations. Gauss–Newton dùng JᵀJ; Hessian đầy đủ của objective còn có hạng đạo hàm bậc hai của residual. Đối chứng số học tuyến tính và phi tuyến xác nhận hai cách có thể khác nhau.
+`profile_uncertainty.py`, `run_profile_diagnostics.py`, and numerical controls were locked at `ecd61de` before comparison on the same 64 realizations. Gauss–Newton uses JᵀJ; the full objective Hessian also includes the residual's second-derivative term. Linear and nonlinear numerical controls confirm that the two approaches can differ.
 
-Trên ảnh thực nghiệm, Hessian objective ở bước 0.002/0.004 pixel thường không ổn định; chỉ 20–28/64 ca mỗi nhóm có cả hai epoch qua kiểm tra độ nhạy bước. Không áp dụng một ellipse mới bằng cách bỏ im lặng các ca còn lại.
+On the empirical images, the objective Hessian was often unstable at 0.002/0.004-pixel steps; only 20–28/64 cases per group passed step-sensitivity checks at both epochs. Do not apply a new ellipse by silently dropping the remaining cases.
 
-Profile likelihood cho **vector chuyển động** tối ưu lại vị trí đầu khi cố định delta, tránh sai lầm dùng threshold hai bậc tự do cho bốn tọa độ đã cố định. Vẫn giữ trọng số robust cuối; tính chất Wilks chưa được chứng minh ở S/N thấp.
+Profile likelihood optimizes the initial position for a **motion vector**, while holding the vector fixed. This avoids incorrectly using a two-degree-of-freedom threshold for four fixed coordinates. Final robust weights are still held fixed; Wilks' theorem has not been established at low S/N.
 
-| Trường | S/N 2: GN → profile LR, chứa truth | S/N 4: GN → profile LR, chứa truth |
+| Field | S/N 2: GN → profile LR, contains truth | S/N 4: GN → profile LR, contains truth |
 |---|---:|---:|
 | w350p35 | 24/64 → 31/64 | 39/64 → 43/64 |
 | w090p10 | 28/64 → 40/64 | 39/64 → 42/64 |
 | w210m20 | 22/64 → 34/64 | 36/64 → 39/64 |
 
-Đây là thay cách biểu diễn bất định trên cùng centroid, chưa phải cải thiện vị trí. Ca mờ vẫn thiếu phủ. Bước tiếp theo là kiểm tra độ trơn của ePSF ở biên support và tính xác định của likelihood, rồi hiệu chuẩn/kiểm định trên dữ liệu độc lập. Không chọn ngưỡng mới theo truth w350 để tuyên bố tổng quát.
+This changes how uncertainty is represented for the same centroids; it does not improve the positions. The faint cases remain undercovered. Next, check ePSF smoothness at the support boundary and likelihood identifiability, then calibrate/test on independent data. Do not select a new threshold against `w350p35` truth and claim generality.
 
-## Provenance và tái tạo
+## Provenance and reproduction
 
-- `web/data/diagnostics/bias-overview.json` lưu từng vector, covariance, các ca Gaussian, influence, profile modes và hash của report lớn.
-- Report lớn và raw FITS ở `data/raw/benchmark/`, không commit; có thể tái tạo từ cache đã ghim trong design 0.9.
-- Chạy `python -m scripts.diagnose_bias --fields w350p35 --jackknife --noise-draws 16 --output data/raw/benchmark/bias-w350-development.json`; lặp hai trường so sánh vào `bias-comparison-development.json`.
-- Chạy `python -m scripts.diagnose_bias --fields w350p35 w090p10 w210m20 --noise-draws 64 --output data/raw/benchmark/bias-gaussian64-development.json`, rồi `python -m scripts.build_bias_overview`.
-- `python -m scripts.run_profile_diagnostics` yêu cầu mã đã commit và chặn ghi đè lượt hoàn tất. Để tái tạo ở môi trường khác, dùng output/cache riêng; không sửa checkpoint đã công bố.
+- `web/data/diagnostics/bias-overview.json` stores each vector, covariance, Gaussian cases, influence, profile modes, and the hash of the larger report.
+- The larger report and raw FITS files are in `data/raw/benchmark/` and are not committed; they can be regenerated from the cache pinned in design 0.9.
+- Run `python -m scripts.diagnose_bias --fields w350p35 --jackknife --noise-draws 16 --output data/raw/benchmark/bias-w350-development.json`; repeat for the two comparison fields into `bias-comparison-development.json`.
+- Run `python -m scripts.diagnose_bias --fields w350p35 w090p10 w210m20 --noise-draws 64 --output data/raw/benchmark/bias-gaussian64-development.json`, then `python -m scripts.build_bias_overview`.
+- `python -m scripts.run_profile_diagnostics` requires committed code and blocks overwriting a completed run. To reproduce in another environment, use a separate output/cache; do not modify a published checkpoint.
 
-Giới hạn: known-position fitting, matched ePSF, Gaussian conditional noise, fixed registration, shared exposures, vùng được chọn sau khi thấy validation. Không có false-positive rate, completeness tìm kiếm mù hay phát hiện thiên văn mới trong báo cáo này.
+Limits: known-position fitting, matched ePSF, conditional Gaussian noise, fixed registration, shared exposures, and regions selected after seeing validation. This report contains no false-positive rate, blind-search completeness, or new astronomical detection.
