@@ -17,7 +17,7 @@
   const workspaceScripts = [
     "review-store.js?v=0.10.0-r11", "draft-store.js?v=0.11.1-r18", "app.js?v=0.11.1-r20",
     "mission.js?v=0.11.0-r17", "benchmark.js?v=0.10.0-r11", "quality.js?v=0.11.0-r17",
-    "covariance.js?v=0.10.0-r11", "ablation.js?v=0.10.0-r11", "linked-comparison.js?v=2", "explorer.js?v=0.14.0",
+    "covariance.js?v=0.10.0-r11", "ablation.js?v=0.10.0-r11", "linked-comparison.js?v=2", "explorer.js?v=0.14.1",
     "goal-dashboard.js?v=0.10.0-r11", "linked-evidence.js?v=0.10.0-r11",
     "neighbor-evidence.js?v=0.10.0-r11", "reference-evidence.js?v=0.10.0-r11",
     "calibration-evidence.js?v=0.10.0-r12", "profile-evidence.js?v=0.10.0-r13",
