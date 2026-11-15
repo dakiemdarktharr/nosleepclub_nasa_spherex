@@ -1,4 +1,4 @@
-"""Check the shipped mascot, science navigation and blank learning route together.
+"""Check the shipped mascot, learning activities and science navigation together.
 
 Runs against an isolated local static server by default. No live API writes.
 """
@@ -38,6 +38,107 @@ def serve():
         server.shutdown()
         server.server_close()
         thread.join(timeout=5)
+
+
+def learning_case(page, output, name, language):
+    learn = page.locator('#learn')
+    lesson = learn.locator('#learn-lesson')
+    tabs = learn.locator('.learn-nav .learn-tab')
+    quiz = learn.locator('#learn-quiz')
+    check = quiz.locator('#learn-check')
+    feedback = quiz.locator('#learn-feedback')
+    next_lesson = lesson.locator('#learn-next-lesson')
+    open_quiz = learn.locator('#learn-open-quiz')
+
+    expect(tabs).to_have_count(3)
+    page.screenshot(path=str(output / f'learn-{name}.png'))
+    learn.locator('#learn-start').click()
+    expect(lesson).to_be_visible()
+    expect(tabs.nth(0)).to_have_attribute('aria-current', 'true')
+    filters = lesson.locator('.learn-filters button')
+    expect(filters).to_have_count(3)
+    filters.last.focus()
+    page.keyboard.press('Enter')
+    expect(filters.last).to_have_attribute('aria-pressed', 'true')
+
+    next_lesson.click()
+    expect(tabs.nth(1)).to_have_attribute('aria-current', 'true')
+    with page.expect_popup() as popup:
+        lesson.locator('.learn-saved-sequence').click()
+    sky = popup.value
+    try:
+        expect(sky).to_have_url(re.compile(r'field=epsilon.*view=saved#night-sky$'))
+        expect(sky.locator('#archived-sequence')).to_be_visible()
+        expect(sky.locator('#archived-frame')).to_be_visible()
+        expect(sky.locator('#archived-time')).to_contain_text('2025-04-29')
+        sky.locator('#archived-next').click()
+        expect(sky.locator('#archived-time')).to_contain_text('2025-05-01')
+        sky.locator('#archived-prev').click()
+        expect(sky.locator('#archived-time')).to_contain_text('2025-04-29')
+    finally:
+        sky.close()
+
+    next_lesson.click()
+    expect(tabs.nth(2)).to_have_attribute('aria-current', 'true')
+    next_lesson.click()
+    expect(quiz).to_be_visible()
+    header = page.locator('.public-header').bounding_box()
+    header_bottom = header['y'] + header['height']
+    assert header_bottom <= quiz.bounding_box()['y'] <= header_bottom + 40
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    page.screenshot(path=str(output / f'quiz-{name}.png'))
+
+    for question, answer in enumerate((1, 0, 0, 2, 0, 1)):
+        choices = quiz.locator('.learn-answer')
+        expect(choices).to_have_count(3)
+        expect(feedback).not_to_be_visible()
+        expect(check).to_be_disabled()
+        if question == 2:
+            expect(quiz.locator('.learn-saved-sequence')).to_be_visible()
+        if question == 4:
+            evidence = quiz.locator('#learn-quiz-evidence')
+            expect(evidence).to_be_visible()
+            expect(evidence.locator('img')).to_have_count(2)
+            for index, date in enumerate(('2025-05-05', '2026-05-11')):
+                expect(evidence.locator('time').nth(index)).to_have_attribute('datetime', date)
+            page.wait_for_function('''() => [...document.querySelectorAll('#learn-quiz-evidence img')]
+                .every(img => img.complete && img.naturalWidth > 0)''')
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+            page.screenshot(path=str(output / f'quiz-evidence-{name}.png'))
+
+        choices.nth(answer).click()
+        expect(check).to_be_enabled()
+        check.click()
+        state = 'incorrect' if question == 1 else 'correct'
+        expect(feedback).to_be_visible()
+        expect(feedback).to_have_attribute('data-state', state)
+        if question == 1:
+            page.reload()
+            expect(quiz).to_be_visible()
+            expect(feedback).to_have_attribute('data-state', 'incorrect')
+            header_language = page.locator('.public-header [data-language]')
+            header_language.click()
+            expect(page.locator('html')).to_have_attribute('lang', 'vi' if language == 'en' else 'en')
+            expect(feedback).to_have_attribute('data-state', 'incorrect')
+            header_language.click()
+            expect(page.locator('html')).to_have_attribute('lang', language)
+            quiz.locator('#learn-quiz-back').click()
+            expect(lesson).to_be_visible()
+            open_quiz.click()
+            expect(feedback).to_have_attribute('data-state', 'incorrect')
+        check.click()
+
+    results = learn.locator('#learn-results')
+    expect(results).to_be_visible()
+    expect(results.locator('#learn-score')).to_have_text(re.compile(r'5\s*/\s*6'))
+    expect(results.locator('#learn-retry')).to_be_visible()
+    page.reload()
+    expect(results).to_be_visible()
+    expect(results.locator('#learn-score')).to_have_text(re.compile(r'5\s*/\s*6'))
+    results.locator('#learn-retry').click()
+    expect(quiz).to_be_visible()
+    expect(check).to_be_disabled()
+    expect(feedback).not_to_be_visible()
 
 
 def check_case(browser, base, output, width, language, light=False):
@@ -91,8 +192,7 @@ def check_case(browser, base, output, width, language, light=False):
         expect(page.locator('#learn')).to_be_visible()
         expect(page.locator('#learn-title')).to_be_focused()
         expect(page).to_have_title(re.compile(r'sphere x learn'))
-        assert page.locator('#learn').inner_text() == 'sphere x learn'
-        page.screenshot(path=str(output / f'learn-{name}.png'))
+        learning_case(page, output, name, language)
 
         # The new public route must remain public after the research router loads.
         page.goto(f'{base}/?lang={language}&flow_source=wise#compare-step')

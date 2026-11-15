@@ -329,7 +329,7 @@ function staticAssetsAreCacheBusted() {
   const index=fs.readFileSync("web/index.html","utf8"),loader=fs.readFileSync("web/public-site.js","utf8");
   assert.match(index,/mission\.css\?v=0\.10\.0-r15/);
   assert.match(index,/workspace-language\.js\?v=3/);
-  assert.match(index,/public-site\.js\?v=7/);
+  assert.match(index,/public-site\.js\?v=8/);
   assert.match(loader,/"explorer\.js\?v=0\.14\.1"/);
 }
 
