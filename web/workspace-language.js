@@ -26,7 +26,6 @@
     ["label[for='explorer-ra']", "RA · degrees or hours:minutes:seconds"],
     ["label[for='explorer-dec']", "Dec · degrees or degrees:minutes:seconds"],
     ["label[for='explorer-fov']", "Field of view"],
-    ["#explorer-fov-hint", "Display cutout size; search finds observations covering the entered coordinates."],
     ["#explorer-fov option[value='0.06']", "3.6 arcmin"],
     ["#explorer-fov option[value='0.12']", "7.2 arcmin"],
     ["#explorer-fov option[value='0.02']", "1.2 arcmin"],

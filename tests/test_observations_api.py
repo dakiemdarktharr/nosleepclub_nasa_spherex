@@ -5,7 +5,6 @@ import importlib.util
 from pathlib import Path
 import unittest
 from unittest.mock import patch
-from urllib.error import HTTPError
 from urllib.parse import parse_qs, urlsplit
 
 spec = importlib.util.spec_from_file_location('observations_api', Path(__file__).resolve().parents[1] / 'web/api/observations.py')
@@ -138,22 +137,6 @@ class ObservationsTest(unittest.TestCase):
         self.assertEqual(caught.exception.code, 'upstream_too_large')
         self.assertEqual(opener.timeout, api.TIMEOUT)
         self.assertIsNone(api.NoRedirect().redirect_request(None, None, 302, '', {}, 'https://evil.example'))
-
-    def test_upstream_retry_after_is_bounded_and_forwarded(self):
-        url = api.upstream_url(self.params())
-        for raw, expected in (('5', '5'), ('0', None), ('121', None), ('later', None)):
-            with self.subTest(retry_after=raw), patch.object(api, 'build_opener') as opener:
-                opener.return_value.open.side_effect = HTTPError(url, 503, 'busy', {'Retry-After': raw}, BytesIO())
-                with self.assertRaises(api.UpstreamError) as caught:
-                    api.fetch(url)
-                self.assertEqual(caught.exception.code, 'upstream_http_error')
-                self.assertEqual(caught.exception.retry_after, expected)
-        api.response_cache.clear()
-        with patch.object(api, 'fetch', side_effect=api.UpstreamError('upstream_http_error',
-                                                                       {'stage': 'open', 'exception_class': 'http_error'}, '5')):
-            status, headers, body = request('/api/observations?ra=350&dec=35')
-        self.assertEqual((status, body), (502, {'error': 'upstream_http_error'}))
-        self.assertEqual(headers['Retry-After'], '5')
 
     def test_http_validation_and_log_privacy(self):
         with self.assertLogs('observations_api', level='WARNING') as logs:

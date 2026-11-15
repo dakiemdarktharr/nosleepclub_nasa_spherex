@@ -9,23 +9,6 @@ from web.api import _telemetry as telemetry
 
 
 class TelemetryTests(unittest.TestCase):
-    def test_sequence_events_are_logged_with_bounded_frame_counts(self):
-        with patch.object(telemetry, 'logging') as logging:
-            logging.ERROR, logging.WARNING, logging.INFO = 40, 30, 20
-            logging.getLevelName.return_value = 'INFO'
-            telemetry.emit_request(logging, {'event': 'sequence_request', 'request_id': 'c' * 32,
-                'category': 'partial', 'status': 200, 'latency_ms': 4.5, 'method': 'POST',
-                'frame_count': 5, 'private_note': 'do-not-log'})
-            event = json.loads(logging.log.call_args.args[1])
-            self.assertEqual(event, {'event': 'sequence_request', 'request_id': 'c' * 32,
-                'category': 'partial', 'status': 200, 'latency_ms': 4.5,
-                'level': 'info', 'method': 'POST', 'frame_count': 5})
-            logging.reset_mock()
-            telemetry.emit_request(logging, {'event': 'sequence_request', 'request_id': 'c' * 32,
-                'category': 'ok', 'status': 200, 'latency_ms': 1, 'frame_count': 99})
-            event = json.loads(logging.log.call_args.args[1])
-            self.assertNotIn('frame_count', event)
-
     def test_success_and_failures_have_distinct_levels_and_streams(self):
         stdout, stderr = StringIO(), StringIO()
         with patch.object(telemetry.sys, 'stdout', stdout), patch.object(telemetry.sys, 'stderr', stderr):

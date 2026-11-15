@@ -1,8 +1,7 @@
 "use strict";
 // Discovery and display use public IRSA observations; no motion fit is performed.
 (() => {
-  const el = id => document.getElementById(id), BANDS = [[.75,1.09],[1.10,1.62],[1.63,2.41],[2.42,3.82],[3.83,4.41],[4.42,5.00]],
-    OBSERVATION_SEARCH_RADIUS_DEG=.001, SEQUENCE_SIZE=5;
+  const el = id => document.getElementById(id), BANDS = [[.75,1.09],[1.10,1.62],[1.63,2.41],[2.42,3.82],[3.83,4.41],[4.42,5.00]], SEQUENCE_SIZE=5;
   const english = () => document.documentElement?.lang?.startsWith("en");
   const t = (vi, en) => english() ? en : vi;
   const presets = {
@@ -126,17 +125,10 @@
     for(let attempt=0;attempt<2;attempt++){
       if(signal.aborted)throw new DOMException(t("Đã đổi vùng trời","Sky region changed"),"AbortError");
       const response=await fetch(url,{signal});
-      const retryAfterHeader=response.headers?.get?.("Retry-After");
-      const retryAfter=retryAfterHeader&&/^\d{1,3}$/.test(retryAfterHeader)?Number(retryAfterHeader):NaN;
-      const retryable=response.status===502||response.status===504
-        ||(response.status===503&&Number.isInteger(retryAfter)&&retryAfter>0&&retryAfter<=120);
-      if(attempt===0&&retryable){
-        const delay=Number.isInteger(retryAfter)&&retryAfter>0&&retryAfter<=120?retryAfter:.9;
-        setStatus(t(`IRSA đang chậm hoặc tạm lỗi. Thử lại sau ${delay} giây…`,`IRSA is slow or temporarily unavailable. Retrying in ${delay} seconds…`));
-        await waitForRetry(delay,signal);
+      if(attempt===0&&[502,504].includes(response.status)){
+        await response.json().catch(()=>{});
         if(signal.aborted)throw new DOMException(t("Đã đổi vùng trời","Sky region changed"),"AbortError");
-        setStatus(t("IRSA đang chậm hoặc tạm lỗi. Đang thử lại lần 2/2…","IRSA is slow or temporarily unavailable. Retrying (2/2)…"));
-        continue;
+        setStatus(t("IRSA đang chậm hoặc tạm lỗi. Đang thử lại lần 2/2…","IRSA is slow or temporarily unavailable. Retrying (2/2)…"));continue;
       }
       return response;
     }
@@ -276,7 +268,7 @@
     const ra=coordinate(el("explorer-ra").value,true),dec=coordinate(el("explorer-dec").value,false),fov=Number(el("explorer-fov").value),det=Number(el("explorer-detector").value);
     if(!Number.isFinite(fov)||fov<.06||fov>.40)throw new Error(t("Trường nhìn phải từ 0,06 đến 0,40 độ.","Field of view must be between 0.06 and 0.40 degrees."));
     if(!Number.isInteger(det)||det<1||det>6||!["dr1","qr3"].includes(el("explorer-release").value))throw new Error(t("Chọn detector và bản dữ liệu được hỗ trợ.","Choose a supported detector and data release."));
-    const p=new URLSearchParams({ra:ra.toString(),dec:dec.toString(),radius:OBSERVATION_SEARCH_RADIUS_DEG.toString(),release:el("explorer-release").value,detector:det.toString(),maxrec:"500",band_min_um:BANDS[det-1][0].toString(),band_max_um:BANDS[det-1][1].toString()});
+    const p=new URLSearchParams({ra:ra.toString(),dec:dec.toString(),radius:(fov/2).toString(),release:el("explorer-release").value,detector:det.toString(),maxrec:"500",band_min_um:BANDS[det-1][0].toString(),band_max_um:BANDS[det-1][1].toString()});
     const start=el("explorer-from").value,end=el("explorer-to").value;
     if(Boolean(start)!==Boolean(end))throw new Error(t("Chọn cả ngày bắt đầu và kết thúc, hoặc bỏ trống cả hai.","Enter both dates, or leave both blank."));
     if(start&&end) {
