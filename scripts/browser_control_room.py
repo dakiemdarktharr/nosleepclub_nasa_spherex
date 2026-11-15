@@ -37,6 +37,11 @@ def run_case(browser, base, output, width, height, language, mobile):
         page.goto(f'{base}/control-room.html?lang={language}')
         expect(page.locator('body')).to_have_attribute('data-scene-state', 'ready')
         expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
+        expect(page.locator('#room-prompt')).not_to_be_visible()
+        expect(page.locator('#room-context-key')).not_to_be_visible()
+        page.keyboard.press('e')
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
+        expect(page.locator('#room-canvas')).to_have_attribute('data-shadow-map', 'enabled')
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
         if mobile:
             screen = page.locator('#room-screen').bounding_box()
@@ -45,6 +50,23 @@ def run_case(browser, base, output, width, height, language, mobile):
             assert abs(controls['height'] - height / 2) <= 2, controls
             assert abs(screen['y'] + screen['height'] - controls['y']) <= 2
         page.screenshot(path=str(output / f'room-{name}.png'))
+
+        # Reduced motion freezes decorative drift, so this observable change
+        # must come from real player contact and retained momentum.
+        prop_states = lambda: page.locator('#room-canvas').evaluate('(node) => JSON.parse(node.dataset.floatingProps)')
+        initial_props = prop_states()
+        assert {'mug', 'book', 'pen'} <= {prop['kind'] for prop in initial_props}
+        page.keyboard.down('ArrowUp')
+        try:
+            page.wait_for_function('() => Number(document.querySelector("#room-canvas").dataset.propPlayerCollisions) > 0', timeout=7000)
+        finally:
+            page.keyboard.up('ArrowUp')
+        struck = next(prop for prop in prop_states() if prop['playerContacts'] > 0)
+        assert sum(v*v for v in struck['velocity']) > .01, struck
+        page.wait_for_timeout(250)
+        drifting = next(prop for prop in prop_states() if prop['id'] == struck['id'])
+        assert sum(abs(a-b) for a,b in zip(struck['position'], drifting['position'])) > .01
+        page.screenshot(path=str(output / f'prop-contact-{name}.png'))
 
         # Real keyboard movement must change world position, then stop on keyup.
         before = position(page)
@@ -74,13 +96,24 @@ def run_case(browser, base, output, width, height, language, mobile):
             assert position(page) == cancelled, 'Touch cancellation left movement active'
 
         page.locator('#room-tablet-shortcut').click()
+        page.wait_for_function('''() => document.querySelector('#room-canvas').dataset.near === 'tablet'
+            && document.body.dataset.gameState === 'room' ''')
+        # Cancel automatic walking inside the interaction radius, then use the
+        # actual context prompt. It must not be a permanent decorative E badge.
+        page.keyboard.press('Escape')
+        expect(page.locator('#room-prompt')).to_be_visible()
+        expect(page.locator('#room-interact')).to_be_enabled()
+        page.locator('#room-prompt').click()
         expect(page.locator('body')).to_have_attribute('data-game-state', 'tablet', timeout=20000)
+        expect(page.locator('#room-prompt')).not_to_be_visible()
         page.screenshot(path=str(output / f'tablet-{name}.png'))
         held_position = position(page)
+        held_props = prop_states()
         page.keyboard.down('ArrowLeft')
         page.wait_for_timeout(180)
         page.keyboard.up('ArrowLeft')
         assert position(page) == held_position, 'Movement must pause during the tablet overlay'
+        assert prop_states() == held_props, 'Prop motion must pause while reading an overlay'
         page.keyboard.press('Escape')
         expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
 

@@ -72,8 +72,8 @@ const payload = {
   source_axes: "Y up, face +Z", source_hashes: sourceHashes,
   bounds: {min: bounds.min.toArray(), max: bounds.max.toArray()},
   materials, nodes,
-  rig: {type: 'rigid-part armature', bone_count: Object.keys(model.userData.rig.joints).length, influences_per_vertex: 1, clip: {name: 'Gagoo_Inertial_Rebound', fps: 30, samples}},
-  limits: ["Rigid-part FK armature: each vertex has one bone influence; no soft-skin deformation or IK controls.", "One rebound demonstration is baked from the runtime spring solver; browser dragging is simulated live, not replayed.", "Browser and Blender lighting/alpha sorting can differ; geometry and part transforms are preserved."]
+  rig: {type: 'rigid-part armature', bone_count: Object.keys(model.userData.rig.joints).length, influences_per_vertex: 1, clip: {name: 'Gagoo_Loose_Joint_Response', fps: 30, samples}},
+  limits: ["Rigid-part FK armature: each vertex has one bone influence; no soft-skin deformation or IK controls.", "One free joint-response demonstration is baked from the runtime spring solver; it is not the staged glass-slide cinematic. Browser dragging is simulated live, not replayed.", "Browser and Blender lighting/alpha sorting can differ; geometry and part transforms are preserved."]
 };
 await mkdir(dirname(output), {recursive: true});
 const bytes = JSON.stringify(payload);

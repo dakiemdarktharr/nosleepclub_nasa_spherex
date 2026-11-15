@@ -8,8 +8,8 @@
   <title>Control room · sphere x learn</title>
   <link rel="icon" href="assets/mission/spherex-white.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/fonts/be-vietnam-pro.css">
-  <link rel="stylesheet" href="control-room.css?v=1">
-  <script src="control-room.js?v=1" defer></script>
+  <link rel="stylesheet" href="control-room.css?v=2">
+  <script src="control-room.js?v=2" defer></script>
 </head>
 <body data-game-state="room" data-scene-state="loading">
   <main id="room-shell">
@@ -23,7 +23,7 @@
       </header>
       <div class="room-load" id="room-loading" role="status"><span class="room-orbit-dot" aria-hidden="true"></span><span data-text="loading">Đang mở khoang tàu…</span></div>
       <div id="room-error" class="room-error" hidden><strong data-text="fallbackTitle">Chưa mở được phòng 3D</strong><p data-text="fallbackBody">Bạn vẫn có thể dùng hai lối tắt bên dưới để thử tablet và hội thoại.</p><button type="button" id="room-reload" data-text="reload">Tải lại</button></div>
-      <div class="room-prompt" id="room-prompt" aria-hidden="true"><span class="room-keycap">E</span><span id="room-prompt-text">Khám phá khoang tàu</span></div>
+      <button type="button" class="room-prompt" id="room-prompt" hidden><span class="room-keycap" aria-hidden="true">E</span><span id="room-prompt-text"></span></button>
       <div class="room-scene-label" aria-hidden="true"><span>01</span><span>ORBITAL CLASSROOM</span></div>
       <div id="room-overlay" class="room-overlay" role="dialog" aria-labelledby="room-overlay-title" hidden>
         <h2 id="room-overlay-title" class="room-sr"></h2>
@@ -63,7 +63,7 @@
         <div class="room-action-pad"><div><button id="room-back" class="room-game-button secondary" type="button" aria-label="Quay lại">B</button><span data-text="back">Quay lại</span></div><div><button id="room-interact" class="room-game-button primary" type="button" aria-label="Tương tác">A</button><span id="room-action-label">Tương tác</span></div></div>
       </div>
       <div class="room-stations" role="group" aria-label="Đi tới điểm tương tác"><button id="room-tablet-shortcut" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M10 18h4"/></svg><span>Tablet</span><span aria-hidden="true">↗</span></button><button id="room-alien-shortcut" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6-2-4m14 4 2-4M12 4C0 4 3 19 12 22 21 19 24 4 12 4Z"/><path d="m7 10 2 4m8-4-2 4"/></svg><span>Alien X</span><span aria-hidden="true">↗</span></button></div>
-      <p class="room-keyboard-hint"><kbd>W A S D</kbd> / <kbd>↑ ← ↓ →</kbd> <span data-text="move">Di chuyển</span><i></i><kbd>E</kbd> <span data-text="interact">Tương tác</span><i></i><kbd>Esc</kbd> <span data-text="back">Quay lại</span></p>
+      <p class="room-keyboard-hint"><kbd>W A S D</kbd> / <kbd>↑ ← ↓ →</kbd> <span data-text="move">Di chuyển</span><span id="room-context-key" hidden><i></i><kbd>E</kbd> <span data-text="interact">Tương tác</span></span><i></i><kbd>Esc</kbd> <span data-text="back">Quay lại</span></p>
       <div class="room-speaker-slots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     </section>
   </main>

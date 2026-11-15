@@ -25,9 +25,9 @@ The runtime model is authored as named polygonal parts in `web/gagoo-scene.js`. 
 ## Presentation and interaction
 
 - Studio review: straight-on front view, full body and both boots visible, plain light-gray background, diffuse lighting, gentle contact shadow, no UI counter.
-- Website: transparent background, shared home-scene lighting, slow idle rotation, draggable position and a simulated zero-gravity tether.
+- Website: transparent background, shared home-scene lighting, slow idle rotation, draggable position and a simulated zero-gravity tether. Runtime toon bands, bold ink silhouettes and shadow maps give the character a grease-pencil-inspired appearance. These are WebGL effects, not Blender Grease Pencil strokes embedded in the editable model.
 - Touch: first tap reveals the label, second tap opens Learn. A drag must not activate navigation. Enter/Space provide keyboard activation; motion can be paused or reduced.
-- Opening Learn: the visible home scene remains in place while the camera pulls back behind a spacecraft window. Gagoo approaches, fills most of the opening, contacts the glass and rebounds backward with soft joint motion. Blinds cover and reveal the destination in one second. Skip and cancel remain available.
+- Opening Learn: the visible home scene remains in place while the camera pulls back behind a spacecraft window. Gagoo approaches, fills most of the opening, contacts the glass and sticks for 650 milliseconds. It then slides right along the glass until the entire character is hidden beyond the window edge. Only after it has disappeared do the blinds cover and reveal the destination in one second. The loose limbs follow the impact and slide; Gagoo no longer rebounds backward. Skip and cancel remain available.
 - Learn is intentionally blank for this milestone. Its header, language/theme controls and home link remain usable.
 
 ## Reproduce the Blender handoff
@@ -35,18 +35,19 @@ The runtime model is authored as named polygonal parts in `web/gagoo-scene.js`. 
 From the repository root:
 
 ```powershell
-node scripts/export_gagoo_geometry.mjs
-& 'C:/Program Files/Blender Foundation/Blender 5.2/blender.exe' --background --factory-startup --python scripts/export_gagoo_blender.py -- --render --resolution 1200
+node scripts/export_gagoo_geometry.mjs data/raw/gagoo-loose-rig-assets/gagoo-geometry.json
+& 'C:/Program Files/Blender Foundation/Blender 5.2/blender.exe' --background --factory-startup --python scripts/export_gagoo_blender.py -- --input data/raw/gagoo-loose-rig-assets/gagoo-geometry.json --output data/raw/gagoo-loose-rig-assets
+node scripts/check_gagoo_glb.mjs data/raw/gagoo-loose-rig-assets
 ```
 
-Generated `.blend`, `.glb`, renders and geometry receipts live under ignored `data/raw/gagoo-assets/`. This conversion runs in a separate Blender process and does not modify a user's open scene. The character has 19 named bones; each broad polygonal part is rigidly attached to its bone in the runtime. The Blender/GLB handoff uses normalized rigid vertex weights and includes a sampled rebound animation.
+The current `.blend`, `.glb` and geometry receipts live under ignored `data/raw/gagoo-loose-rig-assets/`. This conversion runs in a separate Blender process and does not modify a user's open scene. The character has 19 named bones; each broad polygonal part is rigidly attached to its bone in the runtime. The Blender/GLB handoff uses normalized rigid vertex weights and includes `Gagoo_Loose_Joint_Response`, a four-second demonstration of the joint solver. This clip is not the staged glass-slide cinematic. Runtime ink outlines and scene shadow maps are applied separately, so the exported mesh remains editable without duplicate outline shells. Add `--render --resolution 1200` when fresh studio renders are required.
 
 ## Articulated motion
 
-The neck, ears, eyes, shoulders, elbows, hands, hips, knees and feet respond to drag acceleration and impact. Bounded angular springs keep the response soft and readable, then settle after release. The helmet and collar follow the neck together; ear and eye limits stay small enough to preserve the face and visor clearance. Suit-colored joint cores close gaps when elbows and knees bend.
+The neck, ears, eyes, shoulders, elbows, hands, hips, knees and feet respond to drag acceleration and impact. The current revision lowers spring stiffness and damping, with more front/back limb travel and a slower return. Hands and heavier arms settle at different rates. Shoulder and hip side limits allow broader outward movement than inward folding, which limits passage through the torso. The helmet and collar follow the neck together; ear and eye limits stay small enough to preserve the face and visor clearance. Suit-colored joint cores close gaps when elbows and knees bend.
 
-This is a stylized articulated ragdoll, not a general rigid-body collision simulation. Window contact is a staged impulse, and the character does not simulate arbitrary self-collisions or real astronaut biomechanics. The tether remains a separate zero-gravity approximation.
+This is a stylized articulated ragdoll, not a general rigid-body collision simulation. Window contact is a staged impulse with a glass-plane constraint during the hold and slide; the character does not simulate arbitrary self-collisions or real astronaut biomechanics. The tether remains a separate zero-gravity approximation.
 
 ## Verification
 
-Use `tests/gagoo-physics.test.cjs`, `tests/gagoo-ragdoll.test.cjs`, the geometry checks, `scripts/browser_gagoo.py`, `scripts/check_gagoo_entrance.py`, the GLB round-trip check, and the existing desktop/mobile smoke suite. Inspect front, side, back and three-quarter poses. Verify ear/helmet clearance at joint limits, bounded settling, simple eye layers, reduced eye width, mobile drag-to-tap behavior, cancellation and a clean route transition before release.
+Use `tests/gagoo-physics.test.cjs`, `tests/gagoo-ragdoll.test.cjs`, the geometry checks, `scripts/browser_gagoo.py`, `scripts/check_gagoo_entrance.py`, the GLB round-trip check, and the existing desktop/mobile smoke suite. Inspect front, side, back and three-quarter poses. Verify ear/helmet clearance at joint limits, loose follow-through and settling, simple eye layers, reduced eye width, mobile drag-to-tap behavior, the glass hold, complete right-side disappearance before blinds, and cancellation before release. Test requirements here do not imply that the current full browser release suite has already completed; consult its delivery receipt.

@@ -1,7 +1,7 @@
 """Run with Blender --background --factory-startup --python THIS -- [options].
 
 Imports the geometry exported from the actual browser factory, keeping named
-parts editable, with a weighted FK armature and a runtime-sampled rebound clip.
+parts editable, with a weighted FK armature and a runtime-sampled joint-response clip.
 """
 import argparse
 from hashlib import sha256

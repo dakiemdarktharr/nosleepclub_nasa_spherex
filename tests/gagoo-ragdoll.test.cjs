@@ -21,6 +21,20 @@ const path = require('node:path');
   }
   assert.ok(maxArm > .35, 'ragdoll should be visibly responsive, not static');
   assert.ok(Object.values(state).every(j => j.angle.every(v => Math.abs(v) < .0001)), 'motion settles without drift');
+  // A gentle impulse should produce a loose follow-through, not a quick
+  // mechanical snap. Distal joints must turn back before the heavier arm.
+  const gentle = createRagdollState();
+  impulseRagdoll(gentle, {x: 0, y: 0, z: 1.8});
+  let gentlePeak = 0, firstReturn = 0, armAtOneSecond = 0, handAtOneSecond = 0;
+  for (let frame = 1; frame <= 360; frame++) {
+    stepRagdoll(gentle, 1 / 120);
+    gentlePeak = Math.max(gentlePeak, Math.abs(gentle.leftArm.angle[0]));
+    if (!firstReturn && gentle.leftArm.angle[0] > 0) firstReturn = frame / 120;
+    if (frame === 120) { armAtOneSecond = gentle.leftArm.angle[0]; handAtOneSecond = gentle.leftHand.angle[0]; }
+  }
+  assert.ok(gentlePeak > .35 && gentlePeak < .7, 'a gentle drag has visible, controlled arm follow-through');
+  assert.ok(firstReturn > 1 && firstReturn < 1.7, 'the loose arm should reverse slowly after its first swing');
+  assert.ok(armAtOneSecond < -.1 && handAtOneSecond > 0, 'hand and arm should settle at different rates');
   const coarse = createRagdollState(), fine = createRagdollState();
   impulseRagdoll(coarse, [4, -3, 5]); impulseRagdoll(fine, [4, -3, 5]);
   for (let i = 0; i < 30; i++) stepRagdoll(coarse, 1 / 30);
@@ -76,5 +90,5 @@ const path = require('node:path');
     assert.ok(clearance > .005, `head and ear must remain inside helmet at pose ${sample}: ${clearance}`);
   }
   model.userData.dispose();
-  console.log(`Gagoo rig: 19 real bone joints, bounded inertial rebound, timestep stability, exact pose handoff, helmet extreme clearance ${minimum.toFixed(5)} passed`);
+  console.log(`Gagoo rig: 19 bone joints, loose follow-through ${(gentlePeak * 180 / Math.PI).toFixed(1)} degrees, delayed reversal ${firstReturn.toFixed(2)}s, stable timestep, exact pose handoff, helmet clearance ${minimum.toFixed(5)} passed`);
 })().catch(error => { console.error(error); process.exitCode = 1; });

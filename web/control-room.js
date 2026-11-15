@@ -34,11 +34,15 @@
     updateAction();
   }
   function updateAction(){
+    const canInteract=sceneReady&&state==='room'&&Boolean(near);
     $('room-action-label').textContent=text(state==='dialogue'?'next':'interact');
     $('room-interact').setAttribute('aria-label',text(state==='dialogue'?'next':'interact'));
     $('room-back').setAttribute('aria-label',text('back'));
-    $('room-prompt-text').textContent=near==='tablet'?text('tabletNear').split(' · ')[1]:near==='alien'?text('alienNear').split(' · ')[1]:text('exploreShort');
-    $('room-prompt').dataset.active=String(Boolean(near));
+    $('room-prompt-text').textContent=near==='tablet'?text('tabletNear').split(' · ')[1]:near==='alien'?text('alienNear').split(' · ')[1]:'';
+    $('room-prompt').hidden=!canInteract;
+    $('room-context-key').hidden=!canInteract;
+    $('room-prompt').dataset.active=String(canInteract);
+    $('room-interact').disabled=state==='pickup'||state==='tablet'||(state==='room'&&!canInteract);
   }
   function updateLanguage(){
     document.documentElement.lang=language;
@@ -101,7 +105,7 @@
     button.addEventListener('pointerup',release);button.addEventListener('pointercancel',release);button.addEventListener('lostpointercapture',release);
     button.addEventListener('click',event=>{if(event.detail===0&&state==='room'){keys.add(button.dataset.direction);setTimeout(()=>keys.delete(button.dataset.direction),150);}});
   }
-  $('room-tablet-shortcut').addEventListener('click',()=>goTo('tablet'));$('room-alien-shortcut').addEventListener('click',()=>goTo('alien'));
+  $('room-tablet-shortcut').addEventListener('click',()=>goTo('tablet'));$('room-alien-shortcut').addEventListener('click',()=>goTo('alien'));$('room-prompt').addEventListener('click',interact);
   $('room-interact').addEventListener('click',interact);$('room-back').addEventListener('click',closeOverlay);$('room-close').addEventListener('click',closeOverlay);$('room-dialogue-next').addEventListener('click',nextDialogue);$('room-test-choice').addEventListener('click',openQuiz);$('room-quiz-next').addEventListener('click',nextQuestion);$('room-quiz-retry').addEventListener('click',retryQuestion);$('room-reload').addEventListener('click',()=>location.reload());
   $('room-language').addEventListener('click',()=>{language=language==='vi'?'en':'vi';const url=new URL(location.href);url.searchParams.set('lang',language);history.replaceState(history.state,'',url);updateLanguage();});
   $('room-motion').addEventListener('click',()=>{paused=!paused;scene?.setPaused(paused);$('room-motion').setAttribute('aria-pressed',String(paused));$('room-motion').textContent=paused?'▷':'Ⅱ';$('room-motion').setAttribute('aria-label',text(paused?'resume':'pause'));});
@@ -117,9 +121,9 @@
   addEventListener('pageshow',event=>{if(event.persisted)resume();});
   addEventListener('resize',()=>{scene?.resize();scene?.render();});
   updateLanguage();
-  import('./control-room-scene.js?v=1').then(({createControlRoom})=>{
+  import('./control-room-scene.js?v=2').then(({createControlRoom})=>{
     if(disposed)return;
     scene=createControlRoom({canvas:$('room-canvas'),reduced,onNear(value){near=value;if(state==='room'&&!walking)say(near==='tablet'?'tabletNear':near==='alien'?'alienNear':'explore');updateAction();},onArrive:arrived,onPickup(){if(state==='pickup'){setState('tablet');$('room-close').focus({preventScroll:true});}},onError:fail});
-    sceneReady=true;document.body.dataset.sceneState='ready';$('room-loading').hidden=true;resume();
+    sceneReady=true;document.body.dataset.sceneState='ready';$('room-loading').hidden=true;updateAction();resume();
   }).catch(fail);
 })();
