@@ -4,27 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#14287b">
-  <meta name="description" content="Phòng điều khiển thử nghiệm 3D của sphere x learn.">
-  <title>Control room · sphere x learn</title>
+  <meta name="description" content="Phi thuyền 3D thử nghiệm của sphere x learn.">
+  <title>Spaceship · sphere x learn</title>
   <link rel="icon" href="assets/mission/spherex-white.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/fonts/be-vietnam-pro.css">
-  <link rel="stylesheet" href="control-room.css?v=2">
-  <script src="control-room.js?v=2" defer></script>
+  <link rel="stylesheet" href="control-room.css?v=3">
+  <script src="control-room.js?v=3" defer></script>
 </head>
 <body data-game-state="room" data-scene-state="loading">
   <main id="room-shell">
-    <section id="room-screen" aria-label="Phòng điều khiển 3D">
-      <canvas id="room-canvas" aria-label="Gagoo trong phòng điều khiển, cạnh tablet và Alien X"></canvas>
+    <section id="room-screen" aria-label="Phi thuyền 3D">
+      <canvas id="room-canvas" aria-label="Gagoo khám phá phi thuyền, cùng tablet và Alien X"></canvas>
       <header class="room-topbar">
         <a class="room-home" href="./#orbit" aria-label="Về trang chủ"><img src="assets/mission/spherex-white.svg" alt="" width="34" height="34"></a>
-        <div class="room-brand"><span>sphere x learn</span><strong data-text="roomTitle">PHÒNG ĐIỀU KHIỂN</strong></div>
+        <div class="room-brand"><span>sphere x learn</span><strong id="room-current-name">Phòng sinh hoạt</strong></div>
         <span class="room-prototype" data-text="prototype">BẢN THỬ</span>
+        <button id="room-view-side" type="button" hidden>Đổi bên</button>
+        <button id="room-view" type="button" aria-pressed="false">Xem ngoài</button>
         <button id="room-language" type="button" aria-label="Switch to English">EN</button>
       </header>
       <div class="room-load" id="room-loading" role="status"><span class="room-orbit-dot" aria-hidden="true"></span><span data-text="loading">Đang mở khoang tàu…</span></div>
       <div id="room-error" class="room-error" hidden><strong data-text="fallbackTitle">Chưa mở được phòng 3D</strong><p data-text="fallbackBody">Bạn vẫn có thể dùng hai lối tắt bên dưới để thử tablet và hội thoại.</p><button type="button" id="room-reload" data-text="reload">Tải lại</button></div>
+      <div id="room-transition" class="room-transition" role="status" aria-live="polite" hidden><span id="room-transition-text"></span><button id="room-transition-retry" type="button" hidden>Thử lại</button></div>
       <button type="button" class="room-prompt" id="room-prompt" hidden><span class="room-keycap" aria-hidden="true">E</span><span id="room-prompt-text"></span></button>
-      <div class="room-scene-label" aria-hidden="true"><span>01</span><span>ORBITAL CLASSROOM</span></div>
       <div id="room-overlay" class="room-overlay" role="dialog" aria-labelledby="room-overlay-title" hidden>
         <h2 id="room-overlay-title" class="room-sr"></h2>
         <button type="button" id="room-close" class="room-close" aria-label="Đóng">×</button>
