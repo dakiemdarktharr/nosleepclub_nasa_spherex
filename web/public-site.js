@@ -29,6 +29,7 @@
   let aboutLoading;
   let scienceLoading;
   let learnLoading;
+  let learnGame;
   let gagooLoading;
   let gagoo;
   let gagooEntering = false;
@@ -488,32 +489,32 @@
   }
 
   function startLearn() {
+    if (learnGame) { learnGame.enter(); return; }
     if (learnLoading) return;
-    const status = el("learn-load-status");
-    const retry = el("learn-load-retry");
-    const showStatus = (key) => {
-      status.dataset.copy = key;
-      status.textContent = t(key);
-    };
-    showStatus("learnLoading");
-    retry.hidden = true;
-    learnLoading = import("./learn.js?v=1")
-      .then(({mountLearn}) => {
-        mountLearn(el("learn"), window.SpherexSite.language);
-        status.hidden = true;
+    learnLoading = import("./learn-game.js?v=1")
+      .then(({mountLearnGame}) => {
+        learnGame = mountLearnGame(el("learn"));
+        if (currentPage === "learn") learnGame.enter();
       })
       .catch(() => {
         learnLoading = null;
-        showStatus("learnError");
-        retry.hidden = false;
+        const status = el("learn-game-status");
+        status.dataset.copy = "learnGameError";
+        status.textContent = t("learnGameError");
+        el("learn-game-retry").hidden = false;
       });
   }
+  el("learn-game-retry").addEventListener("click", () => {
+    // Reload clears the browser's failed-module cache after a network error.
+    if (!learnGame) location.reload();
+  });
 
   function step(focus = false) {
     const next = publicPage();
     const sectionHash = location.hash.slice(1);
     const aboutSection = next === "about" && sectionHash !== "about";
     currentPage = next;
+    if (next !== "learn") learnGame?.leave();
     gagoo?.refresh();
     const isPublic = Boolean(next);
     document.body.classList.toggle("public-mode", isPublic);

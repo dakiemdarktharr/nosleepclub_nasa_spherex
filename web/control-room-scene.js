@@ -209,8 +209,105 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
   actor.position.set(-2.8,0,-.4);actor.rotation.y=.4;
   const propObstacles=[...SHIP_WALLS,...SHIP_FURNITURE].map(o=>({min:[o.x0,.08,o.z0],max:[o.x1,1.65,o.z1]}));
   const free=shipFree;
-  let autoTarget=null, path=[], near='', pickup=0, pickupMode='', held=false, lastPickupState=false, time=0, lastDirection=new T.Vector2(), disposed=false, motionPaused=false, lost=false;
+  let autoTarget=null, path=[], near='', pickup=0, pickupMode='', held=false, lastPickupState=false, time=0, lastDirection=new T.Vector2(), disposed=false, motionPaused=false, lost=false, suspended=false, tabletHint=false;
   const interactionPositions={tablet:new T.Vector3(-2.4,0,.65),alien:new T.Vector3(-3.9,0,-.7)};
+  let loot=null;
+  canvas.dataset.lootTier='none';canvas.dataset.lootPhase='idle';canvas.dataset.lootVisible='false';
+
+  function clearFuelLoot(collected=false){
+    if(!loot)return;
+    const finished=loot;loot=null;
+    finished.group.removeFromParent();
+    const ownedGeometry=new Set();finished.group.traverse(node=>{if(node.geometry)ownedGeometry.add(node.geometry);});
+    for(const geometry of ownedGeometry){geometry.dispose();geometries.delete(geometry);}
+    for(const surface of finished.surfaces){surface.dispose();materials.delete(surface);}
+    canvas.dataset.lootVisible='false';canvas.dataset.lootPhase=collected?'collected':'cancelled';
+    canvas.dataset.lootProgress=collected?'1':'0';
+    finished.resolve(collected);
+  }
+
+  function playFuelLoot(tier='normal'){
+    if(disposed||lost)return Promise.resolve(false);
+    if(loot)return loot.promise;
+    const kind=tier==='super'?'super':'normal',group=new T.Group(),surfaces=new Set();
+    group.name=kind==='super'?'Rainbow super-fuel pickup':'Fuel pickup';scene.add(group);
+    // Private materials permit a reduced-motion fade without changing the
+    // shared room palette. Every pickup's geometry is released on completion.
+    const surface=(base,basic=false)=>{
+      const result=typeof base==='number'?(basic?new T.MeshBasicMaterial({color:base}):new T.MeshToonMaterial({color:base,gradientMap:gradient})):base.clone();
+      materials.add(result);surfaces.add(result);return result;
+    };
+    const bodyColor=surface(kind==='super'?c.cream:c.yellow),trim=surface(c.navy),label=surface(c.teal),light=surface(c.cream);
+    const shape=new T.Shape();shape.moveTo(-.25,-.30);shape.lineTo(.25,-.30);shape.lineTo(.25,.18);shape.lineTo(.14,.29);shape.lineTo(-.18,.29);shape.lineTo(-.25,.19);shape.closePath();
+    const bodyGeometry=new T.ExtrudeGeometry(shape,{depth:.19,bevelEnabled:true,bevelSegments:1,bevelSize:.025,bevelThickness:.025,steps:1,curveSegments:1});
+    bodyGeometry.translate(0,0,-.095);
+    mesh(bodyGeometry,bodyColor,[0,0,0],group);
+    // A hollow, chunky handle and capped spout make this legible as a small can.
+    box(.27,.065,.12,trim,[-.045,.40,0],group);
+    for(const x of [-.155,.065])box(.055,.15,.12,trim,[x,.34,0],group);
+    cylinder(.07,.07,.085,light,[.19,.29,0],group,6);
+    box(.085,.027,.11,trim,[.19,.35,0],group,false);
+    if(kind==='super'){
+      const colors=[0xf07475,0xffb367,0xf4e676,0x8add9b,0x76d7e9,0x8d9ae9,0xd797e2];
+      for(let i=0;i<colors.length;i++){
+        const color=surface(colors[i]);
+        box(.46,.062,.025,color,[0,-.235+i*.064,.13],group,false);
+      }
+      for(const [inner,outer,opacity] of [[.42,.56,.18],[.56,.64,.07]]){
+        const aura=new T.MeshBasicMaterial({color:0xa3e2e6,transparent:true,opacity,depthWrite:false,side:T.DoubleSide,blending:T.AdditiveBlending});
+        materials.add(aura);surfaces.add(aura);
+        mesh(new T.RingGeometry(inner,outer,24),aura,[0,.05,-.16],group,false);
+      }
+      for(let i=0;i<6;i++){
+        const angle=i*Math.PI/3;
+        mesh(new T.OctahedronGeometry(.035),surface(colors[i],true),[Math.cos(angle)*.58,.05+Math.sin(angle)*.58,0],group,false);
+      }
+    }else{
+      box(.31,.26,.025,label,[0,-.015,.13],group,false);
+      // One simple pale fuel-drop icon, built from broad polygonal surfaces.
+      const drop=mesh(new T.ConeGeometry(.055,.14,5),light,[0,.005,.16],group,false);drop.rotation.z=Math.PI;
+    }
+    const start=actor.position.clone().add(new T.Vector3(-.80,1.18,.22));
+    group.position.copy(start);group.rotation.y=.38;
+    const promise=new Promise(resolve=>{loot={group,surfaces,start,elapsed:0,tier:kind,resolve,promise:null};});
+    loot.promise=promise;
+    for(const value of surfaces)value.userData.baseOpacity=value.opacity;
+    cancelGoal();canvas.dataset.lootTier=kind;canvas.dataset.lootPhase='appearing';canvas.dataset.lootVisible='true';canvas.dataset.lootProgress='0';
+    updateFuelLoot(0);return promise;
+  }
+
+  function updateFuelLoot(dt){
+    if(!loot)return;
+    loot.elapsed+=dt;
+    const duration=reduced.matches ? .25 : 1.85,p=Math.min(1,loot.elapsed/duration);
+    const target=actor.position.clone().add(new T.Vector3(0,.9,.09));
+    if(reduced.matches){
+      loot.group.position.copy(target);loot.group.scale.setScalar(.9);
+      for(const value of loot.surfaces){value.transparent=true;value.opacity=value.userData.baseOpacity*(1-p);value.depthWrite=false;}
+      loot.group.traverse(node=>{if(node.name==='ink outline')node.visible=false;});
+    }else{
+      const travel=Math.max(0,Math.min(1,(p-.28)/.72)),eased=travel*travel*(3-2*travel);
+      loot.group.position.lerpVectors(loot.start,target,eased);
+      loot.group.position.y+=Math.sin(travel*Math.PI)*.32;
+      loot.group.scale.setScalar(Math.max(.001,Math.min(1,p/.12)*(1-eased)));
+      loot.group.rotation.y=.38+Math.sin(p*Math.PI)*.28;
+    }
+    canvas.dataset.lootPhase=p<.28?'appearing':'collecting';
+    canvas.dataset.lootProgress=p.toFixed(3);canvas.dataset.lootPosition=JSON.stringify(loot.group.position.toArray());
+    if(p>=1)clearFuelLoot(true);
+  }
+
+  function getScreenAnchors(){
+    camera.updateMatrixWorld(true);
+    const displayed=!disposed&&!lost&&!suspended&&!exteriorView&&currentRoom==='living'&&roomPhase==='room'&&canvas.clientWidth>0&&canvas.clientHeight>0;
+    const project=(object,offset)=>{
+      object.updateWorldMatrix(true,false);
+      const point=new T.Vector3(...offset).applyMatrix4(object.matrixWorld).project(camera);
+      const x=(point.x+1)/2,y=(1-point.y)/2;
+      return {x:Math.max(0,Math.min(1,x)),y:Math.max(0,Math.min(1,y)),visible:displayed&&object.visible&&point.z>=-1&&point.z<=1&&x>=0&&x<=1&&y>=0&&y<=1};
+    };
+    return {tablet:project(tablet,[0,.12,0]),alien:project(alien,[0,2.22,0])};
+  }
   // Real lazy-loading boundary: a room's furniture module and meshes do not
   // exist until visited. A cancelled corridor never reveals a late result.
   const roomGroups=new Map(), roomPromises=new Map(), roomAttempts=new Map();
@@ -334,7 +431,7 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
     if(currentRoom==='fuel')for(const wallMesh of walls)if(Math.abs(wallMesh.position.z)<.15){wallMesh.scale.y=.18;wallMesh.position.y=.825*.18;}
   }
   function update(dt,input={x:0,y:0},active=true){
-    if(disposed||lost)return;
+    if(disposed||lost||suspended)return;
     const previousActor=actor.position.toArray();
     dt=Math.min(.04,Math.max(0,dt));if(!motionPaused&&!reduced.matches)time+=dt;
     let dx=0,dz=0,moving=false;
@@ -391,16 +488,26 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
     canvas.dataset.propCollisions=String(floatingBodies.reduce((sum,body)=>sum+body.contacts,0));
     canvas.dataset.propPlayerCollisions=String(floatingBodies.reduce((sum,body)=>sum+body.playerContacts,0));
     canvas.dataset.shadowMap='enabled';
-    tabletMarker.material=near==='tablet'?c.lime:c.teal;alienMarker.material=near==='alien'?c.lime:c.teal;
+    tabletMarker.material=near==='tablet'||tabletHint?c.lime:c.teal;alienMarker.material=near==='alien'?c.lime:c.teal;
+    tabletMarker.scale.setScalar(tabletHint&&!held&&!pickupMode&&!reduced.matches&&!motionPaused?1+Math.sin(time*2.2)*.045:1);
     canvas.dataset.room=currentRoom;canvas.dataset.playerX=actor.position.x.toFixed(3);canvas.dataset.playerZ=actor.position.z.toFixed(3);
     canvas.dataset.heldTablet=String(held||pickupMode==='take');
+    // Input can be locked during dialogue and rewards without freezing loot.
+    updateFuelLoot(dt);
   }
   let width=0,height=0;
-  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h||(w===width&&h===height))return;width=w;height=h;renderer.setSize(w,h,false);const aspect=w/h;const vertical=!exteriorView?Math.max(8.4,10/aspect):Math.max(9.2,23/aspect);camera.left=-vertical*aspect/2;camera.right=vertical*aspect/2;camera.top=vertical/2;camera.bottom=-vertical/2;camera.zoom=1;camera.updateProjectionMatrix();}
-  function render(){if(disposed||lost)return;resize();renderer.render(scene,camera);}
-  const contextLost=e=>{e.preventDefault();lost=true;onError?.();};canvas.addEventListener('webglcontextlost',contextLost);
+  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h||(w===width&&h===height))return;width=w;height=h;renderer.setSize(w,h,false);const aspect=w/h;const vertical=!exteriorView?Math.max(8.4,8/aspect):Math.max(9.2,23/aspect);camera.left=-vertical*aspect/2;camera.right=vertical*aspect/2;camera.top=vertical/2;camera.bottom=-vertical/2;camera.zoom=1;camera.updateProjectionMatrix();}
+  function render(){if(disposed||lost||suspended)return;resize();renderer.render(scene,camera);}
+  const contextLost=e=>{e.preventDefault();lost=true;clearFuelLoot(false);onError?.();};canvas.addEventListener('webglcontextlost',contextLost);
   const raycaster=new T.Raycaster(),pointer=new T.Vector2();
-  function pick(clientX,clientY){const rect=canvas.getBoundingClientRect();pointer.set((clientX-rect.left)/rect.width*2-1,-(clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const hit=raycaster.intersectObjects([tablet,alien],true).find(item=>item.object.name!=='ink outline');if(!hit)return '';let n=hit.object;while(n){if(n===tablet)return 'tablet';if(n===alien)return 'alien';n=n.parent;}return '';}
+  function pick(clientX,clientY){if(disposed||lost||suspended||exteriorView||currentRoom!=='living'||roomPhase!=='room')return '';const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return '';pointer.set((clientX-rect.left)/rect.width*2-1,-(clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const hit=raycaster.intersectObjects([tablet,alien],true).find(item=>item.object.name!=='ink outline');if(!hit)return '';let n=hit.object;while(n){if(n===tablet)return 'tablet';if(n===alien)return 'alien';n=n.parent;}return '';}
   update(0);render();
-  return {ready,retryRoom,update,render,resize,goTo,cancelGoal,beginPickup,putDown,pick,getNear:()=>near,setExterior(value,side=1){exteriorView=Boolean(value);exteriorSide=side<0?-1:1;exterior.visible=exteriorView;room.visible=exteriorView;syncRooms();canvas.dataset.view=exteriorView?'exterior':'cutaway';canvas.dataset.exteriorSide=String(exteriorSide);width=0;cameraX=exteriorView?0:actor.position.x;cameraZ=exteriorView?0:actor.position.z;camera.position.set(10+cameraX,17,(exteriorView?25*exteriorSide:25)+cameraZ);camera.lookAt(cameraX,.45,cameraZ);resize();render();},setPaused(value){motionPaused=value;},dispose(){disposed=true;travelEpoch++;clearCorridor();canvas.removeEventListener('webglcontextlost',contextLost);ragdoll.dispose?.();model.userData.dispose?.();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();gradient.dispose();key.shadow.map?.dispose();renderer.dispose();}};
+  return {ready,retryRoom,update,render,resize,goTo,cancelGoal,beginPickup,putDown,pick,getNear:()=>near,
+    getScreenAnchors,playFuelLoot,
+    setTabletHint(value){tabletHint=Boolean(value);canvas.dataset.tabletHint=String(tabletHint);},
+    setSuspended(value){suspended=Boolean(value);canvas.dataset.suspended=String(suspended);},
+    setExterior(value,side=1){exteriorView=Boolean(value);exteriorSide=side<0?-1:1;exterior.visible=exteriorView;room.visible=exteriorView;syncRooms();canvas.dataset.view=exteriorView?'exterior':'cutaway';canvas.dataset.exteriorSide=String(exteriorSide);width=0;cameraX=exteriorView?0:actor.position.x;cameraZ=exteriorView?0:actor.position.z;camera.position.set(10+cameraX,17,(exteriorView?25*exteriorSide:25)+cameraZ);camera.lookAt(cameraX,.45,cameraZ);resize();render();},
+    setPaused(value){motionPaused=value;},
+    dispose(){disposed=true;travelEpoch++;clearFuelLoot(false);clearCorridor();canvas.removeEventListener('webglcontextlost',contextLost);ragdoll.dispose?.();model.userData.dispose?.();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();gradient.dispose();key.shadow.map?.dispose();renderer.dispose();}
+  };
 }

@@ -8,8 +8,8 @@
   <title>Spaceship · sphere x learn</title>
   <link rel="icon" href="assets/mission/spherex-white.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/fonts/be-vietnam-pro.css">
-  <link rel="stylesheet" href="control-room.css?v=3">
-  <script src="control-room.js?v=3" defer></script>
+  <link rel="stylesheet" href="control-room.css?v=4">
+  <script src="control-room.js?v=4" type="module"></script>
 </head>
 <body data-game-state="room" data-scene-state="loading">
   <main id="room-shell">
@@ -18,7 +18,6 @@
       <header class="room-topbar">
         <a class="room-home" href="./#orbit" aria-label="Về trang chủ"><img src="assets/mission/spherex-white.svg" alt="" width="34" height="34"></a>
         <div class="room-brand"><span>sphere x learn</span><strong id="room-current-name">Phòng sinh hoạt</strong></div>
-        <span class="room-prototype" data-text="prototype">BẢN THỬ</span>
         <button id="room-view-side" type="button" hidden>Đổi bên</button>
         <button id="room-view" type="button" aria-pressed="false">Xem ngoài</button>
         <button id="room-language" type="button" aria-label="Switch to English">EN</button>
@@ -27,12 +26,26 @@
       <div id="room-error" class="room-error" hidden><strong data-text="fallbackTitle">Chưa mở được phòng 3D</strong><p data-text="fallbackBody">Bạn vẫn có thể dùng hai lối tắt bên dưới để thử tablet và hội thoại.</p><button type="button" id="room-reload" data-text="reload">Tải lại</button></div>
       <div id="room-transition" class="room-transition" role="status" aria-live="polite" hidden><span id="room-transition-text"></span><button id="room-transition-retry" type="button" hidden>Thử lại</button></div>
       <button type="button" class="room-prompt" id="room-prompt" hidden><span class="room-keycap" aria-hidden="true">E</span><span id="room-prompt-text"></span></button>
-      <div id="room-overlay" class="room-overlay" role="dialog" aria-labelledby="room-overlay-title" hidden>
+      <div id="room-greeting" class="room-greeting" role="status" hidden><strong>ALIEN X</strong><p id="room-greeting-text"></p></div>
+      <div id="room-tablet-hint" class="room-tablet-hint" hidden><span id="room-tablet-hint-label"></span><svg viewBox="0 0 40 54" aria-hidden="true"><path d="M14 3h12v28h10L20 50 4 31h10Z"/></svg></div>
+      <div id="room-loot-message" class="room-loot-message" role="status" hidden></div>
+      <div id="room-overlay" class="room-overlay" role="dialog" aria-modal="true" aria-labelledby="room-overlay-title" hidden>
         <h2 id="room-overlay-title" class="room-sr"></h2>
         <button type="button" id="room-close" class="room-close" aria-label="Đóng">×</button>
-        <section id="room-tablet-panel" class="room-tablet-panel" hidden aria-label="Tablet trống">
+        <section id="room-tablet-panel" class="room-tablet-panel" hidden>
           <div class="room-tablet-camera" aria-hidden="true"></div>
-          <div class="room-tablet-display" aria-label="Màn hình tablet trống"></div>
+          <div id="room-lesson-scroll" class="room-tablet-display">
+            <span id="room-lesson-count" class="room-eyebrow"></span>
+            <h3 id="room-lesson-title" tabindex="-1"></h3><p id="room-lesson-lead"></p>
+            <h4 id="room-lesson-step-title" tabindex="-1"></h4><p id="room-lesson-text"></p>
+            <div id="room-lesson-filter" class="room-lesson-filter">
+              <div id="room-filter-preview" data-band="0" aria-hidden="true"><i class="room-filter-dust"></i><i class="room-filter-star"></i><i class="room-filter-orbit"></i></div>
+              <div class="room-filter-tabs"><button type="button" data-band="0" aria-pressed="true">A</button><button type="button" data-band="1" aria-pressed="false">B</button><button type="button" data-band="2" aria-pressed="false">C</button></div>
+              <p id="room-filter-description" role="status"></p><small data-text="filter">Mô hình minh họa · Không phải dữ liệu quan sát</small>
+            </div>
+            <div class="room-sources"><strong data-text="source">Nguồn NASA</strong><div id="room-lesson-sources"></div></div>
+          </div>
+          <div class="room-lesson-actions"><button id="room-lesson-prev" type="button" data-text="previous">Trước</button><button id="room-lesson-next" type="button" class="room-primary" data-text="next">Tiếp theo</button></div>
           <span class="room-tablet-home" aria-hidden="true"></span>
         </section>
         <section id="room-dialogue-panel" class="room-dialogue-panel" hidden>
@@ -43,18 +56,27 @@
             <div class="room-speech-actions"><button id="room-dialogue-next" type="button"><span data-text="next">Tiếp theo</span><span aria-hidden="true">↗</span></button><button id="room-test-choice" type="button" hidden>test <span aria-hidden="true">↗</span></button></div>
           </div>
         </section>
-        <section id="room-study-panel" class="room-study-panel" hidden aria-labelledby="room-quiz-title">
-          <div class="room-study-top"><span data-text="quizLabel">BÀI THỬ SPHEREx</span><span id="room-quiz-count">01 / 02</span></div>
-          <h3 id="room-quiz-title"></h3>
-          <div id="room-quiz-options"></div>
-          <div id="room-quiz-feedback" role="status" aria-live="polite" hidden><strong id="room-quiz-result"></strong><p id="room-quiz-explanation"></p><a id="room-quiz-source" target="_blank" rel="noopener noreferrer">NASA / JPL ↗</a></div>
-          <div class="room-quiz-actions"><button id="room-quiz-retry" type="button" hidden data-text="tryAgain">Thử lại</button><button id="room-quiz-next" type="button" hidden data-text="next">Tiếp theo</button></div>
+        <section id="room-study-panel" class="room-study-panel" hidden>
+          <div class="room-study-top"><span data-text="quizLabel">BÀI 1 · THỬ THÁCH NHIÊN LIỆU</span><span id="room-quiz-count">1 / 6</span></div>
+          <div id="room-quiz-conversation">
+            <div class="room-chat room-alien-chat"><span class="room-speaker-name">ALIEN X</span><h3 id="room-quiz-title"></h3></div>
+            <div id="room-quiz-choices" class="room-chat room-gagoo-chat"><span class="room-speaker-name" data-text="choose">GAGOO · CHỌN CÂU TRẢ LỜI</span><div id="room-quiz-options"></div></div>
+            <div id="room-gagoo-answer" class="room-chat room-gagoo-chat" hidden><span class="room-speaker-name" data-text="answerLabel">GAGOO · CÂU TRẢ LỜI CỦA BẠN</span><p id="room-gagoo-answer-text"></p></div>
+            <div id="room-quiz-feedback" class="room-chat room-alien-chat" role="status" aria-live="polite" hidden><span class="room-speaker-name">ALIEN X</span><strong id="room-quiz-result"></strong><p id="room-correct-answer"></p><p id="room-quiz-explanation"></p><a id="room-quiz-source" target="_blank" rel="noopener noreferrer">NASA / JPL ↗</a></div>
+            <div class="room-quiz-actions"><button id="room-quiz-next" type="button" class="room-primary" hidden data-text="next">Tiếp theo</button></div>
+          </div>
+          <div id="room-mission-result" hidden>
+            <div class="room-chat room-alien-chat"><span class="room-speaker-name">ALIEN X</span><h3 id="room-result-title" tabindex="-1"></h3><p id="room-result-text"></p></div>
+            <p id="room-result-best"></p><details class="room-review"><summary data-text="review">Xem lại 6 câu và giải thích</summary><ol id="room-result-review"></ol></details>
+            <div class="room-result-actions"><button id="room-claim-fuel" type="button" class="room-primary" data-text="claim">Nhận nhiên liệu</button><button id="room-quiz-retry" type="button" data-text="tryAgain">Làm lại cả lượt</button><button id="room-result-close" type="button" data-text="done">Trở lại phòng</button></div>
+          </div>
         </section>
       </div>
     </section>
     <section id="room-controls" aria-label="Điều khiển trò chơi">
-      <div class="room-controls-top"><div><span class="room-controller-brand">GAGOO / 01</span><p id="room-status" role="status" aria-live="polite">Di chuyển tới tablet hoặc Alien X.</p></div><button id="room-motion" type="button" aria-pressed="false" aria-label="Dừng chuyển động trang trí">Ⅱ</button></div>
+      <div class="room-controls-top"><p id="room-status" role="status" aria-live="polite">Học trên tablet, rồi gặp Alien X để nhận thử thách.</p><button id="room-motion" type="button" aria-pressed="false" aria-label="Dừng chuyển động trang trí">Ⅱ</button></div>
       <div class="room-mobile-pad">
+        <div id="room-joystick" class="room-joystick" role="group" aria-label="Cần điều khiển di chuyển" data-x="0" data-y="0"><span class="room-joystick-rim" aria-hidden="true"></span><span id="room-joystick-knob" aria-hidden="true">✦</span></div>
         <div class="room-dpad" role="group" aria-label="Di chuyển">
           <button type="button" data-direction="up" class="room-dpad-up" aria-label="Đi lên">▲</button>
           <button type="button" data-direction="left" class="room-dpad-left" aria-label="Đi trái">◀</button>
@@ -66,8 +88,8 @@
       </div>
       <div class="room-stations" role="group" aria-label="Đi tới điểm tương tác"><button id="room-tablet-shortcut" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M10 18h4"/></svg><span>Tablet</span><span aria-hidden="true">↗</span></button><button id="room-alien-shortcut" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6-2-4m14 4 2-4M12 4C0 4 3 19 12 22 21 19 24 4 12 4Z"/><path d="m7 10 2 4m8-4-2 4"/></svg><span>Alien X</span><span aria-hidden="true">↗</span></button></div>
       <p class="room-keyboard-hint"><kbd>W A S D</kbd> / <kbd>↑ ← ↓ →</kbd> <span data-text="move">Di chuyển</span><span id="room-context-key" hidden><i></i><kbd>E</kbd> <span data-text="interact">Tương tác</span></span><i></i><kbd>Esc</kbd> <span data-text="back">Quay lại</span></p>
-      <div class="room-speaker-slots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     </section>
+    <button id="room-book" type="button" class="room-book" aria-label="Mở thư viện học tập" title="Mở thư viện học tập"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 7C12 4 7 4 3 6v20c4-2 9-2 13 1 4-3 9-3 13-1V6c-4-2-9-2-13 1Zm0 0v20M7 10l5 1M7 15l5 1M20 11l5-1M20 16l5-1"/></svg></button>
   </main>
   <noscript><p class="room-noscript">Bật JavaScript để chơi thử. Enable JavaScript to try this prototype. <a href="./#orbit">Trang chủ / Home</a></p></noscript>
 </body>
