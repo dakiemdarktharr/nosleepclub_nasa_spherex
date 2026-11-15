@@ -27,6 +27,7 @@
   let orbitLoading;
   let aboutLoading;
   let scienceLoading;
+  let learnLoading;
   let gagooLoading;
   let gagoo;
   let gagooEntering = false;
@@ -485,6 +486,28 @@
     restoreSkyField();
   }
 
+  function startLearn() {
+    if (learnLoading) return;
+    const status = el("learn-load-status");
+    const retry = el("learn-load-retry");
+    const showStatus = (key) => {
+      status.dataset.copy = key;
+      status.textContent = t(key);
+    };
+    showStatus("learnLoading");
+    retry.hidden = true;
+    learnLoading = import("./learn.js?v=1")
+      .then(({mountLearn}) => {
+        mountLearn(el("learn"), window.SpherexSite.language);
+        status.hidden = true;
+      })
+      .catch(() => {
+        learnLoading = null;
+        showStatus("learnError");
+        retry.hidden = false;
+      });
+  }
+
   function step(focus = false) {
     const next = publicPage();
     const sectionHash = location.hash.slice(1);
@@ -506,6 +529,7 @@
     window.SkyExplorer?.pause();
     refreshText();
     if (next === "orbit") { startOrbit(); typeTitle(); schedulePoster(); }
+    if (next === "learn") startLearn();
     if (next === "about") {
       if (!aboutLoading) aboutLoading = import("./about-story.js?v=3")
         .then(({mountAboutStory}) => mountAboutStory(el("about")))
@@ -550,6 +574,7 @@
     document.title = title;
   }
 
+  el("learn-load-retry").addEventListener("click", () => location.reload());
   el("orbit-motion").addEventListener("click", () => { motionPaused = !motionPaused; updateMotion(); });
   el("sky-sidebar-toggle").addEventListener("click", () => {
     const expanded = el("sky-sidebar-toggle").getAttribute("aria-expanded") === "true";
