@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#14287b">
   <meta name="description" content="Phi thuyền 3D thử nghiệm của sphere x learn.">
-  <title>Spaceship · sphere x learn</title>
+  <title>Spaceship · Touch The Sky</title>
   <link rel="icon" href="assets/mission/spherex-white.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/fonts/be-vietnam-pro.css">
-  <link rel="stylesheet" href="control-room.css?v=4">
-  <script src="control-room.js?v=4" type="module"></script>
+  <link rel="stylesheet" href="control-room.css?v=5">
+  <script src="control-room.js?v=5" type="module"></script>
 </head>
 <body data-game-state="room" data-scene-state="loading">
   <main id="room-shell">
@@ -17,11 +17,17 @@
       <canvas id="room-canvas" aria-label="Gagoo khám phá phi thuyền, cùng tablet và Alien X"></canvas>
       <header class="room-topbar">
         <a class="room-home" href="./#orbit" aria-label="Về trang chủ"><img src="assets/mission/spherex-white.svg" alt="" width="34" height="34"></a>
-        <div class="room-brand"><span>sphere x learn</span><strong id="room-current-name">Phòng sinh hoạt</strong></div>
+        <div class="room-brand"><span>Touch The Sky</span><strong id="room-current-name">Phòng sinh hoạt</strong></div>
         <button id="room-view-side" type="button" hidden>Đổi bên</button>
         <button id="room-view" type="button" aria-pressed="false">Xem ngoài</button>
         <button id="room-language" type="button" aria-label="Switch to English">EN</button>
       </header>
+      <nav class="room-route" aria-label="Ship stations">
+        <span id="room-fuel-stock" role="status"></span>
+        <button id="room-engine-shortcut" type="button" data-text="engineRoute">Động cơ ↗</button>
+        <button id="room-bridge-shortcut" type="button" data-text="bridgeRoute">Buồng lái ↗</button>
+        <button id="room-launch" type="button" data-text="launch" hidden>Phóng tàu ↗</button>
+      </nav>
       <div class="room-load" id="room-loading" role="status"><span class="room-orbit-dot" aria-hidden="true"></span><span data-text="loading">Đang mở khoang tàu…</span></div>
       <div id="room-error" class="room-error" hidden><strong data-text="fallbackTitle">Chưa mở được phòng 3D</strong><p data-text="fallbackBody">Bạn vẫn có thể dùng hai lối tắt bên dưới để thử tablet và hội thoại.</p><button type="button" id="room-reload" data-text="reload">Tải lại</button></div>
       <div id="room-transition" class="room-transition" role="status" aria-live="polite" hidden><span id="room-transition-text"></span><button id="room-transition-retry" type="button" hidden>Thử lại</button></div>
@@ -32,6 +38,37 @@
       <div id="room-overlay" class="room-overlay" role="dialog" aria-modal="true" aria-labelledby="room-overlay-title" hidden>
         <h2 id="room-overlay-title" class="room-sr"></h2>
         <button type="button" id="room-close" class="room-close" aria-label="Đóng">×</button>
+        <section id="room-engine-panel" class="room-hardware-panel" hidden>
+          <span class="room-eyebrow">TTS / PROPULSION SYSTEMS</span>
+          <h3 data-text="engineTitle">Một chút năng lượng, một chuyến đi xa.</h3>
+          <div id="room-fuel-gauge" class="room-fuel-gauge" data-fuel="none">
+            <span class="room-gauge-shards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <div class="room-gauge-dial" aria-hidden="true"><span class="room-gauge-needle"></span><span class="room-gauge-hub"></span><span class="room-gauge-crack"></span></div>
+            <meter id="room-fuel-meter" min="0" max="100" value="0" aria-label="Fuel"></meter>
+            <strong id="room-engine-status" role="status"></strong>
+          </div>
+          <p id="room-engine-description"></p>
+          <div class="room-result-actions"><button id="room-load-normal" type="button" data-text="loadNormal">Nạp nhiên liệu thường</button><button id="room-load-super" type="button" data-text="loadSuper">Nạp nhiên liệu cầu vồng</button><button id="room-engine-bridge" type="button" class="room-primary" data-text="bridgeRoute">Buồng lái ↗</button></div>
+        </section>
+        <section id="room-bridge-panel" class="room-hardware-panel" hidden>
+          <span class="room-eyebrow">TTS / FLIGHT DECK</span><h3 data-text="bridgeTitle">Sẵn sàng chạm tới bầu trời?</h3>
+          <p id="room-bridge-status"></p><button id="room-bridge-launch" class="room-primary" type="button" data-text="launch">Phóng tàu ↗</button>
+          <button id="room-bridge-engine" type="button" data-text="engineRoute">Động cơ ↗</button>
+        </section>
+        <section id="room-report-panel" class="room-hardware-panel room-flight-tablet" hidden>
+          <span class="room-eyebrow" data-text="flightLog">NHẬT KÝ CHUYẾN BAY</span><h3 id="room-flight-title" tabindex="-1"></h3>
+          <p id="room-flight-description"></p>
+          <div id="room-flight-progress" class="room-flight-progress" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" aria-label="Journey">
+            <span class="room-flight-track"><i id="room-flight-fill"><svg viewBox="0 0 64 40" aria-hidden="true"><path fill="#f3efe1" stroke="#101727" stroke-width="2" d="M5 12h27L45 5l14 15-14 15-13-7H5l6-8Z"/><path fill="#81edff" d="m43 12 9 8-9 8-5-8Z"/><path stroke="#ffb64c" stroke-width="4" d="M2 15h10M0 25h12"/></svg></i></span>
+          </div><div class="room-flight-milestones"><span>0</span><span>1/3</span><span>2/3</span><span>3/3</span></div>
+          <p class="room-fiction-note" data-text="fiction">Chuyến bay trong câu chuyện · Không phải mô phỏng chuyến bay thật của SPHEREx.</p>
+          <button id="room-report-close" class="room-primary" type="button" data-text="continueExplore">Tiếp tục khám phá</button>
+        </section>
+        <section id="room-cinema-panel" class="room-cinema-panel" hidden>
+          <span id="room-cinema-chapter" class="room-cinema-chapter"></span>
+          <p id="room-cinema-caption" role="status" tabindex="-1"></p>
+          <button id="room-cinema-skip" type="button" data-text="skipScene">Bỏ qua cảnh này</button>
+        </section>
         <section id="room-tablet-panel" class="room-tablet-panel" hidden>
           <div class="room-tablet-camera" aria-hidden="true"></div>
           <div id="room-lesson-scroll" class="room-tablet-display">
