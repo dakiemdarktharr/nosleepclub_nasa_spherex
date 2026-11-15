@@ -1,17 +1,17 @@
 # Upstream failure diagnostics
 
-The observations and frame APIs emit a separate structured diagnostic event
-for handled upstream or response-parsing failures. The existing response status,
-error code, request validation, allowed IRSA endpoint and path, redirect policy,
-body limits and timeouts are unchanged. This change does not retry or cache a
-request and does not itself resolve a production failure.
+The observations, frame and sequence APIs emit a separate structured diagnostic
+event for handled upstream or response-parsing failures. The observations API
+passes through bounded numeric `Retry-After` values; the explorer waits before
+its single retry. These diagnostics do not themselves resolve an upstream
+failure.
 
 `upstream-diagnostic-1` contains only these fields:
 
 | Field | Meaning |
 | --- | --- |
 | `schema`, `event` | Fixed values `upstream-diagnostic-1`, `upstream_diagnostic`. |
-| `endpoint` | `observations` or `frame`. |
+| `endpoint` | `observations`, `frame` or `sequence`. |
 | `request_id` | The same 32-character hexadecimal ID as the request event. |
 | `stage` | `open`, `headers`, `read`, or `parse`. |
 | `exception_class` | Fixed class enum, never an arbitrary exception name or message. |
@@ -23,8 +23,10 @@ denotes the frame API's subsequent content-length inspection, not necessarily
 the moment headers arrived over the network. `read` covers body streaming and
 its existing limits. `parse` covers VOTable/FITS processing. Contract-generated
 failures use `contract_error`; distinguish their specific public error codes
-using the matching request event. The observations request event now includes
-its existing upstream error code; the frame request event already did so.
+using the matching request event. Request events include the endpoint error
+code when available. Sequence events also retain a bounded frame count, and
+partial 200 responses are recorded as health errors so they are visible in
+`/api/status`.
 
 Class enums distinguish URL wrappers, DNS, certificate verification, other TLS,
 direct timeout, connection reset/refused/aborted, broken pipe, other connection

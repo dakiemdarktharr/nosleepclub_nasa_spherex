@@ -52,18 +52,22 @@ class SequenceApiTest(unittest.TestCase):
                 raise result
             return result
 
-        with (patch.object(api, 'parse_request', return_value=[(0, params)]),
-              patch.object(api, 'identity', return_value=('test', None)),
-              patch.object(api, 'guard'),
-              patch.object(api.response_cache, 'run', side_effect=lambda _key, produce: (produce(), 'miss')),
-              patch.object(api, 'produce_frame', side_effect=produce),
-              patch.object(api.time, 'sleep') as sleep):
-            status, result = post(body)
+        with self.assertLogs(api.logger, level='INFO') as logs:
+            with (patch.object(api, 'parse_request', return_value=[(0, params)]),
+                  patch.object(api, 'identity', return_value=('test', None)),
+                  patch.object(api, 'guard'),
+                  patch.object(api.response_cache, 'run', side_effect=lambda _key, produce: (produce(), 'miss')),
+                  patch.object(api, 'produce_frame', side_effect=produce),
+                  patch.object(api.time, 'sleep') as sleep):
+                status, result = post(body)
 
         self.assertEqual(status, 200)
         self.assertEqual(result['errors'], [])
         self.assertEqual(len(result['frames']), 1)
         sleep.assert_called_once_with(2)
+        event = json.loads(logs.records[-1].getMessage())
+        self.assertEqual(event['event'], 'sequence_request')
+        self.assertEqual((event['category'], event['status'], event['frame_count']), ('ok', 200, 1))
 
 
 if __name__ == '__main__':

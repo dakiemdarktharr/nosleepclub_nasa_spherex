@@ -1,11 +1,12 @@
 # Giới hạn truy vấn API công khai
 
-`/api/observations` và `/api/frame` kiểm tra giới hạn **sau xác thực tham số và trước truy vấn IRSA**. Quota đề xuất cho demo ban đầu, không phải SLO hay bằng chứng chống DDoS:
+`/api/observations`, `/api/frame` và `/api/sequence` kiểm tra giới hạn **sau xác thực tham số và trước truy vấn IRSA**. Quota đề xuất cho demo ban đầu, không phải SLO hay bằng chứng chống DDoS:
 
 | Endpoint | Mỗi IP/phút | Toàn bộ IP/phút |
 | --- | ---: | ---: |
 | observations | 12 | 60 |
 | frame | 8 | 24 |
+| sequence | 2 | 4 |
 
 Mỗi process còn có bộ lọc burst tối đa 8 request cho cùng IP và endpoint trong một cửa sổ giây, trước khi ghi MongoDB; trạng thái được khóa thread và giới hạn 4.096 khóa, khóa cũ bị loại khi đầy. Cửa sổ phút/giây cố định nên có thể có burst quanh ranh giới. Bộ nhớ chỉ thuộc từng process, không chia sẻ giữa instance/cold start; **không phải quota phân tán**. Khi bộ lọc chặn, API trả 429, `Retry-After` theo giây, `Cache-Control: no-store` và `X-Request-ID`. Không có dữ liệu IP thô, URL, tọa độ hay note trong log của guard/API.
 

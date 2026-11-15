@@ -137,10 +137,12 @@ async function coordinateCases() {
   assert.equal(h.element("explorer-status").textContent.includes("RA"),true);
   h.element("explorer-ra").value="12:30:00";
   h.element("explorer-dec").value="-10:30:00";
+  h.element("explorer-fov").value="0.40";
   const submit=h.element("explorer-form").fire("submit");await flush();
   const request=find(h,"observations")[0];
   assert.equal(request.params.get("ra"),"187.5");
   assert.equal(request.params.get("dec"),"-10.5");
+  assert.equal(request.params.get("radius"),"0.001","search cone stays centered on the target when display FOV changes");
   observations(request,[]);await submit;
   h.element("explorer-ra").value="-00:01:00";
   await h.element("explorer-form").fire("submit");
@@ -347,6 +349,7 @@ async function main() {
   await explicitAutoloadIsValidatedAndPreservesLanguage();
   await randomVisitsChooseDifferentContiguousWindows();
   await abandonedSearchDoesNotChangePublicRoute();
+  await transientObservationIsRetriedWithBackoff();
   await transientFrameIsRetriedOnce();
   console.log("Explorer DOM and HTTP race cases passed");
 }
@@ -561,6 +564,20 @@ async function transientFrameIsRetriedOnce(){
   find(h,"frame")[1].resolve(failed);await submit;
   assert.equal(find(h,"frame").length,2);
   assert.equal(h.element("explorer-retry").hidden,false);
+}
+async function transientObservationIsRetriedWithBackoff(){
+  const h=harness({lang:"en",deferTimeouts:true});h.element("explorer-fov").value="0.40";
+  const submit=h.element("explorer-form").fire("submit");await flush();
+  const first=find(h,"observations")[0];
+  assert.equal(first.params.get("radius"),"0.001");
+  first.resolve({ok:false,status:504,headers:{get:key=>key.toLowerCase()==="retry-after"?"2":null},json:async()=>({error:"upstream_timeout"})});
+  await flush();
+  const [timerId,timer]=h.timeouts.entries().next().value;
+  assert.equal(timer.delay,2000,"observation retries honor Retry-After");
+  h.timeouts.delete(timerId);timer.fn();await flush();
+  const second=find(h,"observations")[1];
+  assert(second);assert.equal(first.url,second.url,"the retry keeps the same observation search provenance");
+  observations(second,[]);await submit;
 }
 let timeout;
 const done=Promise.race([main(),new Promise((_,reject)=>{
