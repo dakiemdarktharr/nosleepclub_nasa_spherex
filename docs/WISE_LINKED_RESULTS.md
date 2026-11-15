@@ -2,7 +2,7 @@
 
 All **28/28** fits completed under the protocol locked at `cfb9d6a17ee37ca2c5c061a2cd44209d1093f4b7`. This is development on **20 already opened QR2 exposures**: broad uses 10 images per epoch; strict uses two per epoch and is a subset of broad. No new validation field was opened. The results do not establish reduced bias, accuracy, coverage, or an astronomical detection.
 
-[Interactive demo](https://nosleepclub-nasa-spherex.vercel.app/#linked-flux) lets users switch image sets, inspect plots, all seven vectors, and reasons each epoch was blocked. The [protocol](WISE_LINKED_PROTOCOL.md), [overview](../web/data/linked-flux/overview.json), and [all 28 attempts](../web/data/linked-flux/development.json) retain sources, units, runtime, mask/pixels, ePSF zone, spectral coefficient, every start/mode, weights, and conditional covariance. The WISE estimator and manifest currently shown in the workspace were not replaced.
+[Interactive demo](https://nosleepclub-nasa-spherex.vercel.app/#linked-flux) lets users switch image sets, inspect plots, all seven vectors, and reasons each epoch was blocked. The [English protocol](WISE_LINKED_PROTOCOL.en.md), [original hash-locked protocol](WISE_LINKED_PROTOCOL.md), [overview](../web/data/linked-flux/overview.json), and [all 28 attempts](../web/data/linked-flux/development.json) retain sources, units, runtime, mask/pixels, ePSF zone, spectral coefficient, every start/mode, weights, and conditional covariance. The WISE estimator and manifest currently shown in the workspace were not replaced.
 
 ## Results for all branches
 

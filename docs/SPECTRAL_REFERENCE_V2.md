@@ -6,7 +6,7 @@ V2 uses a new kernel, `spectral_bandpass_v2.py`, to avoid subtracting away a sma
 
 While fixing the issue, a specialist ran a numerical preflight on the same 102 development conditions: no exceptions remained, and all 102 had only partial support. This result was viewed **before** the V2 design commit. V2 was locked for release reproducibility; do not describe it as an unseen experiment, independent validation, or out-of-sample evidence. The 30 candidate fields remain unopened.
 
-All physical choices, channels, offsets, and interpretation limits from [protocol V1](SPECTRAL_REFERENCE_PROTOCOL.md) remain unchanged. In particular, photon weighting has not been verified as the SPHEREx calibration convention; nominal response R7 has not been joined to each QR2 pixel. This is not a truth spectrum, astrometric validation, improved accuracy result, or evidence for fitting WISE with the old covariance.
+All physical choices, channels, offsets, and interpretation limits from [protocol V1](SPECTRAL_REFERENCE_PROTOCOL.en.md) remain unchanged. In particular, photon weighting has not been verified as the SPHEREx calibration convention; nominal response R7 has not been joined to each QR2 pixel. This is not a truth spectrum, astrometric validation, improved accuracy result, or evidence for fitting WISE with the old covariance.
 
 ```powershell
 .venv/Scripts/python.exe -B -m unittest tests.test_spectral_bandpass_v2 tests.test_lab_spectral_response tests.test_wise0855_x1d -v

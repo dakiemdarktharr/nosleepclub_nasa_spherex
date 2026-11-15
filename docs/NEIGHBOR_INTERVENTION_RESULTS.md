@@ -2,7 +2,7 @@
 
 **All 288/288 epoch fits completed; controls do not show consistent improvement.** Nonnegative neighbor-flux constraints lowered RMS in three of four synthetic cases but worsened the faint-source case on curved background. One draw passing all numerical screens still had **16.8″** truth error. The WISE measurement is unchanged; no calibrated covariance or production model was accepted; the 30 reserved fields were not opened.
 
-[Open table and plots](https://nosleepclub-nasa-spherex.vercel.app/#neighbor-intervention) · [Protocol](NEIGHBOR_INTERVENTION_PROTOCOL.md) · [Design](../web/data/neighbor-intervention/design.json) · [53 KB summary](../web/data/neighbor-intervention/overview.json).
+[Open table and plots](https://nosleepclub-nasa-spherex.vercel.app/#neighbor-intervention) · [English protocol](NEIGHBOR_INTERVENTION_PROTOCOL.en.md) · [Original hash-locked protocol](NEIGHBOR_INTERVENTION_PROTOCOL.md) · [Design](../web/data/neighbor-intervention/design.json) · [53 KB summary](../web/data/neighbor-intervention/overview.json).
 
 ## Locked configuration and scope
 
