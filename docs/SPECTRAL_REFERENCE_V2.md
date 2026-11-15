@@ -1,18 +1,37 @@
-# Spectral Control: Fix Zero Crossing and Retain Every Trial
+# Đối chứng phổ: sửa zero crossing và giữ mọi lượt thử
 
-V1, locked at `b3eb94c`, stopped before results were published. The fourth run, Cent channel 2, offset −0.0064 µm, had a very small positive lobe that made the solution-position ratio round to 1. Calculating the remaining lobe length as `h*(1-fraction)` then produced 0 and was rejected by the guard. The [failure receipt](evidence/0.10/spectral-reference-b3eb94c-aborted.json) retains reproducible inputs; V1 code and design remain unchanged.
+V1 khóa ở `b3eb94c` đã dừng trước khi xuất kết quả. Lượt thứ tư, Cent kênh 2,
+dịch −0,0064 µm, có một thùy dương rất nhỏ làm tỉ số vị trí nghiệm đổi dấu
+làm tròn thành 1. Tính chiều dài thùy còn lại bằng `h*(1-fraction)` đã thành
+0 và bị guard từ chối. [Receipt lỗi](evidence/0.10/spectral-reference-b3eb94c-aborted.json)
+giữ đầu vào tái hiện; code và design V1 được giữ nguyên.
 
-V2 uses a new kernel, `spectral_bandpass_v2.py`, to avoid subtracting away a small lobe while retaining both sign and absolute weight. It does not clip response or flux, remove support limits, or relax tests. The new runner records `numerical_failure`, `partial_only`, and `full_support` separately across all 102 trials; a numerical error does not become zero flux or disappear from the denominator.
+V2 dùng kernel mới `spectral_bandpass_v2.py`, tránh phép trừ làm mất thùy nhỏ,
+giữ cả dấu và trọng số tuyệt đối. Không clip response hoặc flux, không bỏ
+giới hạn hỗ trợ và không nới test. Runner mới giữ riêng `numerical_failure`,
+`partial_only` và `full_support` cho đủ 102 lượt; lỗi số học không trở thành
+flux bằng 0 hoặc bị bỏ khỏi mẫu số.
 
-While fixing the issue, a specialist ran a numerical preflight on the same 102 development conditions: no exceptions remained, and all 102 had only partial support. This result was viewed **before** the V2 design commit. V2 was locked for release reproducibility; do not describe it as an unseen experiment, independent validation, or out-of-sample evidence. The 30 candidate fields remain unopened.
+Trong khi sửa lỗi, specialist đã chạy preflight số học trên cùng 102 điều
+kiện development: không còn exception và cả 102 chỉ có hỗ trợ một phần. Kết
+quả này đã được xem **trước** commit design V2. Khóa V2 vì tính tái lập của
+bản phát hành; không gọi nó là thử nghiệm chưa xem trước, kiểm định độc lập
+hoặc bằng chứng ngoài mẫu. Ba mươi trường triển vọng vẫn chưa được mở.
 
-All physical choices, channels, offsets, and interpretation limits from [protocol V1](SPECTRAL_REFERENCE_PROTOCOL.en.md) remain unchanged. In particular, photon weighting has not been verified as the SPHEREx calibration convention; nominal response R7 has not been joined to each QR2 pixel. This is not a truth spectrum, astrometric validation, improved accuracy result, or evidence for fitting WISE with the old covariance.
+Mọi lựa chọn vật lý, kênh, độ dịch và giới hạn diễn giải của
+[protocol V1](SPECTRAL_REFERENCE_PROTOCOL.md) giữ nguyên. Đặc biệt, photon
+weighting chưa xác minh là quy ước calibration SPHEREx; nominal response R7
+chưa ghép mỗi pixel QR2. Đây không phải phổ truth, astrometric validation,
+độ chính xác đã tăng hay chứng cứ để fit WISE bằng covariance cũ.
 
 ```powershell
 .venv/Scripts/python.exe -B -m unittest tests.test_spectral_bandpass_v2 tests.test_lab_spectral_response tests.test_wise0855_x1d -v
 .venv/Scripts/python.exe -B -m scripts.audit_spectral_reference_v2 --design
-# Commit code, tests, protocol, and v2-design.json before running:
+# Commit code, test, protocol và v2-design.json rồi mới chạy:
 .venv/Scripts/python.exe -B -m scripts.audit_spectral_reference_v2 --run
 ```
 
-The V2 design hashes V1/V2 sources, protocol, two raw inputs, and spectral metadata. The new output is `web/data/spectral-response/v2-development-audit.json`; it does not overwrite an existing design or result. Report all full-support, partial-spectrum-only, and numerical-failure counts, and include ratios only when their denominators are appropriate.
+Design V2 hash cả nguồn V1/V2, protocol, hai raw inputs và metadata phổ.
+Output mới là `web/data/spectral-response/v2-development-audit.json`;
+không ghi đè file thiết kế hoặc kết quả đã tồn tại. Báo đủ số hỗ trợ toàn
+dải, chỉ có phần phổ và lỗi số học, kèm mọi tỷ số chỉ khi mẫu số phù hợp.

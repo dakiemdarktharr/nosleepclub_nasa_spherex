@@ -86,7 +86,7 @@ The independent audit confirmed all 112 checkpoints: **96 verified, 16 verified-
 
 Main sources and traceability:
 
-- [Locked protocol](PROFILE_LANDSCAPE_PROTOCOL.md), commit `704e3efc806dddef7906b032ba917745f80442a1`; design SHA-256 `6896060318db83a09d9b917f2ced0d4b5f930116d2cbdef2b046c22440b4ef56`.
+- [English protocol](PROFILE_LANDSCAPE_PROTOCOL.en.md) · [Original hash-locked protocol](PROFILE_LANDSCAPE_PROTOCOL.md), commit `704e3efc806dddef7906b032ba917745f80442a1`; design SHA-256 `6896060318db83a09d9b917f2ced0d4b5f930116d2cbdef2b046c22440b4ef56`.
 - [Overview](../web/data/profile-landscape/overview.json) and [independent audit receipt](../web/data/profile-landscape/independent-audit.json); journal digest `fe1105b90c176412e22b837e13c6b7573ea1d9f3ace4e3dc7723648a4a2bb270`, receipt-content checksum `35156d08b0f8198e28eb6e01aff14e73a7749f7f9d07bf47eab3712818964ec3`.
 - Audit code [audit_profile_landscape.py](../scripts/audit_profile_landscape.py), SHA-256 `90eaa6f825a91526bfe3ed049349e40d4d813f1b778d6b4e80b42f85d037e24e`; publisher [publish_profile_landscape.py](../scripts/publish_profile_landscape.py), SHA-256 `d3fb8ef80ed49ccb7af6d0dd68fd10f5e9c1d60571748f00b811f9265c4a77ac`.
 - [112 profile records, 112 audit checkpoints, and two compressed headers](../web/data/profile-landscape/records.json.gz): **3,885,257 bytes** (about 3.885 MB decimal), SHA-256 `5e0c5798333a0533dd495d73131e2830ecf45b2a502b55c95ac87859877b91c4`.
