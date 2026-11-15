@@ -79,18 +79,14 @@ assert not __import__('pathlib').Path('web').exists()
         payload = diagnostic.describe(URLError(ssl.SSLError(SECRET)), 'open')
         payload['message'] = SECRET;payload['extra'] = {'url': SECRET}
         diagnostic.emit(logger, 'frame', REQUEST_ID, payload)
-        diagnostic.emit(logger, 'sequence', REQUEST_ID, payload)
         self.assertEqual(logger.events, [{'schema': 'upstream-diagnostic-1', 'event': 'upstream_diagnostic',
             'endpoint': 'frame', 'request_id': REQUEST_ID, 'stage': 'open',
-            'exception_class': 'url_error', 'reason_class': 'tls_error'},
-            {'schema': 'upstream-diagnostic-1', 'event': 'upstream_diagnostic',
-            'endpoint': 'sequence', 'request_id': REQUEST_ID, 'stage': 'open',
             'exception_class': 'url_error', 'reason_class': 'tls_error'}])
         self.assertNotIn(SECRET, json.dumps(logger.events))
         diagnostic.emit(logger, SECRET, REQUEST_ID, payload)
         diagnostic.emit(logger, 'frame', SECRET, payload)
         diagnostic.emit(logger, 'frame', REQUEST_ID, {'stage': SECRET, 'exception_class': SECRET})
-        self.assertEqual(len(logger.events), 2)
+        self.assertEqual(len(logger.events), 1)
         class Broken:
             def error(self, message):raise RuntimeError(SECRET)
         self.assertIsNone(diagnostic.emit(Broken(), 'frame', REQUEST_ID, payload))

@@ -30,7 +30,7 @@ def emit_request(logger, event):
     if not isinstance(event, dict):
         return
     name = event.get('event')
-    if not isinstance(name, str) or name not in {'review_request', 'observations_request', 'frame_request', 'sequence_request', 'data_request'}:
+    if not isinstance(name, str) or name not in {'review_request', 'observations_request', 'frame_request', 'data_request'}:
         return
     status, latency = event.get('status'), event.get('latency_ms')
     if (type(status) is not int or not 100 <= status <= 599
@@ -52,9 +52,6 @@ def emit_request(logger, event):
     upstream = event.get('upstream_http_status')
     if type(upstream) is int and 100 <= upstream <= 599:
         result['upstream_http_status'] = upstream
-    frame_count = event.get('frame_count')
-    if type(frame_count) is int and 0 <= frame_count <= 10:
-        result['frame_count'] = frame_count
     logger.log(level, json.dumps(result, allow_nan=False))
     try:
         from api._health import record

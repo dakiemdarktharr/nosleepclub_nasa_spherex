@@ -41,10 +41,9 @@ LIVE_RELEASES = ('dr1', 'qr3')
 
 
 class UpstreamError(Exception):
-    def __init__(self, code, diagnostic=None, retry_after=None):
+    def __init__(self, code, diagnostic=None):
         self.code = code
         self.diagnostic = diagnostic
-        self.retry_after = retry_after
         super().__init__(code)
 
 
@@ -142,13 +141,7 @@ def fetch(url):
     except (TimeoutError, socket.timeout) as exc:
         raise UpstreamError('upstream_timeout', describe_upstream(exc, stage))
     except HTTPError as exc:
-        raw_retry_after = exc.headers.get('Retry-After') if exc.headers else None
-        retry_after = (raw_retry_after.strip() if isinstance(raw_retry_after, str)
-                       and re.fullmatch(r'[0-9]{1,3}', raw_retry_after.strip())
-                       and 0 < int(raw_retry_after.strip()) <= 120 else None)
-        diagnostic = describe_upstream(exc, stage)
-        exc.close()
-        raise UpstreamError('upstream_http_error', diagnostic, retry_after) from None
+        raise UpstreamError('upstream_http_error', describe_upstream(exc, stage))
     except URLError as exc:
         raise UpstreamError('upstream_timeout' if isinstance(exc.reason, (TimeoutError, socket.timeout)) else 'upstream_unavailable', describe_upstream(exc, stage))
     except OSError as exc:
@@ -268,7 +261,7 @@ class handler(BaseHTTPRequestHandler):
         if re.fullmatch(r'[0-9a-f]{40}', commit): self.send_header('X-App-Commit', commit)
         if status == 405:
             self.send_header('Allow', 'GET')
-        if status in (429, 502, 503, 504) and getattr(self, 'retry_after', None):
+        if status in (429, 503) and getattr(self, 'retry_after', None):
             self.send_header('Retry-After', str(self.retry_after))
         self.end_headers()
         if self.command != 'HEAD':
@@ -311,7 +304,6 @@ class handler(BaseHTTPRequestHandler):
             return self.reply(400, {'error': str(exc)}, 'validation')
         except UpstreamError as exc:
             emit_upstream(logger, 'observations', self.request_id, exc.diagnostic or describe_upstream(None, stage))
-            self.retry_after = exc.retry_after
             return self.reply(504 if exc.code == 'upstream_timeout' else 502, {'error': exc.code}, 'upstream', error_code=exc.code)
         except HTTPException as exc:
             try:
