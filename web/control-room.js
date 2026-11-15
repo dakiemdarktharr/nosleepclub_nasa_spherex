@@ -98,7 +98,7 @@ function retryMission(){if(state!=='result')return;answers=[];claimed=false;rewa
 async function claimFuel(){if(state!=='result'||claimed||!['normal','super'].includes(rewardTier))return;claimed=true;awardFuel(journey,rewardTier);saveProgress();setState('reward');$('room-loot-message').hidden=false;$('room-loot-message').textContent=text('collecting');say('collecting');try{if(sceneReady)await scene.playFuelLoot(rewardTier);else await new Promise(resolve=>setTimeout(resolve,reduced.matches?200:1000));}finally{if(!disposed){setState('room');$('room-loot-message').hidden=true;say('collected');$('room-engine-shortcut').focus({preventScroll:true});renderJourney();}}}
 function interact(){if(!gameActive())return;if(state==='dialogue'){nextDialogue();return;}if(state==='study'){if(Number.isInteger(answers[questionIndex]))nextQuestion();else $('room-quiz-options').querySelector('button')?.focus({preventScroll:true});return;}if(state!=='room'||exterior||roomTransition.status!=='room')return;if(near==='tablet')openTablet();else if(near==='alien')openAlien();else if(near==='engine')openHardware('engine');else if(near==='launch')openHardware('bridge');}
 function renderJourney(){
-  const key=[language,state,journey.normal,journey.super,journey.loaded,journey.progress,lastFlight,gameActive(),exterior,roomTransition.status,$('room-canvas').dataset.room].join('|');
+  const key=[language,state,journey.normal,journey.super,journey.loaded,journey.progress,lastFlight,gameActive(),sceneReady,exterior,roomTransition.status,$('room-canvas').dataset.room].join('|');
   if(key===journeyRenderKey)return;journeyRenderKey=key;
   document.body.dataset.fuelNormal=String(journey.normal);document.body.dataset.fuelSuper=String(journey.super);
   document.body.dataset.engineFuel=journey.loaded;document.body.dataset.journeyProgress=String(journey.progress);
@@ -117,7 +117,7 @@ function renderJourney(){
   $('room-load-super').disabled=ready||journey.super===0;
   $('room-engine-bridge').hidden=!ready;
   $('room-bridge-status').textContent=text(ready?'bridgeReady':'bridgeEmpty');
-  $('room-bridge-launch').disabled=!ready;
+  $('room-bridge-launch').disabled=!ready||!sceneReady;
   if(state==='report'){
     $('room-flight-title').textContent=text(lastFlight==='super'?'rainbowFlight':journey.progress===2?'bestFlight':'regularFlight');
     $('room-flight-description').textContent=text(lastFlight==='super'?'rainbowReport':'regularReport');
@@ -188,7 +188,7 @@ function tick(now){frame=0;if(!gameActive()||!sceneReady)return;const elapsed=la
 function resume(){scene?.setSuspended(!gameActive());if(sceneReady&&!frame&&gameActive()){last=0;frame=requestAnimationFrame(tick);}updateAction();}
 function stop(){keys.clear();clearDirections();scene?.setSuspended(true);if(frame)cancelAnimationFrame(frame);frame=0;last=0;updateIntro();updateAction();}
 function announceReady(){if(!readySent){readySent=true;send({type:'spherex:game-ready'});}}
-function fail(){sceneReady=false;stop();roomTransition={status:'room',room:'living'};renderTransition();if(state==='encounter')finishEncounter();if(state==='flight'){scene?.setCinematic(null);exterior=false;setState('room');}document.body.dataset.sceneState='error';$('room-loading').hidden=true;$('room-error').hidden=false;near='';updateAction();if(state==='pickup')showTablet();announceReady();}
+function fail(){sceneReady=false;stop();roomTransition={status:'room',room:'living'};renderTransition();if(state==='encounter')finishEncounter();if(['engine','bridge','flight'].includes(state)){scene?.setCinematic(null);exterior=false;setState('room');}document.body.dataset.sceneState='error';$('room-loading').hidden=true;$('room-error').hidden=false;near='';updateAction();if(state==='pickup')showTablet();announceReady();}
 addEventListener('message',event=>{if(!embedded||event.source!==parent||event.origin!==location.origin||event.data?.type!=='spherex:game-state')return;const data=event.data;if(['vi','en'].includes(data.language))language=data.language;if(['dark','light'].includes(data.theme))document.body.dataset.theme=data.theme;if(typeof data.active==='boolean')parentActive=data.active;updateLanguage();if(gameActive())resume();else stop();if(data.focusBook&&parentActive)$('room-book').focus({preventScroll:true});});
 addEventListener('blur',()=>{keys.clear();clearDirections();});document.addEventListener('visibilitychange',()=>document.hidden?stop():resume());addEventListener('pagehide',event=>{stop();if(!event.persisted){disposed=true;scene?.dispose();}});addEventListener('pageshow',event=>{if(event.persisted)resume();});addEventListener('resize',()=>{scene?.resize();scene?.render();updateIntro();});
 for(const [id,fn] of Object.entries({
