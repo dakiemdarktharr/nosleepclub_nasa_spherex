@@ -7,7 +7,7 @@ import ssl
 from urllib.error import HTTPError, URLError
 
 
-_ENDPOINTS = frozenset(('observations', 'frame', 'sequence'))
+_ENDPOINTS = frozenset(('observations', 'frame'))
 _STAGES = frozenset(('open', 'headers', 'read', 'parse'))
 _CLASSES = frozenset(('contract_error', 'http_error', 'url_error', 'dns_error',
     'tls_certificate_error', 'tls_error', 'timeout', 'connection_reset',
