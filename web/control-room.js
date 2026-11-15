@@ -4,14 +4,14 @@
   const params=new URL(location.href).searchParams;
   let language=params.get('lang')==='en'?'en':'vi';
   const copy={
-    roomTitle:['PHÒNG ĐIỀU KHIỂN','CONTROL ROOM'],prototype:['BẢN THỬ','PROTOTYPE'],loading:['Đang mở khoang tàu…','Opening the cabin…'],
+    roomTitle:['PHI THUYỀN','SPACESHIP'],prototype:['BẢN THỬ','PROTOTYPE'],loading:['Đang mở khoang tàu…','Opening the cabin…'],
     fallbackTitle:['Chưa mở được phòng 3D','The 3D room could not open'],fallbackBody:['Bạn vẫn có thể dùng hai lối tắt bên dưới để thử tablet và hội thoại.','Use the two station shortcuts below to try the tablet and conversation.'],reload:['Tải lại','Reload'],
     move:['Di chuyển','Move'],interact:['Tương tác','Interact'],back:['Quay lại','Back'],next:['Tiếp theo','Next'],tryAgain:['Thử lại','Try again'],quizLabel:['BÀI THỬ SPHEREx','SPHEREx DEMO QUIZ'],
     explore:['Di chuyển tới tablet hoặc Alien X.','Walk to the tablet or Alien X.'],exploreShort:['Khám phá khoang tàu','Explore the cabin'],tabletNear:['A / E · Nhấc tablet lên','A / E · Pick up the tablet'],alienNear:['A / E · Nói chuyện với Alien X','A / E · Talk to Alien X'],
     walkingTablet:['Đang tới tablet…','Walking to the tablet…'],walkingAlien:['Đang tới Alien X…','Walking to Alien X…'],pickup:['Gagoo đang nhấc tablet lên.','Gagoo is picking up the tablet.'],tabletStatus:['Tablet đang trống. B / Esc để đặt xuống.','The tablet is blank. B / Esc to put it down.'],dialogueStatus:['A / E · Tiếp tục hội thoại. B / Esc · Quay lại.','A / E · Continue. B / Esc · Back.'],studyStatus:['Chọn một đáp án trên màn hình.','Choose an answer on the screen.'],
     tabletTitle:['Tablet trống','Blank tablet'],dialogueTitle:['Hội thoại với Alien X','Conversation with Alien X'],studyTitle:['Bài thử SPHEREx','SPHEREx demo quiz'],close:['Đóng','Close'],
     correct:['Đúng rồi!','Correct!'],incorrect:['Chưa đúng — cùng xem lý do.','Not quite — here is why.'],done:['Về phòng điều khiển','Back to the room'],finish:['Bạn đã hoàn thành hai câu hỏi thử.','You completed both demo questions.'],
-    pause:['Dừng chuyển động trang trí','Pause decorative motion'],resume:['Tiếp tục chuyển động trang trí','Resume decorative motion'],up:['Đi lên','Move up'],down:['Đi xuống','Move down'],left:['Đi trái','Move left'],right:['Đi phải','Move right'],controls:['Điều khiển trò chơi','Game controls'],stations:['Đi tới điểm tương tác','Go to a station'],canvas:['Gagoo trong phòng điều khiển, cạnh tablet và Alien X','Gagoo in the control room, beside a tablet and Alien X'],
+    pause:['Dừng chuyển động trang trí','Pause decorative motion'],resume:['Tiếp tục chuyển động trang trí','Resume decorative motion'],up:['Đi lên','Move up'],down:['Đi xuống','Move down'],left:['Đi trái','Move left'],right:['Đi phải','Move right'],controls:['Điều khiển trò chơi','Game controls'],stations:['Đi tới điểm tương tác','Go to a station'],canvas:['Gagoo khám phá phi thuyền, cùng tablet và Alien X','Gagoo explores the spaceship with a tablet and Alien X'],
     dialogueOne:['Chào Gagoo! Mình là Alien X. Chào mừng tới khoang học tập của chúng ta.','Hey Gagoo! I am Alien X. Welcome to our learning cabin.'],dialogueTwo:['Muốn thử một bài nhỏ về SPHEREx không? Chọn “test” để bắt đầu.','Ready for a little SPHEREx challenge? Choose “test” to begin.']
   };
   const text=key=>copy[key]?.[language==='en'?1:0]||key;
@@ -20,7 +20,10 @@
     {id:'channels',prompt:['“102 màu” của SPHEREx nói tới điều gì?','What do SPHEREx’s “102 colors” mean?'],answer:'channels',options:[['cameras','102 camera riêng biệt','102 separate cameras'],['planets','102 hành tinh được chụp','102 photographed planets'],['channels','102 kênh bước sóng','102 wavelength channels'],['satellites','102 vệ tinh nhỏ','102 tiny satellites']],explanation:['Đó là 102 kênh phổ trong dải hồng ngoại. SPHEREx dùng sáu detector cùng các bộ lọc thay đổi theo vị trí để thu các phép đo tạo thành phổ — không phải 102 camera.','They are 102 spectral channels in the infrared. SPHEREx uses six detectors and filters that vary with position to collect measurements that build a spectrum — not 102 cameras.'],source:'https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/'}
   ];
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-  let state='room',scene,sceneReady=false,frame=0,last=0,paused=false,near='',dialogueIndex=0,questionIndex=0,answer=null,returnFocus=null,walking='',disposed=false;
+  const roomNames={cockpit:['Buồng lái','Cockpit'],sleep:['Phòng ngủ','Sleeping room'],kitchen:['Bếp','Kitchen'],living:['Phòng sinh hoạt','Living quarter'],airlock:['Khoang ra ngoài tàu','Spacewalk airlock'],fuel:['Khoang nhiên liệu','Fuel and generator']};
+  let displayedRoom='';
+  function updateRoomName(){const room=$('room-canvas').dataset.room||'living';const key=room+language;if(key!==displayedRoom){displayedRoom=key;$('room-current-name').textContent=(roomNames[room]||roomNames.living)[language==='en'?1:0];}}
+  let state='room',scene,sceneReady=false,exterior=false,exteriorSide=1,roomTransition={status:'room',room:'living'},frame=0,last=0,paused=false,near='',dialogueIndex=0,questionIndex=0,answer=null,returnFocus=null,walking='',disposed=false;
   const keys=new Set(),heldDirections=new Map();
   function say(key){$('room-status').textContent=text(key);}
   function setState(next){state=next;document.body.dataset.gameState=next;keys.clear();clearDirections();$('room-overlay').hidden=!['tablet','dialogue','study'].includes(state);
@@ -34,7 +37,10 @@
     updateAction();
   }
   function updateAction(){
-    const canInteract=sceneReady&&state==='room'&&Boolean(near);
+    const canInteract=sceneReady&&state==='room'&&!exterior&&roomTransition.status==='room'&&Boolean(near);
+    $('room-view').disabled=!sceneReady||state!=='room'||roomTransition.status!=='room';
+    $('room-tablet-shortcut').disabled=$('room-alien-shortcut').disabled=state!=='room'||exterior||roomTransition.status!=='room';
+    document.querySelectorAll('[data-direction]').forEach(button=>button.disabled=state!=='room'||exterior);
     $('room-action-label').textContent=text(state==='dialogue'?'next':'interact');
     $('room-interact').setAttribute('aria-label',text(state==='dialogue'?'next':'interact'));
     $('room-back').setAttribute('aria-label',text('back'));
@@ -44,24 +50,28 @@
     $('room-prompt').dataset.active=String(canInteract);
     $('room-interact').disabled=state==='pickup'||state==='tablet'||(state==='room'&&!canInteract);
   }
+  function renderTransition(){const status=roomTransition.status;const panel=$('room-transition');panel.hidden=status==='room'||exterior;const target=roomNames[roomTransition.to]?.[language==='en'?1:0]||'';const labels=language==='vi'?{loading:`Đang chuẩn bị ${target}…`,opening:'Đang mở cửa…',ready:`Cửa đã mở · ${target}`,error:'Chưa tải được phòng. Thử lại hoặc quay về.'}:{loading:`Preparing ${target}…`,opening:'Opening the door…',ready:`Door open · ${target}`,error:'Room failed to load. Retry or turn back.'};$('room-transition-text').textContent=labels[status]||'';$('room-transition-retry').hidden=status!=='error';$('room-transition-retry').textContent=language==='vi'?'Thử lại':'Retry';}
   function updateLanguage(){
     document.documentElement.lang=language;
     document.querySelectorAll('[data-text]').forEach(node=>node.textContent=text(node.dataset.text));
+    $('room-view-side').textContent=language==='vi'?'Đổi bên':'Other side';$('room-view-side').hidden=!exterior;
+    $('room-view').textContent=language==='vi'?(exterior?'Xem trong':'Xem ngoài'):(exterior?'View inside':'View outside');
     $('room-language').textContent=language==='vi'?'EN':'VI';$('room-language').setAttribute('aria-label',language==='vi'?'Switch to English':'Chuyển sang tiếng Việt');
+    document.querySelector('.room-home').setAttribute('aria-label',language==='vi'?'Về trang chủ':'Back to home');
     $('room-close').setAttribute('aria-label',text('close'));$('room-motion').setAttribute('aria-label',text(paused?'resume':'pause'));
     $('room-screen').setAttribute('aria-label',text('roomTitle'));$('room-canvas').setAttribute('aria-label',text('canvas'));$('room-controls').setAttribute('aria-label',text('controls'));document.querySelector('.room-stations').setAttribute('aria-label',text('stations'));
     document.querySelectorAll('[data-direction]').forEach(button=>button.setAttribute('aria-label',text(button.dataset.direction)));
     $('room-tablet-panel').setAttribute('aria-label',text('tabletTitle'));document.querySelector('.room-tablet-display').setAttribute('aria-label',text('tabletTitle'));
-    document.title=`${language==='en'?'Control room':'Phòng điều khiển'} · sphere x learn`;
+    document.title=`${language==='en'?'Spaceship':'Phi thuyền'} · sphere x learn`;
     if(state==='room')say(walking?walking==='tablet'?'walkingTablet':'walkingAlien':near==='tablet'?'tabletNear':near==='alien'?'alienNear':'explore');
     else if(state==='pickup')say('pickup');else if(state==='tablet')say('tabletStatus');else if(state==='dialogue'){say('dialogueStatus');renderDialogue();}else if(state==='study'){say('studyStatus');renderQuestion();}
-    updateAction();
+    updateAction();updateRoomName();renderTransition();
   }
   function renderDialogue(){ $('room-dialogue-text').textContent=text(dialogueIndex===0?'dialogueOne':'dialogueTwo');$('room-dialogue-next').hidden=dialogueIndex!==0;$('room-test-choice').hidden=dialogueIndex!==1; }
   function openAlien(){returnFocus=document.activeElement;walking='';scene?.cancelGoal();dialogueIndex=0;setState('dialogue');renderDialogue();$('room-dialogue-next').focus({preventScroll:true});}
   function openTablet(){returnFocus=document.activeElement;walking='';setState('pickup');say('pickup');if(sceneReady){scene.beginPickup();}else{setState('tablet');$('room-close').focus({preventScroll:true});}}
   function arrived(which){walking='';if(state!=='room')return;if(which==='tablet')openTablet();if(which==='alien')openAlien();}
-  function goTo(which){if(state!=='room')return;if(!sceneReady){arrived(which);return;}walking=which;say(which==='tablet'?'walkingTablet':'walkingAlien');if(scene.goTo(which)===false){walking='';say('explore');}}
+  function goTo(which){if(state!=='room'||exterior||roomTransition.status!=='room')return;if(!sceneReady){arrived(which);return;}walking=which;say(which==='tablet'?'walkingTablet':'walkingAlien');if(scene.goTo(which)===false){walking='';say('explore');}}
   function closeOverlay(){if(state==='room'){scene?.cancelGoal();walking='';say('explore');return;}if(state==='tablet'||state==='pickup')scene?.putDown();setState('room');say(near==='tablet'?'tabletNear':near==='alien'?'alienNear':'explore');const focus=returnFocus?.isConnected?returnFocus:$('room-interact');focus.focus({preventScroll:true});returnFocus=null;}
   function nextDialogue(){if(state!=='dialogue')return;if(dialogueIndex===0){dialogueIndex=1;renderDialogue();$('room-test-choice').focus({preventScroll:true});}else openQuiz();}
   function openQuiz(){questionIndex=0;answer=null;setState('study');renderQuestion();$('room-study-panel').scrollTop=0;$('room-quiz-options').querySelector('button')?.focus({preventScroll:true});}
@@ -88,14 +98,14 @@
   function chooseAnswer(value){if(state!=='study'||answer!==null)return;answer=value;renderFeedback();const correct=value===questions[questionIndex].answer;(correct?$('room-quiz-next'):$('room-quiz-retry')).focus({preventScroll:true});revealFeedback();}
   function nextQuestion(){if(state!=='study'||answer!==questions[questionIndex].answer)return;if(questionIndex===questions.length-1){closeOverlay();say('finish');return;}questionIndex++;answer=null;renderQuestion();$('room-study-panel').scrollTop=0;$('room-quiz-options').querySelector('button').focus({preventScroll:true});}
   function retryQuestion(){if(state!=='study')return;answer=null;renderFeedback();$('room-study-panel').scrollTop=0;$('room-quiz-options').querySelector('button').focus({preventScroll:true});}
-  function interact(){if(state==='dialogue'){nextDialogue();return;}if(state==='study'){if(answer!==null){answer===questions[questionIndex].answer?nextQuestion():retryQuestion();}else $('room-quiz-options').querySelector('button')?.focus({preventScroll:true});return;}if(state!=='room')return;if(near==='tablet')openTablet();else if(near==='alien')openAlien();else say('explore');}
+  function interact(){if(state==='dialogue'){nextDialogue();return;}if(state==='study'){if(answer!==null){answer===questions[questionIndex].answer?nextQuestion():retryQuestion();}else $('room-quiz-options').querySelector('button')?.focus({preventScroll:true});return;}if(state!=='room'||exterior||roomTransition.status!=='room')return;if(near==='tablet')openTablet();else if(near==='alien')openAlien();else say('explore');}
   function clearDirections(){heldDirections.clear();document.querySelectorAll('[data-held]').forEach(button=>button.removeAttribute('data-held'));}
   const directionForKey={ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right'};
   document.addEventListener('keydown',event=>{
     if(event.altKey||event.ctrlKey||event.metaKey)return;
     if(event.key==='Escape'){event.preventDefault();closeOverlay();return;}
     if(event.target.matches('input,textarea,select'))return;
-    if(directionForKey[event.key]){if(state==='room'){event.preventDefault();keys.add(directionForKey[event.key]);walking='';}return;}
+    if(directionForKey[event.key]){if(state==='room'&&!exterior){event.preventDefault();keys.add(directionForKey[event.key]);walking='';}return;}
     if((event.key==='e'||event.key==='E')&&!event.repeat){event.preventDefault();interact();}
   });
   document.addEventListener('keyup',event=>{if(directionForKey[event.key])keys.delete(directionForKey[event.key]);});
@@ -107,23 +117,26 @@
   }
   $('room-tablet-shortcut').addEventListener('click',()=>goTo('tablet'));$('room-alien-shortcut').addEventListener('click',()=>goTo('alien'));$('room-prompt').addEventListener('click',interact);
   $('room-interact').addEventListener('click',interact);$('room-back').addEventListener('click',closeOverlay);$('room-close').addEventListener('click',closeOverlay);$('room-dialogue-next').addEventListener('click',nextDialogue);$('room-test-choice').addEventListener('click',openQuiz);$('room-quiz-next').addEventListener('click',nextQuestion);$('room-quiz-retry').addEventListener('click',retryQuestion);$('room-reload').addEventListener('click',()=>location.reload());
+  $('room-view').addEventListener('click',()=>{if(!sceneReady||state!=='room'||roomTransition.status!=='room')return;exterior=!exterior;scene.cancelGoal();walking='';keys.clear();clearDirections();exteriorSide=1;scene.setExterior(exterior,exteriorSide);$('room-view').setAttribute('aria-pressed',String(exterior));updateLanguage();});
+  $('room-transition-retry').addEventListener('click',()=>scene?.retryRoom?.());
+  $('room-view-side').addEventListener('click',()=>{if(exterior&&sceneReady){exteriorSide=-exteriorSide;scene.setExterior(true,exteriorSide);}});
   $('room-language').addEventListener('click',()=>{language=language==='vi'?'en':'vi';const url=new URL(location.href);url.searchParams.set('lang',language);history.replaceState(history.state,'',url);updateLanguage();});
   $('room-motion').addEventListener('click',()=>{paused=!paused;scene?.setPaused(paused);$('room-motion').setAttribute('aria-pressed',String(paused));$('room-motion').textContent=paused?'▷':'Ⅱ';$('room-motion').setAttribute('aria-label',text(paused?'resume':'pause'));});
-  $('room-canvas').addEventListener('click',event=>{if(state!=='room'||!sceneReady)return;const which=scene.pick(event.clientX,event.clientY);if(which)goTo(which);});
+  $('room-canvas').addEventListener('click',event=>{if(state!=='room'||!sceneReady||exterior)return;const which=scene.pick(event.clientX,event.clientY);if(which)goTo(which);});
   function input(){const all=new Set([...keys,...heldDirections.values()]);return{x:Number(all.has('right'))-Number(all.has('left')),y:Number(all.has('down'))-Number(all.has('up'))};}
-  function tick(now){frame=0;if(disposed||document.hidden||!sceneReady)return;const dt=last?Math.min(.04,(now-last)/1000):1/60;last=now;scene.update(dt,input(),state==='room');scene.render();frame=requestAnimationFrame(tick);}
+  function tick(now){frame=0;if(disposed||document.hidden||!sceneReady)return;const dt=last?Math.min(.04,(now-last)/1000):1/60;last=now;scene.update(dt,input(),state==='room'&&!exterior);updateRoomName();scene.render();frame=requestAnimationFrame(tick);}
   function resume(){if(sceneReady&&!frame&&!document.hidden&&!disposed){last=0;frame=requestAnimationFrame(tick);}}
   function stop(){keys.clear();clearDirections();if(frame)cancelAnimationFrame(frame);frame=0;last=0;}
-  function fail(){sceneReady=false;stop();document.body.dataset.sceneState='error';$('room-loading').hidden=true;$('room-error').hidden=false;near='';updateAction();if(state==='pickup'){setState('tablet');$('room-close').focus({preventScroll:true});}}
+  function fail(){sceneReady=false;stop();roomTransition={status:'room',room:'living'};renderTransition();document.body.dataset.sceneState='error';$('room-loading').hidden=true;$('room-error').hidden=false;near='';updateAction();if(state==='pickup'){setState('tablet');$('room-close').focus({preventScroll:true});}}
   addEventListener('blur',()=>{keys.clear();clearDirections();});
   document.addEventListener('visibilitychange',()=>document.hidden?stop():resume());
   addEventListener('pagehide',event=>{stop();if(!event.persisted){disposed=true;scene?.dispose();}});
   addEventListener('pageshow',event=>{if(event.persisted)resume();});
   addEventListener('resize',()=>{scene?.resize();scene?.render();});
   updateLanguage();
-  import('./control-room-scene.js?v=2').then(({createControlRoom})=>{
+  import('./control-room-scene.js?v=3').then(async ({createControlRoom})=>{
     if(disposed)return;
-    scene=createControlRoom({canvas:$('room-canvas'),reduced,onNear(value){near=value;if(state==='room'&&!walking)say(near==='tablet'?'tabletNear':near==='alien'?'alienNear':'explore');updateAction();},onArrive:arrived,onPickup(){if(state==='pickup'){setState('tablet');$('room-close').focus({preventScroll:true});}},onError:fail});
-    sceneReady=true;document.body.dataset.sceneState='ready';$('room-loading').hidden=true;updateAction();resume();
+    scene=createControlRoom({canvas:$('room-canvas'),reduced,onRoomState(value){roomTransition=value;updateAction();renderTransition();},onNear(value){near=value;if(state==='room'&&!walking)say(near==='tablet'?'tabletNear':near==='alien'?'alienNear':'explore');updateAction();},onArrive:arrived,onPickup(){if(state==='pickup'){setState('tablet');$('room-close').focus({preventScroll:true});}},onError:fail});
+    await scene.ready;if(disposed)return;sceneReady=true;document.body.dataset.sceneState='ready';$('room-loading').hidden=true;updateAction();resume();
   }).catch(fail);
 })();

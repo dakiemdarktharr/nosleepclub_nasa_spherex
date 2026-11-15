@@ -11,11 +11,17 @@ Design decisions confirmed by the owner on **15 November 2026**:
 
 ## Current scope
 
-`web/control-room.html` is a separate, runnable design prototype. The public Learn route remains blank. The prototype uses the same Gagoo model as the home page, an original low-poly control room, an oblique top-down camera, a tablet interaction, Alien X dialogue and a transparent quiz overlay.
+`web/control-room.html` is a separate, runnable design prototype. The public Learn route remains blank. The prototype uses the same Gagoo model as the home page, an original low-poly bus-shaped spaceship with six connected rooms, an oblique top-down camera, a tablet interaction, Alien X dialogue and a transparent quiz overlay.
+
+The playable single-deck layout runs from cockpit through sleeping room and kitchen to the living quarter. The living quarter branches directly to the fuel/generator room and the spacewalk airlock. Shared door openings and collision walls derive from `web/ship-layout.js`. There is one external spacewalk hatch; the rest of the outer hull is mirrored. The exterior and spacecraft systems are fictional game geometry, not an engineering or pressure-safety model.
+
+Gameplay shows only the current room. Crossing a threshold hides it and shows a short connecting chamber while the destination's furniture module loads and its meshes are built. The destination becomes visible and its door opens once that work succeeds. Entering it hides the chamber; retreat restores the previous room. Failed loads keep the destination closed and offer retry or retreat. Loaded rooms are cached for the scene lifetime. This is actual module/mesh loading, not an artificial progress timer; it does not stream a large external 3D asset library.
+
+The camera frames the active room on desktop and mobile, centering on the connecting chamber during travel. Walls that would hide the character lower visually while retaining collision. The separate “View outside” control shows the whole ship; “Other side” reverses the exterior view. Movement is paused during this inspection. The original room furnishings are generated in `web/ship-room-assets.js`: flight consoles and seats, bunks and personal storage, food and water preparation, a communal reading/tablet area, suit and pressurization equipment, and tanks/generator controls. The user's room and prop images guide proportions, visual layering and function; their artwork is not copied or bundled.
 
 The tablet interaction visibly moves the tablet into Gagoo's hand before opening its blank screen. Alien X's dialogue advances to a test request; choosing the option opens the quiz without replacing the room background. Wrong and correct answers receive text feedback. Leaving an overlay returns control to the room.
 
-The room contains a floating coffee mug, two books, two pens and a notepad. Gagoo can bump them into motion and spin; props also contact each other, consoles and room boundaries. The simulation uses conservative sphere proxies for props and a vertical capsule for Gagoo, with bounded timesteps and light damping. It does not model individual hand contact, liquid in the mug, precise prop shapes or engineering-grade microgravity. Opening an interaction overlay pauses prop simulation. The motion preference suppresses decorative drift while preserving the visible consequence of deliberate contact.
+The ship contains a floating coffee mug, two books, two pens and a notepad. Gagoo can bump them into motion and spin; props also contact each other, consoles and room boundaries. The simulation uses conservative sphere proxies for props and a vertical capsule for Gagoo, with bounded timesteps and light damping. It does not model individual hand contact, liquid in the mug, precise prop shapes or engineering-grade microgravity. Opening an interaction overlay pauses prop simulation. The motion preference suppresses decorative drift while preserving the visible consequence of deliberate contact.
 
 The current style uses heavy silhouette strokes, selected surface lines, discrete light bands and cast/received shadows on the characters, objects and room. It is inspired by ink/grease-pencil drawing; it is implemented with WebGL materials and geometry rather than hand-drawn animation frames or Blender Grease Pencil assets.
 
@@ -40,6 +46,8 @@ The prototype does not save quiz results to an account, send analytics, or claim
 7. Both Vietnamese and English remain usable. Keyboard focus, readable feedback, reduced motion, WebGL failure and resizing are checked.
 8. All six floating props drift and rotate without falling; player contact changes their velocity/spin. Props remain within room bounds and avoid persistent overlaps with obstacles and each other. Pausing an overlay must stop the simulation without a jump on return.
 9. Ink outlines and shadows remain readable on desktop and mobile, do not obscure the face or tablet/quiz, and clean up with the scene.
+10. Each doorway supports room → chamber-only loading → open door/destination → destination-only, in both directions. A delayed, failed or cancelled load must not reveal an unrelated room or allow walking through a closed door.
+11. The six-room graph remains traversable. Exterior inspection preserves mirrored geometry except the single external hatch; returning to gameplay restores the current room and position.
 
 ## Run and review
 
@@ -70,13 +78,13 @@ The following counts describe the earlier backward-recoil release (`a4e82dd`), b
 
 That earlier Blender handoff remains under `data/raw/gagoo-rig-assets/`.
 
-## Current rig handoff and release verification
+## Previous rig handoff and release verification
 
 The current handoff is under `data/raw/gagoo-loose-rig-assets/`. It retains 19 bones, 46 meshes and 2,004 triangles, with the four-second `Gagoo_Loose_Joint_Response` clip. `glb-roundtrip.json` records a comparison of all 121 sampled frames against the runtime, and `blender-handoff.json` records source and artifact hashes. The clip demonstrates the loose joint response; it does not include the home scene, glass slide or blinds.
 
 The current focused rig tests verify bounded follow-through, different hand/arm settling rates, stable timestep integration, exact pose handoff and helmet clearance. Visual pose samples are under `data/raw/gagoo-loose-rig-qa/`.
 
-Current local checks completed at the time of this update:
+The following checks describe the earlier glass-slide and floating-room release, before the bus layout:
 
 - All 18 JavaScript suites pass.
 - All 659 local Python tests complete successfully; eight MongoDB integration tests require the disposable CI database and are skipped locally.
@@ -84,7 +92,7 @@ Current local checks completed at the time of this update:
 - Five home/Gagoo browser cases pass.
 - Nineteen cinematic cases pass for the glass hold and right-slide revision, including ultrawide clearance, a zero-height canvas and a bounded return home when projection cannot verify clearance.
 
-The core seven-case browser suite also passes, covering guided comparison, timeline fixtures, retry and script recovery. Final CI, data-gate and exact-deployment verification are recorded in the delivery receipt; historical counts above must not substitute for current acceptance evidence.
+The earlier core suite covered guided comparison, timeline fixtures, retry and script recovery. These historical counts are not evidence for the current ship layout; use the current delivery receipt and browser checks.
 
 Prototype gameplay, learning effectiveness and real-device GPU performance are not validated by automated browser tests. The tablet intentionally has no content; the quiz has two demonstration questions and no persistent learner record.
 

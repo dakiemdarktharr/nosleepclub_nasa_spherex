@@ -17,6 +17,67 @@ def position(page):
     return page.locator('#room-canvas').evaluate('(node) => [Number(node.dataset.playerX), Number(node.dataset.playerZ)]')
 
 
+def traverse_ship(page):
+    """Walk through the room graph with the game's real keyboard input loop.
+
+    The driver follows grid waypoints using keyboard events; it never sets the
+    actor position. A separate touchscreen hold/cancel test covers the pad.
+    """
+    page.set_default_timeout(90000)
+    result = page.evaluate('''async () => {
+      const {shipPath,SHIP_DOORS,SHIP_ROOMS} = await import('./ship-layout.js');
+      const canvas = document.querySelector('#room-canvas');
+      const targets = [['cockpit',6,0], ['sleep',3.5,0], ['kitchen',.5,0],
+        ['living',-3,0], ['airlock',-6,1.25], ['living',-3,0], ['fuel',-6,-1.25]];
+      const pos = () => ({x:Number(canvas.dataset.playerX),z:Number(canvas.dataset.playerZ)});
+      const held = new Set();
+      const setKeys = keys => {
+        for (const k of held) if (!keys.includes(k)) {canvas.dispatchEvent(new KeyboardEvent('keyup',{key:k,bubbles:true}));held.delete(k);}
+        for (const k of keys) if (!held.has(k)) {canvas.dispatchEvent(new KeyboardEvent('keydown',{key:k,bubbles:true}));held.add(k);}
+      };
+      const frame = () => new Promise(resolve => requestAnimationFrame(resolve));
+      const visited=[];
+      try {
+        for (const [room,x,z] of targets) {
+          let route=shipPath(pos(),{x,z});
+          if (!route.length) throw new Error('No path to '+room);
+          let index=0, ticks=0, wasCorridor=false;
+          while(index<route.length) {
+            if (++ticks>2200) throw new Error('Stuck walking to '+room+' at '+JSON.stringify(pos()));
+            const p=pos(), phase=canvas.dataset.roomPhase;
+            if (phase==='room'&&wasCorridor) {route=shipPath(p,{x,z});index=0;wasCorridor=false;if(!route.length)throw new Error('No path after corridor to '+room);}
+            let target=route[index];
+            if (phase!=='room') {
+              wasCorridor=true;
+              const from=canvas.dataset.room, to=canvas.dataset.destination;
+              const door=SHIP_DOORS.find(d=>(d.from===from&&d.to===to)||(d.from===to&&d.to===from));
+              const a=SHIP_ROOMS.find(r=>r.id===from), b=SHIP_ROOMS.find(r=>r.id===to);
+              if(!door||!a||!b)throw new Error('Invalid corridor state '+from+' -> '+to);
+              const sign=Math.sign((b.x0+b.x1)-(a.x0+a.x1));
+              target={x:door.at+sign*.9,z:(door.start+door.end)/2};
+            }
+            const dx=target.x-p.x, dz=target.z-p.z;
+            if (phase==='room'&&Math.hypot(dx,dz)<.12) {index++;continue;}
+            const sx=.9285*dx-.3714*dz, sy=.3714*dx+.9285*dz, keys=[];
+            if (Math.abs(sx)>.414*Math.abs(sy)) keys.push(sx>0?'ArrowRight':'ArrowLeft');
+            if (Math.abs(sy)>.414*Math.abs(sx)) keys.push(sy>0?'ArrowDown':'ArrowUp');
+            setKeys(keys);await frame();
+          }
+          setKeys([]);await frame();
+          if (canvas.dataset.room!==room) throw new Error('Expected '+room+' got '+canvas.dataset.room);
+          if (canvas.dataset.roomPhase!=='room' || canvas.dataset.visibleRooms!==room || canvas.dataset.corridorVisible!=='false')
+            throw new Error('Expected the destination alone after entering '+room+': '+JSON.stringify(canvas.dataset));
+          await window.captureShipRoom(room,visited.length);
+          visited.push(room);
+        }
+      } finally {setKeys([]);}
+      return visited;
+    }''')
+    assert result == ['cockpit', 'sleep', 'kitchen', 'living', 'airlock', 'living', 'fuel'], result
+    page.set_default_timeout(15000)
+    return result
+
+
 def run_case(browser, base, output, width, height, language, mobile):
     name = f'{width}x{height}-{language}'
     context = browser.new_context(viewport={'width': width, 'height': height},
@@ -25,6 +86,8 @@ def run_case(browser, base, output, width, height, language, mobile):
     page.set_default_timeout(15000)
     errors, writes = [], []
     page.on('pageerror', lambda error: errors.append(str(error)))
+    page.expose_binding('captureShipRoom', lambda source, room, index: source['page'].screenshot(
+        path=str(output / f'ship-{name}-{index}-{room}.png')))
 
     def read_only(route):
         if route.request.method not in ('GET', 'HEAD'):
@@ -50,6 +113,29 @@ def run_case(browser, base, output, width, height, language, mobile):
             assert abs(controls['height'] - height / 2) <= 2, controls
             assert abs(screen['y'] + screen['height'] - controls['y']) <= 2
         page.screenshot(path=str(output / f'room-{name}.png'))
+
+        # The full hull inspection is not gameplay: both sides must be visible
+        # while keyboard/touch movement and station shortcuts are disabled.
+        before_exterior = position(page)
+        page.locator('#room-view').click()
+        expect(page.locator('#room-canvas')).to_have_attribute('data-view', 'exterior')
+        expect(page.locator('#room-view-side')).to_be_visible()
+        expect(page.locator('[data-direction="up"]')).to_be_disabled()
+        expect(page.locator('#room-tablet-shortcut')).to_be_disabled()
+        first_side = page.locator('#room-canvas').get_attribute('data-exterior-side')
+        page.screenshot(path=str(output / f'ship-exterior-hatch-{name}.png'))
+        page.locator('#room-view-side').click()
+        expect(page.locator('#room-canvas')).not_to_have_attribute('data-exterior-side', first_side)
+        page.keyboard.down('ArrowUp')
+        page.wait_for_timeout(200)
+        page.keyboard.up('ArrowUp')
+        assert position(page) == before_exterior, 'Exterior inspection moved the player'
+        page.screenshot(path=str(output / f'ship-exterior-{name}.png'))
+        page.locator('#room-view').click()
+        expect(page.locator('#room-canvas')).to_have_attribute('data-view', 'cutaway')
+        expect(page.locator('#room-view-side')).not_to_be_visible()
+        expect(page.locator('[data-direction="up"]')).to_be_enabled()
+        expect(page.locator('#room-tablet-shortcut')).to_be_enabled()
 
         # Reduced motion freezes decorative drift, so this observable change
         # must come from real player contact and retained momentum.
@@ -96,11 +182,11 @@ def run_case(browser, base, output, width, height, language, mobile):
             assert position(page) == cancelled, 'Touch cancellation left movement active'
 
         page.locator('#room-tablet-shortcut').click()
-        page.wait_for_function('''() => document.querySelector('#room-canvas').dataset.near === 'tablet'
-            && document.body.dataset.gameState === 'room' ''')
-        # Cancel automatic walking inside the interaction radius, then use the
-        # actual context prompt. It must not be a permanent decorative E badge.
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'tablet', timeout=20000)
+        # After the shortcut completes and the overlay closes, use the actual
+        # context prompt. No timing race with auto-arrival is involved.
         page.keyboard.press('Escape')
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
         expect(page.locator('#room-prompt')).to_be_visible()
         expect(page.locator('#room-interact')).to_be_enabled()
         page.locator('#room-prompt').click()
@@ -152,10 +238,19 @@ def run_case(browser, base, output, width, height, language, mobile):
         expect(page.locator('body')).to_have_attribute('data-game-state', 'dialogue')
         page.locator('#room-close').click()
         expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
+        visited = traverse_ship(page) if width in (1366, 390) else []
+        if visited:
+            page.screenshot(path=str(output / f'ship-fuel-{name}.png'))
+            # A station shortcut from the far branch must cross the narrow
+            # fuel/living doorway and finish, not stall at an old waypoint.
+            page.locator('#room-tablet-shortcut').click()
+            expect(page.locator('body')).to_have_attribute('data-game-state', 'tablet', timeout=30000)
+            page.keyboard.press('Escape')
+            expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
         assert not errors, errors
         assert not writes, writes
-        return {'case': name, 'passed': True, 'page_errors': errors, 'api_writes': writes}
+        return {'case': name, 'passed': True, 'page_errors': errors, 'api_writes': writes, 'rooms_visited': visited}
     except Exception:
         page.screenshot(path=str(output / f'failure-{name}.png'))
         raise
@@ -195,6 +290,135 @@ def fallback_case(browser, base, output):
         context.close()
 
 
+def corridor_case(browser, base, output):
+    """Hold a real destination module fetch, then fail and retry it.
+
+    The initial living room must load normally. Gagoo reaches the kitchen
+    doorway through keyboard input, never by changing world coordinates.
+    """
+    context = browser.new_context(viewport={'width': 1366, 'height': 900}, reduced_motion='no-preference')
+    page = context.new_page()
+    page.set_default_timeout(20000)
+    errors, requests = [], []
+    page.on('pageerror', lambda error: errors.append(str(error)))
+
+    def defer_kitchen(route):
+        if 'room=kitchen' in route.request.url and 'attempt=1' in route.request.url:
+            requests.append(route)
+        else:
+            route.continue_()
+
+    context.route('**/ship-room-assets.js?*', defer_kitchen)
+    try:
+        page.goto(f'{base}/control-room.html?lang=vi')
+        expect(page.locator('body')).to_have_attribute('data-scene-state', 'ready')
+        canvas = page.locator('#room-canvas')
+        expect(canvas).to_have_attribute('data-room-phase', 'room')
+        expect(canvas).to_have_attribute('data-room', 'living')
+        # Diagonal screen input advances along world +X toward the kitchen.
+        page.keyboard.down('ArrowRight')
+        page.keyboard.down('ArrowDown')
+        try:
+            expect(canvas).to_have_attribute('data-room-phase', 'loading')
+            expect(page.locator('#room-transition')).to_be_visible()
+            expect(canvas).to_have_attribute('data-visible-rooms', '')
+            expect(canvas).to_have_attribute('data-corridor-visible', 'true')
+            page.wait_for_timeout(250)
+            assert requests, 'Expected deferred kitchen asset request'
+            # Door is closed until destination assets are available.
+            assert position(page)[0] <= -.84, position(page)
+            page.screenshot(path=str(output / 'corridor-loading.png'))
+        finally:
+            page.keyboard.up('ArrowRight')
+            page.keyboard.up('ArrowDown')
+        requests.pop().abort()
+        expect(canvas).to_have_attribute('data-room-phase', 'error')
+        expect(page.locator('#room-transition-retry')).to_be_visible()
+        page.screenshot(path=str(output / 'corridor-error.png'))
+        page.locator('#room-transition-retry').click()
+        expect(canvas).to_have_attribute('data-room-phase', 'opening')
+        expect(canvas).to_have_attribute('data-visible-rooms', '')
+        expect(canvas).to_have_attribute('data-door-open', 'false')
+        expect(canvas).to_have_attribute('data-room-phase', 'ready')
+        expect(canvas).to_have_attribute('data-visible-rooms', 'kitchen')
+        expect(canvas).to_have_attribute('data-corridor-visible', 'true')
+        expect(canvas).to_have_attribute('data-door-open', 'true')
+        page.screenshot(path=str(output / 'corridor-ready.png'))
+        page.keyboard.down('ArrowRight')
+        page.keyboard.down('ArrowDown')
+        try:
+            expect(canvas).to_have_attribute('data-room', 'kitchen')
+            expect(canvas).to_have_attribute('data-room-phase', 'room')
+        finally:
+            page.keyboard.up('ArrowRight')
+            page.keyboard.up('ArrowDown')
+        expect(canvas).to_have_attribute('data-visible-rooms', 'kitchen')
+        expect(canvas).to_have_attribute('data-corridor-visible', 'false')
+        assert not errors, errors
+        page.screenshot(path=str(output / 'corridor-entered.png'))
+        return {'case': 'corridor-loading-error-retry', 'passed': True, 'page_errors': errors}
+    finally:
+        for route in requests:
+            route.abort()
+        context.close()
+
+
+def corridor_retreat_case(browser, base, output):
+    """A late response after turning around must never reveal its room."""
+    context = browser.new_context(viewport={'width': 390, 'height': 844},
+                                  is_mobile=True, has_touch=True, reduced_motion='reduce')
+    page = context.new_page()
+    page.set_default_timeout(20000)
+    errors, pending = [], []
+    page.on('pageerror', lambda error: errors.append(str(error)))
+
+    def delay_kitchen(route):
+        if 'room=kitchen' in route.request.url:
+            pending.append(route)
+        else:
+            route.continue_()
+
+    context.route('**/ship-room-assets.js?*', delay_kitchen)
+    try:
+        page.goto(f'{base}/control-room.html?lang=vi')
+        expect(page.locator('body')).to_have_attribute('data-scene-state', 'ready')
+        canvas = page.locator('#room-canvas')
+        page.keyboard.down('ArrowRight')
+        page.keyboard.down('ArrowDown')
+        try:
+            expect(canvas).to_have_attribute('data-room-phase', 'loading')
+        finally:
+            page.keyboard.up('ArrowRight')
+            page.keyboard.up('ArrowDown')
+        assert pending, 'Expected a pending request for the kitchen'
+        expect(canvas).to_have_attribute('data-visible-rooms', '')
+        expect(canvas).to_have_attribute('data-corridor-visible', 'true')
+        page.screenshot(path=str(output / 'corridor-mobile-loading.png'))
+        page.keyboard.down('ArrowLeft')
+        page.keyboard.down('ArrowUp')
+        try:
+            expect(canvas).to_have_attribute('data-room-phase', 'room')
+        finally:
+            page.keyboard.up('ArrowLeft')
+            page.keyboard.up('ArrowUp')
+        expect(canvas).to_have_attribute('data-room', 'living')
+        expect(canvas).to_have_attribute('data-visible-rooms', 'living')
+        expect(canvas).to_have_attribute('data-corridor-visible', 'false')
+        pending.pop().continue_()
+        page.wait_for_timeout(500)
+        expect(canvas).to_have_attribute('data-room-phase', 'room')
+        expect(canvas).to_have_attribute('data-room', 'living')
+        expect(canvas).to_have_attribute('data-visible-rooms', 'living')
+        expect(canvas).to_have_attribute('data-corridor-visible', 'false')
+        assert not errors, errors
+        page.screenshot(path=str(output / 'corridor-mobile-retreat.png'))
+        return {'case': 'corridor-retreat-late-response', 'passed': True, 'page_errors': errors}
+    finally:
+        for route in pending:
+            route.abort()
+        context.close()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--base')
@@ -213,6 +437,12 @@ def main():
                 results.append(result)
                 print(json.dumps(result), flush=True)
             result = fallback_case(browser, args.base or local, args.output)
+            results.append(result)
+            print(json.dumps(result), flush=True)
+            result = corridor_case(browser, args.base or local, args.output)
+            results.append(result)
+            print(json.dumps(result), flush=True)
+            result = corridor_retreat_case(browser, args.base or local, args.output)
             results.append(result)
             print(json.dumps(result), flush=True)
         finally:
