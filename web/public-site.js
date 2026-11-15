@@ -571,7 +571,7 @@
     const titleKey = currentPage === "about" ? "aboutTitle" : currentPage === "learn" ? "learnTitle" : "skyTitle";
     const title = currentPage === "orbit" ? t("brand") : `${t(titleKey)} · ${t("brand")}`;
     const headerBrand = site.querySelector(".public-brand [data-copy]");
-    headerBrand.dataset.copy = currentPage === "learn" ? "learnTitle" : "brand";
+    headerBrand.dataset.copy = "brand";
     headerBrand.textContent = t(headerBrand.dataset.copy);
     document.title = title;
   }

@@ -1,3 +1,4 @@
+import {createShipEffects} from './ship-effects.js?v=1';
 import * as T from './assets/three-0.187.0/three.module.js';
 import {createGagooModel} from './gagoo-scene.js';
 import {createRagdollController} from './gagoo-ragdoll.js';
@@ -82,22 +83,7 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
     const engine=cylinder(.58,.66,1.45,c.navy,[-9.75,.75,side*1.9],room,8);engine.rotation.z=Math.PI/2;
     const nozzle=cylinder(.36,.56,.28,c.yellow,[-10.54,.75,side*1.9],room,8);nozzle.rotation.z=Math.PI/2;
   }
-  // An inspection-only symmetric outer shell; the near upper side and roof are
-  // absent in cutaway mode, with the sole physical exception of the hatch.
-  const exterior=new T.Group();exterior.name='Symmetric exterior inspection';scene.add(exterior);exterior.visible=false;
-  box(18.4,.22,6.6,hullBlue,[0,2.54,0],exterior);
-  const leftEdge=-9.2,rightEdge=9.2,hatchLeft=SHIP_HULL.spacewalk.x0,hatchRight=SHIP_HULL.spacewalk.x1;
-  for(const [start,end] of [[leftEdge,hatchLeft],[hatchRight,rightEdge]]){
-    box(end-start,1.35,.2,hullDark,[(start+end)/2,1.45,3.2],exterior);
-    box(end-start,.23,.22,hullDark,[(start+end)/2,2.2,3.2],exterior);
-    box(end-start,.28,.26,hullBlue,[(start+end)/2,2.4,3.2],exterior);
-  }
-  // Material above the hatch matches its mirrored counterpart.
-  box(hatchRight-hatchLeft,.35,.2,hullDark,[(hatchLeft+hatchRight)/2,2.0,3.2],exterior);
-  box(hatchRight-hatchLeft,.23,.22,hullDark,[(hatchLeft+hatchRight)/2,2.2,3.2],exterior);
-  box(hatchRight-hatchLeft,.28,.26,hullBlue,[(hatchLeft+hatchRight)/2,2.4,3.2],exterior);
   let exteriorView=false, exteriorSide=1;
-
   // Room walls and collision rectangles share the exact same source geometry.
   let sternDivider;
   const bulkheads=[];
@@ -203,6 +189,8 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
     node.material=toonCache.get(original);node.castShadow=true;node.receiveShadow=true;
     if(!/eye|pupil|highlight|display|status/i.test(node.name))outline(node);
   }
+  const effects=createShipEffects({T,scene,camera,actor,model,alien,box,mesh,cylinder,sphere,rod,material,c,reduced});
+  const exterior=effects.hull;
   const ragdoll=createRagdollController(model);
   const contactShadow=new T.MeshBasicMaterial({color:0x101727,transparent:true,opacity:.18,depthWrite:false});materials.add(contactShadow);
   const actorShadow=mesh(new T.CircleGeometry(.42,20),contactShadow,[0,.077,0],scene,false);actorShadow.rotation.x=-Math.PI/2;actorShadow.scale.y=.68;
@@ -210,7 +198,7 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
   const propObstacles=[...SHIP_WALLS,...SHIP_FURNITURE].map(o=>({min:[o.x0,.08,o.z0],max:[o.x1,1.65,o.z1]}));
   const free=shipFree;
   let autoTarget=null, path=[], near='', pickup=0, pickupMode='', held=false, lastPickupState=false, time=0, lastDirection=new T.Vector2(), disposed=false, motionPaused=false, lost=false, suspended=false, tabletHint=false;
-  const interactionPositions={tablet:new T.Vector3(-2.4,0,.65),alien:new T.Vector3(-3.9,0,-.7)};
+  const interactionPositions={tablet:new T.Vector3(-2.4,0,.65),alien:new T.Vector3(-3.9,0,-.7),engine:new T.Vector3(-6.55,0,-1.15),launch:new T.Vector3(7.2,0,-.9)};
   let loot=null;
   canvas.dataset.lootTier='none';canvas.dataset.lootPhase='idle';canvas.dataset.lootVisible='false';
 
@@ -347,7 +335,7 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
     if(roomGroups.has(id))return Promise.resolve(roomGroups.get(id));
     if(roomPromises.has(id))return roomPromises.get(id);
     const attempt=(roomAttempts.get(id)||0)+1;roomAttempts.set(id,attempt);
-    const promise=import(`./ship-room-assets.js?room=${encodeURIComponent(id)}&attempt=${attempt}`).then(assets=>{if(disposed)throw new Error('Scene disposed');return buildRoom(id,assets);}).finally(()=>roomPromises.delete(id));
+    const promise=import(`./ship-room-assets.js?room=${encodeURIComponent(id)}&attempt=${attempt}&v=2`).then(assets=>{if(disposed)throw new Error('Scene disposed');return buildRoom(id,assets);}).finally(()=>roomPromises.delete(id));
     roomPromises.set(id,promise);return promise;
   }
   function syncRooms(){
@@ -403,7 +391,7 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
   function pathTo(target) { return shipPath(actor.position,target).map(p=>new T.Vector3(p.x,0,p.z)); }
   function goTo(which) { if(!interactionPositions[which])return;autoTarget=which;path=pathTo(interactionPositions[which]);if(!path.length){autoTarget=null;return false;}return true; }
   function cancelGoal(){autoTarget=null;path=[];}
-  function updateNear(){const next=roomPhase!=='room'?'':actor.position.distanceTo(interactionPositions.tablet)<.9?'tablet':actor.position.distanceTo(interactionPositions.alien)<.9?'alien':'';if(next!==near){near=next;onNear?.(near);}canvas.dataset.near=near||'none';}
+  function updateNear(){const next=roomPhase!=='room'||exteriorView?'':Object.entries(interactionPositions).find(([id,point])=>shipRoom(point.x,point.z)===currentRoom&&actor.position.distanceTo(point)<.9)?.[0]||'';if(next!==near){near=next;onNear?.(near);}canvas.dataset.near=near||'none';}
   function beginPickup(){cancelGoal();pickupMode='take';pickup=0;held=false;actor.rotation.y=Math.PI;return true;}
   function putDown(){pickupMode='return';pickup=0;held=false;lastPickupState=false;}
   const handPoint=new T.Vector3(), startPoint=new T.Vector3();
@@ -494,19 +482,23 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
     canvas.dataset.heldTablet=String(held||pickupMode==='take');
     // Input can be locked during dialogue and rewards without freezing loot.
     updateFuelLoot(dt);
+    effects.update(dt,{exterior:exteriorView,currentRoom,roomPhase,paused:motionPaused});
+    actorShadow.visible=actor.visible;
   }
   let width=0,height=0;
-  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h||(w===width&&h===height))return;width=w;height=h;renderer.setSize(w,h,false);const aspect=w/h;const vertical=!exteriorView?Math.max(8.4,8/aspect):Math.max(9.2,23/aspect);camera.left=-vertical*aspect/2;camera.right=vertical*aspect/2;camera.top=vertical/2;camera.bottom=-vertical/2;camera.zoom=1;camera.updateProjectionMatrix();}
+  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h||(w===width&&h===height))return;width=w;height=h;renderer.setSize(w,h,false);const aspect=w/h;const vertical=!exteriorView?Math.max(8.4,8/aspect):Math.max(16,34/aspect);camera.left=-vertical*aspect/2;camera.right=vertical*aspect/2;camera.top=vertical/2;camera.bottom=-vertical/2;camera.zoom=1;camera.updateProjectionMatrix();}
   function render(){if(disposed||lost||suspended)return;resize();renderer.render(scene,camera);}
   const contextLost=e=>{e.preventDefault();lost=true;clearFuelLoot(false);onError?.();};canvas.addEventListener('webglcontextlost',contextLost);
   const raycaster=new T.Raycaster(),pointer=new T.Vector2();
-  function pick(clientX,clientY){if(disposed||lost||suspended||exteriorView||currentRoom!=='living'||roomPhase!=='room')return '';const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return '';pointer.set((clientX-rect.left)/rect.width*2-1,-(clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const hit=raycaster.intersectObjects([tablet,alien],true).find(item=>item.object.name!=='ink outline');if(!hit)return '';let n=hit.object;while(n){if(n===tablet)return 'tablet';if(n===alien)return 'alien';n=n.parent;}return '';}
+  function pick(clientX,clientY){if(disposed||lost||suspended||exteriorView||roomPhase!=='room')return '';const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return '';pointer.set((clientX-rect.left)/rect.width*2-1,-(clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const hit=raycaster.intersectObjects([tablet,alien,effects.engine,effects.launchTarget].filter(n=>n.visible),true).find(item=>item.object.name!=='ink outline');if(!hit)return '';let n=hit.object;while(n){if(n===tablet)return 'tablet';if(n===alien)return 'alien';if(n===effects.engine)return 'engine';if(n===effects.launchTarget)return 'launch';n=n.parent;}return '';}
   update(0);render();
   return {ready,retryRoom,update,render,resize,goTo,cancelGoal,beginPickup,putDown,pick,getNear:()=>near,
     getScreenAnchors,playFuelLoot,
+    setEngineFuel:effects.setFuel,
+    setCinematic(value){effects.setCinematic(value);if(!value){camera.zoom=1;camera.updateProjectionMatrix();}canvas.dataset.cinematic=value?.kind||'none';canvas.dataset.cinematicTime=String(value?.elapsed||0);},
     setTabletHint(value){tabletHint=Boolean(value);canvas.dataset.tabletHint=String(tabletHint);},
     setSuspended(value){suspended=Boolean(value);canvas.dataset.suspended=String(suspended);},
-    setExterior(value,side=1){exteriorView=Boolean(value);exteriorSide=side<0?-1:1;exterior.visible=exteriorView;room.visible=exteriorView;syncRooms();canvas.dataset.view=exteriorView?'exterior':'cutaway';canvas.dataset.exteriorSide=String(exteriorSide);width=0;cameraX=exteriorView?0:actor.position.x;cameraZ=exteriorView?0:actor.position.z;camera.position.set(10+cameraX,17,(exteriorView?25*exteriorSide:25)+cameraZ);camera.lookAt(cameraX,.45,cameraZ);resize();render();},
+    setExterior(value,side=1){exteriorView=Boolean(value);exteriorSide=side<0?-1:1;exterior.visible=exteriorView;room.visible=false;actor.visible=!exteriorView;syncRooms();canvas.dataset.view=exteriorView?'exterior':'cutaway';canvas.dataset.exteriorSide=String(exteriorSide);width=0;cameraX=exteriorView?0:actor.position.x;cameraZ=exteriorView?0:actor.position.z;camera.position.set(10+cameraX,17,(exteriorView?25*exteriorSide:25)+cameraZ);camera.lookAt(cameraX,.45,cameraZ);resize();render();},
     setPaused(value){motionPaused=value;},
     dispose(){disposed=true;travelEpoch++;clearFuelLoot(false);clearCorridor();canvas.removeEventListener('webglcontextlost',contextLost);ragdoll.dispose?.();model.userData.dispose?.();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();gradient.dispose();key.shadow.map?.dispose();renderer.dispose();}
   };

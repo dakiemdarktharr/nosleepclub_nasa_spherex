@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const copy = {
-    brand: ["SPHEREx đã thấy gì?", "What Did SPHEREx See?"],
+    brand: ["Touch The Sky", "Touch The Sky"],
     skipPublic: ["Đến nội dung", "Skip to content"],
     guideTitle: ["Cách sử dụng ↓", "How to use ↓"],
     guideHeading: ["Cách sử dụng", "How to use"],
@@ -32,7 +32,7 @@
     datasets: ["Bộ dữ liệu", "Datasets"],
     navigation: ["Điều hướng", "Navigation"],
     language: ["Chuyển sang tiếng Anh", "Switch to Vietnamese"],
-    homeLink: ["SPHEREx đã thấy gì? · Trang chủ", "What Did SPHEREx See? · Home"],
+    homeLink: ["Touch The Sky · Trang chủ", "Touch The Sky · Home"],
     skyNav: ["sphere x night", "sphere x night"],
     learnTitle: ["sphere x learn", "sphere x learn"],
     learnHeading: ["Khám phá bầu trời cùng SPHEREx", "Explore the sky with SPHEREx"],

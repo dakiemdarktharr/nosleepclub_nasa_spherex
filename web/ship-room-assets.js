@@ -141,10 +141,6 @@ export function createRoomAssets({roomId, box, cylinder, sphere, mesh, T, c, mat
       C(.20,.23,.09,amber,x,1.30,-2.43,7);
       B(.62,.08,.06,amber,x,.76,-2.09,false);
     }
-    B(.92,.95,.70,c.navy,-6.55,.55,-2.38);
-    B(.70,.48,.03,dark,-6.55,.65,-2.01,false);
-    for(let i=0;i<3;i++) B(.48,.035,.02,c.teal,-6.55,.50+i*.13,-1.985,false);
-    indicator(-6.27,.88,-1.98,c.coral);indicator(-6.40,.88,-1.98,c.yellow);
     B(1.8,.10,.10,amber,-7.35,1.66,-2.84);
     for(const x of [-7.95,-6.75]) B(.10,.38,.10,amber,x,1.48,-2.84);
     vent(-6.45,2.1,-2.92,.86);

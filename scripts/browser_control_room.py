@@ -122,6 +122,7 @@ def animated_fuel_case(browser, base, output):
     try:
         page.goto(f'{base}/control-room.html?lang=en')
         expect(page.locator('body')).to_have_attribute('data-scene-state', 'ready')
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'room', timeout=15000)
         page.locator('#room-tablet-shortcut').click()
         finish_lesson(page)
         start_quiz(page)
@@ -207,7 +208,7 @@ def run_case(browser, base, output, width, height, language, mobile):
           window.introEvidence = {};
           const record = () => {
             const data = window.introEvidence, body = document.body;
-            if (body?.dataset.sceneState === 'ready' && data.ready === undefined) data.ready = performance.now();
+            if (body?.dataset.sceneState === 'ready' && body?.dataset.gameState === 'room' && data.ready === undefined) data.ready = performance.now();
             for (const [key,id] of [['greeting','room-greeting'],['hint','room-tablet-hint']]) {
               const element = document.getElementById(id);
               if (!element || data.ready === undefined) continue;
@@ -215,7 +216,7 @@ def run_case(browser, base, output, width, height, language, mobile):
               if (element.hidden && data[key] !== undefined && data[key+'End'] === undefined) data[key+'End'] = performance.now();
             }
           };
-          new MutationObserver(record).observe(document,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','data-scene-state']});
+          new MutationObserver(record).observe(document,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','data-scene-state','data-game-state']});
         ''')
     page = context.new_page()
     page.set_default_timeout(15000)
@@ -234,6 +235,7 @@ def run_case(browser, base, output, width, height, language, mobile):
     try:
         page.goto(f'{base}/control-room.html?lang={language}')
         expect(page.locator('body')).to_have_attribute('data-scene-state', 'ready')
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'room', timeout=15000)
         expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
         expect(page.locator('#room-prompt')).not_to_be_visible()
         expect(page.locator('#room-context-key')).not_to_be_visible()
@@ -454,6 +456,7 @@ def corridor_case(browser, base, output):
     try:
         page.goto(f'{base}/control-room.html?lang=vi')
         expect(page.locator('body')).to_have_attribute('data-scene-state', 'ready')
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'room', timeout=15000)
         canvas = page.locator('#room-canvas')
         expect(canvas).to_have_attribute('data-room-phase', 'room')
         expect(canvas).to_have_attribute('data-room', 'living')
@@ -524,6 +527,7 @@ def corridor_retreat_case(browser, base, output):
     try:
         page.goto(f'{base}/control-room.html?lang=vi')
         expect(page.locator('body')).to_have_attribute('data-scene-state', 'ready')
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'room', timeout=15000)
         canvas = page.locator('#room-canvas')
         page.keyboard.down('ArrowRight')
         page.keyboard.down('ArrowDown')
