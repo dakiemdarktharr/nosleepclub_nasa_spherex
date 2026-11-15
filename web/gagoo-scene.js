@@ -2,6 +2,7 @@ import * as Three from "./assets/three-0.187.0/three.module.js";
 import {bodyBounds, clampBody, stepBody, createRope, stepRope, ropePath} from "./gagoo-physics.js";
 import {attachGagooRig} from "./gagoo-rig.js";
 import {createRagdollController} from "./gagoo-ragdoll.js";
+import {applyGagooInk} from "./gagoo-ink.js";
 
 /** Broad planar forms; +Z faces the viewer. The articulated mascot is 3.2 units tall. */
 export function createGagooModel(T = Three) {
@@ -137,14 +138,22 @@ export function mountGagoo({canvas, target, stage, reduced, isActive = () => tru
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.6));
   renderer.toneMapping = Three.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.13;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = Three.PCFShadowMap;
   const scene = new Three.Scene();
   const camera = new Three.OrthographicCamera(-1.5, 1.5, 1.9, -1.9, .1, 30);
   camera.position.set(0, .08, 8); camera.lookAt(0, 0, 0);
-  scene.add(new Three.HemisphereLight(0xdcf2ff, 0x5d6580, 2.55));
-  for (const [color, intensity, position] of [[0xffecc8, 2.6, [-3, 4, 5]], [0x74d9ff, 2.2, [3, 1, -3]], [0xffffff, .6, [2, 0, 5]]]) {
+  scene.add(new Three.HemisphereLight(0xdcf2ff, 0x5d6580, 1.1));
+  for (const [color, intensity, position] of [[0xffecc8, 2.3, [-3, 4, 5]], [0x74d9ff, .85, [3, 1, -3]], [0xffffff, .3, [2, 0, 5]]]) {
     const light = new Three.DirectionalLight(color, intensity); light.position.set(...position); scene.add(light);
+    if (intensity === 2.3) {
+      light.castShadow = true; light.shadow.mapSize.set(512, 512);
+      Object.assign(light.shadow.camera, {left: -2.6, right: 2.6, top: 2.6, bottom: -2.6, near: .5, far: 14});
+      light.shadow.normalBias = .025; light.shadow.bias = -.0002;
+    }
   }
   const model = createGagooModel(); scene.add(model);
+  const disposeInk = applyGagooInk(model, Three);
   const ragdoll = createRagdollController(model);
   const svgNS = "http://www.w3.org/2000/svg";
   let svg, ownRope = false;
@@ -309,7 +318,9 @@ export function mountGagoo({canvas, target, stage, reduced, isActive = () => tru
     dispose() {
       disposed = true; if (frame) cancelAnimationFrame(frame); clearTimeout(suppressTimer);
       resize.disconnect(); intersection.disconnect(); listeners.forEach(remove => remove());
-      model.userData.dispose(); renderer.dispose(); if (ownRope) svg.remove();
+      disposeInk(); model.userData.dispose();
+      scene.traverse(node => node.shadow?.dispose());
+      renderer.dispose(); if (ownRope) svg.remove();
       canvas.hidden = true; target.dataset.model = "fallback";
     }
   };

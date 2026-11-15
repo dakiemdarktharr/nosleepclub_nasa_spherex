@@ -39,7 +39,7 @@ const sourceTriangles = sourceMeshes.reduce((sum, node) => sum + node.indices.le
 if (meshes !== sourceMeshes.length || triangles !== sourceTriangles) throw new Error("GLB mesh/triangle count differs from the source geometry");
 if (source.rig) {
   if (skinnedMeshes !== meshes || bones.size !== source.rig.bone_count) throw new Error(`Exported armature is incomplete: ${skinnedMeshes} skinned meshes, ${bones.size} bones`);
-  if (loaded.animations.length !== 1) throw new Error('Expected the runtime-sampled rebound clip');
+  if (loaded.animations.length !== 1) throw new Error('Expected the runtime-sampled joint-response clip');
   const restRotations = new Map();
   loaded.scene.traverse(node => { if (node.isBone) restRotations.set(node.name, node.quaternion.clone().normalize()); });
   const mixer = new Three.AnimationMixer(loaded.scene);

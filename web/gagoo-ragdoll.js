@@ -10,24 +10,26 @@ const symmetric = values => values.map(v => [-v, v]);
 
 export const GAGOO_JOINTS = {
   root: {limits: symmetric([.02, .02, .02]), spring: 28, damping: 7, gain: 0},
-  spine: {limits: symmetric([.09, .06, .10]), spring: 32, damping: 5.5, gain: .12},
-  neck: {limits: symmetric([.20, .16, .19]), spring: 23, damping: 4.0, gain: .28},
-  leftEar: {limits: [[-.07, .07], [-.05, .05], [-.18, .018]], spring: 49, damping: 3.0, gain: .22},
-  rightEar: {limits: [[-.07, .07], [-.05, .05], [-.018, .18]], spring: 47, damping: 3.1, gain: .22},
-  leftEye: {limits: symmetric([.045, .055, .028]), spring: 65, damping: 4.0, gain: .06},
-  rightEye: {limits: symmetric([.045, .055, .028]), spring: 62, damping: 4.2, gain: .06},
-  leftArm: {limits: symmetric([.85, .35, .70]), spring: 14, damping: 2.9, gain: .85},
-  rightArm: {limits: symmetric([.85, .35, .70]), spring: 15, damping: 3.0, gain: .82},
-  leftForearm: {limits: [[-.95, .35], [-.14, .14], [-.38, .38]], spring: 18, damping: 3.1, gain: .72},
-  rightForearm: {limits: [[-.95, .35], [-.14, .14], [-.38, .38]], spring: 17, damping: 3.0, gain: .74},
-  leftHand: {limits: symmetric([.32, .22, .28]), spring: 23, damping: 3.1, gain: .4},
-  rightHand: {limits: symmetric([.32, .22, .28]), spring: 24, damping: 3.2, gain: .4},
-  leftLeg: {limits: symmetric([.60, .22, .38]), spring: 15, damping: 3.1, gain: .68},
-  rightLeg: {limits: symmetric([.60, .22, .38]), spring: 16, damping: 3.0, gain: .70},
-  leftShin: {limits: [[-.20, .70], [-.12, .12], [-.15, .15]], spring: 20, damping: 3.6, gain: .57},
-  rightShin: {limits: [[-.20, .70], [-.12, .12], [-.15, .15]], spring: 21, damping: 3.5, gain: .55},
-  leftFoot: {limits: symmetric([.28, .12, .18]), spring: 24, damping: 3.6, gain: .36},
-  rightFoot: {limits: symmetric([.28, .12, .18]), spring: 25, damping: 3.7, gain: .36}
+  spine: {limits: symmetric([.13, .09, .14]), spring: 19, damping: 3.0, gain: .16},
+  neck: {limits: symmetric([.24, .19, .23]), spring: 13, damping: 2.2, gain: .35},
+  leftEar: {limits: [[-.07, .07], [-.05, .05], [-.18, .018]], spring: 32, damping: 2.0, gain: .27},
+  rightEar: {limits: [[-.07, .07], [-.05, .05], [-.018, .18]], spring: 30, damping: 2.1, gain: .27},
+  leftEye: {limits: symmetric([.045, .055, .028]), spring: 44, damping: 3.0, gain: .07},
+  rightEye: {limits: symmetric([.045, .055, .028]), spring: 42, damping: 3.1, gain: .07},
+  // More front/back travel, but inward side-folding stops before a limb swings
+  // through the torso. Outward travel is deliberately broader and floppy.
+  leftArm: {limits: [[-1.10, 1.10], [-.42, .42], [-1.00, .18]], spring: 6.5, damping: 1.45, gain: 1.0},
+  rightArm: {limits: [[-1.10, 1.10], [-.42, .42], [-.18, 1.00]], spring: 7.0, damping: 1.5, gain: .97},
+  leftForearm: {limits: [[-1.20, .40], [-.18, .18], [-.42, .42]], spring: 8.5, damping: 1.8, gain: .87},
+  rightForearm: {limits: [[-1.20, .40], [-.18, .18], [-.42, .42]], spring: 8.0, damping: 1.75, gain: .89},
+  leftHand: {limits: symmetric([.40, .27, .34]), spring: 12, damping: 2.0, gain: .48},
+  rightHand: {limits: symmetric([.40, .27, .34]), spring: 12.5, damping: 2.1, gain: .48},
+  leftLeg: {limits: [[-.80, .80], [-.27, .27], [-.48, .16]], spring: 8.0, damping: 1.7, gain: .79},
+  rightLeg: {limits: [[-.80, .80], [-.27, .27], [-.16, .48]], spring: 8.5, damping: 1.75, gain: .82},
+  leftShin: {limits: [[-.20, .95], [-.14, .14], [-.18, .18]], spring: 10, damping: 1.9, gain: .68},
+  rightShin: {limits: [[-.20, .95], [-.14, .14], [-.18, .18]], spring: 10.5, damping: 2.0, gain: .66},
+  leftFoot: {limits: symmetric([.36, .15, .23]), spring: 12, damping: 2.1, gain: .44},
+  rightFoot: {limits: symmetric([.36, .15, .23]), spring: 12.5, damping: 2.2, gain: .44}
 };
 
 export function createRagdollState() {

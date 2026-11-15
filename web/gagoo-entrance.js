@@ -1,10 +1,12 @@
 // A local implementation of the cover/swap/reveal blinds pattern described at
 // https://motion.dev/docs/curtains#blinds. No Motion+ code or service is required.
 let activeEntrance;
-const CINEMA_MS = 4050;
+const CINEMA_MS = 4800;
+const CINEMA_CEILING_MS = CINEMA_MS + 2000;
 const FLIGHT_START = 550;
 const CONTACT_START = 2050;
-const RECOIL_START = 2350;
+const SLIDE_START = 2700;
+const SLIDE_END = 4600;
 const clamp = (value) => Math.max(0, Math.min(1, value));
 const smooth = (value) => value * value * (3 - 2 * value);
 const mix = (a, b, progress) => a + (b - a) * progress;
@@ -13,20 +15,20 @@ const mix = (a, b, progress) => a + (b - a) * progress;
 export function sampleGagooEntrance(milliseconds, contactZ = 2.36) {
   const pullback = smooth(clamp(milliseconds / 1200));
   const flight = smooth(clamp((milliseconds - FLIGHT_START) / (CONTACT_START - FLIGHT_START)));
-  const contact = clamp((milliseconds - CONTACT_START) / (RECOIL_START - CONTACT_START));
-  const recoil = clamp((milliseconds - RECOIL_START) / (CINEMA_MS - RECOIL_START));
-  const impact = milliseconds >= CONTACT_START && milliseconds < RECOIL_START ? Math.sin(contact * Math.PI) : 0;
+  const contact = clamp((milliseconds - CONTACT_START) / (SLIDE_START - CONTACT_START));
+  const slide = smooth(clamp((milliseconds - SLIDE_START) / (SLIDE_END - SLIDE_START)));
+  const impact = milliseconds >= CONTACT_START ? Math.sin(Math.min(1, contact * 2.5) * Math.PI) : 0;
   return {
-    cameraZ: mix(1.5, 7.8, pullback), pullback, flight, recoil,
-    z: milliseconds < RECOIL_START ? mix(-3, contactZ, flight) : contactZ - 8.5 * smooth(recoil),
-    rotationZ: recoil * .38,
-    rotationX: -recoil * .65,
-    scaleX: 1 + impact * .045,
+    cameraZ: mix(1.5, 7.8, pullback), pullback, flight, slide,
+    z: mix(-3, contactZ, flight),
+    rotationZ: -slide * .17,
+    rotationX: 0,
+    scaleX: 1 + impact * .06,
     scaleY: 1 - impact * .04,
-    scaleZ: 1 - impact * .16,
+    scaleZ: 1 - (milliseconds >= CONTACT_START ? .09 + impact * .10 : 0),
     contact: milliseconds >= CONTACT_START,
-    markOpacity: milliseconds < CONTACT_START ? 0 : .12 * (1 - recoil),
-    phase: milliseconds < FLIGHT_START ? "pullback" : milliseconds < CONTACT_START ? "flight" : milliseconds < RECOIL_START ? "contact" : "recoil"
+    markOpacity: milliseconds < CONTACT_START ? 0 : .14 * (1 - slide),
+    phase: milliseconds < FLIGHT_START ? "pullback" : milliseconds < CONTACT_START ? "flight" : milliseconds < SLIDE_START ? "contact" : milliseconds < SLIDE_END ? "slide" : "clear"
   };
 }
 
@@ -121,8 +123,8 @@ function createHomeContinuity(home) {
 }
 
 async function createCinema(canvas, signal, home) {
-  const [Three, {createGagooModel}, {createRagdollController}] = await Promise.all([
-    import("./assets/three-0.187.0/three.module.js"), import("./gagoo-scene.js?v=2"), import("./gagoo-ragdoll.js")
+  const [Three, {createGagooModel}, {createRagdollController}, {applyGagooInk}] = await Promise.all([
+    import("./assets/three-0.187.0/three.module.js"), import("./gagoo-scene.js?v=3"), import("./gagoo-ragdoll.js?v=2"), import("./gagoo-ink.js?v=1")
   ]);
   if (signal.aborted) throw abortError();
   const renderer = new Three.WebGLRenderer({canvas, alpha: true, antialias: true, powerPreference: "low-power"});
@@ -130,9 +132,12 @@ async function createCinema(canvas, signal, home) {
   renderer.setClearColor(0x08162e, 0);
   renderer.toneMapping = Three.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.13;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = Three.PCFShadowMap;
   const scene = new Three.Scene();
   const camera = new Three.PerspectiveCamera(46, 1, .05, 80);
   const model = createGagooModel(Three);
+  const disposeInk = applyGagooInk(model, Three);
   const ragdoll = createRagdollController(model);
   if (home?.snapshot?.pose) ragdoll.restore(home.snapshot.pose);
   model.updateMatrixWorld(true);
@@ -144,9 +149,14 @@ async function createCinema(canvas, signal, home) {
   const sourcePose = home?.snapshot?.pose?.pose || {};
   const actor = new Three.Group(); actor.add(model); scene.add(actor);
   // Match home lighting at the handover; no abrupt new material treatment.
-  scene.add(new Three.HemisphereLight(0xdcf2ff, 0x5d6580, 2.55));
-  for (const [color, intensity, position] of [[0xffecc8, 2.6, [-3, 4, 5]], [0x74d9ff, 2.2, [3, 1, -3]], [0xffffff, .6, [2, 0, 5]]]) {
+  scene.add(new Three.HemisphereLight(0xdcf2ff, 0x5d6580, 1.1));
+  for (const [color, intensity, position] of [[0xffecc8, 2.3, [-3, 4, 5]], [0x74d9ff, .85, [3, 1, -3]], [0xffffff, .3, [2, 0, 5]]]) {
     const light = new Three.DirectionalLight(color, intensity); light.position.set(...position); scene.add(light);
+    if (position[0] === -3) {
+      light.castShadow = true; light.shadow.mapSize.set(512, 512);
+      Object.assign(light.shadow.camera, {left: -2.6, right: 2.6, top: 2.6, bottom: -2.6, near: .5, far: 14});
+      light.shadow.normalBias = .025; light.shadow.bias = -.0002;
+    }
   }
   const continuity = createHomeContinuity(home);
   const cabin = new Three.Group(); scene.add(cabin);
@@ -166,7 +176,8 @@ async function createCinema(canvas, signal, home) {
   let width = 0, height = 0, openingWidth = 0, openingHeight = 0, contactFit = 1, frontDepth = 0;
   function resize() {
     const nextWidth = canvas.clientWidth, nextHeight = canvas.clientHeight;
-    if (!nextWidth || !nextHeight || (nextWidth === width && nextHeight === height)) return;
+    if (!Number.isFinite(nextWidth) || !Number.isFinite(nextHeight) || nextWidth <= 0 || nextHeight <= 0) return false;
+    if (nextWidth === width && nextHeight === height) return true;
     width = nextWidth; height = nextHeight;
     renderer.setSize(width, height, false); camera.aspect = width / height; camera.updateProjectionMatrix();
     for (const item of [...cabin.children]) {
@@ -196,14 +207,17 @@ async function createCinema(canvas, signal, home) {
         bolt.position.set(side * (openingWidth / 2 + .22), vertical * (openingHeight / 2 + .2), 3.22);
       }
     }
+    return true;
   }
-  let lost = false, lastTime = 0, struck = false, disposed = false;
+  const actorBounds = new Three.Box3(), projected = new Three.Vector3();
+  let lost = false, lastTime = 0, struck = false, disposed = false, clearedAt = null;
+  let actorClear = false;
   const onLost = (event) => { event.preventDefault(); lost = true; };
   canvas.addEventListener("webglcontextlost", onLost);
   return {
     draw(milliseconds) {
       if (lost || disposed) return false;
-      resize();
+      if (!resize()) return false;
       const pose = sampleGagooEntrance(milliseconds, 2.92 - frontDepth);
       camera.position.set(0, 0, pose.cameraZ); camera.lookAt(0, 0, -4);
       const dt = Math.max(0, Math.min(.04, (milliseconds - lastTime) / 1000)); lastTime = milliseconds;
@@ -218,17 +232,33 @@ async function createCinema(canvas, signal, home) {
       const startY = (.5 - (source.y + source.height / 2) / height) * viewHeight;
       const fit = mix(startFit, contactFit, pose.flight);
       model.scale.copy(modelBaseScale).multiplyScalar(fit);
-      const impactCorrection = pose.contact && milliseconds < RECOIL_START ? (1 - pose.scaleZ) * frontDepth : 0;
-      actor.position.set(mix(startX, .04, pose.flight) + Math.sin(pose.recoil * Math.PI) * .38,
-        mix(startY, 0, pose.flight) + pose.recoil * .4, pose.z + impactCorrection);
+      // The body stays against the glass; the whole character slides horizontally
+      // behind the right jamb rather than falling or recoiling into open space.
+      const slideDistance = openingWidth / 2 + modelSize.x * contactFit * .9 + .45;
+      actor.position.set(mix(startX, .04, pose.flight) + slideDistance * pose.slide,
+        mix(startY, 0, pose.flight), pose.z);
       actor.rotation.set(mix(sourceRotation[0], 0, pose.flight) + pose.rotationX,
-        mix(sourceRotation[1], 0, pose.flight) + pose.recoil * .85,
+        mix(sourceRotation[1], 0, pose.flight),
         mix(sourceRotation[2], 0, pose.flight) + pose.rotationZ);
       actor.scale.set(pose.scaleX, pose.scaleY, pose.scaleZ);
-      if (milliseconds >= CONTACT_START && !struck) { struck = true; ragdoll.impulse({x: .35, y: -.12, z: -2.7}, 1); }
+      if (milliseconds >= CONTACT_START && !struck) { struck = true; ragdoll.impulse({x: .22, y: -.08, z: -1.9}, 1); }
       if (transferred) {
         const blendedPose = Object.fromEntries(Object.entries(sourcePose).map(([joint, angles]) => [joint, angles.map(angle => angle * (1 - pose.flight))]));
-        ragdoll.step(dt, {acceleration: {x: 0, y: 0, z: milliseconds < CONTACT_START ? .2 : 0}, strength: 1, pose: blendedPose});
+        const stick = smooth(clamp((milliseconds - CONTACT_START) / 240));
+        for (const [joint, angles] of Object.entries({leftArm: [-.33, .12, -.31], rightArm: [-.33, -.12, .31],
+          leftForearm: [-.20, 0, 0], rightForearm: [-.20, 0, 0], leftHand: [.08, 0, -.12], rightHand: [.08, 0, .12],
+          leftLeg: [.08, 0, -.10], rightLeg: [-.06, 0, .10]})) {
+          blendedPose[joint] = angles.map((angle, axis) => (blendedPose[joint]?.[axis] || 0) + angle * stick);
+        }
+        const sliding = clamp((milliseconds - SLIDE_START) / (SLIDE_END - SLIDE_START));
+        const slideAcceleration = milliseconds >= SLIDE_START && milliseconds < SLIDE_END ? (1 - 2 * sliding) * .9 : 0;
+        ragdoll.step(dt, {acceleration: {x: slideAcceleration, y: 0, z: milliseconds < CONTACT_START ? .2 : 0}, strength: 1, pose: blendedPose});
+        if (pose.contact) {
+          // Keep the current posed helmet at the glass even with a loose neck.
+          // Bounds are conservative and include the visor, gloves and ears.
+          actor.updateMatrixWorld(true); actorBounds.setFromObject(actor);
+          actor.position.z += 2.92 - actorBounds.max.z;
+        }
         actor.updateMatrixWorld(true); camera.updateMatrixWorld(true);
         const anchor = model.userData.backpackAnchor?.getWorldPosition(new Three.Vector3()).project(camera);
         if (anchor) continuity.moveTether((anchor.x + 1) * width / 2, (1 - anchor.y) * height / 2, pose.pullback);
@@ -237,16 +267,37 @@ async function createCinema(canvas, signal, home) {
       canvas.dataset.phase = pose.phase;
       canvas.dataset.continuity = continuity.available ? "home" : "fallback";
       canvas.dataset.actorDepth = String(actor.position.z);
+      canvas.dataset.actorX = String(actor.position.x);
+      canvas.dataset.actorY = String(actor.position.y);
+      actorBounds.setFromObject(actor);
+      let leftEdge = Infinity;
+      for (const x of [actorBounds.min.x, actorBounds.max.x]) for (const y of [actorBounds.min.y, actorBounds.max.y]) for (const z of [actorBounds.min.z, actorBounds.max.z]) {
+        projected.set(x, y, z).project(camera); leftEdge = Math.min(leftEdge, projected.x);
+      }
+      const rightJamb = projected.set(openingWidth / 2, 0, 3).project(camera).x;
+      // Project a world-space margin so very wide viewports do not demand an
+      // unreachable fixed NDC gap after the character is already behind the jamb.
+      const clearanceEdge = projected.set(openingWidth / 2 + .05, 0, 3).project(camera).x;
+      actorClear = pose.contact && Number.isFinite(leftEdge) && Number.isFinite(clearanceEdge) && leftEdge > clearanceEdge;
+      clearedAt = actorClear ? clearedAt ?? milliseconds : null;
+      canvas.dataset.frontSurfaceZ = String(actorBounds.max.z);
+      canvas.dataset.actorLeftEdge = String(leftEdge);
+      canvas.dataset.windowRightEdge = String(rightJamb);
+      canvas.dataset.clearanceEdge = String(clearanceEdge);
+      canvas.dataset.actorClear = String(actorClear);
+      if (actorClear) canvas.dataset.phase = "clear";
       canvas.dataset.windowOccupancy = JSON.stringify({width: modelSize.x * contactFit / openingWidth, height: modelSize.y * contactFit / openingHeight});
       renderer.render(scene, camera);
       return true;
     },
+    readyToTransition(milliseconds) { return actorClear && clearedAt !== null && milliseconds - clearedAt >= 120; },
     dispose() {
       if (disposed) return;
       disposed = true;
       continuity.restore();
       canvas.removeEventListener("webglcontextlost", onLost);
-      ragdoll.dispose?.(); model.userData.dispose?.();
+      ragdoll.dispose?.(); disposeInk?.(); model.userData.dispose?.();
+      scene.traverse(node => node.shadow?.dispose());
       for (const item of geometries) item.dispose();
       for (const item of materials) item.dispose();
       renderer.dispose();
@@ -386,9 +437,16 @@ export async function playGagooEntrance({reduced, onCovered, signal, language = 
           cinemaDone = resolve;
           const frame = (now) => {
             raf = 0;
-            if (controller.signal.aborted || skipRequested || now - start >= CINEMA_MS) { resolve(); return; }
-            try { if (!cinema.draw(now - start)) { resolve(); return; } }
-            catch { resolve(); return; }
+            if (controller.signal.aborted || skipRequested) { resolve(); return; }
+            const elapsed = now - start;
+            // A bad projection/context must restore home, never cover a still
+            // visible actor or keep an uncancellable render loop alive forever.
+            if (elapsed >= CINEMA_CEILING_MS) { abort(); resolve(); return; }
+            try {
+              if (!cinema.draw(Math.min(elapsed, CINEMA_MS))) { abort(); resolve(); return; }
+              if (cinema.readyToTransition(elapsed)) { resolve(); return; }
+            }
+            catch { abort(); resolve(); return; }
             raf = requestAnimationFrame(frame);
           };
           raf = requestAnimationFrame(frame);

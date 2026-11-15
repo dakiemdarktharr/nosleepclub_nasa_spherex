@@ -226,7 +226,7 @@
     gagooEntering = true;
     gagoo?.refresh();
     try {
-      const {playGagooEntrance} = await import("./gagoo-entrance.js?v=2");
+      const {playGagooEntrance} = await import("./gagoo-entrance.js?v=3");
       if (currentPage !== "orbit") return;
       await playGagooEntrance({
         reduced: media,
@@ -246,7 +246,7 @@
 
   function startGagoo() {
     if (!gagooLoading) {
-      gagooLoading = import("./gagoo-scene.js?v=2").then(({mountGagoo}) => mountGagoo({
+      gagooLoading = import("./gagoo-scene.js?v=3").then(({mountGagoo}) => mountGagoo({
         canvas: el("gagoo-canvas"), target: el("gagoo-target"), stage: orbit,
         reduced: media,
         isActive: () => currentPage === "orbit" && !gagooEntering,

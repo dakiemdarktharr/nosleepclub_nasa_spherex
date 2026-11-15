@@ -14,8 +14,16 @@ HARNESS = b'''<!doctype html><meta charset="utf-8"><meta name="viewport" content
 <script type="module">
 import {playGagooEntrance,cancelGagooEntrance,sampleGagooEntrance} from '/gagoo-entrance.js';
 window.api={playGagooEntrance,cancelGagooEntrance,sampleGagooEntrance};
+new MutationObserver(records=>{
+  const canvas=document.querySelector('.gagoo-entrance-canvas');
+  if(!canvas)return;
+  const sample=()=>({...canvas.dataset,at:performance.now()-window.started});
+  if(records.some(record=>record.target===canvas))window.frameSamples?.push(sample());
+  if(records.some(record=>record.target.matches?.('dialog[data-stage="blinds"]')))window.blindsSample=sample();
+}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['data-actor-x','data-stage']});
 window.start=(options={})=>{
   window.done=null; window.covered=0; window.failure=null;
+  window.frameSamples=[]; window.blindsSample=null;
   window.started=performance.now();
   window.controller=new AbortController();
   playGagooEntrance({language:'en',signal:controller.signal,...options,onCovered:()=>{
@@ -119,8 +127,8 @@ def main():
     try:
         with sync_playwright() as pw:
             browser = pw.chromium.launch()
-            for name in ['reduced', 'full', 'mobile', 'mobile-small', 'skip', 'escape', 'cancel-button', 'signal', 'route', 'import-cancel', 'renderer-fallback', 'reentry', 'blinds-cancel', 'route-failure']:
-                context = browser.new_context(viewport={'width': 320 if name == 'mobile-small' else 390 if name == 'mobile' else 1200, 'height': 844})
+            for name in ['reduced', 'full', 'mobile', 'mobile-small', 'ultrawide', 'zero-canvas', 'clearance-timeout', 'skip', 'escape', 'cancel-button', 'signal', 'route', 'import-cancel', 'renderer-fallback', 'reentry', 'blinds-cancel', 'route-failure']:
+                context = browser.new_context(viewport={'width': 3200 if name == 'ultrawide' else 320 if name == 'mobile-small' else 390 if name == 'mobile' else 1200, 'height': 80 if name == 'ultrawide' else 844})
                 page = context.new_page()
                 errors = []
                 pending_routes = []
@@ -131,23 +139,30 @@ def main():
                     page.add_init_script("HTMLCanvasElement.prototype.getContext=function(){return null}")
                 page.goto(f'http://127.0.0.1:{server.server_port}/__gagoo_test.html#orbit')
                 page.wait_for_function('() => !!window.api')
+                if name == 'clearance-timeout':
+                    # Simulate an unusable projection without altering product code.
+                    # The cinema must return home, not transition while uncleared.
+                    page.evaluate("async () => {const T=await import('/assets/three-0.187.0/three.module.js');T.Vector3.prototype.project=function(){this.x=0;return this}}")
                 page.locator('#start').focus()
                 page.evaluate('(test)=>{window.start({reduced:test==="reduced"||test==="route-failure",fail:test==="route-failure"})}', name)
                 if name not in ['reduced', 'route-failure']:
                     expect(page.locator('.gagoo-entrance')).to_be_visible()
-                if name in ['full', 'mobile', 'mobile-small']:
+                if name in ['full', 'mobile', 'mobile-small', 'ultrawide']:
                     page.wait_for_function("() => document.querySelector('canvas')?.dataset.phase === 'contact'", polling=10)
                     page.screenshot(path=str(output / f'{name}-contact.png'))
                     occupancy = json.loads(page.locator('canvas').get_attribute('data-window-occupancy'))
                     assert occupancy['width'] > .75 and occupancy['height'] > .75, occupancy
-                    contact_depth = float(page.locator('canvas').get_attribute('data-actor-depth'))
-                    page.wait_for_function("() => document.querySelector('canvas')?.dataset.phase === 'recoil'", polling=10)
-                    page.wait_for_timeout(450)
-                    recoil_depth = float(page.locator('canvas').get_attribute('data-actor-depth'))
-                    assert recoil_depth < contact_depth - .5, (contact_depth, recoil_depth)
-                    page.screenshot(path=str(output / f'{name}-recoil.png'))
+                    page.wait_for_function("() => document.querySelector('canvas')?.dataset.phase === 'slide'", polling=10)
+                    page.wait_for_timeout(500)
+                    assert float(page.locator('canvas').get_attribute('data-actor-x')) > .15
+                    page.screenshot(path=str(output / f'{name}-slide.png'))
+                    page.wait_for_function("() => document.querySelector('canvas')?.dataset.actorClear === 'true'", polling=10)
+                    page.screenshot(path=str(output / f'{name}-clear.png'))
                 elif name == 'skip':
                     page.get_by_role('button', name='Skip animation').click()
+                elif name == 'zero-canvas':
+                    page.wait_for_function("() => document.querySelector('canvas')?.dataset.phase === 'flight'", polling=10)
+                    page.locator('canvas').evaluate("node=>{node.style.height='0px'}")
                 elif name in ['escape', 'import-cancel']:
                     if name == 'import-cancel':
                         for _ in range(100):
@@ -176,13 +191,32 @@ def main():
                     context.close()
                     continue
                 assert page.evaluate('window.failure') is None
+                if name in ['full', 'mobile', 'mobile-small', 'ultrawide']:
+                    samples = page.evaluate('window.frameSamples')
+                    held = [sample for sample in samples if sample.get('phase') in ['contact', 'slide', 'clear']]
+                    assert len(held) > 10, 'The glass contact and slide must be rendered, not skipped'
+                    # Loose joint motion cannot move the helmet away from or through
+                    # the window. Character translation is horizontal to the right.
+                    assert all(abs(float(sample['frontSurfaceZ']) - 2.92) < 1e-5 for sample in held)
+                    assert all(abs(float(sample['actorY'])) < 1e-7 for sample in held)
+                    xs = [float(sample['actorX']) for sample in held]
+                    assert all(after >= before - 1e-7 for before, after in zip(xs, xs[1:])), xs
+                    blinds = page.evaluate('window.blindsSample')
+                    assert blinds['actorClear'] == 'true', 'Blinds started before Gagoo disappeared'
+                    assert float(blinds['actorLeftEdge']) > float(blinds['clearanceEdge'])
+                    (output / f'{name}-motion.json').write_text(json.dumps(samples, indent=2), encoding='utf-8')
                 expect(page.locator('.gagoo-entrance')).to_have_count(0)
-                cancelled = name in ['escape', 'cancel-button', 'signal', 'route', 'import-cancel', 'blinds-cancel']
+                cancelled = name in ['escape', 'cancel-button', 'signal', 'route', 'import-cancel', 'blinds-cancel', 'zero-canvas', 'clearance-timeout']
                 if name != 'reentry':
                     assert page.evaluate('window.done.cancelled') == cancelled
                     assert page.evaluate('window.covered') == (0 if cancelled else 1)
                 if name in ['escape', 'signal', 'import-cancel']:
                     expect(page.locator('#start')).to_be_focused()
+                if name in ['zero-canvas', 'clearance-timeout']:
+                    assert page.evaluate('window.blindsSample') is None
+                    expect(page.locator('#start')).to_be_focused()
+                    if name == 'clearance-timeout':
+                        assert page.evaluate('window.elapsed') < 9000, 'Unclear actor left an unbounded animation loop'
                 assert not errors, errors
                 for route in pending_routes:
                     route.abort()

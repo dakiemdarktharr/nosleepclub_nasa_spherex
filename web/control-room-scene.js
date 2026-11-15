@@ -1,6 +1,7 @@
 import * as T from './assets/three-0.187.0/three.module.js';
 import {createGagooModel} from './gagoo-scene.js';
 import {createRagdollController} from './gagoo-ragdoll.js';
+import {createFloatingPropState,stepFloatingProps,floatingPropSnapshot} from './room-prop-physics.js';
 
 /** Original low-poly room and Alien X. No image/texture downloads are required. */
 export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, onError}) {
@@ -8,17 +9,20 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.65));
   renderer.outputColorSpace = T.SRGBColorSpace;
   renderer.toneMapping = T.NoToneMapping;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = T.PCFShadowMap;
   const scene = new T.Scene();
   const camera = new T.OrthographicCamera(-8,8,6,-6,.1,80);
   camera.position.set(8.3,12.4,15.5); camera.lookAt(0,.45,-.15);
   const geometries = new Set(), materials = new Set();
-  const gradient = new T.DataTexture(new Uint8Array([65,145,255]),3,1,T.RedFormat);
+  const gradient = new T.DataTexture(new Uint8Array([35,110,230]),3,1,T.RedFormat);
   gradient.minFilter = gradient.magFilter = T.NearestFilter; gradient.needsUpdate = true;
   const ink = new T.MeshBasicMaterial({color:0x101727,side:T.BackSide}); materials.add(ink);
   ink.onBeforeCompile = shader => {
-    shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\ntransformed += normal * 0.022;');
+    shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\ntransformed += normal * 0.04;');
   };
-  ink.customProgramCacheKey = () => 'room-outline-022';
+  ink.customProgramCacheKey = () => 'room-outline-040';
+  const pencil = new T.LineBasicMaterial({color:0x1c2c3b,transparent:true,opacity:.58});materials.add(pencil);
   const palette = {};
   const material = (color, basic=false) => {
     const key = `${color}-${basic}`;
@@ -27,18 +31,23 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
   };
   const c = {floor:material(0xb1c5bf), cream:material(0xe4e3cd), navy:material(0x31445f), blue:material(0x354c96), teal:material(0x72b7b2), coral:material(0xdc795f), yellow:material(0xe5be69), lime:material(0xbde54a), dark:material(0x101727), screen:material(0x143b4a,true), glow:material(0xa3e2d3,true), green:material(0x88d94d), pink:material(0xe2a0c3), purple:material(0x5960c6)};
   const room = new T.Group(); room.name='Original orbital classroom'; scene.add(room);
-  scene.add(new T.HemisphereLight(0xf5f1da,0x3b536e,2.15));
-  const key = new T.DirectionalLight(0xffefd4,2.8); key.position.set(-5,10,8);scene.add(key);
-  const fill = new T.DirectionalLight(0x98d8df,.6);fill.position.set(5,3,-6);scene.add(fill);
+  scene.add(new T.HemisphereLight(0xf5f1da,0x3b536e,.95));
+  const key = new T.DirectionalLight(0xffefd4,2.25); key.position.set(-5,10,8);scene.add(key);
+  key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-7;key.shadow.camera.right=7;key.shadow.camera.top=6;key.shadow.camera.bottom=-6;key.shadow.camera.near=.5;key.shadow.camera.far=28;key.shadow.bias=-.0005;key.shadow.normalBias=.035;
+  const fill = new T.DirectionalLight(0x98d8df,.25);fill.position.set(5,3,-6);scene.add(fill);
 
   function outline(mesh) {
     if (mesh.material.transparent || mesh.userData.noOutline) return;
-    const shell = new T.Mesh(mesh.geometry,ink);shell.name='ink outline';shell.userData.noOutline=true;mesh.add(shell);
+    const shell = new T.Mesh(mesh.geometry,ink);shell.name='ink outline';shell.userData.noOutline=true;shell.castShadow=false;shell.receiveShadow=false;mesh.add(shell);
   }
   function mesh(geometry,surface,position=[0,0,0],parent=room,outlined=true) {
-    geometries.add(geometry);const object = new T.Mesh(geometry,surface);object.position.set(...position);parent.add(object);if(outlined)outline(object);return object;
+    geometries.add(geometry);const object = new T.Mesh(geometry,surface);object.position.set(...position);object.receiveShadow=!surface.isMeshBasicMaterial;object.castShadow=outlined&&!surface.transparent&&!surface.isMeshBasicMaterial;parent.add(object);if(outlined)outline(object);return object;
   }
-  const box = (w,h,d,surface,position,parent=room,outlined=true) => mesh(new T.BoxGeometry(w,h,d),surface,position,parent,outlined);
+  const box = (w,h,d,surface,position,parent=room,outlined=true) => {
+    const result=mesh(new T.BoxGeometry(w,h,d),surface,position,parent,outlined);
+    if(outlined&&Math.max(w,h,d)>1.1){const edges=new T.EdgesGeometry(result.geometry,35);geometries.add(edges);const lines=new T.LineSegments(edges,pencil);result.add(lines);}
+    return result;
+  };
   const cylinder = (rTop,rBottom,height,surface,position,parent=room,segments=8) => mesh(new T.CylinderGeometry(rTop,rBottom,height,segments),surface,position,parent);
   const sphere = (r,surface,position,parent=room,w=10,h=6) => mesh(new T.SphereGeometry(r,w,h),surface,position,parent);
   const rod = (a,b,r,surface,parent=room) => {
@@ -112,6 +121,47 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
   box(.17,1.5,1.2,c.cream,[-4.86,1.75,1.0]);
   for(let i=0;i<4;i++)box(.03,.12,.52,i===2?c.yellow:c.teal,[-4.75,1.32+i*.29,1],room,false);
 
+  // Sparse deliberate pencil strokes, rather than noisy full-screen outlines.
+  const strokes=[];
+  for(let i=0;i<12;i++){
+    const z=-3.1+i*.47;strokes.push(-4.895,.38,z,-4.895,.77,z+.16);
+    const x=-4.4+i*.72;strokes.push(x,.085,3.42,x+.18,.085,3.60);
+  }
+  const strokeGeometry=new T.BufferGeometry();strokeGeometry.setAttribute('position',new T.Float32BufferAttribute(strokes,3));geometries.add(strokeGeometry);room.add(new T.LineSegments(strokeGeometry,pencil));
+
+  // Floating objects have physical poses; they do not reset to a sine-wave path
+  // after a bump. These conservative proxies trade precision for mobile speed.
+  const floatingBodies=createFloatingPropState(), floatingVisuals=[];
+  for(const [index,body] of floatingBodies.entries()){
+    const prop=new T.Group();prop.name=body.id;scene.add(prop);
+    const accent=index===2?c.teal:index===4?c.teal:c.coral;
+    if(body.kind==='mug'){
+      cylinder(.16,.13,.26,c.teal,[0,0,0],prop,8);
+      const rim=mesh(new T.TorusGeometry(.143,.022,4,8),c.cream,[0,.137,0],prop);rim.rotation.x=Math.PI/2;
+      const inside=mesh(new T.CircleGeometry(.12,8),c.dark,[0,.137,0],prop,false);inside.rotation.x=-Math.PI/2;
+      mesh(new T.TorusGeometry(.095,.031,4,8),c.teal,[.186,.01,0],prop);
+      box(.10,.07,.009,c.cream,[0,.015,.146],prop,false);
+    }else if(body.kind==='book'){
+      box(.40,.10,.50,c.cream,[0,0,0],prop);
+      for(const side of [-1,1])box(.44,.035,.54,accent,[0,side*.067,0],prop);
+      box(.045,.16,.54,accent,[-.21,0,0],prop);
+      box(.20,.009,.035,c.cream,[.035,.09,-.1],prop,false);
+      box(.13,.009,.026,c.cream,[.035,.09,-.035],prop,false);
+      for(let i=0;i<2;i++)box(.006,.008,.40,c.navy,[.202,-.025+i*.05,.02],prop,false);
+    }else if(body.kind==='pen'){
+      cylinder(.033,.033,.34,accent,[0,0,0],prop,6);
+      cylinder(.042,.042,.065,c.cream,[0,.20,0],prop,6);
+      cylinder(.031,0,.075,c.yellow,[0,-.208,0],prop,6);
+      box(.016,.13,.018,c.dark,[.035,.135,0],prop,false);
+    }else{
+      box(.43,.06,.47,c.navy,[0,0,0],prop);
+      box(.38,.018,.42,c.cream,[0,.04,.015],prop);
+      for(let line=0;line<4;line++)box(.23,.008,.012,line===0?c.coral:c.teal,[.015,.055,-.1+line*.065],prop,false);
+      for(const x of [-.13,0,.13]){const ring=mesh(new T.TorusGeometry(.045,.011,3,6),c.dark,[x,.02,-.20],prop);ring.rotation.y=Math.PI/2;}
+    }
+    floatingVisuals.push(prop);
+  }
+
   function makeAlien() {
     const alien=new T.Group();alien.name='Alien X — original classroom companion';
     const body=sphere(.34,c.green,[0,.55,0],alien,8,5);body.scale.set(.9,1.1,.76);
@@ -140,12 +190,16 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
     if(node.material.transparent)continue;
     const original=node.material;
     if(!toonCache.has(original)){const next=new T.MeshToonMaterial({color:original.color,gradientMap:gradient});toonCache.set(original,next);materials.add(next);}
-    node.material=toonCache.get(original);outline(node);
+    node.material=toonCache.get(original);node.castShadow=true;node.receiveShadow=true;
+    if(!/eye|pupil|highlight|display|status/i.test(node.name))outline(node);
   }
   const ragdoll=createRagdollController(model);
-  const actorShadow=mesh(new T.CircleGeometry(.42,20),material(0x637e81),[0,.077,0],scene,false);actorShadow.rotation.x=-Math.PI/2;actorShadow.scale.y=.68;
+  const contactShadow=new T.MeshBasicMaterial({color:0x101727,transparent:true,opacity:.18,depthWrite:false});materials.add(contactShadow);
+  const actorShadow=mesh(new T.CircleGeometry(.42,20),contactShadow,[0,.077,0],scene,false);actorShadow.rotation.x=-Math.PI/2;actorShadow.scale.y=.68;
   actor.position.set(0,0,2.1);actor.rotation.y=.4;
   const solid=[{x0:-4.77,x1:4.77,z0:-3.8,z1:-2.03},{x0:-4.15,x1:-1.85,z0:-.58,z1:.98},{x0:3.35,x1:4.6,z0:-1.3,z1:.08},{x0:2.05,x1:3.25,z0:-.45,z1:.55}];
+  const propObstacles=solid.map((o,i)=>({min:[o.x0,.08,o.z0],max:[o.x1,[1.2,1.16,1.56,2.2][i],o.z1]}));
+  for(const x of [-3.35,0,3.35])propObstacles.push({min:[x-.98,1.05,-3.22],max:[x+.98,2.15,-2.75]});
   const radius=.25;
   const free=(x,z)=>x>=-4.58&&x<=4.58&&z>=-3.6&&z<=3.56&&!solid.some(o=>x>o.x0-radius&&x<o.x1+radius&&z>o.z0-radius&&z<o.z1+radius);
   let autoTarget=null, path=[], near='', pickup=0, pickupMode='', held=false, lastPickupState=false, time=0, lastDirection=new T.Vector2(), disposed=false, motionPaused=false, lost=false;
@@ -174,6 +228,7 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
   const pose={};
   function update(dt,input={x:0,y:0},active=true){
     if(disposed||lost)return;
+    const previousActor=actor.position.toArray();
     dt=Math.min(.04,Math.max(0,dt));if(!motionPaused&&!reduced.matches)time+=dt;
     let dx=0,dz=0,moving=false;
     if(active&&!pickupMode){
@@ -207,6 +262,12 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
       if(pickup>=1){const took=pickupMode==='take';pickupMode='';held=took;lastPickupState=false;if(took)onPickup?.();}
     }else if(held){tablet.position.copy(handPoint);tablet.rotation.set(.6,actor.rotation.y,0);}
     actorShadow.position.x=actor.position.x;actorShadow.position.z=actor.position.z;
+    stepFloatingProps(floatingBodies,dt,{player:{position:actor.position.toArray(),previous:previousActor,radius:.43},obstacles:propObstacles,idleMotion:!motionPaused&&!reduced.matches,paused:!active});
+    floatingBodies.forEach((body,i)=>{floatingVisuals[i].position.set(...body.position);floatingVisuals[i].rotation.set(...body.rotation);});
+    canvas.dataset.floatingProps=JSON.stringify(floatingPropSnapshot(floatingBodies));
+    canvas.dataset.propCollisions=String(floatingBodies.reduce((sum,body)=>sum+body.contacts,0));
+    canvas.dataset.propPlayerCollisions=String(floatingBodies.reduce((sum,body)=>sum+body.playerContacts,0));
+    canvas.dataset.shadowMap='enabled';
     tabletMarker.material=near==='tablet'?c.lime:c.teal;alienMarker.material=near==='alien'?c.lime:c.teal;
     canvas.dataset.playerX=actor.position.x.toFixed(3);canvas.dataset.playerZ=actor.position.z.toFixed(3);
     canvas.dataset.heldTablet=String(held||pickupMode==='take');
@@ -218,5 +279,5 @@ export function createControlRoom({canvas, reduced, onNear, onArrive, onPickup, 
   const raycaster=new T.Raycaster(),pointer=new T.Vector2();
   function pick(clientX,clientY){const rect=canvas.getBoundingClientRect();pointer.set((clientX-rect.left)/rect.width*2-1,-(clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const hit=raycaster.intersectObjects([tablet,alien],true).find(item=>item.object.name!=='ink outline');if(!hit)return '';let n=hit.object;while(n){if(n===tablet)return 'tablet';if(n===alien)return 'alien';n=n.parent;}return '';}
   update(0);render();
-  return {update,render,resize,goTo,cancelGoal,beginPickup,putDown,pick,getNear:()=>near,setPaused(value){motionPaused=value;},dispose(){disposed=true;canvas.removeEventListener('webglcontextlost',contextLost);ragdoll.dispose?.();model.userData.dispose?.();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();gradient.dispose();renderer.dispose();}};
+  return {update,render,resize,goTo,cancelGoal,beginPickup,putDown,pick,getNear:()=>near,setPaused(value){motionPaused=value;},dispose(){disposed=true;canvas.removeEventListener('webglcontextlost',contextLost);ragdoll.dispose?.();model.userData.dispose?.();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();gradient.dispose();key.shadow.map?.dispose();renderer.dispose();}};
 }
