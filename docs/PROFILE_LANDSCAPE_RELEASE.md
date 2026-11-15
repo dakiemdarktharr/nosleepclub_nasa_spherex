@@ -17,7 +17,7 @@ Two earlier 502 errors remain in the old receipt. New telemetry adds only phase/
 
 ## Science and interface evidence
 
-Protocol `704e3ef` was locked before 112 branches. There are 96 profile branches and 16 missing-input branches; all 14 stars remain in the sample. An independent WLS audit checked 2,760 selected nodes, three-step stencils at 192 fit points, and 480 saved objectives. Source, design, journal, and image files are hashed. See [full results](PROFILE_LANDSCAPE_RESULTS.md).
+Protocol `704e3ef` was locked before 112 branches. There are 96 profile branches and 16 missing-input branches; all 14 stars remain in the sample. An independent WLS audit checked 2,760 selected nodes, three-step stencils at 192 fit points, and 480 saved objectives. Source, design, journal, and image files are hashed. See the [English results](PROFILE_LANDSCAPE_RESULTS.en.md) and [hash-locked original results](PROFILE_LANDSCAPE_RESULTS.md).
 
 Positive Hessians and connected regions on a grid do not certify physical solutions, establish coverage, or remove the old gate. The 252 assessment cells and 30 prospective fields remain unopened. No improvement in astronomical accuracy has been demonstrated.
 

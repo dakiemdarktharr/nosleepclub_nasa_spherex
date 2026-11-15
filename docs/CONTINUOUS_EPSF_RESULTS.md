@@ -2,7 +2,7 @@
 
 **Result: insufficient basis for changing the scientific method.** Across the three opened fields, padding the target ePSF made the profile Hessian more stable, but vector-error RMS did not decrease in any of the six Gaussian cases. At SNR 2/frame, the profile 68% ellipses contained truth in only 31/64, 36/64, and 34/64 trials. These are frequencies from conditional trials, not precise estimates of coverage for all sky sources.
 
-The protocol and model code were locked at commit `f138e1109183bb7db2122384ec1cfcd8f5958488`; design SHA-256: `ea41e9e83133329c04f9d648d193941053a84ca4805cdfd35c746634b6dfec5a`. Trial truth still uses the frozen nearest ePSF, while the candidate pads only the target ePSF; neighbor ePSF, mask, WCS, noise, and nuisance projection follow the protocol. There was no independent physical-PSF validation, no added source shot noise, no new independent field, and no new WISE 0855 measurement. See the [protocol](CONTINUOUS_EPSF_PROTOCOL.md) for data generation, assumptions, and limits.
+The protocol and model code were locked at commit `f138e1109183bb7db2122384ec1cfcd8f5958488`; design SHA-256: `ea41e9e83133329c04f9d648d193941053a84ca4805cdfd35c746634b6dfec5a`. Trial truth still uses the frozen nearest ePSF, while the candidate pads only the target ePSF; neighbor ePSF, mask, WCS, noise, and nuisance projection follow the protocol. There was no independent physical-PSF validation, no added source shot noise, no new independent field, and no new WISE 0855 measurement. See the [English protocol](CONTINUOUS_EPSF_PROTOCOL.en.md) and [hash-locked original](CONTINUOUS_EPSF_PROTOCOL.md) for data generation, assumptions, and limits.
 
 ## Gaussian controls by field and case
 
