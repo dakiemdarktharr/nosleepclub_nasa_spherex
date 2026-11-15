@@ -1,131 +1,64 @@
-# WISE 0855: ràng buộc phổ chưa giải quyết được vị trí
+# WISE 0855: Spectral Constraints Do Not Resolve Position
 
-Đủ **28/28** lượt fit hoàn tất theo protocol khóa tại
-`cfb9d6a17ee37ca2c5c061a2cd44209d1093f4b7`. Đây là development trên **20
-exposure QR2 đã mở**: broad dùng 10 ảnh mỗi epoch, strict dùng hai ảnh mỗi
-epoch và là tập con của broad. Không có trường kiểm định mới được mở. Kết quả
-chưa chứng minh giảm bias, độ chính xác, coverage hay phát hiện thiên văn.
+All **28/28** fits completed under the protocol locked at `cfb9d6a17ee37ca2c5c061a2cd44209d1093f4b7`. This is development on **20 already opened QR2 exposures**: broad uses 10 images per epoch; strict uses two per epoch and is a subset of broad. No new validation field was opened. The results do not establish reduced bias, accuracy, coverage, or an astronomical detection.
 
-[Demo tương tác](https://nosleepclub-nasa-spherex.vercel.app/#linked-flux)
-cho đổi bộ ảnh, xem biểu đồ, đủ bảy vector và lý do chặn từng epoch.
-[Protocol](WISE_LINKED_PROTOCOL.md), [overview](../web/data/linked-flux/overview.json)
-và [28 attempt đầy đủ](../web/data/linked-flux/development.json) giữ nguồn,
-đơn vị, runtime, mask/pixel, ePSF zone, spectral coefficient, mọi start/mode,
-trọng số và covariance có điều kiện. Không thay estimator hay manifest WISE
-đang hiển thị trong workspace.
+[Interactive demo](https://nosleepclub-nasa-spherex.vercel.app/#linked-flux) lets users switch image sets, inspect plots, all seven vectors, and reasons each epoch was blocked. The [English protocol](WISE_LINKED_PROTOCOL.en.md), [original hash-locked protocol](WISE_LINKED_PROTOCOL.md), [overview](../web/data/linked-flux/overview.json), and [all 28 attempts](../web/data/linked-flux/development.json) retain sources, units, runtime, mask/pixels, ePSF zone, spectral coefficient, every start/mode, weights, and conditional covariance. The WISE estimator and manifest currently shown in the workspace were not replaced.
 
-## Kết quả tất cả nhánh
+## Results for all branches
 
-Đơn vị giây cung. Δ là khoảng cách Euclid giữa vector của nhánh đó và vector
-control **trong cùng bộ ảnh**; nó không phải sai số so truth. “Screen” là
-kiểm tra số học cho cả hai epoch, chưa phải nghiệm thu khoa học.
+Units are arcseconds. Δ is Euclidean distance between a branch's vector and its control vector **within the same image set**; it is not error against truth. “Screen” is an arithmetic check of both epochs, not science acceptance.
 
-| Nhánh | Broad đông / bắc | Broad Δ | Broad screen | Strict đông / bắc | Strict Δ | Strict screen |
+| Branch | Broad East / North | Broad Δ | Broad screen | Strict East / North | Strict Δ | Strict screen |
 |---|---:|---:|---|---:|---:|---|
-| 1 · Độ sáng riêng từng frame | −3,067 / +0,087 | 0 | 2/2 | −2,535 / +0,501 | 0 | 1/2 |
-| 2 · Phổ R7 68, α=0 · candidate định trước | −3,029 / −0,023 | 0,116 | 2/2 | −3,122 / +2,704 | 2,280 | 1/2 |
-| 3 · Phổ + độ nghiêng tự do | −3,322 / +0,226 | 0,290 | 2/2 | −2,535 / +0,501 | ≈0 | 1/2 |
-| 4 · Reference α=−4 | −3,029 / −0,023 | 0,116 | 2/2 | −3,122 / +2,705 | 2,281 | 1/2 |
-| 5 · Reference α=+4 | −3,030 / −0,023 | 0,116 | 2/2 | −3,121 / +2,703 | 2,279 | 1/2 |
-| 6 · Center QR2, shape R7 68 | −2,859 / −0,082 | 0,268 | 2/2 | −3,133 / +2,692 | 2,272 | 1/2 |
-| 7 · Response R7 17 kênh | −3,028 / −0,026 | 0,120 | 2/2 | −3,122 / +2,703 | 2,279 | 1/2 |
+| 1 · Independent brightness per frame | −3.067 / +0.087 | 0 | 2/2 | −2.535 / +0.501 | 0 | 1/2 |
+| 2 · R7 spectrum 68, α=0 · prespecified candidate | −3.029 / −0.023 | 0.116 | 2/2 | −3.122 / +2.704 | 2.280 | 1/2 |
+| 3 · Spectrum + free tilt | −3.322 / +0.226 | 0.290 | 2/2 | −2.535 / +0.501 | ≈0 | 1/2 |
+| 4 · Reference α=−4 | −3.029 / −0.023 | 0.116 | 2/2 | −3.122 / +2.705 | 2.281 | 1/2 |
+| 5 · Reference α=+4 | −3.030 / −0.023 | 0.116 | 2/2 | −3.121 / +2.703 | 2.279 | 1/2 |
+| 6 · QR2 center, R7 68 shape | −2.859 / −0.082 | 0.268 | 2/2 | −3.133 / +2.692 | 2.272 | 1/2 |
+| 7 · R7 17-channel response | −3.028 / −0.026 | 0.120 | 2/2 | −3.122 / +2.703 | 2.279 | 1/2 |
 
-Khoảng cách lớn nhất giữa **mọi cặp** vector là **0,555861″ broad** (nhánh 3
-và 6), **2,280631″ strict** (nhánh 3 và 4). Giá trị broad lớn nhất so riêng
-control là 0,290400″; không dùng con số này thay cho toàn bộ spread. Tính
-spread giữ cả nhánh không qua screening. Hai bộ ảnh chia sẻ dữ liệu, không
-phải hai kiểm định độc lập.
+Maximum separation between **any pair** of vectors is **0.555861″ broad** (branches 3 and 6) and **2.280631″ strict** (branches 3 and 4). Maximum broad change relative to control alone is 0.290400″; do not substitute it for total spread. Include branches that fail screening in spread calculations. The two image sets share data and are not independent validations.
 
-Nhánh 3 có hai tham số flux và hai wavelength khác nhau trong strict, nên
-span tuyến tính tương đương hai flux độc lập. Vector trùng control là kiểm
-tra đại số, không phải thêm một bằng chứng thiên văn.
+Branch 3 has two flux parameters and two different wavelengths in strict, so its linear span is equivalent to two independent fluxes. The vector matching control is an algebraic check, not another astronomical evidence source.
 
-## Hai nghiệm trong epoch sau của strict
+## Two solutions in strict's later epoch
 
-Cả bảy nhánh strict hội tụ IRLS nhưng bị chặn bởi
-`multiple_near_best_modes` ở epoch `after`. Đây không phải timeout hoặc
-failure chuẩn bị. Tại control, hai nghiệm tốt nhất có χ² weighted
-272,823844 và 272,861320, chênh **0,037476**. Với candidate chính, chênh là
-**0,568008**. Ngưỡng Δχ² của mode audit là heuristic, chưa có phân phối xác
-suất hoặc mức phủ được chứng minh cho robust fit này.
+All seven strict branches converge under IRLS but are blocked by `multiple_near_best_modes` in the `after` epoch. This is not a timeout or preparation failure. In the control, the two best solutions have weighted χ² 272.823844 and 272.861320, a difference of **0.037476**. For the primary candidate, the difference is **0.568008**. The mode-audit Δχ² threshold is heuristic; no probability distribution or coverage has been demonstrated for this robust fit.
 
-[Replay hậu kiểm](WISE_LINKED_MODE_DIAGNOSTICS.md) tính lại profile tuyến tính
-tại các vị trí và trọng số đã lưu; không refit, chọn lại model hoặc mở dữ
-liệu. Chi phí, flux/error và residual tại điểm đã lưu khớp đúng trên runtime
-hiện tại. Trong control, hai exposure đóng góp Δχ² **+0,554247** và
-**−0,516770**, gần triệt tiêu nhau. Trong nhánh shared, amplitude chung do cả
-hai ảnh quyết định; không diễn từng phần χ² như hai phép đo độc lập.
+The [post hoc replay](WISE_LINKED_MODE_DIAGNOSTICS.md) recalculates the linear profile at saved positions and weights; it does not refit, reselect a model, or open data. On the current runtime, saved-point cost, flux/error, and residual match exactly. In the control, the two exposures contribute Δχ² **+0.554247** and **−0.516770**, nearly canceling. In the shared branch, both images determine the common amplitude; do not interpret per-exposure χ² parts as independent measurements.
 
-Mask core được chọn đầy đủ tại các mode đã kiểm tra. Mỗi ảnh có ba template
-catalog trong nuisance. Một template gần các mode; phần information nguồn
-còn lại sau phép chiếu giảm mạnh hơn ở mode gần template. Đây là chẩn đoán
-hình học của mô hình. Chưa chứng minh template đó gây đa mode, chưa xác định
-là một nguồn thiên văn tách biệt và chưa biết nghiệm nào đúng hơn.
+The core mask is fully selected at inspected modes. Each image has three catalog templates in the nuisance model. One template is near the modes; projected source information falls more at the mode near the template. This is a geometric model diagnostic. It does not prove that the template causes multimodality, identify a separate astronomical source, or determine which solution is more correct.
 
-## Những gì đã kiểm tra và còn thiếu
+## Checks and gaps
 
-- R7 channel map có `DETCOORD=sky`, còn map center/bandwidth có
-  `DETCOORD=DEVICE`: binder áp dụng orientation riêng từng HDU, tránh lật
-  kép. [Audit quy ước photometry](PHOTOMETRIC_CONVENTION_AUDIT.md) ghi rõ
-  thông tin xác minh được và phần chưa xác minh.
-- Renderer chuẩn hóa toàn lattice native hữu hạn trước mask, giữ dấu các
-  cánh âm của ePSF, dùng WCS nguồn chính xác và Ω pixel có đơn vị. Kiểm tra
-  hội tụ Ω không phải error bound vật lý; chưa ghép đúng SAPM UUID từ
-  processing history. Chuẩn hóa không tự làm ePSF thành truth độc lập.
-- PRISM pipeline MAST năm 2023 được dùng riêng, không ghép G395M, scale
-  Spitzer hoặc deconvolve LSF. Reference α=0, ±4 là các giả định tường minh,
-  chưa xác minh là chuẩn calibration SPHEREx. Row center QR2 vẫn dùng shape
-  response R7, không phải so hai pipeline QR2/QR3 đầy đủ.
-- Tỷ số phổ giữ tại pixel gần anchor, chưa tích phân response qua footprint
-  ePSF hay đạo hàm theo vị trí đang fit. Chưa propagate uncertainty phổ,
-  variability, LSF, shape response, PSF tails, ePSF QR3 trên ảnh QR2.
-- Một vị trí mỗi epoch chưa mô tả chuyển động/parallax trong mùa. Offset
-  Gaia và vị trí/hình nguồn nền giữ cố định; covariance thiếu các hệ thống
-  này và cross-frame/cross-epoch chung. Không cộng RSS các SNR frame shared
-  vì chúng dùng cùng một tham số amplitude.
-- GN/profile-H chỉ mô tả quanh một nghiệm theo trọng số cuối. Không nới
-  covariance tùy ý để phủ mode khác, không dùng nó như ellipse hiệu chuẩn.
-  Jacobian vị trí không được lưu nên publication auditor không thể tính
-  lại GN từ report một cách độc lập; có kiểm PD và phép biến đổi covariance.
-- Publisher tính lại χ² theo pixel, flux basis/covariance, IRLS/mode flags,
-  vectors, spread và profile-H inverse. Đây là kiểm toán số học, chưa kiểm
-  chứng PSF/noise/astrometric truth hoặc độ chính xác của estimator.
+- R7 channel maps have `DETCOORD=sky`, while center/bandwidth maps have `DETCOORD=DEVICE`: the binder applies orientation per HDU and avoids a double flip. The [photometric-convention audit](PHOTOMETRIC_CONVENTION_AUDIT.md) records verified and unverified details.
+- The renderer normalizes across the full finite native lattice before masking, retains signed negative ePSF wings, uses exact source WCS, and uses Ω with units. Ω convergence is not a physical error bound; the correct SAPM UUID has not been matched from processing history. Normalization does not make the ePSF independent truth.
+- The 2023 MAST PRISM pipeline is used separately; it is not merged with G395M, scaled by Spitzer, or LSF-deconvolved. Reference α=0, ±4 are explicit assumptions, not verified SPHEREx calibration. The QR2 row center still uses R7 68 response shape; this is not a full comparison of QR2 and QR3 pipelines.
+- Spectral ratio is fixed at the pixel nearest the anchor; response is not integrated over the ePSF footprint or differentiated by fitted source position. Spectral uncertainty, variability, LSF, response-shape, PSF tails, and QR3 ePSF applied to QR2 images are not propagated.
+- One position per epoch does not model within-season motion/parallax. Gaia offsets and background-source positions/shapes are fixed; covariance omits these shared effects and cross-frame/cross-epoch terms. Do not add shared-frame S/N in quadrature because frames share one amplitude parameter.
+- GN/profile-H describe curvature around one solution at final weights. Do not arbitrarily enlarge covariance to cover another mode or use it as a calibrated ellipse. Position Jacobians were not saved, so the publication auditor cannot independently recompute GN from the report; PD checks and covariance transformations are available.
+- The publisher recomputes per-pixel χ², flux basis/covariance, IRLS/mode flags, vectors, spread, and profile-H inverse. This is arithmetic auditing, not validation of PSF/noise/astrometric truth or estimator accuracy.
 
-## Tái lập và provenance
+## Reproduction and provenance
 
-Raw checkpoint 4.788.083 byte, SHA-256
-`a5bffe162ae8ccd88a6fc5311d1e8ddc279c56092b072a782652da5a7f1cfd0a`.
-Design SHA-256
-`c5914ab5b3ef1e8fb0b0a41c0d35d0bab741cc562ea820b632ca902e4944b072`.
-Public report chứa nguyên records/checksum và phần kiểm toán bổ sung;
-overview giữ SHA/byte size của report. Raw FITS và checkpoint lớn ở
-`data/raw/`, không đưa vào Git. [Manifest biểu đồ](../web/data/linked-flux/figures.json)
-ghi source, package/font hash và tọa độ đã vẽ.
+Closed raw checkpoint: 4,788,083 bytes, SHA-256 `a5bffe162ae8ccd88a6fc5311d1e8ddc279c56092b072a782652da5a7f1cfd0a`. Design SHA-256 `c5914ab5b3ef1e8fb0b0a41c0d35d0bab741cc562ea820b632ca902e4944b072`. The public report has original records/checksums plus additional audit data; overview records its hash/byte size. Raw FITS and large checkpoints are Git-ignored under `data/raw/`. [Figure manifest](../web/data/linked-flux/figures.json) records sources and package/font hashes and plotted coordinates.
 
 ```powershell
 .venv/Scripts/python.exe -B -m unittest tests.test_linked_publication -v
 .venv/Scripts/python.exe -B -m scripts.publish_linked_study
-# Tuỳ chọn, chỉ cho hình khoa học offline; không đổi requirements science đã khóa:
+# Optional; offline science figures only, without changing pinned science requirements:
 .venv/Scripts/python.exe -B -m pip install -r requirements-figures.txt
 .venv/Scripts/python.exe -B -m scripts.plot_linked_study
 node tests/linked-evidence.test.cjs
 .venv/Scripts/python.exe -B -m scripts.serve_app --port 8767
-# Mở http://127.0.0.1:8767/#linked-flux
+# Open http://127.0.0.1:8767/#linked-flux
 ```
 
-Runner nguyên thủy từ chối ghi đè study đã hoàn tất. Muốn thử can thiệp mới
-cần module/design/output khác; không sửa protocol sau khi xem các mode này.
+The original runner refuses to overwrite a completed study. A new intervention requires a different module/design/output; do not change protocol after viewing these modes.
 
-## Mốc kế tiếp và điều kiện nghiệm thu
+## Next milestone and acceptance conditions
 
-Khóa phép thử nguồn chồng/ePSF trên **dữ liệu development đã mở**. So cùng
-pixel/căn chỉnh và giữ mọi mode giữa: nuisance hiện tại; neighbor có ràng
-buộc vật lý cùng uncertainty vị trí/hình; ePSF kiểm tra trên sao tham chiếu
-giữ ngoài xây PSF. Thêm đối chứng độc lập về pha, SED, PSF/noise, không chọn
-model vì gần vector tài liệu hơn. Đánh giá cả RMS/bias, failure/abstention và
-ngân sách uncertainty; covariance nhỏ hơn hoặc χ² thấp hơn tự nó không đạt.
+Lock a blend/ePSF experiment on **already opened development data**. Compare on the same pixels/alignment and retain every mode: current nuisance model; neighbors with physical constraints and position/shape uncertainty; and ePSF evaluated on reference stars held out from PSF construction. Add independent phase, SED, PSF/noise controls; do not choose a model because it is closer to the published vector. Evaluate RMS/bias, failures/abstentions, and uncertainty budget; smaller covariance or lower χ² alone does not pass.
 
-Sau đó nối time model theo exposure và uncertainty căn chỉnh chung. Chỉ mở
-**12 calibration / 12 validation / 6 holdout cuối** khi evaluator, overlap
-exposure/pixel, power, gate tuyệt đối và quy tắc ngoài miền đã khóa. Phép thử
-này chưa đáp ứng những điều kiện đó; goal production vẫn đang thực hiện.
+Then add an exposure-level time model and shared alignment uncertainty. Open **12 calibration / 12 validation / 6 final holdout fields** only after locking evaluator, exposure/pixel overlap, power, absolute gates, and out-of-domain policy. This experiment does not meet those conditions; production work remains in progress.

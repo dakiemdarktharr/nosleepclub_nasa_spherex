@@ -1,241 +1,242 @@
-# What Did SPHEREx See? / SPHEREx đã thấy gì?
+# Touch The Sky
 
-NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details).
+**NoSleepClub · NASA Space Apps Challenge 2026 · [Planet X and SPHEREx](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details)**
 
-Từ cảnh SPHEREx trên quỹ đạo, chọn vệ tinh để tìm hiểu sứ mệnh hoặc chọn Trái Đất để nhìn lên bầu trời đêm. Chọn một vùng có dữ liệu hoặc nhập RA/Dec để mở ảnh SPHEREx và so sánh các lần chụp.
+Touch The Sky is an educational website for middle-school learners and anyone curious about space. It helps visitors understand NASA’s SPHEREx mission through a playable learning story, short lessons, a mission guide, and an interactive way to explore real SPHEREx images. The goal is to make infrared astronomy approachable, build confidence in reading scientific images, and encourage learners to ask what the data can—and cannot—show.
 
-From the orbit scene, select SPHEREx to learn about the mission or Earth to look up at the night sky. Open a marked region or enter RA/Dec to view SPHEREx images and compare observations.
+**[Open Touch The Sky](https://nosleepclub-nasa-spherex.vercel.app/?lang=en)** · [Challenge: Planet X and SPHEREx](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details)
 
-## Mở bản xem trước / Open the local preview
+## What visitors can do
 
-Từ thư mục repo, dùng môi trường Python đã cài `web/requirements.txt`. / From the repo root, use a Python environment with `web/requirements.txt` installed.
+### Learn through the game
 
-```sh
-python scripts/serve_app.py
+In **Touch The Sky**, players join Gagoo aboard a spacecraft and meet Alien X. They study a lesson on the ship’s tablet, answer six questions, and earn story fuel that powers a short flight sequence. The lesson introduces infrared light, filters, false-color images, spectra, and how astronomers use observations across multiple infrared bands to study material such as water ice in star-forming regions.
+
+Fuel, aliens, wormholes, and flight progress are fictional game mechanics. They are not SPHEREx telemetry or scientific results. Learning progress is saved in the current browser, not in an account.
+
+### Explore three short lessons
+
+The lesson journal is designed for learners around grades 6–9 and for self-guided exploration. Its three activities take about 19 minutes in total:
+
+1. **Why does SPHEREx photograph the same patch of sky again?** Learn how filters separate infrared wavelengths and why the same region can look different across bands.
+2. **Can you find the same group of dots again?** Navigate a saved sequence of three real SPHEREx observations of the Epsilon Indi B field, recorded on 29 April, 1 May, and 7 May 2025 UTC.
+3. **Did the bright dot really disappear?** Read missing-data and quality masks, compare image alignment, and consider what evidence is needed before claiming a source changed.
+
+Each lesson includes an activity and connects to a six-question quiz with explanations. The material has not yet been evaluated in a formal classroom study.
+
+### Read the SPHEREx mission guide
+
+The **About SPHEREx** section explains the mission’s three science goals: studying the early universe through galaxy distributions, measuring the accumulated light from galaxies across cosmic history, and mapping ices in dense star-forming clouds. It also introduces the observatory, its infrared instrument, detectors, filters, data products, and the path from measurements to research.
+
+SPHEREx measures near-infrared light from **0.75 to 5.0 micrometers**. Its six detectors and variable filters provide **102 nominal spectral channels** across the sky. The guide distinguishes explanatory diagrams and assigned colors from direct observations, and links to NASA and the SPHEREx archive for further reading.
+
+### Explore real SPHEREx images
+
+From **Explore the Sky**, visitors can select an example target or search by right ascension and declination. Search options include the **DR1** or **QR3** release, detector band, field of view, and an optional date range. The app queries the NASA/IPAC Infrared Science Archive (IRSA), lists available observations, and retrieves FITS cutouts for viewing.
+
+The image viewer can:
+
+- Compare two observations side by side on a shared view, or blink between them.
+- Inspect compatible observations as a time sequence, with observation dates and metadata for each frame.
+- Show the selected detector band and the wavelength at the target position when the FITS metadata supports it.
+- Identify masked or missing pixels and provide links to source FITS files and provenance records.
+- Export the query and viewed-frame metadata for later reference.
+
+For comparisons, the app reads the FITS WCS/SIP coordinate solution and resamples images to a common tangent-plane grid. It applies consistent display and mask rules to the compared frames. Time playback is limited to compatible observations; it is a viewing aid, not a motion or variability measurement. The sequence eligibility rule checks detector, mask policy, usable center pixels, and wavelength overlap at the field center. Scientific claims require separate analysis of calibration, alignment, masks, uncertainty, and the underlying measurements.
+
+## How the project teaches image literacy
+
+Touch The Sky connects mission science with the choices a learner makes while viewing data. A learner can change the infrared band, revisit an observed field, read observation dates, compare image masks, and ask whether a visual difference might come from wavelength, image coverage, quality flags, or time. The site encourages learners to inspect sources and limitations before interpreting a change as an astronomical result.
+
+The site presents educational material and interactive data views. It does not certify astronomical detections or establish that a source moved, brightened, or faded. The saved Epsilon Indi B sequence is suitable for learning to navigate repeated observations; it does not resolve the pair or confirm motion or variability.
+
+## Technology
+
+- **Frontend:** HTML, CSS, and modular JavaScript. Interactive spacecraft and sky scenes use WebGL, with Three.js bundled in `web/assets/three-0.187.0/`.
+- **Mission and learning content:** Structured lesson data, bilingual interface copy, interactive diagrams, quizzes, and browser-local progress storage.
+- **Archive access and image handling:** NASA/IPAC IRSA SIA queries and FITS cutouts; Python services use Astropy, NumPy, and Pillow for FITS/WCS handling and image preparation.
+- **Local preview:** A Python launcher serves the web app and its local API routes. The static demo server can also serve the saved educational products without the live API.
+- **Deployment:** Vercel serves the site and Python API routes. Selected review features use an isolated MongoDB database.
+
+The original research and validation work remains documented under [`docs/`](docs/). Those reports include methods, data provenance, uncertainty qualifications, and open limitations. They should be read in context; their presence does not mean every exploratory analysis is a validated astronomical result.
+
+## Run the local preview
+
+From the repository root, install the Python requirements and start the application:
+
+```powershell
+python -m pip install -r requirements.txt -r web/requirements.txt
+python -m scripts.serve_app --port 8767
 ```
 
-[Trang chủ / Home](http://127.0.0.1:8767/) · [Bầu trời đêm / Night sky](http://127.0.0.1:8767/#night-sky) · [Nhập tọa độ / Coordinate search](http://127.0.0.1:8767/#explore)
+Open <http://127.0.0.1:8767/>. The local launcher binds to loopback and does not load production secrets. Searching IRSA for new observations requires an internet connection; the saved Epsilon Indi B sequence is available when the archive is slow or unreachable.
 
-Chọn **Epsilon Indi B → Mở chuỗi ảnh đã lưu** để xem ba ảnh DR1 khi IRSA chậm hoặc gián đoạn. / Select **Epsilon Indi B → Open saved sequence** to play three DR1 images when IRSA is slow or unavailable. [Metadata và FITS / Metadata and FITS](web/assets/mission/epsilon-sequence/provenance.json)
+To serve the saved educational demo without the local API:
 
-Cảnh quỹ đạo dùng mô hình trực quan 3D của NASA’s Eyes và ảnh dự phòng lưu cùng web. Tra cứu và tải ảnh mới cần kết nối IRSA. Bản local đã phát ba ảnh thật DR1 D6 của vùng Epsilon Indi B chụp ngày **29/4, 1/5 và 7/5/2025 UTC**. Độ giao phổ ước tính ở tâm vùng là **99,755%** theo WCS-WAVE. Ba lượt tải cutout mất **4,6–17,6 giây** trong lần kiểm tra này. Tốc độ ở Barnard’s Star thay đổi theo lần tải. Kiểm tra vận hành trên bản public còn chờ. [Nhật ký chuỗi ảnh](docs/data/spherex-dr1-timeline-smoke.json)
+```powershell
+python scripts/serve_demo.py
+```
 
-The orbit scene uses the NASA’s Eyes visualization model and a local still fallback. Live searches and new images require access to IRSA. The local preview played three real DR1 D6 images of the Epsilon Indi B field from **29 April, 1 May and 7 May 2025 UTC**. Estimated common band overlap at the field center was **99.755%** using WCS-WAVE. The three cutouts took **4.6–17.6 seconds** to load in that run. Barnard’s Star latency varied across requests. Public deployment checks are pending. [Image sequence receipt](docs/data/spherex-dr1-timeline-smoke.json)
+## NASA data and references
 
-[Brief giao nhóm / Team brief](docs/PRODUCTION_PRODUCT_BRIEF.md) · [Góc tham chiếu 3D / Spacecraft references](docs/SPHEREX_REFERENCE_VIEWS.md) · [Danh mục dữ liệu / Dataset catalog](docs/DATASET_CATALOG.md) · [Cách triển khai / Deployment](docs/DEPLOYMENT.md)
+The project uses NASA mission and science resources and SPHEREx archive data. Principal sources include:
 
-## Định hình phiên bản tiếp theo
+- [NASA/IPAC IRSA SPHEREx archive documentation](https://caltech-ipac.github.io/spherex-archive-documentation/)
+- [IRSA SPHEREx data access](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/)
+- [IRSA SPHEREx data products](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/)
+- [NASA/JPL SPHEREx mission science](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/science/)
+- [NASA SPHEREx mission overview](https://science.nasa.gov/missions/spherex/)
 
-[Câu hỏi sản phẩm và tiêu chí nghiệm thu](docs/OVERHAUL_DISCOVERY.md) · [Danh mục nguồn dữ liệu](docs/DATASET_CATALOG.md) · [Bản đồ vùng trời 3D](docs/sky-atlas.html).
+Individual dataset and asset records are linked from the app and recorded in the relevant manifests. For usage terms and third-party credits, see [`NOTICE.md`](NOTICE.md).
 
-[Quy trình so ảnh và nghiên cứu WiseView / Comparison workflow and WiseView research](docs/IMAGE_COMPARISON_WORKFLOW.md) · [Nghiên cứu thu hút người mới / Citizen science engagement](docs/CITIZEN_SCIENCE_ENGAGEMENT.md).
+## Data, rights, and project status
 
-Mở `docs/sky-atlas.html` trực tiếp trong trình duyệt để xoay thiên cầu và chọn dữ liệu. Bản đồ có sẵn danh mục để dùng ngoại tuyến. Sau khi sửa JSON ở `docs/data/`, chạy `python scripts/embed_sky_atlas.py` để cập nhật dữ liệu nhúng.
+Original project code and accompanying original documentation are released under the [MIT License](LICENSE). External datasets, fonts, illustrations, and dependencies retain their own terms; see [`NOTICE.md`](NOTICE.md) before reuse.
 
-## Giao diện theo quy trình
+SPHEREx observations can be masked, incomplete, or unavailable for a selected field and date. IRSA requests may be slow or temporarily fail. Image colors and contrast are visualization choices, not visible-light colors or measurements of temperature. The app preserves source links and metadata where available so that viewers can inspect how an image was obtained.
 
-**[Bắt đầu từ dữ liệu](https://nosleepclub-nasa-spherex.vercel.app/#home)** · [Luồng thao tác và giới hạn](docs/WORKFLOW_UI.md).
+This is an independent NASA Space Apps Challenge project and is not an official NASA product or endorsement.
 
-Ứng dụng tách thành **Dữ liệu → So ảnh → Kiểm tra → Ghi nhận**, mỗi màn có một hành động chính và đường quay lại. Bỏ các đoạn chữ phụ lặp, giữ nhãn/đơn vị/cảnh báo cần cho quyết định; chi tiết nằm trong mục mở khi cần. Kho kiểm chứng có danh sách báo cáo riêng, không chen vào quy trình xử lý.
+## Current product workflow
 
-Bộ mẫu WISE và truy vấn IRSA giữ ngữ cảnh riêng. Residual không hiển thị vector/SNR của WISE. IRSA cần giữ A và tải B; ghi chú được khôi phục theo đúng truy vấn/cặp ảnh và xuất trong JSON, không gửi vào API nhận xét WISE. Hướng dẫn, Back/Forward và skip link giữ đúng nguồn đang dùng. Các sản phẩm khoa học và số đo WISE không đổi.
+[Open the Explore the Sky section](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Workflow and limitations](docs/WORKFLOW_UI.md).
 
-## Đối chứng tín hiệu, nguồn chồng và pha pixel
+The main task flow is **Choose data → Compare images → Check evidence → Record observations**. Each screen has one primary action and a clear way back. The interface keeps labels, units, and decision-relevant warnings visible, with deeper explanations available on demand. A separate verification library lists research reports without interrupting the image workflow.
 
-**[Xem demo](https://nosleepclub-nasa-spherex.vercel.app/#signal-controls)** · [Kết quả, giới hạn và bước tiếp theo](docs/SIGNAL_CONTROL_RESULTS.md).
+WISE demo data and live IRSA searches keep separate context. Residual views do not show WISE motion vectors or S/N. IRSA comparison retains image A and loads image B; notes are restored for the matching query/image pair and exported as JSON, not sent to the WISE review API. Help, browser Back/Forward, and skip links retain the active data source. These interface changes do not alter science products or the WISE measurement.
 
-Thiết kế `9894074` đã khóa và đẩy lên GitHub trước **640 lượt fit**: 192 không nhiễu, 384 có nhiễu Gaussian và 64 không nguồn. Hai hình học sao, một exposure đã mở; không phải trường trời mới. Đối chiếu ePSF gốc/hiệu chỉnh, hai họ nguồn giả, bốn pha pixel và nguồn chồng đã khai báo/bị bỏ sót. Toàn bộ 640 lượt hoàn tất và được kiểm toán riêng; đủ hai journal trong **10,05 MB gzip** tải theo yêu cầu.
+For learners, the project connects mission science with choices made while viewing data: changing an infrared band, revisiting a field, reading observation dates, comparing masks, and considering whether a visible difference is caused by wavelength, image coverage, quality flags, or time. It encourages inspection of sources and limitations before treating a visual change as an astronomical result.
 
-- **Gate đo đúng không nhiễu trượt: 70/128.** Có 64 ca đạt từ đối chứng khớp template gốc, chỉ **6/64** từ Gaussian độc lập. Sàng lọc số vẫn đạt cả 128 ca: chạy ổn chưa có nghĩa đo đúng.
-- **Guard giữ tín hiệu đạt 64/64 cặp**, chỉ giới hạn mức suy giảm tương đối ≤0,02 pixel và ≤0,02 sai lệch tỷ lệ flux; chưa chứng minh độ đúng hay tăng độ chính xác. **8/16 nhóm có nhiễu** đạt ngưỡng mẫu ≥15/16; không gộp các điều kiện ghép noise thành trường độc lập.
-- Bỏ sót bạn đồng hành có thể kéo fit về phía nguồn chồng dù vẫn qua sàng lọc số. Demo giữ đủ bias, flux, phân loại gần nguồn giả/bạn/nơi khác và đối chứng null; null chưa có ngưỡng phát hiện nên không gọi là tỷ lệ báo nhầm.
+## Current scientific-validation status — version 0.10
 
-**252 ô dành riêng và 30 trường triển vọng chưa mở; phép đo WISE 0855 giữ nguyên.** Bước tiếp: khóa phép thử tách diện tích pixel, sai template và hấp thụ tín hiệu nguồn chồng; chỉ đề xuất mở dữ liệu sau khi ứng viên mới qua gate tuyệt đối, guard, calibration và bằng chứng PSF/sai số độc lập. Goal production còn các mục khoa học, recovery/load/SLO và accessibility.
+The web explorer, saved-image sequences, review workflow, and evidence views are available. The science work remains exploratory. It has not produced a validated motion measurement for WISE 0855, a calibrated all-sky detection model, or a production-ready uncertainty estimate. The [20-item production-readiness checklist](docs/PRODUCTION_READINESS.md) tracks remaining work.
 
-## Chẩn đoán nghiệm phụ — bước trước
+### Real-star and source-presence studies
 
-**Mã nguồn riêng đã áp dụng [MIT](LICENSE)** theo lựa chọn của chủ repo ngày 31/10/2026. Font, ảnh Canva, dataset và dependency giữ điều kiện riêng trong [NOTICE](NOTICE.md).
+**840 real-star attempts and 7,992 simulated source-presence attempts** were checked with calibration and validation separated. For 21 previously opened Gaia stars × 20 images × two ePSFs, **718 fits completed and 122 preparation failures** remain in the denominator. Across the same 359 completed pairs, interpolated ePSF lowers RMS from **0.934″ to 0.924″** but raises P90 from **0.876″ to 0.942″**. It was not selected as a new default; two stars without results remain visible as `0/20`.
 
-**[Xem bốn nhánh trên web](https://nosleepclub-nasa-spherex.vercel.app/#profile-landscape)** · [Kết quả, giới hạn và bước tiếp theo](docs/PROFILE_LANDSCAPE_RESULTS.md).
+The source-acceptance threshold **17.7038** was locked in Git after 1,998 null calibration cases and before a separate 5,994-attempt validation. It is a score, not sigma or detection probability.
 
-Thiết kế `704e3ef` khóa **14 sao × 2 ảnh đã mở × 2 ePSF × 2 bộ trọng số** trước khi lấy mẫu. **96/112 nhánh** có chẩn đoán; **16 nhánh thiếu đầu vào** của hai sao vẫn được giữ. Web cho đổi sao/ảnh, xem bốn bản đồ và tải đủ hai journal profile/kiểm toán trong **3,89 MB gzip**; không tự tải archive lớn.
-
-Kiểm toán độc lập bằng WLS kiểm lại **2.760 nút lưới**, stencil tại **192 điểm fit** qua ba bước sai phân và **480** hàm mục tiêu đã lưu. Hai ca bị chặn vẫn có ứng viên phụ với độ cong dương trong các bước đã kiểm; chưa xác nhận nghiệm vật lý hay giảm bias. **Gate cũ vẫn trượt, 252 ô dành riêng và 30 trường mới chưa mở.**
-
-API thêm log lỗi upstream bằng enum, không ghi URL, thông điệp exception hoặc credential. Chưa xác định nguyên nhân hai lỗi 502 trước; không thêm retry tự động. [Schema và giới hạn](docs/UPSTREAM_DIAGNOSTICS.md).
-
-Đối chứng native tiếp nối được báo cáo ở checkpoint phía trên. Đồng thời cần kiểm định recovery, tải đại diện và SLO; **toàn bộ goal production chưa hoàn tất**.
-
-## Hiệu chỉnh PSF và sai số chung — bước trước
-
-**[Xem demo](https://nosleepclub-nasa-spherex.vercel.app/#shape-validation)** · [Kết quả, giới hạn và bước tiếp theo](docs/SHAPE_REFERENCE_RESULTS.md).
-
-- Học ePSF từ **145/168** ô calibration, giữ 22 ô thiếu hỗ trợ và một ô từ chối số học. Cân bằng nguồn giảm đóng góp lớn nhất **50,70% → 12,87%**; hệ số được seal trước khi fit vị trí.
-- Fit vị trí hoàn tất **146/168** ô, nhưng **hai sao có nghiệm cạnh tranh cách nhau 1,89″ và 3,38″**. Gate chặn mô hình: **252 ô dành riêng chưa đánh giá**, gồm 56 ô primary. Chưa áp dụng hiệu chỉnh hoặc chuyển ngưỡng nhận nguồn cũ sang PSF mới.
-- Covariance baseline giữ **49.294 pixel** và sai số Gaia dùng chung: **357/420** ô có đáp ứng, 61 ô thiếu hỗ trợ và hai ô từ chối vẫn hiện. Heldout χ²/bậc tự do **407,431/238 ≈ 1,71**; sai số chưa được hiệu chuẩn đầy đủ.
-
-Audit độc lập kiểm **357/357** đáp ứng native bằng QR và **1.314/1.314** hàm mục tiêu cuối của 146 fit mới bằng BVLS tại vị trí đã lưu. Đây là kiểm chứng số học, chưa phải độ chính xác thiên văn. Đăng ký cũ, tọa độ nguồn chồng, trọng số và một số sai số mô hình vẫn được giữ cố định; **30 trường triển vọng chưa mở**.
-
-Web tách ba bước học → gate calibration → đánh giá dành riêng; báo rõ phần bị hoãn và giữ ca không có kết quả. Ba overview chỉ tải khi mở mục; các audit **2,48 / 3,06 / 2,72 MB gzip** là tải riêng. Chẩn đoán bổ sung ở checkpoint mới phía trên; giữ tín hiệu và lan truyền các phụ thuộc sai số còn thiếu vẫn cần kiểm định.
-
-## Goal production đang thực hiện — 0.10
-
-[Mở vùng trời](https://nosleepclub-nasa-spherex.vercel.app/#explore) · [Sao thật & nhận nguồn](https://nosleepclub-nasa-spherex.vercel.app/#reference-presence) · [20 tiêu chí nghiệm thu](docs/PRODUCTION_READINESS.md).
-
-Luồng RA/Dec → metadata IRSA → cutout thật → so/nhấp nháy cùng thang hiển thị → xuất bằng chứng đã hoạt động. Năm mục tiêu của đề có hai cutout thật với nguồn, epoch và hash. Review khách riêng có ID ổn định, hết hạn, xóa theo ID, quota atomic và CI replica set thật; chưa có phân công chuyên gia hoặc chia sẻ nhận xét công khai.
-
-**Đã kiểm tra 840 lượt sao thật và 7.992 mô phỏng có calibration/validation tách riêng.** Trên 21 sao Gaia đã mở × 20 ảnh × 2 ePSF, có **718 fit hoàn tất và 122 lượt lỗi chuẩn bị**, giữ đủ mẫu số. Cùng 359 cặp đo được, nội suy ePSF giảm RMS **0,934″ → 0,924″** nhưng tăng P90 **0,876″ → 0,942″**. Chưa chọn nó làm mô hình mới; hai sao không có kết quả vẫn hiện `0/20`.
-
-Ngưỡng nhận nguồn **17,7038** được khóa trong Git sau 1.998 null calibration, trước 5.994 lượt validation riêng. Đây là điểm số, không phải sigma hay xác suất phát hiện.
-
-| Validation trên một geometry đã mở | Chấp nhận /999 | Cận một phía 97,5% | Kết quả |
+| Validation on one previously opened geometry | Accepted /999 | One-sided 97.5% bound | Result |
 |---|---:|---:|---|
-| Plane · không có mục tiêu | 0 | Báo nhầm ≤0,369% | Đạt điều kiện mô phỏng |
-| Bậc hai · không có mục tiêu | 0 | Báo nhầm ≤0,369% | Đạt điều kiện mô phỏng |
-| Plane · 600 µJy | 928 | Thu hồi ≥91,12% | Đạt ≥80% |
-| Bậc hai · 600 µJy | 870 | Thu hồi ≥84,85% | Đạt ≥80% |
-| Plane · 300 µJy | 46 | Thu hồi ≥3,39% | Chỉ báo cáo; phần lớn bị bỏ sót |
-| Bậc hai · 300 µJy | 55 | Thu hồi ≥4,17% | Chỉ báo cáo; phần lớn bị bỏ sót |
+| Plane · no target | 0 | False alarm ≤0.369% | Meets the simulation criterion |
+| Quadratic · no target | 0 | False alarm ≤0.369% | Meets the simulation criterion |
+| Plane · 600 µJy | 928 | Recovery ≥91.12% | Meets ≥80% |
+| Quadratic · 600 µJy | 870 | Recovery ≥84.85% | Meets ≥80% |
+| Plane · 300 µJy | 46 | Recovery ≥3.39% | Report only; most are missed |
+| Quadratic · 300 µJy | 55 | Recovery ≥4.17% | Report only; most are missed |
 
-**Chưa xác nhận false-alarm trên bầu trời thật hoặc hiệu chuẩn sai số chuyển động.** Tất cả mô phỏng dùng một bố cục đã mở, Gaussian khác family fitter và noise có điều kiện; scorer dùng VARIANCE quan sát, không dùng error oracle. Audit QR độc lập tính lại đủ 7.992 điểm số từ dữ liệu lưu; không sinh lại noise để chứng minh detector model.
+**False alarms on the real sky and calibrated motion uncertainty remain unverified.** Simulations use one opened layout, Gaussian sources from a family different from the fitter, and conditional noise; the scorer uses observed VARIANCE, not oracle error. Independent QR audit recalculates all 7,992 scores from saved inputs but does not regenerate noise to validate the detector model.
 
-[Báo cáo & giới hạn](docs/REFERENCE_PRESENCE_RESULTS.md) · [Protocol sao thật](docs/REFERENCE_STAR_PROTOCOL.md) · [Protocol nhận nguồn](docs/SOURCE_PRESENCE_PROTOCOL.md) · [Overview sao thật](web/data/reference-stars/overview.json) · [Overview mô phỏng](web/data/source-presence/overview.json). Các audit đầy đủ có SHA và link tải riêng: **14,2 MB / 71,1 MB gzip**; web chỉ tự tải hai overview khi mở mục mới.
+[Results and limitations](docs/REFERENCE_PRESENCE_RESULTS.md) · [Reference-star protocol](docs/REFERENCE_STAR_PROTOCOL.md) · [Source-presence protocol](docs/SOURCE_PRESENCE_PROTOCOL.md) · [Real-star overview](web/data/reference-stars/overview.json) · [Simulation overview](web/data/source-presence/overview.json). Full audits with hashes are separate downloads (**14.2 MB / 71.1 MB gzip**); the web app loads only the two overviews when opening the section.
 
-[Đối chứng nguồn chồng trước](docs/NEIGHBOR_INTERVENTION_RESULTS.md) giữ đủ 288 lượt, kể cả một draw qua số học vẫn lệch **16,8″**. Không bỏ failure đó hoặc chọn NNLS chỉ từ các ca thuận lợi. Linked-flux và các sản phẩm khoa học cũ vẫn giữ nguyên.
+The earlier [neighbor-blend control](docs/NEIGHBOR_INTERVENTION_RESULTS.md) retains all 288 attempts, including a numerically supported draw with **16.8″** error. Do not drop that failure or select NNLS based only on favorable cases. Linked-flux and earlier science products remain unchanged.
 
-**Chưa đạt nghiệm thu khoa học/production.** [Study linked-flux trước](docs/WISE_LINKED_RESULTS.md) giữ đủ 28 fit và nghiệm cạnh tranh; [ePSF liên tục](docs/CONTINUOUS_EPSF_RESULTS.md) ổn định Hessian nhưng RMS không giảm ở cả sáu ca; [sandwich covariance](docs/SANDWICH_RESULTS.md) vẫn thiếu phủ ở nguồn mờ. Không ghi đè các sản phẩm 0.3–0.9 hoặc gọi chúng là kiểm định chưa mở.
+**Science/production acceptance has not been met.** The [linked-flux study](docs/WISE_LINKED_RESULTS.md) retains all 28 fits and competing solutions; [continuous ePSF](docs/CONTINUOUS_EPSF_RESULTS.md) stabilizes the Hessian but does not lower RMS in all six cases; [sandwich covariance](docs/SANDWICH_RESULTS.md) still undercovers faint sources. Do not overwrite products 0.3–0.9 or describe them as unopened validation.
 
-[Time model](docs/ASTROMETRIC_TIME_MODEL.md) kiểm 31 header và rank GLS nhưng chưa nối vào fit nguồn. [Phổ độc lập](docs/SPECTRAL_REFERENCE_RESULTS.md), [mask](docs/SCIENCE_MASK_AUDIT.md), [gain](docs/NATIVE_GAIN_BINDING.md) và [quy ước photometry](docs/PHOTOMETRIC_CONVENTION_AUDIT.md) giữ đơn vị, UUID/hash và giả định chưa kiểm chứng. IRSA cho phép ePSF mới với QR2 cũ; residual/bias của renderer hiện tại vẫn phải đo riêng.
+The [time model](docs/ASTROMETRIC_TIME_MODEL.md) checks 31 headers and GLS rank but is not connected to the source fit. [Independent spectra](docs/SPECTRAL_REFERENCE_RESULTS.md), [mask audit](docs/SCIENCE_MASK_AUDIT.md), [gain audit](docs/NATIVE_GAIN_BINDING.md), and [photometric-convention audit](docs/PHOTOMETRIC_CONVENTION_AUDIT.md) record units, UUIDs/hashes, and unverified assumptions. IRSA permits the newer ePSF on older QR2 data; residual/bias from the current renderer still needs separate measurement.
 
-**API review đạt baseline tải nhỏ:** [60/60 request](docs/REVIEW_LOAD_RESULTS.md), 12/12 phiên QA xác minh sạch; p95 GET **1,937 s**, POST **0,203 s**, DELETE **0,141 s**. Protocol `d7fd8f9` khóa trước đo trên production `8032493`, tối đa ba request đồng thời, cách đợt ít nhất sáu giây. Chưa chứng minh SLO, saturation, failover hoặc recovery production. [Runbook](docs/OPERATIONS.md) giữ cả lịch sử lỗi 502/504.
+### Signal, blends, and pixel-phase controls
 
-**Bản public đã xác minh trước checkpoint này: [PR #12](https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/pull/12), main `57e7bb1`.** [CI](docs/evidence/0.10/ci-pr12-595f9a8.json) chạy 528 ca Python (13 optional raw-cache/photutils skip), sáu ca Mongo replica set thật và sáu suite Node. [79 phản hồi public](docs/evidence/0.10/production-57e7bb1.json) xác minh 63 artifact theo Git, commit cả ba API và cleanup QA. Hai GET upstream lỗi 502 rồi thành công ở một retry phía verifier được giữ nguyên trong receipt; chưa xác định nguyên nhân. [Biên nhận phát hành](docs/SHAPE_REFERENCE_RELEASE.md) tách software verification và các gate khoa học chưa đạt. Lịch sử lỗi đóng gói/upstream vẫn nằm trong [runbook](docs/OPERATIONS.md).
+Design `9894074` was locked and pushed before **640 fit attempts**: 192 noiseless, 384 with Gaussian noise, and 64 null. Two star geometries and one already opened exposure were used; this is not a new sky field. The experiment compares original/corrected ePSF, two synthetic source families, four pixel phases, and specified/omitted blends. All 640 attempts completed and were independently audited; both journals are available in a **10.05 MB gzip** archive on request.
 
-Bước học ePSF và covariance baseline đã có kết quả ở checkpoint mới phía trên. Tiếp theo cần giải thích các nghiệm cạnh tranh, kiểm giữ tín hiệu và hoàn thiện covariance trước đánh giá ngoài. Khả năng giảm bias vẫn chưa được chứng minh. Chưa áp dụng gate mô phỏng này để xác nhận nguồn trong workspace. [30 tâm trường dành trước](docs/INDEPENDENT_FIELD_SELECTION.md) vẫn chưa query/đo: **12 calibration / 12 validation / 6 final holdout**. Khóa evaluator, power, miền hỗ trợ, gate và overlap trước khi mở.
+- **The noiseless measurement-fidelity gate failed: 70/128.** Of the passing cases, 64 came from the original matched-template control and only **6/64** from the independent Gaussian. All 128 passed numerical screening: a stable fit is not necessarily an accurate measurement.
+- **Signal-preservation guard passed 64/64 pairs**, but it limits only relative degradation to ≤0.02 pixel and flux-ratio error to ≤0.02; it does not establish accuracy or improvement. **8/16 noisy groups** met the sample threshold ≥15/16. Paired noise conditions are not independent sky fields.
+- An omitted companion can pull a fit toward the blended source despite passing numerical screens. The demo retains bias, flux, classifications as near simulated target/companion/other, and null controls. Null has no detection threshold and must not be called a false-alarm rate.
 
-[Mã nguồn riêng theo MIT](LICENSE). [Nguồn và quyền sử dụng](NOTICE.md) ghi điều kiện riêng của font, dữ liệu, minh họa Canva và dependency; các tài sản này không được cấp lại theo MIT.
+**The 252 reserved cells and 30 prospective fields remain unopened; the WISE 0855 measurement is unchanged.** Next, lock tests for pixel-area variation, template mismatch, and signal absorption by a blend. Consider opening new data only after a candidate passes absolute gates, signal-preservation controls, calibration, and independent PSF/error checks. Production goals for science, recovery/load/SLO, and accessibility remain open.
 
-## Bắt đầu trên web
+### Profile diagnostics and ePSF correction
 
-1. Chọn **Bắt đầu quan sát**. Kéo vạch trước/sau hoặc bật **Nhấp nháy** để tìm điểm đổi vị trí.
-2. Mở **Kiểm chứng** để xem sai lệch phục hồi, số fit lỗi và giới hạn của kết quả.
-3. Chọn **Ghi nhận**, lưu điều bạn thấy; có thể chọn **Tôi chưa chắc**, xuất JSON hoặc xóa nhận xét.
+Design `704e3ef` locked **14 stars × 2 opened images × 2 ePSFs × 2 weight sets** before sampling. **96/112 branches** have diagnostics; all **16 branches with missing inputs** from two stars remain in the denominator. The web view switches stars/images, shows four profile maps, and provides both profile/audit journals in a **3.89 MB gzip** archive without automatic download.
 
-Nút **Hướng dẫn 60 giây** giải thích sao lùn nâu, pixel, ellipse sai số và cách đọc ảnh. Người có kinh nghiệm có thể mở bảng tọa độ, dữ liệu Gaia, FITS và cấu hình đầy đủ.
+Independent WLS audit checked **2,760 grid nodes**, stencils at **192 fit points** across three finite-difference steps, and **480** saved objective functions. The two blocked cases retain alternative candidates with positive curvature at tested steps; this does not establish physical solutions or lower bias. **The old gate still fails; 252 reserved cells and 30 new fields remain unopened.**
 
-## Tách thử nền/ePSF và covariance theo nhóm — 0.9.0
+The API adds upstream-error logging with enums and does not record URLs, exception messages, or credentials. The cause of two earlier 502 errors is unknown; there is no automatic retry. See [schema and limitations](docs/UPSTREAM_DIAGNOSTICS.md). A native signal/blend control follows the profile diagnostic; recovery, representative load, and SLO checks are also required. **The overall production goal is incomplete.**
 
-So bốn tổ hợp trên **5 trường đã mở**, cùng pixel/căn chỉnh/gate. **Giữ nền phẳng + ePSF cố định**: nền bậc hai giảm pooled RMS 3,110→1,967″ nhưng chỉ đạt 8/25 nhóm, không đủ ổn định để thay baseline. Cả 5 lần bỏ một trường đều giữ lựa chọn đơn giản.
+The ePSF correction was learned from **145/168** calibration cells, retaining 22 without support and one numerical rejection. Source balancing lowered the maximum contribution from **50.70% to 12.87%**; coefficients were sealed before position fitting. Position fitting completed **146/168** cells, but **two stars have competing solutions 1.89″ and 3.38″ apart**. The gate blocked the model: **252 reserved cells remain unassessed**, including 56 primary cells. The correction has not been applied, and the old source-acceptance threshold was not transferred to the new PSF.
 
-Lựa chọn/ngưỡng nền khóa ở `1f1dae2`; covariance học từ **192** ca calibration riêng, tách vùng học floor và scale, gộp nhóm ít mẫu. Seal `8c7ad54` trước **135 cutout QR2** tại ba trường mới. S/N/nền dùng đặc trưng quan sát; không dùng truth để chọn nhóm. Ngoài miền thì không cấp covariance hiệu chuẩn.
+Baseline covariance retains **49,294 pixels** and shared Gaia errors: **357/420** cells have a response; 61 unsupported and two rejected cells remain visible. Heldout χ²/degrees of freedom is **407.431/238 ≈ 1.71**; error is not fully calibrated. Independent audit checked **357/357** native responses with QR and **1,314/1,314** final objectives for 146 new fits with BVLS at saved positions. This verifies arithmetic, not astronomical accuracy. Old registration, blended-source coordinates, weights, and some model uncertainties remain fixed; **30 prospective fields are unopened**.
 
-| Kiểm định 96 nguồn giả | Hiệu chuẩn chung | Theo S/N và nền |
+The web separates learning → calibration gate → reserved assessment, and clearly reports deferred cases. Three overviews load only when opened; full audits (**2.48 / 3.06 / 2.72 MB gzip**) require separate download. Signal preservation and propagation of remaining error dependencies still need testing.
+
+### Covariance-by-group model — version 0.9.0
+
+Four combinations were compared on **five opened fields**, with identical pixels/alignment/gates. The selected model remains **plane background + fixed ePSF**: a quadratic background lowered pooled RMS from 3.110″ to 1.967″ but passed only 8/25 groups, not enough stability to replace baseline. All five leave-one-field-out checks retained the simpler choice.
+
+Background selection/thresholds were locked at `1f1dae2`; covariance was learned from **192** separate calibration cases, splitting floor and scale learning and pooling small groups. Seal `8c7ad54` preceded **135 QR2 cutouts** in three new fields. S/N/background use observed features; truth was not used to choose groups. No calibrated covariance is returned outside the supported domain.
+
+| 96 synthetic-source validation cases | Shared calibration | S/N/background conditional |
 |---|---:|---:|
-| Qua quality gate, cùng miền hỗ trợ | 69/96 | 69/96 |
-| Phủ ellipse 68%, trên 69 mẫu | 54/69 (78,3%) | 57/69 (82,6%) |
-| Diện tích ellipse trung vị / raw | ×5,15 | ×2,23 |
+| Passed quality gate, common support | 69/96 | 69/96 |
+| 68% ellipse coverage over 69 cases | 54/69 (78.3%) | 57/69 (82.6%) |
+| Median ellipse area / raw | ×5.15 | ×2.23 |
 
-**Chưa qua gate tổng.** Ba trong bốn ô quá phủ; theo trường là 100%, 83,9%, 12,5%. Trường cuối chỉ còn một vùng nền với 8 ca tương quan, sai lệch vẫn 1,19–2,95″. Demo đánh dấu vùng cần người xem lại trên ảnh gốc, tách rõ nguồn giả khỏi thiên thể thật. Sao Gaia có 18/23 ca qua gate nằm ngoài miền covariance nên được báo từ chối ngoại suy.
+**Overall gate failed.** Three of four bins are over-covered; by field, coverage is 100%, 83.9%, and 12.5%. The final field has only one background region with 8 correlated cases and errors remain 1.19–2.95″. The demo marks regions for human review on original images and separates synthetic sources from real astronomical objects. Gaia stars with 18/23 accepted cases lie outside the covariance domain and are labeled as extrapolation refusals.
 
-**95/95 kiểm thử offline đạt.** [Phương pháp, lựa chọn, kết quả và giới hạn](docs/ABLATION_VALIDATION.md). Số đo WISE 0855 vẫn giữ nguyên; chưa xác nhận chuyển động. Bước tiếp theo: chẩn đoán bias/nguồn chồng ở tập đã mở và bổ sung calibration theo trường trước khi khóa một tập ngoài mới.
+**All 95/95 offline tests passed.** See [method, selection, results, and limitations](docs/ABLATION_VALIDATION.md). The WISE 0855 measurement is unchanged and motion remains unconfirmed. Next, diagnose bias/blending on opened data and add field-conditional calibration before locking an unseen set.
 
-![Chọn mô hình và kiểm định covariance theo nhóm](docs/ablation-validation.jpg)
+### Image background/ePSF covariance validation — version 0.8.0
 
-## Nền ảnh/ePSF và hiệu chuẩn covariance — 0.8.0
+The experiment tested quadratic background and flexible ePSF width, splitting by field/exposure into **development / calibration / validation**. Design was locked at `4e7a50c`; error floor was learned from **192** synthetic sources in three opened fields, then the calibrator was sealed at `d7d92dc` before fitting **122 QR2 cutouts** from three new fields. Validation includes 96 synthetic sources and 33 Gaia stars held out from alignment.
 
-Thử nền bậc hai và độ rộng ePSF linh hoạt, tách **phát triển / calibration / validation** theo trường và exposure. Thiết kế khóa ở `4e7a50c`; error floor học từ **192** nguồn giả trên ba trường đã mở, rồi khóa calibrator ở `d7d92dc` trước khi fit **122 cutout QR2** của ba trường mới. Tập kiểm định có 96 nguồn giả và 33 sao Gaia giữ ngoài căn chỉnh.
-
-| Trường RA/Dec | RMS nguồn giả cũ → mới, cặp chung | Qua gate /32 | Phủ 68% thô → hiệu chuẩn |
+| RA/Dec field | Old → new synthetic RMS, paired | Passed gate /32 | Raw → calibrated 68% coverage |
 |---|---:|---:|---:|
-| 60° / −30° | 0,945 → 0,993″ | 32 | 24/32 → 32/32 |
-| 150° / +45° | 1,368 → 1,418″ | 21 | 9/21 → 18/21 |
-| 330° / +10° | 3,096 → 2,843″ | 14 | 0/14 → 10/14 |
+| 60° / −30° | 0.945 → 0.993″ | 32 | 24/32 → 32/32 |
+| 150° / +45° | 1.368 → 1.418″ | 21 | 9/21 → 18/21 |
+| 330° / +10° | 3.096 → 2.843″ | 14 | 0/14 → 10/14 |
 
-**Chưa đạt tiêu chí thay mặc định.** Pooled RMS giảm 2,079→1,961″ nhưng P90 tăng và hai trường tăng RMS. Trên 67/96 mẫu qua gate, ellipse danh nghĩa 68% phủ **49,3%→89,6%**, với diện tích trung vị ×**3,65**; mức phủ mới quá cao so với tiêu chí đã khóa. Hiệu chuẩn không thay centroid, không xác nhận chuyển động và chưa được áp dụng lên WISE 0855.
+**The default-replacement criteria were not met.** Pooled RMS fell from 2.079″ to 1.961″, but P90 rose and RMS rose in two fields. For 67/96 accepted cases, nominal 68% ellipse coverage rose from **49.3% to 89.6%**, with median area ×**3.65**; the new coverage is too high relative to the locked criterion. Calibration does not change centroids, confirm motion, or apply to WISE 0855.
 
-Demo tách RMS/bias khỏi độ phủ và mức nới ellipse, chuyển được giữa nguồn giả và sao Gaia, có protocol/hash và giới hạn. **73/73 kiểm thử offline đạt**; MongoDB production được kiểm tra riêng bằng review QA của bài test.
+The demo separates RMS/bias from coverage and ellipse expansion, switches between synthetic sources and Gaia stars, and records protocol/hash/limitations. **All 73/73 offline tests passed**; production MongoDB was checked separately by review QA.
 
-[Phương pháp, audit, kết quả và bước tiếp theo](docs/COVARIANCE_VALIDATION.md). Mốc tiếp theo là ablation nền/ePSF trên dữ liệu đã mở, chọn point model rồi hiệu chuẩn theo S/N/nền trước một tập ngoài mới.
+See [methods, audit, results, and next steps](docs/COVARIANCE_VALIDATION.md). Next: ablate background/ePSF on opened data, choose the point model, and calibrate by S/N/background before a new external set.
 
-![Hiệu chuẩn covariance và ba trường kiểm định](docs/covariance-validation.jpg)
+### Quality gate and crowded-source study — version 0.7.0
 
-## Quality gate và nguồn chồng — 0.7.0
+The model adds CatWISE/Gaia neighbors, two Huber iterations for pixel outliers, and gates for residuals, source core, blend degeneracy, and centroid disagreement. Alignment rejects outliers with median/MAD and still requires at least four stars.
 
-Thêm mô hình hàng xóm CatWISE/Gaia, hai vòng giảm trọng số Huber cho pixel outlier và gate kiểm tra residual, lõi ảnh, suy biến nguồn chồng, bất đồng centroid giữa hai mô hình. Căn chỉnh từ chối outlier theo median/MAD và vẫn cần ít nhất 4 sao.
+Code/catalog/split/rules were locked at **`330449c`** before evaluation on three new fields: **115 QR2 cutouts**, 58 spectrally matched exposures, 33 heldout stars, and 96 synthetic-source cases across two ePSF families.
 
-Code, catalog, chia mẫu và rule được khóa tại **`330449c`** trước khi đánh giá ba trường mới: **115 cutout QR2**, 58 exposure ghép phổ, 33 sao heldout và 96 tình huống nguồn giả qua hai họ ePSF.
-
-| Trường RA/Dec | RMS nguồn giả trên cặp chung, trước gate | Qua gate cũ → mới /32 |
+| RA/Dec field | Old → new paired synthetic RMS before gate | Old → new passed /32 |
 |---|---:|---:|
-| 30° / −10° | 1,826 → 1,471″ | 24 → 20 |
-| 180° / +20° | 1,989 → 1,991″ | 28 → 28 |
-| 300° / −30° | 5,279 → 3,725″ | 8 → 8 |
+| 30° / −10° | 1.826 → 1.471″ | 24 → 20 |
+| 180° / +20° | 1.989 → 1.991″ | 28 → 28 |
+| 300° / −30° | 5.279 → 3.725″ | 8 → 8 |
 
-**Chưa đạt tiêu chí thay mặc định.** Hai trường giảm RMS nguồn giả ở điểm ước lượng, nhưng sai lệch sao thật xấu hơn ở hai trường; nhóm cùng qua gate ở trường cuối còn tăng RMS 4,397→5,282″. Chỉ 8/56 nguồn giả được nhận nằm trong ellipse danh nghĩa 68%, nên chưa có ngân sách sai số được hiệu chuẩn.
+**The default-replacement criteria were not met.** Synthetic-source point-estimate RMS fell in two fields, but real-star errors worsened in two; on the final field, jointly accepted RMS rose from 4.397″ to 5.282″. Only 8/56 accepted synthetic sources lie in nominal 68% ellipses, so the error budget is not calibrated.
 
-Trên các trường phát triển đã mở, outlier 6,309″ giảm xuống 0,283″ nhưng vẫn bị gate loại; một ca RW Aur có residual nhỏ mà lệch hơn bị gate bất đồng chặn. Demo cho xem lý do từ chối và số lượt trước/sau gate. Với bộ ảnh WISE 0855 cũ, UI chỉ kiểm tra cơ bản từ dữ liệu đã xuất và ghi rõ chưa chạy gate mới đầy đủ; số đo khoa học giữ nguyên.
+In opened development fields, a 6.309″ Gaia outlier fell to 0.283″ but remained rejected; an RW Aur case with low residual but worse positional error was stopped by the model-disagreement gate. Demo shows rejection reasons and pre/post-gate counts. For the old WISE 0855 pair, UI checks only basic exported solver/bounds/χ²/S/N and states the full new gate was not run; the science measurement remains unchanged.
 
-[Phương pháp, kết quả theo trường/độ sáng, giới hạn và cách tái tạo](docs/QUALITY_VALIDATION.md). 59/59 kiểm thử offline đạt; đây là kiểm chứng phần mềm và dữ liệu, không phải xác nhận phát hiện thiên văn.
+See [method, per-field/brightness results, limits, and reproduction](docs/QUALITY_VALIDATION.md). 59/59 offline tests passed; these validate software/data, not an astronomical detection.
 
-![So sánh trước và sau quality gate](docs/quality-validation.jpg)
+### Earlier field benchmark — version 0.6.0
 
-## Kiểm tra ngoài trường trước đó — 0.6.0
+Downloaded **129 QR2 cutouts** across Barnard's Star, RW Aur, and R Draconis and checked **6,736 Gaia DR3 rows**. Code/dataset/split were locked at commit `8aa2536` before measurement. The WISE 0855 result was not changed.
 
-Đã tải **129 cutout QR2** ở ba trường Barnard’s Star, RW Aur và R Draconis, đối chiếu **6.736 hàng Gaia DR3**. Khóa code/dataset/chia mẫu tại commit `8aa2536` trước khi đo. Không thay số đo WISE 0855.
-
-| Trường, phổ rộng | Sao giữ ngoài đo được / thử | RMS lệch vector so Gaia | Nguồn giả fit được / thử | RMS nguồn giả hợp lệ |
+| Broad-spectrum field | Heldout stars measured / attempted | Vector RMS vs Gaia | Synthetic fits valid / attempted | Valid synthetic RMS |
 |---|---:|---:|---:|---:|
-| Barnard | 11/11 | 1,921″ | 15/16 | 2,103″ |
-| RW Aur | 11/11 | 0,182″ | 13/16 | 6,009″ |
-| R Dra | Chưa đo được | Chỉ 3 sao căn chỉnh, cần ≥4 | — | — |
+| Barnard | 11/11 | 1.921″ | 15/16 | 2.103″ |
+| RW Aur | 11/11 | 0.182″ | 13/16 | 6.009″ |
+| R Dra | Not measured | Only 3 alignment stars; ≥4 required | — | — |
 
-![Benchmark độ chính xác trên các trường mới](docs/external-benchmark.jpg)
+Barnard has a Gaia outlier of **6.309″**. Barnard's target is **2.628″** from the prediction despite very high χ²r while the solver converged. Faint sources on the RW Aur background recover much worse than bright Gaia stars. Barnard strict/broad use the same image pairs and are not independent checks.
 
-Barnard có một outlier Gaia **6,309″**. Chính mục tiêu Barnard lệch dự báo **2,628″**, χ²r rất cao dù solver hội tụ. Nguồn mờ trên nền RW Aur phục hồi kém hơn nhiều so với sao Gaia sáng. Phổ chặt/rộng Barnard dùng đúng cùng cặp ảnh; không tính là hai kiểm chứng độc lập.
+**There is no overall accuracy rate or blind-search precision/recall.** This is local fitting at known positions, with only 32 synthetic cases using the same ePSF family as the fitter, and the ellipse budget omits systematic terms. See [dataset, method, brightness-stratified results, and reproduction](docs/EXTERNAL_BENCHMARK.md).
 
-**Chưa có tỷ lệ chính xác chung hoặc precision/recall tìm kiếm mù.** Đây là kiểm tra local fitting ở vị trí đã biết; 32 tình huống nguồn giả duy nhất, dùng cùng họ ePSF với fitter và ngân sách ellipse còn thiếu hệ thống. [Dataset, phương pháp, kết quả theo độ sáng và cách tái tạo](docs/EXTERNAL_BENCHMARK.md).
+## WISE 0855 demo and astrometry history
 
-## Giao diện dễ đọc
+The [current WISE 0855 report](docs/WISE0855_GAIA.md) retains the same 20 broad-configuration exposures, expands cutouts from 0.12° to 0.32°, and cross-matches 675 Gaia DR3 sources. It selects 21 quality stars: 14 for alignment and 7 held out from fitting, propagating Gaia position/proper motion/parallax and covariance to observation dates.
 
-- Dùng **Be Vietnam Pro** ở năm độ đậm 400–800, gồm bộ ký tự Vietnamese và Latin. Font WOFF2 được phục vụ ngay từ repo, dùng được khi mở demo offline; không gọi dịch vụ font bên ngoài lúc chạy.
-- Tăng khoảng cách dòng để dấu tiếng Việt không bị cắt. Bảng, chỉ dẫn và nhãn điều khiển dùng cỡ chữ lớn hơn trên desktop/mobile.
-- Chữ trên ảnh có nền tối đặc và viền riêng; chữ biểu đồ sáng hơn. Các cặp màu chính đã kiểm tra có tương phản trên 10:1.
-- Tách phần mô tả, nút và dải thông tin đầu trang theo luồng bố cục, tránh chồng nội dung khi chữ xuống dòng. Nhận xét không bị giữ ngoài màn hình ở viewport thấp.
+For broad spectrum, the measured vector is **3.29″ ± 0.52″** over 163.5 days. Changing the star set changes it by **0.04″**; leave-one-star-out maximum change is **0.17″**; affine check changes it by **0.10″**. These are conditional model errors. The map is interactive and includes an error-budget table, injections at eight positions/two brightnesses, both pre-Gaia configurations, and three original single-image pairs. It supports wipe, side-by-side, difference, blink, zoom, highlights, and evidence table. Production review is stored in MongoDB per browser session, with local fallback, JSON export, and deletion by section.
 
-[Chi tiết kiểm tra độ dễ đọc](docs/READABILITY.md) · [Nguồn font](https://github.com/google/fonts/tree/main/ofl/bevietnampro) · [Giấy phép SIL OFL](web/assets/fonts/OFL.txt).
+**Motion signal, not confirmed.** Strict spectrum is primary: **3.06″ ± 0.99″**; broad spectrum is a sensitivity check and shares some images. Stationary synthetic sources of similar brightness on eight other real backgrounds have broad-configuration RMS error **2.72″**. Moving sources at half brightness fall inside the 68% ellipse in only **2/8** cases. The broad vector differs by **1.21″** from the external prediction. Gaia clarifies frame stability but does not resolve blending, ePSF, or spectral-response errors. No vision model has been trained.
 
-**Kiểm chứng 0.5.0:** [QR3/CatWISE/ePSF và 30 vùng khóa trước](docs/QR3_CATWISE_VALIDATION.md). QR3 chưa phủ tọa độ truy vấn ở cả SIA và TAP. Đã bổ sung catalog IR có hiệu chỉnh tile, so ba mô hình bằng 1.440 phép phục hồi; phổ rộng có điểm ước lượng tốt hơn, chưa mô hình nào qua gate ở cả hai cấu hình. Giữ phép đo cũ làm mặc định. Minh họa Canva luôn tách rõ khỏi FITS thật.
+The original single-image baseline, before coaddition, is documented in [WISE0855_DEMO.md](docs/WISE0855_DEMO.md). Epoch coadd/astrometry and the Gaia extension are documented in [WISE0855_COADD.md](docs/WISE0855_COADD.md) and [WISE0855_GAIA.md](docs/WISE0855_GAIA.md).
 
-| Thành phần | Phiên bản | Vai trò |
-|---|---|---|
-| Explorer và kiểm chứng hiện tại | 0.10 | RA/Dec, chuỗi ảnh thật, review riêng, chẩn đoán ePSF/covariance; chưa đạt nghiệm thu khoa học |
-| Chọn mô hình theo nhóm | 0.9.0 | Ablation 2×2, covariance theo S/N/nền; giữ trong lịch sử, chưa qua gate tổng |
-| Hiệu chuẩn covariance chung | 0.8.0 | Đối chứng lịch sử; không thay mặc định |
-| Quality gate và deblend | 0.7.0 | Baseline cho thí nghiệm 0.8; chưa thay mặc định |
-| Benchmark ngoài trường trước đó | 0.6.0 | Baseline để phân tích lỗi và phát triển gate |
-| Thí nghiệm catalog IR/ePSF | 0.5.0 | 30 vùng khóa trước; chưa thay số đo mặc định |
-| Phép đo mặc định | 0.3.0 | Pixel gốc, căn chỉnh Gaia; chuyển động chưa xác nhận |
+## Open the saved demo offline
 
-## Demo hiện tại: WISE 0855
-
-![NoSleepClub mission interface](docs/wise0855-mission.jpg)
-
-- Giữ cùng 20 exposure của bản cộng ảnh, mở cutout từ 0,12° lên 0,32° và đối chiếu 675 nguồn Gaia DR3.
-- Chọn 21 sao đạt chất lượng: 14 sao căn chỉnh, 7 sao giữ ngoài fit. Lan truyền vị trí/proper motion/parallax và covariance Gaia đến ngày quan sát.
-- Cấu hình phổ rộng: **3,29″ ± 0,52″** trong 163,5 ngày; đổi tập sao làm vector đổi **0,04″**, bỏ từng sao lớn nhất **0,17″**, thử affine **0,10″**. Đây là sai số theo mô hình có điều kiện.
-- Bản đồ Gaia tương tác, bảng ngân sách sai số, kiểm tra nguồn giả tại 8 vị trí/hai độ sáng; giữ cả hai cấu hình trước Gaia và ba cặp ảnh đơn cũ.
-- So sánh kéo vạch, song song, sai khác và nhấp nháy; zoom, highlight và bảng bằng chứng.
-- Nhận xét production lưu MongoDB theo phiên trình duyệt; có local fallback, xuất JSON và xóa theo vùng.
-- Hướng dẫn thao tác ngắn trong giao diện; phương pháp/giới hạn đầy đủ mở theo nhu cầu. Bảng A/B có bộ lọc phổ và ePSF, cùng bản đồ 30 vùng kiểm thử.
-- FITS đã xử lý, arrays và manifest có nguồn, hash và phiên bản để kiểm tra lại.
-
-![Nhãn đo có nền riêng trên ảnh thật](docs/wise0855-readable-overlay.jpg)
-
-**Dấu hiệu chuyển động, chưa xác nhận.** Phổ chặt là cấu hình chính: **3,06″ ± 0,99″**; phổ rộng là kiểm tra độ nhạy và dùng chung một phần ảnh. Nguồn giả đứng yên cùng độ sáng trên tám nền ảnh khác vẫn có RMS lệch **2,72″** ở cấu hình rộng; nguồn dịch chuyển bằng nửa độ sáng chỉ có **2/8** lượt nằm trong ellipse sai số 68%. Vector rộng còn chênh **1,21″** so với dự báo ngoài. Gaia làm rõ độ ổn định của frame, chưa giải quyết toàn bộ blending, ePSF và đáp ứng phổ. Chưa có vision model được huấn luyện.
-
-## Mở bộ ảnh demo offline
-
-Ứng dụng dùng các sản phẩm nhỏ đã có sẵn trong repo; chỉ cần Python để mở, không cần Node hoặc tải lại dữ liệu.
+The app uses small products checked into the repository; Python is needed to serve it, but no Node install or data download is required.
 
 ```sh
 git clone https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex.git
@@ -243,18 +244,18 @@ cd nosleepclub_nasa_spherex
 python scripts/serve_demo.py
 ```
 
-Mở **http://127.0.0.1:8766**. Có thể đổi cổng bằng `--port 8767`. Server chỉ phục vụ thư mục `web/`, bind vào localhost. Các tệp trong `web/` cũng có thể được phục vụ bằng static hosting có hỗ trợ JSON/PNG/FITS.
+Open **http://127.0.0.1:8766**. Change the port with `--port 8767`. The server serves only `web/` and binds to localhost. Files under `web/` can also be served by static hosting that supports JSON/PNG/FITS.
 
-## Tái tạo kết quả khoa học
+## Reproduce the science pipeline
 
-Python 3.11 trở lên; nên dùng virtual environment. Các phiên bản trong `requirements.txt` là phiên bản đã chạy trên máy phát triển.
+Python 3.11 or later; a virtual environment is recommended. Versions in `requirements.txt` are those used on the development machine.
 
 ```sh
 python -m venv .venv
 .venv\Scripts\python -m pip install -r requirements.txt
-# Thêm dependency API và kiểm thử vận hành để chạy toàn bộ suite:
+# Add API and operational-test dependencies for the full suite:
 .venv\Scripts\python -m pip install -r web/requirements.txt -r requirements-ops.txt
-# Chỉ khi xuất lại các hình khoa học bằng Matplotlib:
+# Only to regenerate science figures with Matplotlib:
 .venv\Scripts\python -m pip install -r requirements-figures.txt
 .venv\Scripts\python scripts/fetch_wise0855.py
 .venv\Scripts\python scripts/fetch_wise0855.py --demo
@@ -266,57 +267,49 @@ python -m venv .venv
 .venv\Scripts\python -m unittest discover -s tests -v
 ```
 
-Lệnh `--demo` tải 6 cutout được chọn và kiểm tra FITS; lưu trong `data/raw/wise0855/target-centered/`. Chạy fetch không có `--demo` để quét các quan sát D6 trong vùng truy vấn ban đầu, hiện đã kiểm tra 43 quan sát. Download có cache và giới hạn 3 request đồng thời.
+`--demo` downloads six selected cutouts and checks FITS; cache is in `data/raw/wise0855/target-centered/`. Run fetch without `--demo` to enumerate D6 observations in the initial query region; 43 observations have been checked. Downloads are cached and limited to three concurrent requests.
 
-`prepare_motion_data.py` chọn 31 cutout trong hai cửa sổ epoch, tải lại quanh mục tiêu và lấy hai tệp hiệu chuẩn chính thức đã ghim phiên bản/hash. Phân tích dùng 2 hoặc 10 cặp phù hợp phổ; không dùng tất cả 31 ảnh để cộng. `motion_analysis.py` chạy 128 mô phỏng noise mỗi epoch/cấu hình, xuất covariance, đối chứng và hai bộ sản phẩm web. Chạy `build_demo.py` trước rồi `motion_analysis.py` để manifest chứa cả ảnh đơn và ảnh cộng. Test chạy offline; chỉ kiểm tra hash raw khi có cache.
+`prepare_motion_data.py` selects 31 cutouts in two epoch windows, downloads again around the target, and retrieves two version/hash-pinned official calibration files. Analysis uses 2 or 10 spectrally compatible pairs; it does not coadd all 31 images. `motion_analysis.py` runs 128 noise simulations per epoch/configuration, exports covariance/controls, and writes two web-product sets. Run `build_demo.py` before `motion_analysis.py` so the manifest contains both single-image and coadd products. Tests run offline; raw hashes are checked only when the cache is available.
 
-`prepare_gaia_data.py` tải cutout rộng của đúng 20 exposure cũ và truy vấn Gaia DR3 qua IRSA TAP, lưu ADQL/URL/hash. `gaia_motion.py --publish` cache centroid sao tham chiếu, chạy đổi tập sao, 14 lượt bỏ từng sao, affine, 256 bootstrap căn chỉnh và 32 injection mỗi cấu hình; sau đó thêm sản phẩm Gaia vào demo. Chạy các bước theo thứ tự trên nếu tái tạo toàn bộ manifest. 31 kiểm thử kiểm tra cả các sản phẩm đã commit mà không cần tải raw.
+`prepare_gaia_data.py` downloads wider cutouts for the same 20 exposures and queries Gaia DR3 via IRSA TAP, saving ADQL/URL/hash. `gaia_motion.py --publish` caches reference-star centroids, runs star-set swaps, 14 leave-one-out tests, affine fitting, 256 alignment bootstraps, and 32 injections per configuration, then adds Gaia products to the demo. Run steps in order to reproduce the complete manifest. 31 tests check committed products without downloading raw data.
 
-Thí nghiệm 0.4.0: `python -m scripts.joint_motion --configuration broad`, lặp lại với `strict`, rồi `python -m scripts.summarize_joint`. 192 phép phục hồi nguồn giả và 128 bootstrap/epoch/mô hình. Fit nhiều nguồn chưa cải thiện đồng đều; **chưa thay bản 0.3.0 làm mặc định**. Xem RMS, số fit lỗi và so sánh ghép cặp trong tài liệu accuracy. Ở checkpoint 0.7, suite có 59 kiểm thử offline. CI và báo cáo theo phiên bản ghi kết quả mới nhất; số ca lịch sử không phải số ca hiện tại.
+Version 0.4.0 experiment: run `python -m scripts.joint_motion --configuration broad`, repeat with `strict`, then run `python -m scripts.summarize_joint`. It uses 192 synthetic-source recovery cases and 128 bootstraps per epoch/model. Multi-source fitting did not improve consistently; **it did not replace version 0.3.0 as default**. See RMS, fit failures, and paired comparisons in the accuracy report. The suite had 59 offline tests at the 0.7 checkpoint. CI and per-version reports record the latest outcomes; historical test counts are not current counts.
 
-Benchmark 0.6.0: `python -m scripts.prepare_benchmark_data --download`, rồi `python -m scripts.benchmark_accuracy`. Cần calibration D6 của quy trình trước. Protocol đã có trong repo; script kiểm tra hash và từ chối thay nguồn đã khóa. Xem báo cáo trước khi diễn giải số đo hoặc tạo tập kiểm chứng mới.
+Version 0.6.0 benchmark: run `python -m scripts.prepare_benchmark_data --download`, then `python -m scripts.benchmark_accuracy`. Calibration from the earlier D6 workflow is required. Protocol is committed; scripts check hashes and refuse to replace locked inputs. Read the report before interpreting results or creating new validation data.
 
-Quality study 0.7.0: `python -m scripts.prepare_quality_data`, `python -m scripts.prepare_quality_data --new`, rồi `python -m scripts.quality_study` và `python -m scripts.build_quality_overview`. Dùng protocol đã commit; không chạy `--lock` đè lên tập đã mở. Đọc báo cáo để tách kết quả phát triển, đánh giá mới và các giới hạn covariance.
+Version 0.7.0 quality study: run `python -m scripts.prepare_quality_data`, `python -m scripts.prepare_quality_data --new`, then `python -m scripts.quality_study` and `python -m scripts.build_quality_overview`. Use the committed protocol; do not run `--lock` over an opened set. Read the report to distinguish development, new evaluation, and covariance limitations.
 
-## Tài liệu
+## Documentation
 
-- [Quality gate, nguồn chồng và đánh giá khóa trước 0.7.0](docs/QUALITY_VALIDATION.md)
-- [Benchmark ba trường mới: dataset, độ chính xác và các lỗi](docs/EXTERNAL_BENCHMARK.md)
-- [QR3, CatWISE, ePSF và 30 vùng khóa trước](docs/QR3_CATWISE_VALIDATION.md)
-- [Font tiếng Việt, tương phản và bố cục](docs/READABILITY.md)
-- [Thiết kế luồng cho người mới](docs/UI_DESIGN.md)
-- [Thí nghiệm nhiều nguồn 0.4.0](docs/ACCURACY_RESEARCH.md)
-- [Gaia, độ ổn định vector, sai số và milestone tiếp theo](docs/WISE0855_GAIA.md)
-- [Research cải thiện công cụ và danh mục nhập Zotero](docs/GAIA_RESEARCH.md)
-- [Bản cộng ảnh trước Gaia](docs/WISE0855_COADD.md)
-- [Baseline ba cặp ảnh đơn ban đầu](docs/WISE0855_DEMO.md)
-- [Phân tích vision model và quy trình review](docs/DEEP_RESEARCH_VISION.md)
-- [Tóm tắt đề bài](docs/CHALLENGE.md)
-- [Lộ trình](docs/ROADMAP.md)
-- [Hướng dẫn đóng góp](CONTRIBUTING.md)
+- [Quality gate, crowded sources, and prespecified evaluation](docs/QUALITY_VALIDATION.md)
+- [Three-field benchmark: data, accuracy, and failure cases](docs/EXTERNAL_BENCHMARK.md)
+- [QR3, CatWISE, ePSF, and 30 prespecified fields](docs/QR3_CATWISE_VALIDATION.md)
+- [Font, contrast, and layout readability](docs/READABILITY.md)
+- [Interface design for new users](docs/UI_DESIGN.md)
+- [Multi-source experiment 0.4.0](docs/ACCURACY_RESEARCH.md)
+- [Gaia, vector stability, uncertainty, and next milestone](docs/WISE0855_GAIA.md)
+- [Gaia research and importable Zotero bibliography](docs/GAIA_RESEARCH.md)
+- [Pre-Gaia image coadds](docs/WISE0855_COADD.md)
+- [Initial three-pair single-image baseline](docs/WISE0855_DEMO.md)
+- [Vision-model analysis and review workflow](docs/DEEP_RESEARCH_VISION.md)
+- [Challenge summary](docs/CHALLENGE.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Contributing guide](CONTRIBUTING.md)
 
-## Dữ liệu và giấy phép
+## Data and licensing
 
-Dữ liệu gốc: SPHEREx QR2 tại NASA/IPAC IRSA, DOI [10.26131/IRSA652](https://doi.org/10.26131/IRSA652). Các PNG/FITS trong `web/data/` là sản phẩm xử lý phục vụ demo, không phải sản phẩm khoa học chính thức của IRSA. Manifest giữ URL cutout, SHA-256, observation ID và pipeline version.
+Source data: SPHEREx QR2 from NASA/IPAC IRSA, DOI [10.26131/IRSA652](https://doi.org/10.26131/IRSA652). PNG/FITS under `web/data/` are processed demo products, not official IRSA science products. Manifests retain cutout URL, SHA-256, observation ID, and pipeline version.
 
-Không commit token hoặc bộ FITS thô lớn. Mã nguồn riêng và tài liệu gốc đi kèm được cấp phép theo [MIT](LICENSE), theo lựa chọn của chủ repo ngày 31/10/2026. Dữ liệu, font, minh họa Canva và dependency giữ điều kiện sử dụng riêng trong [NOTICE](NOTICE.md).
+Do not commit tokens or large raw FITS datasets. Original project code and accompanying original documentation are licensed under [MIT](LICENSE), per the repository owner's choice on 2026-10-31. Data, fonts, Canva illustrations, and dependencies retain their own terms in [NOTICE](NOTICE.md).
 
-Font Be Vietnam Pro được phân phối theo SIL Open Font License 1.1, kèm giấy phép và SHA-256 trong `web/assets/fonts/`. Script `python scripts/fetch_web_fonts.py` chỉ dùng khi cần lấy lại font từ nguồn chính thức; clone repo để chạy web không cần bước này.
-## Lưu trữ dữ liệu và quy trình web
+Be Vietnam Pro is distributed under SIL Open Font License 1.1; its license and SHA-256 are in `web/assets/fonts/`. Run `python scripts/fetch_web_fonts.py` only if the font must be retrieved again from the official source. The repository clone already includes the font for local web use.
 
-213 sản phẩm demo công khai (212,2 MB gốc) được phục vụ từ MongoDB qua
-[reader có hash](docs/MONGODB_PUBLIC_DATA.md). Static output mới chỉ giữ UI,
-font và ảnh thiết kế; không đóng gói `web/data/`. Một cluster hiện dùng khoảng
-170 MB logical data; chưa cần cluster thứ hai. Repo vẫn giữ dữ liệu để tái lập.
+## Data hosting and web operations
 
-UI đã bổ sung chọn A/B rõ ràng, phục hồi lỗi ảnh IRSA, nháp trong cùng tab và
-xuất JSON gồm cả nháp WISE; nhận xét riêng không tự được công khai. Tệp audit
-lớn tải theo phần và chỉ cho lưu sau khi SHA-256 khớp. Local server vẫn dùng
-file trực tiếp, không cần Mongo credential.
+The 213 public demo products (212.2 MB raw) are served from MongoDB through a [hash-verifying reader](docs/MONGODB_PUBLIC_DATA.md). New static output retains only UI, fonts, and design images; it does not bundle `web/data/`. One cluster currently uses about 170 MB logical data; a second cluster is not needed. The repository retains data for reproducibility.
 
-Các deployment cũ vẫn được giữ để rollback. Việc giảm output mới không xóa
-source checkout Git hoặc giảm mọi chi phí băng thông Vercel; M0 chưa qua kiểm
-thử tải/failover dài hạn. [Quy trình và giới hạn](docs/MONGODB_PUBLIC_DATA.md).
+The UI adds clear A/B selection, IRSA image-error recovery, same-tab drafts, and JSON export including WISE drafts; private notes are not made public automatically. Large audit files are downloaded in chunks and saved only after SHA-256 matches. The local server still uses files directly and needs no Mongo credential.
 
-Biên nhận cutover, lỗi/rollback được giữ nguyên và kiểm thử public:
-[MONGODB_PUBLIC_DATA_RELEASE.md](docs/MONGODB_PUBLIC_DATA_RELEASE.md).
+Older deployments remain available for rollback. Reducing new output does not remove source checkouts from Git or reduce all Vercel bandwidth costs; M0 has not passed long-duration load/failover tests. See [workflow and limits](docs/MONGODB_PUBLIC_DATA.md).
+
+Cutover receipts, errors/rollback records, and public verification are retained in [MONGODB_PUBLIC_DATA_RELEASE.md](docs/MONGODB_PUBLIC_DATA_RELEASE.md).

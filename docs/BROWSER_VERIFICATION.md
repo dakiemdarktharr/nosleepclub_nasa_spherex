@@ -1,82 +1,56 @@
-# Kiểm tra web 0.10
+# Web Verification 0.10
 
-Kiểm tra trực tiếp ngày 2026-10-30 trên trình duyệt trong ứng dụng, tại `http://127.0.0.1:8767/`. Môi trường local dùng API IRSA thật, còn review chỉ lưu ở trình duyệt. Đây chưa phải bằng chứng triển khai Vercel hoặc MongoDB production.
+Direct browser checks on 30 October 2026 in the in-app browser at `http://127.0.0.1:8767/`. The local environment used the live IRSA API, while reviews were stored in the browser. This is not evidence of a Vercel deployment or production MongoDB.
 
-## Những đường đã chạy
+## Flows exercised
 
-- RA = 350°, Dec = +35°, FOV = 0.06°, D6, QR2: truy vấn trả 77 quan sát và tải PNG thật. Ảnh đầu MJD 60853.93441 có cutout SHA-256 `514ac17f7c8d2b7de1f723e4464dfc85a1caacf666f868e70fd844c9d80de8a6`; ảnh cuối MJD 61221.83881 có SHA-256 `2965965e13366ed397f1896f80025aa0facd42b0297141a6165a9407d5ffbb6c`. Ảnh cuối tải thành công 37 × 37 pixel; hai ảnh dùng khoảng xám −0.0399 đến 0.3072 MJy/sr. Hash là của cutout nguồn, không phải PNG.
-- Ghim ảnh đầu, chọn ảnh cuối bằng bàn phím `End`, phát và dừng nhấp nháy: nhãn MJD, số ảnh, hash và slider chuyển theo ảnh đang hiện. Link FITS mang đúng cutout query. Đây chỉ là kiểm tra hiển thị, chưa căn chỉnh theo sao hay so phổ tại nguồn.
-- RA 360° bị từ chối với thông báo phạm vi; không gửi truy vấn. Trường nhập tay được ghi nhãn `Tọa độ tự nhập` để tránh gắn nhầm tên mục tiêu mẫu.
-- Lưu ghi chú QA local, thấy lịch sử tăng từ 0 lên 1; xóa, thấy lịch sử về 0 và thông báo đã xóa. Không dùng ghi chú thật.
-- Mặc định WISE chọn bộ phổ gần nhau hơn; vị trí đo và vị trí dự báo chưa bật. Deep link `#covariance-validation` tự mở kho thí nghiệm cũ và giữ phần đó hiển thị.
-- Menu mobile mở và đưa tới Khám phá. Ở viewport 390 × 844, không có input/select/button của phần Khám phá tràn ngang; chiều rộng document đo được 375 pixel. Font tiếng Việt và tương phản được xem trực tiếp. Chưa phải một audit screen-reader hoặc WCAG đầy đủ.
-- Không có lỗi JavaScript được trình duyệt ghi nhận trong những đường này.
+- RA = 350°, Dec = +35°, FOV = 0.06°, D6, QR2: the query returned 77 observations and loaded a real PNG. The first image at MJD 60853.93441 had cutout SHA-256 `514ac17f7c8d2b7de1f723e4464dfc85a1caacf666f868e70fd844c9d80de8a6`; the last image at MJD 61221.83881 had SHA-256 `2965965e13366ed397f1896f80025aa0facd42b0297141a6165a9407d5ffbb6c`. The final image loaded at 37 × 37 pixels; both used a grayscale range of −0.0399 to 0.3072 MJy/sr. These hashes are for source cutouts, not PNGs.
+- Pinned the first image, selected the last image with the `End` key, played, and stopped blinking. The MJD label, image index, hash, and slider followed the displayed image. The FITS link used the correct cutout query. This checks display behavior only; there was no stellar registration or spectral comparison at the target.
+- RA 360° was rejected with a range message and no query was sent. Manually entered coordinates are labeled `Custom coordinates` to avoid assigning an example-target name incorrectly.
+- Saved a local QA note; history increased from 0 to 1. Deleted it; history returned to 0 and showed a deletion confirmation. No real notes were used.
+- WISE defaults to the closer spectral configuration; measured and predicted positions are initially off. The `#covariance-validation` deep link automatically opens the older experiment archive and keeps it visible.
+- The mobile menu opened and navigated to Explore. At 390 × 844, no input/select/button in Explore overflowed horizontally; document width measured 375 px. Vietnamese fonts and contrast were viewed directly. This is not a full screen-reader or WCAG audit.
+- The browser reported no JavaScript errors in these flows.
 
-## Kiểm tra tự động liên quan
+## Related automated checks
 
-142 Python tests đạt trong môi trường local. `tests/explorer.test.cjs` và `tests/review-store.test.cjs` thực thi JS thật với DOM/HTTP test doubles; các ca lifecycle, mất phiên, GET/POST/DELETE chạy chồng, chọn ảnh nhanh, phản hồi cũ, đổi vùng, no-data và thang tương phản không khớp đều đạt trong V8. Những test này không thay thế kiểm tra trình duyệt hoặc cơ sở dữ liệu thật. GitHub CI còn phải được kiểm tra trên đúng commit triển khai.
+142 Python tests passed locally. `tests/explorer.test.cjs` and `tests/review-store.test.cjs` execute real JavaScript with DOM/HTTP test doubles; lifecycle, session loss, concurrent GET/POST/DELETE, rapid image selection, stale responses, field changes, no-data, and mismatched display scale all passed in V8. These checks do not replace browser testing or tests against a real database. GitHub CI still needs to be checked against the exact deployment commit.
 
-Ảnh chụp tại [desktop](evidence/0.10/explorer-desktop.jpg) và [mobile](evidence/0.10/explorer-mobile.jpg). Dữ liệu IRSA có thể cập nhật; số quan sát và cutout trên đây là kết quả tại lần kiểm tra, không phải assertion cố định cho archive tương lai.
+Screenshots: [desktop](evidence/0.10/explorer-desktop.jpg) and [mobile](evidence/0.10/explorer-mobile.jpg). IRSA data may change; observation counts and cutouts above are results from this run, not fixed assertions about the future archive.
 
-## Chưa nghiệm thu
+## Not yet accepted
 
-Vercel bundle/timeout và nhận diện môi trường, MongoDB quota/TTL/owner isolation thật, review mất cookie nhiều tab, screen-reader, bàn phím toàn trang, phục hồi dữ liệu, tải đồng thời và phép đo khoa học độc lập. Không gọi trang đã đạt production chỉ dựa trên những bước ở trên.
+Vercel bundle/timeouts and deployment-context detection, real MongoDB quota/TTL/owner isolation, review behavior across multiple tabs after cookie loss, screen reader, full-page keyboard navigation, recovery, concurrent load, and independent scientific measurements. The site is not production-ready based only on the steps above.
 
-## Bổ sung sau triển khai và nghiên cứu mới
+## Additions after deployment and later research
 
-- Production `c88fe57`, deployment `dpl_CWVm5qSJb2d7npBPv1ngV7vw3HGG`: [24 response checks](evidence/0.10/production-c88fe57.json) đạt, gồm commit API, cutout thật, review transaction/isolation/expiry và cleanup QA. Đây bổ sung bằng chứng API còn thiếu ở phần trên; không phải phép tải đồng thời hay chờ TTL 180 ngày thực sự trôi qua.
-- Trình duyệt production xác nhận mặc định phổ chặt, nhãn chưa hiệu chuẩn, overlays đo/dự báo chưa bật và lưu trữ MongoDB. Tab từ nút cuối dialog về nút đóng; Shift+Tab quay lại nút cuối; Escape đóng và trả focus về `workspace-help`. [Ảnh focus production](evidence/0.10/dialog-keyboard-production.png). Menu mobile Escape trả `aria-expanded=false`, focus về nút menu; document không tràn ngang ở viewport yêu cầu 390 × 844 (content area đo được 375 pixel).
-- Bảng sandwich mới đã thử **local**, chưa dùng ảnh chụp này để xác nhận deployment: mở bằng Enter, mặc định 68%/toàn bộ; đổi 50/95% và accepted cập nhật đúng tử/mẫu. Ví dụ w090p10 SNR2 ở 95% accepted cho GN/H/sandwich là 95/124, 108/124, 101/124. Không có lỗi JavaScript trong các thao tác này. [Desktop](evidence/0.10/sandwich-desktop.png), [mobile](evidence/0.10/sandwich-mobile.png); bảng giữ cuộn ngang riêng, control không tràn trang.
-- Trang chỉ tải overview sandwich khoảng 177 KB khi mở; bản audit 8,2 MB là liên kết tải chủ động. Cả hai chứa hash để đối chiếu; biểu đồ/bảng không thêm một phép đo WISE mới.
+- Production `c88fe57`, deployment `dpl_CWVm5qSJb2d7npBPv1ngV7vw3HGG`: all [24 response checks](evidence/0.10/production-c88fe57.json) passed, including API commit, real cutout, review transaction/isolation/expiry, and QA cleanup. This adds the API evidence missing above; it is not a concurrent-load test or a test that waited for the 180-day TTL to elapse.
+- The production browser confirmed the tighter spectral default, uncalibrated label, disabled measurement/prediction overlays, and MongoDB storage. Tab from the last dialog control moved to the close button; Shift+Tab returned to the last control; Escape closed the dialog and returned focus to `workspace-help`. [Production focus screenshot](evidence/0.10/dialog-keyboard-production.png). Escape closed the mobile menu, set `aria-expanded=false`, and returned focus to the menu button. At the required 390 × 844 viewport, the document did not overflow horizontally (content area measured 375 px).
+- The newer sandwich table was tried **locally**; this screenshot does not verify deployment. Enter opens it, with 68%/all accepted selected by default. Changing to 50/95% and accepted updates the numerator/denominator correctly. Example: w090p10 SNR2 at 95% accepted gives 95/124, 108/124, and 101/124 for GN/H/sandwich. No JavaScript errors occurred during these actions. [Desktop](evidence/0.10/sandwich-desktop.png), [mobile](evidence/0.10/sandwich-mobile.png); the table retains its own horizontal scroll area and controls do not overflow the page.
+- Opening the page loads only about 177 KB of sandwich overview data; the 8.2 MB audit is an explicit download link. Both include hashes for comparison. The charts/table add no new WISE measurement.
 
-Screen-reader thực, keyboard toàn trang, reflow 200–400%, mobile/touch thực, mất cookie nhiều tab, load/restore và khoa học độc lập vẫn chưa được nghiệm thu đầy đủ.
+A real screen reader, full-page keyboard navigation, 200–400% reflow, real mobile/touch, multi-tab behavior after cookie loss, load/restore, and independent science remain incompletely verified.
 
-Bảng sandwich sau đó đã kiểm trên **production c65d79b**: deep link tự mở, cả sáu hàng mặc định khớp JSON; đổi 95%/accepted giữ đúng 95/124, 108/124 và 101/124 ở w090p10 SNR2, không có JS error trong thao tác. [Ảnh production](evidence/0.10/sandwich-production.png). [Receipt 30 response checks](evidence/0.10/production-c65d79b.json) xác minh hash các artifact mới; lượt fail 502 trước đó được giữ riêng trong evidence. Kiểm chứng này không thay phép đo khoa học hay các audit còn thiếu.
+The sandwich table was later checked on **production `c65d79b`**: the deep link opened automatically, and all six default rows matched JSON. Selecting 95%/accepted retained 95/124, 108/124, and 101/124 for w090p10 SNR2, with no JavaScript error during the interaction. [Production screenshot](evidence/0.10/sandwich-production.png). [Receipt of 30 response checks](evidence/0.10/production-c65d79b.json) verifies new artifact hashes; an earlier 502 attempt remains separately recorded in evidence. This verification does not replace scientific measurement or the remaining audits.
 
-Local sau sửa mask API 1.1 (31/10/2026 giờ Việt Nam): truy vấn 350°/+35° trả 77 quan sát; ảnh đầu thật hiển thị 1.335 pixel khả dụng, 34 bị loại, 0 thiếu trên grid 37×37, cùng mức xám −0,0399–0,3072 MJy/sr. Không có JS error trong đường này. Test JS thực thi thêm ca từ chối ghép hai mask policy khác nhau, rồi tìm lại vùng để reset policy; toàn bộ suite explorer đạt trong V8. Chưa dùng thử local này để xác nhận policy mới đã deploy.
+Local check after API mask fix 1.1 (31 October 2026, Vietnam time): the 350°/+35° query returned 77 observations. The first real image showed 1,335 usable pixels, 34 excluded, and 0 missing on the 37×37 grid, with grayscale range −0.0399–0.3072 MJy/sr. No JavaScript errors occurred in this flow. Executed JS tests added a check rejecting a comparison across different mask policies, then reloaded the field to reset policy; the full explorer suite passed in V8. This local run does not verify that the new policy was deployed.
 
-Sau merge PR #5, [receipt public fc17f96](evidence/0.10/production-fc17f96.json) đã xác minh byte các asset, API 1.1, policy và 1.335/34/0 pixel qua HTTP. Browser-control session trở nên không khả dụng khi kiểm lại giao diện public; không có ảnh chụp hoặc xác minh tương tác mới của production này. Ảnh production c65d79b phía trên vẫn chỉ chứng nhận đúng phiên bản được ghi. Công cụ fetch protected preview bị auto-review chặn vì tạo/tái sử dụng authenticated share link 23 giờ; không dùng link đó hoặc thay access protection để vượt qua.
+After merging PR #5, [public receipt `fc17f96`](evidence/0.10/production-fc17f96.json) verified asset bytes, API 1.1, the mask policy, and 1,335/34/0 pixels over HTTP. The browser-control session became unavailable while rechecking the public interface; there is no new screenshot or production interaction verification for this build. The `c65d79b` production screenshot above certifies only the version named in that receipt. Automatic review blocked the protected-preview fetch because it would create/reuse an authenticated share link that lasts 23 hours. Do not use that link or change access protection to bypass the block.
 
-PR #6 lên production `906af66`. [37 HTTP responses](evidence/0.10/production-906af66.json) xác minh HTML mới và các JSON phổ qua hash commit. Local trả đúng byte của năm static assets; details `#spectral-reference` dùng điều hướng details sẵn có, không thêm JS. Nhãn hero mới chỉ nói phép đo SPHEREx của dự án là thử nghiệm. Phiên browser-control vẫn không khả dụng, nên chưa có screenshot/reflow/keyboard mới cho panel này; HTTP và CI không được thay thế bằng chứng đó.
+PR #6 reached production as `906af66`. [37 HTTP responses](evidence/0.10/production-906af66.json) verified new HTML and spectral JSON against commit hashes. Local responses returned the expected bytes for five static assets. The `#spectral-reference` details link uses existing details navigation and adds no JavaScript. The updated hero label says only that the project’s SPHEREx measurements are exploratory. The browser-control session remained unavailable, so no new screenshot/reflow/keyboard review was completed for this panel; HTTP and CI do not replace that evidence.
 
+## Local linked-flux milestone — 30 October 2026 UTC
 
-## Local linked-flux milestone — 2026-10-30 UTC
+CUA inspected live content at `http://127.0.0.1:8767/#linked-flux`, with tab 8 selected in IAB. [Local receipt](evidence/0.10/linked-local-checks.json) includes asset hashes and screenshots: [desktop](evidence/0.10/linked-local-desktop.jpg), [mobile](evidence/0.10/linked-local-mobile.jpg). This is not a production receipt.
 
-CUA đã kiểm tra nội dung thật ở `http://127.0.0.1:8767/#linked-flux`, tab 8 của
-IAB đang chọn. [Receipt local](evidence/0.10/linked-local-checks.json) gắn hash
-các asset và hai ảnh chụp: [desktop](evidence/0.10/linked-local-desktop.jpg),
-[mobile](evidence/0.10/linked-local-mobile.jpg). Đây chưa là receipt production.
+- Switching strict ↔ broad updated all seven rows, chart, SVG link, status, and spread value from 2.281″ ↔ 0.556″. The seven blocked strict branches remained visible. Enter opened diagnostics with both exposure rows and signed Δχ² values.
+- Checked 1280×720, 768×1024, and 390×844. No document-wide horizontal overflow; on mobile, the chart has its own scroll area (298/650 px), as does the table. Tab moved focus to the chart area with an outline; the mobile menu opened/closed. Viewport override was reset after testing. Screen reader and full WCAG were not checked.
+- Workspace loaded with strict default; measured/prior overlays were both disabled. An advisory links to the newer comparison; it does not change historical measurements or analysis hashes.
+- Opening r8 at 19:19 UTC logged `ReviewStore is not defined`; reload recovered before code was changed, and the cause was not established. r9 added an error state and retry button if the review module is missing. A JavaScript fixture executing the actual app confirms it does not remain indefinitely in `aria-busy`. No r9 console error was observed in this run; the network cause is not claimed as known.
+- Three JavaScript suites ran on Node v24.18.0. All 326 local Python tests completed (six Mongo fixture skips); CI replica-set and production need separate receipts.
 
-- Đổi strict ↔ broad cập nhật đúng 7 hàng, biểu đồ, link SVG, trạng thái và số
-  spread 2,281″ ↔ 0,556″. Không giấu bảy nhánh strict bị chặn; mở diagnostic
-  bằng Enter cho đủ hai dòng exposure và các Δχ² có dấu.
-- Kiểm tra 1280×720, 768×1024 và 390×844. Không có document overflow ngang;
-  ở mobile chart cuộn trong vùng riêng (298/650 px), bảng cũng cuộn riêng.
-  Tab đưa focus tới vùng chart có outline; menu mobile mở/đóng được. Viewport
-  override đã hoàn nguyên sau kiểm tra. Chưa kiểm screen reader hoặc full WCAG.
-- Workspace tải xong với strict mặc định, measured/prior overlay đều tắt.
-  Advisory dẫn tới đối chứng mới; không thay số đo/analysis hash lịch sử.
-- Lần mở r8 lúc 19:19 UTC ghi `ReviewStore is not defined`; reload đã phục hồi
-  trước khi đổi code, nguyên nhân chưa xác định. r9 thêm trạng thái lỗi và
-  nút tải lại nếu thiếu module review; fixture JavaScript thực thi actual app
-  xác minh không đứng mãi ở aria-busy. Không quan sát lỗi console r9 trong
-  lượt kiểm tra này, không khẳng định đã xác định nguyên nhân mạng.
-- Ba suite JavaScript thực thi trên Node v24.18.0, 326 test Python local hoàn
-  tất (sáu ca Mongo fixture skip); CI replica set và production cần receipt riêng.
+## Public linked-flux release — `8032493`
 
+[Public browser receipt](evidence/0.10/linked-production-browser.json) and [public screenshot](evidence/0.10/linked-production-desktop.jpg) verify strict/broad switching for the seven-row table, KPI, and SVG; diagnostics open with Enter and can return to the real image. Workspace defaults to strict, with both measured and prior overlays disabled. No console error/warning was observed in this run. Public checks were at 1280×720; tablet/mobile checks used the same hashed asset locally.
 
-## Public linked-flux release — 8032493
-
-[Public browser receipt](evidence/0.10/linked-production-browser.json) và
-[ảnh public](evidence/0.10/linked-production-desktop.jpg) xác minh nhánh
-strict/broad đổi đúng bảng bảy hàng, KPI, SVG; mở chẩn đoán bằng Enter và
-quay về ảnh thật được. Workspace mặc định strict, cả hai overlay measured và
-prior đều tắt. Không quan sát console error/warning trong lượt này. Kiểm tra
-public ở 1280×720; tablet/mobile ở phần local trên cùng asset được hash.
-
-[45 response checks](evidence/0.10/production-8032493.json) so 31 static
-artifact với Git blob và kiểm cả ba API đúng commit; QA guest đã xóa sạch,
-không cần retry upstream ở lượt này. `worktree_dirty:true` trong receipt do
-bằng chứng CI còn chưa commit khi chạy verifier; các asset được chứng nhận
-bằng **Git blob 8032493**, không dùng byte trong working tree để thay thế.
-Đây vẫn là kiểm tra có phạm vi, không phải SLO hoặc nghiệm thu thiên văn.
+[45 response checks](evidence/0.10/production-8032493.json) compared 31 static artifacts with Git blobs and checked all three APIs against the same commit; QA guest data was deleted with no upstream retry required. `worktree_dirty:true` in the receipt is because CI evidence had not yet been committed when the verifier ran. The certified assets are the **Git blob at `8032493`**, not replacement bytes from the working tree. This remains a scoped check, not an SLO or astronomical acceptance.

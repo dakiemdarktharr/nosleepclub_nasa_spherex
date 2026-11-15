@@ -1,102 +1,102 @@
-# Sao tham chiếu thật và kiểm tra hiện diện nguồn
+# Real Reference Stars and Source-Presence Checks
 
-Hai phép thử đã hoàn tất, nhưng **chưa đủ để thay mô hình đo WISE 0855 hoặc cấp sai số chuyển động đã hiệu chuẩn**. Nội suy ePSF không cải thiện đồng đều các thước đo trên sao thật. Quy tắc nhận nguồn đạt điều kiện đã khóa ở mức 600 µJy trong mô phỏng có điều kiện; ở 300 µJy, tỷ lệ thu hồi còn rất thấp.
+Two experiments are complete, but **they are not sufficient to replace the WISE 0855 measurement model or provide a calibrated motion uncertainty**. ePSF interpolation does not improve all metrics on real stars. The source-acceptance rule met its prespecified criterion at 600 µJy in a conditional simulation; recovery at 300 µJy remains very low.
 
-[Mở báo cáo trên web](https://nosleepclub-nasa-spherex.vercel.app/#reference-presence). Tab **Sao thật** so vị trí với Gaia; tab **Có nguồn hay chỉ nhiễu?** hiển thị cả ca không có mục tiêu và ca có nguồn mô phỏng. Các bản gzip đầy đủ chỉ tải khi bấm vào liên kết.
+[Open the web report](https://nosleepclub-nasa-spherex.vercel.app/#reference-presence). The **Real stars** tab compares positions with Gaia; **Source or noise?** shows both no-target cases and simulated sources. Full gzip files are downloaded only when their links are selected.
 
-## Cấu hình được khóa trước phép thử
+## Configuration locked before the experiments
 
-| Bước | Commit | Phạm vi |
+| Step | Commit | Scope |
 |---|---|---|
-| Khóa sao tham chiếu | `71f63ca4bab85e9ee51c539cd46ae5bfd50c8bc2` | 21 sao × 20 exposure × 2 ePSF; 840 lượt |
-| Khóa quy tắc nhận nguồn | `627fe211bd144d0d0e9f9b5b2042316418c54788` | Hai tập random riêng, toàn bộ 7.992 lượt và tiêu chí đã định |
-| Niêm phong ngưỡng | `6fc5b7c7506333c0f320405718f08ca7d9cfa693` | Đủ 1.998 null calibration, trước khi sinh validation |
-| Mã xuất và audit | `1cac567` | BVLS tại nghiệm lưu; QR và tính lại điểm số từ dữ liệu đã lưu |
+| Reference-star lock | `71f63ca4bab85e9ee51c539cd46ae5bfd50c8bc2` | 21 stars × 20 exposures × 2 ePSFs; 840 attempts |
+| Source-acceptance rule lock | `627fe211bd144d0d0e9f9b5b2042316418c54788` | Two separate random sets, all 7,992 attempts, and prespecified criteria |
+| Threshold seal | `6fc5b7c7506333c0f320405718f08ca7d9cfa693` | All 1,998 null calibrations, before validation was generated |
+| Export and audit code | `1cac567` | BVLS at saved solutions; QR and score recomputation from saved data |
 
-Các commit khóa được tạo cục bộ trước bước tương ứng, sau đó đưa lên lịch sử GitHub cùng bản phát hành. Không gọi đây là một đăng ký nghiên cứu bên ngoài. Cả hai thí nghiệm dùng ảnh WISE đã mở; **không query, tải pixel hoặc đo 30 trường dành cho calibration/validation/holdout mới**. Các sản phẩm 0.3–0.9, linked-flux và neighbor-intervention trước đó được giữ nguyên.
+The lock commits were created locally before their corresponding steps, then added to GitHub history with the release. This is not an external study preregistration. Both experiments use WISE images already opened; **no queries, pixel downloads, or measurements were made for the 30 new calibration/validation/holdout fields**. Earlier 0.3–0.9, linked-flux, and neighbor-intervention products remain unchanged.
 
-Protocol chi tiết: [sao thật](REFERENCE_STAR_PROTOCOL.md), [nhận nguồn](SOURCE_PRESENCE_PROTOCOL.md). Design lưu hash của source, test, protocol, các sản phẩm đã mở và raw input. Runtime dùng đúng các gói đã pin; mỗi worker CLI yêu cầu một thread số học. Đây là cấu hình yêu cầu, không phải phép đo số thread backend.
+Detailed protocols: [real stars](REFERENCE_STAR_PROTOCOL.md), [source presence](SOURCE_PRESENCE_PROTOCOL.md). The design hashes source, tests, protocol, opened products, and raw inputs. The pinned packages are used at runtime; each CLI worker requests one numerical thread. This is a configuration request, not a measurement of the number of threads used by every backend.
 
-## 1. Vị trí trên sao thật
+## 1. Positions of real stars
 
-Giữ đủ 21 sao từng được chọn từ ảnh và 20 exposure D6 QR2. Mỗi sao được đo độc lập trên từng exposure với ePSF gần nhất và ePSF nội suy. Cùng pixel, VARIANCE gốc, danh sách hàng xóm và mặt phẳng nền được dùng ở cả hai nhánh. Flux mục tiêu/hàng xóm được fit có dấu, không dùng ràng buộc phổ của WISE.
+All 21 stars previously selected from the images and all 20 D6 QR2 exposures were retained. Each star was measured independently in each exposure with the nearest and interpolated ePSF. Both branches use the same pixels, original VARIANCE, neighbor list, and background plane. Target and neighbor fluxes are fit with signed values; no WISE spectral constraint is used.
 
-Vị trí Gaia được chuyển tới IMAGE MJD-AVG UTC. Với 14 sao từng tham gia căn chỉnh, sao đang được đánh giá bị loại khỏi nghiệm translation của chính nó; bảy sao mang nhãn heldout cũ dùng các sao training cũ. Nhãn cũ được giữ cho provenance, **không làm chúng thành validation chưa mở**. Sai số catalog năm tham số được giữ với tương quan giữa 20 thời điểm trong từng ma trận 40×40 riêng; đó chưa phải covariance centroid/căn chỉnh tổng.
+Gaia positions were propagated to IMAGE MJD-AVG UTC. For the 14 stars that had participated in alignment, the evaluated star was excluded from its own translation solution; the seven with the old heldout label use the old training stars. The old labels are retained for provenance, **but these are not unopened validation stars**. Catalog five-parameter errors retain temporal correlation across the 20 times in each separate 40×40 matrix; this is not total centroid/alignment covariance.
 
-| Mẫu số | Kết quả |
+| Denominator | Result |
 |---|---:|
-| Lượt định trước / có bản ghi terminal | 840 / 840 |
-| Fit hoàn tất / fit thất bại | 718 / 0 |
-| Lỗi chuẩn bị vẫn giữ | 122 |
-| Cặp sao × ảnh hoàn tất cả hai nhánh | 359 / 420 |
-| Cặp qua sàng lọc số ở cả hai nhánh | 357 / 420 |
-| Sao có ít nhất một cặp hoàn tất | 19 / 21 |
+| Prespecified attempts / terminal records | 840 / 840 |
+| Completed fits / failed fits | 718 / 0 |
+| Preparation failures retained | 122 |
+| Star × image pairs with both branches complete | 359 / 420 |
+| Pairs passing the numerical screen in both branches | 357 / 420 |
+| Stars with at least one completed pair | 19 / 21 |
 
-122 lượt lỗi gồm **116 thiếu lề ảnh** và **6 thiếu pixel hợp lệ quanh tâm dự kiến**. Chúng tương ứng 61 cặp bị từ chối, không được thay nguồn hoặc chạy lại với điều kiện dễ hơn. Hai sao không có kết quả vẫn có hàng `0/20` và giá trị không xác định trong bảng web/JSON. Một sao chỉ có hai cặp hợp lệ; không suy ra độ ổn định thời gian từ trường hợp đó.
+The 122 failed attempts comprise **116 cutouts without enough image margin** and **6 without valid pixels around the predicted center**. They correspond to 61 rejected pairs; no replacement stars were selected and no easier conditions were rerun. The two stars without results retain `0/20` rows and undefined values in the web/JSON tables. One star has only two valid pairs; its temporal stability cannot be inferred.
 
-| Trên cùng 359 cặp hoàn tất | ePSF gần nhất | ePSF nội suy |
+| Same 359 completed pairs | Nearest ePSF | Interpolated ePSF |
 |---|---:|---:|
-| RMS radial so Gaia (″) | 0,934327 | 0,924057 |
-| Trung vị radial (″) | 0,380255 | 0,345538 |
-| P90 radial (″) | 0,876152 | 0,942167 |
-| Trung bình Đông / Bắc (″) | −0,017431 / 0,073362 | −0,022827 / 0,082513 |
+| Radial RMS against Gaia (″) | 0.934327 | 0.924057 |
+| Radial median (″) | 0.380255 | 0.345538 |
+| Radial P90 (″) | 0.876152 | 0.942167 |
+| East / north mean (″) | −0.017431 / 0.073362 | −0.022827 / 0.082513 |
 
-Nội suy giảm nhẹ RMS và trung vị nhưng **tăng P90**, nên chưa chọn nó làm ePSF mới. Đổi giữa hai ePSF gây dịch vị trí trung vị **0,066879″**, lớn nhất **0,431565″**. Đây là độ nhạy mô hình trên mẫu đang xem, không phải sai số độc lập của WISE 0855.
+Interpolation slightly lowers RMS and median but **increases P90**, so it was not selected as the new ePSF. Switching between the two ePSFs shifts position by a median of **0.066879″**, with a maximum of **0.431565″**. This is model sensitivity in the inspected sample, not an independent WISE 0855 error estimate.
 
-Nếu chỉ xem cùng 357 cặp qua sàng lọc số, RMS là **0,603717″ / 0,588622″**, P90 là **0,859338″ / 0,897138″**. Hai cặp bị loại về số học không bị xóa khỏi mẫu 359; giao diện mặc định giữ mọi cặp hoàn tất. Sàng lọc số vẫn chưa chứng nhận đúng nguồn, như failure 16,8″ của [pilot trước](NEIGHBOR_INTERVENTION_RESULTS.md).
+On only the same 357 pairs that pass the numerical screen, RMS is **0.603717″ / 0.588622″** and P90 is **0.859338″ / 0.897138″**. The two numerically rejected pairs remain part of the 359; the default interface retains every completed pair. Passing the numerical screen does not establish source identity, as shown by the 16.8″ failure in the [earlier pilot](NEIGHBOR_INTERVENTION_RESULTS.md).
 
-Audit dựng lại sample và template tại điểm đã lưu, model/residual, KKT của hệ tuyến tính, đường đi IRLS và chi phí các final start thành công bằng BVLS độc lập. Lỗi chuẩn bị được replay; lỗi optimizer, nếu có, chỉ giữ input/provenance, không thử lại. Jacobian/rank vị trí chưa được kiểm lại bằng một phương pháp độc lập. Đủ bản ghi, mô hình có thể tái dựng, và độ chính xác thiên văn là ba điều khác nhau.
+The audit reconstructs samples and templates at saved positions, model/residual, linear-system KKT conditions, IRLS path, and costs for successful final starts using independent BVLS. Preparation failures are replayed; optimizer failures retain their input/provenance and are not retried. Position Jacobian/rank has not been independently recomputed. Complete records, reconstructable models, and astronomical accuracy are distinct claims.
 
-[Kiểm tra khoa học bổ sung](evidence/0.10/reference-presence-science-audit.json) xác nhận **6.459 final start thành công** đã được replay, giữ **3 final start thất bại**. Chênh chi phí lớn nhất là `4,55e-13`, vi phạm KKT theo thang cột lớn nhất `8,47e-15`. Đây là sai khác số học, không phải sai số vị trí.
+The [additional science audit](evidence/0.10/reference-presence-science-audit.json) confirms that **6,459 successful final starts** were replayed and **3 failed final starts** were retained. The largest cost difference is `4.55e-13`, and the largest column-scaled KKT violation is `8.47e-15`. These are numerical differences, not positional errors.
 
-Giới hạn còn lại: một trường đã mở, chọn sao từ ảnh trước đây, số ảnh mỗi sao khác nhau và sai số dùng chung giữa các sao/exposure. Không coi 718 fit là 718 quan sát độc lập. Upstream WCS/ePSF có thể dùng Gaia; thành viên tập huấn luyện upstream chưa biết. Chuyển vị trí dùng Earth parallax/proper motion bậc một, chưa có đầy đủ observer/perspective/radial-velocity. Residual gồm các thành phần đó, căn chỉnh và mô hình ảnh; chưa quy toàn bộ cho ePSF.
+Remaining limits include a single previously opened field, stars selected from images earlier, varying numbers of images per star, and shared errors between stars/exposures. Do not treat 718 fits as 718 independent observations. Upstream WCS/ePSF may use Gaia; membership of the upstream training set is unknown. Position propagation uses first-order Earth parallax/proper motion, without a complete observer/perspective/radial-velocity model. Residuals include those effects, alignment, and image modeling; they cannot all be attributed to ePSF.
 
-## 2. Hiệu chuẩn ngưỡng và validation nhận nguồn
+## 2. Threshold calibration and source-presence validation
 
-Phép thử dùng một bố cục strict đã mở, hai ảnh trước và hai ảnh sau. Mỗi nhánh ePSF xét lưới 441 vị trí cố định. Điểm số có dấu được tính sau khi chiếu ra khỏi nuisance nền/hàng xóm; toàn bộ phép tìm cực đại, hai mùa và hai ePSF được đưa chung vào bước học ngưỡng. Đây là kiểm hiện diện mục tiêu, chưa phải đo centroid hoặc liên kết chuyển động.
+The experiment uses an already opened strict layout with two before and two after images. For each ePSF branch, it searches a fixed grid of 441 positions. Signed scores are computed after projecting out background/neighbor nuisance terms; the threshold-learning step jointly includes all searches, both epochs, and both ePSFs. This tests target presence, not centroid or linked motion.
 
-Calibration có 999 null mỗi loại nền, tổng **1.998/1.998**, không có lỗi. Ngưỡng là cực đại trên cả hai ca: **17,70381304535502**. Ngưỡng không phải S/N, mức sigma hay xác suất phát hiện. File seal có `validation_generated: false` để ghi nhận trạng thái **tại lúc niêm phong**, trước validation; trường này không được sửa sau khi nghiên cứu hoàn tất.
+Calibration contains 999 nulls per background type, **1,998/1,998** total, with no errors. The threshold is the maximum across both null cases: **17.70381304535502**. It is not S/N, a sigma level, or a detection probability. The seal records `validation_generated: false` as the state **at the time of sealing**, before validation; that field is not changed after study completion.
 
-Validation riêng có **5.994/5.994** lượt, không có lỗi. Mỗi ca dưới đây có mẫu số 999, dùng luồng PCG64 khác calibration và các study trước:
+The separate validation set contains **5,994/5,994** attempts, with no errors. Each case below has denominator 999, uses a PCG64 stream distinct from calibration and earlier studies:
 
-| Cảnh validation | Được chấp nhận /999 | Tỷ lệ quan sát | Cận một phía 97,5% | Tiêu chí khóa trước |
+| Validation scene | Accepted /999 | Observed rate | One-sided 97.5% bound | Prespecified criterion |
 |---|---:|---:|---:|---|
-| Plane, không có mục tiêu | 0 | 0% | Báo nhầm ≤0,3686% | Đạt ≤1% |
-| Bậc hai, không có mục tiêu | 0 | 0% | Báo nhầm ≤0,3686% | Đạt ≤1% |
-| Plane, 300 µJy | 46 | 4,6046% | Thu hồi ≥3,3906% | Chỉ báo cáo |
-| Plane, 600 µJy | 928 | 92,8929% | Thu hồi ≥91,1196% | Đạt ≥80% |
-| Bậc hai, 300 µJy | 55 | 5,5055% | Thu hồi ≥4,1741% | Chỉ báo cáo |
-| Bậc hai, 600 µJy | 870 | 87,0871% | Thu hồi ≥84,8479% | Đạt ≥80% |
+| Plane, no target | 0 | 0% | False alarm ≤0.3686% | Pass ≤1% |
+| Quadratic, no target | 0 | 0% | False alarm ≤0.3686% | Pass ≤1% |
+| Plane, 300 µJy | 46 | 4.6046% | Recovery ≥3.3906% | Report only |
+| Plane, 600 µJy | 928 | 92.8929% | Recovery ≥91.1196% | Pass ≥80% |
+| Quadratic, 300 µJy | 55 | 5.5055% | Recovery ≥4.1741% | Report only |
+| Quadratic, 600 µJy | 870 | 87.0871% | Recovery ≥84.8479% | Pass ≥80% |
 
-Không có báo nhầm quan sát được không có nghĩa tỷ lệ báo nhầm thật bằng không. Cận binomial được tính theo từng ca. Hai cận null 97,5% cho phát biểu đồng thời ít nhất 95% trong hai ca null đã định; **không gộp cả bốn gate thành một tuyên bố tin cậy chung 95%**. Lỗi được tính là false accept ở ca null và là miss ở ca positive khi xét gate, nên không thể cải thiện chỉ bằng cách bỏ lượt lỗi.
+No observed false alarms does not mean the true false-alarm rate is zero. Binomial bounds are calculated for each case. The two null 97.5% bounds support a simultaneous statement of at least 95% across the two prespecified null cases; **they do not combine all four gates into one 95% confidence claim**. An error counts as a false accept for a null case and a miss for a positive case, so results cannot be improved by dropping failed attempts.
 
-Đây là một bước tiến của quy tắc mô phỏng có điều kiện ở 600 µJy. Nguồn 300 µJy bị bỏ sót phần lớn, và chưa có kiểm chứng false-alarm trên bầu trời thật. **Chưa áp dụng ngưỡng này để xác nhận hoặc lọc phát hiện trong workspace WISE.**
+This is a step forward for the conditional simulation rule at 600 µJy. Most 300 µJy sources are missed, and false alarms on the real sky have not been validated. **This threshold is not applied to confirm or filter detections in the WISE workspace.**
 
-Truth Gaussian tích phân theo pixel khác family fitter; noise dùng Gaussian với thang VARIANCE quan sát và source/neighbor-Poisson ramp lý tưởng theo gain có binding điều kiện. Scorer dùng **VARIANCE quan sát gốc**, không dùng error oracle từ generator. VARIANCE đó có thể đã chứa photon noise của nguồn thật; chưa phải phân rã noise detector được kiểm chứng. Không có nguồn mục tiêu trong null, nhưng hàng xóm vẫn có mặt.
+Gaussian truth is pixel-integrated and comes from a different family than the fitter. Noise uses a Gaussian scale from observed VARIANCE, and the source/neighbor Poisson ramp is idealized and conditionally bound to gain. The scorer uses **the original observed VARIANCE**, not the generator's oracle error. That VARIANCE may already include photon noise from real sources; it is not a validated decomposition of detector noise. Null cases have no target but retain neighbors.
 
-Audit độc lập dựng lại template/native geometry, dùng QR kiểm phép chiếu SVD và tính lại đủ **7.992/7.992** điểm số, vị trí thắng lưới và quyết định từ vector dữ liệu đã lưu. Hash của data, source/gain/background và seed được kiểm. Audit này **không sinh lại noise từ RNG**, không đo độ phủ covariance và không biến 7.992 lượt noise thành 7.992 trường trời độc lập.
+The independent audit reconstructs templates/native geometry, uses QR to check the SVD projection, and recalculates all **7,992/7,992** scores, winning grid positions, and decisions from saved vectors. Data, source/gain/background hashes, and seeds are checked. The audit **does not regenerate noise from the RNG**, measure covariance coverage, or make 7,992 noise realizations into 7,992 independent sky fields.
 
-Điểm validation gần ngưỡng nhất cách **0,0091881** đơn vị điểm số; không có quyết định nào chỉ cách ngưỡng ở mức sai khác làm tròn của replay QR.
+The closest validation score is **0.0091881** score units from the threshold; no decision is close to the threshold within the rounding-level replay difference of QR.
 
-## Dữ liệu và cách kiểm tra
+## Data and verification
 
-- Sao thật: [overview](../web/data/reference-stars/overview.json), [design](../web/data/reference-stars/design.json), [840 bản ghi/audit và covariance catalog](../web/data/reference-stars/records.json.gz), **14.164.757 byte gzip**.
-- Nhận nguồn: [overview](../web/data/source-presence/overview.json), [design](../web/data/source-presence/design.json), [seal ngưỡng](../web/data/source-presence/threshold.json), [toàn bộ 7.992 lượt và geometry](../web/data/source-presence/records.json.gz), **71.148.124 byte gzip**.
-- SHA-256 bản nén và bản giải nén nằm trong mỗi overview. Raw FITS và journal từng lượt nằm trong `data/raw/` đã ignore. Browser chỉ tải hai overview khi mở mục mới; không tự giải nén hoặc tải các audit lớn.
+- Real stars: [overview](../web/data/reference-stars/overview.json), [design](../web/data/reference-stars/design.json), [840 records/audits and catalog covariance](../web/data/reference-stars/records.json.gz), **14,164,757-byte gzip**.
+- Source presence: [overview](../web/data/source-presence/overview.json), [design](../web/data/source-presence/design.json), [threshold seal](../web/data/source-presence/threshold.json), [all 7,992 attempts and geometry](../web/data/source-presence/records.json.gz), **71,148,124-byte gzip**.
+- Compressed and decompressed SHA-256 hashes are recorded in each overview. Raw FITS and per-attempt journals stay in Git-ignored `data/raw/`. The browser downloads only the two overviews when the section is opened; it does not automatically extract or download the larger audits.
 
-Với raw cache đã tải đúng provenance, chạy kiểm tra/xuất lại từ dữ liệu đã lưu:
+With raw cache files carrying the expected provenance, rerun the checks/export from saved results:
 
 ```powershell
 .\.venv\Scripts\python.exe -B -m scripts.publish_reference_stars --protocol-commit 71f63ca4bab85e9ee51c539cd46ae5bfd50c8bc2
 .\.venv\Scripts\python.exe -B -m scripts.publish_presence_study --protocol-commit 627fe211bd144d0d0e9f9b5b2042316418c54788 --threshold-commit 6fc5b7c7506333c0f320405718f08ca7d9cfa693
 ```
 
-Các lệnh không tối ưu lại vị trí, sinh noise mới hoặc mở trường mới. Runtime/tham số phải khớp journal. [Kiểm thử sản phẩm](../tests/test_reference_presence_products.py) kiểm hash/giải nén theo luồng, source đã khóa và mẫu số mà không cần raw FITS.
+These commands do not refit positions, generate new noise, or open new fields. Runtime/parameters must match the journal. [Product tests](../tests/test_reference_presence_products.py) check hashes/streamed extraction, locked source, and denominators without needing raw FITS.
 
-## Mốc tiếp theo và điều kiện nghiệm thu
+## Next milestone and acceptance conditions
 
-Mốc kế tiếp là **học hiệu chỉnh ePSF có ràng buộc trên tập sao development riêng, rồi kiểm tra trên sao giữ ngoài bước học, kèm covariance căn chỉnh dùng chung**. Khóa basis/độ phức tạp, chia tập theo source/exposure phù hợp và giữ các điều kiện mask trước khi fit. Không chọn mô hình chỉ từ RMS tổng đang đẹp hơn.
+The next milestone is **to learn a constrained ePSF correction on a separate development star set, then test it on stars held out from training, with shared alignment covariance included**. Lock the basis/complexity, split by source/exposure as appropriate, and preserve masks before fitting. Do not choose a model solely because its aggregate RMS looks better.
 
-Điều kiện để đi tiếp: báo đủ mẫu số/abstention; cải thiện sai lệch tuyệt đối lẫn đuôi phân bố trên tập kiểm tra riêng; không làm mất nguồn hoặc suy giảm flux trong signal-preservation control; mô tả được tương quan thời gian/căn chỉnh và kiểm độ phủ covariance. Các sao/trường đã xem vẫn là development. Chỉ sau khi evaluator, power, ngân sách sai số, miền hỗ trợ và overlap được khóa mới mở **12 trường calibration, 12 validation và 6 holdout** đã dành trước.
+Conditions for proceeding: report the full denominator/abstentions; improve both absolute error and distribution tails on an independent test set; preserve sources and flux in signal-preservation controls; model temporal/alignment correlations and test covariance coverage. Stars/fields already viewed remain development data. Only after locking the evaluator, power, error budget, support domain, and overlap may the reserved **12 calibration, 12 validation, and 6 holdout fields** be opened.
 
-[Bảng 20 tiêu chí](PRODUCTION_READINESS.md) tiếp tục mở. Recovery/rollback production, tải đại diện, SLO và giấy phép mã nguồn cũng còn phải hoàn tất; một gate mô phỏng đạt không đóng các hạng mục này.
+The [20-item readiness table](PRODUCTION_READINESS.md) remains open. Production recovery/rollback, representative load, SLOs, and source licensing also remain to be completed; passing a simulated gate does not close them.

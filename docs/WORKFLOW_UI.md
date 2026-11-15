@@ -1,85 +1,51 @@
-# Giao diện theo quy trình
+# Workflow-Oriented Interface
 
-Giao diện xử lý một bộ dữ liệu tại một thời điểm, qua bốn màn hình.
-[Mở ứng dụng](https://nosleepclub-nasa-spherex.vercel.app/#home).
-Đây là thay đổi giao diện và quản lý ngữ cảnh; không chạy lại phép đo khoa học.
+The interface processes one dataset at a time through four screens. [Open the app](https://nosleepclub-nasa-spherex.vercel.app/#home). This is a change to interface/context management; it does not rerun scientific measurements.
 
-| Bước | Bộ mẫu WISE 0855 | Ảnh tìm tại IRSA |
+| Step | WISE 0855 sample | IRSA image search |
 |---|---|---|
-| 1. Dữ liệu | Chọn bộ ảnh; xem ảnh SPHEREx thật thu nhỏ trước/sau | Nhập tọa độ, release, detector và trường nhìn; tìm metadata rồi tải cutout |
-| 2. So ảnh | Kéo vạch, song song, ảnh sai khác hoặc nhấp nháy; chọn WISE/residual | Giữ ảnh A, chọn ảnh B; so nhấp nháy các ảnh đã tải cùng thang hiển thị |
-| 3. Kiểm tra | Vector/SNR WISE chỉ hiện khi chọn WISE; residual có tọa độ và điểm riêng | Xem ID hai ảnh, mask, nguồn, quy ước hiển thị và giới hạn; chưa fit chuyển động |
-| 4. Ghi nhận | Nhận xét riêng gắn đúng analysis hash, scene và vùng; cơ chế API MongoDB giữ nguyên | Xuất JSON kèm đúng truy vấn, cặp A/B và ghi chú; không POST nhận xét IRSA vào API WISE |
+| 1. Data | Select an image set; preview its real SPHEREx images at reduced size, before/after | Enter coordinates, release, detector, and field of view; search metadata and download cutouts |
+| 2. Compare | Wipe, side-by-side, difference, or blink; select WISE/residual | Keep image A and select image B; blink downloaded images with the same display scale |
+| 3. Check | WISE vector/SNR appears only when WISE is selected; residual has its own coordinates and score | View both image IDs, mask, sources, display convention, and limits; no motion fitting yet |
+| 4. Record | Private note tied to the correct analysis hash, scene, and region; MongoDB API lifecycle remains unchanged | Export JSON with the exact query, A/B pair, and note; do not POST IRSA notes to the WISE API |
 
-Thanh bước và nút chính dùng cùng thứ tự. Mỗi màn có nút quay lại; đổi màn không
-đổi dữ liệu. Quay về chọn dữ liệu là một hành động rõ ràng. Chuyển sang kho kiểm
-chứng giữ vị trí để trở lại quy trình.
+The step bar and primary button use the same order. Each screen has a back button; changing screens does not change data. Returning to data selection is an explicit action. Switching to the audit archive preserves the current position so the user can return to the workflow.
 
-## Bớt chữ, giữ thông tin quyết định
+## Reduce copy while preserving decision-relevant information
 
-- Bỏ trang mở đầu minh họa lớn, các đoạn quảng bá và hướng dẫn lặp dưới tiêu đề.
-  Ảnh chọn dữ liệu là thumbnail SPHEREx của chính scene; Canva nằm trong hướng
-  dẫn và vẫn được ghi là minh họa.
-- Chi tiết kỹ thuật, provenance, hash và giới hạn dài nằm trong mục mở khi cần.
-  Đơn vị, nhãn ảnh thật/nguồn giả, cảnh báo sai số chưa hiệu chuẩn và lỗi chất
-  lượng ảnh hưởng quyết định vẫn hiển thị cạnh bước liên quan.
-- Kho kiểm chứng tách khỏi bốn màn. Chỉ một báo cáo được hiển thị, có đường quay
-  về danh sách và quay về công việc. Báo cáo lịch sử không được trình bày như kết
-  quả phân tích tọa độ IRSA đang chọn. Các journal lớn vẫn là tải theo yêu cầu.
-- Dùng font Be Vietnam Pro cục bộ, nền đặc, nhãn trường và focus rõ; không đặt chữ
-  xử lý dữ liệu lên ảnh trang trí.
+- Remove the large illustrative landing page, promotional sections, and repeated instructions under headings. The data-selection image is a thumbnail of the selected SPHEREx scene; Canva assets stay in the guide and remain labeled as illustrations.
+- Put long technical details, provenance, hashes, and limits in expandable sections. Units, real-image/synthetic-source labels, uncalibrated-error warnings, and image-quality failures that affect decisions remain visible beside the relevant step.
+- Keep the audit archive separate from the four screens. Display one report at a time, with links back to the list and current work. Historical reports must not be presented as analysis of the currently selected IRSA coordinates. Large journals remain on-demand downloads.
+- Use the local Be Vietnam Pro font, solid backgrounds, clear field labels, and focus indicators; do not place data-processing text over decorative images.
 
-## Ràng buộc ngữ cảnh
+## Context constraints
 
-Nút đi tiếp chờ dữ liệu sẵn sàng. IRSA cần giữ A và tải B khác trước khi sang kiểm
-tra/ghi nhận. Xem màn kiểm tra được nhớ theo chữ ký của bộ ảnh và vùng; thay đổi
-scene, vùng, truy vấn hoặc cặp ảnh sẽ yêu cầu kiểm lại. Đây là thứ tự thao tác,
-**không phải một gate xác nhận khoa học**.
+The next-step button waits for data to be ready. IRSA requires retaining image A and downloading a different image B before moving to check/record. The check screen is remembered against a signature of the image set and field; changing scene, region, query, or image pair requires a new check. This is an interaction sequence, **not a scientific validation gate**.
 
-Khi tải scene mới, dữ liệu cũ không được coi là scene mới đã sẵn sàng. Lỗi về trễ
-của request cũ không ghi đè scene mới. Nhấp nháy dừng khi rời màn so ảnh và giữ
-cặp đã chọn, kể cả đang hiển thị ảnh A tại thời điểm bấm tiếp.
+When a new scene loads, old data is not treated as the new scene being ready. A late error from an old request must not overwrite the new scene. Blinking stops when leaving the compare screen and retains the selected pair, even if image A was visible when the user continued.
 
-Ghi chú IRSA được giữ trong bộ nhớ theo truy vấn và hai URL nguồn; đổi cặp không
-gắn nhầm ghi chú cũ, quay lại cùng cặp khôi phục nháp. Các nháp này chưa được lưu
-qua lần reload/đóng trang; nút **Xuất ghi nhận JSON** là đầu ra cần lưu. Nhận xét
-WISE vẫn theo vòng đời riêng của ReviewStore/API, không chuyển sang vùng IRSA.
+IRSA notes stay in memory under the query and two source URLs; changing pairs does not attach an old note to a different pair, and returning to the same pair restores its draft. These drafts are not persisted across reload or closing the page; **Export review JSON** is the output that must be saved. WISE reviews retain their separate ReviewStore/API lifecycle and do not move into the IRSA workspace.
 
-## Điều hướng và bàn phím
+## Navigation and keyboard
 
-`#home` là màn dữ liệu; `#compare-step`, `#check-step`, `#review-step` giữ nguồn
-đang chọn. Link cũ `#workspace` mở WISE, `#explore` mở truy vấn IRSA, và các link
-báo cáo như `#signal-controls`/`#profile-landscape` vẫn có đích. Back/Forward
-đổi màn, không khởi tạo lại bộ dữ liệu.
+`#home` is the data screen; `#compare-step`, `#check-step`, and `#review-step` retain the selected source. The old `#workspace` link opens WISE, `#explore` opens IRSA search, and report links such as `#signal-controls`/`#profile-landscape` still resolve. Back/Forward changes screens without reinitializing the dataset.
 
-Skip link chỉ đưa focus vào nội dung hiện tại. Mỗi lần đổi màn, focus chuyển đến
-tiêu đề; mở báo cáo bằng Enter không để focus trong danh sách đã ẩn. Hướng dẫn
-quay lại nguồn đang dùng, không âm thầm chuyển IRSA sang WISE.
+The skip link moves focus only to the current content. After each screen change, focus moves to its heading; opening a report with Enter does not leave focus in the hidden list. Help returns to the current source and does not silently switch IRSA to WISE.
 
-Các kiểm tra bàn phím và reflow chỉ xác minh những thao tác đã thử; chưa thay
-thế đánh giá screen reader hoặc kiểm toán WCAG đầy đủ.
+Keyboard and reflow checks verify only the tested interactions; they do not replace screen-reader testing or a full WCAG audit.
 
-## Giới hạn khoa học giữ nguyên
+## Scientific limits remain unchanged
 
-Ảnh IRSA mới là cutout đặt trên WCS hiển thị, chưa căn chỉnh sao, ghép phổ tại
-nguồn hay fit chuyển động. Phép đo WISE đang dùng sản phẩm có điều kiện đã công
-bố. Residual chưa có danh tính thiên thể; số fit chạy được không chứng nhận phát
-hiện. Không đổi ngưỡng, PSF, covariance hoặc sản phẩm khoa học đã khóa; 252 ô
-assessment và 30 trường dành riêng vẫn chưa mở.
+IRSA images are cutouts placed on the display WCS; they have not been star-aligned, spectrally joined at source, or fit for motion. WISE measurements use the previously published conditional product. Residuals have no celestial-source identity; a successful fit does not confirm a detection. Do not change thresholds, PSF, covariance, or locked science products; the 252 assessment cells and 30 reserved fields remain unopened.
 
-## Bước tiếp theo
+## Next step
 
-Thử với ba người mới: mỗi người hoàn thành cả luồng WISE và IRSA, giữ đúng dữ
-liệu/vùng khi quay lại và xuất/lưu đúng ghi nhận mà không cần nhắc đường đi.
-Ghi lại điểm dừng và hiểu nhầm, đặc biệt giữa residual, vector WISE và báo cáo
-nguồn giả. Sau vòng này, tiếp tục milestone khoa học tách bias diện tích pixel,
-template và nguồn chồng đã nêu trong SIGNAL_CONTROL_RESULTS.md.
+Test with three new users: each should complete both WISE and IRSA flows, preserve the correct dataset/region when returning, and export/save the right record without route prompts. Record where they stop or misunderstand, especially the distinction among residual, WISE vector, and synthetic-source report. After this round, continue the separate science milestone on pixel-area bias, template, and overlapping sources described in `SIGNAL_CONTROL_RESULTS.md`.
 
-Preview cục bộ:
+Local preview:
 
 ```powershell
 .venv/Scripts/python.exe -m scripts.serve_app --port 8770
 ```
 
-Mở `http://127.0.0.1:8770/#home`. Runtime web vẫn tách khỏi môi trường tính toán
-khoa học; không thêm Node runtime hoặc framework build vào ứng dụng.
+Open `http://127.0.0.1:8770/#home`. The web runtime remains separate from the scientific-computing environment; do not add a Node runtime or framework build to the application.

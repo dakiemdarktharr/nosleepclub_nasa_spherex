@@ -1,33 +1,33 @@
-# Mô hình thời gian và GLS astrometry theo exposure
+# Exposure-Time Model and GLS Astrometry
 
-Đây là module tính toán độc lập cho dữ liệu SPHEREx: đọc thời điểm IMAGE, dựng ma trận thiết kế và fit GLS có kiểm tra rank. Module chưa được nối với point estimator, không tạo phép đo nguồn mới, không khẳng định detection hoặc tách được parallax trên dữ liệu thực.
+This is a standalone computational module for SPHEREx data: it reads IMAGE times, builds a design matrix, and fits GLS with rank checks. It is not connected to the point estimator, creates no new source measurement, and makes no claim of detection or measurable parallax on real data.
 
-## Thời điểm và hệ quy chiếu
+## Time and reference frame
 
-`parse_image_header` yêu cầu header `EXTNAME=IMAGE`, `TIMESYS` hợp lệ và ba giá trị số hữu hạn `MJD-BEG`, `MJD-AVG`, `MJD-END`. Các từ khóa MJD này được hiểu là **MJD tuyệt đối, đơn vị ngày**, không cộng `MJDREF`. Để từ chối offset bị nhầm thành ngày tuyệt đối, module chỉ nhận MJD 40000–100000: đây là giới hạn phạm vi của công cụ SPHEREx, không phải định nghĩa tổng quát của MJD. `MJDREF` khi có phải hữu hạn; các dạng scalar/split phải khớp. `TIMEZERO`/`TIMEOFFS` khác 0, `TREFPOS` barycentric hoặc không nhận diện, duplicate keyword quan trọng, thứ tự sai, midpoint lệch tâm quá 1 giây hoặc `DATE-*` mâu thuẫn MJD quá 5 ms đều bị từ chối. DATE-* có thì kiểm tra, không tự suy scale khi thiếu TIMESYS. Các scale được hỗ trợ là UTC, TAI, TT, TDB, TCG, TCB; không mặc định UTC cho metadata thiếu hoặc nhận UT1/LOCAL.
+`parse_image_header` requires `EXTNAME=IMAGE`, a valid `TIMESYS`, and three finite numeric values for `MJD-BEG`, `MJD-AVG`, and `MJD-END`. These MJD keywords are interpreted as **absolute MJD values in days**, without adding `MJDREF`. To reject an offset mistakenly treated as absolute days, the module accepts only MJD 40000–100000. This is the SPHEREx tool's domain limit, not a general MJD definition. If present, `MJDREF` must be finite; scalar and split forms must agree. Nonzero `TIMEZERO`/`TIMEOFFS`, barycentric or unrecognized `TREFPOS`, duplicate important keywords, invalid order, midpoint offset greater than 1 second, or `DATE-*` mismatch with MJD greater than 5 ms are rejected. Present `DATE-*` values are checked, but the module does not infer a timescale if `TIMESYS` is missing. Supported scales are UTC, TAI, TT, TDB, TCG, and TCB; there is no default to UTC for missing metadata, and UT1/LOCAL are not accepted.
 
-`astropy.time.Time` giữ scale gốc và chuyển rõ sang TDB cho thời gian thiết kế. Năm là 365,25 ngày TDB. Đây là chuyển thang thời gian, **không phải** hiệu chỉnh light-travel time của photon về barycenter. Tài liệu [Astropy Time](https://docs.astropy.org/en/stable/api/astropy.time.Time.html) mô tả scale và định dạng; [SPHEREx Explanatory Supplement](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp_QR.pdf) mô tả các keyword MJD và vị trí tàu.
+`astropy.time.Time` retains the original scale and explicitly converts to TDB for design time. A year is 365.25 TDB days. This is a timescale conversion, **not** a photon light-travel-time correction to the barycenter. [Astropy Time documentation](https://docs.astropy.org/en/stable/api/astropy.time.Time.html) describes scales and formats; the [SPHEREx Explanatory Supplement](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/SPHEREx_Expsupp_QR.pdf) describes MJD keywords and spacecraft location.
 
-Vị trí Trái Đất dùng `get_body_barycentric('earth', time.tdb, ephemeris='builtin')` với kết quả ICRS barycentric theo AU, không phụ thuộc cấu hình ephemeris toàn cục và không tải kernel. [Astropy](https://docs.astropy.org/en/latest/api/astropy.coordinates.get_body_barycentric.html) mô tả convention này. `X_SC/Y_SC/Z_SC` không được cộng vào vector Trái Đất: header chỉ khai gốc GEOCENTER, chưa xác minh orientation trục. Hàm riêng `spacecraft_parallax_bound` chỉ dùng norm XYZ và giả định giá trị theo km trong hệ Cartesian geocentric trực giao. Nó tính cận góc bậc nhất `||r_sc||/AU × parallax_assumed`, không phải hiệu chỉnh vector, uncertainty ngẫu nhiên hay tham số fit; thiếu gốc/tọa độ thì trả unavailable.
+Earth position uses `get_body_barycentric('earth', time.tdb, ephemeris='builtin')`, returning ICRS barycentric coordinates in AU without depending on global ephemeris configuration or downloading a kernel. [Astropy](https://docs.astropy.org/en/latest/api/astropy.coordinates.get_body_barycentric.html) documents this convention. Do not add `X_SC/Y_SC/Z_SC` to Earth's vector: the header states only a GEOCENTER origin, and axis orientation has not been verified. The separate `spacecraft_parallax_bound` function uses only the XYZ norm and assumes values are in km in an orthogonal geocentric Cartesian frame. It computes the first-order angular bound `||r_sc||/AU × parallax_assumed`; it is not a vector correction, random uncertainty, or fitted parameter. If origin/coordinates are missing, the result is unavailable.
 
-## Ma trận, GLS và dự báo
+## Design matrix, GLS, and predictions
 
-Tại hướng ICRS cố định `(α,δ)` do caller cung cấp, chọn vector đơn vị Đông `e=(-sin α, cos α, 0)` và Bắc `n=(-sin δ cos α, -sin δ sin α, cos δ)`. Ma trận cho mỗi exposure hai hàng Đông/Bắc:
+At a fixed ICRS direction `(α,δ)` supplied by the caller, define east unit vector `e=(-sin α, cos α, 0)` and north unit vector `n=(-sin δ cos α, -sin δ sin α, cos δ)`. Each exposure contributes east/north rows:
 
 ```text
 east(t)  = east0  + mu_east  * Δt − parallax * (r_earth/AU · e)
 north(t) = north0 + mu_north * Δt − parallax * (r_earth/AU · n)
 ```
 
-Vị trí và parallax có đơn vị arcsec; proper motion là arcsec/năm TDB; Δt tính so với `reference` do caller chọn. Đông là `ΔRA cos(dec)`, Bắc là `Δdec`; RA wrap được xử lý tuần hoàn, cực có hướng trục quy ước theo RA cung cấp. Đây là xấp xỉ tangent-plane bậc nhất quanh hướng cố định, không phải tọa độ tuyệt đối mới, không có prior chuyển động/độ sáng, và chưa mô hình perspective acceleration, aberration, chromaticity hay astrometric reference systematics.
+Position and parallax use arcseconds; proper motion uses arcseconds per TDB year; Δt is relative to a caller-selected reference. East is `ΔRA cos(dec)`, north is `Δdec`; RA wrap is handled periodically, and the pole's axis direction follows the supplied RA convention. This is a first-order tangent-plane approximation around a fixed direction, not a new absolute coordinate solution. It has no motion/brightness prior and does not model perspective acceleration, aberration, chromaticity, or astrometric-reference systematics.
 
-`design_matrix(..., model='pm_only')` dựng **4** tham số `[east0, north0, mu_east, mu_north]`. `model='pm_parallax'` dựng **5** tham số trên cộng `parallax`. Hai lựa chọn hoàn toàn tường minh; không tự sửa mô hình hay giữ parallax cố định để tránh singularity. `fit_gls` nhận vector `[east_0,north_0,east_1,north_1,...]` và covariance **đầy đủ 2N×2N** theo arcsec², bao gồm block giữa các exposure. Nó kiểm tra covariance đối xứng dương xác định, whiten bằng Cholesky, scale từng cột và kiểm SVD. Không dùng pseudoinverse: bậc tự do ≤0, rank thiếu hoặc condition number sau scale >1000 mặc định gây `UnidentifiableDesign`, kèm chẩn đoán. Ngưỡng 1000 là guard số học có thể cấu hình, không phải bảo đảm precision khoa học; rank đầy đủ cũng không chứng minh tín hiệu thị sai có thể đo được. Covariance tham số là conditional GLS với covariance đầu vào, không tự nhân reduced χ² hay bổ sung hệ thống thiếu.
+`design_matrix(..., model='pm_only')` builds **4** parameters `[east0, north0, mu_east, mu_north]`. `model='pm_parallax'` adds parallax for **5** parameters. The choices are explicit; the module does not change models or hold parallax fixed to avoid singularity. `fit_gls` accepts vector `[east_0,north_0,east_1,north_1,...]` and a **full 2N×2N covariance** in arcsec², including between-exposure blocks. It checks positive-definite symmetry, whitens by Cholesky, scales columns, and checks SVD. It does not use a pseudoinverse: degrees of freedom ≤0, deficient rank, or scaled condition number >1000 by default raises `UnidentifiableDesign` with diagnostics. The threshold 1000 is a configurable numerical guard, not a scientific precision guarantee; full rank does not prove measurable parallax. Parameter covariance is conditional GLS using the input covariance; the module does not automatically multiply by reduced χ² or add missing systematics.
 
-`predict` trả mean và covariance của fitted mean. Với covariance observation mới và block covariance train/new, nó trả thêm covariance của `y_new − fitted_mean`, tính cả cross-terms. Nếu không cung cấp cross-block thì giả định bằng 0; joint covariance được kiểm dương bán xác định. Đây là dự báo tuyến tính vô điều kiện, không cộng hiệu chỉnh kriging hay xử lý cross-covariance không được cung cấp.
+`predict` returns the fitted-mean estimate and covariance. Given covariance for new observations and a train/new block covariance, it also returns covariance of `y_new − fitted_mean`, including cross terms. If no cross block is supplied, it assumes zero; the joint covariance is checked for positive semidefiniteness. This is an unconditional linear prediction; it does not add kriging corrections or handle unspecified cross-covariance.
 
-Kiểm tra đối xứng và PSD chuẩn hóa theo độ lệch chuẩn của từng phần tử, với dung sai theo machine epsilon và kích thước ma trận; không dùng một ngưỡng tuyệt đối cố định theo arcsec². Ma trận covariance đầu vào chỉ được đối xứng hóa nếu chênh lệch nằm trong dung sai làm tròn, sau đó vẫn phải qua Cholesky. Joint covariance được kiểm PSD trong thang correlation, kể cả trường hợp singular PSD hợp lệ; cross-block không được cắt hoặc thay thế. Covariance residual được kiểm lại PSD theo thang của các hạng dùng để tính nó: giá trị âm vượt sai số làm tròn gây lỗi; nếu eigenvalue âm chỉ ở mức làm tròn, một hiệu chỉnh đường chéo nhỏ được ghi rõ tại `prediction_residual_psd_roundoff_adjustment_arcsec2`, cùng ngưỡng tại `prediction_residual_psd_tolerance_arcsec2`. Đây là xử lý số học, không phải thành phần uncertainty vật lý.
+Symmetry and PSD checks are normalized by the standard deviations of matrix elements, with tolerance based on machine epsilon and matrix size; there is no fixed absolute threshold in arcsec². Input covariance is symmetrized only when differences are within rounding tolerance, then must still pass Cholesky. Joint covariance is checked for PSD in correlation scale, including valid singular PSD cases; the cross block is not clipped or replaced. Residual covariance is rechecked for PSD on the scale of its calculation terms: a negative value beyond rounding error raises an error; if negative eigenvalues are only at rounding scale, a small diagonal correction is recorded in `prediction_residual_psd_roundoff_adjustment_arcsec2`, along with the threshold in `prediction_residual_psd_tolerance_arcsec2`. This is numerical handling, not a physical uncertainty term.
 
-Ví dụ sử dụng (chỉ minh họa API; `headers`, `y`, `cov` phải đến từ dữ liệu đã được kiểm tra):
+Usage example (API illustration only; `headers`, `y`, and `cov` must come from validated data):
 
 ```python
 from scripts import astrometric_time_model as atm
@@ -40,24 +40,24 @@ B, _ = atm.design_matrix(new_times, reference, ra_deg, dec_deg, 'pm_parallax')
 prediction = atm.predict(fit, B, new_cov, train_new_cross_cov)
 ```
 
-## Audit development đã chạy trên cache WISE
+## Completed development audit on the WISE cache
 
 ```powershell
 .venv/Scripts/python.exe -m unittest tests.test_astrometric_time_model -v
 .venv/Scripts/python.exe -m scripts.audit_exposure_times
 ```
 
-[development-audit.json](../web/data/time-model/development-audit.json) lưu hash manifest, code, từng FITS, URL, thời gian và trạng thái từng exposure. Audit chỉ đọc 31 ảnh đã tải trong manifest coadd WISE, không khẳng định chúng đều là cặp primary strict/broad, không đọc centroid hay fit nguồn. Toàn bộ 31 IMAGE header hợp lệ: 16 exposure tháng 11/2025 và 15 tháng 4/2026. `MJD-AVG` sau `MJD-OBS` khoảng 57,55873–57,55882 giây trong cache này; MJD-OBS là đầu exposure ở các header đó.
+[development-audit.json](../web/data/time-model/development-audit.json) stores manifest hashes, code, each FITS, URLs, times, and per-exposure status. The audit reads only the 31 images already downloaded in the WISE coadd manifest. It does not claim they are all primary strict/broad pairs, and does not read centroids or fit sources. All 31 IMAGE headers are valid: 16 exposures from November 2025 and 15 from April 2026. In this cache, `MJD-AVG` is about 57.55873–57.55882 seconds after `MJD-OBS`; those headers use MJD-OBS as exposure start.
 
-Khoảng trải midpoint trong hai mùa là 4,616 và 5,297 ngày. Với giả định minh họa từ [Luhman 2014](https://arxiv.org/pdf/1404.6501), `μ_east=−8,06″/năm`, `μ_north=+0,70″/năm`, `π=0,454″`, độ dịch lớn nhất dự tính giữa hai exposure cùng mùa do Earth-only là 0,108″ và 0,126″. Cộng cận bảo thủ của hai vị trí tàu làm các cận có điều kiện lần lượt 0,107793″ và 0,126300″; mỗi exposure có cận bỏ vị trí tàu khoảng 2,134–2,136 × 10⁻⁵″. Các giá trị giả định là ví dụ, không phải centroid đo được, fit target, hay cận tổng quát cho acceleration và sai số thiết bị.
+Midpoint span within the two seasons is 4.616 and 5.297 days. Under the illustrative assumptions from [Luhman 2014](https://arxiv.org/pdf/1404.6501), `μ_east=−8.06″/year`, `μ_north=+0.70″/year`, and `π=0.454″`, the maximum predicted Earth-only shift between same-season exposures is 0.108″ and 0.126″. Adding a conservative bound for both spacecraft positions gives conditional bounds of 0.107793″ and 0.126300″, respectively; per-exposure bounds that omit spacecraft position are about 2.134–2.136 × 10⁻⁵″. These are assumed illustrative values, not measured centroids, target fits, or general bounds on acceleration/instrument error.
 
-Với identity weights và reference TDB gần median:
+With identity weights and a reference TDB near the median:
 
-| Sampling | PM-only rank / condition | PM+parallax rank / condition | Diễn giải số học |
+| Sampling | PM-only rank / condition | PM+parallax rank / condition | Numerical interpretation |
 |---|---:|---:|---|
-| 2025-11 riêng | 4 / 2,67 | 5 / 17.683 | PM+parallax bị từ chối do condition >1000 |
-| 2026-04 riêng | 4 / 167,19 | 5 / 8.429 | PM+parallax bị từ chối do condition >1000 |
-| 31 exposure gộp | 4 / 2,31 | 5 / 113,55 | Qua guard số học dưới identity weights; chưa chứng minh precision |
-| Hai mùa co về đúng hai thời điểm | 4 / 2,31 | 4 / không xác định | PM+parallax thiếu rank, bị từ chối |
+| November 2025 only | 4 / 2.67 | 5 / 17,683 | PM+parallax rejected because condition >1000 |
+| April 2026 only | 4 / 167.19 | 5 / 8,429 | PM+parallax rejected because condition >1000 |
+| All 31 exposures | 4 / 2.31 | 5 / 113.55 | Passes the numerical guard under identity weights; precision is not established |
+| Two seasons collapsed to exactly two times | 4 / 2.31 | 4 / undefined | PM+parallax is rank deficient and rejected |
 
-Variation trong từng mùa tạo thêm rank đại số trong thiết kế gộp, nhưng điều đó không chứng minh parallax có thể được đo chính xác: covariance thực, reference chung, blending, model PSF và độ nhạy đều chưa đưa vào audit. Bước tiếp theo là dùng covariance đầy đủ được kiểm định và mô phỏng có epoch withheld trên các trường đã mở; chỉ cân nhắc suy luận thật sau khi thiết kế, độ phủ và precision được xác minh độc lập. Không thay đổi sản phẩm 0.3–0.9 hoặc số đo WISE đã công bố.
+Within-season variation adds algebraic rank to the combined design, but this does not prove parallax can be measured precisely: real covariance, a shared reference, blending, PSF model, and sensitivity were not included in the audit. Next, use validated full covariance and simulate with withheld epochs in already opened fields; consider real inference only after the design, coverage, and precision are independently verified. Do not change products 0.3–0.9 or published WISE measurements.

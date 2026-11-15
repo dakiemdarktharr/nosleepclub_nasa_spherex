@@ -7,8 +7,10 @@ its scenes, noise or fits**. The old ePSF coefficients and failed calibration ga
 remain unchanged.
 
 [Open the demo](https://nosleepclub-nasa-spherex.vercel.app/#signal-controls) ·
-[Frozen protocol](SIGNAL_CONTROL_PROTOCOL.md) ·
-[Independent audit](SIGNAL_CONTROL_AUDIT.md) ·
+[English protocol](SIGNAL_CONTROL_PROTOCOL.en.md) ·
+[Original hash-locked protocol](SIGNAL_CONTROL_PROTOCOL.md) ·
+[English audit](SIGNAL_CONTROL_AUDIT.en.md) ·
+[Original hash-locked audit](SIGNAL_CONTROL_AUDIT.md) ·
 [Overview](../web/data/signal-controls/overview.json) ·
 [All records and audit checkpoints](../web/data/signal-controls/records.json.gz).
 

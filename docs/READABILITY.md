@@ -1,35 +1,35 @@
-# Font tiếng Việt và độ dễ đọc — giao diện 0.5.4
+# Vietnamese Typography and Readability — Interface 0.5.4
 
-## Font và bố cục
+## Font and layout
 
-Be Vietnam Pro, năm độ đậm 400/500/600/700/800, bộ ký tự Vietnamese và Latin. Mười tệp WOFF2 tổng cộng 170.316 byte; giữ nguyên font từ Google Fonts, kèm SIL OFL và [provenance.json](../web/assets/fonts/provenance.json). CSS dùng font này cho nội dung, điều khiển, SVG và nhãn canvas, với Arial làm fallback. Chỉ tải asset cùng origin, tương thích CSP hiện có và demo offline.
+Be Vietnam Pro is served in five weights (400/500/600/700/800) with Vietnamese and Latin character sets. The ten WOFF2 files total 170,316 bytes. The original Google Fonts files are retained with the SIL OFL and [provenance.json](../web/assets/fonts/provenance.json). CSS uses the font for content, controls, SVG, and canvas labels, with Arial as a fallback. Assets load only from the same origin, work with the current CSP, and are available in the offline demo.
 
-Khoảng cách dòng của tiêu đề/nội dung tăng để dấu tiếng Việt không bị cắt. Hero chuyển sang hai hàng trong luồng bố cục, thay cho dải facts định vị tuyệt đối, nên nội dung xuống dòng không chồng nhau. Màu chữ phụ sáng hơn; badge có nền đặc; bảng có header và hàng xen kẽ rõ. Các nhãn dữ liệu/điều khiển chính có cỡ tối thiểu 12 px ở mobile.
+Heading and body line height was increased to prevent Vietnamese diacritics from being clipped. The hero now uses two rows in the document flow instead of absolutely positioned fact cards, so wrapped text does not overlap. Secondary text is brighter, badges use solid backgrounds, and table headers and alternating rows are clearer. Key data/control labels are at least 12 px on mobile.
 
-Nhãn “Trước/Sau” trên canvas có nền đặc `#070d16`, viền màu và cỡ chữ theo kích thước hiển thị, thay vì luôn vẽ 17 pixel trong ảnh 1024 pixel rồi thu nhỏ. Nhãn tự được giới hạn trong mép khung; nhãn residual chỉ hiện cho vùng được chọn để giảm rối. Canvas vẽ lại khi font tải xong hoặc viewport đổi kích thước. Bản đồ giữ tên đầy đủ trong dropdown và chỉ nhấn nhãn sao đang chọn/hover/focus.
+The canvas **Before/After** labels use a solid `#070d16` background, colored border, and text size based on the display size, instead of always drawing 17 pixels into a 1024-pixel image and then shrinking it. Labels stay within the frame edges; residual labels appear only for the selected region to reduce clutter. The canvas redraws when the font loads or the viewport changes size. The map keeps full names in the dropdown and emphasizes only the selected, hovered, or focused star label.
 
-Panel nhận xét cuộn cùng trang trên màn hình thấp; chỉ sticky ở desktop đủ cao để chứa panel. Số đo, dữ liệu và quy tắc phân tích khoa học không thay đổi.
+The review panel scrolls with the page on short screens and becomes sticky only on desktops tall enough to contain it. Measurements, data, and scientific analysis rules were unchanged.
 
-## Các cặp màu đã kiểm tra
+## Checked color pairs
 
-Dùng relative luminance sRGB theo [W3C Contrast Minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html). Số dưới đây đo các cặp màu nền đặc; phần hero còn được kiểm tra trực quan vì nền ảnh thay đổi.
+Relative sRGB luminance was calculated using [W3C Contrast Minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html). The values below cover solid background pairs; the hero was also inspected visually because its image background varies.
 
-| Thành phần | Chữ / nền | Tương phản |
+| Element | Text / background | Contrast |
 |---|---|---:|
-| Nội dung | `#f6f7f8` / `#101419` | 17,23:1 |
-| Chữ phụ | `#c3ccd7` / `#101419` | 11,39:1 |
-| Trạng thái | `#ffd3a4` / `#2b2117` | 11,34:1 |
-| Nhãn đo trên ảnh | `#d6fff6` / `#070d16` | 18,08:1 |
-| Chữ biểu đồ | `#d1dce8` / `#101419` | 13,30:1 |
-| Placeholder | `#b8c4d2` / `#12171e` | 10,17:1 |
+| Body copy | `#f6f7f8` / `#101419` | 17.23:1 |
+| Secondary text | `#c3ccd7` / `#101419` | 11.39:1 |
+| Status | `#ffd3a4` / `#2b2117` | 11.34:1 |
+| Measurement labels on images | `#d6fff6` / `#070d16` | 18.08:1 |
+| Chart text | `#d1dce8` / `#101419` | 13.30:1 |
+| Placeholder | `#b8c4d2` / `#12171e` | 10.17:1 |
 
-## Kiểm tra giao diện
+## Interface checks
 
-- Xác minh font 400/800 tải được với chuỗi có ă/â/đ/ê/ô/ơ/ư và dấu thanh.
-- Kiểm tra hero, bảng, nhãn ảnh, menu và bộ chọn dữ liệu trên desktop 1.265 px và mobile 390 px; font 400/800 với chuỗi tiếng Việt đều tải thành công.
-- Kiểm tra không tràn ngang trang, nội dung hero không đè lên facts; bảng rộng cuộn trong khung.
-- Suite offline: 46/46 kiểm thử đạt. Smoke test production kiểm tra thêm hash của cả 10 tệp font cùng origin và thao tác MongoDB bằng review QA riêng.
+- Confirmed that weights 400/800 load for strings containing ă/â/đ/ê/ô/ơ/ư and Vietnamese tone marks.
+- Checked the hero, tables, image labels, menu, and data selector at 1,265 px desktop and 390 px mobile widths; Vietnamese text loaded in weights 400/800.
+- Checked that the page does not overflow horizontally, the hero does not cover the fact cards, and wide tables scroll within their frame.
+- Offline suite: 46/46 tests passed. Production smoke checks also verified same-origin hashes for all ten font files and MongoDB operations through review QA.
 
-Minh chứng: [desktop](wise0855-mission.jpg), [mobile](wise0855-vietnamese-mobile.jpg), [nhãn trên ảnh thật](wise0855-readable-overlay.jpg). Các phép đo màu trên không phải chứng nhận WCAG cho toàn bộ ứng dụng.
+Evidence: [desktop](wise0855-mission.jpg), [mobile](wise0855-vietnamese-mobile.jpg), [labels on a real image](wise0855-readable-overlay.jpg). These color measurements do not certify WCAG compliance for the full application.
 
-Ảnh giao diện và nhãn mới được cập nhật trong README. Milestone tiếp theo: kiểm thử luồng đọc chỉ số với người mới, đặc biệt ý nghĩa sai số và trạng thái chưa xác nhận, trước khi tăng mật độ thông tin.
+The updated interface images and labels were added to the README. Next milestone: test the metric-reading flow with new users, especially their understanding of uncertainty and unconfirmed status, before increasing information density.

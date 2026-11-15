@@ -1,38 +1,38 @@
-# Planet X and SPHEREx — ghi chú đề bài
+# Planet X and SPHEREx — Challenge Notes
 
-Độ khó **Advanced**. Đã đối chiếu lại ngày 14/11/2026. [Details chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details) · [Đối chiếu yêu cầu và tài nguyên](CHALLENGE_LIVE_REVIEW.md)
+Difficulty: **Advanced**. Reviewed on 14 November 2026. [Official details](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=details) · [Requirements and resource review](CHALLENGE_LIVE_REVIEW.md)
 
-## Yêu cầu chính
+## Main requirement
 
-Xây dựng web công khai: nhập tọa độ **Right Ascension (RA)** và **declination (Dec)**, rồi xem chuỗi ảnh SPHEREx của cùng vùng trời theo thời gian như video để nhận ra chuyển động.
+Build a public web tool that accepts **right ascension (RA)** and **declination (Dec)** coordinates, then plays a time sequence of SPHEREx images of the same region like a short video to help viewers notice motion.
 
-## Mục tiêu kiểm thử được đề chỉ định
+## Test targets specified by the challenge
 
-| Đối tượng | Ghi chú |
+| Target | Notes |
 | --- | --- |
-| Barnard’s Star | Sao |
-| Epsilon Indi B | Cặp sao lùn nâu |
+| Barnard’s Star | Star |
+| Epsilon Indi B | Brown-dwarf pair |
 | WISE 0855 | RA `08h55m10.831s`, Dec `-7d14m42.53s` |
-| RW Aurigae | Sao biến quang |
-| R Draconis | Sao biến quang |
+| RW Aurigae | Variable star |
+| R Draconis | Variable star |
 
-## Gợi ý tùy chọn từ đề
+## Optional suggestions from the challenge
 
-- Dễ cập nhật dữ liệu mới; khai thác 102 dải hồng ngoại.
-- Cộng hoặc trừ ảnh, chọn trường nhìn, tạo phổ.
-- Overlay Gaia/WISE, tọa độ trong URL, metadata và cờ nhiễm.
-- Tham khảo Astropy và Aladin/CDS.
+- Make it easy to add new data; explore the 102 infrared bands.
+- Add or subtract images, choose a field of view, and generate spectra.
+- Overlay Gaia or WISE, include coordinates in the URL, and show metadata and contamination flags.
+- Consider Astropy and Aladin/CDS.
 
-## Tài nguyên
+## Resources
 
-Tab Resources ngày 14/11/2026 hiển thị tám tài nguyên. Nhóm NASA liệt kê IRSA, notebook SPHEREx, WiseView và Gaia DR3. Đối tác CSA liệt kê trang giới thiệu NEOSSat, CADC, tutorial NEOSSat và dataset NEOSSat. [Resources chính thức](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=resources) · [Các đường dẫn và ghi chú](CHALLENGE_LIVE_REVIEW.md#các-gợi-ý-tùy-chọn-và-nguồn-của-đề)
+On 14 November 2026, the Resources tab listed eight items. NASA’s group included IRSA, SPHEREx notebooks, WiseView, and Gaia DR3. The Canadian Space Agency partner group included the NEOSSat overview, CADC, a NEOSSat tutorial, and the NEOSSat dataset. [Official resources](https://www.spaceappschallenge.org/2026/challenges/planet-x-and-spherex/?tab=resources) · [Links and notes](CHALLENGE_LIVE_REVIEW.md#optional-suggestions-and-challenge-sources)
 
-## Cách nhóm sẽ đánh giá prototype — đề xuất
+## Proposed prototype evaluation criteria
 
-Các tiêu chí dưới đây do nhóm đề xuất, chưa phải tính năng đã xây dựng:
+The following criteria are proposed by the team; they are not claims that these features have been built:
 
-- Người mới có thể mở một mục tiêu mẫu và hiểu cách so sánh ảnh mà không cần biết FITS.
-- Cùng một vùng trời được căn chỉnh giữa các thời điểm; chuyển động trên màn hình phải phân biệt được với sai lệch căn chỉnh.
-- Mỗi frame hiển thị thời điểm quan sát, đơn vị, dải phổ và nguồn dữ liệu.
-- Giao diện giải thích khi thiếu ảnh, không có vùng phủ hoặc truy vấn không hợp lệ.
-- Các dấu hiệu chuyển động/biến quang được trình bày là ứng viên cần kiểm chứng, không tự khẳng định phát hiện thiên thể mới.
+- A first-time visitor can open an example target and understand how to compare images without knowing FITS.
+- Images of the same sky region are aligned across observation times; apparent motion on screen can be distinguished from alignment error.
+- Each frame shows its observation time, units, spectral band, and data source.
+- The interface explains when images are missing, coverage is unavailable, or a query is invalid.
+- Motion and variability are presented as candidates for follow-up, not as confirmed discoveries.

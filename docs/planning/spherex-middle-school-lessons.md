@@ -1,86 +1,86 @@
-# Ba bài khám phá bầu trời cùng SPHEREx
+# Three Sky Explorations with SPHEREx
 
-Bản nội dung để thử với học sinh lớp 6–9. Dự kiến khoảng 25 phút cho ba bài và sáu câu trắc nghiệm. Phần dành cho học sinh xưng hô “mình – bạn”.
+Draft lesson content for students in grades 6–9. The three lessons and six-question quiz take about 25 minutes. Student-facing copy uses a friendly first-person voice.
 
-## Bài 1. Sao SPHEREx cứ chụp lại cùng một vùng trời?
+## Lesson 1. Why does SPHEREx photograph the same patch of sky again?
 
-*6 phút*
+*6 minutes*
 
-Bạn để ý đám bụi trong video này nhé. Cùng một góc bầu trời mà có ảnh thấy nó rất rõ, có ảnh lại khó thấy. Bạn đoán giữa các ảnh đã có gì thay đổi? [Video SPHEREx quét bầu trời](https://science.nasa.gov/photojournal/spherex-scans-the-sky/)
+Pay attention to the dust cloud in this video. It is the same part of the sky, but the dust looks clear in one image and harder to see in another. What might have changed between the images? [SPHEREx scans the sky](https://science.nasa.gov/photojournal/spherex-scans-the-sky/)
 
-**Thử với một tờ giấy.** Vẽ một chấm làm vùng trời. Lấy một dải giấy, chia thành ba ô A, B, C rồi trượt từng ô qua chấm đó. Cứ tưởng tượng mỗi ô là một phần của bộ lọc, cho một dải ánh sáng khác nhau đi qua. Chấm vẫn ở nguyên chỗ, còn dải ánh sáng mình đo được thay đổi theo ô.
+**Try it with a sheet of paper.** Draw a dot to represent a patch of sky. Take a strip of paper, divide it into three sections labeled A, B, and C, then slide each section over the dot. Imagine that each section is part of a filter and lets through a different range of light. The dot stays in the same place, while the light measured through each section changes.
 
-SPHEREx làm gần giống vậy khi quét bầu trời. Các ảnh chồng lên nhau, nên cùng một vùng lần lượt đi qua nhiều phần của bộ lọc. Kính đo ánh sáng hồng ngoại mà mắt mình không thấy được, còn NASA gán màu để mình phân biệt các dải trên màn hình. Có những thứ chỉ hiện rõ khi mình xem đúng dải. Nhờ những phép đo ở nhiều dải hồng ngoại, các nhà thiên văn tìm được dấu hiệu của băng nước trong một vùng đang hình thành sao. [Bản đồ băng nước ở Cygnus X](https://science.nasa.gov/photojournal/nasas-spherex-mission-maps-water-ice-throughout-cygnus-x/)
+SPHEREx does something similar as it surveys the sky. The overlapping images mean the same region passes through different parts of the filter. The telescope measures infrared light that our eyes cannot see, and NASA assigns visible colors so we can tell the bands apart on screen. Some things stand out only in the right band. Measurements across several infrared bands help astronomers find signs of ice in a star-forming region. [Water-ice map of Cygnus X](https://science.nasa.gov/photojournal/nasas-spherex-mission-maps-water-ice-throughout-cygnus-x/)
 
-## Bài 2. Bạn tìm lại được cụm chấm này không?
+## Lesson 2. Can you find the same group of dots again?
 
-*6 phút*
+*6 minutes*
 
-Mở **NightSky → Bộ dữ liệu → Epsilon Indi B → Mở chuỗi ảnh đã lưu**. Bấm **Phát chuỗi**, rồi **Tạm dừng** ở một ảnh bất kỳ. Chọn một cụm chấm bạn thấy dễ nhớ. Dùng **Ảnh trước** và **Ảnh sau** để tìm lại cụm đó. Bạn có thể nhìn hình mà các chấm tạo thành, rồi xem ngày chụp dưới mỗi ảnh.
+Open **NightSky → Datasets → Epsilon Indi B → Open saved sequence**. Select **Play**, then **Pause** on any image. Choose a group of dots that is easy to remember. Use **Previous image** and **Next image** to find it again. Look at the pattern the dots make, then check the date beneath the image.
 
-Ba ảnh SPHEREx thật này được chụp vào ngày 29/4, 1/5 và 7/5/2025 theo UTC. Nếu muốn xem một chấm có thay đổi theo thời gian, mình sẽ bắt đầu với hai ảnh **cùng vùng, khác ngày và có bước sóng gần nhau**. Nhớ đám bụi ở bài trước chứ? Chỉ cần đổi dải ánh sáng, cùng một vùng đã có thể trông khác rồi. [Hướng dẫn và nguồn ảnh Epsilon Indi B](../SKY_EXPLORER.md)
+These are three real SPHEREx images taken on 29 April, 1 May, and 7 May 2025 UTC. To check whether a dot changes over time, start with two images of the **same region, taken on different dates, at similar wavelengths**. Remember the dust cloud from the previous lesson? Changing the wavelength alone can make the same region look different. [Epsilon Indi B sequence: guide and sources](../SKY_EXPLORER.md)
 
-## Bài 3. Chấm sáng biến mất thật à?
+## Lesson 3. Did the bright dot really disappear?
 
-*7 phút*
+*7 minutes*
 
-Ở ảnh đầu có một chấm sáng. Sang ảnh sau, đúng chỗ đó lại là một ô tím. Nhìn thoáng qua dễ tưởng chấm sáng đã tắt. Mình mở chú giải xem ô tím đang nói gì nhé.
+The first image has a bright dot. In the next image, a purple square appears at the same position. At a glance, it may look as if the bright dot turned off. Open the legend and check what the purple square means.
 
-Trong **Cách sử dụng → Thử so ảnh có hướng dẫn**, xem cặp ảnh Epsilon Indi B. **Ô tím** là chỗ thiếu dữ liệu. **Ô cam** là chỗ dữ liệu đã bị loại khi kiểm tra chất lượng. **Ô tối** có mức hiển thị thấp trên thang đang dùng. Giờ thử sang cặp ảnh vùng **WISE 0855** và tự đọc vị trí khoanh bằng chú giải.
+Under **How to use → Try a guided comparison**, open the Epsilon Indi B image pair. A **purple square** marks missing data. An **orange square** marks data rejected during quality checks. A **dark square** is faint on the current display scale. Now try the WISE 0855 image pair and use the legend to read the marked position.
 
-Còn nếu chấm bạn theo dõi có vẻ dịch sang phải? Nhìn mấy chấm bên cạnh trước. Nếu cả cụm cũng lệch cùng hướng, mình có thể dùng chúng làm mốc để căn lại hai ảnh. Ảnh xem trước giúp mình biết chỗ nào đáng xem kỹ. Muốn xác nhận một thiên thể sáng lên, mờ đi hay dịch chuyển, mình cần xem dữ liệu đo và sai số. [Nguồn cặp ảnh vùng WISE 0855](../../web/data/guided-transfer/provenance.json)
+If the dot you are tracking seems to shift to the right, check the nearby dots first. If the whole group shifts in the same direction, those stars may help align the images. A preview can show where closer inspection is useful. To confirm that an object brightened, faded, or moved, we need to inspect the measurements and their uncertainties. [WISE 0855 image-pair sources](../../web/data/guided-transfer/provenance.json)
 
-## Sáu câu trắc nghiệm
+## Six-question quiz
 
-Bạn cứ mở lại ảnh và chú giải trong lúc làm. Mỗi câu có một đáp án đúng.
+You may reopen the images and legend while answering. Each question has one correct answer.
 
-### 1. SPHEREx đã chụp một vùng trời qua phần A của bộ lọc. Nếu chụp lại qua phần B, kính biết thêm điều gì?
+### 1. SPHEREx photographs a patch of sky through filter section A. If it observes the patch through section B, what additional information does the telescope measure?
 
-- **A.** Vùng trời trông ra sao khi phóng to.
-- **B.** Kính nhận được bao nhiêu ánh sáng từ vùng trời đó ở một dải hồng ngoại khác.
-- **C.** Vùng trời có sáng lên theo thời gian hay không.
+- **A.** How the patch looks when zoomed in.
+- **B.** How much light the patch emits in a different infrared band.
+- **C.** Whether the patch became brighter over time.
 
-### 2. Trong video NASA, bạn thấy cùng một vùng trời hiện màu xanh ở ảnh này và màu đỏ ở ảnh khác. Hai màu trên màn hình biểu thị điều gì?
+### 2. In NASA’s video, the same patch of sky appears blue in one image and red in another. What do the colors on screen represent?
 
-- **A.** Hai màu mắt mình sẽ thấy nếu đến gần.
-- **B.** Hai mức nhiệt độ của vùng trời.
-- **C.** Hai dải hồng ngoại được NASA gán màu để hiển thị.
+- **A.** The colors your eyes would see if you traveled closer.
+- **B.** Two temperatures of the region.
+- **C.** Two infrared bands that NASA assigned visible colors to for display.
 
-### 3. Mở chuỗi Epsilon Indi B và xem ngày dưới ảnh. Ảnh sớm nhất và ảnh muộn nhất được chụp vào hai ngày nào?
+### 3. Open the Epsilon Indi B sequence and check the dates below the images. On what dates were the earliest and latest images taken?
 
-- **A.** 29/4 và 7/5.
-- **B.** 29/4 và 1/5.
-- **C.** 1/5 và 7/5.
+- **A.** 29 April and 7 May.
+- **B.** 29 April and 1 May.
+- **C.** 1 May and 7 May.
 
-### 4. Bạn muốn xem một chấm sáng có thay đổi theo thời gian. Bạn sẽ mở cặp ảnh nào trước?
+### 4. You want to check whether a bright dot changed over time. Which pair of images should you open first?
 
-- **A.** Cùng vùng, cùng ngày, hai dải hồng ngoại khác nhau.
-- **B.** Cùng vùng, khác ngày, hai dải hồng ngoại khác xa nhau.
-- **C.** Cùng vùng, khác ngày, hai dải hồng ngoại gần nhau.
+- **A.** The same region on the same date, in two different infrared bands.
+- **B.** The same region on different dates, in two infrared bands far apart.
+- **C.** The same region on different dates, in two similar infrared bands.
 
-### 5. Nhìn ô được khoanh trong cặp ảnh vùng WISE 0855. Ảnh A có ô cam, ảnh B có ô xám. Bạn sẽ ghi gì vào sổ quan sát?
+### 5. Look at the marked pixel in the WISE 0855 image pair. Image A shows an orange square and image B shows a gray square. What should you write in your observing notes?
 
-- **A.** Ô ở ảnh A đã bị loại. Cần thêm ảnh có dữ liệu dùng được ở đúng chỗ đó để so độ sáng.
-- **B.** Chấm sáng mờ đi giữa hai lần chụp vì ô cam chuyển thành xám.
-- **C.** Chấm đó sáng lên giữa hai lần chụp vì ảnh B hiện ô xám.
+- **A.** The data in image A were rejected. To compare brightness, find usable data at the same position in both images.
+- **B.** The dot faded between the observations because the orange square became gray.
+- **C.** The dot brightened between the observations because image B shows a gray square.
 
-### 6. Thử tưởng tượng chấm bạn theo dõi và ba chấm bên cạnh đều lệch sang phải gần bằng nhau. Bạn làm gì để kiểm tra riêng chấm mình đang theo dõi?
+### 6. Imagine that the dot you are tracking and the three dots next to it all shift right by about the same amount. What should you do to check whether your target moved independently?
 
-- **A.** Đo khoảng cách từ chấm đó đến mép phải mỗi ảnh.
-- **B.** Căn hai ảnh theo các chấm xung quanh rồi xem chấm đó còn lệch so với chúng không.
-- **C.** Phóng to ảnh sau đến khi thấy chấm rõ nhất.
+- **A.** Measure the distance from the target to the right edge of each image.
+- **B.** Align the images using the nearby dots, then check whether the target still shifts relative to them.
+- **C.** Zoom in on the later image until the target looks clearest.
 
-## Đáp án và phản hồi sau khi chọn
+## Answers and feedback
 
-1. **B.** Bạn đổi phần bộ lọc, nên SPHEREx đo được thêm một dải hồng ngoại của cùng vùng trời.
-2. **C.** NASA dùng màu mình nhìn thấy để phân biệt các dải hồng ngoại mà mắt mình không thấy được.
-3. **A.** Chuỗi có thể phát lặp. Bạn nhìn ngày dưới ảnh là biết ảnh nào được chụp trước.
-4. **C.** Dùng hai dải gần nhau giúp bạn giảm khả năng ảnh trông khác chỉ vì bước sóng.
-5. **A.** Ô cam cho bạn biết dữ liệu ở đó đã bị loại. Muốn so độ sáng, mình cần cả hai lần chụp có dữ liệu dùng được ở cùng vị trí.
-6. **B.** Cả cụm cùng lệch là dấu hiệu hai ảnh có thể đang lệch nhau. Căn theo các chấm bên cạnh giúp bạn kiểm tra chấm mình theo dõi còn lệch không.
+1. **B.** Changing the filter section lets SPHEREx measure another infrared band from the same patch of sky.
+2. **C.** NASA uses visible colors to distinguish infrared bands that our eyes cannot see.
+3. **A.** The sequence can loop. Check the date below each image to see which was taken first.
+4. **C.** Two similar bands reduce the chance that the images look different only because of wavelength.
+5. **A.** The orange square means the data there were rejected. To compare brightness, both observations need usable data at the same position.
+6. **B.** A shift shared by the surrounding group may mean the images themselves are misaligned. Aligning the nearby dots helps show whether the target still moves relative to them.
 
-## Chạy thử với học sinh
+## Try the lessons with students
 
-- Chạy `python scripts/serve_demo.py` từ thư mục dự án. Mở [NightSky](http://127.0.0.1:8766/?lang=vi#night-sky) và [bài so ảnh có hướng dẫn](http://127.0.0.1:8766/?lang=vi#field-guide). Hai bài thực hành dùng ảnh đã lưu. Ở câu 5, cho học sinh xem cặp ảnh WISE 0855 và chú giải trước khi đưa lời giải.
-- Ghi lại chỗ các bạn cần gợi ý khi mở chuỗi, cách tìm lại cùng một vị trí và lý do chọn đáp án ở câu 4–6. Dành phút cuối để mỗi bạn mở một vùng trời mình tò mò muốn xem tiếp.
-- Sau buổi thử, đối chiếu xem các bạn có tự tìm được ảnh, giải thích vì sao một ảnh có thể trông khác và chỉ ra được bằng chứng cần xem tiếp không. Ngày chụp của chuỗi Epsilon và ô cam, ô xám của cặp WISE đã được đối chiếu với ảnh và metadata. Nội dung chưa được thử với học sinh.
+- Run `python scripts/serve_demo.py` from the project directory. Open [NightSky](http://127.0.0.1:8766/?lang=en#night-sky) and the [guided image comparison](http://127.0.0.1:8766/?lang=en#field-guide). Both activities use saved images. For question 5, let students inspect the WISE 0855 pair and legend before showing the answer.
+- Note where students need help opening the sequence, finding the same position again, and explaining their answers to questions 4–6. In the final minute, invite each student to open a sky region they would like to explore next.
+- After the session, check whether students can find an image independently, explain why two images might look different, and identify what evidence they would inspect next. The Epsilon Indi sequence dates and the orange/gray squares in the WISE pair have been checked against the images and metadata. The lesson has not yet been tested with students.

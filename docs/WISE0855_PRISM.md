@@ -1,55 +1,15 @@
-# Phổ JWST/NIRSpec PRISM riêng cho WISE 0855
+# WISE 0855-Specific JWST/NIRSpec PRISM Spectrum
 
-Đã lấy [sản phẩm MAST x1d công khai cấp 3](https://mast.stsci.edu/jwst/api/v0.1/Download/file?uri=mast%3AJWST%2Fproduct%2Fjw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits)
-của WISE 0855, program 1230, ngày 17-04-2023, CLEAR/PRISM, khe S200A1.
-Metadata MAST ghi `PUBLIC`, obsid `349842176`, 198.720 byte; SHA-256 của FITS
-là `17164197d803117d02c0e1e89ce64d5521ba86b523d3ba0cc03679974df53e3f`.
-FITS ghi CAL_VER `3.0.0`, CRDS `jwst_1584.pmap`, thời điểm tạo
-12-10-2026 10:03:40.226. MAST có thể tái xử lý sản phẩm; hash xác định bản
-được audit. Metadata, bảng cột/đơn vị, URL, hash và association được ghi
-trong [wise0855-prism-reference.json](../web/data/external/wise0855-prism-reference.json),
-còn bản gốc và metadata đầy đủ ở `data/raw/external/wise0855/` đã được bỏ qua Git.
+The public [MAST Level 3 x1d product](https://mast.stsci.edu/jwst/api/v0.1/Download/file?uri=mast%3AJWST%2Fproduct%2Fjw01230-o007_t001-s000000001_nirspec_clear-prism-s200a1-subs200a1_x1d.fits) for WISE 0855 was retrieved: program 1230, 17 April 2023, CLEAR/PRISM, S200A1 slit. MAST metadata lists `PUBLIC`, obsid `349842176`, and 198,720 bytes. FITS SHA-256: `17164197d803117d02c0e1e89ce64d5521ba86b523d3ba0cc03679974df53e3f`. FITS records CAL_VER `3.0.0`, CRDS `jwst_1584.pmap`, and creation time 12 October 2026 10:03:40.226. MAST may reprocess a product; the hash identifies the audited version. Metadata, column names/units, URL, hash, and association are recorded in [wise0855-prism-reference.json](../web/data/external/wise0855-prism-reference.json); the original file and full metadata are in Git-ignored `data/raw/external/wise0855/`.
 
-Association `spec3_00001` liệt kê **ba science exposure NRS1** cùng hai mục
-target acquisition. FITS ghi `EXPCOUNT=7`; con số header này không được diễn
-giải là số science member trong association. Đây là phổ pipeline MAST kết hợp
-theo association, không phải bảng PRISM Hình 3 được trích xuất riêng trong
-[Luhman và cộng sự 2024](https://doi.org/10.3847/1538-3881/ad0b72). Không
-giả định phổ MAST đã nhận cùng bước scale Spitzer của nhóm tác giả.
+Association `spec3_00001` lists **three NRS1 science exposures** and two target-acquisition entries. FITS reports `EXPCOUNT=7`; do not interpret that header count as the number of science members in the association. This is an MAST pipeline spectrum combined for the association, not the separately extracted PRISM Figure 3 table in [Luhman et al. 2024](https://doi.org/10.3847/1538-3881/ad0b72). Do not assume the MAST spectrum received the same Spitzer scaling used by the authors.
 
-File chứa 434 hàng, bước sóng `WAVELENGTH` tính bằng µm, `FLUX` và
-`FLUX_ERROR` bằng Jy, cùng bitmask `DQ`. Định nghĩa kiểm tra mô tả ở đây là
-DQ bằng 0, flux và error hữu hạn, error dương: **410/434 hàng đạt**. Có 24
-hàng DQ khác 0 với flux NaN và error 0; chúng vẫn được giữ nguyên trong parser.
-Trong các hàng đạt có 29 flux âm, cũng được giữ nguyên. Phạm vi wavelength
-của hàng đạt là 0,5981883407–5,3010544777 µm.
+The file has 434 rows: `WAVELENGTH` in µm, `FLUX` and `FLUX_ERROR` in Jy, and a `DQ` bitmask. Under the descriptive check used here—DQ equals 0, finite flux and error, positive error—**410/434 rows pass**. The 24 rows with nonzero DQ have NaN flux and zero error; the parser retains them unchanged. Among passing rows, 29 fluxes are negative and also remain unchanged. Passing wavelengths span 0.5981883407–5.3010544777 µm.
 
-Vùng 4,266020–5,110683 µm, là toàn bộ miền bước sóng của lưới response R7
-và ba shift trong preflight trước đó, có **100/100 mẫu nằm trong miền đạt**.
-Tính cả hai mẫu ngoài để kẹp hai biên có **102/102 mẫu đạt**, phạm vi kẹp
-4,2642903328–5,1135554314 µm, khoảng cách giữa hai mẫu lớn nhất
-0,0093011856 µm, nhỏ hơn ngưỡng 0,01 µm đã chọn. Riêng đoạn
-5,0930738449–5,110683 µm có hai mẫu bên trong và bốn mẫu kẹp, tất cả đạt;
-khoảng cách kẹp lớn nhất 0,0076842308 µm. Những con số này chỉ mô tả support
-theo mask và sampling; chưa tính bandpass hoặc thay đổi bất kỳ kết quả trước.
+The 4.266020–5.110683 µm region, which covers the full wavelength range of the R7 response grid and the three earlier preflight shifts, has **100/100 in-range samples passing**. Including two outer samples used to bracket both edges gives **102/102 passing** across 4.2642903328–5.1135554314 µm; the largest gap between samples is 0.0093011856 µm, below the chosen 0.01 µm threshold. The 5.0930738449–5.110683 µm segment has two in-range and four bracketing samples, all passing; maximum bracket gap is 0.0076842308 µm. These values describe support under the mask and sampling only; no bandpass has been calculated and no previous result has changed.
 
-Theo [tài liệu NIRSpec](https://jwst-docs.stsci.edu/jwst-near-infrared-spectrograph/nirspec-instrumentation/nirspec-dispersers-and-filters)
-và bài báo Luhman, độ phân giải PRISM thay đổi theo bước sóng, khoảng
-R≈300 gần đầu dài; G395M khoảng R≈1000. Phổ PRISM đã chịu line-spread function
-và các bước xử lý của NIRSpec. Việc có mẫu kẹp không bảo đảm giữ được cấu trúc
-phổ chi tiết cho response khác, kể cả response có R≈130; độ rộng, hình dạng
-LSF và cách so sánh hoặc tích phân phải được xác định trong protocol riêng.
-Sai số theo hàng không cung cấp covariance phổ đầy đủ, sai số chuẩn tuyệt đối
-hay biến thiên thời gian giữa các quan sát.
+According to [NIRSpec documentation](https://jwst-docs.stsci.edu/jwst-near-infrared-spectrograph/nirspec-instrumentation/nirspec-dispersers-and-filters) and the Luhman paper, PRISM resolution varies with wavelength and is about R≈300 near the long-wavelength end; G395M is about R≈1000. The PRISM spectrum has already been convolved with the NIRSpec line-spread function and processing. Bracketing samples do not guarantee preservation of detailed spectral structure for another response, including a response around R≈130; the LSF width/shape and comparison or integration method require a separate protocol. Per-row errors do not provide full spectral covariance, absolute calibration error, or time variability among observations.
 
-Chưa ghép hoặc scale PRISM với G395M, chưa dựng SED kết hợp, bơm nhiễu, đo
-nguồn hay fit. Nếu sau này cần nghiên cứu dùng PRISM, hãy khóa trước phương
-pháp LSF/response, xử lý covariance và chấp nhận sai khác calibration; lấy
-mẫu tại đủ bước sóng không tự xác nhận một phép đo thiên văn.
+PRISM has not been joined or scaled with G395M, used to construct a combined SED, injected with noise, measured, or fit. If a future study needs PRISM, lock the LSF/response method, covariance handling, and calibration discrepancy acceptance in advance. Having samples at enough wavelengths does not validate an astronomical measurement.
 
-Kiểm tra file đã lưu bằng
-`.venv\Scripts\python.exe scripts/parse_wise0855_prism.py` và chạy
-`.venv\Scripts\python.exe -m unittest tests.test_wise0855_prism -v`.
-Nếu file chưa được cache, `--fetch` chỉ lấy hai file MAST và metadata đã ghi,
-kiểm tra hash/size và không ghi đè bytes khác; một bản MAST đã tái xử lý sẽ
-bị từ chối thay vì âm thầm thay thế phiên bản đã xác định.
+Check the saved file with `.venv\Scripts\python.exe scripts/parse_wise0855_prism.py` and run `.venv\Scripts\python.exe -m unittest tests.test_wise0855_prism -v`. If the file is not cached, `--fetch` retrieves only the two MAST files and recorded metadata, checks hash/size, and does not overwrite different bytes; a reprocessed MAST version is rejected instead of silently replacing the identified version.

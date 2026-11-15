@@ -1,51 +1,51 @@
-# Giảm sai số WISE 0855 — nghiên cứu và thử nghiệm 0.4.0
+# Reducing WISE 0855 Error — Research and Experiment 0.4.0
 
-Ngày kiểm tra nguồn: 2026-10-30. Kết luận: đã bổ sung fit nhiều nguồn trên pixel gốc và phép thử A/B, nhưng **chưa chứng minh cải thiện ổn định để thay bản Gaia 0.3.0**. Không hạ sai số công bố bằng cách bỏ hạng hệ thống hoặc chọn cấu hình gần dự báo ngoài hơn.
+Sources checked on 30 October 2026. Conclusion: a multi-source fit on native pixels and an A/B experiment were added, but **a stable improvement sufficient to replace Gaia version 0.3.0 has not been demonstrated**. Do not lower the reported error by dropping systematic terms or choosing a configuration closer to the external prediction.
 
-## Bằng chứng mới
+## New evidence
 
-Gaia có một nguồn G≈16,31 cách neo mục tiêu khoảng 8,67″ ở MJD 61000. Đây là vị trí quang học đã lan truyền, chưa chứng minh độ sáng hay tâm quang học của nguồn tại 4,7 µm. Mô hình mới thêm các ePSF Gaia nằm trong 11 pixel lưới trời quanh mỗi vùng fit. Vị trí lân cận cố định, biên độ tự do riêng từng exposure, cùng mặt phẳng nền. SVD khử các tham số tuyến tính; chỉ centroid mục tiêu được tối ưu phi tuyến, không dùng vector dự báo làm prior. Các phép thử tổng hợp độc lập kiểm tra phục hồi centroid khi có nguồn chồng và khi ma trận nuisance có cột trùng.
+Gaia lists a source at G≈16.31, about 8.67″ from the target anchor at MJD 61000. This is a propagated optical position; it does not establish the source's brightness or photocenter at 4.7 µm. The new model adds Gaia ePSFs within 11 sky-grid pixels of each fit region. Neighbor positions are fixed, with a separate free amplitude for each exposure and a shared plane background. SVD eliminates the linear parameters; only the target centroid is optimized nonlinearly, without using a predicted vector as a prior. Independent synthetic tests check centroid recovery with overlapping sources and duplicate columns in the nuisance matrix.
 
-Hai mô hình A/B dùng cùng stamp gốc, cờ chất lượng, noise map, ePSF và solver đa khởi tạo. Bootstrap noise 128 lượt/epoch/mô hình/cấu hình. Nguồn thật với phổ rộng: một nguồn cho vector (Đông, Bắc) = (−3,268; +0,431)″; nhiều nguồn cho (−3,035; +0,107)″, độ dài 3,037″. **σ noise chiếu theo vector tăng từ 0,495″ lên 0,701″.** Những số này chưa gồm sai số frame, ePSF hoặc vị trí hàng xóm, nên không so trực tiếp với σ tổng 0,52″ của bản Gaia.
+The A/B models use the same original stamps, quality flags, noise maps, ePSF, and multi-start solver. Noise bootstrap: 128 draws per epoch/model/configuration. For the real source with a broad spectrum, the single-source model gives vector (east, north) = (−3.268, +0.431)″; the multi-source model gives (−3.035, +0.107)″, with length 3.037″. **Projected noise σ increases from 0.495″ to 0.701″.** These values exclude frame, ePSF, and neighbor-position errors, so they are not directly comparable with the previous Gaia version's total σ of 0.52″.
 
-12 vị trí mới được ghi trong `web/data/joint/protocol.json` trước khi chạy, ngoài tám vùng của bản trước. Mỗi vùng có hai độ sáng và hai vector tiêm: [0;0] và [0,6;0,05] pixel. Tổng cộng 48 lượt/phương pháp/cấu hình, 192 phép phục hồi. Không chọn tham số bằng kết quả các vùng này. Bây giờ đã xem kết quả, phải xem các vùng này là dữ liệu phát triển cho lần tiếp theo.
+Twelve new positions were recorded in `web/data/joint/protocol.json` before the run, in addition to the previous version's eight regions. Each region has two brightnesses and two injected vectors: `[0, 0]` and `[0.6, 0.05]` pixels. This gives 48 trials per method/configuration and 192 recoveries total. No parameters were selected using these regions' results. Because the results have now been viewed, these regions must be treated as development data in future work.
 
-| Phổ | Độ sáng | RMS một nguồn | RMS nhiều nguồn | Hợp lệ một / nhiều |
+| Spectrum | Brightness | Single-source RMS | Multi-source RMS | Valid single / multi |
 |---|---:|---:|---:|---:|
-| Rộng | 0,5× | 1,699″ | 1,572″ | 22/24 · 24/24 |
-| Rộng | 1× | 1,016″ | 1,336″ | 24/24 · 24/24 |
-| Chặt | 0,5× | 2,128″ | 2,572″ | 24/24 · 23/24 |
-| Chặt | 1× | 1,353″ | 1,137″ | 24/24 · 22/24 |
+| Broad | 0.5× | 1.699″ | 1.572″ | 22/24 · 24/24 |
+| Broad | 1× | 1.016″ | 1.336″ | 24/24 · 24/24 |
+| Narrow | 0.5× | 2.128″ | 2.572″ | 24/24 · 23/24 |
+| Narrow | 1× | 1.353″ | 1.137″ | 24/24 · 22/24 |
 
-RMS ở bảng chỉ tính fit thành công, không chạm biên; không được bỏ qua cột số hợp lệ. Các lần tiêm trên cùng vùng chia sẻ nền và noise; hai cấu hình phổ cũng chia sẻ exposure. Không thêm shot noise nguồn; dùng cùng họ ePSF để tiêm và fit. Đây là chẩn đoán có điều kiện, chưa phải completeness, false-positive rate hay kiểm chứng độc lập sai số hệ thống.
+RMS in the table includes only successful fits that did not hit a boundary; do not ignore the valid-count column. Injections on the same region share background and noise, and both spectral configurations share exposures. No source shot noise was added; injection and fitting use the same ePSF family. This is a conditional diagnostic, not completeness, false-positive rate, or independent validation of systematic error.
 
-So sánh ghép cặp **chỉ các lượt cùng hợp lệ** khắc phục một phần khác biệt mẫu số: rộng 0,5× có RMS 1,699″ → 1,630″ (22 cặp), cải thiện 4,06%; rộng 1× xấu hơn 31,49%. Bootstrap hậu kiểm 2.000 lượt theo **vùng không gian**, không coi từng injection là độc lập: khoảng 95% của phần trăm cải thiện lần lượt [0,89;7,64] và [−48,96;6,38]. Chặt 0,5× xấu hơn 26,65%; chặt 1× tốt hơn 2,99% trên 22 cặp, nhưng có thêm hai lỗi/biên. Chỉ 11–12 vùng, mẫu có điều kiện và nhiều phép so sánh: các khoảng này không phải đảm bảo thống kê hay phép kiểm định xác nhận phát hiện.
+Paired comparisons **restricted to trials valid in both methods** partly address denominator differences: broad 0.5× has RMS 1.699″ → 1.630″ (22 pairs), a 4.06% improvement; broad 1× is 31.49% worse. A post hoc bootstrap of 2,000 draws resampled by **spatial region**, not treating each injection as independent, gives approximate 95% intervals for percent improvement of [0.89, 7.64] and [−48.96, 6.38]. Narrow 0.5× is 26.65% worse; narrow 1× is 2.99% better on 22 pairs, but has two additional failures/boundary hits. With only 11–12 regions, conditional samples, and multiple comparisons, these intervals are not statistical guarantees or a confirmatory detection test.
 
-Sản phẩm: [broad.json](../web/data/joint/broad.json), [strict.json](../web/data/joint/strict.json), [summary.json](../web/data/joint/summary.json). Giữ nguyên dữ liệu, FITS và hash của bản 0.3.0. Mỗi kết quả mới có hash mã nguồn, catalog và phân tích Gaia cha.
+Products: [broad.json](../web/data/joint/broad.json), [strict.json](../web/data/joint/strict.json), [summary.json](../web/data/joint/summary.json). Data, FITS, and hashes from version 0.3.0 remain unchanged. Each new result carries hashes for source code, catalog, and its parent Gaia analysis.
 
-## Nghiên cứu nguồn gốc và quyết định
+## Background research and decisions
 
-1. **Khớp cảnh nhiều nguồn trước khi xếp hạng bằng AI.** [Tài liệu Spectrophotometry của IRSA](https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/sp.html) mô tả việc fit đồng thời bạn đồng hành để giảm ảnh hưởng blending. Công cụ chính thức này giữ vị trí cố định và chỉ fit flux; phần tối ưu centroid trong demo là triển khai riêng, chưa được IRSA xác nhận. Đã triển khai thử nghiệm; chưa bật mặc định vì bảng A/B chưa đạt.
+1. **Model multi-source scenes before ranking with AI.** [IRSA Spectrophotometry documentation](https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/sp.html) describes fitting companions jointly to reduce blending. The official tool holds positions fixed and fits flux only; centroid optimization in the demo is a separate implementation not validated by IRSA. A prototype has been implemented; it is not enabled by default because the A/B results do not meet the criteria.
 
-2. **Catalog sâu có đánh đổi.** [Huai et al., Simulating Spectral Confusion in SPHEREx Photometry and Redshifts](https://arxiv.org/abs/2510.01410) mô phỏng cả confusion từ nguồn không có trong catalog và blending giữa nguồn đã biết. Độ sâu catalog làm thay đổi cả hai; thêm mọi nguồn không tự động tối ưu. Bài nghiên cứu chủ yếu về photometry/redshift, không cung cấp cam kết sai số centroid cho WISE 0855. CoChat tìm được bản tạp chí DOI [10.3847/1538-4357/ae472b](https://doi.org/10.3847/1538-4357/ae472b); đã đối chiếu nội dung với bản tác giả arXiv. Truy vấn CoChat rộng ban đầu có kết quả lạc đề, chỉ giữ bài sau khi xác minh chính xác tiêu đề.
+2. **Deeper catalogs involve trade-offs.** [Huai et al., *Simulating Spectral Confusion in SPHEREx Photometry and Redshifts*](https://arxiv.org/abs/2510.01410) simulates both confusion from sources absent from the catalog and blending among known sources. Catalog depth affects both; adding every source is not automatically optimal. The paper focuses mainly on photometry/redshift and does not provide a centroid-error guarantee for WISE 0855. CoChat found the journal version, DOI [10.3847/1538-4357/ae472b](https://doi.org/10.3847/1538-4357/ae472b); its content was checked against the authors' arXiv version. An initial broad CoChat search returned irrelevant results; the paper was retained only after its exact title was verified.
 
-3. **ePSF cần đúng pixel và vị trí detector.** [Anderson & King 2000](https://arxiv.org/abs/astro-ph/0006325) giải thích ePSF tích hợp đáp ứng pixel và tính biến đổi không gian. Các mức chính xác HST trong bài không chuyển được sang SPHEREx. [Notebook ePSF chính thức](https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/) cung cấp cách truy xuất calibration SPHEREx. Hiện demo chọn zone gần nhất; nội suy zone, perturbation ePSF theo exposure và kiểm tra phụ thuộc subpixel là các bước cần đánh giá, chưa tuyên bố đã làm.
+3. **The ePSF must match the pixel and detector position.** [Anderson & King 2000](https://arxiv.org/abs/astro-ph/0006325) explains that the ePSF integrates pixel response and varies spatially. The HST accuracy levels in the paper do not transfer to SPHEREx. The [official ePSF notebook](https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/) shows how to retrieve SPHEREx calibration. The demo currently selects the nearest zone; zone interpolation, exposure-dependent ePSF perturbations, and subpixel-dependence checks still need evaluation and are not claimed as completed.
 
-4. **Noise map có thể phụ thuộc chính dữ liệu đang fit.** [Tài liệu tác giả tractorjax-spherex: Backgrounds & systematics](https://spherex-photometry.readthedocs.io/en/latest/backgrounds_systematics.html) lưu ý VARIANCE phụ thuộc observed count rate và có thể gây weight-noise bias cho nguồn mờ. Đây là giả thuyết cần kiểm tra với sản phẩm/read-noise thực tế. Chưa thay variance bằng hằng số hoặc công thức tự đặt. Nền theo CWAVE có thể hữu ích, nhưng ví dụ He I 1,083 µm không phải bằng chứng trực tiếp cho detector D6 ở 4,7 µm. Khóa mô hình nền bằng vùng phát triển, giữ vùng kiểm chứng chưa mở.
+4. **The noise map may depend on the data being fit.** The authors' [tractorjax-spherex documentation: Backgrounds & systematics](https://spherex-photometry.readthedocs.io/en/latest/backgrounds_systematics.html) notes that VARIANCE depends on observed count rate and may cause weight-noise bias for faint sources. This is a hypothesis to check against real product/read-noise behavior. Variance has not been replaced with a constant or a custom formula. A CWAVE-based background may be useful, but the He I 1.083 µm example is not direct evidence for detector D6 at 4.7 µm. Lock the background model on development regions and keep validation regions unopened.
 
-5. **Có QR3 để kiểm tra hiệu chuẩn.** [Mission page IRSA](https://irsa.ipac.caltech.edu/Missions/spherex.html) và [Data Products chính thức](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/) xác nhận QR3 bắt đầu phát hành tháng 9/2026. Đây là hướng ưu tiên trước khi cố tối ưu cực hạn QR2. Chưa xác nhận QR3 có đúng exposure WISE 0855 cần dùng, chưa tự thay dữ liệu hoặc gộp phiên bản. Cần truy vấn footprint, pin calibration/hash, so QR2/QR3 cùng exposure trước, rồi mới thêm epoch.
+5. **QR3 is available for calibration checks.** The [IRSA mission page](https://irsa.ipac.caltech.edu/Missions/spherex.html) and [official Data Products documentation](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/) confirm that QR3 release began in September 2026. This is a priority before attempting to optimize QR2 at extreme precision. It has not been confirmed that QR3 contains the required WISE 0855 exposures; no data have been replaced or versions combined. Query footprints, pin calibration/hash, and compare QR2/QR3 for the same exposure before adding an epoch.
 
-6. **Tách precision và accuracy.** Frame Gaia ổn định không loại bỏ bias do photocentre, blending hay phổ của một brown dwarf rất đỏ. Mức 0,52″ là ngân sách có điều kiện của bản trước, trong khi các phép tiêm có sai lệch lớn hơn. Thêm một mô hình làm σ tăng có thể phản ánh đúng mất thông tin do blending; không coi đó là lỗi cần ép giảm.
+6. **Separate precision from accuracy.** Stable Gaia frames do not eliminate bias from photocenter, blending, or the spectrum of a very red brown dwarf. The 0.52″ value is the previous version's conditional budget, while some injection errors are larger. A model that increases σ may correctly reflect information lost to blending; do not treat that increase as an error to force down.
 
-## Milestone tiếp theo và điều kiện đạt
+## Next milestone and acceptance criteria
 
-Ưu tiên khảo sát QR3 cùng exposure; đối chiếu catalog hồng ngoại phù hợp như CatWISE/AllWISE/Legacy Survey với epoch và proper motion rõ ràng; dùng catalog để chọn nguồn nuisance có căn cứ IR. Sau đó đánh giá nội suy ePSF và mô hình nền/variance trên các vùng đã mở. Không chọn mô hình theo độ gần vector Luhman.
+Prioritize a QR3 check for the same exposures; cross-reference suitable infrared catalogs such as CatWISE/AllWISE/Legacy Survey with clear epochs and proper motions; use catalogs to select infrared-supported nuisance sources. Then evaluate ePSF interpolation and background/variance models on already opened regions. Do not select a model based on proximity to the Luhman vector.
 
-Khóa pipeline, điều kiện loại nguồn và lựa chọn phổ trước khi mở **tối thiểu 30 vùng mới**, cách các stamp cũ đủ xa. Báo lỗi/biên, vector bias, RMSE, paired comparison và coverage theo độ sáng/mật độ nguồn. Chỉ thay mặc định nếu RMSE giảm ở cả 0,5× và 1×, số lỗi không tăng và coverage không xấu hơn; bootstrap theo vùng phải hỗ trợ kết luận, không chỉ điểm ước lượng. Kiểm tra mismatch ePSF khi tiêm khác mô hình fit, thêm noise nguồn có căn cứ đơn vị/calibration và nhiễu tương quan thiết bị.
+Lock the pipeline, source-exclusion criteria, and spectral choice before opening **at least 30 new regions** sufficiently far from old stamps. Report error/boundary failures, vector bias, RMSE, paired comparisons, and coverage by brightness/source density. Change the default only if RMSE decreases at both 0.5× and 1×, failures do not increase, and coverage does not worsen; region-level bootstrap must support the conclusion, not just point estimates. Check ePSF mismatch when injection and fit models differ, add source noise with supported units/calibration, and assess correlated instrument noise.
 
-Sau khi nền đo ổn định, thêm epoch thứ ba, fit motion + parallax với baseline phù hợp; hai epoch không tự giải được các tham số này. Vision model dùng để xếp hạng cảnh và chuyển người duyệt sau các gate vật lý, đánh giá train/test theo vùng trời, không dùng LLM để thay covariance.
+After the position measurement is stable, add a third epoch and fit motion + parallax with an appropriate baseline; two epochs alone do not solve these parameters. Use a vision model to rank scenes and hand them to a reviewer after physical gates, with train/test splits by sky region; do not use an LLM to replace covariance.
 
-## Tái tạo
+## Reproduction
 
 ```powershell
 .\.venv\Scripts\python.exe -m scripts.joint_motion --configuration broad
@@ -54,4 +54,4 @@ Sau khi nền đo ổn định, thêm epoch thứ ba, fit motion + parallax vớ
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-Hai lệnh đầu cần cache cutout rộng và centroid Gaia của milestone trước. Lệnh summary/test đọc các sản phẩm nhỏ đã commit.
+The first two commands require the broad cutout cache and Gaia centroids from the preceding milestone. The summary/test commands read the committed small products.

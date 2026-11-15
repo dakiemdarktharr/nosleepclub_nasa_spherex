@@ -1,156 +1,79 @@
-# Hiệu chỉnh ePSF và covariance sao tham chiếu — 31/10/2026
+# ePSF Correction and Reference-Star Covariance — 2026-10-31
 
-**Ứng viên ePSF chưa được áp dụng vào phép đo.** Bước học qua các kiểm tra
-thông tin và hình dạng, nhưng phép thử vị trí trên calibration tìm thêm nghiệm
-cạnh tranh ở hai sao. Gate đã chặn đánh giá 252 ô còn lại. Nghiên cứu covariance
-riêng tái lập được bằng đại số độc lập, nhưng chưa hiệu chuẩn tổng sai số.
+**The candidate ePSF has not been applied to the measurement.** The learning step passed information and shape checks, but the calibration position test found additional competing solutions for two stars. The gate blocked assessment of the remaining 252 cells. A separate covariance study is reproducible with independent algebra, but total uncertainty is not calibrated.
 
-[Mở demo](https://nosleepclub-nasa-spherex.vercel.app/#shape-validation) ·
-[20 tiêu chí](PRODUCTION_READINESS.md) · [MIT](../LICENSE) · [NOTICE](../NOTICE.md).
+[Open demo](https://nosleepclub-nasa-spherex.vercel.app/#shape-validation) · [20 criteria](PRODUCTION_READINESS.md) · [MIT](../LICENSE) · [NOTICE](../NOTICE.md).
 
-## Ba bước được khóa trước khi chạy
+## Three steps locked before running
 
-| Bước | Commit protocol | Kết quả |
+| Step | Protocol commit | Result |
 |---|---|---|
-| Học ba hệ số ePSF từ calibration | `972c8b8723326bc60e99ebd8611e1beb6efd34b3` | 145 ô có thông tin /168 kế hoạch; 22 ô không có ảnh phù hợp, một ô baseline bị từ chối số học |
-| Covariance baseline và khung tham chiếu | `b42515e3a4ac95df5e786d47f5ff18ad706b937b` | 357 ô có đáp ứng /420; 61 ô thiếu hỗ trợ và hai ô bị từ chối vẫn được giữ |
-| Fit vị trí với hệ số ePSF đã seal | `31d07ab777628aecc90af3b244e882e2e6d95b93` | Calibration: 146 fit /168 ô, 22 lỗi chuẩn bị cũ. Gate không đạt; 252 ô assessment chưa được mở |
+| Learn three ePSF coefficients from calibration | `972c8b8723326bc60e99ebd8611e1beb6efd34b3` | 145 informative cells /168 planned; 22 lacked suitable images, one baseline was numerically rejected |
+| Baseline covariance and reference frame | `b42515e3a4ac95df5e786d47f5ff18ad706b937b` | 357 cells with response /420; 61 lacked support and two rejected cells were retained |
+| Fit positions with sealed ePSF coefficients | `31d07ab777628aecc90af3b244e882e2e6d95b93` | Calibration: 146 fits /168 cells, 22 old preparation failures. Gate failed; 252 assessment cells unopened |
 
-Tất cả sao và ảnh đều thuộc trường WISE đã mở. 14 nhãn training và bảy nhãn
-heldout đã có từ trước; các kết quả baseline của chúng cũng đã được xem.
-Trong mỗi mùa, sáu exposure đầu theo IMAGE MJD-AVG dùng học, bốn exposure cuối
-dành cho đánh giá sau. Cách chia này tách dữ liệu cho phép thử mới, nhưng không
-biến cohort đã chọn từ ảnh thành kiểm định bầu trời độc lập. 30 tâm trường
-12/12/6 triển vọng vẫn chưa được query hoặc đo.
+All stars/images are from the WISE field already opened. The 14 training and seven heldout labels were assigned earlier; their baseline results had also been viewed. Within each season, the first six exposures by IMAGE MJD-AVG are used for learning and the final four are reserved for later assessment. This split separates data for the new experiment, but does not make an image-selected cohort an independent sky validation. The 30 prospective 12/12/6 field centers have not been queried or measured.
 
-## Bước học: giảm một sao chi phối, chưa chứng minh giảm bias
+## Learning step: reduced dominance by one star, no proof of reduced bias
 
-Preflight không dùng residual score cho thấy một sao sáng đóng góp tới
-50,70% thông tin theo một hướng hiệu chỉnh. Trước khi học hệ số, estimator
-được đổi sang cân bằng theo thông tin trung bình mỗi exposure của từng sao.
-Đây là lựa chọn sau khi xem thông tin của tập development, được công bố trong
-[protocol](SHAPE_CALIBRATION_PROTOCOL.md). Ngưỡng chi phối 35% được giữ nguyên.
+Preflight that did not use residual scores found that one bright star contributed up to 50.70% of information in one correction direction. Before coefficient learning, the estimator was changed to balance mean information per exposure for each star. This choice was made after inspecting development-set information and is disclosed in the [protocol](SHAPE_CALIBRATION_PROTOCOL.md). The 35% dominance threshold remains unchanged.
 
-Sau cân bằng, đóng góp lớn nhất là **12,87%**, condition của thông tin ba chiều
-là **1,052**. 13/14 sao cung cấp thông tin. Cả 145 mẫu khả dụng qua kiểm tra
-moment, biến đổi peak và cánh âm. Hệ số được seal trong Git trước fit vị trí:
+After balancing, the maximum contribution is **12.87%** and the three-dimensional information condition number is **1.052**. 13/14 stars contribute information. All 145 available samples pass moment, peak-change, and negative-wing checks. Coefficients were sealed in Git before position fitting:
 
-| Hệ số | Giá trị | Sai số chuẩn có điều kiện | Đơn vị |
+| Coefficient | Value | Conditional standard error | Units |
 |---|---:|---:|---|
-| Độ rộng | −0,00830790 | 0,00568703 | pixel² native |
-| Bất đối xứng x | +0,000695585 | 0,000828389 | pixel³ native |
-| Bất đối xứng y | +0,000807192 | 0,000807902 | pixel³ native |
+| Width | −0.00830790 | 0.00568703 | native pixel² |
+| X asymmetry | +0.000695585 | 0.000828389 | native pixel³ |
+| Y asymmetry | +0.000807192 | 0.000807902 | native pixel³ |
 
-Họ mô hình giữ tổng và hai moment bậc nhất trên lattice native đầy đủ trước
-khi mask; target và mọi hàng xóm giữ lại dùng cùng họ hiệu chỉnh. Điều đó cố
-định một quy ước số học, không xác định tâm quang học thật hoặc chuẩn flux của
-thiết bị. Covariance dùng đáp ứng trên 20.327 pixel gốc khác nhau, cộng đóng
-góp của stamp chồng trước khi lan truyền noise.
+The model family preserves total flux and the first two moments on the full native lattice before masking; target and all retained neighbors use the same corrected family. This fixes a numerical convention but does not identify the true optical center or instrument flux calibration. Covariance uses response over 20,327 distinct original pixels, summing overlapping-stamp contributions before propagating noise.
 
-Sai số trên có điều kiện theo vị trí baseline, trọng số Huber, cân bằng nguồn,
-mask, tọa độ catalog và calibration. Cân bằng phụ thuộc biên độ khớp có nhiễu;
-biến thiên của chính trọng số chưa được lan truyền. Không coi hệ số hoặc tỷ lệ
-giá trị/sai số này là kiểm định quang học hay bằng chứng bias đã giảm.
+Errors are conditional on baseline position, Huber weights, source balancing, mask, catalog coordinates, and calibration. Balancing depends on noisy fitted amplitudes; variation in weights is not propagated. Do not treat coefficients or value/error ratios as an optical test or evidence of reduced bias.
 
-## Gate vị trí: hai ca mất hỗ trợ
+## Position gate: two cases lost support
 
-Không học lại hệ số. Fitter giữ pixel, error quan sát, nền phẳng nghiêng, flux
-Jy có dấu, vị trí hàng xóm, chín điểm khởi đầu và giới hạn Huber của baseline.
-Trong 145 ô trước đây có hỗ trợ số học, **143** còn hỗ trợ. Trên 143 ô này,
-chênh lệch giữa thay đổi vị trí thực và dự báo tuyến tính có P90 **0,004593
-pixel common** và cực đại **0,025339 pixel common**, dưới ngân sách 0,02/0,05.
-Hai ô còn lại làm gate thất bại, không bị xóa khỏi mẫu số.
+Do not relearn the coefficients. The fitter retains baseline pixels, observed errors, sloped plane, signed Jy flux, neighbor positions, nine starts, and Huber limit. Of 145 previously numerically supported cells, **143** remain supported. On these 143, the difference between actual and linearized predicted position changes has P90 **0.004593 common pixels** and maximum **0.025339 common pixels**, below budgets 0.02/0.05. The other two cells cause gate failure and remain in the denominator.
 
-| Gaia source ID | Exposure | Số nghiệm gần tốt nhất cũ → mới | Hai nghiệm mới cách nhau |
+| Gaia source ID | Exposure | Old → new near-best solution count | Separation between new solutions |
 |---|---|---:|---:|
-| 5756942110218608640 | 2025W46_2A_0214_3 | 1 → 2 | 1,889921″ |
-| 5756958431094222592 | 2025W46_2A_0214_3 | 1 → 2 | 3,378414″ |
+| 5756942110218608640 | 2025W46_2A_0214_3 | 1 → 2 | 1.889921″ |
+| 5756958431094222592 | 2025W46_2A_0214_3 | 1 → 2 | 3.378414″ |
 
-Đây là các nghiệm được tìm trong audit chín điểm khởi đầu với trọng số cuối
-cố định; ngưỡng Δχ² 5,991 là heuristic. Chưa chứng minh đã tìm hết nghiệm,
-hoặc các nghiệm khác không tồn tại trong baseline. Cả hai fit Huber hội tụ;
-nguyên nhân chặn lần này là nghiệm vị trí cạnh tranh, không phải hết iteration.
+These solutions were found in a nine-start audit using fixed final weights; Δχ² threshold 5.991 is heuristic. This does not prove all solutions were found or that baseline had no other solutions. Both Huber fits converged; this gate failure is due to competing position solutions, not iteration exhaustion.
 
-**252 ô assessment, gồm 56 ô primary = bảy sao × tám exposure, chưa được
-đánh giá bằng mô hình hiệu chỉnh.** Các gate primary trong JSON chưa đạt do
-chưa có kết quả; đó không phải kết luận chúng đã được đo và thất bại. Mọi
-định danh, lỗi và danh sách ô hoãn vẫn có trong audit. Ngưỡng nhận nguồn cũ
-không được chuyển sang PSF mới; phép đo WISE 0855 giữ nguyên.
+**The 252 assessment cells, including 56 primary cells = seven stars × eight exposures, were not evaluated with the corrected model.** Primary gates in JSON are unmet because results are unavailable; this is not a conclusion that they were measured and failed. All IDs, errors, and deferred cells remain in the audit. Do not transfer the old source-acceptance threshold to the new PSF; the WISE 0855 measurement is unchanged.
 
-Kiểm toán độc lập kiểm đủ 168 định danh/checksum, 146 mô hình trên native
-pixel, IRLS và các nhóm nghiệm. **1.314/1.314** hàm mục tiêu cuối được replay
-bằng BVLS tại vị trí đã lưu: chênh χ² lớn nhất **2,274×10⁻¹³**, chênh model
-lớn nhất **1,776×10⁻¹⁵ MJy/sr**. Không tối ưu lại vị trí trong audit. Jacobian
-và rank vị trí chưa được audit độc lập; đây không phải kiểm chứng PSF vật lý.
+Independent audit checked all 168 IDs/checksums, 146 native-pixel models, IRLS, and solution groups. **1,314/1,314** final objective functions were replayed by BVLS at saved positions: maximum χ² difference **2.274×10⁻¹³**, maximum model difference **1.776×10⁻¹⁵ MJy/sr**. Position was not re-optimized in the audit. Position Jacobian/rank has not been independently audited; this does not validate a physical PSF.
 
-## Covariance baseline: giữ tương quan, chưa đạt hiệu chuẩn
+## Baseline covariance: correlations retained, calibration not achieved
 
-Nghiên cứu riêng này dùng ePSF nearest cũ, **không** dùng hệ số vừa học. Đáp
-ứng vị trí được tính tại điểm fit baseline đã lưu. Một biến noise cho mỗi
-exposure/native pixel giữ tương quan giữa stamp chồng; Gaia giữ covariance
-năm tham số dùng chung theo thời gian của mỗi sao. Ma trận có **49.294** pixel
-gốc khác nhau. Nghiệm tịnh tiến của 20 exposure chỉ dùng sao training, với
-11–13 sao khả dụng mỗi exposure. Covariance residual heldout giữ cả số hạng
-chéo giữa sao và nghiệm khung tham chiếu.
+This separate study uses the old nearest ePSF, **not** the coefficients just learned. Position response is evaluated at saved baseline fit points. One noise variable per exposure/native pixel preserves correlations between overlapping stamps; Gaia retains each star's shared five-parameter covariance across time. The matrix contains **49,294** distinct original pixels. The translation solution across 20 exposures uses training stars only, with 11–13 available per exposure. Heldout residual covariance retains cross-star terms and reference-frame solution terms.
 
-| Chẩn đoán có điều kiện | Số ô dùng được | Chi² | Bậc tự do | Chi²/bậc tự do |
+| Conditional diagnostic | Usable cells | χ² | Degrees of freedom | χ² / d.f. |
 |---|---:|---:|---:|---:|
-| Training | 238 | 833,8641 | 436 | 1,9125 |
-| Heldout | 119 | 407,4310 | 238 | 1,7119 |
+| Training | 238 | 833.8641 | 436 | 1.9125 |
+| Heldout | 119 | 407.4310 | 238 | 1.7119 |
 
-Sao heldout `5756959015209770112` không có ô khả dụng vẫn nằm trong bảng
-`0/20`; sao training `5756962382464133248` cũng được giữ. Không bỏ outlier,
-thêm floor hoặc tự nhân covariance để làm chi² vừa một. Thống kê danh nghĩa
-cho thấy phần dư chưa khớp mô hình sai số này; chưa xác định được phần chênh
-do bias, noise, nguồn chồng hoặc các thành phần còn thiếu.
+Heldout star `5756959015209770112` has no available cells but remains as `0/20`; training star `5756962382464133248` is also retained. Do not remove outliers, add a floor, or arbitrarily scale covariance to force χ² to one. Nominal statistics show residuals do not fit this error model; the difference has not been attributed to bias, noise, blends, or missing components.
 
-Kiểm toán QR độc lập trên **357/357** điểm native tái dựng đúng data, error,
-nền và thiết kế hàng xóm. Sai khác tuyệt đối lớn nhất của đáp ứng vị trí là
-**5,575×10⁻¹⁵**, của covariance pixel là **2,082×10⁻¹⁷ pixel²**. Ma trận Gaia,
-nghiệm GLS và residual heldout cũng được tái tính độc lập. Thành công đại số
-không chứng minh covariance đã đủ: mask, trọng số, ePSF, đăng ký cũ và tọa độ
-hàng xóm vẫn được giữ cố định, chưa lan truyền phụ thuộc noise của chúng;
-catalog khác sao được giả định độc lập. Cohort đã mở và upstream WCS/ePSF có
-thể dùng chung dữ liệu. Chưa có kiểm định độ phủ tổng thể.
+Independent QR audit over **357/357** points reconstructs data, errors, background, and neighbor design correctly. Maximum absolute difference in position response is **5.575×10⁻¹⁵**; in pixel covariance it is **2.082×10⁻¹⁷ pixel²**. Gaia matrices, GLS solutions, and heldout residuals were independently recomputed. Algebraic success does not establish complete covariance: masks, weights, ePSF, prior registration, and neighbor coordinates remain fixed; their noise dependence is not propagated. Different catalog stars are assumed independent. The cohort is already opened and upstream WCS/ePSF may share data. Overall coverage has not been validated.
 
-## Sản phẩm có thể kiểm tra
+## Inspectable products
 
-| Sản phẩm | Bản nhẹ | Toàn bộ audit |
+| Product | Lightweight | Full audit |
 |---|---|---|
-| Học hệ số | [Overview](../web/data/shape-correction/overview.json), [seal](../web/data/shape-correction/coefficient-seal.json) | [2,48 MB gzip](../web/data/shape-correction/calibration-records.json.gz) |
-| Fit calibration và gate | [Overview](../web/data/shape-point-check/overview.json), [gate](../web/data/shape-point-check/calibration-gate.json), [audit độc lập](../web/data/shape-point-check/independent-audit.json) | [3,06 MB gzip](../web/data/shape-point-check/records.json.gz) |
-| Covariance baseline | [Overview](../web/data/reference-covariance/overview.json), [audit độc lập](../web/data/reference-covariance/independent-audit.json) | [2,72 MB gzip](../web/data/reference-covariance/records.json.gz) |
+| Coefficient learning | [Overview](../web/data/shape-correction/overview.json), [seal](../web/data/shape-correction/coefficient-seal.json) | [2.48 MB gzip](../web/data/shape-correction/calibration-records.json.gz) |
+| Calibration fits and gate | [Overview](../web/data/shape-point-check/overview.json), [gate](../web/data/shape-point-check/calibration-gate.json), [independent audit](../web/data/shape-point-check/independent-audit.json) | [3.06 MB gzip](../web/data/shape-point-check/records.json.gz) |
+| Baseline covariance | [Overview](../web/data/reference-covariance/overview.json), [independent audit](../web/data/reference-covariance/independent-audit.json) | [2.72 MB gzip](../web/data/reference-covariance/records.json.gz) |
 
-Các overview ghi SHA-256 nén/giải nén, số byte, commit protocol, digest journal,
-source audit và đơn vị. Web chỉ tải ba overview khi mở mục; archive là tải riêng.
-FITS gốc vẫn ở cache bị Git bỏ qua; URL/hash/mask/phiên bản nằm trong từng record.
-Sản phẩm 0.3–0.9 và hai nghiên cứu 840/7.992 lượt trước đó giữ nguyên.
+Overviews record compressed/decompressed SHA-256, byte size, protocol commit, journal digest, audit source, and units. The web app loads only the three overviews on opening the section; archives are separate downloads. Original FITS remains in the Git-ignored cache; URL/hash/mask/version are in each record. Products 0.3–0.9 and the earlier 840/7,992-attempt studies remain unchanged.
 
-Tài liệu [IRSA](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/)
-và [tutorial chính thức](https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/)
-khuyến nghị ePSF mới cho ảnh QR2. Vì vậy, hai ca này không tự chứng minh việc
-ghép QR2/ePSF mới là sai. [Photutils](https://docs.astropy.org/projects/photutils/en/stable/user_guide/epsf_building.html)
-mô tả vai trò sampling, tâm và chuẩn hóa; không xác nhận họ hiệu chỉnh này.
+[IRSA documentation](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/) and the [official tutorial](https://caltech-ipac.github.io/irsa-tutorials/spherex-psf/) recommend the new ePSF for QR2 images. Therefore, these two cases do not by themselves show that QR2/new-ePSF pairing is wrong. [Photutils](https://docs.astropy.org/projects/photutils/en/stable/user_guide/epsf_building.html) discusses sampling, center, and normalization; it does not validate this correction family.
 
-## Bước tiếp theo và tiêu chí
+## Next steps and criteria
 
-Hồi quy local chạy **528 ca Python: 522 đạt, sáu ca Mongo fixture bỏ qua** vì
-không đưa credential production về máy. Sáu suite Node 24 đạt. [Biên nhận
-source/log](evidence/0.10/shape-reference-local-tests.json) và [kiểm tra
-desktop/mobile/bàn phím](evidence/0.10/shape-local-browser.json) ghi phạm vi
-thực tế; chưa phải audit screen-reader/WCAG đầy đủ. CI Mongo và bản public
-cần biên nhận phát hành riêng.
+Local regression ran **528 Python cases: 522 passed, six Mongo fixture cases skipped** because production credentials were not brought onto the machine. Six Node suites passed. [Source/log receipts](evidence/0.10/shape-reference-local-tests.json) and [desktop/mobile/keyboard checks](evidence/0.10/shape-local-browser.json) record the actual scope; this is not a full screen-reader/WCAG audit. CI Mongo and public deployment need separate release receipts.
 
-Ưu tiên giải thích hai nghiệm cạnh tranh trong cùng exposure: khóa một phép
-chẩn đoán profile vị trí trên hai sao lỗi, các sao training cùng ảnh và ảnh
-liền kề; lưu ảnh gốc/model/residual/mask và vai trò hàng xóm. Phân biệt mode
-có sẵn nhưng solver bỏ sót với thay đổi landscape khi chỉnh PSF. Giữ mọi ca
-và không đổi ngưỡng để làm gate xanh.
+Prioritize explaining the two competing solutions within one exposure: lock a positional-profile diagnostic for the two failed stars, same-image training stars, and neighboring images; save original/model/residual/mask and neighbor roles. Distinguish a mode already available but missed by the solver from a landscape change caused by the PSF correction. Retain every case and do not change thresholds to turn the gate green.
 
-Milestone đạt khi có kiểm tra tái lập được cơ chế gây cạnh tranh và một
-estimator/miền từ chối được khai báo trước, thử cả giữ tín hiệu lẫn nguồn chồng.
-Sau đó mới lan truyền đăng ký/tọa độ hàng xóm đầy đủ và kiểm định độ phủ theo
-đặc trưng quan sát S/N, nền, crowding trên các split riêng. Chỉ mở 30 trường
-triển vọng sau khi khóa evaluator, ngân sách sai số tuyệt đối, power, overlap
-và quy tắc chấp nhận. Backup/restore production, tải đại diện, SLO và audit
-accessibility đầy đủ tiếp tục nằm trong ledger; milestone này không đóng chúng.
+The milestone passes when the mechanism behind competition is reproducible and a prespecified estimator/support domain or refusal rule is tested for both signal preservation and blends. Then propagate full registration/neighbor-coordinate uncertainty and test coverage by observed S/N, background, and crowding on separate splits. Open the 30 prospective fields only after locking evaluator, absolute-error budget, power, overlap, and acceptance policy. Production backup/restore, representative load, SLO, and complete accessibility audit remain in the ledger; this milestone does not close them.

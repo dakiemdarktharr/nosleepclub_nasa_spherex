@@ -1,22 +1,22 @@
-# Khám phá tọa độ và chuỗi ảnh SPHEREx
+# SPHEREx Coordinate Search and Image Sequences
 
-Nhập RA theo độ hoặc giờ:phút:giây, Dec theo độ hoặc độ:phút:giây. Chọn DR1 hoặc QR3, detector, trường nhìn và khoảng ngày tùy chọn rồi tìm ảnh. DR1 là mặc định. Liên kết QR2 cũ báo người dùng tìm bản DR1 đã xử lý lại. Truy vấn chọn BAND theo dải detector để giảm số hàng trả về. Metadata SIA mô tả phạm vi của toàn detector. [Các bản phát hành và trạng thái QR2](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/).
+Enter RA in degrees or hours:minutes:seconds and Dec in degrees or degrees:minutes:seconds. Choose DR1 or QR3, a detector, field of view, and an optional date range, then search for images. DR1 is the default. Legacy QR2 links direct users to the reprocessed DR1 data. The query filters `BAND` by detector band to reduce the number of returned rows. SIA metadata describes the footprint of the full detector. [Data releases and QR2 status](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-access/).
 
-Ảnh tải theo nhu cầu từ dịch vụ cutout IRSA, dùng WCS/SIP thật để đặt lên lưới TAN bắc trên/đông trái với 6,15″/pixel. Giữ một ảnh đối chiếu rồi chọn khung khác để nhấp nháy A/B. `Phát chuỗi` hoạt động khi đã mở ít nhất ba ảnh có cùng thang hiển thị và policy mask, obs ID và MJD UTC riêng, cùng detector, pixel tâm khả dụng và giao dải WCS-WAVE tại tâm đạt ít nhất 75% độ rộng dải rộng nhất trong chuỗi. Ngưỡng này là quy tắc hiển thị. Căn chỉnh sao, đáp ứng phổ, biến quang và chuyển động cần kiểm chứng riêng. Link FITS trỏ đúng cutout được hash, kể cả phần mở rộng để bao góc xoay. [Giới hạn WCS-WAVE](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/).
+Images are retrieved on demand from the IRSA cutout service. The app uses the FITS WCS/SIP solution to place each image on a north-up, east-left TAN grid at 6.15 arcseconds per pixel. Keep one reference image, then select another frame to blink between A and B. **Play sequence** becomes available after at least three images have been opened with a shared display scale and mask policy, distinct observation IDs and UTC MJDs, the same detector, valid center pixels, and WCS-WAVE overlap at the center of at least 75% of the widest band in the sequence. This threshold is a display rule. Stellar alignment, spectral response, variability, and motion require separate validation. FITS links point to the exact hashed cutout, including the extension needed to represent the image rotation. [WCS-WAVE limitations](https://caltech-ipac.github.io/spherex-archive-documentation/spherex-data-products/).
 
-**So sánh A/B** giữ cùng lưới, quy tắc mask và mức hiển thị. Chọn một lần quan sát và một dải detector trên mỗi ô. Cả hai ô dùng chung độ phóng đại và tâm khi kéo, bấm phím mũi tên hoặc đặt lại. Dải danh nghĩa nằm trong bộ chọn. WCS-WAVE dưới ảnh là bước sóng tại tâm, khi xác định được từ FITS. Đổi dải ở một ô giữ nguyên ảnh bên kia và tra IRSA cho dải mới. Mở **Chuỗi thời gian** để xem các lần chụp và bật phát cho các khung tương thích. Bước sóng có thể biến thiên qua trường. [Hướng dẫn trực quan IRSA](https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/visualization.html)
+**A/B comparison** uses the same grid, mask rule, and display scale. Choose an observation and detector band for each pane. Both panes share zoom and center when panned, moved with the arrow keys, or reset. The selector lists nominal bands. WCS-WAVE below each image shows the wavelength at the center position when it can be read from the FITS file. Changing the band in one pane keeps the other image and queries IRSA for the new band. Open **Observation timeline** to see observation times and play compatible frames. Wavelength can vary across the field. [IRSA visualization guide](https://irsa.ipac.caltech.edu/onlinehelp/spherex/spherex/visualization.html)
 
-Cam biểu thị pixel bị loại theo FLAGS, tím là vùng thiếu hoặc ngoài ảnh. Nearest-neighbor phục vụ hiển thị, còn photometry cần phép lấy mẫu bảo toàn flux và sai số phù hợp. Trình duyệt thử tải lại cutout một lần khi IRSA trả lỗi tạm thời hoặc ngắt stream. Nếu ảnh vẫn thiếu, người dùng thấy lỗi và có thể chọn lại từ danh sách. Các giới hạn request và cache giữ tải trong biên cho phép. IRSA vẫn có thể chậm hoặc không sẵn sàng.
+Orange marks pixels excluded by FLAGS; purple marks missing or out-of-image regions. Nearest-neighbor interpolation is for display. Photometry requires flux-preserving sampling and suitable uncertainty handling. The browser retries a cutout once after a temporary IRSA error or interrupted stream. If the image is still missing, the user sees an error and can choose another result. Request and cache limits keep service load bounded. IRSA may still be slow or unavailable.
 
-`web/data/challenge-targets.json` ghi nguồn và epoch của các tâm mẫu. WISE 0855 và Barnard được dự báo tới năm 2026 để tránh việc tâm catalog cũ làm nguồn chuyển động nhanh ra khỏi khung. Epsilon Indi B dùng tọa độ trường ESO lịch sử và FOV rộng hơn; cặp chưa được phân giải. Những tọa độ này chỉ hướng dẫn tìm vùng, không phải phép đo độc lập.
+`web/data/challenge-targets.json` records the source and epoch for example target centers. WISE 0855 and Barnard’s Star are propagated to 2026 so that fast-moving sources do not fall outside the field when using older catalog centers. Epsilon Indi B uses historical ESO field coordinates and a wider field of view; the pair is unresolved. These coordinates help locate fields and are not independent measurements.
 
-Ngày 30/10/2026 đã lấy hai cutout thật tại mỗi tâm mục tiêu. Mười PNG QR2 lịch sử cùng metadata, URL và hash nằm ở `web/data/explorer-check/`. Khi IRSA ngừng tra QR2, bộ ảnh này vẫn là dữ liệu mẫu đã ghim. [Danh mục trường thử](DATASET_CATALOG.md).
+On 30 October 2026, two real cutouts were retrieved at each example target center. Ten historical QR2 PNGs, with metadata, URLs, and hashes, are stored in `web/data/explorer-check/`. These pinned images remain available as examples when IRSA no longer returns QR2 search results. [Test-field catalog](DATASET_CATALOG.md).
 
-## Kiểm tra DR1 và QR3 ngày 14/11/2026
+## DR1 and QR3 check on 14 November 2026
 
-API đã đọc VOTable SIA của cả hai bản dữ liệu tại năm tâm, dùng cone 0,001°, band 4,415–4,996 µm, MAXREC 100, sau đó lọc detector D6.
+The API read SIA VOTables from both releases at five field centers, using a 0.001° cone, a 4.415–4.996 µm band, and `MAXREC=100`, then filtered for detector D6.
 
-| Tâm trường | DR1 D6 | QR3 D6 |
+| Field center | DR1 D6 | QR3 D6 |
 | --- | ---: | ---: |
 | WISE 0855 | 45 | 0 |
 | Barnard’s Star | 41 | 17 |
@@ -24,30 +24,30 @@ API đã đọc VOTable SIA của cả hai bản dữ liệu tại năm tâm, d�
 | RW Aurigae | 38 | 18 |
 | R Draconis | 30 (truncated) | 21 |
 
-IRSA trả hai cutout Barnard’s Star có FLAGS theo schema mới. Renderer xuất PNG tại FOV yêu cầu 0,05° với 929 pixel khả dụng từ DR1 và 193 pixel khả dụng từ QR3. QR3 thiếu 763 pixel vì vùng chụp chỉ giao một phần. SHA-256 cutout DR1 là `79c70ed83d50a7c9f1c0848547bf8e44add6270bb41384564bf82c411d2ab8d2`, QR3 là `5005ce035d4748c47b19dec3cef6362bffe51c06480af8fa1a929a6531e7d445`. Pixel tâm bị mask hoặc nằm ngoài ảnh ở hai khung này nên chúng không đủ điều kiện cho chuỗi WCS-WAVE. [Nguồn DR1](https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W33_2C/l2b-v27-2026-228/6/level2_2025W33_2C_0321_1D6_spx_l2b-v27-2026-228.fits?center=269.446266885%2C4.76822221648&size=0.08612855) · [Nguồn QR3](https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W33_2A/l2b-v27-2026-241/6/level2_2026W33_2A_0594_3D6_spx_l2b-v27-2026-241.fits?center=269.446266885%2C4.76822221648&size=0.08612855).
+IRSA returned two Barnard’s Star cutouts with FLAGS in the newer schema. The renderer produced PNGs at the requested 0.05° field of view, with 929 usable pixels from DR1 and 193 from QR3. QR3 lacked 763 pixels because the field only partially overlapped the cutout. SHA-256 for the DR1 cutout: `79c70ed83d50a7c9f1c0848547bf8e44add6270bb41384564bf82c411d2ab8d2`; for QR3: `5005ce035d4748c47b19dec3cef6362bffe51c06480af8fa1a929a6531e7d445`. The center pixel was masked or outside the image in both frames, so neither qualified for a WCS-WAVE sequence. [DR1 source](https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W33_2C/l2b-v27-2026-228/6/level2_2025W33_2C_0321_1D6_spx_l2b-v27-2026-228.fits?center=269.446266885%2C4.76822221648&size=0.08612855) · [QR3 source](https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W33_2A/l2b-v27-2026-241/6/level2_2026W33_2A_0594_3D6_spx_l2b-v27-2026-241.fits?center=269.446266885%2C4.76822221648&size=0.08612855).
 
-Ba ảnh DR1 D6 của vùng **Epsilon Indi B** qua kiểm tra hiển thị chuỗi với tâm RA 331,04583333°, Dec −56,78333333°, trường nhìn 0,12°. Chúng có giao dải WCS-WAVE tại tâm bằng **99,755%** độ rộng dải lớn nhất. Các PNG dùng chung lưới 71×71 pixel, policy mask và tương phản cố định theo ảnh đầu. Đây là vùng ảnh có thể phát theo thời gian. Việc phân giải cặp sao hay đo chuyển động của chúng cần phép đo độc lập.
+Three DR1 D6 images of the **Epsilon Indi B field** passed the sequence display check at RA 331.04583333°, Dec −56.78333333°, and a 0.12° field of view. Their WCS-WAVE overlap at the center is **99.755%** of the widest band. The PNGs use a shared 71×71-pixel grid, mask policy, and contrast fixed from the first image. This field can be played as an image sequence. Resolving the pair or measuring its motion requires independent analysis.
 
-| Bắt đầu UTC | Observation ID | Bước sóng tại tâm (µm) | Pixel khả dụng |
+| Start time (UTC) | Observation ID | Center wavelength (µm) | Usable pixels |
 | --- | --- | ---: | ---: |
-| 29/04/2025 01:35:28 | `2025W18_1B_0081_3` | 4,458349 | 4.885 |
-| 01/05/2025 13:57:52 | `2025W18_2B_0011_3` | 4,458435 | 4.948 |
-| 07/05/2025 05:14:15 | `2025W19_1B_0344_3` | 4,458371 | 4.609 |
+| 29 Apr 2025 01:35:28 | `2025W18_1B_0081_3` | 4.458349 | 4,885 |
+| 1 May 2025 13:57:52 | `2025W18_2B_0011_3` | 4.458435 | 4,948 |
+| 7 May 2025 05:14:15 | `2025W19_1B_0344_3` | 4.458371 | 4,609 |
 
-Trong Bầu trời, chọn **Epsilon Indi B → So sánh ảnh** để tải lần lượt ba ảnh trên. Khi dùng server local, cũng có thể [mở truy vấn Epsilon Indi B ngày 29/04–07/05/2025](http://127.0.0.1:8767/?lang=vi&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1&sky_from=2025-04-29&sky_to=2025-05-07&sky_sequence=epsilon-dr1&sky_autoload=1#explore). Nhấn **Phát chuỗi** sau khi ba ảnh sẵn sàng. Chromium đã đọc ba cutout từ truy vấn live trả 25 hàng, phát đúng thứ tự và tạm dừng. JSON giữ URL gốc, processing version và SHA-256 của metadata SIA, FITS và PNG. Một số lần gọi IRSA khác trong cùng phiên bị chậm, lỗi HTTP 503 hoặc ngắt khi tải. [Receipt chuỗi DR1](data/spherex-dr1-timeline-smoke.json)
+In the sky view, select **Epsilon Indi B → Compare images** to load these three images in order. With the local server, you can also [open the Epsilon Indi B query for 29 April–7 May 2025](http://127.0.0.1:8767/?lang=en&sky_ra=331.04583333&sky_dec=-56.78333333&sky_fov=0.12&sky_det=6&sky_release=dr1&sky_from=2025-04-29&sky_to=2025-05-07&sky_sequence=epsilon-dr1&sky_autoload=1#explore). Select **Play sequence** after all three images are ready. Chromium loaded three cutouts from a live query that returned 25 rows, played them in order, and paused. The JSON retains original URLs, processing version, and SHA-256 values for SIA metadata, FITS, and PNG files. Other IRSA requests in the same session were slow, returned HTTP 503, or had interrupted downloads. [DR1 sequence receipt](data/spherex-dr1-timeline-smoke.json)
 
-Chọn **Mở chuỗi ảnh đã lưu** trên cùng thẻ Epsilon Indi B để phát ba PNG có hash trùng receipt mà không cần chờ IRSA. Tùy chọn này cũng chạy với server tĩnh `python scripts/serve_demo.py`. Giao diện giữ giờ UTC và liên kết FITS của từng khung. [Metadata của ba ảnh đã lưu](../web/assets/mission/epsilon-sequence/provenance.json)
+Select **Open saved sequence** on the same Epsilon Indi B card to play three PNGs whose hashes match the receipt without waiting for IRSA. This option also works with the static server, `python scripts/serve_demo.py`. The interface retains UTC times and a FITS link for each frame. [Metadata for the three saved images](../web/assets/mission/epsilon-sequence/provenance.json)
 
-## Chạy tại máy
+## Run locally
 
-Sau khi cài `requirements.txt` và `web/requirements.txt`:
+After installing `requirements.txt` and `web/requirements.txt`:
 
 ```powershell
 python -m scripts.serve_app --port 8767
 ```
 
-Mở http://127.0.0.1:8767/#explore. Launcher chỉ bind loopback, bật rõ local API budgets; không nạp secret production. `python scripts/serve_app.py --check` kiểm tra imports mà không mở socket. Bản chỉ dùng sản phẩm đã xuất vẫn mở bằng `python scripts/serve_demo.py` ở port 8766; server tĩnh đó không chạy hai API mới. Review local nằm trong trình duyệt, còn cloud review chỉ ở production có credential đã được cấp.
+Open <http://127.0.0.1:8767/#explore>. The launcher binds to loopback, enables explicit local API budgets, and does not load production secrets. `python scripts/serve_app.py --check` checks imports without opening a socket. To serve exported products only, run `python scripts/serve_demo.py` on port 8766; this static server does not run the two new APIs. Local reviews stay in the browser, while cloud reviews are available only in production with configured credentials.
 
-Gói JSON xuất từ explorer lưu query, metadata IRSA, headers provenance của các frame đã xem, thang hiển thị và ý kiến cá nhân. Ghi chú explorer hiện xuất thành tệp, chưa thành hồ sơ review cộng tác hay xác nhận khoa học. Review các phân tích WISE cố định vẫn dùng API khách có ID và expiry riêng.
+An exported explorer JSON bundle stores the query, IRSA metadata, provenance headers for viewed frames, display scale, and the user’s note. Explorer notes are exported to a file; they are not collaborative review records or scientific validation. Reviews of the fixed WISE analyses still use the client API with separate IDs and expiry.
 
-Xem [observations API](OBSERVATION_API_CONTRACT.md), [frame API](FRAME_API_CONTRACT.md), [quota](API_ABUSE_CONTROLS.md), [kiểm chứng và các giới hạn còn mở](PRODUCTION_READINESS.md).
+See the [observations API](OBSERVATION_API_CONTRACT.md), [frame API](FRAME_API_CONTRACT.md), [quota controls](API_ABUSE_CONTROLS.md), and [verification and open limitations](PRODUCTION_READINESS.md).

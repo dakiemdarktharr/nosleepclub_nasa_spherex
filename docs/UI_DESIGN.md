@@ -1,24 +1,24 @@
-# Luồng khám phá cho người mới
+# First-Time Exploration Flow
 
-Tham khảo trực tiếp NASA.gov và SpaceX.com ngày 2026-10-30: hero dùng ảnh lớn, chữ trắng có tương phản, điều hướng ngắn và hành động rõ. Không sao chép logo, ảnh, bài viết hay mã nguồn của hai trang.
+NASA.gov and SpaceX.com were reviewed directly on 30 October 2026. The reference pattern uses a large hero image, high-contrast white text, short navigation, and clear actions. Do not copy their logos, images, articles, or source code.
 
-Token: đen vũ trụ `#000000`, nền công cụ `#101419`, bề mặt `#191f27`, trắng `#f6f7f8`, xám đọc được `#c3ccd7`, cam đánh dấu `#ffb36a`. Từ giao diện 0.5.4 dùng Be Vietnam Pro tự host, gồm Vietnamese/Latin và năm độ đậm; Arial làm fallback. Dùng tabular numbers cho phép đo, không dùng monospace trang trí. Nhãn trên ảnh có nền riêng; thông tin hero nằm trong luồng bố cục để chữ xuống dòng không chồng dải facts.
+Tokens: space black `#000000`, tool background `#101419`, surface `#191f27`, white `#f6f7f8`, readable gray `#c3ccd7`, marker orange `#ffb36a`. Since interface 0.5.4, Be Vietnam Pro is self-hosted in Vietnamese/Latin character sets and five weights, with Arial fallback. Use tabular figures for measurements; do not use monospace as decoration. Image labels have their own backgrounds; hero content stays in the document flow so wrapped text does not overlap the fact cards.
 
 ```text
-Điều hướng: Nhiệm vụ | Quan sát | Kiểm chứng | Ghi nhận
-Hero minh họa Canva + Bắt đầu quan sát / Hướng dẫn
-1 So ảnh → 2 Xem bằng chứng → 3 Lưu nhận xét
-Quan sát: ảnh thật lớn | mục tiêu + nhận xét
-  Đổi bộ ảnh, mode, zoom, chọn điểm luôn là thao tác thật
-  Tọa độ, thuật ngữ và cấu hình cũ mở theo nhu cầu
-Kiểm chứng: QR3 có dữ liệu? → 30 vùng mới → kết luận có đạt không?
-Bước kế: mục tiêu và tiêu chí chấp nhận
+Navigation: Mission | Observe | Validate | Record
+Illustrative Canva hero + Start observing / Guide
+1 Compare images → 2 Review evidence → 3 Save a note
+Observe: large real image | target + notes
+  Change dataset, mode, zoom, or selected point using real controls
+  Open coordinates, terminology, and advanced settings as needed
+Validate: QR3 data available? → 30 new fields → acceptance result
+Next step: target and acceptance criteria
 ```
 
-So với một dashboard kỹ thuật, phần mặc định ưu tiên ảnh, chỉ dẫn thao tác đúng lúc và ý nghĩa kết quả. Không đặt chồng bảng covariance, source ID và danh sách phiên bản lên luồng nhập môn. Người có kinh nghiệm vẫn truy cập đủ Gaia, FITS, CSV/JSON, nguồn, hash và hạn chế. Không ẩn trạng thái “Chưa xác nhận”.
+Compared with a technical dashboard, the default view prioritizes images, timely instructions, and the meaning of results. It does not put covariance tables, source IDs, and version lists in the introductory flow. Experienced users can still access Gaia, FITS, CSV/JSON, sources, hashes, and limitations. **Unconfirmed** status remains visible.
 
-Asset hero và minh họa hai thời điểm do Canva tạo theo brief riêng; cả hai được ghi là minh họa, không đặt làm ảnh quan sát. FITS/overlay giữ nguyên sản phẩm khoa học. Mọi số liệu trong hero và báo cáo lấy từ dữ liệu thực, không từ ảnh Canva.
+The Canva hero and two-epoch illustration were made to separate briefs. Both are labeled as illustrations and are not presented as observation images. FITS and overlays retain their scientific products. All figures in the hero and reports come from real data, not Canva images.
 
-Tiêu chí UX: từ trang đầu đến ảnh chỉ một nút; đến nhận xét từ vùng quan sát bằng một hành động; menu mobile đóng/mở bằng bàn phím; hướng dẫn giải thích mục tiêu, ảnh bị vỡ hạt, ellipse và vì sao chưa xác nhận; không tràn trang ở 390 px; tôn trọng reduced motion; modal có nhãn/đóng và không làm mất lựa chọn dữ liệu; review MongoDB còn lưu/xóa hoạt động.
+UX criteria: one action from the first page to an image; one action from the observed field to a note; the mobile menu opens/closes by keyboard; the guide explains targets, grainy images, the uncertainty ellipse, and why results may be unconfirmed; no overflow at 390 px; respect reduced-motion settings; dialogs have accessible labels and close controls without losing data selection; MongoDB review save/delete remains functional.
 
-Canva assets: [Hero](https://www.canva.com/M/MAHZbvmhEbQ), [hướng dẫn hai thời điểm](https://www.canva.com/M/MAHZbsQBgXg). Bản WebP giữ trong `web/assets/`, metadata/hash trong `provenance.json`. Không hotlink URL thumbnail có hạn dùng. Mã frontend chính trong `mission.css`/`mission.js`; canvas và phép đo giữ `app.js`. Menu, chọn bộ ảnh, bốn mode, zoom, modal, bộ lọc phổ/ePSF và xem bản đồ kiểm thử đều thực hiện hành động thật.
+Canva assets: [Hero](https://www.canva.com/M/MAHZbvmhEbQ), [two-epoch guide](https://www.canva.com/M/MAHZbsQBgXg). WebP copies are stored in `web/assets/`; metadata and hashes are in `provenance.json`. Do not hotlink expiring thumbnail URLs. The main frontend code is in `mission.css`/`mission.js`; the canvas and measurements remain in `app.js`. Menu, dataset selector, four modes, zoom, modal, spectral/ePSF filters, and map inspection were checked to confirm each performs a real action.

@@ -1,117 +1,46 @@
-# Dữ liệu công khai trong MongoDB
+# Public Data in MongoDB
 
-## Phạm vi và dung lượng
+## Scope and size
 
-Chuyển đúng **213 Git blob** dưới `web/data/`: 212.215.160 byte gốc,
-127.478.741 byte sau nén transport. Có 426 phần, tối đa 512 KiB/phần.
-Một ảnh chẩn đoán cục bộ bị ignore không thuộc danh mục phát hành. Không nhập
-`data/raw/`, FITS tải thô, ghi chú riêng, cookie hay các trường dành riêng.
-Các FITS/NPZ nhỏ vốn đã công khai trong `web/data/` vẫn được giữ nguyên hash.
+Transferred exactly **213 Git blobs** under `web/data/`: 212,215,160 original bytes, 127,478,741 bytes after transport compression. There are 426 parts, up to 512 KiB each. One ignored local diagnostic image is outside the release inventory. Do not import `data/raw/`, raw downloaded FITS, private notes, cookies, or reserved fields. Small FITS/NPZ files already public under `web/data/` retain their original hashes.
 
-Cluster M0 `nosleepclub-spherex`, project `NoSleepClub_NASA_SPHEREx`, database
-`nosleepclub_nasa_spherex` được dùng tiếp. Trước import, `dbStats` ghi 34 byte
-logical data, 126.976 byte storage và 249.856 byte index. Chunk giữ dạng base64
-để phép chuyển qua connector/HTTP không đổi byte; khoảng 170 MB logical trước
-overhead vẫn nằm trong hạn mức 512 MB. Chưa có bằng chứng cần thêm cluster.
+Continue using M0 cluster `nosleepclub-spherex`, project `NoSleepClub_NASA_SPHEREx`, database `nosleepclub_nasa_spherex`. Before import, `dbStats` reported 34 bytes of logical data, 126,976 bytes of storage, and 249,856 bytes of indexes. Chunks remain base64 so transfer through the connector/HTTP does not change bytes; about 170 MB logical before overhead remains within the 512 MB limit. There is no evidence that another cluster is needed.
 
-MongoDB áp dụng giới hạn storage, connection, throughput và transfer cho M0;
-thêm cluster không tự tăng băng thông Vercel. Tài liệu hiện hành:
-[Atlas Free limits](https://www.mongodb.com/docs/atlas/reference/free-shared-limitations/),
-[cluster capacity](https://www.mongodb.com/docs/atlas/manage-clusters/).
-Không tạo project/cluster trả phí hoặc nhân cluster khi chưa đo nhu cầu.
+MongoDB applies storage, connection, throughput, and transfer limits to M0; adding a cluster does not automatically increase Vercel bandwidth. Current documentation: [Atlas Free limits](https://www.mongodb.com/docs/atlas/reference/free-shared-limitations/), [cluster capacity](https://www.mongodb.com/docs/atlas/manage-clusters/). Do not create a paid project/cluster or duplicate clusters without measuring a need.
 
-## Đường đọc
+## Read path
 
-`web/api/_data_manifest.json` ghim hash/size/MIME/encoding/chunk của từng Git blob.
-`public_asset_chunks` chỉ chứa các chunk có `_id = SHA-256(payload)`. API không
-nhận tên collection hoặc truy vấn Mongo từ client và không đọc review riêng.
+`web/api/_data_manifest.json` pins the hash/size/MIME/encoding/chunk for each Git blob. `public_asset_chunks` stores only chunks with `_id = SHA-256(payload)`. The API does not accept collection names or Mongo queries from clients and does not read private reviews.
 
-URL chưa có phiên bản chuyển hướng đến `v=stored_sha256`, không cache redirect.
-URL có phiên bản mới được cache browser/CDN; phiên bản cũ khác manifest bị từ
-chối thay vì trả nhầm byte. Metadata chưa có phiên bản và mọi lỗi đều no-store.
-JSON/SVG có thể truyền gzip rồi trình duyệt giải nén, hash gốc vẫn nguyên.
-Từng phần được xác minh length và SHA ở server trước khi trả.
+Unversioned URLs redirect to `v=stored_sha256` and do not cache the redirect. Versioned URLs can be cached by browser/CDN; a stale version that differs from the manifest is rejected instead of returning the wrong bytes. Unversioned metadata and all errors are no-store. JSON/SVG may be gzip-transferred and decompressed by the browser; the original hash remains unchanged. The server verifies each part's length and SHA before returning it.
 
-Vercel giới hạn một phản hồi function ở 4,5 MB. Response trực tiếp tối đa 4 MiB;
-ba archive lớn chuyển đến trang tải theo phần. Trình duyệt kiểm từng chunk và
-toàn tệp trước khi mở nút Lưu. Không gắn thuộc tính download vào link mở trang
-tải. Đây là thay đổi vận chuyển, không tái chạy hoặc cải thiện phép đo khoa học.
-[Function limits](https://vercel.com/docs/functions/limitations),
-[CDN caching](https://vercel.com/docs/caching/cache-control-headers).
+Vercel limits a function response to 4.5 MB. Direct responses are capped at 4 MiB; three large archives go to a part-download page. The browser verifies each chunk and the complete file before enabling Save. Do not add a download attribute to the link that opens the download page. This is a transport change; it does not rerun or improve science measurements. [Function limits](https://vercel.com/docs/functions/limitations), [CDN caching](https://vercel.com/docs/caching/cache-control-headers).
 
-## Hai pha triển khai
+## Two deployment phases
 
-1. Thêm reader/importer và cải thiện UX; giữ nguyên `/data/` trên CDN. Không
-   kích hoạt `buildCommand`/`outputDirectory` hoặc rewrite trước reconciliation.
-2. Nhập đủ, kiểm hash qua reader, thu hồi capability. Sau đó mới dùng
-   `python build_public.py`, static output `public/` và redirect `/data/` theo hash sang
-   reader. Static output chỉ gồm UI/font/ảnh thiết kế; repo vẫn giữ dataset để
-   tái lập và rollback. Source checkout/build vẫn tải repo, không gọi đó là
-   giảm toàn bộ source storage hoặc băng thông function.
+1. Add the reader/importer and improve UX; keep `/data/` on the CDN. Do not enable `buildCommand`/`outputDirectory` or rewrites before reconciliation.
+2. After import, verify hashes through the reader and revoke the capability. Only then run `python build_public.py`, use static output `public/`, and redirect `/data/` by hash to the reader. Static output contains only UI/font/design images; the repository retains datasets for reproduction and rollback. Source checkout/build still downloads the repository, so do not describe this as eliminating all source storage or function bandwidth.
 
-Cutover `7efcf6b` build thành công (static shell Linux: 615.668 byte), nhưng
-wildcard rewrite trả 400 cho canonical `/data/manifest.json`. Smoke bắt lỗi
-trước khi tạo review QA; đã rollback về deployment static ngay trước đó,
-`2f1442a`, và xác minh manifest HTTP 200. Không xác định chính xác tập query
-nội bộ từ rewrite. Bản sửa dùng **213 redirect cụ thể** từ danh mục đã ghim
-sang `/api/data?path=...&v=...`, không truyền wildcard qua lớp rewrite.
-Generator/check và canonical verifier kiểm đủ từng ánh xạ. Query validation
-của reader không được nới lỏng; chưa coi lần cutover đầu là đã giao thành công.
+Cutover `7efcf6b` built successfully (static Linux shell: 615,668 bytes), but the wildcard rewrite returned 400 for canonical `/data/manifest.json`. Smoke caught this before creating a QA review; it was rolled back to the preceding static deployment `2f1442a`, and the manifest returned HTTP 200. The exact internal rewrite query set was not determined. The fix uses **213 specific redirects** from the pinned inventory to `/api/data?path=...&v=...`, without passing a wildcard through the rewrite layer. Generator/check and canonical verifier check every mapping. Reader query validation was not relaxed; the first cutover was not counted as successful delivery.
 
-## Nhập và khôi phục
+## Import and recovery
 
-`build_data_manifest --write` chỉ đọc Git blob đã commit, nén deterministic,
-lưu phần tải trong ignored `data/raw/asset-migration/`. Source/hash gốc không
-bị sửa. Connector Atlas đã trả 413 cho lô khoảng 1,4 MB; không tính là đã nhập.
-Vì vậy dữ liệu lớn đi qua importer bị khóa bằng capability ngẫu nhiên riêng.
-Mongo URI hiện có chỉ ở production Vercel, không tải ra máy/CI/preview.
+`build_data_manifest --write` reads only committed Git blobs, compresses deterministically, and stores downloadable parts in ignored `data/raw/asset-migration/`. Original source/hash is not modified. Atlas connector returned 413 for a batch of about 1.4 MB; this was not counted as imported. Large data therefore used an importer locked by a dedicated random capability. Existing Mongo URI is only in production Vercel; it is not downloaded to local machines/CI/previews.
 
-`migrate_public_data --prepare` tạo capability cục bộ 32 byte ngẫu nhiên và
-permit chỉ có hash, manifest ID, issued/expiry (tối đa 45 phút). Operator dùng
-Atlas connector đặt đúng permit vào `public_asset_import_permits`. Import chỉ
-chạy production, nhận payload ≤512 KiB có đúng SHA/size trong manifest, dùng
-insert-only. Không ghi đè chunk đang có. Dùng `--upload` gửi đến domain production
-cố định qua TLS; mỗi lần chạy có receipt riêng, kể cả khi lỗi. Có thể chạy lại
-toàn bộ idempotently; không xóa receipt lỗi hoặc tính request lỗi là thành công.
+`migrate_public_data --prepare` creates a local random 32-byte capability and a permit containing only its hash, manifest ID, issue/expiry time (maximum 45 minutes). The operator uses the Atlas connector to place that permit in `public_asset_import_permits`. Import runs only in production, accepts payloads ≤512 KiB with the exact manifest SHA/size, and is insert-only. Existing chunks cannot be overwritten. `--upload` sends to a fixed production domain over TLS; each run has its own receipt, including failures. The entire import can be retried idempotently; do not delete failure receipts or count failed requests as success.
 
-Sau khi hoàn tất, xóa đúng permit của migration bằng connector, kiểm POST bị
-từ chối, xóa capability cục bộ do migration tạo. Request đã qua kiểm tra permit
-có thể hoàn tất trước khi thu hồi; không thể dùng nó để viết byte ngoài manifest.
-Không có permit hợp lệ thì endpoint không nhận import. Không tự GC chunk;
-trước khi xóa version cũ phải đối chiếu mọi deployment cần rollback.
+After completion, remove the migration's exact permit through the connector, verify POST is rejected, and delete the local capability created by migration. Requests that passed the permit check may finish before revocation; the capability cannot write bytes outside the manifest. Without a valid permit, the endpoint rejects imports. Do not garbage-collect chunks automatically; before deleting an old version, check every deployment needed for rollback.
 
-Đường truyền local đã mất 41,312 giây cho một phần 512 KiB. Chủ repo đã cho
-phép khóa public-asset tạm `SPHEREX_PUBLIC_DATA_IMPORT` trong GitHub Actions;
-workflow chỉ chạy thủ công trên main và kiểm cả người khởi chạy/người bấm
-rerun đều là owner. Secret chỉ vào bước import, không vào artifact; Mongo URI
-không vào GitHub. Artifact chỉ giữ receipt import/reconciliation. Xóa Secret
-cùng permit sau khi hoàn tất; mode canonical chỉ đối soát, không dùng secret.
+Local transfer took 41.312 seconds for a 512 KiB part. The repository owner authorized a temporary public-asset key `SPHEREX_PUBLIC_DATA_IMPORT` in GitHub Actions; the workflow runs manually on main and checks that both the launcher and rerun initiator are owners. The secret is limited to the import step and is not put in artifacts; Mongo URI is not in GitHub. Artifacts retain only import/reconciliation receipts. Delete the Secret and permit after completion; canonical mode only reconciles and does not use the secret.
 
-Lượt import `41208174465` nhập đủ 426 phần; lượt đối soát đầu dừng ở NPZ vì
-CDN gzip thêm cho client đã quảng cáo gzip. Tệp vẫn được browser giải mã đúng;
-verifier cũ đã nhầm byte lưu với byte nén HTTP. Lượt đó được giữ nguyên. Verifier
-mới thương lượng identity cho sản phẩm identity và chunk, gzip cho sản phẩm
-gzip, đồng thời kiểm media type, encoding và byte thực nhận; không bỏ kiểm hash.
+Import run `41208174465` uploaded all 426 parts; initial reconciliation stopped at an NPZ because the CDN added gzip for clients advertising gzip. The file still decompressed correctly in the browser; the old verifier confused stored bytes with HTTP-compressed bytes. That run remains unchanged. The new verifier negotiates identity for identity products/chunks and gzip for gzip products while checking media type, encoding, and received bytes; it does not skip hash validation.
 
-Nếu import/reader chưa đạt, giữ static release. Nếu cutover có lỗi, rollback
-về release pha 1: dữ liệu vẫn có trong Git/CDN và review cũ vẫn dùng database
-ban đầu. Khi logical size vượt 70% hạn mức hoặc tải đo được gây nghẽn, đánh giá
-retention/versioning và storage cho binary trước khi khóa phân vùng nhiều cluster;
-không coi nhiều M0 là sharding hay high availability đã kiểm chứng.
+If import/reader fails, retain the static release. If cutover fails, roll back to the phase-1 release: data remains in Git/CDN and old reviews still use the original database. When logical size exceeds 70% of the limit or measured load causes congestion, assess retention/versioning and binary storage before considering sharding across clusters; multiple M0 clusters are not proven sharding or high availability.
 
-## UX được thử lại
+## UX retested
 
-WISE và IRSA đi theo Dữ liệu → So ảnh → Kiểm tra → Ghi nhận. Danh sách IRSA
-được mở ngay sau metadata, kể cả khi ảnh đầu lỗi; bỏ qua quan sát không có URL,
-có nút Tải lại ảnh. Chỉ khi đủ hai ảnh đã tải mới cho qua Kiểm tra. Danh sách
-đánh dấu A/B, hiển thị ngày UTC; giữ khoảng ngày trong URL.
+WISE and IRSA use Data → Compare → Check → Record. The IRSA list opens immediately after metadata, even if the first image fails; observations without URLs are skipped and a Retry image button is available. The user can proceed to Check only after two images load. The list labels A/B and shows UTC dates; the date range remains in the URL.
 
-Nháp được giữ trong sessionStorage cùng tab (tối đa 50, hết hạn 24 giờ), gắn
-analysis/selection hoặc query/A/B; không tự gửi lên máy chủ. Reload phải chọn
-lại đúng cặp IRSA mới khôi phục nháp. Đóng tab có thể mất nháp: xuất JSON để
-giữ. Xuất WISE chứa nhận xét đã lưu và nháp chưa lưu ở hai trường riêng, không
-âm thầm bỏ phần đang gõ. Lưu cục bộ không hứa tự đồng bộ.
+Drafts stay in sessionStorage for the current tab (up to 50, expire after 24 hours), keyed to analysis/selection or query/A/B; they are not uploaded to a server automatically. Reload restores an IRSA draft only after selecting the exact pair again. Closing the tab may lose a draft; export JSON to retain it. WISE export includes saved reviews and unsaved drafts in separate fields; text being edited is not silently omitted. Local saving does not promise synchronization.
 
-Các kiểm thử mô phỏng và browser của agent không thay thế thử với người mới
-thật. Kết quả vận hành/public và giới hạn còn lại được bổ sung trong receipt
-phát hành sau cutover; không coi tài liệu thiết kế là bằng chứng đã di chuyển.
+Agent-simulated/browser tests do not replace testing with real newcomers. Operational/public results and remaining limits are added in the post-cutover release receipt; do not treat the design document as evidence that migration has completed.

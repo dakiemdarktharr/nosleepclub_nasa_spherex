@@ -1,61 +1,4 @@
-# SPHEREx đã thấy gì? / What Did SPHEREx See?
-
-[Tiếng Việt](#tiếng-việt) · [English](#english) · [Tham chiếu phần cứng / Hardware references](#hardware-references--tham-chiếu-phần-cứng)
-
-## Tiếng Việt
-
-### Mục tiêu
-
-Xây một công cụ web công khai, song ngữ Việt–Anh, để bất kỳ ai cũng tự tìm được một vùng trời và xem SPHEREx đã chụp gì ở đó. Bản nộp hackathon là bản phát hành đầu tiên của sản phẩm dùng lâu dài. Người mới có thể bắt đầu từ một điểm đánh dấu trên trời. Chuyên gia có thể nhập RA/Dec, truy lại từng ảnh và kiểm điều kiện so sánh.
-
-Phần bắt buộc của đề là nhập RA/Dec và phát ảnh SPHEREx của cùng vùng trời theo thời gian. Năm mục tiêu kiểm thử gồm Barnard’s Star, Epsilon Indi B, WISE 0855, RW Aurigae và R Draconis. Cảnh quỹ đạo và bầu trời hướng người dùng tới tác vụ này. Cảnh quỹ đạo lấy bố cục từ ảnh người dùng gửi. Cấu hình phần cứng dựa trên tư liệu chuyến bay có đối chiếu. [Đề bài trong repo](CHALLENGE.md) · [Bản đăng HackAthlone](https://hackathlone.com/challenges/planet-x-and-spherex)
-
-### Trải nghiệm phải nghiệm thu
-
-| Màn hình | Người dùng làm gì | Bằng chứng nghiệm thu |
-| --- | --- | --- |
-| **Trang chủ** | Thấy tiêu đề và SPHEREx phía trên đường chân trời Trái Đất. Trái Đất là mặt phẳng có texture trôi chậm. Rê chuột hoặc focus làm nổi đường viền của vệ tinh hoặc Trái Đất. Vệ tinh quay để lộ nhiều mặt. Nhấn vệ tinh mở **Về SPHEREx**. Nhấn Trái Đất mở **Khám phá bầu trời**. | Hai hành động có nhãn và đều hoạt động qua nút, bàn phím hoặc chạm. Thiết bị giảm chuyển động hoặc gặp lỗi tải media có hình tĩnh và hai lối vào. Quỹ đạo được ghi là minh họa. |
-| **Về SPHEREx** | Xem sứ mệnh, cách các tấm chắn bảo vệ kính và cách khảo sát thu ảnh phổ hồng ngoại. Xoay mô hình hoặc xem các góc đã xác minh. | Tên và chú thích bộ phận trỏ nguồn. Nút **Khám phá bầu trời** quay thẳng về tác vụ. Trạng thái mô hình, ảnh hoặc animation được ghi rõ. |
-| **Khám phá bầu trời** | Nhìn lên trời đêm từ mặt đất. Kéo chuột hoặc chạm để xoay, phóng to và chọn một điểm sáng của vùng có dữ liệu. Có thể dùng danh sách mục tiêu và nhập RA/Dec để đến vùng ngoài góc nhìn ban đầu. | Cùng một vùng chọn được qua bản đồ, danh sách và tọa độ. Phím mũi tên hoặc nút có nhãn thay thế kéo. Tâm truy vấn, tên vùng và dấu quan sát đều có thể đọc qua bàn phím. |
-| **Toàn cảnh vùng** | Nhấn điểm sáng để mở ảnh quan sát của vùng, zoom/pan và xem số ảnh, thời điểm, dải và nguồn. Nhấn **So sánh ảnh** để sang trình phát với đúng vùng và khung đã chọn. | Ảnh xem trước cho biết trường nhìn và phạm vi ảnh thực. Nếu dùng cutout hoặc mosaic thì giao diện gọi đúng loại. Loading, ảnh rỗng, lỗi nguồn và chỉ một khung đều có trạng thái cụ thể. |
-| **So sánh ảnh** | Xem chuỗi theo thời điểm quan sát, kéo timeline, bước từng ảnh, phát/tạm dừng, hoặc nhấp nháy A/B khi hai ảnh phù hợp. Mở metadata hoặc tải tệp. | Giữ ngữ cảnh khi quay lại và đổi ngôn ngữ. Link mở lại RA/Dec, trường nhìn, release, bộ lọc và lựa chọn khung nếu các khung còn khả dụng. Thời điểm chụp, detector, dải, scale hiển thị, chất lượng và nguồn gắn với từng khung. |
-
-**Song ngữ trong luồng sử dụng.** Hai bản dùng tiêu đề **SPHEREx đã thấy gì?** và **What Did SPHEREx See?**. Dịch nút, hướng dẫn, tooltip, trạng thái rỗng, lỗi động, metadata dễ hiểu, menu và nhãn cho công nghệ hỗ trợ. Lưu lựa chọn ngôn ngữ và cập nhật thuộc tính `lang` khi chuyển. Giữ nguyên ID khoa học, tên cột FITS, đơn vị và giá trị gốc có trong tệp tải.
-
-**Điều hướng trong repo.** Điểm vào là `web/index.html`, `#about` mở phần sứ mệnh và `#night-sky` mở bầu trời. Các link cũ tới workspace, bộ mẫu và báo cáo vẫn là ca kiểm tra hồi quy. Đưa hai lối vào trang chủ lên trước việc tải media để người dùng có thể bắt đầu trên mạng chậm.
-
-### Tiêu chuẩn cho mô hình và bản đồ
-
-- **Vệ tinh.** Tạo bảng cho từng bộ phận với tên Việt–Anh, góc nhìn, nguồn, kích thước đã biết và mức chắc chắn. Đối chiếu cả miệng chắn, thân vệ tinh, mặt dưới, hai bên tấm pin, góc sau và góc chéo. Chụp ít nhất sáu góc và một vòng quay của bản xuất web dưới ánh sáng trung tính, kiểm hình dáng, mặt khuất, vị trí linh kiện và vật liệu cùng người duyệt độc lập. Dùng cấu hình quan sát sau khi nắp bụi được tháo. [Thông báo tháo nắp của NASA](https://science.nasa.gov/blogs/spherex/2025/03/20/nasas-recently-launched-spherex-ejects-dust-cover-from-telescope/)
-- **Asset 360° và phương án dự phòng.** Dùng mô hình trực quan công khai của NASA’s Eyes, đóng gói GLB trong repo để xoay tự do. Đây là mô hình trực quan cấu hình triển khai của NASA/JPL-Caltech. Mức độ khớp từng linh kiện cần được đối chiếu riêng bằng ảnh chuyến bay hoặc CAD được xác minh. Khi thiết bị không chạy được 3D, dùng ảnh tĩnh hoặc đoạn quay ngoại thất của NASA/JPL-Caltech có credit, giữ nguyên hai hành động trên trang chủ. [NASA’s Eyes · SPHEREx](https://eyes.nasa.gov/apps/solar-system/#/sc_spherex) · [Mô hình glTF gốc](https://eyes.nasa.gov/assets/static/models/sc_spherex/spherex.gltf) · [NASA SVS 14966](https://svs.gsfc.nasa.gov/14966/) · [Chính sách ảnh JPL](https://www.jpl.nasa.gov/jpl-image-use-policy/)
-- **Bầu trời nhìn từ đất.** Mặc định là góc nhìn minh họa, với danh mục và tọa độ ICRS nhất quán khi xoay. Nếu nhóm muốn hiển thị đúng bầu trời tại một nơi và giờ cụ thể, đặc tả vị trí quan sát, UTC và phép đổi RA/Dec sang phương vị/cao độ, rồi kiểm chéo với nguồn thiên văn. Chỉ yêu cầu truy cập vị trí khi người dùng chủ động chọn chế độ địa phương.
-- **Điểm đánh dấu.** Hình ngôi sao là nút mở vùng khảo sát. Nền trời minh họa, tâm mục tiêu, footprint và ảnh quan sát có chú giải riêng. Đánh dấu khác nhau cho vùng có preview thật trong app, vùng mới xác minh metadata và vùng có chuỗi ảnh đã kiểm tra. Số đếm phải ghi loại đếm, ví dụ hàng metadata, lần quan sát hoặc khung đủ điều kiện. [Danh mục và kiểm tra vùng phủ](DATASET_CATALOG.md)
-- **Chuỗi ảnh.** Dùng Spectral Images DR1/QR3 theo từng lần chụp. Kiểm footprint và pixel hợp lệ sau mask, cùng lưới WCS và thang hiển thị, thời điểm, đáp ứng phổ tại mục tiêu và phiên bản xử lý. Gần nhau về tên detector vẫn cần đánh giá bước sóng tại pixel. Bản đồ hợp nhất DR1 là lớp nền hoặc tra phổ. Giữ nguồn, ID, thời điểm/hệ thời gian, dải và đơn vị, mask, phiên bản, hash theo đúng loại tệp. Ảnh quan sát, vị trí ngoại suy, đối chứng giả và đầu ra mô hình có nhãn riêng. [IRSA DR1](https://irsa.ipac.caltech.edu/data/SPHEREx/docs/overview_dr1.html) · [Hợp đồng API ảnh](FRAME_API_CONTRACT.md)
-
-### Giao việc cho thành viên
-
-| Nhóm | Bàn giao | Câu hỏi cần trả lời trước khi ghép |
-| --- | --- | --- |
-| **Thiết kế và 3D** | Board góc chụp, bảng bằng chứng linh kiện và quyền sử dụng. Cảnh quỹ đạo, texture Trái Đất, mô hình web hoặc animation dự phòng, các góc render so khớp. | Có mesh cấu hình bay chia sẻ được không? Mặt dưới và sau tấm pin đã có ảnh đối chiếu chưa? Ai duyệt tỷ lệ, vật liệu và sai khác còn lại? |
-| **Giao diện và bản địa hóa** | Trang chủ, Về SPHEREx, bầu trời kéo/chạm, danh sách và tìm RA/Dec, toàn cảnh, điều hướng tới trình phát. Từ điển Việt–Anh và ca kiểm tra link cũ. | Có thể tìm vùng bất kỳ qua danh sách/toạ độ khi màn hình nhỏ hoặc tắt 3D không? Đổi ngôn ngữ và Back/Forward phục hồi camera, vùng và khung bằng cách nào? Tên vùng hiển thị ở đâu khi marker chồng nhau? |
-| **Dữ liệu và thiên văn** | Luồng khám phá DR1/QR3, kiểm footprint và mẫu preview có provenance. Chuỗi ít nhất ba khung thật phù hợp ở một mục tiêu. Bảng trạng thái cả năm mục tiêu, API và tệp xuất tái lập. | Release/collection nào dùng cho từng vùng? Mức chất lượng pixel và phù hợp phổ nào cho phép bật so sánh? Có ít nhất ba lần chụp độc lập nào đạt cùng điều kiện? Ai ký duyệt và lưu nhật ký loại khung? |
-| **QA và vận hành** | Kiểm tra preview trên hạ tầng thật, ca bàn phím, screen reader và mobile, đo tải và lỗi upstream, hướng dẫn giám sát/rollback, credit và hash asset. | Thiết bị/mạng nền nào đại diện? Ai trực khi IRSA lỗi và cập nhật release mới? Ngân sách tải, lưu trữ, ngưỡng lỗi và kế hoạch rollback là gì? |
-
-**Thứ tự ghép.** Giao diện và dữ liệu thống nhất mã vùng, tọa độ, trạng thái preview và cấu hình link trước. Giao diện có thể dùng một bộ mẫu có provenance để dựng luồng đầy đủ trong khi nhóm dữ liệu kiểm tra các chuỗi mới. Nhóm 3D bàn giao ảnh tĩnh có credit trước và thay bằng asset tương tác sau khi duyệt ngoại thất. QA kiểm cả hai cách vào luồng trước khi bật cảnh mới cho mọi người.
-
-### Mốc phát hành và câu hỏi cần người phụ trách chốt
-
-1. **Luồng có dữ liệu thật.** Tìm theo RA/Dec và mục tiêu mẫu, mở đúng preview rồi phát tối thiểu ba khung tương thích ở một mục tiêu. Kiểm cùng bài chạy trên năm mục tiêu. Hai khung có A/B. Thiếu khung hiện lý do và lối sang mục tiêu khác. Lỗi IRSA hiện nút thử lại hoặc mẫu lưu sẵn có nhãn release, ngày chụp và nguồn.
-2. **Luồng song ngữ và lối vào bằng nút.** Chạy hai lần từ trang chủ tới trình phát bằng tiếng Việt và tiếng Anh. Thử chuột, chạm, bàn phím và trình đọc màn hình. Kiểm `prefers-reduced-motion`, trạng thái tải hỏng, mất kết nối và mở lại link. Mốc dùng thử đề xuất là 4/5 người mới tự mở đúng vùng trong 60 giây, rồi một người có kinh nghiệm tái lập lần xem từ URL và tệp xuất.
-3. **Gói có thể vận hành.** Đính kèm kết quả CI, link preview, hash/credit tài sản, thời gian tải ở thiết bị/mạng đã chọn và kết quả smoke trên đường dẫn public. Giới hạn truy vấn và thời gian chờ ở API, giữ chính sách nguồn FITS và cache theo release. Nếu bật lưu nhận xét, kiểm phân tách phiên, hết hạn, xóa và phục hồi dữ liệu. Ghi chủ sở hữu theo dõi, ngưỡng cảnh báo và rollback. [Tiêu chí vận hành đang dùng](PRODUCTION_READINESS.md) · [Runbook](OPERATIONS.md)
-
-Các mốc này là tiêu chí nghiệm thu. Team ghi việc nào đã có bằng chứng và việc nào còn chờ vào bản bàn giao release, kèm commit hoặc URL preview.
-
-**Đã kiểm trên bản local.** Trình phát đã hiển thị ba ảnh SPHEREx DR1 D6 của vùng Epsilon Indi B theo ngày **29/4, 1/5 và 7/5/2025 UTC**. Chúng dùng chung lưới WCS, chính sách mask và thang hiển thị. Phần dải giao nhau chiếm **99,755%** dải rộng nhất tại tâm vùng, ước tính từ WCS-WAVE. Các lượt tải cutout trong lần thử mất **4,6–17,6 giây**. Lần tải Barnard’s Star có độ trễ thay đổi và cần đo lại. Kiểm tra trọn luồng trên cả năm mục tiêu và bản triển khai public vẫn chờ. Kết quả này xác minh cách phát ảnh, còn việc đo chuyển động, biến quang và phân giải cặp Epsilon Indi B cần bằng chứng khoa học riêng. [Nhật ký thời điểm, nguồn, mask và hash](data/spherex-dr1-timeline-smoke.json)
-
-**Cần chốt.** Ai là người duyệt cuối về hình dáng phần cứng và độ phù hợp chuỗi ảnh? Trang chủ mặc định EN, VI hay tự chọn theo trình duyệt? Dùng toàn bộ bầu trời minh họa hay thêm ngay địa điểm/giờ quan sát? Chọn mục tiêu mở màn sau khi có chuỗi đủ điều kiện hay ưu tiên một mục tiêu do nhóm chọn trước? Những linh kiện nào cần bằng chứng CAD hoặc ảnh riêng trước khi công bố? Hạn phát hành, hạ tầng và thiết bị nền cụ thể là gì?
-
-## English
+# What Did SPHEREx See? — Product Brief
 
 ### Product objective
 
@@ -73,7 +16,7 @@ The challenge requires RA/Dec input and chronological playback of SPHEREx images
 | **Region overview** | Open a marker to see the observed field, pan and zoom, then inspect image count, dates, spectral bands and source. Select **Compare images** to carry the region and frame into the viewer. | The preview states field of view and image bounds, with a cutout or mosaic label as appropriate. Loading, empty results, upstream failure and single-frame cases have explicit states. |
 | **Compare images** | Play images by observation time, scrub, step, pause or blink two compatible images. Inspect metadata or download source data. | Back navigation and language changes retain the observing context. A share link restores RA/Dec, field size, release, filters and frame selection whenever those frames remain available. Each frame carries time, detector, band, display scale, quality and source. |
 
-**Bilingual end-to-end flow.** Use **What Did SPHEREx See?** and **SPHEREx đã thấy gì?** in the two language versions. Translate actions, help, tooltips, empty states, dynamic errors, accessible labels and human-readable metadata. Persist the language preference and update the document’s `lang`. Preserve scientific identifiers, FITS field names, units and original values in downloads.
+**Bilingual end-to-end flow.** Use a clear page title in each language version. Translate actions, help, tooltips, empty states, dynamic errors, accessible labels, and human-readable metadata. Persist the language preference and update the document’s `lang`. Preserve scientific identifiers, FITS field names, units, and original values in downloads.
 
 **Routes in the repo.** Use `web/index.html` for home, `#about` for the mission and `#night-sky` for the observing view. Keep existing workspace, sample and report deep links in regression checks. Render both home actions before requesting media so visitors on slower networks can proceed.
 
@@ -108,15 +51,15 @@ These gates are acceptance criteria. The release handoff records which items hav
 
 **Decisions needed.** Who approves spacecraft fidelity and astronomy comparability? Should the first visit default to EN, VI or the browser locale? Should the first release use the illustrative full-sky view or include location and time? Should the lead target be chosen once a series qualifies or selected in advance? Which components require CAD or dedicated photographic evidence before release? What are the delivery deadline, hosting budget and baseline device?
 
-## Hardware references / Tham chiếu phần cứng
+## Hardware references
 
-| View / Góc nhìn | What to inspect / Chi tiết cần đối chiếu |
-| --- | --- |
-| **Orbit composition / Bố cục quỹ đạo** | Three-quarter silhouette above Earth’s limb, foreground lighting and panel placement. The submitted image sets the layout. / Dáng góc chéo trên đường chân trời, ánh sáng và vị trí tấm pin. Ảnh người dùng gửi là tham chiếu bố cục. [NASA Photojournal orbit concept](https://science.nasa.gov/photojournal/spherex-in-orbit-artists-concept/) |
-| **Shield opening from the side / Miệng chắn góc ngang** | Three shield rims, aperture depth and scale. / Ba mép chắn, độ sâu miệng và tỷ lệ. [JPL PIA26542](https://www.jpl.nasa.gov/images/pia26542-spherex-in-horizontal-orientation/) |
-| **Integrated hardware / Phần cứng đã lắp** | Match outer shield and bus against late flight hardware. Assembly photos may omit the panel or contain test hardware. / Đối chiếu chắn ngoài và thân với ảnh gần cấu hình chuyến bay. Ảnh lắp ráp có thể thiếu tấm pin hoặc có đồ gá. [NASA final assembly](https://science.nasa.gov/photojournal/final-assembly-of-spherex-observatory/) · [NASA post-test photo](https://science.nasa.gov/photojournal/spherex-after-environmental-testing/) |
-| **Full turn / Vòng quay ngoại thất** | Use the exterior portion before the shields are faded out. Check front, rear, underside and opposite panel faces against the source and the physical photographs. / Dùng đoạn ngoại thất trước khi các chắn mờ đi. Đối chiếu mặt trước, sau, dưới và hai mặt tấm pin với phim và ảnh thật. [NASA SVS 14966](https://svs.gsfc.nasa.gov/14966/) |
-| **Dimensions and parts / Kích thước và linh kiện** | Overall height 2.6 m, photon shield assembly 1.7 m tall and 3.2 m across, fixed solar panel 2.67 × 1.02 m. Check communications antenna locations from the press kit. / Tổng cao 2,6 m, cụm chắn cao 1,7 m và rộng 3,2 m, tấm pin cố định 2,67 × 1,02 m. Kiểm vị trí antenna liên lạc theo press kit. [JPL Spacecraft](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/spacecraft/) |
-| **Interactive comparison / Đối chiếu tương tác** | JPL lists NASA’s Eyes as a browser reference. Confirm any export and redistribution rights independently. / JPL dẫn NASA’s Eyes để quan sát trên trình duyệt. Xác minh riêng quyền xuất và phân phối mọi asset. [JPL gallery](https://www.jpl.nasa.gov/press-kits/spherex/gallery/) · [NASA’s Eyes](https://go.nasa.gov/eyesonspherex) |
+| View | What to inspect | Source |
+| --- | --- | --- |
+| **Orbit composition** | Three-quarter silhouette above Earth’s limb, foreground lighting, and panel placement. The submitted image sets the composition. | [NASA Photojournal orbit concept](https://science.nasa.gov/photojournal/spherex-in-orbit-artists-concept/) |
+| **Shield opening from the side** | Three shield rims, aperture depth, and scale. | [JPL PIA26542](https://www.jpl.nasa.gov/images/pia26542-spherex-in-horizontal-orientation/) |
+| **Integrated hardware** | Match the outer shield and bus against late flight hardware. Assembly photos may omit the panel or include test hardware. | [NASA final assembly](https://science.nasa.gov/photojournal/final-assembly-of-spherex-observatory/) · [NASA post-test photo](https://science.nasa.gov/photojournal/spherex-after-environmental-testing/) |
+| **Full turn** | Use the exterior portion before the shields fade out. Check the front, rear, underside, and both panel faces against the source and physical photographs. | [NASA SVS 14966](https://svs.gsfc.nasa.gov/14966/) |
+| **Dimensions and parts** | Overall height 2.6 m; photon-shield assembly 1.7 m tall and 3.2 m across; fixed solar panel 2.67 × 1.02 m. Check communication-antenna locations against the press kit. | [JPL spacecraft overview](https://www.jpl.nasa.gov/press-kits/spherex/mission-overview/spacecraft/) |
+| **Interactive comparison** | JPL lists NASA’s Eyes as a browser reference. Confirm export and redistribution rights independently. | [JPL gallery](https://www.jpl.nasa.gov/press-kits/spherex/gallery/) · [NASA’s Eyes](https://go.nasa.gov/eyesonspherex) |
 
-**Asset receipt / Hồ sơ asset.** Retain the source URL, original credit, usage terms, configuration, asset hash and any edits. Check third-party credits as well as NASA and JPL terms. / Lưu URL, credit gốc, điều khoản sử dụng, cấu hình, hash và mọi chỉnh sửa. Kiểm credit bên thứ ba cùng điều khoản NASA và JPL. [NASA media guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/) · [JPL image use policy](https://www.jpl.nasa.gov/jpl-image-use-policy/)
+**Asset receipt.** Retain the source URL, original credit, reuse terms, configuration, asset hash, and any edits. Check third-party credits as well as NASA and JPL terms. [NASA media guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/) · [JPL image use policy](https://www.jpl.nasa.gov/jpl-image-use-policy/) · [Caltech SPHEREx image use policy](https://spherex.caltech.edu/page/image-use-policy/)
