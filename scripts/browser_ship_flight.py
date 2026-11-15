@@ -1,6 +1,7 @@
 """Real UI journey: encounter, learning, earned fuel, thruster and both flights."""
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright, expect
@@ -108,9 +109,12 @@ def main():
     parser.add_argument('--output', type=Path, default=Path('data/raw/flight-review'))
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
+    # Assertions have their own timeout; page.set_default_timeout only covers
+    # actions. Software-rendered walking can take longer than its default 5 s.
+    expect.set_options(timeout=30000)
     results = []
     with serve() as base, sync_playwright() as p:
-        browser = p.chromium.launch(args=['--use-angle=swiftshader', '--enable-unsafe-swiftshader'])
+        browser = p.chromium.launch(args=['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] if sys.platform == 'win32' else [])
         try:
             for width, tier in [(1366, 'normal'), (390, 'super')]:
                 result = run_case(browser, args.base or base, args.output, width, tier)
