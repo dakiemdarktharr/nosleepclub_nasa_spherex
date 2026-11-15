@@ -14,6 +14,7 @@
   const expanded = el("sky-image-expanded");
   const search = el("sky-target-search");
   const dialog = el("sky-image-dialog");
+  const learnQr = el("learn-qr-dialog");
   const workspaceScripts = [
     "review-store.js?v=0.10.0-r11", "draft-store.js?v=0.11.1-r18", "app.js?v=0.11.1-r20",
     "mission.js?v=0.11.0-r17", "benchmark.js?v=0.10.0-r11", "quality.js?v=0.11.0-r17",
@@ -694,6 +695,7 @@
     }
   }
   el("sky-field-example").addEventListener("click", openSavedSequence);
+  el("learn-qr-open").addEventListener("click", () => learnQr.showModal());
   site.querySelector(".skip-link").addEventListener("click", (event) => {
     event.preventDefault();
     el("public-main").focus();
@@ -701,6 +703,7 @@
   document.addEventListener("spherex:language", () => { refreshText(); if (titleAnimation) showTitle(); });
   window.addEventListener("hashchange", () => {
     if (dialog.open) dialog.close();
+    if (learnQr.open) learnQr.close();
     if (el("archived-sequence").open) el("archived-sequence").close();
     if (el("guided-activity").open) el("guided-activity").close();
     step(true);
