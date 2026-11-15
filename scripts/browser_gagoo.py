@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 import re
 import threading
+from urllib.parse import urljoin
 
 from playwright.sync_api import expect, sync_playwright
 
@@ -21,10 +22,12 @@ def serve():
     class SecurityHandler(QuietHandler):
         def end_headers(self):
             # Match production restrictions; no browser-side CSP bypass.
+            ancestors = "'self'" if self.path.split('?', 1)[0] == '/control-room.html' else "'none'"
+            self.send_header('X-Frame-Options', 'SAMEORIGIN' if ancestors == "'self'" else 'DENY')
             self.send_header('Content-Security-Policy',
                              "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
                              "img-src 'self' data: blob:; connect-src 'self' blob:; object-src 'none'; "
-                             "base-uri 'self'; frame-ancestors 'none'; form-action 'self'")
+                             f"base-uri 'self'; frame-ancestors {ancestors}; form-action 'self'")
             super().end_headers()
     class Server(ThreadingHTTPServer):
         request_queue_size = 128
@@ -40,7 +43,39 @@ def serve():
         thread.join(timeout=5)
 
 
+def open_library(page):
+    game = page.frame_locator('#learn-game-frame')
+    expect(game.locator('body')).to_have_attribute('data-scene-state', 'ready', timeout=30000)
+    game.locator('#room-book').click()
+    expect(page.locator('#learn-library')).to_be_visible()
+
+
 def learning_case(page, output, name, language):
+    game = page.frame_locator('#learn-game-frame')
+    expect(game.locator('body')).to_have_attribute('data-scene-state', 'ready', timeout=30000)
+    expect(game.locator('#room-canvas')).to_have_attribute('data-room', 'living')
+    expect(page.locator('#learn-library')).not_to_be_visible()
+    expect(page.locator('.public-header')).to_be_visible()
+    frame_url = page.locator('#learn-game-frame').get_attribute('src')
+    response = page.request.get(urljoin(page.url, frame_url))
+    assert response.status == 200
+    assert response.headers.get('x-frame-options', '').upper() == 'SAMEORIGIN'
+    assert "frame-ancestors 'self'" in response.headers.get('content-security-policy', '')
+    frame_box = page.locator('#learn-game-frame').bounding_box()
+    header_box = page.locator('.public-header').bounding_box()
+    assert abs(frame_box['y'] - (header_box['y'] + header_box['height'])) <= 2
+    assert abs(frame_box['height'] + frame_box['y'] - page.viewport_size['height']) <= 2
+    assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1')
+    page.screenshot(path=str(output / f'game-{name}.png'))
+    open_library(page)
+    # Opening the book pauses the game rather than leaving an invisible world
+    # running behind a lesson. Synthetic keys still go through normal handlers.
+    canvas = game.locator('#room-canvas')
+    before = canvas.evaluate('(n)=>[n.dataset.playerX,n.dataset.playerZ,n.dataset.floatingProps]')
+    canvas.evaluate('(n)=>n.dispatchEvent(new KeyboardEvent("keydown",{key:"ArrowRight",bubbles:true}))')
+    page.wait_for_timeout(250)
+    canvas.evaluate('(n)=>n.dispatchEvent(new KeyboardEvent("keyup",{key:"ArrowRight",bubbles:true}))')
+    assert canvas.evaluate('(n)=>[n.dataset.playerX,n.dataset.playerZ,n.dataset.floatingProps]') == before
     learn = page.locator('#learn')
     lesson = learn.locator('#learn-lesson')
     tabs = learn.locator('.learn-nav .learn-tab')
@@ -96,9 +131,7 @@ def learning_case(page, output, name, language):
     expect(tabs.nth(2)).to_have_attribute('aria-current', 'true')
     next_lesson.click()
     expect(quiz).to_be_visible()
-    header = page.locator('.public-header').bounding_box()
-    header_bottom = header['y'] + header['height']
-    assert header_bottom <= quiz.bounding_box()['y'] <= header_bottom + 40
+    expect(quiz).to_be_in_viewport()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
     page.screenshot(path=str(output / f'quiz-{name}.png'))
 
@@ -128,6 +161,7 @@ def learning_case(page, output, name, language):
         expect(feedback).to_have_attribute('data-state', state)
         if question == 1:
             page.reload()
+            open_library(page)
             expect(quiz).to_be_visible()
             expect(feedback).to_have_attribute('data-state', 'incorrect')
             header_language = page.locator('.public-header [data-language]')
@@ -147,12 +181,21 @@ def learning_case(page, output, name, language):
     expect(results.locator('#learn-score')).to_have_text(re.compile(r'5\s*/\s*6'))
     expect(results.locator('#learn-retry')).to_be_visible()
     page.reload()
+    open_library(page)
     expect(results).to_be_visible()
     expect(results.locator('#learn-score')).to_have_text(re.compile(r'5\s*/\s*6'))
     results.locator('#learn-retry').click()
     expect(quiz).to_be_visible()
     expect(check).to_be_disabled()
     expect(feedback).not_to_be_visible()
+    page.locator('#learn-library-close').click()
+    expect(page.locator('#learn-library')).not_to_be_visible()
+    expect(game.locator('#room-book')).to_be_focused()
+    page.locator('.public-header [data-language]').click()
+    expect(game.locator('html')).to_have_attribute('lang', 'vi' if language == 'en' else 'en')
+    page.locator('.public-header [data-language]').click()
+    expect(game.locator('html')).to_have_attribute('lang', language)
+    assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1')
 
 
 def check_case(browser, base, output, width, language, light=False):

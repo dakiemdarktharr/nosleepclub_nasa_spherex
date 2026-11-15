@@ -7,11 +7,11 @@ Design decisions confirmed by the owner on **15 November 2026**:
 - The current entrance sticks Gagoo to the glass for 650 milliseconds, then slides it right until it is fully out of view before the one-second blinds transition. This replaces the earlier backward recoil.
 - The room uses bold ink/cel shading, runtime shadows and six floating props that respond to collisions. The contextual E prompt appears only within reach of an interaction.
 - The learning interaction after choosing **test** is **multiple choice with answers**, not flashcards.
-- On mobile, the upper half of the viewport is the game screen and the lower half contains controls, following the already approved handheld-console layout.
+- The latest learning mission uses the whole viewport below the site header on desktop and mobile. An analog joystick and Interact/Back buttons overlay the game; the earlier half-screen console layout is superseded for this milestone. Releasing or cancelling a joystick touch stops movement.
 
 ## Current scope
 
-`web/control-room.html` is a separate, runnable design prototype. The public Learn route remains blank. The prototype uses the same Gagoo model as the home page, an original low-poly bus-shaped spaceship with six connected rooms, an oblique top-down camera, a tablet interaction, Alien X dialogue and a transparent quiz overlay.
+`web/control-room.html` runs independently and also powers the public `#learn` route through a same-origin frame. The public route retains the site header, language and theme controls, with no page scrolling. A book button opens the previous learning library and pauses the game until it is closed. The game uses the same Gagoo model as the home page, an original low-poly bus-shaped spaceship with six connected rooms, an oblique top-down camera, a tablet interaction, Alien X dialogue and a transparent quiz overlay.
 
 The playable single-deck layout runs from cockpit through sleeping room and kitchen to the living quarter. The living quarter branches directly to the fuel/generator room and the spacewalk airlock. Shared door openings and collision walls derive from `web/ship-layout.js`. There is one external spacewalk hatch; the rest of the outer hull is mirrored. The exterior and spacecraft systems are fictional game geometry, not an engineering or pressure-safety model.
 
@@ -19,13 +19,13 @@ Gameplay shows only the current room. Crossing a threshold hides it and shows a 
 
 The camera frames the active room on desktop and mobile, centering on the connecting chamber during travel. Walls that would hide the character lower visually while retaining collision. The separate “View outside” control shows the whole ship; “Other side” reverses the exterior view. Movement is paused during this inspection. The original room furnishings are generated in `web/ship-room-assets.js`: flight consoles and seats, bunks and personal storage, food and water preparation, a communal reading/tablet area, suit and pressurization equipment, and tanks/generator controls. The user's room and prop images guide proportions, visual layering and function; their artwork is not copied or bundled.
 
-The tablet interaction visibly moves the tablet into Gagoo's hand before opening its blank screen. Alien X's dialogue advances to a test request; choosing the option opens the quiz without replacing the room background. Wrong and correct answers receive text feedback. Leaving an overlay returns control to the room.
+The tablet moves into Gagoo's hand and opens lesson 1, using the same sourced content as the journal. Reading all steps completes the lesson and unlocks Alien X's six-question quiz. Each first answer is locked: Gagoo speaks the chosen response, while Alien X gives the correct answer and explanation. Five correct responses award normal fuel; six award rainbow fuel with an aura. A fuel can travels into Gagoo's torso and disappears. Below five, the player reviews the explanations and retries the whole round. Fuel is a fictional game reward, not a statement about SPHEREx propulsion or a scientific assessment.
 
 The ship contains a floating coffee mug, two books, two pens and a notepad. Gagoo can bump them into motion and spin; props also contact each other, consoles and room boundaries. The simulation uses conservative sphere proxies for props and a vertical capsule for Gagoo, with bounded timesteps and light damping. It does not model individual hand contact, liquid in the mug, precise prop shapes or engineering-grade microgravity. Opening an interaction overlay pauses prop simulation. The motion preference suppresses decorative drift while preserving the visible consequence of deliberate contact.
 
 The current style uses heavy silhouette strokes, selected surface lines, discrete light bands and cast/received shadows on the characters, objects and room. It is inspired by ink/grease-pencil drawing; it is implemented with WebGL materials and geometry rather than hand-drawn animation frames or Blender Grease Pencil assets.
 
-The prototype does not save quiz results to an account, send analytics, or claim a validated educational assessment. It does not operate SPHEREx or display live spacecraft telemetry.
+Learning completion and best mission score are local browser progress, not an account or a tamper-proof reward ledger. The game does not send analytics or claim a validated educational assessment. It does not operate SPHEREx or display live spacecraft telemetry.
 
 ## Visual direction and references
 
@@ -40,9 +40,9 @@ The prototype does not save quiz results to an account, send analytics, or claim
 1. Dragging Gagoo drives independently delayed joint motion; release and window impact settle without detached parts, unstable transforms or helmet penetration.
 2. The entrance begins from the visible Earth, satellite and Gagoo composition. The camera withdraws through a window; Gagoo fills most of the opening on contact, sticks for 650 milliseconds, then slides right on the glass plane. Its complete silhouette disappears before blinds begin. Cancel restores the home scene; skip and reduced motion remain supported.
 3. Gagoo can reach both room interactions with keyboard, touch controls or accessible station controls. Walls and consoles prevent walking through solid geometry. The contextual E prompt appears only when the player is close enough to interact, and clears when they leave.
-4. Tablet pickup is visible, its display is blank, and closing it returns control without stuck input.
-5. Alien X dialogue reaches the test option; the quiz shows correct/incorrect feedback, explanation, retry and progression.
-6. Mobile controls stay in their own half of the viewport in portrait and landscape. Touch release/cancellation stops movement, and overlays stop background movement.
+4. Tablet pickup is visible; lesson 1 and its filter activity work in both languages. Only completion unlocks the six-question mission. Closing it returns control without stuck input.
+5. Alien X speaks questions and feedback; Gagoo speaks selected answers. First responses determine the score. Cover all three outcomes: below 5/6 retry, 5/6 normal fuel, and 6/6 rainbow fuel. Prevent repeated rewards from duplicate clicks.
+6. The game fills the viewport below the site header in portrait and landscape without page scrolling. The mobile joystick supports direction and magnitude, with a dead zone and immediate stop on touch release/cancellation. Interact and Back remain distinct reachable buttons. The journal suspends simulation and resumes at the same position.
 7. Both Vietnamese and English remain usable. Keyboard focus, readable feedback, reduced motion, WebGL failure and resizing are checked.
 8. All six floating props drift and rotate without falling; player contact changes their velocity/spin. Props remain within room bounds and avoid persistent overlaps with obstacles and each other. Pausing an overlay must stop the simulation without a jump on return.
 9. Ink outlines and shadows remain readable on desktop and mobile, do not obscure the face or tablet/quiz, and clean up with the scene.
@@ -99,3 +99,9 @@ Prototype gameplay, learning effectiveness and real-device GPU performance are n
 ## Next design milestone
 
 Use this room to test one complete short learning activity with a beginner: approach Alien X, read a concept, answer a question, inspect the explanation and return to exploration. Check that learners can find the interaction and explain the answer without assistance before expanding the room or adding rewards.
+
+## Living-quarter mission entry
+
+Gagoo starts in the living quarter on each new entry to Learn. After one second of active, ready gameplay Alien X invites the player to earn fuel; that bubble lasts three seconds. At two seconds a projected arrow identifies the tablet until the player interacts. Hiding the tab or opening the journal pauses these timers. Language and theme changes cross a validated same-origin message channel. Leaving the route destroys the frame and scene; reopening the journal alone does not reset the room.
+
+The page embedding exception is limited to `control-room.html` with `frame-ancestors self` and `X-Frame-Options: SAMEORIGIN`; other pages retain their embedding denial. The game is always usable standalone, including the keyboard-accessible fallback when WebGL is unavailable.

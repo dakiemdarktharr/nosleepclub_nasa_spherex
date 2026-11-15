@@ -1,16 +1,136 @@
 """Exercise the independent control-room prototype with the production CSP.
 
-No API writes. Tests movement, two reachable interactions, answer feedback,
-mobile screen/control separation and a recoverable WebGL failure.
+No API writes. Tests movement, tablet lesson, Alien X dialogue quiz, all fuel
+boundaries, full-screen touch controls and a recoverable WebGL failure.
 """
 import argparse
 import json
 from pathlib import Path
+import re
 
 from playwright.sync_api import expect, sync_playwright
 
 from scripts.browser_gagoo import serve
 from scripts.browser_smoke import ROOT
+
+
+CORRECT_ANSWERS = [0, 1, 2, 0, 1, 2]
+
+
+def finish_lesson(page):
+    expect(page.locator('body')).to_have_attribute('data-game-state', 'tablet')
+    expect(page.locator('#room-lesson-next')).to_be_visible()
+    bands = page.locator('#room-lesson-filter button[data-band]')
+    expect(bands).to_have_count(3)
+    for index in range(3):
+        bands.nth(index).click()
+        expect(bands.nth(index)).to_have_attribute('aria-pressed', 'true')
+        expect(page.locator('#room-filter-preview')).to_have_attribute('data-band', str(index))
+    for _ in range(3):
+        page.locator('#room-lesson-next').click()
+    expect(page.locator('body')).to_have_attribute('data-lesson-complete', 'true')
+
+
+def start_quiz(page):
+    page.locator('#room-alien-shortcut').click()
+    expect(page.locator('body')).to_have_attribute('data-game-state', 'dialogue', timeout=20000)
+    for _ in range(5):
+        if page.locator('#room-test-choice').is_visible():
+            break
+        page.locator('#room-dialogue-next').click()
+    page.locator('#room-test-choice').click()
+    if page.locator('#room-mission-result').is_visible():
+        page.locator('#room-quiz-retry').click()
+    expect(page.locator('body')).to_have_attribute('data-game-state', 'study')
+
+
+def answer_round(page, correct_count, output=None, name='', toggle_language=False, inspect_loot=False):
+    for index, correct in enumerate(CORRECT_ANSWERS):
+        options = page.locator('#room-quiz-options button[data-answer]')
+        expect(options).to_have_count(3)
+        for choice in range(3):
+            expect(options.nth(choice)).to_be_enabled()
+        selected = correct if index < correct_count else (correct + 1) % 3
+        reply = options.nth(selected).locator('span').inner_text()
+        options.nth(selected).click()
+        expect(page.locator('#room-gagoo-answer')).to_be_visible()
+        expect(page.locator('#room-gagoo-answer-text')).to_have_text(reply)
+        feedback = page.locator('#room-quiz-feedback')
+        expect(feedback).to_be_visible()
+        expect(feedback).to_have_attribute('data-correct', str(index < correct_count).lower())
+        assert len(page.locator('#room-quiz-explanation').inner_text()) > 40
+        expect(page.locator('#room-quiz-source')).to_have_attribute('href', re.compile(r'^https://science.nasa.gov/'))
+        for choice in range(3):
+            expect(options.nth(choice)).to_be_disabled()
+        # A duplicate click must not replace a first answer, including a wrong one.
+        answered = page.locator('body').get_attribute('data-quiz-answered')
+        score = page.locator('body').get_attribute('data-quiz-score')
+        options.nth(correct).evaluate('(button)=>button.dispatchEvent(new MouseEvent("click",{bubbles:true}))')
+        expect(page.locator('body')).to_have_attribute('data-quiz-answered', answered)
+        expect(page.locator('body')).to_have_attribute('data-quiz-score', score)
+        expect(page.locator('#room-quiz-retry')).not_to_be_visible()
+        if index == 1 and toggle_language:
+            initial_lang = page.locator('html').get_attribute('lang')
+            initial_text = page.locator('#room-quiz-explanation').inner_text()
+            page.locator('#room-language').click()
+            expect(page.locator('html')).to_have_attribute('lang', 'vi' if initial_lang == 'en' else 'en')
+            assert page.locator('#room-quiz-explanation').inner_text() != initial_text
+            expect(feedback).to_have_attribute('data-correct', 'true')
+            expect(page.locator('body')).to_have_attribute('data-quiz-score', score)
+            page.locator('#room-language').click()
+        if output and index == 4:
+            page.screenshot(path=str(output / f'quiz-{name}-{correct_count}.png'))
+        page.locator('#room-quiz-next').click()
+    expect(page.locator('#room-mission-result')).to_be_visible()
+    expect(page.locator('body')).to_have_attribute('data-quiz-score', str(correct_count))
+    expect(page.locator('body')).to_have_attribute('data-quiz-answered', '6')
+    expected_tier = 'super' if correct_count == 6 else 'normal' if correct_count == 5 else 'none'
+    expect(page.locator('body')).to_have_attribute('data-reward-tier', expected_tier)
+    if correct_count < 5:
+        expect(page.locator('#room-claim-fuel')).not_to_be_visible()
+        page.locator('#room-quiz-retry').click()
+        expect(page.locator('body')).to_have_attribute('data-quiz-score', '0')
+        expect(page.locator('body')).to_have_attribute('data-quiz-answered', '0')
+        expect(page.locator('#room-quiz-count')).to_have_text('1 / 6')
+    else:
+        page.locator('#room-claim-fuel').click()
+        if inspect_loot:
+            expect(page.locator('body')).to_have_attribute('data-game-state', 'reward')
+            expect(page.locator('#room-canvas')).to_have_attribute('data-loot-visible', 'true')
+            frozen = position(page)
+            page.keyboard.down('ArrowLeft')
+            try:
+                page.wait_for_timeout(220)
+                assert position(page) == frozen, 'Receiving fuel must lock movement'
+                page.screenshot(path=str(output / f'loot-{name}-{expected_tier}.png'))
+            finally:
+                page.keyboard.up('ArrowLeft')
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'room', timeout=10000)
+        canvas = page.locator('#room-canvas')
+        expect(canvas).to_have_attribute('data-loot-tier', expected_tier)
+        expect(canvas).to_have_attribute('data-loot-phase', 'collected', timeout=10000)
+        page.wait_for_timeout(100)
+        expect(canvas).to_have_attribute('data-loot-phase', 'collected')
+
+
+def animated_fuel_case(browser, base, output):
+    context = browser.new_context(viewport={'width': 1366, 'height': 900}, reduced_motion='no-preference')
+    page = context.new_page()
+    page.set_default_timeout(20000)
+    errors = []
+    page.on('pageerror', lambda error: errors.append(str(error)))
+    try:
+        page.goto(f'{base}/control-room.html?lang=en')
+        expect(page.locator('body')).to_have_attribute('data-scene-state', 'ready')
+        page.locator('#room-tablet-shortcut').click()
+        finish_lesson(page)
+        start_quiz(page)
+        answer_round(page, 6, output, 'animated', inspect_loot=True)
+        expect(page.locator('#room-canvas')).to_have_attribute('data-loot-visible', 'false')
+        assert not errors, errors
+        return {'case': 'rainbow-fuel-animation-and-input-lock', 'passed': True, 'page_errors': errors}
+    finally:
+        context.close()
 
 
 def position(page):
@@ -82,6 +202,21 @@ def run_case(browser, base, output, width, height, language, mobile):
     name = f'{width}x{height}-{language}'
     context = browser.new_context(viewport={'width': width, 'height': height},
                                   is_mobile=mobile, has_touch=mobile, reduced_motion='reduce')
+    if width == 1366:
+        context.add_init_script('''
+          window.introEvidence = {};
+          const record = () => {
+            const data = window.introEvidence, body = document.body;
+            if (body?.dataset.sceneState === 'ready' && data.ready === undefined) data.ready = performance.now();
+            for (const [key,id] of [['greeting','room-greeting'],['hint','room-tablet-hint']]) {
+              const element = document.getElementById(id);
+              if (!element || data.ready === undefined) continue;
+              if (!element.hidden && data[key] === undefined) data[key] = performance.now();
+              if (element.hidden && data[key] !== undefined && data[key+'End'] === undefined) data[key+'End'] = performance.now();
+            }
+          };
+          new MutationObserver(record).observe(document,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','data-scene-state']});
+        ''')
     page = context.new_page()
     page.set_default_timeout(15000)
     errors, writes = [], []
@@ -106,12 +241,21 @@ def run_case(browser, base, output, width, height, language, mobile):
         expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
         expect(page.locator('#room-canvas')).to_have_attribute('data-shadow-map', 'enabled')
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
-        if mobile:
-            screen = page.locator('#room-screen').bounding_box()
-            controls = page.locator('#room-controls').bounding_box()
-            assert abs(screen['height'] - height / 2) <= 2, screen
-            assert abs(controls['height'] - height / 2) <= 2, controls
-            assert abs(screen['y'] + screen['height'] - controls['y']) <= 2
+        assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1')
+        screen = page.locator('#room-screen').bounding_box()
+        assert abs(screen['height'] - height) <= 2, screen
+        expect(page.locator('#room-book')).to_be_visible()
+        intro = None
+        if width == 1366:
+            expect(page.locator('#room-greeting')).to_be_visible()
+            expect(page.locator('#room-greeting-text')).to_have_text('Are you ready to answer questions to earn fuel for the spaceship?')
+            expect(page.locator('#room-tablet-hint')).to_be_visible()
+            page.screenshot(path=str(output / 'intro-greeting-tablet.png'))
+            expect(page.locator('#room-greeting')).not_to_be_visible()
+            intro = page.evaluate('window.introEvidence')
+            assert 850 <= intro['greeting'] - intro['ready'] <= 1600, intro
+            assert 1850 <= intro['hint'] - intro['ready'] <= 2600, intro
+            assert 2750 <= intro['greetingEnd'] - intro['greeting'] <= 3500, intro
         page.screenshot(path=str(output / f'room-{name}.png'))
 
         # The full hull inspection is not gameplay: both sides must be visible
@@ -167,12 +311,18 @@ def run_case(browser, base, output, width, height, language, mobile):
         assert sum(abs(a - b) for a, b in zip(stopped, position(page))) < .02
 
         if mobile:
-            # Real touchscreen hold/cancel, not an artificial click handler.
-            pad = page.locator('[data-direction="up"]').bounding_box()
+            # A real analog touch drag must move the actor; cancellation clears
+            # the held vector even when the thumb never returns to the center.
+            joystick = page.locator('#room-joystick')
+            expect(joystick).to_be_visible()
+            pad = joystick.bounding_box()
+            center_x, center_y = pad['x'] + pad['width'] / 2, pad['y'] + pad['height'] / 2
             touch = context.new_cdp_session(page)
             before_touch = position(page)
             touch.send('Input.dispatchTouchEvent', {'type': 'touchStart', 'touchPoints': [
-                {'x': pad['x'] + pad['width'] / 2, 'y': pad['y'] + pad['height'] / 2}]})
+                {'x': center_x, 'y': center_y}]})
+            touch.send('Input.dispatchTouchEvent', {'type': 'touchMove', 'touchPoints': [
+                {'x': center_x + 5, 'y': center_y - pad['height'] * .32}]})
             page.wait_for_timeout(250)
             touch.send('Input.dispatchTouchEvent', {'type': 'touchCancel', 'touchPoints': []})
             assert sum(abs(a - b) for a, b in zip(before_touch, position(page))) > .1
@@ -180,8 +330,15 @@ def run_case(browser, base, output, width, height, language, mobile):
             cancelled = position(page)
             page.wait_for_timeout(200)
             assert position(page) == cancelled, 'Touch cancellation left movement active'
+            assert abs(float(joystick.get_attribute('data-x'))) < .01
+            assert abs(float(joystick.get_attribute('data-y'))) < .01
 
-        page.locator('#room-tablet-shortcut').click()
+        # A first visit to Alien X explains the prerequisite and cannot bypass it.
+        page.locator('#room-alien-shortcut').click()
+        expect(page.locator('body')).to_have_attribute('data-game-state', 'dialogue', timeout=20000)
+        expect(page.locator('#room-test-choice')).not_to_be_visible()
+        expect(page.locator('#room-dialogue-text')).to_contain_text('lesson 1' if language == 'en' else 'bài 1')
+        page.locator('#room-dialogue-next').click()
         expect(page.locator('body')).to_have_attribute('data-game-state', 'tablet', timeout=20000)
         # After the shortcut completes and the overlay closes, use the actual
         # context prompt. No timing race with auto-arrival is involved.
@@ -200,39 +357,22 @@ def run_case(browser, base, output, width, height, language, mobile):
         page.keyboard.up('ArrowLeft')
         assert position(page) == held_position, 'Movement must pause during the tablet overlay'
         assert prop_states() == held_props, 'Prop motion must pause while reading an overlay'
-        page.keyboard.press('Escape')
+        finish_lesson(page)
+        if page.locator('body').get_attribute('data-game-state') != 'room':
+            page.keyboard.press('Escape')
         expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
 
-        page.locator('#room-alien-shortcut').click()
-        expect(page.locator('body')).to_have_attribute('data-game-state', 'dialogue', timeout=20000)
-        page.screenshot(path=str(output / f'dialogue-{name}.png'))
-        for _ in range(5):
-            if page.locator('#room-test-choice').is_visible():
-                break
-            page.locator('#room-dialogue-next').click()
-        expect(page.locator('#room-test-choice')).to_be_visible()
-        page.locator('#room-test-choice').click()
-        expect(page.locator('body')).to_have_attribute('data-game-state', 'study')
-
-        # An incorrect answer must explain the distinction; retry accepts a
-        # correct answer and advances without persisting a fabricated score.
-        options = page.locator('#room-quiz-options button[data-answer]')
-        expect(options).to_have_count(4)
-        page.locator('#room-quiz-options button:not([data-answer="infrared"])').first.click()
-        expect(page.locator('#room-quiz-feedback')).to_have_attribute('data-correct', 'false')
-        assert len(page.locator('#room-quiz-feedback').inner_text()) > 40
-        page.locator('#room-quiz-retry').click()
-        page.locator('#room-quiz-options [data-answer="infrared"]').click()
-        expect(page.locator('#room-quiz-feedback')).to_have_attribute('data-correct', 'true')
-        page.screenshot(path=str(output / f'quiz-{name}.png'))
-        page.locator('#room-quiz-next').click()
-        expect(options).to_have_count(4)
-        page.locator('#room-language').click()
-        expect(page.locator('html')).to_have_attribute('lang', 'vi' if language == 'en' else 'en')
-        expect(page.locator('body')).to_have_attribute('data-game-state', 'study')
-        page.locator('#room-quiz-options [data-answer="channels"]').click()
-        expect(page.locator('#room-quiz-feedback')).to_have_attribute('data-correct', 'true')
-        page.locator('#room-quiz-next').click()
+        start_quiz(page)
+        # Low score retries the complete six-question round, retaining no points.
+        if width in (1366, 844):
+            answer_round(page, 4, output, name)
+            answer_round(page, 5 if width == 1366 else 6, output, name, toggle_language=True)
+        else:
+            answer_round(page, 6 if width == 390 else 5, output, name, toggle_language=True)
+        if width == 1366:
+            start_quiz(page)
+            answer_round(page, 6, output, name)
+        page.keyboard.press('Escape')
         expect(page.locator('body')).to_have_attribute('data-game-state', 'room')
         page.locator('#room-alien-shortcut').click()
         expect(page.locator('body')).to_have_attribute('data-game-state', 'dialogue')
@@ -250,7 +390,7 @@ def run_case(browser, base, output, width, height, language, mobile):
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
         assert not errors, errors
         assert not writes, writes
-        return {'case': name, 'passed': True, 'page_errors': errors, 'api_writes': writes, 'rooms_visited': visited}
+        return {'case': name, 'passed': True, 'page_errors': errors, 'api_writes': writes, 'rooms_visited': visited, 'intro_ms': intro}
     except Exception:
         page.screenshot(path=str(output / f'failure-{name}.png'))
         raise
@@ -276,13 +416,15 @@ def fallback_case(browser, base, output):
         expect(page.locator('#room-error')).to_be_visible()
         page.locator('#room-tablet-shortcut').click()
         expect(page.locator('body')).to_have_attribute('data-game-state', 'tablet')
-        assert page.locator('.room-tablet-display').inner_text() == ''
-        page.keyboard.press('Escape')
-        page.locator('#room-alien-shortcut').click()
-        page.locator('#room-dialogue-next').click()
-        page.locator('#room-test-choice').click()
-        page.locator('[data-answer="infrared"]').click()
-        expect(page.locator('#room-quiz-feedback')).to_have_attribute('data-correct', 'true')
+        finish_lesson(page)
+        if page.locator('body').get_attribute('data-game-state') != 'room':
+            page.keyboard.press('Escape')
+        start_quiz(page)
+        # Without WebGL, learning and first-answer feedback still work.
+        page.locator('#room-quiz-options [data-answer="1"]').click()
+        expect(page.locator('#room-quiz-feedback')).to_have_attribute('data-correct', 'false')
+        assert len(page.locator('#room-quiz-explanation').inner_text()) > 40
+        expect(page.locator('#room-quiz-next')).to_be_visible()
         page.screenshot(path=str(output / 'webgl-fallback.png'))
         assert not errors, errors
         return {'case': 'webgl-unavailable', 'passed': True, 'page_errors': errors}
@@ -437,6 +579,9 @@ def main():
                 results.append(result)
                 print(json.dumps(result), flush=True)
             result = fallback_case(browser, args.base or local, args.output)
+            results.append(result)
+            print(json.dumps(result), flush=True)
+            result = animated_fuel_case(browser, args.base or local, args.output)
             results.append(result)
             print(json.dumps(result), flush=True)
             result = corridor_case(browser, args.base or local, args.output)
