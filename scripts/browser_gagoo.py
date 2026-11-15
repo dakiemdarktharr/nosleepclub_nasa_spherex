@@ -82,6 +82,9 @@ def learning_case(page, output, name, language):
     expect(tabs.nth(2)).to_have_attribute('aria-current', 'true')
     next_lesson.click()
     expect(quiz).to_be_visible()
+    header = page.locator('.public-header').bounding_box()
+    header_bottom = header['y'] + header['height']
+    assert header_bottom <= quiz.bounding_box()['y'] <= header_bottom + 40
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
     page.screenshot(path=str(output / f'quiz-{name}.png'))
 

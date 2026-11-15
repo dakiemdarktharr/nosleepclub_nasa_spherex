@@ -1,3 +1,5 @@
+:root:has(body[data-public-page="learn"]) { scroll-padding-top: 0; }
+
 #learn.learn-page {
   --learn-ground: #0b1020;
   --learn-surface: #141a2c;
@@ -120,7 +122,7 @@
 }
 
 #learn .learn-content { padding-block: clamp(1.25rem, 3.3vw, 3rem) clamp(2.5rem, 7vw, 5rem); }
-#learn:is([data-view="quiz"], [data-view="results"]) .learn-content { min-height: calc(100svh - 4rem); }
+#learn:is([data-view="quiz"], [data-view="results"]) .learn-content { min-height: 100svh; }
 #learn .learn-panel { scroll-margin-top: 4.5rem; }
 
 #learn .learn-nav {
