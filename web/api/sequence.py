@@ -15,13 +15,15 @@ try:
     from api._response_cache import cache_key
     from api.frame import FRAME_CONTRACT, MASK_POLICY, FrameError, parse_params, produce_frame, response_cache
     from api._telemetry import emit_request, request_logger
+    from api._upstream_diagnostics import emit as emit_upstream
 except ModuleNotFoundError as exc:
-    if exc.name not in ('api', 'api._access_control', 'api._response_cache', 'api.frame', 'api._telemetry'):
+    if exc.name not in ('api', 'api._access_control', 'api._response_cache', 'api.frame', 'api._telemetry', 'api._upstream_diagnostics'):
         raise
     from web.api._access_control import AccessDenied, guard, identity
     from web.api._response_cache import cache_key
     from web.api.frame import FRAME_CONTRACT, MASK_POLICY, FrameError, parse_params, produce_frame, response_cache
     from web.api._telemetry import emit_request, request_logger
+    from web.api._upstream_diagnostics import emit as emit_upstream
 
 MAX_BODY_BYTES = 64_000
 MAX_FRAMES = 10
@@ -80,7 +82,7 @@ class handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def respond(self, status, content):
+    def respond(self, status, content, category=None, error_code=None):
         self.send_response(status)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Content-Length', str(len(content)))
@@ -98,13 +100,15 @@ class handler(BaseHTTPRequestHandler):
         if self.command != 'HEAD':
             self.wfile.write(content)
         emit_request(logger, {'event': 'sequence_request', 'request_id': self.request_id, 'status': status,
+                              'category': category or ('ok' if status < 400 else 'request_rejected'),
+                              'error_code': error_code, 'method': self.command,
                               'latency_ms': round((time.monotonic() - self.started) * 1000, 2),
                               'frame_count': getattr(self, 'frame_count', 0)})
 
     def dispatch(self, method):
         self.request_id, self.started = secrets.token_hex(16), time.monotonic()
         if method != 'POST':
-            return self.respond(405, b'{"error":"method_not_allowed"}')
+            return self.respond(405, b'{"error":"method_not_allowed"}', 'method', 'method_not_allowed')
         try:
             length = self.headers.get('Content-Length', '')
             if not re.fullmatch(r'[0-9]{1,6}', length) or int(length) > MAX_BODY_BYTES:
@@ -119,9 +123,9 @@ class handler(BaseHTTPRequestHandler):
         except AccessDenied as exc:
             self.retry_after = exc.retry_after
             payload = json.dumps({'error': exc.code}, separators=(',', ':')).encode()
-            return self.respond(exc.status, payload)
+            return self.respond(exc.status, payload, 'rate_limit' if exc.status == 429 else 'rate_unavailable', exc.code)
         except (ValueError, UnicodeDecodeError, json.JSONDecodeError):
-            return self.respond(400, b'{"error":"invalid_parameters"}')
+            return self.respond(400, b'{"error":"invalid_parameters"}', 'validation', 'invalid_parameters')
 
         def render_cached(params):
             key = cache_key(namespace, FRAME_CONTRACT + '/' + MASK_POLICY, params)
@@ -149,6 +153,8 @@ class handler(BaseHTTPRequestHandler):
                 except Exception as exc:
                     code, status = getattr(exc, 'code', None), getattr(exc, 'status', None)
                     if isinstance(code, str) and re.fullmatch(r'[a-z0-9_]{1,64}', code) and isinstance(status, int):
+                        if isinstance(exc, FrameError) and isinstance(exc.diagnostic, dict):
+                            emit_upstream(logger, 'sequence', self.request_id, exc.diagnostic)
                         errors.append({'index': index, 'error': code, 'status': status})
                         continue
                     logger.error('sequence_frame_failed request_id=%s index=%s exception_type=%s',
@@ -158,15 +164,15 @@ class handler(BaseHTTPRequestHandler):
         ordered = [results[index] for index, _ in frames if index in results]
         total = sum(len(item['png']) * 3 // 4 for item in ordered)
         if total > MAX_TOTAL_PNG_BYTES:
-            return self.respond(413, b'{"error":"sequence_too_large"}')
+            return self.respond(413, b'{"error":"sequence_too_large"}', 'result_size', 'sequence_too_large')
         if not ordered:
             payload = json.dumps({'error': 'sequence_upstream_failed', 'frames': [], 'errors': errors},
                                  separators=(',', ':')).encode()
-            return self.respond(502, payload)
+            return self.respond(502, payload, 'upstream', 'sequence_upstream_failed')
         payload = json.dumps({'frames': ordered, 'errors': errors}, separators=(',', ':'), allow_nan=False).encode()
         if len(payload) > 2_500_000:
-            return self.respond(413, b'{"error":"sequence_too_large"}')
-        return self.respond(200, payload)
+            return self.respond(413, b'{"error":"sequence_too_large"}', 'result_size', 'sequence_too_large')
+        return self.respond(200, payload, 'partial' if errors else 'ok', 'partial_upstream' if errors else None)
 
     def do_POST(self):
         self.dispatch('POST')

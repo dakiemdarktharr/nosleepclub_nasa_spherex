@@ -7,7 +7,8 @@ import time
 _lock = threading.Lock()
 _last = {}
 ENDPOINTS = {'data_request': 'data', 'frame_request': 'frame',
-             'observations_request': 'observations', 'review_request': 'reviews'}
+             'observations_request': 'observations', 'sequence_request': 'sequence',
+             'review_request': 'reviews'}
 
 
 def record(event):
@@ -17,7 +18,7 @@ def record(event):
     status = event['status']
     if not endpoint or 400 <= status < 500:
         return
-    kind = 'error' if status >= 500 else 'success'
+    kind = 'error' if status >= 500 or event.get('category') == 'partial' else 'success'
     key = (endpoint, kind)
     now = time.monotonic()
     with _lock:
@@ -41,7 +42,7 @@ def record(event):
 def recent(db):
     result = {}
     for row in db.service_health.find({'_id': {'$in': list(ENDPOINTS.values())}},
-                                      {'last_success_at': 1, 'last_error_at': 1}).limit(4):
+                                      {'last_success_at': 1, 'last_error_at': 1}).limit(5):
         result[row['_id']] = {key: value.isoformat() for key, value in row.items()
                               if key in {'last_success_at', 'last_error_at'} and isinstance(value, datetime)}
     return result
