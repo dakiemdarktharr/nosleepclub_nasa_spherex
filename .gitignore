@@ -42,6 +42,9 @@ web/data/diagnostic.png
 *.hdf5
 
 # Local tools and OS files
+.playwright-mcp/
+playwright-report/
+test-results/
 .codex/
 .agents/
 .aws/

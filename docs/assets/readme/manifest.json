@@ -1,0 +1,43 @@
+{
+  "assets": [
+    {
+      "file": "alien-x.png",
+      "bytes": 244808,
+      "sha256": "825a161cb97bcaef0ed71ddc776dfa37dc1027e920e10d22d5b2c3f4cace03b9"
+    },
+    {
+      "file": "pitch-cover.png",
+      "bytes": 38897,
+      "sha256": "2cc2a7589e9182b6f580d300759319a1d3e5cf39d1caebb55102085fb064eb91"
+    },
+    {
+      "file": "pitch-en.srt",
+      "bytes": 634,
+      "sha256": "1c5ada0251fbaebada019a06dc76865d77bffc3e769f7cd3baf0895489a4ef9f"
+    },
+    {
+      "file": "pitch-vi.srt",
+      "bytes": 774,
+      "sha256": "bacdec82f60fb53979aef6dc1a370ea6cd06a32631da1992e7e610446f4bd5fc"
+    },
+    {
+      "file": "space-apps-2026-certificate.jpeg",
+      "bytes": 652848,
+      "sha256": "b4d6868b2fdac4c9022cda2083a97c060ef32693270a18da4d960b40e2c27a13"
+    },
+    {
+      "file": "spaceship.png",
+      "bytes": 362735,
+      "sha256": "932cfecd2a58379bd3287e30f035fef4502b37198e9cfebc16ae49aa51f89adb"
+    },
+    {
+      "file": "Touch-the-Sky-30s-v3.mp4",
+      "url": "https://github.com/dakiemdarktharr/nosleepclub_nasa_spherex/releases/download/pitch-v3/Touch-the-Sky-30s-v3.mp4",
+      "bytes": 19063581,
+      "sha256": "7c6c37746c88d0a0bd2a175c473d8fa5527d44b614e985577ab14dc91502e826",
+      "duration_seconds": 30,
+      "width": 1920,
+      "height": 1080
+    }
+  ]
+}
