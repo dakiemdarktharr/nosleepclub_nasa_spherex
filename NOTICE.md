@@ -9,6 +9,7 @@ proposal are recorded in [CODE_LICENSE_PROPOSAL.md](docs/CODE_LICENSE_PROPOSAL.m
 
 | Material | Source and current record | Reuse boundary |
 |---|---|---|
+| README screenshots, pitch video and participation certificate | [Media provenance and hashes](docs/assets/readme/README.md) | Screenshots retain the terms of displayed assets; the pitch includes generated ElevenLabs narration/music and credited NASA visualizations. The supplied certificate documents participation only. The code's MIT license does not relicense these materials |
 | Original project code and its original accompanying documentation | Git history, scientific source hashes and [LICENSE](LICENSE) | MIT; retain its copyright and permission notice. This grant does not relicense external material listed below |
 | Be Vietnam Pro fonts | `web/assets/fonts/provenance.json`, local `OFL.txt` | SIL Open Font License, retained with the font files |
 | Space Grotesk title font | [Google Fonts package](https://github.com/google/fonts/tree/main/ofl/spacegrotesk), `web/assets/fonts/Space-Grotesk-OFL.txt` | SIL Open Font License. Vietnamese and Latin subsets served locally |

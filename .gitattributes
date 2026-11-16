@@ -6,3 +6,5 @@
 *.webp binary
 *.ico binary
 *.pdf binary
+# Keep released subtitle bytes identical to the media manifest on every platform.
+docs/assets/readme/*.srt -text
